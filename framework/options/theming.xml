@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset icon="fas fa-paint-brush" label="AF_THEMING" name="astroid_theming" addfieldpath="/libraries/astroid/framework/fields" order="11">
+         <field type="astroidgroup" name="colors" title="ASTROID_OPTIONS_COLOURS" help="https://docs.joomdev.com/article/astroid-theming-options" />
+         <field type="astroidgroup" name="sassoverrides" title="ASTROID_OPTIONS_OVERRIDES" />
+         <field astroidgroup="colors" name="theme_colors_heading" type="astroidheading" title="AF_THEMING_ALL_COLORS" description="AF_THEMING_ALL_COLORS_DESC"></field>
+         <field astroidgroup="colors" name="theme_blue" type="astroidcolor" large="true" label="TPL_COLOR_BLUE" default="#007bff"></field>
+         <field astroidgroup="colors" name="theme_indigo" type="astroidcolor" large="true" label="TPL_COLOR_INDIGO" default="#6610f2"></field>
+         <field astroidgroup="colors" name="theme_purple" type="astroidcolor" large="true" label="TPL_COLOR_PURPLE" default="#6f42c1"></field>
+         <field astroidgroup="colors" name="theme_pink" type="astroidcolor" large="true" label="TPL_COLOR_PINK" default="#f36"></field>
+         <field astroidgroup="colors" name="theme_red" type="astroidcolor" large="true" label="TPL_COLOR_RED" default="#dc3545"></field>
+         <field astroidgroup="colors" name="theme_orange" type="astroidcolor" large="true" label="TPL_COLOR_ORANGE" default="#fd7e14"></field>
+         <field astroidgroup="colors" name="theme_yellow" type="astroidcolor" large="true" label="TPL_COLOR_YELLOW" default="#ffc107"></field>
+         <field astroidgroup="colors" name="theme_green" type="astroidcolor" large="true" label="TPL_COLOR_GREEN" default="#28a745"></field>
+         <field astroidgroup="colors" name="theme_teal" type="astroidcolor" large="true" label="TPL_COLOR_TEAL" default="#20c997"></field>
+         <field astroidgroup="colors" name="theme_cyan" type="astroidcolor" large="true" label="TPL_COLOR_CYAN" default="#17a2b8"></field>
+         <field astroidgroup="colors" name="theme_white" type="astroidcolor" large="true" label="TPL_COLOR_WHITE" default="#fff"></field>
+         <field astroidgroup="colors" name="theme_gray100" type="astroidcolor" large="true" label="TPL_COLOR_LIGHT_GREY" default="#f8f9fa"></field>
+         <field astroidgroup="colors" name="theme_gray600" type="astroidcolor" large="true" label="TPL_COLOR_GREY" default="#6c757d"></field>
+         <field astroidgroup="colors" name="theme_gray800" type="astroidcolor" large="true" label="TPL_COLOR_GREY_DARK" default="#2c2e36"></field>
+
+         <field astroidgroup="colors" name="theme_scheme_heading" type="astroidheading" title="AF_THEMING_ALL_THEME_COLORS" description="AF_THEMING_ALL_THEME_COLORS_DESC"></field>
+
+         <field astroidgroup="colors" name="theme_primary" type="astroidlist" class="form-control" default="" label="Primary" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_primary_custom" type="astroidcolor" default="" label="Custom Primary" ngShow="theme_primary=='custom'" />
+
+         <field astroidgroup="colors" name="theme_secondary" type="astroidlist" class="form-control" default="" label="Secondary" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_secondary_custom" type="astroidcolor" default="" label="Custom Secondary" ngShow="theme_secondary=='custom'" />
+
+         <field astroidgroup="colors" name="theme_success" type="astroidlist" class="form-control" default="" label="Success" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_success_custom" type="astroidcolor" default="" label="Custom Success" ngShow="theme_success=='custom'" />
+
+         <field astroidgroup="colors" name="theme_info" type="astroidlist" class="form-control" default="" label="Info" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_info_custom" type="astroidcolor" default="" label="Custom Info" ngShow="theme_info=='custom'" />
+
+         <field astroidgroup="colors" name="theme_warning" type="astroidlist" class="form-control" default="" label="Warning" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_warning_custom" type="astroidcolor" default="" label="Custom Warning" ngShow="theme_warning=='custom'" />
+
+         <field astroidgroup="colors" name="theme_danger" type="astroidlist" class="form-control" default="" label="Danger" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_danger_custom" type="astroidcolor" default="" label="Custom Danger" ngShow="theme_danger=='custom'" />
+
+         <field astroidgroup="colors" name="theme_light" type="astroidlist" class="form-control" default="" label="Light" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_light_custom" type="astroidcolor" default="" label="Custom Light" ngShow="theme_light=='custom'" />
+
+         <field astroidgroup="colors" name="theme_dark" type="astroidlist" class="form-control" default="" label="Dark" bootstrap-color="true" />
+         <field astroidgroup="colors" name="theme_dark_custom" type="astroidcolor" default="" label="Custom Dark" ngShow="theme_dark=='custom'" />
+
+         <field astroidgroup="sassoverrides" name="sass_overrides" type="astroidsassoverrides" default='[{"variable":"btn-border-radius-lg","value":"0.2rem","color":false},{"variable":"btn-padding-y-lg","value":"0.6rem","color":false},{"variable":"btn-padding-x-lg","value":"2.5rem","color":false}]'></field>
+      </fieldset>
+   </fields>
+</form>

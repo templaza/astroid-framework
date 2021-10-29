@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset icon="fas fa-share-alt" label="ASTROID_OPTIONS_SOCIAL" name="astroid_social" addfieldpath="/libraries/astroid/framework/fields" order="7">
+			<field type="astroidgroup" name="social_profile" title="TPL_ASTROID_SOCIAL_TITLE_LABEL" description="TPL_ASTROID_SOCIAL_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-social-profile" ></field>
+
+			<field astroidgroup="social_profile" name="social_profiles_position" astroid-content-layout="social" type="astroidmodulesposition" default="astroid-top-social" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control"></field>
+
+			<field astroidgroup="social_profile" name="social_profiles_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="social_profiles_position" default="after">
+				<option value="after">TPL_ASTROID_AFTER_MODULE</option>
+				<option value="before">TPL_ASTROID_BEFORE_MODULE</option>
+			</field>
+
+			<field astroidgroup="social_profile" name="social_profiles_style" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_STYLE" description="TPL_ASTROID_SOCIAL_STYLE_DESC">
+				<option value="1">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_INHERIT_COLOR</option>
+				<option value="2">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_BRAND_COLOR</option>
+			</field>
+
+			<field astroidgroup="social_profile" name="social_profiles" type="astroidsocialprofiles"></field>
+
+		</fieldset>
+	</fields>
+</form>

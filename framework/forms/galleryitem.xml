@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fieldset name="astroid_article_gallery_item" label="Section1">
+      <field name="title"
+             label="ASTROID_GALLERY_ITEM_CAPTION_LBL"
+             type="text"
+             description="ASTROID_GALLERY_ITEM_CAPTION_DESC"
+      />
+      <field name="image"
+             label="ASTROID_GALLERY_ITEM_IMAGE_LBL"
+             description="ASTROID_GALLERY_ITEM_IMAGE_DESC"
+             type="media"
+      />
+      <field name="description"
+             label="ASTROID_GALLERY_ITEM_DESCRIPTION_LBL"
+             description="ASTROID_GALLERY_ITEM_DESCRIPTION_DESC"
+             type="textarea" />
+   </fieldset>
+</form>

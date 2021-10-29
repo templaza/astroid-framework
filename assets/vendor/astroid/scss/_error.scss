@@ -1,0 +1,25 @@
+.btn-backtohome {
+	@extend .btn-primary;
+}
+
+.error-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	padding: 30px 0px;
+}
+
+.alert-notice {
+	@extend .alert-warning;
+}
+
+.invalid {
+	border-color: #B94A48;
+	background: #F2DEDE
+}
+
+label.invalid,
+label.required span {
+	color: #B94A48;
+	background: none
+}

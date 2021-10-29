@@ -1,0 +1,244 @@
+$burger-layer-width: 30px !default;
+$burger-layer-height: 3px !default;
+$burger-layer-spacing: 7px !default;
+$offcanvas-btn: 50px !default;
+
+.header-offcanvas-trigger {
+	background: none;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	cursor: pointer;
+	width: 34px;
+	height: 34px;
+	padding: 2px;
+}
+
+.burger-menu-button {
+	.button {
+		padding: 0;
+		cursor: pointer;
+		transition-property: opacity, filter;
+		transition-duration: .15s;
+		transition-timing-function: linear; // Normalize (<button>)
+		font: inherit;
+		color: inherit;
+		text-transform: none;
+		background-color: transparent;
+		border: 0;
+		margin: 0;
+		overflow: visible;
+		&:hover {
+			opacity: .7;
+		}
+		width: $burger-layer-width;
+		height: $burger-layer-width;
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	.offcanvas-close-btn .inner {
+		transform: rotate(225deg);
+		transition-delay: .12s;
+		transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+		&::before {
+			top: 0;
+			opacity: 0;
+			transition: top .1s ease-out, opacity .1s .12s ease-out;
+		}
+		&::after {
+			bottom: 0;
+			transform: rotate(-90deg);
+			transition: bottom .1s ease-out, transform .22s .12s cubic-bezier(.215, .61, .355, 1);
+		}
+	}
+	.box {
+		width: $burger-layer-width;
+		height: $burger-layer-width;
+		display: inline-block;
+		position: relative;
+	}
+	.inner {
+		display: block;
+		top: 50%;
+		margin-top: $burger-layer-height / -2;
+		&,
+		&::before,
+		&::after {
+			width: $burger-layer-width;
+			height: $burger-layer-height;
+			background-color: $body-color;
+			position: absolute;
+			transition-property: transform;
+			transition-duration: .15s;
+			transition-timing-function: ease;
+		}
+		&::before,
+		&::after {
+			content: "";
+			display: block;
+		}
+		&::before {
+			top: ($burger-layer-spacing + $burger-layer-height) * -1;
+		}
+		&::after {
+			bottom: ($burger-layer-spacing + $burger-layer-height) * -1;
+		}
+	}
+
+	.inner {
+		transition-duration: .22s;
+		transition-timing-function: cubic-bezier(.55, .055, .675, .19);
+		&::before {
+			transition: top .1s .25s ease-in, opacity .1s ease-in;
+		}
+		&::after {
+			transition: bottom .1s .25s ease-in, transform .22s cubic-bezier(.55, .055, .675, .19);
+		}
+	}
+
+	&.header-offcanvas-trigger {
+		.inner {
+			&::before {
+				width: $burger-layer-width - 10px;
+				margin-left: 10px;
+			}
+			&::after {
+				width: $burger-layer-width - 5px;
+				margin-left: 5px;
+			}
+		}
+		&.active .inner {
+			&::before,
+			&::after {
+				width: $burger-layer-width;
+				margin-left: 0;
+			}
+		}
+	}
+}
+
+.off-page-content {
+	position: fixed;
+	top: 0;
+	height: 100%;
+	z-index: 10001;
+	.off-page-inner {
+		position: relative;
+		z-index: 2;
+		background-color: $white;
+		height: 100%;
+		overflow-y: auto;
+	}
+	.off-page-close {
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 3;
+		text-align: center;
+		line-height: 40px;
+		background-color: $white;
+		color: $black;
+		font-size: 16px;
+		cursor: pointer;
+		border-bottom: 1px solid #eee;
+		border-left: 1px solid #eee;
+		&:after {
+			content: "\2715";
+		}
+	}
+	.off-page-overlay {
+		position: fixed;
+		display: none;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		background-color: rgba(0, 0, 0, .6);
+	}
+}
+
+.astroid-offcanvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: $zindex-popover;
+	visibility: hidden;
+	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	background-color: $white;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+	max-width: 100vw !important;
+	.burger-menu-button{
+		padding: 10px;
+		position: sticky;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 9;
+	}
+	.astroid-offcanvas-inner {
+		position: relative;
+		display: block;
+		padding: 0 15px;
+		height: calc(100% - #{$offcanvas-btn});
+		.moduletable {
+			margin: 0 -15px;
+		}
+		.moduletable .module-title {
+			padding: 10px 15px;
+			margin: 0;
+		}
+	}
+	li.menu-item.menu-go-back{
+		margin-top: $offcanvas-btn;
+	}
+	.close-offcanvas,
+	.close-offcanvas:hover {
+		display: inline-block;
+		margin-top: 0;
+		position: relative;
+		right: 0;
+		z-index: 999999;
+	}
+	.burger-menu-button .inner,
+	.burger-menu-button .inner::before,
+	.burger-menu-button .inner::after {
+		background-color: $black;
+		opacity: 1;
+	}
+}
+
+body.astroid-offcanvas-opened {
+	max-height: 100vh;
+	overflow: hidden;
+	.astroid-content:after {
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		-webkit-transition: opacity .5s;
+		transition: opacity .5s;
+	}
+	.astroid-offcanvas:after {
+		width: 0;
+		height: 0;
+		opacity: 0;
+		-webkit-transition: opacity .5s, width .1s .5s, height .1s .5s;
+		transition: opacity .5s, width .1s .5s, height .1s .5s;
+	}
+	.astroid-offcanvas-open {
+		overflow-x: hidden;
+	}
+}
+
+.offcanvasDirRight .astroid-offcanvas {
+	left: auto;
+	right: 0;
+}

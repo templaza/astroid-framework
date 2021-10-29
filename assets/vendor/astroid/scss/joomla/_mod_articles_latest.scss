@@ -1,0 +1,14 @@
+.latestnews {
+   &.view-media {
+      li {
+         display: block;
+         &:not(:last-child) {
+            margin-bottom: 15px;
+         }
+      }
+      .article-media {
+         display: block;
+         margin-bottom: 10px;
+      }
+   }
+}

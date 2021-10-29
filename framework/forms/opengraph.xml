@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="attribs">
+      <fieldset label="ASTROID_ARTICLE_OPEN_GRAPH_TITLE_LABEL" name="articleogoptions">
+         <field
+            type="text"
+            name="astroid_og_title"
+            label="JGLOBAL_TITLE"
+            default=""
+         />
+         <field
+            type="textarea"
+            name="astroid_og_desc"
+            label="ASTROID_OPENGRAPH_DESCRIPTION"
+            default=""
+         />
+         <field
+            type="media"
+            name="astroid_og_image"
+            label="ASTROID_IMAGE"
+            default=""
+         />
+      </fieldset>
+   </fields>
+</form>

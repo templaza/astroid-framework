@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset name="astroid_article_review_criteria" label="ASTROID_GALLERY_ITEMS">
+        <field name="title" label="ASTROID_REVIEW_CRITERIAS_TEXT" description="ASTROID_REVIEW_CRITERIAS_TEXT_DESC" type="text" />
+        <field name="score" label="ASTROID_REVIEW_CRITERIAS_SCORE" description="ASTROID_REVIEW_CRITERIAS_SCORE_DESC" type="jdrating" default="5" rating-type="star" max="10" />
+    </fieldset>
+</form>

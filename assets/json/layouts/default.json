@@ -1,0 +1,189 @@
+{
+   "sections": [
+      {
+         "id": "1528971557124",
+         "type": "section",
+         "rows": [
+            {
+               "id": "1528971598876",
+               "cols": [
+                  {
+                     "id": "1528971598876",
+                     "elements": [
+                        {
+                           "id": "1528971641604",
+                           "type": "module_position",
+                           "params": [
+                              {
+                                 "name": "position",
+                                 "value": "astroid-top-contact"
+                              },
+                              {
+                                 "name": "title",
+                                 "value": "Astroid Contact Details"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 6
+                  },
+                  {
+                     "id": "1528971598876",
+                     "elements": [
+                        {
+                           "id": "1528971649704",
+                           "type": "module_position",
+                           "params": [
+                              {
+                                 "name": "position",
+                                 "value": "astroid-top-social"
+                              },
+                              {
+                                 "name": "title",
+                                 "value": "Astroid Social Icons"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 6
+                  }
+               ]
+            },
+            {
+               "id": "1528971557124",
+               "cols": [
+                  {
+                     "id": "1528971557124",
+                     "elements": [
+                        {
+                           "id": "1528971659159",
+                           "type": "module_position",
+                           "params": [
+                              {
+                                 "name": "position",
+                                 "value": "astroid-header"
+                              },
+                              {
+                                 "name": "title",
+                                 "value": "Astroid Header"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 12
+                  }
+               ]
+            }
+         ],
+         "params": [
+            {
+               "name": "title",
+               "value": "Header Section"
+            },
+            {
+               "name": "layout_type",
+               "value": ""
+            }
+         ]
+      },
+      {
+         "id": "1528971561366",
+         "type": "section",
+         "rows": [
+            {
+               "id": "1528971561366",
+               "cols": [
+                  {
+                     "id": "1528971561366",
+                     "elements": [
+                        {
+                           "id": "1528971711775",
+                           "type": "message",
+                           "params": [
+                              {
+                                 "name": "title",
+                                 "value": "Messages"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 12
+                  }
+               ]
+            },
+            {
+               "id": "1528971714963",
+               "cols": [
+                  {
+                     "id": "1528971714963",
+                     "elements": [
+                        {
+                           "id": "1528971716796",
+                           "type": "component",
+                           "params": [
+                              {
+                                 "name": "title",
+                                 "value": "Component Area"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 12
+                  }
+               ]
+            }
+         ],
+         "params": [
+            {
+               "name": "title",
+               "value": "Content Section"
+            },
+            {
+               "name": "layout_type",
+               "value": ""
+            }
+         ]
+      },
+      {
+         "id": "1528971627712",
+         "type": "section",
+         "rows": [
+            {
+               "id": "1528971627712",
+               "cols": [
+                  {
+                     "id": "1528971627712",
+                     "elements": [
+                        {
+                           "id": "1528971723326",
+                           "type": "module_position",
+                           "params": [
+                              {
+                                 "name": "position",
+                                 "value": "astroid-footer"
+                              },
+                              {
+                                 "name": "title",
+                                 "value": "Astroid Footer"
+                              }
+                           ]
+                        }
+                     ],
+                     "size": 12
+                  }
+               ]
+            }
+         ],
+         "params": [
+            {
+               "name": "title",
+               "value": "Footer Section"
+            },
+            {
+               "name": "layout_type",
+               "value": ""
+            }
+         ]
+      }
+   ]
+}

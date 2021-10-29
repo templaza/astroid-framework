@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_ARTICLE_CATEGORY_BLOG_OPTIONS_TITLE_LABEL" name="articleblogoptions">
+         <field type="radio" name="astroid_authorinfo" label="ASTROID_AUTHOR_INFO" class="form-check-inline" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="astroid_relatedposts" label="ASTROID_RELATED_POSTS" class="form-check-inline" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="article_relatedposts_count" label="ASTROID_ARTICLE_COUNT_LBL" class="form-check-inline" default="" showon="astroid_relatedposts:1">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">Custom</option>
+         </field>
+
+         <field type="number" name="article_relatedposts_count_custom" label="ASTROID_BLANK_LBL" showon="astroid_relatedposts:1[AND]article_relatedposts_count:1" default="4">
+         </field>
+
+         <field type="radio" name="article_relatedposts_posttype" label="ASTROID_RELATED_POSTS_TYPE_ICONS" class="form-check-inline" default="" showon="astroid_relatedposts:1">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="article_relatedposts_badge" label="ASTROID_RELATED_POSTS_BADGE" class="form-check-inline" default="" showon="astroid_relatedposts:1">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="astroid_readtime" label="ASTROID_READ_TIME" class="form-check-inline" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="astroid_socialshare" label="ASTROID_SOCIAL_SHARE" class="form-check-inline" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+         <field type="radio" name="astroid_comments" label="ASTROID_COMMENTS" class="form-check-inline" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+
+      </fieldset>
+   </fields>
+</form>

@@ -1,0 +1,53 @@
+.article-rating {
+	clear: both;
+	margin: 0 0 15px;
+
+	.rating {
+		padding: 13px 0;
+	}
+
+	.vote-count {
+		display: -webkit-inline-box;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		white-space: nowrap;
+		vertical-align: text-bottom;
+		font-size: 13px;
+		opacity: 1;
+		transition: .3s linear;
+
+		&.change {
+			transform: scale(1.3);
+			opacity: .1;
+			font-weight: bold;
+			color: $success;
+		}
+	}
+
+	.loading {
+		@include loading-variant(1.2rem, $secondary, .5s, 2px);
+		display: -webkit-inline-box;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		white-space: nowrap;
+		vertical-align: text-top;
+		margin-left: 10px;
+	}
+
+	.message {
+		display: -webkit-inline-box;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		white-space: nowrap;
+		vertical-align: text-bottom;
+		font-size: 13px;
+
+		&.error {
+			color: $danger;
+		}
+
+		&.success {
+			color: $success;
+		}
+	}
+}

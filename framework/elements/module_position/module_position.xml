@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+   <title>TPL_ASTROID_MODULE_POSITION_LABEL</title>
+   <description>ASTROID_ELEMENT_MODULE_TITLE_DESC</description>
+   <icon>fas fa-cube</icon>
+   <color>#00B8D8</color>
+   <form>
+      <fields>
+         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <field name="position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_MODULE_POSITION_LABEL"></field>
+         </fieldset>
+      </fields>
+   </form>
+</element>

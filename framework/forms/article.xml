@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="attribs">
+        <fieldset label="ASTROID_ARTICLE_TYPE_OPTIONS_TITLE_LABEL" name="articletypeoptions" addfieldpath="/libraries/astroid/framework/fields">
+            <field type="radio" name="astroid_article_type" label="ASTROID_ARTICLE_OPTIONS_TYPE" description="ASTROID_ARTICLE_OPTIONS_TYPE_DESC" class="form-check-inline" default="regular">
+                <option value="regular">ASTROID_ARTICLE_OPTIONS_TYPE_REGULAR</option>
+                <option value="video">ASTROID_ARTICLE_OPTIONS_TYPE_VIDEO</option>
+                <option value="gallery">ASTROID_ARTICLE_OPTIONS_TYPE_GALLERY</option>
+                <option value="audio">ASTROID_ARTICLE_OPTIONS_TYPE_AUDIO</option>
+                <option value="review">ASTROID_ARTICLE_OPTIONS_TYPE_REVIEW</option>
+                <option value="quote">ASTROID_ARTICLE_OPTIONS_TYPE_QUOTE</option>
+            </field>
+            <!-- Video Options -->
+            <field type="spacer" showon="astroid_article_type:video" name="astroidarticlevideo" label="ASTROID_ARTICLE_OPTIONS_VIDEO_LABEL" />
+            <field showon="astroid_article_type:video" name="astroid_article_video_type" type="radio" default="youtube" label="ASTROID_VIDEO_TYPE" description="ASTROID_VIDEO_TYPE_DESC" class="form-check-inline">
+                <option value="youtube">ASTROID_YOUTUBE</option>
+                <option value="vimeo">ASTROID_VIMEO</option>
+            </field>
+            <field type="text" name="astroid_article_video_url" label="ASTROID_VIDEO_ID" description="ASTROID_VIDEO_ID_DESC" showon="astroid_article_type:video" />
+            <!-- Gallery Options -->
+            <field type="spacer" showon="astroid_article_type:gallery" name="astroidarticlegallery" label="ASTROID_ARTICLE_OPTIONS_GALLERY_LABEL" />
+            <field showon="astroid_article_type:gallery" name="astroid_article_gallery_width" type="text" hint="ASTROID_GALLERY_WIDTH_PLACEHOLDER" label="ASTROID_GALLERY_WIDTH_LBL" description="ASTROID_GALLERY_WIDTH_DESC" />
+            <field showon="astroid_article_type:gallery" name="astroid_article_gallery_bullets" type="radio" default="1" label="ASTROID_GALLERY_BULLETS_LBL" description="ASTROID_GALLERY_BULLETS_DESC" class="form-check-inline">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field showon="astroid_article_type:gallery" name="astroid_article_gallery_navigation" type="radio" default="1" label="ASTROID_GALLERY_NAVIGATION_LBL" description="ASTROID_GALLERY_NAVIGATION_DESC" class="form-check-inline">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field showon="astroid_article_type:gallery[OR]astroid_article_type:video" name="astroid_article_thumbnail" type="radio" default="1" label="ASTROID_GALLERY_THUMBNAIL_LBL" description="ASTROID_GALLERY_THUMBNAIL_DESC" class="form-check-inline">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field showon="astroid_article_type:gallery" name="astroid_article_gallery_items" type="subform" formsource="libraries/astroid/framework/forms/galleryitem.xml" multiple="true" label="ASTROID_GALLERY_ITEMS" />
+
+            <!-- Audio Options -->
+            <field showon="astroid_article_type:audio" name="astroid_article_audio_source" type="radio" class="form-check-inline" default="soundcloud" label="ASTROID_AUDIO_SOURCE" description="">
+                <option value="soundcloud">ASTROID_SOUNDCLOUD_LBL</option>
+                <option value="spotify">ASTROID_SPOTIFY_LBL</option>
+            </field>
+            <field type="textarea" filter="raw" name="astroid_article_audio_soundcloud" label="ASTROID_SOUNDCLOUD_CODE" showon="astroid_article_type:audio[AND]astroid_article_audio_source:soundcloud" />
+            <field type="text" filter="raw" name="astroid_article_audio_spotify" label="ASTROID_SPOTIFY_SONG_URI" showon="astroid_article_type:audio[AND]astroid_article_audio_source:spotify" />
+            <!-- Review Options -->
+            <field type="spacer" showon="astroid_article_type:review" name="astroidarticlereview" label="ASTROID_ARTICLE_OPTIONS_REVIEW_LABEL" />
+            <field type="text" name="astroid_article_review_heading" label="ASTROID_REVIEW_HEADING" description="ASTROID_REVIEW_HEADING_DESC" showon="astroid_article_type:review" />
+            <field type="textarea" name="astroid_article_review_summery" label="ASTROID_REVIEW_SUMMERY" description="ASTROID_REVIEW_SUMMERY_DESC" showon="astroid_article_type:review" />
+            <field type="textarea" name="astroid_article_review_good" label="ASTROID_WHATS_GOOD" description="ASTROID_WHATS_GOOD_DESC" showon="astroid_article_type:review" />
+            <field type="textarea" name="astroid_article_review_bad" label="ASTROID_WHATS_BAD" description="ASTROID_WHATS_BAD_DESC" showon="astroid_article_type:review" />
+            <field type="jdrating" name="astroid_article_review_rating" label="ASTROID_OVERALL_RATING" description="ASTROID_OVERALL_RATING_DESC" default="5" max="10" rating-type="star" showon="astroid_article_type:review" clear="true" />
+            <field type="text" name="astroid_article_button_action" label="ASTROID_CALL_ACTION_BUTTON" description="ASTROID_CALL_ACTION_BUTTON_DESC" showon="astroid_article_type:review" />
+            <field type="text" name="astroid_article_button_link" label="ASTROID_BUTTON_LINK" description="ASTROID_BUTTON_LINK_DESC" showon="astroid_article_type:review" />
+            <field showon="astroid_article_type:review" name="astroid_article_review_criterias" type="subform" formsource="libraries/astroid/framework/forms/reviewcriteria.xml" multiple="true" label="ASTROID_REVIEW_CRITERIAS" description="ASTROID_REVIEW_CRITERIAS_DESC" />
+            <!-- Quote Options -->
+            <field type="spacer" showon="astroid_article_type:quote" name="astroidarticlequote" label="ASTROID_ARTICLE_OPTIONS_QUOTE_LABEL" />
+            <field type="text" name="astroid_article_quote_text" label="ASTROID_ARTICLE_QUOTE_TEXT" description="ASTROID_ARTICLE_QUOTE_TEXT_DESC" showon="astroid_article_type:quote" />
+            <field type="text" name="astroid_article_quote_author" label="ASTROID_ARTICLE_QUOTE_AUTHOR" description="ASTROID_ARTICLE_QUOTE_AUTHOR_DESC" showon="astroid_article_type:quote" />
+
+
+            <field type="list" showon="astroid_article_type!:regular" name="astroid_article_content_position" label="Position" default="above-title">
+                <option value="above-title">Above Title</option>
+                <option value="before-content">Before Content</option>
+                <option value="after-content">After Content</option>
+            </field>
+
+            <!-- Badge Options -->
+            <field name="astroid_article_badge" type="radio" default="0" label="ASTROID_ARTICLE_BADGE" description="ASTROID_ARTICLE_BADGE_DESC" class="form-check-inline">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field type="radio" name="astroid_article_badge_type" label="ASTROID_SELECT_BADGE" description="ASTROID_SELECT_BADGE_DESC" class="form-check-inline" default="2" showon="astroid_article_badge:1">
+                <option value="2">ASTROID_ARTICLE_OPTIONS_BADGE_2_LBL</option>
+                <option value="3">ASTROID_ARTICLE_OPTIONS_BADGE_3_LBL</option>
+                <option value="4">ASTROID_ARTICLE_OPTIONS_BADGE_4_LBL</option>
+                <option value="5">ASTROID_ARTICLE_OPTIONS_BADGE_5_LBL</option>
+                <option value="6">ASTROID_ARTICLE_OPTIONS_BADGE_6_LBL</option>
+                <option value="1">ASTROID_ARTICLE_OPTIONS_BADGE_CUSTOM_LBL</option>
+            </field>
+            <field type="text" name="astroid_article_badge_text" label="ASTROID_BADGE_LABEL" description="ASTROID_BADGE_LABEL_DESC" showon="astroid_article_badge:1[AND]astroid_article_badge_type:1" />
+            <field type="color" name="astroid_article_badge_color" label="ASTROID_BADGE_COLOR" description="ASTROID_BADGE_COLOR_DESC" showon="astroid_article_badge:1[AND]astroid_article_badge_type:1" />
+            <field type="color" name="astroid_article_badge_text_color" label="ASTROID_BADGE_TEXT_COLOR" description="ASTROID_BADGE_TEXT_COLOR_DESC" showon="astroid_article_badge:1[AND]astroid_article_badge_type:1" />
+        </fieldset>
+    </fields>
+</form>

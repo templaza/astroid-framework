@@ -1,0 +1,145 @@
+.article-badge {
+	position: absolute;
+	height: $article-badge-height;
+	left: -8px;
+	top: 15px;
+	text-align: center;
+	line-height: $article-badge-height;
+	font-size: 14px;
+	color: #fff;
+	padding: 0 10px;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+	}
+
+	&.article-badge-1 {
+		background-color: $article-badge-2-bg;
+
+		&:before {
+			@include triangle(8px, darken(#000, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, transparent, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-2 {
+		background-color: $article-badge-2-bg;
+
+		&:before {
+			@include triangle(8px, darken($article-badge-2-bg, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, $article-badge-2-bg, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-3 {
+		background-color: $article-badge-3-bg;
+
+		&:before {
+			@include triangle(8px, darken($article-badge-3-bg, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, $article-badge-3-bg, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-4 {
+		background-color: $article-badge-4-bg;
+
+		&:before {
+			@include triangle(8px, darken($article-badge-4-bg, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, $article-badge-4-bg, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-5 {
+		background-color: $article-badge-5-bg;
+
+		&:before {
+			@include triangle(8px, darken($article-badge-5-bg, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, $article-badge-5-bg, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-6 {
+		background-color: $article-badge-6-bg;
+
+		&:before {
+			@include triangle(8px, darken($article-badge-6-bg, 15%), down-right);
+			top: -8px;
+			left: 0;
+		}
+
+		&:after {
+			@include triangle($article-badge-height 15px, $article-badge-6-bg, right);
+			right: -15px;
+		}
+	}
+
+	&.article-badge-custom {
+		&:after {
+			height: 0;
+			width: 0;
+			border-top: 20px solid transparent;
+			border-bottom: 20px solid transparent;
+			border-left: 15px solid transparent;
+			right: -15px;
+		}
+
+		&:before {
+			height: 0;
+			width: 0;
+			border-left: 8px solid transparent;
+			border-bottom: 8px solid #000;
+			top: -8px;
+			left: 0;
+		}
+	}
+}
+
+.card-body {
+	&.has-badge {
+		.item-title {
+			margin-top: 45px;
+		}
+
+		&.has-image {
+			.item-title {
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+.blog-item {
+	position: relative;
+}

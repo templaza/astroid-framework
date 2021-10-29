@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+   <title>ASTROID_ELEMENTS_COMPONENT_TITLE</title>
+   <description>ASTROID_ELEMENTS_COMPONENT_DESCRIPTION</description>
+   <icon>fas fa-puzzle-piece</icon>
+   <color>#FFB400</color>
+   <info>ASTROID_ELEMENTS_COMPONENT_INFO</info>
+   <info label="Animation" property="animation"></info>
+   <multiple>false</multiple>
+</element>

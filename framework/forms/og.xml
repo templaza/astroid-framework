@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_ARTICLE_OPEN_GRAPH_TITLE_LABEL" name="ogoptions">
+         <field name="astroid_opengraph_menuitem" type="radio" default="0" label="ASTROID_ARTICLE_OPTIONS_OPENGRAPH_LBL" class="form-check-inline">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
+         <field
+            showon="astroid_opengraph_menuitem:1"
+            type="text"
+            name="astroid_og_title_menuitem"
+            label="JGLOBAL_TITLE"
+            default=""
+         />
+         <field
+            showon="astroid_opengraph_menuitem:1"
+            type="textarea"
+            name="astroid_og_desc_menuitem"
+            label="ASTROID_OPENGRAPH_DESCRIPTION"
+            default=""
+         />
+         <field
+            showon="astroid_opengraph_menuitem:1"
+            type="media"
+            name="astroid_og_image_menuitem"
+            label="ASTROID_IMAGE"
+            default=""
+         />
+      </fieldset>
+   </fields>
+</form>

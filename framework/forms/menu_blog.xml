@@ -1,0 +1,21 @@
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_ARTICLE_BLOG_OPTIONS_TITLE_LABEL" name="menublogoptions">
+         <field type="radio" name="astroid_posttype" label="ASTROID_POST_TYPE_ICONS" class="btn-group" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+         <field type="radio" name="astroid_readtime" label="ASTROID_READ_TIME" class="btn-group" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+         <field type="radio" name="astroid_badge" label="ASTROID_ARTICLE_BADGE" class="btn-group" default="">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="1">ASTROID_SHOW</option>
+            <option value="0">ASTROID_HIDE</option>
+         </field>
+      </fieldset>
+   </fields>
+</form>

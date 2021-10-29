@@ -1,0 +1,281 @@
+.jddrop-content {
+	display: none;
+	z-index: 99;
+}
+
+// Menu Badge
+
+.menu-item-badge {
+	padding: 2px 7px;
+	font-weight: normal;
+	text-transform: none;
+	line-height: 20px;
+	font-size: 14px;
+	border-radius: 2px;
+}
+
+// Megamenu Dropdown
+
+.megamenu-container {
+	padding: 15px 10px;
+	display: none;
+	position: absolute;
+	z-index: 999;
+
+	&.nav-submenu-container {
+		padding: 0;
+	}
+}
+
+.nav-item-megamenu .nav-submenu {
+
+	.item-link-heading.item-level-2,
+	.item-link-separator.item-level-2 {
+		border-bottom: 1px solid #B4B4B4;
+
+		&:hover {
+			color: inherit !important;
+			background-color: inherit !important;
+		}
+	}
+}
+
+.nav-submenu-static {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	z-index: 9;
+
+	>li {
+		padding: 0;
+		position: relative;
+
+		>a {
+			text-decoration: none;
+			display: block;
+			padding: 10px 15px;
+		}
+
+		>.nav-submenu {
+			position: absolute;
+			top: 0;
+			left: 100%;
+			width: 100%;
+			max-width: 300px;
+			display: none;
+
+			&.right {
+				left: -100%;
+			}
+		}
+	}
+}
+
+.astroid-nav {
+	.nav-title {
+		display: block;
+		position: relative;
+	}
+
+	.nav-subtitle {
+		display: block;
+	}
+
+	.nav-item-parent {
+		.nav-title {
+			padding-right: 25px;
+
+			>.nav-item-caret {
+				right: 0;
+				position: absolute;
+				top: 50%;
+				font-size: 75%;
+				width: 20px;
+				height: 20px;
+				line-height: 20px;
+				text-align: center;
+				margin-top: -10px;
+			}
+		}
+
+		&.no-dropdown-icon .nav-title {
+			padding-right: 0;
+		}
+	}
+
+	// Submenu Dropdown
+	.nav-submenu {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		display: flex;
+		flex-direction: column;
+		z-index: 9;
+
+		&.megamenu-submenu-level-1 {
+			box-shadow: none;
+		}
+
+		.nav-item-parent.nav-title {
+			padding-right: 25px;
+		}
+
+		.nav-title {
+			padding-right: 0;
+		}
+
+		>li {
+			padding: 0;
+			position: relative;
+
+			>a {
+				text-decoration: none;
+				display: block;
+				padding: 5px 15px;
+			}
+
+			>.nav-submenu {
+				position: absolute;
+				top: 0;
+				left: 100%;
+				width: 100%;
+				/* max-width: 300px;*/
+				display: none;
+
+				&.right {
+					left: -100%;
+				}
+			}
+		}
+	}
+}
+
+ul {
+	&.megamenu-submenu {
+		list-style-type: none;
+		padding: 0;
+
+		>li {
+			>.megamenu-submenu {
+				padding-left: 15px;
+			}
+		}
+	}
+}
+
+.has-megamenu {
+	position: relative;
+	display: flex;
+
+	&[data-position=left] {
+		justify-content: flex-start;
+	}
+
+	&[data-position=right] {
+		justify-content: flex-end;
+	}
+
+	&[data-position=center],
+	&[data-position=full],
+	&[data-position=edge] {
+		justify-content: center;
+	}
+
+	&:before {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 250%;
+		max-height: 100px;
+		position: absolute;
+		top: 100%;
+		display: none;
+		cursor: pointer;
+	}
+
+	&.open {
+		&:before {
+			display: block;
+		}
+
+		.arrow {
+			position: absolute;
+			width: 0;
+			height: 0;
+			border-left: 8px solid transparent;
+			border-right: 8px solid transparent;
+			border-bottom: 8px solid #eee;
+			z-index: 0;
+			left: 50%;
+			margin-left: -8px;
+			bottom: 0;
+			display: none;
+		}
+	}
+}
+
+.astroid-sidebar-menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		width: 100%;
+		display: block;
+		border-bottom: 1px solid #eee;
+
+		a {
+			padding: 10px;
+			width: calc(100% - 50px);
+			display: inline-block;
+		}
+
+		>ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			padding-left: 20px;
+			display: none;
+			border-top: 1px solid #eee;
+
+			li {
+				&:last-child {
+					border-bottom: 0;
+				}
+			}
+		}
+
+		&.nav-item-active {
+			>ul {
+				display: block;
+			}
+		}
+
+		>.nav-item-caret {
+			width: 50px;
+			display: inline-block;
+			font-size: 13px;
+			text-align: right;
+			padding: 10px;
+			cursor: pointer;
+			float: right;
+			line-height: inherit;
+
+			&:before {
+				content: "\f067";
+			}
+
+			&.open {
+				&:before {
+					content: "\f068";
+				}
+			}
+		}
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+}

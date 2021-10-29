@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset icon="fas fa-cogs" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
+         <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-contact-information" />
+         <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_COMMING_NOON_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-coming-soon" />
+         <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-404-error" />
+         <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-favicon" />
+         <field type="astroidgroup" name="lazyloadgroup" title="TPL_ASTROID_LAZYLOAD_TITLE_LABEL" />
+         <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" />
+
+         <field astroidgroup="contact_info" name="contact_details" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_CONTACT_DEATILS_LABEL" description="TPL_ASTROID_CONTACT_DEATILS_DESC">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_module_position" astroid-content-layout="contactinfo" type="astroidmodulesposition" default="astroid-top-contact" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control" ngShow="contact_details" ngRequired="contact_details">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_feature_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="contact_module_position" default="after" ngShow="contact_details=='1'" ngRequired="contact_details=='1'">
+            <option value="after">TPL_ASTROID_AFTER_MODULE</option>
+            <option value="before">TPL_ASTROID_BEFORE_MODULE</option>
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_address" type="astroidtext" label="TPL_ASTROID_MISCELL_ADDRESS_LABEL" description="TPL_ASTROID_MISCELL_ADDRESS_DESC" hint="15 Barnes Wallis Way, West Road, Chorley, USA" ngShow="contact_details=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_phone_number" type="astroidtext" label="TPL_ASTROID_MISCELL_PHONE_NUMBER_LABEL" description="TPL_ASTROID_MISCELL_PHONE_NUMBER_DESC" hint="+1 123 456 7890" ngShow="contact_details=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_mobile_number" type="astroidtext" label="TPL_ASTROID_MISCELL_MOBILE_NUMBER_LABEL" description="TPL_ASTROID_MISCELL_MOBILE_NUMBER_DESC" hint="+1 123 456 7890" ngShow="contact_details=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_email_address" type="astroidtext" label="JGLOBAL_EMAIL" description="TPL_ASTROID_MISCELL_EMAIL_DESC" hint="email@yourcompany.com" ngShow="contact_details=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_open_hours" type="astroidtext" label="TPL_ASTROID_MISCELL_OPEN_HOURS_LABEL" description="TPL_ASTROID_MISCELL_OPEN_HOURS_DESC" hint="Mon-Fri : 9:00am - 6:00pm" ngShow="contact_details=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="contact_info" name="contact_display" type="astroidradio" label="TPL_ASTROID_DISPLAY_LABEL" description="TPL_ASTROID_DISPLAY_LABEL_DESC" default="icons" ngShow="contact_details=='1'">
+            <option value="text">TPL_ASTROID_TEXT</option>
+            <option value="icons">TPL_ASTROID_ICONS</option>
+         </field>
+
+         <field astroidgroup="contact_info" ngShow="contact_details=='1' AND contact_display=='icons'" description="TPL_ASTROID_ICON_COLOR_DESC" name="icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ICON_COLOR_LABEL">
+         </field>
+
+         <field astroidgroup="coming_soon" name="development_mode" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_LABEL" description="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_DESC">
+         </field>
+
+         <field astroidgroup="coming_soon" name="coming_soon_logo" type="astroidmedia" label="TPL_ASTROID_MISCELL_COMING_LOGO_LABEL" description="TPL_ASTROID_MISCELL_COMING_LOGO_DESC" ngShow="development_mode=='1'" ngRequired="development_mode=='1'" class="form-control">
+         </field>
+
+         <field astroidgroup="coming_soon" name="coming_soon_content" code="html" class="form-control" type="astroidtextarea" label="TPL_ASTROID_MISCELL_COMING_CONTENT_LABEL" description="TPL_ASTROID_MISCELL_COMING_CONTENT_DESC" ngShow="development_mode=='1'" ngRequired="development_mode=='1'">
+         </field>
+
+         <field astroidgroup="coming_soon" name="coming_soon_countdown_date" type="astroidcalendar" label="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_LABEL" description="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_DESC" default="01/01/2020 00:00 AM" ngShow="development_mode=='1'" ngRequired="development_mode=='1'">
+         </field>
+
+         <field astroidgroup="coming_soon" name="coming_soon_social" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_LABEL" ngShow="development_mode=='1'" description="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_DESC">
+         </field>
+
+         <field astroidgroup="coming_soon" ngShow="development_mode=='1'" description="TPL_ASTROID_MISCELL_COMING_BG_TYPE_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_MISCELL_COMING_BG_TYPE_LABEL">
+            <option value="0">ASTROID_NONE</option>
+            <option value="color">TPL_ASTROID_COLOR</option>
+            <option value="image">TPL_ASTROID_IMAGE</option>
+            <option value="video">TPL_ASTROID_VIDEO</option>
+         </field>
+
+         <field astroidgroup="coming_soon" ngShow="background_setting =='color' AND development_mode=='1'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="img_background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
+            <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+            <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+         </field>
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+            <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+         </field>
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
+            <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
+         </field>
+         <field astroidgroup="coming_soon" ngShow="background_setting =='image' AND development_mode=='1'" name="background_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+         <field astroidgroup="coming_soon" ngShow="background_setting =='video' AND development_mode=='1'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+
+         <field astroidgroup="error_404" name="error_404_content" code="html" class="form-control" type="astroidtextarea" label="TPL_ASTROID_MISCELL_ERROR_404_CONTENT_LABEL" description="TPL_ASTROID_MISCELL_ERROR_404_CONTENT_DESC">
+         </field>
+
+         <field astroidgroup="error_404" name="error_call_to_action" type="astroidtext" label="TPL_ASTROID_MISCELL_ERROR_404_CALL_TO_ACTION_LABEL" required="true" description="TPL_ASTROID_MISCELL_ERROR_404_CALL_TO_ACTION_DESC" default="Go Home" hint="Go Home" class="form-control">
+         </field>
+
+         <field astroidgroup="error_404" description="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_DESC" name="background_setting_404" type="astroidradio" default="0" label="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_LABEL">
+            <option value="0">ASTROID_NONE</option>
+            <option value="color">TPL_ASTROID_COLOR</option>
+            <option value="image">TPL_ASTROID_IMAGE</option>
+            <option value="video">TPL_ASTROID_VIDEO</option>
+         </field>
+
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='color'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_color_404" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="img_background_color_404" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="background_image_404" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="background_repeat_404" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
+            <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+            <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+         </field>
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="background_size_404" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+            <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+         </field>
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="background_attchment_404" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
+            <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
+         </field>
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='image'" name="background_position_404" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+         <field astroidgroup="error_404" ngShow="background_setting_404 =='video'" name="background_video_404" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+
+         <field astroidgroup="favicongroup" name="favicon" type="astroidmedia" label="TPL_ASTROID_BASIC_FAVICON_LABEL" description="TPL_ASTROID_BASIC_FAVICON_DESC">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload" type="astroidtext" astroid-switch="true" default="0" label="Enable Lazy Load" description="">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_imgs" type="astroidtextarea" label="Selected Images" class="form-control" ngShow="lazyload==1" description="TPL_ASTROID_LAZYLOAD_IMAGE_SELECTION_DESC">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_imgs_action" type="astroidradio" default="include" label="" ngShow="lazyload" description="" groupClass="border-top-0 mb-4">
+            <option value="include">Include</option>
+            <option class="btn-danger" value="exclude">Exclude</option>
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_components" type="astroidtextarea" label="Selected Components" class="form-control" ngShow="lazyload==1" description="TPL_ASTROID_LAZYLOAD_COMPONENT_SELECTION_DESC">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_components_action" type="astroidradio" default="include" label="" ngShow="lazyload" description="" groupClass="border-top-0 mb-4">
+            <option value="include">Include</option>
+            <option class="btn-danger" value="exclude">Exclude</option>
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_urls" type="astroidtextarea" label="Selected URLs" class="form-control" ngShow="lazyload==1" description="TPL_ASTROID_LAZYLOAD_URL_SELECTION_DESC">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_urls_action" type="astroidradio" default="include" label="" ngShow="lazyload" description="" groupClass="border-top-0 mb-4">
+            <option value="include">Include</option>
+            <option class="btn-danger" value="exclude">Exclude</option>
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_classes" type="astroidtextarea" label="Selected Classes" class="form-control" ngShow="lazyload==1" description="TPL_ASTROID_LAZYLOAD_CLASSES_SELECTION_DESC">
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_classes_action" type="astroidradio" default="include" label="" ngShow="lazyload" description="" groupClass="border-top-0 mb-4">
+            <option value="include">Include</option>
+            <option class="btn-danger" value="exclude">Exclude</option>
+         </field>
+
+         <field astroidgroup="lazyloadgroup" name="lazyload_exclude_views" type="astroidtextarea" label="Excluded Template Views" class="form-control" ngShow="lazyload==1" description="TPL_ASTROID_LAZYLOAD_COMPONENT_SELECTION_DESC">
+         </field>
+
+         <field astroidgroup="minifygroup" description="" title="CSS Minify" type="astroidheading" name="minify_css_heading" />
+
+         <field astroidgroup="minifygroup" name="minify_css" type="astroidtext" astroid-switch="true" default="0" label="Minify CSS" description="Minify &amp; combine all CSS.">
+         </field>
+
+         <field astroidgroup="minifygroup" name="minify_js" type="astroidtext" astroid-switch="true" default="0" label="Minify JS" description="Minify &amp; combine all JS.">
+         </field>
+
+         <field astroidgroup="minifygroup" ngShow="minify_js==true" name="minify_js_excludes" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_MINIFYJS_EXCLUDES_LABEL" description="TPL_ASTROID_MINIFYJS_EXCLUDES_DESC" hint="jquery.*,.min.js" />
+
+         <field astroidgroup="minifygroup" name="minify_html" type="astroidtext" astroid-switch="true" default="0" label="Minify HTML" description="">
+         </field>
+
+         <field astroidgroup="minifygroup" name="minify_html_level" type="astroidradio" label="HTML Minify Level" description="" default="basic" ngShow="minify_html=='1'">
+            <option value="basic">Basic</option>
+            <option value="advanced">Advanced</option>
+         </field>
+      </fieldset>
+   </fields>
+</form>

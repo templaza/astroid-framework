@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
+
+         <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-preloader/"/>
+         <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-back-to-top/"/>
+         <field type="astroidgroup" name="layout_setting" title="TPL_ASTROID_LAYOUT_SETTING_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-layout-settings/"/>
+         <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://docs.joomdev.com/article/smooth-scroll/"/>
+		
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"></field>
+         <field astroidgroup="preloader_options" ngShow="preloader=='1'" description="TPL_ASTROID_PRELOADER_TYPE_DESC" name="preloder_setting" type="astroidradio" default="animations" label="TPL_ASTROID_PRELOADER_TYPE">
+            <option value="animations">ASTROID_ANIMATION</option>
+            <option value="image">TPL_ASTROID_IMAGE</option>
+            <option value="fontawesome">TPL_ASTROID_FONTAWESOME</option>
+         </field>
+
+         <field astroidgroup="preloader_options" description="" name="preloader_image" type="astroidmedia" class="form-control" label="TPL_ASTROID_SELECT_IMAGE" ngShow="preloader=='1' AND preloder_setting =='image'"/> 
+      
+         <field astroidgroup="preloader_options" ngShow="preloader=='1' AND preloder_setting =='image'" name="preloader_image_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL">
+          <option value="">JGLOBAL_INHERIT</option>
+          <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
+          <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+          <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+         </field>
+
+         <field astroidgroup="preloader_options" ngShow="preloader=='1' AND preloder_setting =='image'" name="preloader_image_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+            <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+         </field>
+
+         <field astroidgroup="preloader_options" ngShow="preloader=='1' AND preloder_setting =='image'" name="preloader_image_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_DESC" name="preloader_animation" type="astroidpreloaders" class="form-control" default="circle" label="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_LABEL" ngShow="preloader=='1' AND preloder_setting =='animations'" astroid-variable="preloder_animations" />
+
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_DESC" name="preloader_fontawesome" type="astroidpreloadersFont" class="form-control" default="spinner" label="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_LABEL" ngShow="preloader=='1' AND preloder_setting =='fontawesome'" />
+
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_COLOR_DESC" name="preloader_color" type="astroidcolor" ngShow="preloader=='1' AND (preloder_setting =='animations' OR preloder_setting =='fontawesome')" label="TPL_ASTROID_BASIC_PRELOADER_COLOR_LABEL">
+         </field>
+
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_BACKGROUND_COLOR_DESC" astroid-scss-variable="preloader-background" name="preloader_bgcolor" type="astroidcolor" ngShow="preloader=='1'" label="TPL_ASTROID_BASIC_PRELOADER_BACKGROUND_COLOR_LABEL">
+         </field>
+
+         <field ngShow="preloader=='1' AND (preloder_setting =='animations' OR preloder_setting =='fontawesome')" astroidgroup="preloader_options" name="preloader_size" type="astroidrange" astroid-scss-variable="spinkit-size" min="20" max="500" step="1" postfix="px" default="40" label="TPL_ASTROID_BASIC_PRELOADER_SIZE_LABEL" description="TPL_ASTROID_BASIC_PRELOADER_SIZE_DESC" />
+
+         <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" ></field>
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_DESC" name="backtotop_icon" type="astroidicon" class="form-control" label="TPL_ASTROID_BASIC_ICON_LABEL" />
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" name="backtotop_icon_size" type="astroidrange" min="20" max="200" step="1" postfix="px" default="20" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_COLOR_DESC" name="backtotop_icon_color" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_COLOR_LABEL" />
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_DESC" name="backtotop_icon_bgcolor" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_LABEL" />
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_STYLE_DESC" name="backtotop_icon_style" type="astroidlist" class="form-control" default="circle" label="TPL_ASTROID_BASIC_ICON_STYLE_LABEL">
+            <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
+            <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
+            <option value="square">TPL_ASTROID_ICON_STYLE_SQUARE</option>
+         </field>
+
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"></field>
+		 
+         <field astroidgroup="layout_setting" description="TPL_ASTROID_ADVANCED_LAYOUT_SELECT_DESC" name="template_layout" type="astroidradio" default="wide" label="TPL_ASTROID_ADVANCED_LAYOUT_SELECT">
+            <option value="wide">TPL_ASTROID_ADVANCED_LAYOUT_OPTION_WIDE</option>
+            <option value="boxed">TPL_ASTROID_ADVANCED_LAYOUT_OPTION_BOXED</option>
+         </field>
+
+         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL">
+         </field>
+
+         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_repeat" type="astroidlist" class="form-control" label="ASTROID_BACKGROUND_REPEAT">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="no-repeat">ASTROID_BACKGROUND_NO_REPEAT</option>
+            <option value="repeat">ASTROID_BACKGROUND_REPEAT_ALL</option>
+            <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+            <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+         </field>
+  
+         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_size" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_SIZE_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+            <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+         </field>
+  
+         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_position" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_POSITION_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+
+         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_attachment" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_ATTCHMENT_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
+            <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
+         </field>
+         
+         <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"></field>
+         
+		   <field ngShow="enable_smooth_scroll=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
+         
+      </fieldset>
+   </fields>
+</form>

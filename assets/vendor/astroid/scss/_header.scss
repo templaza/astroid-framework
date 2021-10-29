@@ -1,0 +1,310 @@
+.astroid-nav .megamenu-container a.nav-link.megamenu-title:hover {
+   background-color: inherit !important;
+   color: currentColor !important;
+}
+
+/* Header Section */
+.astroid-header-section {
+   width: 100%;
+   left: 0;
+   z-index: $header-section-zindex;
+
+   /* Header Element */
+   header {
+      &.astroid-header:not(.astroid-header-sticky) {
+         padding: $header-padding-y $header-padding-x;
+         z-index: 1;
+      }
+
+      /* Stacked Header */
+      &.header-stacked {
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 100%;
+         width: 100%;
+         display: none;
+         background-color: $stacked-header-bg;
+         z-index: $stacked-header-zindex;
+      }
+   }
+
+   /* Sticky Header */
+   .astroid-header-sticky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      z-index: $sticky-header-zindex;
+      -webkit-animation-duration: $sticky-header-animation-duration;
+      animation-duration: $sticky-header-animation-duration;
+
+      >div {
+         padding-top: $sticky-header-padding-y;
+         padding-bottom: $sticky-header-padding-y;
+      }
+
+      &.d-flex {
+         -webkit-animation-name: slideInDown;
+         animation-name: slideInDown;
+      }
+
+      .astroid-logo {
+         .astroid-logo-default {
+            display: none !important;
+         }
+
+         .astroid-logo-sticky {
+            @include media-breakpoint-between(lg, xl) {
+               display: block !important;
+            }
+         }
+      }
+   }
+
+   // Stacked Header
+   .astroid-stacked-seperated-header {
+      .header-stacked-inner {
+         padding: 20px 0;
+      }
+   }
+
+   .header-left-section,
+   .header-center-section,
+   .header-right-section {
+      &.flex-grow-1 {
+         >div {
+            width: max-content;
+         }
+      }
+   }
+}
+
+header .logo-wrapper {
+   align-self: center;
+}
+
+.astroid-logo {
+   @include media-breakpoint-down(md) {
+      .astroid-logo-default {
+         display: none;
+      }
+   }
+
+   img {
+      max-width: $logo-max-width;
+      max-height: $logo-max-height;
+   }
+
+   .astroid-logo-mobile {
+      max-width: 100%;
+      display: none;
+
+      @include media-breakpoint-down(md) {
+         display: block;
+      }
+   }
+
+   .astroid-logo-sticky {
+      display: none;
+   }
+}
+
+.fixed-header {
+   .astroid-logo {
+
+      .astroid-logo-default,
+      .astroid-logo-mobile {
+         display: none;
+      }
+
+      .astroid-logo-sticky {
+         display: block;
+      }
+   }
+}
+
+.astroid-stacked-seperated-header {
+   .astroid-logo-image {
+      img {
+         margin: auto;
+      }
+   }
+}
+
+/* Sidebar Header */
+.astroid-header {
+   &.has-sidebar {
+      position: fixed;
+      width: $sidebar-header-width;
+      top: 0;
+      height: 100%;
+      z-index: 1;
+      transition: .1s linear all;
+      box-shadow: $sidebar-header-shadow;
+
+      @media(max-width: 1200px) {
+         width: $sidebar-header-mini-width;
+      }
+
+      &.sidebar-dir-left {
+         left: 0 !important;
+         right: auto !important;
+      }
+
+      &.sidebar-dir-right {
+         right: 0 !important;
+         left: auto !important;
+      }
+
+      >.container {
+         height: 100%;
+
+         >.row {
+            height: 100%;
+
+            .astroid-column {
+               >div {
+                  height: 100%;
+               }
+            }
+         }
+      }
+
+      .astroid-sidebar-logo {
+         margin: 15px 0;
+      }
+
+      .astroid-logo {
+         margin: 0 auto !important;
+         justify-content: center;
+      }
+
+      .astroid-sidebar-mobile-menu {
+         display: none;
+      }
+
+      .astroid-sidebar-block {
+         padding: 10px 15px;
+      }
+   }
+
+   @media (min-width: 1200px) {
+      .astroid-sidebar-content {
+         display: flex;
+         flex-direction: column;
+      }
+
+      .astroid-sidebar-block {
+         &:not(.astroid-sidebar-block-1) {
+            margin-top: auto;
+         }
+      }
+
+      .astroid-sidebar-block-1 {
+         margin-bottom: auto;
+      }
+   }
+
+   @media (max-width: 1200px) {
+      &.has-sidebar {
+         display: block;
+         width: 100%;
+         position: relative;
+         padding: 15px 0;
+
+         .astroid-sidebar-mobile-menu {
+            display: block;
+         }
+
+         .astroid-sidebar-logo {
+            display: flex;
+            padding: 0 15px;
+            align-items: center;
+         }
+      }
+   }
+
+   .dropdown-menus {
+      max-width: $sidebar-header-width;
+   }
+
+   .astroid-sidebar-content {
+      overflow-y: auto;
+   }
+
+   .astroid-sidebar-collapsable {
+      padding: 1rem;
+      font-size: 24px;
+      justify-content: flex-end;
+      cursor: pointer;
+      display: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      >i {
+         width: 22px;
+         text-align: center;
+         display: block;
+
+         &:before {
+            content: "\f0c9";
+         }
+      }
+   }
+
+   @media(max-width: 1200px) {
+      .astroid-sidebar-content {
+         >div.astroid-sidebar-menu {
+            display: none;
+         }
+
+         >div.astroid-sidebar-block {
+            display: none;
+         }
+      }
+
+      &.expanded {
+         width: $sidebar-header-width !important;
+         -webkit-transition: .1s linear all;
+         -moz-transition: .1s linear all;
+         -ms-transition: .1s linear all;
+         -o-transition: .1s linear all;
+         transition: .1s linear all;
+
+         .astroid-sidebar-collapsable {
+            >i {
+               &:before {
+                  content: "\f00d";
+               }
+            }
+         }
+
+         .astroid-sidebar-logo {
+            display: block;
+         }
+
+         .astroid-sidebar-content>div.astroid-sidebar-menu {
+            display: block;
+         }
+
+         .astroid-sidebar-content>div.astroid-sidebar-block {
+            display: block;
+         }
+      }
+   }
+}
+
+@media (min-width:1201px) {
+   body.header-sidebar-left {
+      margin-left: $sidebar-header-width;
+   }
+
+   body.header-sidebar-right {
+      margin-right: $sidebar-header-width;
+   }
+}

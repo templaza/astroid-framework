@@ -1,0 +1,39 @@
+.tag-category {
+
+   form {
+      .filters {
+         justify-content: space-between;
+         width: 100%;
+         .clearfix {
+            display: none;
+         }
+         input.inputbox[type="text"] {
+            padding: 10px 15px;
+         }
+      }
+      select.inputbox {
+         background: #eaedf0;
+         border: 1px solid #ddd;
+         padding: 10px;
+         padding-right: 9px;
+      }
+   }
+
+   .element-invisible {
+      font-size: 0;
+   }
+
+   ul.category {
+      padding: 0;
+      list-style: none;
+      margin-top: 20px;
+      li {
+         border: 1px solid rgba(0, 0, 0, 0.125);
+         margin-bottom: -1px;
+         padding: .75rem 1.25rem;
+         h3 {
+            margin: 0;
+         }
+      }
+   }
+}

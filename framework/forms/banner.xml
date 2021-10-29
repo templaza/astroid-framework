@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset label="ASTROID_BANNER_MIAN_TITLE_LABEL" id="astroid_banner" name="astroid_banner" addfieldpath="/libraries/astroid/framework/fields">
+			<field name="banner_note" type="note" class="alert alert-info" description="ASTROID_BANNER_MIAN_TITLE_DESC" />
+			<field name="astroid_banner_enabled" type="radio" default="0" label="ASTROID_BANNER_ENABLE_LABEL" description="ASTROID_BANNER_ENABLE_BANNNER_DESC" class="form-check-inline">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_title_enabled" type="radio" default="1" label="ASTROID_BANNER_ENABLE_TITLE_LABEL" description="ASTROID_BANNER_ENABLE_BANNNER_TITLE_DESC" class="form-check-inline">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			<field showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" name="astroid_banner_title" filter="RAW" type="text" label="ASTROID_BANNER_TITLE_LABEL">
+			</field>
+			<field showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" name="astroid_banner_subtitle" type="text" label="ASTROID_BANNER_SUBTITLE_LABEL">
+			</field>
+			<field name="astroid_banner_textcolor" type="color" showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" label="TPL_ASTROID_TEXT_COLOR_LABEL">
+			</field>
+			<field name="astroid_banner_subtextcolor" type="color" showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" label="TPL_ASTROID_SUBTEXT_COLOR_LABEL">
+			</field>
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_bgcolor" type="color" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL">
+			</field>
+
+			<field type="spacer" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_spacer1" hr="true"></field>
+
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_bgimage" type="media" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL">
+			</field>
+
+			<field showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_position" type="list" default="" label="Background Position">
+				<option value="">Default</option>
+				<option value="left top">Left Top</option>
+				<option value="left center">Left Center</option>
+				<option value="left bottom">Left Bottom</option>
+				<option value="right top">Right Top</option>
+				<option value="right center">Right Center</option>
+				<option value="right bottom">Right Bottom</option>
+				<option value="center top">Center Top</option>
+				<option value="center center">Center Center</option>
+				<option value="center bottom">Center Bottom</option>
+				<option value="custom">Custom</option>
+			</field>
+
+			<field showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:[AND]astroid_banner_bgimage_position:custom" name="astroid_banner_bgimage_position_x" type="text" label="Background Position X" default="">
+			</field>
+
+			<field showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:[AND]astroid_banner_bgimage_position:custom" name="astroid_banner_bgimage_position_y" type="text" label="Background Position Y" default="">
+			</field>
+
+			<field type="list" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_repeat" label="Background Repeat" default="">
+				<option value="">Default</option>
+				<option value="no-repeat">No Repeat</option>
+				<option value="repeat-x">Repeat-X</option>
+				<option value="repeat-y">Repeat-Y</option>
+				<option value="space">Space</option>
+				<option value="round">Round</option>
+			</field>
+
+			<field type="list" name="astroid_banner_bgimage_size" label="Background Size" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" default="">
+				<option value="">Default</option>
+				<option value="cover">Cover</option>
+				<option value="contain">Contain</option>
+				<option value="custom">Custom</option>
+			</field>
+
+			<field type="text" name="astroid_banner_bgimage_width" label="Background Width" default="" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:[AND]astroid_banner_bgimage_size:custom">
+			</field>
+
+			<field type="list" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_attachment" label="Background Attachment" default="">
+				<option value="">Default</option>
+				<option value="fixed">Fixed</option>
+				<option value="scroll">Scroll</option>
+			</field>
+
+			<field type="spacer" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_spacer2" hr="true"></field>
+
+			<field showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" name="astroid_banner_title_tag" type="headertag" default="h3" label="ASTROID_BANNER_TITLE_TAG_LABEL">
+			</field>
+
+			<field showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" name="astroid_banner_subtitle_tag" type="list" default="span" label="ASTROID_BANNER_SUBTITLE_TAG_LABEL">
+				<option value="h1">h1</option>
+				<option value="h2">h2</option>
+				<option value="h3">h3</option>
+				<option value="h4">h4</option>
+				<option value="h5">h5</option>
+				<option value="h6">h6</option>
+				<option value="p">p</option>
+				<option value="div">div</option>
+				<option value="span">span</option>
+			</field>
+
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_class" type="text" label="ASTROID_BANNER_CLASS_LABEL">
+			</field>
+
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_height" type="text" label="ASTROID_BANNER_HEIGHT_LABEL">
+			</field>
+
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_wrapper" type="list" default="container" label="ASTROID_BANNER_LAUOUT_LABEL">
+				<option value="">TPL_ASTROID_DEFAULT</option>
+				<option value="container">ASTROID_CONTAINER</option>
+				<option value="container-fluid">ASTROID_CONTAINER_FLUID</option>
+			</field>
+
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_visibility" type="list" label="ASTROID_BANNER_VISIBILITY_LABEL" default="allPage">
+				<option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
+				<option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

@@ -1,0 +1,215 @@
+$burger-layer-width: 30px !default;
+$close-btn-height: 50px !default;
+$menu-indicator-width: 60px !default;
+
+.astroid-mobilemenu {
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: $zindex-popover;
+   visibility: hidden;
+   height: 100%;
+   width: 250px;
+   overflow: auto;
+   -webkit-overflow-scrolling: touch;
+   background-color: $white;
+   -webkit-transition: all .5s;
+   transition: all .5s;
+   max-width: 100vw !important;
+
+   &.dir-right {
+      right: 0;
+      left: auto;
+   }
+
+   a small {
+      display: block !important;
+   }
+
+   .burger-menu-button {
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9;
+   }
+}
+
+.offcanvas-right {
+   .astroid-mobilemenu-container .astroid-mobilemenu-inner .dropdown-menus {
+      left: auto;
+      right: -100%;
+
+      &.menu_open {
+         left: auto;
+         right: 0;
+      }
+   }
+}
+
+.astroid-mobilemenu-container .astroid-mobilemenu-inner {
+   ul {
+      padding: 0;
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+
+      >li.menu-item:first-child {
+         border-top: 1px solid #ddd;
+      }
+
+      li.menu-item.menu-go-back {
+         margin-top: $close-btn-height;
+         border-top: 0;
+      }
+   }
+
+   .menu-item {
+      border-bottom: 1px solid #ddd;
+      display: table;
+      width: 100%;
+   }
+
+   .menu-item a,
+   .menu-item span.separator,
+   .menu-item span.nav-header {
+      cursor: pointer;
+      outline: 0;
+      width: calc(100% - #{$menu-indicator-width});
+      text-decoration: none;
+      vertical-align: middle;
+      display: table-cell;
+      color: $black;
+      padding: 15px;
+   }
+
+   .menu-item.divider.parent {
+      position: relative;
+
+      span.separator~.menu-indicator {
+         &:before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+         }
+
+         border-left: 0;
+      }
+   }
+
+   .menu-item.nav-item-divider.nav-item-parent {
+      position: relative;
+
+      a.item-link-separator~.menu-indicator {
+         &:before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+         }
+
+         border-left: 0;
+      }
+   }
+
+   .menu-item .menu-indicator {
+      width: $menu-indicator-width;
+      text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+      border-left: 1px solid #ddd;
+      cursor: pointer;
+   }
+
+   .dropdown-menus {
+      position: fixed;
+      left: -150%;
+      top: 0;
+      height: 100vh;
+      width: 100% !important;
+      transition: all .5s;
+      background-color: $white;
+
+      .menu-indicator-back {
+         text-align: left;
+         width: 100%;
+         cursor: pointer;
+         display: block;
+         padding: 15px;
+         box-sizing: border-box;
+      }
+
+      .menu-indicator-back i {
+         margin-right: 10px;
+      }
+
+      .dropdown-menus-item {
+         width: 100%;
+      }
+
+      &.menu_open {
+         left: 0;
+         z-index: 1;
+      }
+   }
+}
+
+.burger-menu-button {
+   text-align: right;
+   line-height: 0;
+   margin: 0;
+}
+
+.astroid-mobilemenu-open {
+
+   .close-offcanvas,
+   .close-offcanvas:hover {
+      color: $black;
+      display: inline-block;
+      margin: 0;
+      position: relative;
+      right: 5px;
+      box-sizing: content-box;
+      z-index: 999999;
+   }
+
+   .burger-menu-button .inner,
+   .burger-menu-button .inner::before,
+   .burger-menu-button .inner::after {
+      background-color: $black;
+      opacity: 1;
+   }
+}
+
+body.astroid-mobilemenu-opened {
+   max-height: 100vh;
+   overflow: hidden;
+
+   .astroid-mobilemenu-open {
+      overflow-x: hidden;
+   }
+
+   .astroid-content:after {
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      -webkit-transition: opacity .5s;
+      transition: opacity .5s;
+   }
+
+   .astroid-mobilemenu:after {
+      width: 0;
+      height: 0;
+      opacity: 0;
+      -webkit-transition: opacity .5s, width .1s .5s, height .1s .5s;
+      transition: opacity .5s, width .1s .5s, height .1s .5s;
+   }
+}

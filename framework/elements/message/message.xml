@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+   <title>TPL_ASTROID_MESSAGES_LABEL</title>
+   <description>TPL_ASTROID_MESSAGES_DESC</description>
+   <icon>fas fa-exclamation-triangle</icon>
+   <color>#17C671</color>
+   <info>TPL_ASTROID_SYSTEM_MESSAGES_LABEL</info>
+   <multiple>false</multiple>
+   <info label="Animation" property="animation"></info>
+</element>

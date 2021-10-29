@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset icon="fas fa-paint-brush" label="ASTROID_OPTIONS_COLOURS" name="astroid_colours" addfieldpath="/libraries/astroid/framework/fields" order="3">
+			<field type="astroidgroup" name="presets" title="Presets" description="" />
+			<field type="astroidgroup" name="body" title="TPL_ASTROID_COLOURS_BODY_TITLE_LABEL" description="TPL_ASTROID_COLOURS_BODY_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-body-colors" />
+			<field type="astroidgroup" name="header_colors" title="TPL_ASTROID_COLOURS_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-header-colors"/>
+			<field type="astroidgroup" name="sticky_header" title="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-sticky-header-colors"/>
+			<field type="astroidgroup" name="main_menu" title="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-main-menu-colors"/>
+			<field type="astroidgroup" name="dropdown_menu" title="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-dropdown-menu-colors"/>
+			
+			<field type="astroidgroup" name="off_canvas" title="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_LABEL" description="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" />
+
+			<field type="astroidgroup" name="mobilemenu" title="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" />
+
+			<field astroidgroup="presets" name="template_preset" type="astroidpresets" label="false" description="">
+			</field>
+			<field astroidgroup="body" name="body_background_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_BODY_COLOR_BOX_LAYPUT_BACKGROUND_DESC">
+			</field>
+			<field astroidgroup="body" name="body_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL" description="TPL_ASTROID_BODY_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="body" name="body_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="body" name="body_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_HOVER_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_bg" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_HEADER_BACKGROUND_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL"
+			description="TPL_ASTROID_HEADER_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_logo_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_logo_text_tagline_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_TAG_LINE_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_TAGLINE_COLOR_DESC">
+			</field>
+			<field astroidgroup="sticky_header" name="stick_header_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_STICKY_HEADER_BACKGROUND_COLOR_DESC">
+			</field>
+
+			<field astroidgroup="sticky_header" name="stick_header_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="sticky_header" name="stick_header_menu_link_active_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_ACTIVE_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_ACTIVE_COLOR_DESC">
+			</field>
+			<field astroidgroup="sticky_header" name="stick_header_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_HOVER_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_link_active_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_ACTIVE_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_ACTIVE_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_HOVER_COLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_BACKGROUND_COLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_menu_active_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_LINK_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_LINK_ACTIVE_COLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_menu_active_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_LINK_ACTIVE_BGCOLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_HOVER_LINK_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_LINK_HOVER_COLOR_DESC">
+			</field>
+			<field astroidgroup="dropdown_menu" name="dropdown_menu_hover_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_HOVER_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_HOVER_BACKGROUND_COLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_backgroundcolor" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_BACKGROUND_COLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_COLOURS_OFF_CANVAS_TEXT_LABEL" description="TPL_ASTROID_OFF_CANVAS_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_active_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_LINK_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_ACTIVE_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_active_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_ACTIVE_BGCOLOR_DESC">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_HAMBURGER_ICON_COLOR">
+			</field>
+			<field astroidgroup="off_canvas" name="mobile_menu_active_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_HAMBURGER_ICON_COLOR">
+			</field>
+
+			<field astroidgroup="mobilemenu" name="mobilemenu_backgroundcolor" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_BACKGROUND_COLOR_DESC">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_COLOURS_OFF_CANVAS_TEXT_LABEL" description="TPL_ASTROID_OFF_CANVAS_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_active_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_LINK_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_ACTIVE_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_active_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_OFF_CANVAS_ACTIVE_BGCOLOR_DESC">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_HAMBURGER_ICON_COLOR">
+			</field>
+			<field astroidgroup="mobilemenu" name="mobilemenu_menu_active_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_HAMBURGER_ICON_COLOR">
+			</field>
+		</fieldset>
+	</fields>
+</form>

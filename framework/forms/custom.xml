@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset label="ASTROID_CUSTOMCODE_OPTIONS_TITLE_LABEL" id="astroidcustomcode" name="astroidcustomcode">
+            <field name="astroid_trackingcode" code="html" filter="raw" class="form-control" type="textarea" label="TPL_ASTROID_CUSTOM_TRACKING_CODE" description="TPL_ASTROID_CUSTOM_TRACKING_CODE_DESC">
+            </field>
+
+            <field code="html" filter="raw" name="astroid_beforehead" class="form-control" type="textarea" label="TPL_ASTROID_CUSTOM_SPACE_BEFORE_HEAD_LABEL" description="TPL_ASTROID_CUSTOM_SPACE_BEFORE_HEAD_DESC">
+            </field>
+
+            <field code="html" filter="raw" name="astroid_beforebody" class="form-control" type="textarea" label="TPL_ASTROID_CUSTOM_SPACE_BEFORE_BODY_LABEL" description="TPL_ASTROID_CUSTOM_SPACE_BEFORE_BODY_DESC">
+            </field>
+
+            <field code="css" filter="raw" name="astroid_customcss" class="form-control" type="textarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_DESC">
+            </field>
+            <field name="astroid_customcssfiles" filter="raw" class="form-control mw-100" type="textarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_LABEL" hint="https://yourwebsite.com/style.css" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_DESC">
+            </field>
+
+            <field code="javascript" filter="raw" name="astroid_customjs" class="form-control" type="textarea" label="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_DESC">
+            </field>
+
+            <field name="astroid_customjsfiles" filter="raw" class="form-control mw-100" type="textarea" label="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_FILES_LABEL" hint="https://yourwebsite.com/script.js" description="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_FILE_DESC">
+            </field>
+        </fieldset>
+    </fields>
+</form>

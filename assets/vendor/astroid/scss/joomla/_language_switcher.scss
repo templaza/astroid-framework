@@ -1,0 +1,32 @@
+body div.mod-languages {
+	z-index: 9999;
+	position: relative;
+
+	.btn {
+		padding: 0 10px;
+	}
+
+	img {
+		display: inline-block;
+	}
+
+	ul.lang-block {
+		>li {
+			display: block;
+			margin: 0;
+			padding: 5px 10px;
+
+			img {
+				margin-right: 5px;
+			}
+
+			a {
+				display: block;
+			}
+
+			&:not(:last-child) {
+				border-bottom: 1px solid #ddd;
+			}
+		}
+	}
+}

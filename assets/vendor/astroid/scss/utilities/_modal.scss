@@ -1,0 +1,15 @@
+a.modal {
+	display: inline-block;
+	position: relative;
+	top: inherit;
+	right: inherit;
+	bottom: inherit;
+	left: inherit;
+	overflow: inherit;
+	outline: inherit;
+	z-index: inherit;
+}
+
+#sbox-window {
+	box-sizing: content-box;
+}

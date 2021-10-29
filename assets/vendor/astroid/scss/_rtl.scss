@@ -1,0 +1,225 @@
+body.rtl {
+   direction: rtl;
+   text-align: right;
+   unicode-bidi: embed;
+   .address-details .icon {
+      float: right;
+      margin-left: 15px;
+      margin-right: 0;
+   }
+   .astroid-footer ul li:not(:last-child) {
+      margin-right: 0;
+      margin-left: 10px;
+   }
+   #astroid-backtotop {
+      right: auto;
+      left: 20px;
+   }
+   .astroid-nav li.parent{
+      > span:after, 
+      > a:after {
+         margin-right: 8px;
+         margin-left: 0;
+      }
+   }
+   .astroid-mobilemenu-container .astroid-mobilemenu-inner {
+      .dropdown-menus .menu-indicator-back i {
+         margin-left: 10px;
+         margin-right: 0;
+      }
+      .menu-item .menu-indicator {
+         -webkit-transform: rotate(180deg);
+         -ms-transform: rotate(180deg);
+         transform: rotate(180deg);
+      }
+   }
+   .list-inline {
+      padding-right: 0;
+   }
+   .article-info {
+      >dd {
+         float: right;
+         &:not(:first-child) {
+            border-right: 1px solid #ccc;
+         }
+         &:not(:last-child) {
+            border: none;
+         }
+      }
+   }
+   .pagenav {
+      li {
+         &.next {
+            float: left;
+         }
+         &.previous {
+            float: right;
+         }
+      }
+   }
+   .pagination li {
+      &:first-child a{
+         border-right:1px solid #dee2e6;
+         @include border-left-radius(0);
+         @include border-right-radius($border-radius);
+      }
+      &:last-child a{
+         border-right: 0;
+         @include border-right-radius(0);
+         @include border-left-radius($border-radius);
+      }
+   }
+   ol,
+   ul,
+   dl {}
+   .list-unstyled {
+      padding-right: 0;
+   }
+   code,
+   kbd,
+   pre,
+   samp {
+      direction: ltr;
+      unicode-bidi: bidi-override;
+   }
+   .close {
+      float: left;
+   }
+   .list-group {
+      padding-right: 0;
+   }
+   .nav {
+      padding-right: 0;
+   }
+   .form-check {
+      padding-left: 0;
+      padding-right: $form-check-input-gutter;
+   }
+   @each $breakpoint in map-keys($grid-breakpoints) {
+      @include media-breakpoint-up($breakpoint) {
+         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+         .float#{$infix}-left {
+            @include float-right;
+         }
+         .float#{$infix}-right {
+            @include float-left;
+         }
+      }
+   } // Responsive alignment
+   @each $breakpoint in map-keys($grid-breakpoints) {
+      @include media-breakpoint-up($breakpoint) {
+         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+         .text#{$infix}-left {
+            text-align: right !important;
+         }
+         .text#{$infix}-right {
+            text-align: left !important;
+         }
+      }
+   }
+   @each $breakpoint in map-keys($grid-breakpoints) {
+      @include media-breakpoint-up($breakpoint) {
+         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+         @each $prop,
+         $abbrev in (margin: m, padding: p) {
+            @each $size, $length in $spacers {
+               .#{$abbrev}r#{$infix}-#{$size}, .#{$abbrev}x#{$infix}-#{$size} {
+                  #{$prop}-right: 0 !important;
+                  #{$prop}-left: $length !important;
+               }
+               .#{$abbrev}l#{$infix}-#{$size},
+               .#{$abbrev}x#{$infix}-#{$size} {
+                  #{$prop}-left: 0 !important;
+                  #{$prop}-right: $length !important;
+               }
+            }
+         }
+         .mr#{$infix}-auto {
+            margin-right: initial !important;
+            margin-left: auto !important;
+         }
+      }
+   }
+   .form-check-input {
+      margin-left: auto;
+      margin-right: -$form-check-input-gutter;
+   }
+   .input-group {
+      >.form-control,
+      >.custom-select {
+         &:not(:last-child) {
+            @include border-left-radius(0);
+            @include border-right-radius($input-border-radius);
+         }
+         &:not(:first-child) {
+            @include border-right-radius(0);
+            @include border-left-radius($input-border-radius);
+         }
+      } // Custom file inputs have more complex markup, thus requiring different
+      // border-radius overrides.
+      >.custom-file {
+         &:not(:last-child) .custom-file-label,
+            &:not(:last-child) .custom-file-label::after {
+            @include border-left-radius(0);
+            @include border-right-radius($input-border-radius);
+         }
+         &:not(:first-child) .custom-file-label {
+            @include border-right-radius(0);
+            @include border-left-radius($input-border-radius);
+         }
+      }
+   }
+   .input-group>.input-group-prepend>.btn,
+   .input-group>.input-group-prepend>.input-group-text,
+   .input-group>.input-group-append:not(:last-child)>.btn,
+      .input-group>.input-group-append:not(:last-child)>.input-group-text,
+      .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle),
+      .input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
+      @include border-left-radius(0);
+      @include border-right-radius($input-border-radius);
+   }
+   .input-group>.input-group-append>.btn,
+   .input-group>.input-group-append>.input-group-text,
+   .input-group>.input-group-prepend:not(:first-child)>.btn,
+      .input-group>.input-group-prepend:not(:first-child)>.input-group-text,
+      .input-group>.input-group-prepend:first-child>.btn:not(:first-child),
+      .input-group>.input-group-prepend:first-child>.input-group-text:not(:first-child) {
+      @include border-right-radius(0);
+      @include border-left-radius($input-border-radius);
+   }
+   .input-group-prepend {
+      margin-left: -$input-border-width;
+      margin-right: 0;
+   }
+   .input-group-append {
+      margin-right: -$input-border-width;
+      margin-left: 0;
+   }
+   .btn-group,
+   .btn-group-vertical {
+      // Prevent double borders when buttons are next to each other
+      .btn+.btn,
+      .btn+.btn-group,
+      .btn-group+.btn,
+      .btn-group+.btn-group {
+         margin-right: -$btn-border-width;
+         margin-left: 0;
+      }
+   }
+   .btn-group {
+      >.btn:first-child {
+         margin-left: -$btn-border-width;
+         margin-right: 0;
+      } // Reset rounded corners
+      >.btn:not(:last-child):not(.dropdown-toggle),
+         >.btn-group:not(:last-child)>.btn {
+         @include border-left-radius(0);
+         @include border-right-radius($input-border-radius);
+      }
+      >.btn:not(:first-child),
+         >.btn-group:not(:first-child)>.btn {
+         @include border-right-radius(0);
+         @include border-left-radius($input-border-radius);
+      }
+   }
+}

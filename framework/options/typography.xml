@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset icon="fas fa-font" label="ASTROID_OPTIONS_TYPOGRAPHY" name="astroid_typography" addfieldpath="/libraries/astroid/framework/fields" order="5">
+         <field type="astroidgroup" name="body_typography_group" title="TPL_ASTROID_TYPOGRAPHY_BODY" description="TPL_ASTROID_TYPOGRAPHY_BODY_DESC" help="https://docs.joomdev.com/article/astroid-body-typography" />
+         <field type="astroidgroup" name="menu_typography" title="TPL_ASTROID_TYPOGRAPHY_MENU" description="TPL_ASTROID_TYPOGRAPHY_MENU_DESC" help="https://docs.joomdev.com/article/astroid-menu-typography" />
+         <field type="astroidgroup" name="submenu_typography" title="TPL_ASTROID_TYPOGRAPHY_SUBMENU" description="TPL_ASTROID_TYPOGRAPHY_SUBMENU_DESC" help="https://docs.joomdev.com/article/astroid-submenu-typography" />
+         <field type="astroidgroup" name="h1_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H1" description="TPL_ASTROID_TYPOGRAPHY_H1_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="h2_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H2" description="TPL_ASTROID_TYPOGRAPHY_H2_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="h3_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H3" description="TPL_ASTROID_TYPOGRAPHY_H3_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="h4_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H4" description="TPL_ASTROID_TYPOGRAPHY_H4_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="h5_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H5" description="TPL_ASTROID_TYPOGRAPHY_H5_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="h6_header_typography" title="TPL_ASTROID_TYPOGRAPHY_H6" description="TPL_ASTROID_TYPOGRAPHY_H6_DESC" help="https://docs.joomdev.com/article/astroid-h1-h6-typography" />
+         <field type="astroidgroup" name="custom_header_typography" title="TPL_ASTROID_TYPOGRAPHY_CUSTOMTYPE" description="TPL_ASTROID_TYPOGRAPHY_CUSTOMTYPE_DESC" help="https://docs.joomdev.com/article/astroid-custom-typography" />
+
+         <field astroidgroup="body_typography_group" description="TPL_ASTROID_BODY_TYPOGRAPHY_OPTION_DESC" name="body_typography" type="astroidradio" default="default" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <!-- Body Typography Options -->
+         <field ngShow="body_typography=='custom'" astroidgroup="body_typography_group" name="body_typography_options" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-unit="em" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="false"></field>
+
+         <!-- Menu Typography Options -->
+         <field astroidgroup="menu_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="menus_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="menu_typography" ngShow="menus_typography=='custom'" name="menu_typography_options" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-unit="em" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="false"></field>
+
+         <!-- Sub Menu Typography Options -->
+         <field astroidgroup="submenu_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="submenus_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="submenu_typography" ngShow="submenus_typography=='custom'" name="submenu_typography_options" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-unit="em" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="false"></field>
+
+         <!--  More Options: font-picker="false" letter-spacing-picker="false" line-height-picker="false" font-style-picker="false" font-weight-picker="false" text-transform-picker="false" font-size-picker="false"  -->
+
+         <!-- H1 Typography Options -->
+         <field astroidgroup="h1_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h1_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h1_header_typography" ngShow="h1_typography=='custom'" name="h1_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3.5" font-unit="em" letter-spacing="0" line-height="1" font-weight="700" text-transform="none"></field>
+
+         <!-- H2 Typography Options -->
+         <field astroidgroup="h2_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h2_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h2_header_typography" ngShow="h2_typography=='custom'" name="h2_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3" font-unit="em" letter-spacing="0" line-height="1" font-weight="600" text-transform="none"></field>
+
+         <!-- H3 Typography Options -->
+         <field astroidgroup="h3_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h3_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h3_header_typography" ngShow="h3_typography=='custom'" name="h3_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="2" font-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+
+         <!-- H4 Typography Options -->
+         <field astroidgroup="h4_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h4_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h4_header_typography" ngShow="h4_typography=='custom'" name="h4_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1.5" font-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+
+         <!-- H5 Typography Options -->
+         <field astroidgroup="h5_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h5_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h5_header_typography" ngShow="h5_typography=='custom'" name="h5_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+
+         <!-- H6 Typography Options -->
+         <field astroidgroup="h6_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h6_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="h6_header_typography" ngShow="h6_typography=='custom'" name="h6_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="0.7" font-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+
+         <!-- Custom Typography Options -->
+         <field astroidgroup="custom_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="custom_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+            <option value="inherit">JGLOBAL_INHERIT</option>
+            <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+         </field>
+
+         <field astroidgroup="custom_header_typography" description="TPL_ASTROID_TYPOGRAPHY_CUSTOMTYPE_SELECTORS_DESC" ngShow="custom_typography=='custom'" name="custom_typography_selectors" type="astroidtext" class="form-control" label="TPL_ASTROID_TYPOGRAPHY_CUSTOMTYPE_SELECTORS">
+         </field>
+
+         <field astroidgroup="custom_header_typography" ngShow="custom_typography=='custom'" name="custom_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="0.7" font-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+
+      </fieldset>
+   </fields>
+</form>

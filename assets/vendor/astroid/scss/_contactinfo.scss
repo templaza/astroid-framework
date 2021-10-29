@@ -1,0 +1,16 @@
+.astroid-contact-info {
+	span {
+		margin-right: 5px;
+		margin-left: 5px;
+		display: inline-block;
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			margin-right: 0;
+		}
+		[class*="fa-"] {
+			margin-right: 5px;
+		}
+	}
+}

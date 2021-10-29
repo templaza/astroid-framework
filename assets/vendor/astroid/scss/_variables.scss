@@ -1,0 +1,101 @@
+// Logo
+$logo-max-width: 250px !default;
+$logo-max-height: 65px !default;
+
+// Header Section
+$header-padding-y: 15px !default;
+$header-padding-x: 0 !default;
+$header-section-zindex: $zindex-dropdown + 2 !default;
+$header-border-bottom: 1px solid #dee2e6 !default;
+$header-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !default;
+
+// Sticky Header
+$sticky-header-zindex: $zindex-sticky !default;
+$sticky-header-animation-duration: .7s !default;
+$sticky-header-padding-x: 0 !default;
+$sticky-header-padding-y: 10px !default;
+$sticky-header-border-bottom: 1px solid #dee2e6 !default;
+$sticky-header-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !default;
+
+// Stacked Header
+$stacked-header-bg: #fff !default;
+$stacked-header-zindex: $zindex-dropdown !default;
+
+// Sidebar Header
+$sidebar-header-shadow: 0 0 2px 0 rgba(56, 69, 84, .2) !default;
+$sidebar-header-width: 320px !default;
+$sidebar-header-mini-width: 54px !default;
+
+// Deprecated Variable
+$header-sidebar-width: 320px !default;
+$header-sidebar-mini-width: 54px !default;
+
+// Back to top
+$backtotop-right: 20px !default;
+$backtotop-bottom: 20px !default;
+$backtotop-padding: 10px !default;
+$backtotop-zindex: $zindex-sticky !default;
+$backtotop-rounded-radius: 4px !default;
+
+// Banner
+$banner-bg: #f8f9fa !default;
+$banner-padding-y: 80px !default;
+$banner-padding-x: 0 !default;
+$banner-title-color: #fff !default;
+$banner-subtitle-color: #fff !default;
+
+// Coming Soon
+$comingsoon-logo-margin-bottom: 50px !default;
+$comingsoon-content-margin-bottom: 50px !default;
+$comingsoon-count-title-font-size: 18px !default;
+$comingsoon-count-font-size: 40px !default;
+$comingsoon-count-line-height: 40px !default;
+$comingsoon-count-font-weight: bold !default;
+
+// Social Share
+$socialshare_margin: 0 10px !default;
+
+// Module
+$module-margin-y: .5rem !default;
+$module-margin-x: 0 !default;
+$module-padding-y: .5rem !default;
+$module-padding-x: 0 !default;
+
+// Selection
+$selection-bg: $primary !default;
+$selection-text-color: $white !default;
+
+// Post Type
+$post-type-quote-bg: #bfe6ff !default;
+$post-type-gallery-bg: #e5f9f1 !default;
+$post-type-review-bg: #f5db8b !default;
+$post-type-youtube-bg: #fee8eb !default;
+$post-type-vimeo-bg: #76d3f2 !default;
+$post-type-soundcloud-bg: #fff1ea !default;
+$post-type-spotify-bg: #1ed760 !default;
+$post-type-regular-color: #fff !default;
+$post-type-quote-color: #45a9ea !default;
+$post-type-gallery-color: #0dc772 !default;
+$post-type-review-color: #bb900b !default;
+$post-type-youtube-color: #f23453 !default;
+$post-type-vimeo-color: #1dabda !default;
+$post-type-soundcloud-color: #ff7930 !default;
+$post-type-spotify-color: #181413 !default;
+$post-type-padding: 10px 10px !default;
+
+// Badge
+$article-badge-width: 80px !default;
+$article-badge-height: 40px !default;
+$article-badge-2-bg: #007bff !default;
+$article-badge-3-bg: #6f42c1 !default;
+$article-badge-4-bg: #e83e8c !default;
+$article-badge-5-bg: #fd7e14 !default;
+$article-badge-6-bg: #20c997 !default;
+
+// Tags
+$tag-bg: #FCFCFC;
+$tag-font-size: 14px;
+$tag-text-color: #8E8E8E;
+$tag-padding: 4px 8px;
+$tag-icon: \f02c;
+$tag-icon-color: $primary;

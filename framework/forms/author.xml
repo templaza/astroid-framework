@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_AUTHOR_PROFILE_TAB_LABEL" name="astroid_author">
+         <field type="radio" name="astroid_author_picture" label="ASTROID_AUTHOR_PICTURE_LABEL" description="ASTROID_AUTHOR_PICTURE_DESC" class="form-check-inline" default="0">
+            <option value="0">ASTROID_NONE</option>
+            <option value="gravatar">ASTROID_AUTHOR_PICTURE_GRAVATAR</option>
+            <option value="upload">ASTROID_AUTHOR_PICTURE_UPLOAD</option>
+         </field>
+         <field type="media" showon="astroid_author_picture:upload" name="upload" label="ASTROID_AUTHOR_PICTURE_UPLOAD_IMG_LABEL" description="ASTROID_AUTHOR_PICTURE_UPLOAD_IMG_DESC"></field>
+         <field name="astroid_author_aboutme" label="ASTROID_AUTHOR_ABOUTME_LABEL" description="ASTROID_AUTHOR_ABOUTME_DESC" cols="30" filter="raw" rows="5" type="textarea"></field>
+         <field name="astroid_author_social" type="subform" label="ASTROID_AUTHOR_PROFILE_SOCIAL_LABEL" description="ASTROID_AUTHOR_PROFILE_SOCIAL_DESC" multiple="true">
+            <form>
+               <field name="icon" label="ASTROID_AUTHOR_ICON_LABEL" description="ASTROID_AUTHOR_ICON_DESC" type="text" />
+               <field name="link" label="ASTROID_AUTHOR_ICON_LINK_LABEL" description="ASTROID_AUTHOR_ICON_LINK_DESC" type="text" />
+            </form>
+         </field>
+      </fieldset>
+   </fields>
+</form>

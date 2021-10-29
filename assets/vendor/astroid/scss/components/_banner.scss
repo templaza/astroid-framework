@@ -1,0 +1,15 @@
+.astroid-banner-inner {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-color: $banner-bg;
+	padding: $banner-padding-y $banner-padding-x;
+
+	.astroid-banner-title {
+		color: $banner-title-color;
+	}
+
+	.astroid-banner-subtitle {
+		color: $banner-subtitle-color;
+	}
+}

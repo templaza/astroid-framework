@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="ASTROID_MENU_OPTIONS_TITLE_LABEL" id="astroidmenu" name="astroidmenu" addfieldpath="/libraries/astroid/framework/fields">
+         <field type="astroidmenuoptions" name="astroid_menu_options" />
+      </fieldset>
+   </fields>
+</form>

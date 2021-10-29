@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset icon="fas fa-code" label="ASTROID_OPTIONS_CUSTOM" name="astroid_custom" addfieldpath="/libraries/astroid/framework/fields" order="8">
+
+			<field type="astroidgroup" name="custom" title="TPL_ASTROID_CUSTOM_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/category/astroid-user-manual/custom-code"/>
+
+			<field astroidgroup="custom" name="trackingcode" code="html" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_TRACKING_CODE" description="TPL_ASTROID_CUSTOM_TRACKING_CODE_DESC">
+			</field>
+
+			<field astroidgroup="custom" code="html" name="beforehead" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_SPACE_BEFORE_HEAD_LABEL" description="TPL_ASTROID_CUSTOM_SPACE_BEFORE_HEAD_DESC">
+			</field>
+
+			<field astroidgroup="custom" code="html" name="beforebody" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_SPACE_BEFORE_BODY_LABEL" description="TPL_ASTROID_CUSTOM_SPACE_BEFORE_BODY_DESC">
+			</field>
+
+			<field astroidgroup="custom" code="css" name="customcss" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_DESC">
+			</field>
+			<field astroidgroup="custom" name="customcssfiles" class="form-control mw-100" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_LABEL" hint="https://yourwebsite.com/style.css" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_DESC">
+			</field>
+
+			<field astroidgroup="custom" code="javascript" name="customjs" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_DESC">
+			</field>
+
+			<field astroidgroup="custom" name="customjsfiles" class="form-control mw-100" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_FILES_LABEL" hint="https://yourwebsite.com/script.js" description="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_FILE_DESC">
+			</field>
+
+		</fieldset>
+	</fields>
+</form>

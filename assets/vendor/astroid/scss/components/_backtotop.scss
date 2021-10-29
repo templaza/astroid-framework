@@ -1,0 +1,26 @@
+#astroid-backtotop {
+	display: none;
+	line-height: 0;
+	position: fixed;
+	right: $backtotop-right;
+	bottom: $backtotop-bottom;
+	padding: $backtotop-padding;
+	z-index: $backtotop-zindex;
+
+	&.circle {
+		border-radius: 100%;
+	}
+
+	&.rounded {
+		border-radius: $backtotop-rounded-radius;
+	}
+
+	&.square {
+		border-radius: 0;
+	}
+}
+
+.header-sidebar-right #astroid-backtotop {
+	right: auto;
+	left: $backtotop-right;
+}

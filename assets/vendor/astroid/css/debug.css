@@ -1,0 +1,80 @@
+#astroid-reporter {
+    background: #252736;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    bottom: 0;
+    left: 0;
+}
+
+#astroid-reporter code {
+    color: #888ede;
+}
+
+#astroid-reporter .nav-tabs {
+    display: none;
+}
+
+#astroid-reporter.active .nav-tabs {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: -40px;
+    padding: 0px 50px;
+    border: 0;
+}
+
+#astroid-reporter .nav-tabs .nav-item {
+    margin-right: 10px;
+}
+
+#astroid-reporter .nav-tabs .nav-link {
+    line-height: 40px;
+    padding: 0px;
+    min-width: 100px;
+    border: 0;
+    text-align: center;
+    background: #3a3d55;
+    color: #868aac;
+    border-radius: 0;
+    padding: 0px 10px;
+}
+
+#astroid-reporter .nav-tabs .nav-link.active {
+    background: #252736;
+    color: #fff;
+}
+
+
+#astroid-reporter .tab-content {
+    display: none;
+}
+
+#astroid-reporter.active .tab-content {
+    display: block;
+}
+
+#astroid-reporter.active .tab-pane {
+    height: 200px;
+    overflow-y: auto;
+}
+
+#astroid-reporter .astroid-reporter-heading {
+    width: 200px;
+    position: absolute;
+    top: -40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    right: 50px;
+    background: #1a1b25;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.astroid-reporter-item {
+    border-bottom: 1px solid #616373;
+    padding: 10px;
+    color: #f1f1f1;
+}

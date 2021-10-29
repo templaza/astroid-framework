@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+   <title>ASTROID_BANNER_LABEL</title>
+   <description>ASTROID_BANNER_DESC</description>
+   <icon>far fa-image</icon>
+   <color>#00B8D8</color>
+   <multiple>false</multiple>
+</element>

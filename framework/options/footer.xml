@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset icon="fas fa-cogs" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="10">
+
+			<field type="astroidgroup" name="copyright" title="TPL_ASTROID_FOOTER_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-copyright" />
+
+			<field astroidgroup="copyright" class="astroid-header-switch" name="footer" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_FOOTER_BRANDING_LABEL" description="TPL_ASTROID_FOOTER_BRANDING_DESC"></field>
+
+			<field astroidgroup="copyright" ngShow="footer==true" name="footer_copyright" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_FOOTER_BRANDING_TEXT_LABEL" description="TPL_ASTROID_FOOTER_BRANDING_TEXT_DESC" hint="Copyright {year}, {sitename}. All Rights Reserved." />
+
+			<field astroidgroup="copyright" ngShow="footer==true" name="footer_module_position" astroid-content-layout="footer" type="astroidmodulesposition" default="footer1" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control" ngRequired="footer">
+			</field>
+
+			<field astroidgroup="copyright" ngShow="footer==true" name="footer_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="footer_module_position" default="after" astroid-variable="feature_load_position" ngRequired="footer=='1'">
+				<option value="after">TPL_ASTROID_AFTER_MODULE</option>
+				<option value="before">TPL_ASTROID_BEFORE_MODULE</option>
+			</field>
+
+		</fieldset>
+	</fields>
+</form>

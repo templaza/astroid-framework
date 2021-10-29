@@ -1,0 +1,29 @@
+ul.categories-module {
+	li {
+		&.active {
+			background-color: inherit;
+
+			a {
+				color: $secondary;
+			}
+		}
+
+		a {
+			font-size: 1rem;
+		}
+	}
+}
+
+.content-edit-dropdown.open {
+	*z-index: 1000;
+}
+
+.content-edit-dropdown.open>.dropdown-menu {
+	display: block;
+}
+
+.js-calendar {
+	&.hidden {
+		display: none;
+	}
+}

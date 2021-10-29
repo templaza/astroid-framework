@@ -1,0 +1,15 @@
+ul.categories-module {
+	li {
+		&.active {
+			background-color: inherit;
+
+			a {
+				color: $secondary;
+			}
+		}
+
+		a {
+			font-size: 1rem;
+		}
+	}
+}
