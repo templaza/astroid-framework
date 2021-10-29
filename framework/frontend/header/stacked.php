@@ -40,6 +40,74 @@ $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none',
    <div class="d-flex">
       <div class="header-stacked-section d-flex justify-content-between flex-column w-100">
          <?php
+         //Center Balance
+         if ($mode == 'center-balance') {
+             echo '<div class="astroid-header-center-balance w-100 d-flex justify-content-center">';
+             ?>
+             <?php if (!empty($header_mobile_menu)) { ?>
+                 <div class="w-100 d-flex d-lg-none justify-content-start">
+                     <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                     </div>
+                 </div>
+             <?php } ?>
+             <?php
+             // header block 1 starts
+             if ($block_1_type == 'position') {
+                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo $document->position($block_1_position, 'xhtml');
+                 echo '</div>';
+             }
+             if ($block_1_type == 'custom') {
+                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo $block_1_custom;
+                 echo '</div>';
+             }
+             // header block 1 ends
+
+             $logo = $document->include('logo', [], true);
+             if (!empty($logo)) {
+                 echo '<div class="d-flex w-100 justify-content-center">' . $logo . '</div>';
+             }
+
+             if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom') {
+                 echo '<div class="w-100 d-flex justify-content-end align-items-center">';
+                 // header block 2 starts
+                 if ($block_2_type == 'position') {
+                     echo '<div class="header-block-item d-none d-lg-flex justify-content-end align-items-center">';
+                     echo $document->position($block_2_position, 'xhtml');
+                     echo '</div>';
+                 }
+                 if ($block_2_type == 'custom') {
+                     echo '<div class="header-block-item d-none d-lg-flex justify-content-end align-items-center">';
+                     echo $block_2_custom;
+                     echo '</div>';
+                 }
+                 // header block 2 ends
+
+                 if ($enable_offcanvas) {
+                     ?>
+                     <div class="d-flex justify-content-end ml-3">
+                         <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                     </div>
+                     <?php
+                 }
+                 echo '</div>';
+             }
+
+             echo '</div>';
+             // header nav starts -->
+             ?>
+             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-header-center-balance-menu w-100 d-none d-lg-flex justify-content-center pt-3">
+                 <?php
+                 Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass);
+                 ?>
+             </div>
+             <?php
+             // header nav ends
+         }
+
+         // Center Mode
          if ($mode == 'center') {
             echo '<div class="w-100 d-flex justify-content-center">';
          ?>

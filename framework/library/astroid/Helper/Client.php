@@ -11,6 +11,7 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -148,7 +149,7 @@ class Client
     protected function checkAndRedirect()
     {
         if (!\JFactory::getUser()->id) {
-            $uri = \JFactory::getURI();
+            $uri = ASTROID_JOOMLA_VERSION > 3 ? Uri::getInstance() : \JFactory::getURI();
             $return = $uri->toString();
             \JFactory::getApplication()->redirect(\JRoute::_('index.php?ast=' . urlencode(base64_encode($return))));
         }

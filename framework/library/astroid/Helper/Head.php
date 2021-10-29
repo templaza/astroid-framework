@@ -61,7 +61,7 @@ class Head
         if (ASTROID_JOOMLA_VERSION != 4) {
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
-            $document->addStyleSheet('templates/cassiopeia/css/vendor/fontawesome-free/fontawesome.min.css');
+            $document->addStyleSheet('media/astroid/assets/vendor/fontawesome/css/all.min.css');
             if ($document->isFrontendEditing()) {
                 $document->addStyleSheet('templates/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');

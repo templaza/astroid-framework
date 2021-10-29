@@ -392,6 +392,29 @@ class AstroidElement
             }
          }
       }
+
+      //Column order
+       $column_order_xl     =   $params->get('column_order_xl', '');
+       $column_order_lg     =   $params->get('column_order_lg', '');
+       $column_order_md     =   $params->get('column_order_md', '');
+       $column_order_sm     =   $params->get('column_order_sm', '');
+       $column_order_xs     =   $params->get('column_order_xs', '');
+       if (!empty($column_order_xl)) {
+           $class[]             =   'order-xl-'.$column_order_xl;
+       }
+       if (!empty($column_order_lg)) {
+           $class[]             =   'order-lg-'.$column_order_lg;
+       }
+       if (!empty($column_order_md)) {
+           $class[]             =   'order-md-'.$column_order_md;
+       }
+       if (!empty($column_order_sm)) {
+           $class[]             =   'order-sm-'.$column_order_sm;
+       }
+       if (!empty($column_order_xs)) {
+           $class[]             =   'order-'.$column_order_xs;
+       }
+
       return implode(' ', $class);
    }
 

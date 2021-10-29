@@ -11,6 +11,16 @@
 				<option value="before">TPL_ASTROID_BEFORE_MODULE</option>
 			</field>
 
+			<field astroidgroup="social_profile" name="social_profiles_gutter" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_GUTTER" description="TPL_ASTROID_SOCIAL_GUTTER_DESC">
+				<option value="">Default</option>
+				<option value="small">Small</option>
+				<option value="medium">Medium</option>
+				<option value="large">Large</option>
+			</field>
+
+			<field astroidgroup="social_profile" name="social_profiles_fontsize" type="astroidtext" label="TPL_ASTROID_SOCIAL_FONTSIZE" hint="16px" class="form-control">
+			</field>
+
 			<field astroidgroup="social_profile" name="social_profiles_style" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_STYLE" description="TPL_ASTROID_SOCIAL_STYLE_DESC">
 				<option value="1">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_INHERIT_COLOR</option>
 				<option value="2">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_BRAND_COLOR</option>

@@ -67,7 +67,7 @@
             <field name="margin" type="astroidspacing" label="Margin" />
             <field name="padding" type="astroidspacing" label="Padding" />
          </fieldset>
-         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
             <field description="TPL_ASTROID_ROW_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
             <field description="TPL_ASTROID_ROW_SMALL_DEVICES_DESC" name="hideonsm" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />

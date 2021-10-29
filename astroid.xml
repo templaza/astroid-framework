@@ -2,15 +2,15 @@
 <extension version="3.1" type="library" method="upgrade">
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
-   <author>JoomDev</author>
-   <creationDate>Aug 2021</creationDate>
-   <version>2.5.4</version>
-   <url>https://www.astroidframework.com</url>
-   <copyright>Copyright (C) 2021 Joomdev, Inc. All rights reserved.</copyright>
+   <author>JoomDev/TemPlaza</author>
+   <creationDate>October 2021</creationDate>
+   <version>2.5.5</version>
+   <url>https://www.templaza.com</url>
+   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-   <authorEmail>info@joomdev.com</authorEmail>
-   <authorUrl>https://www.joomdev.com</authorUrl>
-   <description>Astroid Template Framework by JoomDev</description>
+   <authorEmail>info@templaza.com</authorEmail>
+   <authorUrl>https://www.templaza.com</authorUrl>
+   <description>Astroid Template Framework by TemPlaza</description>
    <scriptfile>script.php</scriptfile>
    <files>
       <file>script.php</file>

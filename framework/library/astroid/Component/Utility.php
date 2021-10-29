@@ -347,7 +347,7 @@ class Utility
 
         $menu = $app->getMenu();
         $item = $menu->getItem($itemid);
-        $params = $item->getParams();
+        $params = !empty($item)?$item->getParams(): (new \Joomla\Registry\Registry());
 
         $document->addCustomTag($params->get('astroid_trackingcode', ''));
         $document->addStyleDeclaration($params->get('astroid_customcss', ''));

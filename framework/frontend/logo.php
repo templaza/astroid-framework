@@ -52,7 +52,6 @@ if ($logo_link_type === 'custom') {
 
 ?>
 <!-- logo starts -->
-<!-- <div class="<?php /* echo implode(' ', $class); */ ?>"> -->
 <?php if ($logo_type == 'text') : ?>
    <!-- text logo starts -->
    <?php
@@ -60,7 +59,11 @@ if ($logo_link_type === 'custom') {
    ?>
    <div class="logo-wrapper <?php echo implode(' ', $class); ?> flex-column<?php echo $mr; ?>">
       <a target="<?php echo $logo_link_target; ?>" class="site-title" href="<?php echo $logo_link; ?>"><?php echo $logo_text; ?></a>
-      <p class="site-tagline"><?php echo $tag_line; ?></p>
+       <?php
+       if ($tag_line) {
+           echo '<p class="site-tagline">'. $tag_line .'</p>';
+       }
+       ?>
    </div>
    <!-- text logo ends -->
 <?php endif; ?>
@@ -84,5 +87,4 @@ if ($logo_link_type === 'custom') {
    </div>
    <!-- image logo ends -->
 <?php endif; ?>
-<!-- </div> -->
 <!-- logo ends -->

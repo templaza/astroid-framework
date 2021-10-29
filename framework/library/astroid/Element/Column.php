@@ -69,6 +69,18 @@ class Column extends BaseElement
             }
         }
 
+        //Column Order
+        $column_order_xl     =   $this->params->get('column_order_xl', 0);
+        $column_order_lg     =   $this->params->get('column_order_lg', 0);
+        $column_order_md     =   $this->params->get('column_order_md', 0);
+        $column_order_sm     =   $this->params->get('column_order_sm', 0);
+        $column_order_xs     =   $this->params->get('column_order_xs', 0);
+        $this->addClass('order-xl-'.$column_order_xl);
+        $this->addClass('order-lg-'.$column_order_lg);
+        $this->addClass('order-md-'.$column_order_md);
+        $this->addClass('order-sm-'.$column_order_sm);
+        $this->addClass('order-'.$column_order_xs);
+
         parent::_getclasses();
     }
 }

@@ -28,6 +28,7 @@
          </field>
 
          <field ngShow="header==true AND header_mode=='stacked'" astroidgroup="header_element" name="header_stacked_menu_mode" type="astroidradio" image-width="150" radio-image="true" default="seperated" label="TPL_ASTROID_HEADER_STACKED_HEADER_MODE_LABEL" description="TPL_ASTROID_HEADER_STACKED_HEADER_MODE_DESC">
+            <option label="TPL_ASTROID_STACKED_CENTER_BALANCE" value="center-balance">media/astroid/assets/images/header/stacked_style0.svg</option>
             <option label="TPL_ASTROID_STACKED_CENTER" value="center">media/astroid/assets/images/header/stacked_style1.svg</option>
             <option label="TPL_ASTROID_STACKED_SEPERATED" value="seperated">media/astroid/assets/images/header/stacked_style2.svg</option>
             <option label="TPL_ASTROID_STACKED_DIVIDED" value="divided">media/astroid/assets/images/header/stacked_style3.svg</option>
