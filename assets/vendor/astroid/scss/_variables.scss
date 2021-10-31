@@ -99,3 +99,9 @@ $tag-text-color: #8E8E8E;
 $tag-padding: 4px 8px;
 $tag-icon: \f02c;
 $tag-icon-color: $primary;
+
+// Form check
+$form-check-input-gutter:               1.25rem !default;
+
+// Utilities
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex !default;

@@ -60,13 +60,13 @@ body.rtl {
    .pagination li {
       &:first-child a{
          border-right:1px solid #dee2e6;
-         @include border-left-radius(0);
-         @include border-right-radius($border-radius);
+         @include border-start-radius(0);
+         @include border-end-radius($border-radius);
       }
       &:last-child a{
          border-right: 0;
-         @include border-right-radius(0);
-         @include border-left-radius($border-radius);
+         @include border-end-radius(0);
+         @include border-start-radius($border-radius);
       }
    }
    ol,
@@ -99,10 +99,10 @@ body.rtl {
       @include media-breakpoint-up($breakpoint) {
          $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
          .float#{$infix}-left {
-            @include float-right;
+            float: right !important;
          }
          .float#{$infix}-right {
-            @include float-left;
+            float: left !important;
          }
       }
    } // Responsive alignment
@@ -148,24 +148,24 @@ body.rtl {
       >.form-control,
       >.custom-select {
          &:not(:last-child) {
-            @include border-left-radius(0);
-            @include border-right-radius($input-border-radius);
+            @include border-start-radius(0);
+            @include border-end-radius($input-border-radius);
          }
          &:not(:first-child) {
-            @include border-right-radius(0);
-            @include border-left-radius($input-border-radius);
+            @include border-end-radius(0);
+            @include border-start-radius($input-border-radius);
          }
       } // Custom file inputs have more complex markup, thus requiring different
       // border-radius overrides.
       >.custom-file {
          &:not(:last-child) .custom-file-label,
             &:not(:last-child) .custom-file-label::after {
-            @include border-left-radius(0);
-            @include border-right-radius($input-border-radius);
+            @include border-start-radius(0);
+            @include border-end-radius($input-border-radius);
          }
          &:not(:first-child) .custom-file-label {
-            @include border-right-radius(0);
-            @include border-left-radius($input-border-radius);
+            @include border-end-radius(0);
+            @include border-start-radius($input-border-radius);
          }
       }
    }
@@ -175,8 +175,8 @@ body.rtl {
       .input-group>.input-group-append:not(:last-child)>.input-group-text,
       .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle),
       .input-group>.input-group-append:last-child>.input-group-text:not(:last-child) {
-      @include border-left-radius(0);
-      @include border-right-radius($input-border-radius);
+      @include border-start-radius(0);
+      @include border-end-radius($input-border-radius);
    }
    .input-group>.input-group-append>.btn,
    .input-group>.input-group-append>.input-group-text,
@@ -184,8 +184,8 @@ body.rtl {
       .input-group>.input-group-prepend:not(:first-child)>.input-group-text,
       .input-group>.input-group-prepend:first-child>.btn:not(:first-child),
       .input-group>.input-group-prepend:first-child>.input-group-text:not(:first-child) {
-      @include border-right-radius(0);
-      @include border-left-radius($input-border-radius);
+      @include border-end-radius(0);
+      @include border-start-radius($input-border-radius);
    }
    .input-group-prepend {
       margin-left: -$input-border-width;
@@ -213,13 +213,13 @@ body.rtl {
       } // Reset rounded corners
       >.btn:not(:last-child):not(.dropdown-toggle),
          >.btn-group:not(:last-child)>.btn {
-         @include border-left-radius(0);
-         @include border-right-radius($input-border-radius);
+         @include border-start-radius(0);
+         @include border-end-radius($input-border-radius);
       }
       >.btn:not(:first-child),
          >.btn-group:not(:first-child)>.btn {
-         @include border-right-radius(0);
-         @include border-left-radius($input-border-radius);
+         @include border-end-radius(0);
+         @include border-start-radius($input-border-radius);
       }
    }
 }
