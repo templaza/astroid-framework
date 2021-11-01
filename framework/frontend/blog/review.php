@@ -32,21 +32,25 @@ if (empty($overall_rating)) {
    $overall_rating = $score / $items;
 }
 ?>
-<div class="article-review">
+<div class="article-review uk-margin-medium">
    <div class="review-head row">
-      <div class="review-total-score col-auto">
-         <div class="review-total-score-wrapper">
-            <span class="score-value"><?php echo $overall_rating; ?></span>
-            <span class="score-label"><?php echo JText::_('ASTROID_ARTICLE_TOTAL_SCORE'); ?></span>
-         </div>
+      <div class="col-auto">
+          <div class="review-total-score">
+              <div class="review-total-score-wrapper">
+                  <span class="score-value"><?php echo $overall_rating; ?></span>
+                  <span class="score-label"><?php echo JText::_('ASTROID_ARTICLE_TOTAL_SCORE'); ?></span>
+              </div>
+          </div>
       </div>
       <div class="review-content col">
-         <?php if (!empty($heading)) { ?>
-            <h3 class="review-heading"><?php echo $heading; ?></h3>
-         <?php } ?>
-         <?php if (!empty($summery)) { ?>
-            <p class="review-summary"><?php echo $summery; ?></p>
-         <?php } ?>
+          <div class="d-flex flex-column justify-content-center h-100">
+              <?php if (!empty($heading)) { ?>
+                  <h3 class="review-heading"><?php echo $heading; ?></h3>
+              <?php } ?>
+              <?php if (!empty($summery)) { ?>
+                  <p class="review-summary"><?php echo $summery; ?></p>
+              <?php } ?>
+          </div>
       </div>
    </div>
    <div class="review-criterias">

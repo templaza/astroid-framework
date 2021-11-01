@@ -19,7 +19,7 @@ if (empty($text) && empty($author)) {
    return;
 }
 ?>
-<div class="article-quote-area">
+<div class="article-quote-area uk-margin-medium">
    <blockquote class="blockquote">
       <?php if (!empty($text)) { ?>
          <p><?php echo $text; ?></p>

@@ -1,5 +1,5 @@
 $article-posttype-icon-width: 40px;
-$article-posttype-spacing: 50px;
+$article-posttype-spacing: 40px;
 
 .items-more {
 	>a {
@@ -261,7 +261,7 @@ ul.tags{
 }
 
 .full-image {
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	&.text-left {}
 	&.text-right {
 		.img_caption {
@@ -286,21 +286,10 @@ ul.tags{
 // Gallery Type
 
 .article-gallery {
-	.carousel-control-prev,
-	.carousel-control-next {
-		height: 50px;
-		width: 50px;
-		top: 50%;
-		transform: translateY(-50%);
-		background-color: $primary;
-		background-color: lighten($color: $primary, $amount: 20);
-		opacity: 1;
-	}
-	.carousel-control-prev {
-		border-radius: 0 4px 4px 0;
-	}
-	.carousel-control-next {
-		border-radius: 4px 0 0 4px;
+	.carousel-caption {
+		h5 {
+			color: inherit;
+		}
 	}
 }
 
@@ -371,6 +360,7 @@ ul.tags{
 	text-align: center;
 	color: $white;
 	display: flex;
+	padding: 20px;
 	.review-total-score-wrapper {
 		align-self: center;
 		width: 100%;
