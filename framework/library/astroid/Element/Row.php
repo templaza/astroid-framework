@@ -80,7 +80,7 @@ class Row extends BaseElement
         $layout_type = (Framework::getDocument()->isBuilder() && $this->section->hasComponent) ? 'no-container' : $this->section->params->get('layout_type', '');
 
         if (in_array($layout_type, ['no-container', 'custom-container', 'container-with-no-gutters', 'container-fluid-with-no-gutters'])) {
-            $this->addClass('no-gutters');
+            $this->addClass('no-gutters gx-0');
         }
 
         parent::_getclasses();
