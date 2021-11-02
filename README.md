@@ -27,6 +27,7 @@ Version 2.5.5 - November 2nd, 2021
     [update] Migrate to Bootstrap 5
     [update] Update Social layout
     [update] Update Blog post type
+    [update] Update Astroid Information
     [add] Add Stacked Center Balance header
     [add] Add Column Order in Responsive layout
     [add] Add Color option for Back to top icon
