@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension version="3.1" type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
-   <author>JoomDev</author>
-   <creationDate>Aug 2021</creationDate>
-   <version>2.5.4</version>
+   <author>JoomDev/TemPlaza</author>
+   <creationDate>November 2021</creationDate>
+   <version>2.5.5</version>
    <url>https://www.astroidframework.com</url>
-   <copyright>Copyright (C) 2021 Joomdev, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-   <authorEmail>info@joomdev.com</authorEmail>
-   <authorUrl>https://www.joomdev.com</authorUrl>
+   <authorEmail>info@templaza.com</authorEmail>
+   <authorUrl>https://www.templaza.com</authorUrl>
    <description>Astroid Framework Plugin Description Here</description>>
    <files>
       <filename plugin="astroid">astroid.php</filename>
