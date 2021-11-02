@@ -8,7 +8,7 @@
 
 
 ## Requirements
-* Joomla: 3.8 +
+* Joomla: 3.x, 4.x
 * PHP : 5.6+
 
 ## Browser Support
@@ -19,3 +19,18 @@
 ## Links
 * [Documentation](https://docs.joomdev.com)
 * [Translations](https://github.com/joomdev/Astroid-Framework/wiki/Translations)
+
+## Changelogs
+
+Version 2.5.5 - November 2nd, 2021
+    
+    [update] Migrate to Bootstrap 5
+    [update] Update Social layout
+    [update] Update Blog post type
+    [add] Add Stacked Center Balance header
+    [add] Add Column Order in Responsive layout
+    [add] Add Color option for Back to top icon
+    [fixbug] Fix PHP warning when Itemid is null
+    [fixbug] Fix PHP warning when system redirect to admin login
+    [fixbug] Fix 404 error when load cassiopeia/css/vendor/fontawesome-free/fontawesome.min.css
+

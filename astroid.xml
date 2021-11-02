@@ -26,6 +26,6 @@
       <language tag="en-GB">en-GB.astroid.sys.ini</language>
    </languages>
    <updateservers>
-      <server type="extension" priority="1" name="Astroid Framework">https://cdn.joomdev.com/updates/astroid_framework.xml</server>
+      <server type="extension" priority="1" name="Astroid Framework">https://raw.githubusercontent.com/templaza/astroid-framework/master/astroid_framework.xml</server>
    </updateservers>
 </extension>
