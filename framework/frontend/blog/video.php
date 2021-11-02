@@ -23,7 +23,7 @@ if (empty($content)) {
    return;
 }
 ?>
-<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="embed-responsive embed-responsive-16by9 article-video">
+<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">
    <?php echo $content; ?>
    <meta itemprop="name" content="<?php echo $article->title; ?>" />
    <meta itemprop="embedUrl" content="<?php echo $url; ?>" />
