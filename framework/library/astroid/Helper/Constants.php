@@ -19,13 +19,13 @@ class Constants
     public static $forum_link = 'https://www.joomdev.com/forum/astroid-framework';
     public static $documentation_link = 'https://docs.joomdev.com/category/astroid-user-manual/';
     public static $video_tutorial_link = 'https://www.youtube.com/playlist?list=PLv9TlpLcSZTBBVpJqe3SdJ34A6VvicXqM';
-    public static $github_link = 'https://github.com/joomdev/astroid-framework';
-    public static $download_link = 'https://github.com/joomdev/Astroid-Framework/releases/latest';
-    public static $releases_link = 'https://github.com/joomdev/Astroid-Framework/releases';
+    public static $github_link = 'https://github.com/templaza/astroid-framework';
+    public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
+    public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $joomdev_link = 'https://www.joomdev.com';
-    public static $joomdev_products_link = 'https://www.joomdev.com/products';
-    public static $joomdev_templates_link = 'https://www.joomdev.com/products/templates';
-    public static $jd_builder_link = 'https://www.joomdev.com/jd-builder';
+    public static $joomdev_products_link = 'https://www.templaza.com/joomla-templates.html';
+    public static $joomdev_templates_link = 'https://www.templaza.com/joomla-templates.html';
+    public static $jd_builder_link = 'https://www.templaza.com/joomla-templates.html';
 
     public static $bootstrap_colors = [
         '' => 'TPL_COLOR_DEFAULT',
