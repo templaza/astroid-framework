@@ -6,6 +6,25 @@
 
 [![Watch Intro Video here](https://www.joomdev.com/images/githubassets/astroid-play.jpg)](https://www.youtube.com/watch?v=ZflNq3fDaXE)
 
+## Features
+* Bootstrap 5 Compatible
+* Built for Joomla 4
+* Drag and Drop Layout Builder
+* Advanced Responsive Control
+* Advanced Mega Menu
+* Off-Canvas Menu
+* Advanced Typography Controls
+* Advanced Blog Options
+* Unlimited Custom Code
+* Logo and Header Options
+* Enhanced User Experience
+* Import/Export Settings
+* Only Enable What You Need
+* Font Awesome 5
+* Social Icons & Share
+* SaaS ready
+* Responsive & Accessible Design
+* Refactored Codebase
 
 ## Requirements
 * Joomla: 3.x, 4.x
