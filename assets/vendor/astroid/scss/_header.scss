@@ -57,7 +57,7 @@
          }
 
          .astroid-logo-sticky {
-            @include media-breakpoint-between(lg, xl) {
+            @include media-breakpoint-up(md) {
                display: block !important;
             }
          }
