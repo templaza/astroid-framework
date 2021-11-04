@@ -41,6 +41,12 @@
 
 ## Changelogs
 
+Version 2.5.6 - November 4th, 2021
+
+    [fixbug] Fix logo sticky disappear in xxl screen
+    [improve] Improve Social Style
+    [improve] Fix Pagination Buttons in mobile run out of screen and Add float-left, float-right class 
+
 Version 2.5.5 - November 2nd, 2021
     
     [update] Migrate to Bootstrap 5

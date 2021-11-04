@@ -12,43 +12,51 @@
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-$document = Astroid\Framework::getDocument();
-$params = Astroid\Framework::getTemplate()->getParams();
+$document   = Astroid\Framework::getDocument();
+$params     = Astroid\Framework::getTemplate()->getParams();
 
-$social_profiles    = $params->get('social_profiles', []);
-$style              = $params->get('social_profiles_style', 1);
-$gutter             = $params->get('social_profiles_gutter', 'small');
-$fontsize           = $params->get('social_profiles_fontsize', '16px');
+$social_profiles            = $params->get('social_profiles', []);
+$style                      = $params->get('social_profiles_style', 1);
+$gutter                     = $params->get('social_profiles_gutter', '');
+$fontsize                   = $params->get('social_profiles_fontsize', '16px');
+$social_icon_color          = $params->get('social_icon_color', '');
+$social_icon_color_hover    = $params->get('social_icon_color_hover', '');
 if (!empty($social_profiles)) {
-   $social_profiles = json_decode($social_profiles);
+    $social_profiles = json_decode($social_profiles);
 }
-$class              = $gutter ? 'uk-grid-'.$gutter : '';
+$class              = $gutter ? 'gx-'.$gutter : '';
 $styles             = '';
 if (!empty($fontsize)) {
     $styles         .=  '.astroid-social-icons {font-size:'.$fontsize.'}';
 }
+if (!empty($social_icon_color) && $style == 1) {
+    $styles         .= '.astroid-social-icons a{ color: ' . $social_icon_color . ' !important;}';
+}
+if (!empty($social_icon_color_hover) && $style == 1) {
+    $styles         .= '.astroid-social-icons a:hover{ color: ' . $social_icon_color_hover . ' !important;}';
+}
 $document->addStyledeclaration($styles);
 ?>
 
-<div class="astroid-social-icons<?php echo !empty($class) ? ' ' . $class : ''; ?>" data-uk-grid>
-   <?php
-   foreach ($social_profiles as $social_profile) {
-      switch ($social_profile->id) {
-         case 'whatsapp':
-            $social_profile_link = 'https://wa.me/' . $social_profile->link;
-            break;
-         case 'telegram':
-            $social_profile_link = 'https://t.me/' . $social_profile->link;
-            break;
-         case 'skype':
-            $social_profile_link = 'skype:' . $social_profile->link . '?chat';
-            break;
-         default:
-            $social_profile_link = $social_profile->link;
-            break;
-      }
-      $sid = md5($social_profile->color . $social_profile_link . $social_profile->icon);
-      echo '<div><a title="' . ($social_profile->title ? $social_profile->title : 'Social Icon') . '" ' . ($style != 1 ? ' aria-label="' . $social_profile->title . '" style="color:' . $social_profile->color . '"' : '') . ' href="' . $social_profile_link . '" target="_blank" rel="noopener"><i class="' . $social_profile->icon . '"></i></a></div>';
-   }
-   ?>
+<div class="astroid-social-icons row<?php echo !empty($class) ? ' ' . $class : ''; ?>">
+    <?php
+    foreach ($social_profiles as $social_profile) {
+        switch ($social_profile->id) {
+            case 'whatsapp':
+                $social_profile_link = 'https://wa.me/' . $social_profile->link;
+                break;
+            case 'telegram':
+                $social_profile_link = 'https://t.me/' . $social_profile->link;
+                break;
+            case 'skype':
+                $social_profile_link = 'skype:' . $social_profile->link . '?chat';
+                break;
+            default:
+                $social_profile_link = $social_profile->link;
+                break;
+        }
+        $sid = md5($social_profile->color . $social_profile_link . $social_profile->icon);
+        echo '<div class="col"><a title="' . ($social_profile->title ? $social_profile->title : 'Social Icon') . '" ' . ($style != 1 ? ' aria-label="' . $social_profile->title . '" style="color:' . $social_profile->color . '"' : '') . ' href="' . $social_profile_link . '" target="_blank" rel="noopener"><i class="' . $social_profile->icon . '"></i></a></div>';
+    }
+    ?>
 </div>
