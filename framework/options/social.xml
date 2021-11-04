@@ -11,11 +11,13 @@
 				<option value="before">TPL_ASTROID_BEFORE_MODULE</option>
 			</field>
 
-			<field astroidgroup="social_profile" name="social_profiles_gutter" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_GUTTER" description="TPL_ASTROID_SOCIAL_GUTTER_DESC">
+			<field astroidgroup="social_profile" name="social_profiles_gutter" type="astroidlist" class="form-control" default="" label="TPL_ASTROID_SOCIAL_GUTTER" description="TPL_ASTROID_SOCIAL_GUTTER_DESC">
 				<option value="">Default</option>
-				<option value="small">Small</option>
-				<option value="medium">Medium</option>
-				<option value="large">Large</option>
+				<option value="1">X-Small</option>
+				<option value="2">Small</option>
+				<option value="3">Medium</option>
+				<option value="4">Large</option>
+				<option value="5">X-Large</option>
 			</field>
 
 			<field astroidgroup="social_profile" name="social_profiles_fontsize" type="astroidtext" label="TPL_ASTROID_SOCIAL_FONTSIZE" hint="16px" class="form-control">
@@ -24,6 +26,12 @@
 			<field astroidgroup="social_profile" name="social_profiles_style" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_STYLE" description="TPL_ASTROID_SOCIAL_STYLE_DESC">
 				<option value="1">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_INHERIT_COLOR</option>
 				<option value="2">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_BRAND_COLOR</option>
+			</field>
+
+			<field astroidgroup="social_profile" ngShow="social_profiles_style=='1'" description="TPL_ASTROID_SOCIAL_COLOR_DESC" name="social_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_SOCIAL_COLOR_LABEL">
+			</field>
+
+			<field astroidgroup="social_profile" ngShow="social_profiles_style=='1'" description="TPL_ASTROID_SOCIAL_COLOR_HOVER_DESC" name="social_icon_color_hover" type="astroidcolor" large="true" label="TPL_ASTROID_SOCIAL_COLOR_HOVER_LABEL">
 			</field>
 
 			<field astroidgroup="social_profile" name="social_profiles" type="astroidsocialprofiles"></field>

@@ -1,5 +1,5 @@
 [![Github All Releases](https://img.shields.io/github/downloads/templaza/astroid-framework/total.svg)](https://github.com/templaza/astroid-framework/releases)
-![AUR](https://img.shields.io/aur/license/yaourt.svg)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/templaza/astroid-framework.svg)](https://github.com/templaza/astroid-framework/releases)
 
 # Astroid Framework - Powerful Joomla Template Framework
@@ -40,6 +40,12 @@
 * [Translations](https://github.com/joomdev/Astroid-Framework/wiki/Translations)
 
 ## Changelogs
+
+Version 2.5.6 - November 4th, 2021
+
+    [fixbug] Fix logo sticky disappear in xxl screen
+    [improve] Improve Social Style
+    [improve] Fix Pagination Buttons in mobile run out of screen and Add float-left, float-right class 
 
 Version 2.5.5 - November 2nd, 2021
     
