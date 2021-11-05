@@ -41,6 +41,11 @@
 
 ## Changelogs
 
+Version 2.5.7 - November 5th, 2021
+
+    [fixbug] Fix issue missing .form-group of Zero and One Template with BS5
+    [improve] Add Text Logo Typography.
+
 Version 2.5.6 - November 4th, 2021
 
     [fixbug] Fix logo sticky disappear in xxl screen
