@@ -1,0 +1,18 @@
+.fas.icon-eye-slash {
+  &:before {
+    content: "\f070";
+  }
+}
+.mod-login__username {
+  .fa-user {
+    min-width: 18px;
+  }
+}
+.mod-login__password {
+  .btn {
+    padding: 0.375rem 0.75rem;
+  }
+  .fa-eye {
+    min-width: 18px;
+  }
+}
