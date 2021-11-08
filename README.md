@@ -36,8 +36,9 @@
 | &nbsp;&nbsp;Chrome 64+&nbsp;&nbsp; | &nbsp;&nbsp;Firefox 58+&nbsp;&nbsp; | &nbsp;&nbsp;Edge 14+&nbsp;&nbsp; | &nbsp;&nbsp;Safari 10+ &nbsp;&nbsp; |
 
 ## Links
-* [Documentation](https://docs.joomdev.com)
+* [Documentation](https://github.com/templaza/astroid-framework/wiki)
 * [Translations](https://github.com/joomdev/Astroid-Framework/wiki/Translations)
+* [Find a template](https://www.templaza.com/joomla-templates.html)
 
 ## Changelogs
 
