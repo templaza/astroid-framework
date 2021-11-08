@@ -20,8 +20,6 @@ class Form
     public function __construct($name)
     {
         $this->form = new \JForm($name);
-        $template = Framework::getTemplate();
-        Helper::triggerEvent('onBeforeAstroidFormLoad', [&$template, &$this->form]);
     }
 
     public function loadOptions($dir = '')

@@ -90,8 +90,11 @@ class Admin extends Helper\Client
 
         Framework::getDebugger()->log('Loading Forms');
         $form = Framework::getForm();
+        Helper::triggerEvent('onBeforeAstroidFormLoad', [&$template, &$form]);
         $form->loadOptions(JPATH_LIBRARIES . '/astroid/framework/options');
+        Helper::triggerEvent('onAfterAstroidFormLoad', [&$template, &$form]);
         $form->loadOptions(ASTROID_TEMPLATE_PATH . '/astroid/options');
+        Helper::triggerEvent('onAfterAstroidTemplateFormLoad', [&$template, &$form]);
         Framework::getDebugger()->log('Loading Forms');
 
         $this->checkAndRedirect(); // Auth
