@@ -11,7 +11,6 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
-use Astroid\Helper;
 
 extract($displayData);
 $params = Astroid\Framework::getTemplate()->getParams();
@@ -34,20 +33,6 @@ if ($logo_type == 'text') {
     $config = JFactory::getConfig();
     $logo_text = $params->get('logo_text', $config->get('sitename')); // Logo Text
     $tag_line = $params->get('tag_line', ''); // Logo Tagline
-    // Logo Font Styles
-    $bodyType = $params->get('logo_typography');
-    if (trim($bodyType) == 'custom') {
-        $typography     = $params->get('logo_typography_options');
-        $selector       = '.astroid-logo-text > a.site-title';
-        Helper\Style::renderTypography($selector, $typography);
-    }
-    // Logo Tag Line Font Styles
-    $bodyType = $params->get('logo_tag_line_typography');
-    if (trim($bodyType) == 'custom') {
-        $typography     = $params->get('logo_tag_line_typography_options');
-        $selector       = '.astroid-logo-text > p.site-tagline';
-        Helper\Style::renderTypography($selector, $typography);
-    }
 } else {
     // Logo file
     $default_logo = $params->get('defult_logo', false);
