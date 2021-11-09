@@ -27,3 +27,9 @@
 		display: none !important;
 	}
 }
+
+.hideonxxl {
+	@include media-breakpoint-only(xxl) {
+		display: none !important;
+	}
+}

@@ -116,6 +116,9 @@
             <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
             <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
          </field>
+
+         <field astroidgroup="layout_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
+         </field>
          
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"></field>
          
