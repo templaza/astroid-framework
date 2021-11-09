@@ -75,6 +75,7 @@
             <field description="TPL_ASTROID_ELEMENT_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
             <field description="TPL_ASTROID_ELEMENT_LARGE_DEVICES_DESC" name="hideonlg" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
             <field description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
          </fieldset>
       </fields>
    </form>
