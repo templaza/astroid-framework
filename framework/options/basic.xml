@@ -8,7 +8,7 @@
          <field type="astroidgroup" name="layout_setting" title="TPL_ASTROID_LAYOUT_SETTING_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-layout-settings/"/>
          <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://docs.joomdev.com/article/smooth-scroll/"/>
 		
-         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"></field>
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"/>
          <field astroidgroup="preloader_options" ngShow="preloader=='1'" description="TPL_ASTROID_PRELOADER_TYPE_DESC" name="preloder_setting" type="astroidradio" default="animations" label="TPL_ASTROID_PRELOADER_TYPE">
             <option value="animations">ASTROID_ANIMATION</option>
             <option value="image">TPL_ASTROID_IMAGE</option>
@@ -55,7 +55,7 @@
 
          <field ngShow="preloader=='1' AND (preloder_setting =='animations' OR preloder_setting =='fontawesome')" astroidgroup="preloader_options" name="preloader_size" type="astroidrange" astroid-scss-variable="spinkit-size" min="20" max="500" step="1" postfix="px" default="40" label="TPL_ASTROID_BASIC_PRELOADER_SIZE_LABEL" description="TPL_ASTROID_BASIC_PRELOADER_SIZE_DESC" />
 
-         <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" ></field>
+         <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" />
 
          <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_DESC" name="backtotop_icon" type="astroidicon" class="form-control" label="TPL_ASTROID_BASIC_ICON_LABEL" />
 
@@ -74,7 +74,7 @@
             <option value="square">TPL_ASTROID_ICON_STYLE_SQUARE</option>
          </field>
 
-         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"></field>
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"/>
 		 
          <field astroidgroup="layout_setting" description="TPL_ASTROID_ADVANCED_LAYOUT_SELECT_DESC" name="template_layout" type="astroidradio" default="wide" label="TPL_ASTROID_ADVANCED_LAYOUT_SELECT">
             <option value="wide">TPL_ASTROID_ADVANCED_LAYOUT_OPTION_WIDE</option>
@@ -120,7 +120,7 @@
          <field astroidgroup="layout_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
          </field>
          
-         <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"></field>
+         <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
          
 		   <field ngShow="enable_smooth_scroll=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
          
