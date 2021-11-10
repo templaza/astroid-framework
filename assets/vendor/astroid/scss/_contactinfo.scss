@@ -1,16 +1,21 @@
 .astroid-contact-info {
 	span {
-		margin-right: 5px;
-		margin-left: 5px;
 		display: inline-block;
-		&:first-child {
-			margin-left: 0;
-		}
-		&:last-child {
-			margin-right: 0;
+		&:not(:first-child) {
+			margin-left: 10px;
 		}
 		[class*="fa-"] {
 			margin-right: 5px;
+		}
+	}
+}
+.rtl {
+	.astroid-contact-info {
+		span {
+			&:not(:first-child) {
+				margin-left: 0;
+				margin-right: 10px;
+			}
 		}
 	}
 }
