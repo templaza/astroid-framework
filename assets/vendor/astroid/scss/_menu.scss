@@ -17,7 +17,7 @@
 // Megamenu Dropdown
 
 .megamenu-container {
-	padding: 15px 10px;
+	--as-menu-gutter-x: #{$megamenu-gutter-width};
 	display: none;
 	position: absolute;
 	z-index: 999;
@@ -25,14 +25,19 @@
 	&.nav-submenu-container {
 		padding: 0;
 	}
+	padding: calc(var(--as-menu-gutter-x) * .5) calc(var(--as-menu-gutter-x) * .25);
+	.row > * {
+		padding-left: calc(var(--as-menu-gutter-x) * .25);
+		padding-right: calc(var(--as-menu-gutter-x) * .25);
+	}
 }
 
 .nav-item-megamenu .nav-submenu {
 
 	.item-link-heading.item-level-2,
 	.item-link-separator.item-level-2 {
-		border-bottom: 1px solid #B4B4B4;
-
+		text-transform: uppercase;
+		font-weight: bolder;
 		&:hover {
 			color: inherit !important;
 			background-color: inherit !important;
