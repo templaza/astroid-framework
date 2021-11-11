@@ -42,6 +42,16 @@
 
 ## Changelogs
 
+Version 2.5.8 - November 11th, 2021
+
+    [fixbug] Fix hideonxxl is missing.
+    [fixbug] Fix blog column not work on Featured Article view on One and Zero Template
+    [improve] Add Theme-Width option
+    [improve] Improve Social col style. Add trigger onBeforeAstroidTemplateFormLoad & onAfterAstroidTemplateFormLoad
+    [improve] Improve Responsive Stacked Divided header
+    [improve] Improve Contact Info style & Off-canvas RTL style 
+    [improve] Add font-size option for Heading on Category Blog Layout
+
 Version 2.5.7 - November 5th, 2021
 
     [fixbug] Fix issue missing .form-group of Zero and One Template with BS5

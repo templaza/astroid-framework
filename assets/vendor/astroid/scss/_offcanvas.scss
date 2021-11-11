@@ -119,6 +119,19 @@ $offcanvas-btn: 50px !default;
 	}
 }
 
+.rtl {
+	.burger-menu-button {
+		&.header-offcanvas-trigger {
+			.inner {
+				&::before, &::after {
+					margin-left: 0;
+					left: 0;
+				}
+			}
+		}
+	}
+}
+
 .off-page-content {
 	position: fixed;
 	top: 0;

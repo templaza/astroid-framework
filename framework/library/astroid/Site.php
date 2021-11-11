@@ -24,6 +24,7 @@ class Site extends Helper\Client
         Component\Utility::typography(); // site typography
         Component\Utility::background(); // site background
         Component\Utility::colors(); // site colors
+        Component\Utility::article(); // site article
         Component\Utility::smoothScroll(); // smooth scroll utility
         Component\Utility::custom(); // site custom codes
         Component\LazyLoad::run(); // to execute lazy load

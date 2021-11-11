@@ -33,3 +33,9 @@
 		display: none !important;
 	}
 }
+
+.w-auto\@l {
+	@include media-breakpoint-up(lg) {
+		width: auto !important;
+	}
+}

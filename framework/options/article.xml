@@ -2,29 +2,30 @@
 <form>
 	<fields name="params">
 		<fieldset label="ASTROID_OPTIONS_ARTICLE_BLOG" icon="far fa-newspaper" name="articles" addfieldpath="/libraries/astroid/framework/fields" order="6">
-
-			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE"/>
 			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS"/>
+			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE"/>
 
-			<field astroidgroup="article_listing_options" name="article_posttype" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_TYPE_ICON_LBL" description="ASTROID_ARTICLE_TYPE_ICON_DESC"></field>
+			<field astroidgroup="article_listing_options" name="article_listing_lead_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="32" label="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_DESC" />
+			<field astroidgroup="article_listing_options" name="article_listing_intro_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="26" label="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_DESC" />
+			<field astroidgroup="article_listing_options" name="article_posttype" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_TYPE_ICON_LBL" description="ASTROID_ARTICLE_TYPE_ICON_DESC"/>
 
-			<field astroidgroup="article_listing_options" name="astroid_readtime" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_READTIME_LBL" description="ASTROID_ARTICLE_OPTIONS_READTIME_DESC"></field>
+			<field astroidgroup="article_listing_options" name="astroid_readtime" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_READTIME_LBL" description="ASTROID_ARTICLE_OPTIONS_READTIME_DESC"/>
 
-			<field astroidgroup="article_listing_options" name="astroid_badge" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_BADGE" description="ASTROID_ARTICLE_BADGE_DESC"></field>
+			<field astroidgroup="article_listing_options" name="astroid_badge" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_BADGE" description="ASTROID_ARTICLE_BADGE_DESC"/>
 
-			<field astroidgroup="article_single_options" name="article_authorinfo" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_AUTHORINFO_LBL" description="ASTROID_ARTICLE_OPTIONS_AUTHORINFO_DESC"></field>
+			<field astroidgroup="article_single_options" name="article_authorinfo" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_AUTHORINFO_LBL" description="ASTROID_ARTICLE_OPTIONS_AUTHORINFO_DESC"/>
 
-			<field astroidgroup="article_single_options" name="article_rating" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_ARTICLERATING_LBL" description="ASTROID_ARTICLE_OPTIONS_ARTICLERATING_DESC"></field>
+			<field astroidgroup="article_single_options" name="article_rating" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_ARTICLERATING_LBL" description="ASTROID_ARTICLE_OPTIONS_ARTICLERATING_DESC"/>
 
-			<field astroidgroup="article_single_options" name="article_relatedposts" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_RELATED_LBL" description="ASTROID_ARTICLE_RELATED_DESC"></field>
+			<field astroidgroup="article_single_options" name="article_relatedposts" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_RELATED_LBL" description="ASTROID_ARTICLE_RELATED_DESC"/>
 
-			<field ngShow="article_relatedposts" astroidgroup="article_single_options" class="form-control" name="article_relatedposts_count" type="number" hint="4" default="4" label="ASTROID_ARTICLE_COUNT_LBL" min="1" description="ASTROID_ARTICLE_COUNT_DESC"></field>
+			<field ngShow="article_relatedposts" astroidgroup="article_single_options" class="form-control" name="article_relatedposts_count" type="number" hint="4" default="4" label="ASTROID_ARTICLE_COUNT_LBL" min="1" description="ASTROID_ARTICLE_COUNT_DESC"/>
 
-			<field ngShow="article_relatedposts" astroidgroup="article_single_options" name="article_relatedposts_posttype" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_RELATED_POSTS_TYPE_ICONS" description="ASTROID_RELATED_POSTS_TYPE_ICONS_DESC"></field>
+			<field ngShow="article_relatedposts" astroidgroup="article_single_options" name="article_relatedposts_posttype" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_RELATED_POSTS_TYPE_ICONS" description="ASTROID_RELATED_POSTS_TYPE_ICONS_DESC"/>
 
-			<field ngShow="article_relatedposts" astroidgroup="article_single_options" name="article_relatedposts_badge" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_RELATED_POSTS_BADGE" description="ASTROID_RELATED_POSTS_BADGE_DESC"></field>
+			<field ngShow="article_relatedposts" astroidgroup="article_single_options" name="article_relatedposts_badge" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_RELATED_POSTS_BADGE" description="ASTROID_RELATED_POSTS_BADGE_DESC"/>
 
-			<field astroidgroup="article_single_options" name="astroid_article_readtime" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_READTIME_LBL" description="ASTROID_ARTICLE_OPTIONS_READTIME_DESC"></field>
+			<field astroidgroup="article_single_options" name="astroid_article_readtime" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_READTIME_LBL" description="ASTROID_ARTICLE_OPTIONS_READTIME_DESC"/>
 
 			<field astroidgroup="article_single_options" name="article_socialshare_type" type="astroidradio" default="none" label="ASTROID_ARTICLE_OPTIONS_SOCIALBTNS_LBL" description="ASTROID_ARTICLE_OPTIONS_SOCIALBTNS_DESC">
 				<option class="btn-danger" value="none">ASTROID_NONE</option>
@@ -36,7 +37,7 @@
 
 			<field ngShow="article_socialshare_type=='sharethis'" astroidgroup="article_single_options" name="article_socialshare_sharethis" type="astroidtext" filter="raw" class="form-control" label="ASTROID_SHARETHIS_PID_LBL" description="ASTROID_SHARETHIS_PID_DESC" />
 
-			<field astroidgroup="article_single_options" name="article_opengraph" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_OPENGRAPH_LBL" description="ASTROID_ARTICLE_OPTIONS_OPENGRAPH_DESC"></field>
+			<field astroidgroup="article_single_options" name="article_opengraph" type="astroidtext" astroid-switch="true" default="1" label="ASTROID_ARTICLE_OPTIONS_OPENGRAPH_LBL" description="ASTROID_ARTICLE_OPTIONS_OPENGRAPH_DESC"/>
 
 			<field ngShow="article_opengraph" astroidgroup="article_single_options" name="article_opengraph_facebook" type="astroidtext" filter="raw" class="form-control" label="ASTROID_FACEBOOK_APPID_LBL" description="ASTROID_FACEBOOK_APPID_DESC" />
 
