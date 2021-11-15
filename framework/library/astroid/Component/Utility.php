@@ -92,12 +92,18 @@ class Utility
     {
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
+
+        $theme_width    =   $params->get('theme_width', '');
+        if (!empty($theme_width)) {
+            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
+        }
+
         $template_layout = $params->get('template_layout', 'wide');
         if ($template_layout != 'boxed') {
             return false;
         }
-        $layout_background_image = $params->get('layout_background_image', '');
 
+        $layout_background_image = $params->get('layout_background_image', '');
         if (!empty($layout_background_image)) {
             $style = new Style('body');
             $style->addCss('background-image', 'url(' . \JURI::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
@@ -106,11 +112,6 @@ class Utility
             $style->addCss('background-position', $params->get('layout_background_position', 'inherit'));
             $style->addCss('background-attachment', $params->get('layout_background_attachment', 'inherit'));
             $style->render();
-        }
-
-        $theme_width    =   $params->get('theme_width', '');
-        if (!empty($theme_width)) {
-            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
         }
     }
 
