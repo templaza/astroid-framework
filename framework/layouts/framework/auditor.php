@@ -317,7 +317,7 @@ $stylesheets[] = $assets . 'css' . '/' . 'admin.css?v=' . $document->getMediaVer
    $scripts[] = $assets . 'vendor' . '/' . 'bootstrap/js/bootstrap-datetimepicker.min.js?v=' . $document->getMediaVersion();
    $scripts[] = $assets . 'vendor' . '/' . 'bootstrap-slider' . '/' . 'js' . '/' . 'bootstrap-slider.min.js?v=' . $document->getMediaVersion();
    $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'angular.min.js?v=' . $document->getMediaVersion();
-   $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'angular-animate.js?v=' . $document->getMediaVersion();
+   $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'angular-animate.min.js?v=' . $document->getMediaVersion();
    $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'sortable.min.js?v=' . $document->getMediaVersion();
    $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'angular-legacy-sortable.js?v=' . $document->getMediaVersion();
    foreach ($scripts as $script) {
