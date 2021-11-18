@@ -5,7 +5,7 @@ We really appriciate any help! If you find an issue or want to help please mail 
 
 ## Completed Languages
 * Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
-* Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cz-CZ.zip)
+* Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cs-CZ.zip)
 * Dutch (nl-NL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_nl-NL.zip)
 * French (fr-FR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_fr-FR.zip)
 * German (de-DE) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
