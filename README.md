@@ -4,7 +4,7 @@
 
 
 ## Completed Languages
-* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE/astroid_de-DE.zip) 
+* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip) 
 
 ## Requirements
 * Joomla: 3.x, 4.x
