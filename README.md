@@ -7,7 +7,7 @@
 
 
 ## Completed Languages
-* Arabic (ar-AA) 
+* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/blob/language/astroid_de-DE/astroid_de-DE.zip) 
 * Built for Joomla 4
 * Drag and Drop Layout Builder
 * Advanced Responsive Control
