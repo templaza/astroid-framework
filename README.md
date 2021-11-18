@@ -6,8 +6,8 @@
 # Astroid is available in the following languages
 
 
-## Features
-* Bootstrap 5 Compatible
+## Completed Languages
+* Arabic (ar-AA) 
 * Built for Joomla 4
 * Drag and Drop Layout Builder
 * Advanced Responsive Control
