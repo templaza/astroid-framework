@@ -1,22 +1,18 @@
 <a title="Crowdin" target="_blank" href="https://crowdin.com"><img src="https://badges.crowdin.net/astroid/localized.svg"></a>
 
 # Astroid is available in the following languages
-
+We really appriciate any help! If you find an issue or want to help please mail us at: joomlaplates@gmail.com
 
 ## Completed Languages
-* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip) 
+* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
+* Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cz-CZ.zip)
+* Dutch (nl-NL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_nl-NL.zip)
+* French (fr-FR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_fr-FR.zip)
+* German (de-DE) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
+* Greek(el-GR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_el-GR.zip)
+* Polish (pl-PL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_pl-PL.zip)
+* Russian (ru-RU) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ru-RU.zip)
+* Spanish (es-ES)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_es-ES.zip)
 
-## Requirements
-* Joomla: 3.x, 4.x
-* PHP : 5.6+
 
-## Browser Support
-| ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)|![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)|![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)|![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)|
-| :---: | :---:	|:---:|:---:|
-| &nbsp;&nbsp;Chrome 64+&nbsp;&nbsp; | &nbsp;&nbsp;Firefox 58+&nbsp;&nbsp; | &nbsp;&nbsp;Edge 14+&nbsp;&nbsp; | &nbsp;&nbsp;Safari 10+ &nbsp;&nbsp; |
-
-## Links
-* [Documentation](https://github.com/templaza/astroid-framework/wiki)
-* [Translations](https://github.com/joomdev/Astroid-Framework/wiki/Translations)
-* [Find a template](https://www.templaza.com/joomla-templates.html)
 
