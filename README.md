@@ -3,9 +3,8 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/templaza/astroid-framework.svg)](https://github.com/templaza/astroid-framework/releases)
 
-# Astroid Framework - Powerful Joomla Template Framework
+# Astroid is available in the following languages
 
-[![Watch Intro Video here](https://www.joomdev.com/images/githubassets/astroid-play.jpg)](https://www.youtube.com/watch?v=ZflNq3fDaXE)
 
 ## Features
 * Bootstrap 5 Compatible
