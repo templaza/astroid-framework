@@ -14,5 +14,9 @@ We really appriciate any help! If you find an issue or want to help please mail 
 * Russian (ru-RU) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ru-RU.zip)
 * Spanish (es-ES)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_es-ES.zip)
 
+## How to install a language file
+* Download the language file
+* Goto Joomla admin area > system > install > extension
+* Now drop the file, see picture below
 
-
+![install](https://user-images.githubusercontent.com/71080509/142489908-e2abe613-36a0-4ccc-8087-36c738df877f.jpg)
