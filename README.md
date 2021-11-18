@@ -22,7 +22,7 @@
 * Only Enable What You Need
 * Font Awesome 5
 * Social Icons & Share
-* SaaS ready
+* Sass ready
 * Responsive & Accessible Design
 * Refactored Codebase
 
@@ -41,6 +41,17 @@
 * [Find a template](https://www.templaza.com/joomla-templates.html)
 
 ## Changelogs
+
+Version 2.5.9 - November 18th, 2021
+
+    [fixbug] Fix issue theme-width does not work
+    [fixbug] Fix Popover JS issue.
+    [fixbug] Fix animate wrong display
+    [fixbug] Fix issue not is_file of LazyLoad.php
+    [improve] Improve Megamenu white space
+    [improve] Add Bootstrap Bundle JS Library
+    [improve] Add Banner CTA Button for Banner Block
+    [update] Update AngularJS v1.8.2
 
 Version 2.5.8 - November 11th, 2021
 
