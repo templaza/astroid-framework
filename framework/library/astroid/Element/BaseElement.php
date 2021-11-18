@@ -204,6 +204,7 @@ class BaseElement
         }
         $document = Framework::getDocument();
         $document->addStyleSheet('css/animate.min.css');
+        $this->addAttribute('style', 'visibility: hidden;');
         $this->addAttribute('data-animation', $animation);
 
         $delay = $this->params->get('animation_delay', '');

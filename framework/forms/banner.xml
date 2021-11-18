@@ -15,6 +15,13 @@
 			</field>
 			<field showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" name="astroid_banner_subtitle" type="text" label="ASTROID_BANNER_SUBTITLE_LABEL">
 			</field>
+			<field showon="astroid_banner_enabled:1" name="astroid_banner_buttons" type="subform" label="ASTROID_BANNER_CTA_BUTTON_LABEL" description="ASTROID_BANNER_CTA_BUTTON_DESC" multiple="true">
+				<form>
+					<field name="text" label="ASTROID_BANNER_CTA_BUTTON_TEXT_LABEL" type="text" />
+					<field name="link" label="ASTROID_BANNER_CTA_BUTTON_LINK_LABEL" type="text" />
+					<field name="class" label="ASTROID_BANNER_CTA_BUTTON_CLASS_LABEL" type="text" default="btn btn-primary" />
+				</form>
+			</field>
 			<field name="astroid_banner_textcolor" type="color" showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" label="TPL_ASTROID_TEXT_COLOR_LABEL">
 			</field>
 			<field name="astroid_banner_subtextcolor" type="color" showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" label="TPL_ASTROID_SUBTEXT_COLOR_LABEL">
@@ -70,6 +77,9 @@
 				<option value="">Default</option>
 				<option value="fixed">Fixed</option>
 				<option value="scroll">Scroll</option>
+			</field>
+
+			<field showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_overlay_color" type="color" format="rgba" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
 			</field>
 
 			<field type="spacer" showon="astroid_banner_enabled:1[AND]astroid_banner_bgimage!:" name="astroid_banner_bgimage_spacer2" hr="true"></field>

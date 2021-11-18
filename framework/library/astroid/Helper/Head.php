@@ -46,8 +46,7 @@ class Head
         $getPluginParams = Helper::getPluginParams();
 
         if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
-            $document->addScript('vendor/bootstrap/js/popper.min.js', 'body');
-            $document->addScript('vendor/bootstrap/js/bootstrap.min.js', 'body');
+            $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
         }
 
         $document->addScript('vendor/jquery/jquery.noConflict.js', 'body');
