@@ -361,7 +361,9 @@ $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'sortable.min.js?v=' .
 $scripts[] = $assets . 'vendor' . '/' . 'angular' . '/' . 'angular-legacy-sortable.js?v=' . $document->getMediaVersion();
 $scripts[] = $assets . 'js' . '/' . 'astroid-framework.js?v=' . $document->getMediaVersion();
 echo "<script src='" . JURI::root() . "/media/astroid/assets/vendor/jquery/jquery-3.5.1.min.js'></script>";
-echo "<script src='" . JURI::root() . "/media/astroid/assets/vendor/bootstrap/js/bootstrap.min.js'></script>";
+if (ASTROID_JOOMLA_VERSION > 3) {
+    echo "<script src='" . JURI::root() . "/media/astroid/assets/vendor/bootstrap/js/bootstrap.min.js'></script>";
+}
 foreach ($scripts as $script) {
    echo "<script src='" . $script . "'></script>";
 }
