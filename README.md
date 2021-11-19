@@ -37,8 +37,11 @@
 
 ## Links
 * [Documentation](https://github.com/templaza/astroid-framework/wiki)
-* [Translations](https://github.com/joomdev/Astroid-Framework/wiki/Translations)
-* [Find a template](https://www.templaza.com/joomla-templates.html)
+* [Translations](https://github.com/templaza/astroid-framework/tree/language)
+
+## Find an Astroid Template provider
+* [TemPlaza - Joomla Template](https://www.templaza.com/joomla-templates.html)
+* [JoomlaPlate - Joomla Template](https://www.joomlaplates.com/)
 
 ## Changelogs
 
