@@ -9,7 +9,7 @@ After that, I will give you access to the translation files.
 * Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
 * Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cs-CZ.zip)
 * Dutch (nl-NL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_nl-NL.zip)
-* French (fr-FR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_fr-FR.zip)
+* French (fr-FR) [Download](https://github.com/templaza/astroid-framework/raw/language/fr-FR.astroid-2.5.9.zip)
 * German (de-DE) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
 * Greek(el-GR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_el-GR.zip)
 * Polish (pl-PL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_pl-PL.zip)
