@@ -150,7 +150,7 @@ class AstroidElement
       $html = $layout->render(['element' => $this]);
       $form = str_replace(array("\n", "\r", "\t"), '', $html);
       $replacer = [
-         'ng-show="' => 'ng-show="elementParams.',
+//         'ng-show="' => 'ng-show="elementParams.',
          'ng-hide="' => 'ng-hide="elementParams.',
          'ng-model="' => 'ng-model="elementParams.',
          'ng-value="' => 'ng-value="elementParams.',
@@ -162,7 +162,15 @@ class AstroidElement
          $replaced = str_replace(':', ':elementParams.', $matches[2]);
          return str_replace($matches[2], $replaced, $matches[0]);
       }, $form);
-
+        preg_match_all('/ng-show="(.*?)"/i', $form, $ngShow);
+        if (isset($ngShow[1]) && is_array($ngShow[1]) && count($ngShow[1])) {
+            foreach ($ngShow[1] as $value) {
+                $tmp = preg_replace('/([A-z_]\w+)\s*?([!=]=)/i', 'elementParams.$1$2', $value);
+                if ($tmp) {
+                    $form   =   str_replace('ng-show="'.$value.'"', 'ng-show="'. $tmp .'"', $form);
+                }
+            }
+        }
       foreach ($replacer as $find => $replace) {
          $form = str_replace($find, $replace, $form);
       }
@@ -219,7 +227,7 @@ class AstroidElement
             $elHtml[] = 'id="' . $this->getID() . '"';
          }
          if (!empty($this->getStyles())) {
-            $elHtml[] = 'style="' . $this->getStyles() . '"';
+            $elHtml[] = 'style="' . $this->getStyles() . (!empty($this->getAnimation()) ? 'visibility: hidden;' : '') . '"';
          }
          if (!empty($this->getAnimation())) {
             $elHtml[] = 'data-animation="' . $this->getAnimation() . '"';
