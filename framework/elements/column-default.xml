@@ -3,14 +3,14 @@
    <form>
       <fields>
          <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field type="astroidtext" class="form-control" label="ASTROID_COLUMN_TITLE_LABEL" name="title"></field>
-            <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"></field>
-            <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"></field>
+            <field type="astroidtext" class="form-control" label="ASTROID_COLUMN_TITLE_LABEL" name="title"/>
+            <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"/>
+            <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
          </fieldset>
          <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="animation" type="astroidanimations" label="ASTROID_ANIMATION"></field>
-            <field ngShow="animation AND animation!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"></field>
-            <field ngShow="animation AND animation!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"></field>
+            <field name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
+            <field ngShow="animation!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
+            <field ngShow="animation!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
             <field description="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_LABEL">
                <option value="0">ASTROID_NONE</option>
                <option value="color">TPL_ASTROID_COLOR</option>
@@ -55,7 +55,7 @@
             </field>
             <field ngShow="background_setting =='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
 
-            <field ngShow="background_setting =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"></field>
+            <field ngShow="background_setting =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
              
             
             <field name="custom_colors" type="astroidtext" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL"  />
@@ -68,7 +68,7 @@
             <field name="padding" type="astroidspacing" label="Padding" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field default="" name="responsive" type="astroidresponsive" label=""></field>
+            <field default="" name="responsive" type="astroidresponsive" label=""/>
             <field name="column_order_xl" type="astroidlist" default="0" label="ASTROID_EXTRA_LARGE_COLUMN_ORDER_LABEL">
                <option value="0">JDEFAULT</option>
                <option value="1">1</option>
