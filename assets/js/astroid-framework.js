@@ -711,6 +711,7 @@ astroidFramework.directive("droppable", function () {
       }
    }
 });
+/* No need since 2.5.5
 astroidFramework.directive("popover", function () {
    return {
       restrict: "A",
@@ -723,7 +724,7 @@ astroidFramework.directive("popover", function () {
          }, 100)
       }
    }
-});
+}); */
 astroidFramework.directive("convertToNumber", function () {
    return {
       require: "ngModel",
