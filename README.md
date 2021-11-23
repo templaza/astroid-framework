@@ -45,6 +45,16 @@
 
 ## Changelogs
 
+Version 2.5.10 - November 23th, 2021
+
+    [new feature] Add Background Image Overlay option for element.
+    [fixbug] Fix issue multi-condition does not work in Popup element.php configure
+    [fixbug] Fix issue cannot select article, category in menu
+    [fixbug] Fix issue can not create menu in Joomla 3
+    [fixbug] Fix issue order-undefined error in Order option.
+    [improve] Correct Element XML configure
+    [improve] Update language file.
+
 Version 2.5.9 - November 18th, 2021
 
     [fixbug] Fix issue theme-width does not work

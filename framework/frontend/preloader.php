@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 extract($displayData);
 
 $params = Astroid\Framework::getTemplate()->getParams();
-$document = Astroid\Framework::getDocument();
+$document = \JFactory::getDocument();
 
 $enable_preloader = $params->get('preloader', 1);
 if (!$enable_preloader) {
@@ -106,9 +106,9 @@ if($preloder_setting == "animations"){
    $preloaderHTML = '<div class="'.$preloader_fontawesome.'" style="font-size:'.$preloader_size.'px; color: '.$preloader_color.'; display: flex;justify-content: center;margin: 0 auto;"></div>';
    $preloaderStyles = '';
 }
-$document->addStyledeclaration('#astroid-preloader{background:' . $preloader_bgcolor . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}');
+$document->addStyledeclaration('#astroid-preloader{display:flex;align-items:center;background:' . $preloader_bgcolor . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}');
 $document->addStyledeclaration($preloaderStyles);
 ?>
-<div id="astroid-preloader" class="d-flex align-items-center">
+<div id="astroid-preloader">
    <?php echo $preloaderHTML; ?>
 </div>
