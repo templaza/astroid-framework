@@ -1,9 +1,7 @@
-<a title="Crowdin" target="_blank" href="https://crowdin.com"><img src="https://badges.crowdin.net/astroid/localized.svg"></a>
-
 # Astroid is available in the following languages
-We really appriciate any help! If you find an issue or want to help please use the invitation link here
-https://crwd.in/astroid
-After that, I will give you access to the translation files.
+We really appriciate any help! If you find an issue or want to help, please download the language files below. 
+Any questions? Mail at joomlaplates@gmail.com
+
 
 ## Completed Languages
 * Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
