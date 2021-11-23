@@ -70,11 +70,11 @@ class Column extends BaseElement
         }
 
         //Column Order
-        $column_order_xl     =   $this->params->get('column_order_xl', 0);
-        $column_order_lg     =   $this->params->get('column_order_lg', 0);
-        $column_order_md     =   $this->params->get('column_order_md', 0);
-        $column_order_sm     =   $this->params->get('column_order_sm', 0);
-        $column_order_xs     =   $this->params->get('column_order_xs', 0);
+        $column_order_xl     =   intval($this->params->get('column_order_xl', 0));
+        $column_order_lg     =   intval($this->params->get('column_order_lg', 0));
+        $column_order_md     =   intval($this->params->get('column_order_md', 0));
+        $column_order_sm     =   intval($this->params->get('column_order_sm', 0));
+        $column_order_xs     =   intval($this->params->get('column_order_xs', 0));
         $this->addClass('order-xl-'.$column_order_xl);
         $this->addClass('order-lg-'.$column_order_lg);
         $this->addClass('order-md-'.$column_order_md);

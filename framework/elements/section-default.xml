@@ -70,9 +70,9 @@
                <option value="gradient">TPL_ASTROID_GRADIENT</option>
                <option value="pattern">TPL_ASTROID_PATTERN</option>
             </field>
-            <field ngShow="background_setting=='image' AND background_image_overlay=='color'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+            <field ngShow="background_setting=='image' AND (background_image_overlay=='color' OR background_image_overlay=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
             <field ngShow="background_setting=='image' AND background_image_overlay=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
-            <field ngShow="background_setting=='image' AND background_image_overlay=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+            <field ngShow="background_setting=='image' AND background_image_overlay=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
             <field ngShow="background_setting =='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
 
@@ -81,9 +81,9 @@
 
             <field name="custom_colors" type="astroidtext" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
 
-            <field ngShow="custom_colors" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
-            <field ngShow="custom_colors" name="link_color" type="astroidcolor" label="TPL_ASTROID_LINK_COLOR_LABEL" />
-            <field ngShow="custom_colors" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
+            <field ngShow="custom_colors!=0" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
+            <field ngShow="custom_colors!=0" name="link_color" type="astroidcolor" label="TPL_ASTROID_LINK_COLOR_LABEL" />
+            <field ngShow="custom_colors!=0" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
 
             <field name="spacing_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL" />
             <field name="margin" type="astroidspacing" label="Margin" />
