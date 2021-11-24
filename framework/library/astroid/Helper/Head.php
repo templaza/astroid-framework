@@ -11,6 +11,7 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 defined('_JEXEC') or die;
 
@@ -38,17 +39,21 @@ class Head
     public static function scripts()
     {
         $document = Framework::getDocument();
-        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
-
         $app = \JFactory::getApplication();
         $layout = $app->input->get('layout', '', 'STRING');
-
         $getPluginParams = Helper::getPluginParams();
-
-        if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
-            $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
+        if (ASTROID_JOOMLA_VERSION < 4) {
+            $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
+            if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
+                $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
+            }
+        } else {
+            HTMLHelper::_('jquery.framework');
+            if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
+                // Depends on Bootstrap
+                HTMLHelper::_('bootstrap.framework');
+            }
         }
-
         $document->addScript('vendor/jquery/jquery.noConflict.js', 'body');
     }
 
