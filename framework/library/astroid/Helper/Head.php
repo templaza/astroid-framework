@@ -42,14 +42,11 @@ class Head
         $app = \JFactory::getApplication();
         $layout = $app->input->get('layout', '', 'STRING');
         $getPluginParams = Helper::getPluginParams();
-        if (ASTROID_JOOMLA_VERSION < 4) {
-            $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
-            if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
+        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
+        if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
+            if (ASTROID_JOOMLA_VERSION < 4) {
                 $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
-            }
-        } else {
-            HTMLHelper::_('jquery.framework');
-            if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
+            } else {
                 // Depends on Bootstrap
                 HTMLHelper::_('bootstrap.framework');
             }
