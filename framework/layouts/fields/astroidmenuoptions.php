@@ -414,7 +414,9 @@ foreach ($scripts as $script) {
          initMegamenuWidth();
       });
       initMegamenuWidth();
-
+       if ($('#astroid-menu-options').parent().prev().is(':empty')) {
+           $('#astroid-menu-options').parent().prev().remove();
+       }
    })(jQuery);
 </script>
 <script>
