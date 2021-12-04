@@ -32,7 +32,29 @@ class Head
         $params = Framework::getTemplate()->getParams();
         $favicon = $params->get('favicon', '');
         if (!empty($favicon)) {
-            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $favicon, 'shortcut icon');
+            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
+                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)),
+                'sizes' => 'any'
+            ));
+        }
+        $apple_touch_icon = $params->get('apple_touch_icon', '');
+        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon)) {
+            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
+                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)),
+                'sizes' => 'any'
+            ));
+        }
+        $site_webmanifest = $params->get('site_webmanifest', '');
+        if (!empty($site_webmanifest)) {
+            if ( (strpos( $site_webmanifest, 'http://' ) !== false) || (strpos( $site_webmanifest, 'https://' ) !== false) ) {
+                $site_webmanifest = $site_webmanifest;
+            } else {
+                $site_webmanifest = \JURI::base( true ) . '/' . $site_webmanifest;
+            }
+
+            Framework::getDocument()->addLink($site_webmanifest, 'manifest', array(
+                'type'  => 'application/json'
+            ));
         }
     }
 
