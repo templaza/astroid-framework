@@ -45,6 +45,14 @@
 
 ## Changelogs
 
+Version 2.5.11 - December 6th, 2021
+
+    [update] Use Bootstrap from Joomla 4 Core
+    [improve] Improve favicon feature support Apple Touch & Manifest
+    [improve] Update language file.
+    [fixbug] Fix issue conflict style with Regular Lab Library
+    [fixbug] Fix warning Array to string conversion of SCSS library
+
 Version 2.5.10 - November 23th, 2021
 
     [new feature] Add Background Image Overlay option for element.

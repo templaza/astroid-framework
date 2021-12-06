@@ -3,10 +3,11 @@
    <fields name="params">
       <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
 
-         <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-preloader/"/>
-         <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-back-to-top/"/>
-         <field type="astroidgroup" name="layout_setting" title="TPL_ASTROID_LAYOUT_SETTING_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-layout-settings/"/>
-         <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://docs.joomdev.com/article/smooth-scroll/"/>
+         <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#preloader"/>
+         <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#favicon" />
+         <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#back-to-top"/>
+         <field type="astroidgroup" name="layout_setting" title="TPL_ASTROID_LAYOUT_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
+         <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
 		
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"/>
          <field astroidgroup="preloader_options" ngShow="preloader=='1'" description="TPL_ASTROID_PRELOADER_TYPE_DESC" name="preloder_setting" type="astroidradio" default="animations" label="TPL_ASTROID_PRELOADER_TYPE">
@@ -54,6 +55,13 @@
          </field>
 
          <field ngShow="preloader=='1' AND (preloder_setting =='animations' OR preloder_setting =='fontawesome')" astroidgroup="preloader_options" name="preloader_size" type="astroidrange" astroid-scss-variable="spinkit-size" min="20" max="500" step="1" postfix="px" default="40" label="TPL_ASTROID_BASIC_PRELOADER_SIZE_LABEL" description="TPL_ASTROID_BASIC_PRELOADER_SIZE_DESC" />
+
+         <field astroidgroup="favicongroup" name="favicon" type="astroidmedia" label="TPL_ASTROID_BASIC_FAVICON_LABEL" description="TPL_ASTROID_BASIC_FAVICON_DESC">
+         </field>
+         <field astroidgroup="favicongroup" name="apple_touch_icon" type="astroidmedia" label="TPL_ASTROID_BASIC_FAVICON_APPLE_TOUCH_LABEL" description="TPL_ASTROID_BASIC_FAVICON_APPLE_TOUCH_DESC">
+         </field>
+         <field astroidgroup="favicongroup" name="site_webmanifest" type="astroidtext" label="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_LABEL" description="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_DESC" hint="/manifest.json" class="form-control">
+         </field>
 
          <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" />
 

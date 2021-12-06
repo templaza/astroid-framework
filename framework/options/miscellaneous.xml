@@ -2,10 +2,9 @@
 <form>
    <fields name="params">
       <fieldset icon="fas fa-cogs" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
-         <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-contact-information" />
-         <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_COMMING_NOON_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-coming-soon" />
-         <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-404-error" />
-         <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://docs.joomdev.com/article/astroid-favicon" />
+         <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#contact-information" />
+         <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_COMMING_NOON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#coming-soon" />
+         <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#error-page" />
          <field type="astroidgroup" name="lazyloadgroup" title="TPL_ASTROID_LAZYLOAD_TITLE_LABEL" />
          <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" />
 
@@ -149,9 +148,6 @@
             <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
          </field>
          <field astroidgroup="error_404" ngShow="background_setting_404 =='video'" name="background_video_404" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
-
-         <field astroidgroup="favicongroup" name="favicon" type="astroidmedia" label="TPL_ASTROID_BASIC_FAVICON_LABEL" description="TPL_ASTROID_BASIC_FAVICON_DESC">
-         </field>
 
          <field astroidgroup="lazyloadgroup" name="lazyload" type="astroidtext" astroid-switch="true" default="0" label="Enable Lazy Load" description="">
          </field>

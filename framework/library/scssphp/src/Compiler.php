@@ -877,13 +877,13 @@ class Compiler
 
             // check that we are not building an infinite loop of extensions
             // if the new part is just including a previous part don't try to extend anymore
-            if (\count($part) > 1) {
-                foreach ($partsPile as $previousPart) {
-                    if (! \count(array_diff($previousPart, $part))) {
-                        continue 2;
-                    }
-                }
-            }
+//            if (\count($part) > 1) {
+//                foreach ($partsPile as $previousPart) {
+//                    if (! \count(array_diff($previousPart, $part))) {
+//                        continue 2;
+//                    }
+//                }
+//            }
 
             $partsPile[] = $part;
 
