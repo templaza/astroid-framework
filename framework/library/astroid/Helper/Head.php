@@ -31,14 +31,14 @@ class Head
     {
         $params = Framework::getTemplate()->getParams();
         $favicon = $params->get('favicon', '');
-        if (!empty($favicon)) {
+        if (!empty($favicon) && file_exists(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)) {
             Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
                 'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)),
                 'sizes' => 'any'
             ));
         }
         $apple_touch_icon = $params->get('apple_touch_icon', '');
-        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon)) {
+        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
             Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
                 'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)),
                 'sizes' => 'any'
