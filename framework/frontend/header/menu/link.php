@@ -11,7 +11,8 @@ defined('_JEXEC') or die;
 
 extract($displayData);
 
-$params = Astroid\Framework::getTemplate()->getParams();
+$params     =   Astroid\Framework::getTemplate()->getParams();
+$document   =   Astroid\Framework::getDocument();
 
 /**
  * Layout variables
@@ -19,10 +20,7 @@ $params = Astroid\Framework::getTemplate()->getParams();
  * @var   string   $item            Item Object.
  * @var   string   $options         Astroid Menu Options.
  */
-$options = $options;
 $header_endLevel = $params->get('header_endLevel', 0);
-$item = $item;
-$active = $active;
 $header = @$header;
 $is_mobile_menu = $mobilemenu;
 $slidemenu = @$slidemenu;
@@ -48,6 +46,17 @@ if ($item->anchor_css) {
    $attributes['class'] = $item->anchor_css;
 } else {
    $attributes['class'] = '';
+}
+
+if (isset($item->id)) {
+    $attributes['class'] = ' nav-link-item-id-'.$item->id;
+    if ($options->badge) {
+        $style      =   '--as-nav-item-badge-background: '.$options->badge_bgcolor.';';
+        $style      .=  '--as-nav-item-badge-color: '.$options->badge_color.';';
+        $style      .=  'background-color: var(--as-nav-item-badge-background);';
+        $style      .=  'color: var(--as-nav-item-badge-color);';
+        $document->addStyledeclaration('.nav-link-item-id-'.$item->id.' > .nav-title .menu-item-badge{'.$style.'}');
+    }
 }
 
 if ($item->level == 1 || $is_mobile_menu) {
@@ -118,12 +127,12 @@ if ($item->type == 'url') {
       <?php if ($options->badge) { ?>
          <?php if ($item->level == 1) { ?>
             <sup>
-               <span class="menu-item-badge" style="background: <?php echo $options->badge_bgcolor ?>; color: <?php echo $options->badge_color ?> !important;">
+               <span class="menu-item-badge">
                   <?php echo $options->badge_text; ?>
                </span>
             </sup>
          <?php } else { ?>
-            <span class="menu-item-badge" style="background: <?php echo $options->badge_bgcolor ?> !important; color: <?php echo $options->badge_color ?>;">
+            <span class="menu-item-badge">
                <?php echo $options->badge_text; ?>
             </span>
          <?php } ?>
