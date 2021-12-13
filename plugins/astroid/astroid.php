@@ -15,7 +15,7 @@
 defined('_JEXEC') or die;
 define('COMPILE_SASS', 0);
 
-if (defined('_ASTROID')) {
+if (file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
     JLoader::registerNamespace('Astroid', JPATH_LIBRARIES . '/astroid/framework/library/astroid', false, false, 'psr4');
 }
 
@@ -35,7 +35,7 @@ class plgSystemAstroid extends JPlugin
 
     public function onAfterRoute()
     {
-        if (!defined('_ASTROID')) {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         Framework::init();
@@ -48,7 +48,7 @@ class plgSystemAstroid extends JPlugin
 
     public function onContentPrepareForm($form, $data)
     {
-        if (!defined('_ASTROID')) {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         Framework::getClient()->onContentPrepareForm($form, $data);
@@ -56,7 +56,7 @@ class plgSystemAstroid extends JPlugin
 
     public function onAfterRender()
     {
-        if (!defined('_ASTROID')) {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         Framework::getClient()->onAfterRender();
@@ -64,7 +64,7 @@ class plgSystemAstroid extends JPlugin
 
     public function onAfterRespond()
     {
-        if (!defined('_ASTROID')) {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         if (!(Helper::getPluginParams()->get('astroid_debug', 0)) || Framework::isAdmin()) {
@@ -87,7 +87,7 @@ class plgSystemAstroid extends JPlugin
 
     public function onExtensionAfterSave($context, $table, $isNew)
     {
-        if (!defined('_ASTROID')) {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         if (Framework::isAdmin() && $context == "com_templates.style" && $isNew && Template::isAstroidTemplate($table->template)) {
