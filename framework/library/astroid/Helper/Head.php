@@ -85,7 +85,7 @@ class Head
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
             if ($document->isFrontendEditing()) {
-                $document->addStyleSheet('media/astroid/assets/vendor/fontawesome/css/all.min.css');
+                $document->addStyleSheet('administrator/templates/atum/css/vendor/fontawesome-free/fontawesome.min.css');
                 $document->addStyleSheet('templates/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
             }
