@@ -155,10 +155,10 @@
          </field>
 
          <field astroidgroup="header_element" ngShow="logo_tag_line_typography=='custom' AND header==true AND logo_type=='text'" name="logo_tag_line_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-unit="rem" letter-spacing="0px" line-height="1" font-weight="400" text-transform="none" />
-
          <field ngShow="header==true AND logo_type!='none'" astroidgroup="header_element" name="logo_link_type" ngModel="logo_link_type" type="astroidradio" default="default" label="Logo Link">
             <option value="default">TPL_ASTROID_DEFAULT</option>
             <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+            <option value="none">ASTROID_NONE</option>
          </field>
 
          <field astroidgroup="header_element" description="" ngShow="header==true AND logo_type!='none' AND logo_link_type=='custom'" name="logo_link_custom" type="astroidtext" class="form-control" default="#" label="Logo Link Url">
