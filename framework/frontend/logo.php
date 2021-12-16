@@ -73,7 +73,7 @@ if ($logo_link_type === 'custom') {
     <?php
     $mr = ($header_mode == 'stacked' && ($header_stacked_menu_mode == 'seperated' || $header_stacked_menu_mode == 'center')) ? '' : ' mr-0 mr-lg-4';
     ?>
-    <div class="logo-wrapper">
+    <div class="logo-wrapper astroid-logo">
         <?php if ($logo_link_type != 'none') : ?>
         <a target="<?php echo $logo_link_target; ?>" class="<?php echo implode(' ', $class); ?><?php echo $mr; ?>" href="<?php echo $logo_link; ?>">
         <?php endif; ?>
