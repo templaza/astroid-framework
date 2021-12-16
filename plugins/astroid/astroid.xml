@@ -25,6 +25,10 @@
                <option value="cdn">CDN</option>
                <option value="local">Local</option>
             </field>
+            <field name="astroid_load_jquery" type="radio" default="astroid" label="ASTROID_LOAD_JQUERY" description="ASTROID_LOAD_JQUERY_DESC" class="btn-group btn-group-yesno">
+               <option value="astroid">Astroid</option>
+               <option value="core">Joomla Core</option>
+            </field>
             <field name="astroid_bootstrap_js" type="radio" default="1" label="ASTROID_ENABLE_BOOTSTRAP_JS_LABEL" description="" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
