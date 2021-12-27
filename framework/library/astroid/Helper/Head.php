@@ -89,8 +89,8 @@ class Head
         if (ASTROID_JOOMLA_VERSION != 4) {
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
+            $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
             if ($document->isFrontendEditing()) {
-                $document->addStyleSheet('administrator/templates/atum/css/vendor/fontawesome-free/fontawesome.min.css');
                 $document->addStyleSheet('templates/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
             }
