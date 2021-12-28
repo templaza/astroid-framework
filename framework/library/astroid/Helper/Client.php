@@ -175,7 +175,7 @@ class Client
         }
 
         if ($form->getName() == 'com_content.article' && ((Framework::isSite() && $frontendVisibility) || Framework::isAdmin())) {
-            if (Framework::isSite()) {
+            if (Framework::isSite() && isset($data->attribs) && isset($data->params)) {
                 $data->attribs = $data->params;
             }
             $form->loadFile('article', false);
