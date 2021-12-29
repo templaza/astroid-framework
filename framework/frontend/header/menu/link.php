@@ -21,6 +21,7 @@ $document   =   Astroid\Framework::getDocument();
  * @var   string   $options         Astroid Menu Options.
  */
 $header_endLevel = $params->get('header_endLevel', 0);
+$enable_sticky_badge = $params->get('enable_sticky_badge', 0);
 $header = @$header;
 $is_mobile_menu = $mobilemenu;
 $slidemenu = @$slidemenu;
@@ -124,7 +125,7 @@ if ($item->type == 'url') {
             <?php echo $item->title; ?>
          <?php } ?>
       <?php } ?>
-      <?php if ($options->badge) { ?>
+      <?php if ($options->badge && ($header != 'sticky' || $enable_sticky_badge)) { ?>
          <?php if ($item->level == 1) { ?>
             <sup>
                <span class="menu-item-badge">
