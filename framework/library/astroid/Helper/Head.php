@@ -31,16 +31,16 @@ class Head
     {
         $params = Framework::getTemplate()->getParams();
         $favicon = $params->get('favicon', '');
-        if (!empty($favicon) && file_exists(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)) {
-            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
-                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)),
+        if (!empty($favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)) {
+            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
+                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)),
                 'sizes' => 'any'
             ));
         }
         $apple_touch_icon = $params->get('apple_touch_icon', '');
-        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
-            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
-                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)),
+        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
+            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
+                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)),
                 'sizes' => 'any'
             ));
         }
@@ -49,7 +49,7 @@ class Head
             if ( (strpos( $site_webmanifest, 'http://' ) !== false) || (strpos( $site_webmanifest, 'https://' ) !== false) ) {
                 $site_webmanifest = $site_webmanifest;
             } else {
-                $site_webmanifest = \JURI::base( true ) . '/' . $site_webmanifest;
+                $site_webmanifest = \JURI::root() . $site_webmanifest;
             }
 
             Framework::getDocument()->addLink($site_webmanifest, 'manifest', array(
