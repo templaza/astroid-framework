@@ -848,14 +848,12 @@ class Document
     public function getStylesheets()
     {
         $keys = array_keys($this->_stylesheets);
-
         foreach ($keys as $index => $key) {
             if ($this->_stylesheets[$key]['shifted']) {
                 $newindex = $index + (int) $this->_stylesheets[$key]['shifted'];
                 $this->moveFile($keys, $index, $newindex);
             }
         }
-
         $content = '';
         foreach ($keys as $key) {
             $stylesheet = $this->_stylesheets[$key];
@@ -1064,6 +1062,7 @@ class Document
 
     public function astroidCSS()
     {
+        $getPluginParams = Helper::getPluginParams();
         // Scss
         if (Framework::isSite()) {
             $template = Framework::getTemplate();
@@ -1091,28 +1090,37 @@ class Document
             $this->addStyleSheet('css/compiled-' . $scssVersion . '.css');
         }
 
-        if (Helper::getPluginParams()->get('astroid_debug', 0)) {
+        if ($getPluginParams->get('astroid_debug', 0)) {
             $this->addStyleSheet('vendor/astroid/css/debug.css');
         }
-        // css on page
-        $css = $this->renderCss();
+
         if (Framework::isSite()) {
-            // page css
-            $pageCSSHash = md5($css);
-            $pageCSS = ASTROID_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
-            if (!file_exists($pageCSS)) {
-                Helper::putContents($pageCSS, $css);
+            $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
+            if (!$astroid_inline_css) {
+                $css = $this->renderCss();
+                // page css
+                $pageCSSHash = md5($css);
+                $pageCSS = ASTROID_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+                if (!file_exists($pageCSS)) {
+                    Helper::putContents($pageCSS, $css);
+                }
+                $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             }
-            $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             // custom css
             if (file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
                 $this->addStyleSheet('css/custom.css');
             }
-            // return
-            return '';
-        } else {
-            $minifier = new Minify\CSS($css);
-            return '<style>' . $minifier->minify() . '</style>';
+        }
+    }
+    public function astroidInlineCSS() {
+        // css on page
+        $getPluginParams = Helper::getPluginParams();
+        $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
+        if (!Framework::isSite() || $astroid_inline_css) {
+            $css = $this->renderCss();
+            return '<style>' . $css . '</style>';
+//            $minifier = new Minify\CSS($css);
+//            return '<style>' . $minifier->minify() . '</style>';
         }
     }
 }

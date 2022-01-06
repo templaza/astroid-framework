@@ -10,7 +10,7 @@
 	font-weight: normal;
 	text-transform: none;
 	line-height: 20px;
-	font-size: 14px;
+	font-size: 1em;
 	border-radius: 2px;
 }
 
@@ -82,6 +82,23 @@
 	.nav-title {
 		display: block;
 		position: relative;
+		sup {
+			position: absolute;
+			top: -25px;
+			left: 10%;
+			.menu-item-badge {
+				white-space: nowrap;
+				&:before {
+					content: "";
+					position: absolute;
+					border-left: 3px solid rgba(0,0,0,0);
+					border-right: 3px solid rgba(0,0,0,0);
+					border-top: 3px solid var(--as-nav-item-badge-background);
+					left: 5px;
+					bottom: -3px;
+				}
+			}
+		}
 	}
 
 	.nav-subtitle {
@@ -153,6 +170,14 @@
 					left: -100%;
 				}
 			}
+		}
+	}
+}
+
+#astroid-sticky-header {
+	.nav-title {
+		sup {
+			top: -20px;
 		}
 	}
 }

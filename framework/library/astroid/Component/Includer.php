@@ -61,18 +61,17 @@ class Includer
 
     public static function _headStyles()
     {
+        Helper\Head::styles();
         $document = Framework::getDocument();
-        $content = '';
-        $content .= Helper\Head::styles();
-        $content .= $document->renderLinks();
+        $content  = $document->renderLinks();
         $content .= $document->getStylesheets();
+        $content .= $document->astroidInlineCSS();
         return $content;
     }
 
     public static function _headScripts()
     {
         $document = Framework::getDocument();
-
         $content = '';
         $content .= $document->getScripts('head');
         $content .= $document->getCustomTags('head');

@@ -31,16 +31,19 @@ class Head
     {
         $params = Framework::getTemplate()->getParams();
         $favicon = $params->get('favicon', '');
-        if (!empty($favicon)) {
-            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
-                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $favicon)),
+
+        if (!empty($favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)) {
+            $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon);
+            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
+                'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));
         }
         $apple_touch_icon = $params->get('apple_touch_icon', '');
-        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon)) {
-            Framework::getDocument()->addLink(\JURI::base(true) . '/' . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
-                'type'  => image_type_to_mime_type(exif_imagetype(JPATH_BASE.'/'. Media::getPath() . '/' . $apple_touch_icon)),
+        if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
+            $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon);
+            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
+                'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));
         }
@@ -49,7 +52,7 @@ class Head
             if ( (strpos( $site_webmanifest, 'http://' ) !== false) || (strpos( $site_webmanifest, 'https://' ) !== false) ) {
                 $site_webmanifest = $site_webmanifest;
             } else {
-                $site_webmanifest = \JURI::base( true ) . '/' . $site_webmanifest;
+                $site_webmanifest = \JURI::root() . $site_webmanifest;
             }
 
             Framework::getDocument()->addLink($site_webmanifest, 'manifest', array(
@@ -64,7 +67,12 @@ class Head
         $app = \JFactory::getApplication();
         $layout = $app->input->get('layout', '', 'STRING');
         $getPluginParams = Helper::getPluginParams();
-        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
+        $load_jquery    =   $getPluginParams->get('astroid_load_jquery', 'astroid');
+        if ($load_jquery == 'core' && ASTROID_JOOMLA_VERSION > 3) {
+            HTMLHelper::_('jquery.framework');
+        } else {
+            $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
+        }
         if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
             if (ASTROID_JOOMLA_VERSION < 4) {
                 $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
@@ -78,19 +86,18 @@ class Head
 
     public static function styles()
     {
-        $styles = '';
         $document = Framework::getDocument();
         $document->loadFontAwesome();
         if (ASTROID_JOOMLA_VERSION != 4) {
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
-            $document->addStyleSheet('media/astroid/assets/vendor/fontawesome/css/all.min.css');
+            $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
             if ($document->isFrontendEditing()) {
                 $document->addStyleSheet('templates/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
             }
         }
-        $styles .= $document->astroidCSS();
-        return $styles;
+        $document->astroidCSS();
+        return '';
     }
 }

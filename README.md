@@ -45,6 +45,23 @@
 
 ## Changelogs
 
+Version 2.5.12 - January 6th, 2022
+
+    [new feature] Add feature load inline CSS. Loading via inline would help speed up your website and improve CSS delivery. 
+    [new feature] Add feature enable/disable logo link. 
+    [new feature] Add feature load jQuery from Joomla Core instead of Astroid
+    [new feature] Add feature enable/disable badge in Sticky Menu.
+    [improve] Improve Menu Badge style
+    [improve] Update language file.
+    [fixbug] Fix issue when template.xml is not exists. 
+    [fixbug] Fix error 500 Library path when Uninstall package.
+    [fixbug] Fix issue fontawesome is not disabled when option is switch off
+    [fixbug] Fix issue Joomla font-awesome does not work.
+    [fixbug] Fix issue in Front-end module and article edit.
+    [fixbug] Fix issue Edit button style in front-end
+    [fixbug] Fix issue Favicon wrong url
+    [fixbug] Fix issue exif module is not installed
+
 Version 2.5.11 - December 6th, 2021
 
     [update] Use Bootstrap from Joomla 4 Core

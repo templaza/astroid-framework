@@ -167,7 +167,7 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         $customselector = $params->get('custom_typography_selectors', '');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => '.astroid-logo-text > a.site-title', 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu', 'custom' => $customselector);
+        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => '.astroid-logo-text, .astroid-logo-text > a.site-title', 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu', 'custom' => $customselector);
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {

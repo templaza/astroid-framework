@@ -59,7 +59,7 @@ if ($logo_link_type === 'custom') {
     $mr = ($header_mode == 'stacked' && ($header_stacked_menu_mode == 'seperated' || $header_stacked_menu_mode == 'center')) ? '' : ' mr-0 mr-lg-4';
     ?>
     <div class="logo-wrapper <?php echo implode(' ', $class); ?> flex-column<?php echo $mr; ?>">
-        <a target="<?php echo $logo_link_target; ?>" class="site-title" href="<?php echo $logo_link; ?>"><?php echo $logo_text; ?></a>
+        <?php if ($logo_link_type != 'none') : ?><a target="<?php echo $logo_link_target; ?>" class="site-title" href="<?php echo $logo_link; ?>"><?php endif; ?><?php echo $logo_text; ?><?php if ($logo_link_type != 'none') : ?></a><?php endif; ?>
         <?php
         if ($tag_line) {
             echo '<p class="site-tagline">'. $tag_line .'</p>';
@@ -73,8 +73,10 @@ if ($logo_link_type === 'custom') {
     <?php
     $mr = ($header_mode == 'stacked' && ($header_stacked_menu_mode == 'seperated' || $header_stacked_menu_mode == 'center')) ? '' : ' mr-0 mr-lg-4';
     ?>
-    <div class="logo-wrapper">
+    <div class="logo-wrapper astroid-logo">
+        <?php if ($logo_link_type != 'none') : ?>
         <a target="<?php echo $logo_link_target; ?>" class="<?php echo implode(' ', $class); ?><?php echo $mr; ?>" href="<?php echo $logo_link; ?>">
+        <?php endif; ?>
             <?php if (!empty($default_logo)) { ?>
                 <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" />
             <?php } ?>
@@ -84,7 +86,9 @@ if ($logo_link_type === 'custom') {
             <?php if (!empty($stickey_header_logo)) { ?>
                 <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" />
             <?php } ?>
+        <?php if ($logo_link_type != 'none') : ?>
         </a>
+        <?php endif; ?>
     </div>
     <!-- image logo ends -->
 <?php endif; ?>

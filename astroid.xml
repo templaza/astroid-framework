@@ -3,10 +3,10 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>JoomDev/TemPlaza</author>
-   <creationDate>November 2021</creationDate>
-   <version>2.5.11</version>
+   <creationDate>January 2022</creationDate>
+   <version>2.5.12</version>
    <url>https://www.templaza.com</url>
-   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>

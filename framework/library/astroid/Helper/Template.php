@@ -45,6 +45,9 @@ class Template
 
     public static function isAstroidTemplate($template)
     {
+        if (!file_exists(JPATH_SITE . "/templates/{$template}/templateDetails.xml")) {
+            return false;
+        }
         $xml = Helper::getXML(JPATH_SITE . "/templates/{$template}/templateDetails.xml");
         $version = (string) $xml->version;
         $form = new \JForm('template');
@@ -88,7 +91,9 @@ class Template
     {
         $source = JPATH_SITE . '/templates/' . $template . '/images/default';
         $destination = JPATH_SITE . '/images/' . $template;
-        $files = \JFolder::files($source);
-        \JFolder::copy($source, $destination, '', true);
+        if (file_exists($source)) {
+            $files = \JFolder::files($source);
+            \JFolder::copy($source, $destination, '', true);
+        }
     }
 }

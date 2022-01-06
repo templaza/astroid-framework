@@ -44,6 +44,12 @@ class Overrides
                     File::move($path . $file, $path . (str_replace(basename($file), basename($file, '.php') . '-' . date('Y-m-d') . '.php', $file)));
                 }
             }
+
+            if (ASTROID_JOOMLA_VERSION == 4) {
+                if (is_dir($path . 'com_config')) {
+                    Folder::move($path . 'com_config', $path . (str_replace(basename('com_config'), basename('com_config') . '-' . date('Y-m-d'), 'com_config')));
+                }
+            }
         }
     }
 }
