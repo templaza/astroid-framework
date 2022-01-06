@@ -2,6 +2,9 @@
 We really appriciate any help! If you find an issue or want to help, please download the language files below. 
 Any questions? Mail at joomlaplates@gmail.com
 
+Translation was done with a great tool, you can download here. But please make sure you save the translation file in UTF format.
+https://sourceforge.net/projects/initranslator/
+
 
 ## Completed Languages
 * Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
