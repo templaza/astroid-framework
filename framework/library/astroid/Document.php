@@ -1118,8 +1118,9 @@ class Document
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
         if (!Framework::isSite() || $astroid_inline_css) {
             $css = $this->renderCss();
-//            $minifier = new Minify\CSS($css);
             return '<style>' . $css . '</style>';
+//            $minifier = new Minify\CSS($css);
+//            return '<style>' . $minifier->minify() . '</style>';
         }
     }
 }
