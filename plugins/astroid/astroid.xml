@@ -2,11 +2,11 @@
 <extension version="3.1" type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
    <author>JoomDev/TemPlaza</author>
-   <creationDate>December 2021</creationDate>
+   <creationDate>January 2022</creationDate>
    <version>2.5.12</version>
    <url>https://www.astroidframework.com</url>
-   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
-   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+   <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
+   <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
    <description>Astroid Framework Plugin Description Here</description>>
@@ -30,6 +30,10 @@
                <option value="core">Joomla Core</option>
             </field>
             <field name="astroid_bootstrap_js" type="radio" default="1" label="ASTROID_ENABLE_BOOTSTRAP_JS_LABEL" description="" class="btn-group btn-group-yesno">
+               <option value="1">JYES</option>
+               <option value="0">JNO</option>
+            </field>
+            <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>

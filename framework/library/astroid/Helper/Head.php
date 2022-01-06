@@ -86,7 +86,6 @@ class Head
 
     public static function styles()
     {
-        $styles = '';
         $document = Framework::getDocument();
         $document->loadFontAwesome();
         if (ASTROID_JOOMLA_VERSION != 4) {
@@ -98,7 +97,7 @@ class Head
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
             }
         }
-        $styles .= $document->astroidCSS();
-        return $styles;
+        $document->astroidCSS();
+        return '';
     }
 }
