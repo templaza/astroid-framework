@@ -87,7 +87,8 @@ class Admin extends Helper\Client
     {
         $this->format = 'html'; // Response Format
         $document = Framework::getDocument();
-
+        $template = Framework::getTemplate();
+ 
         Framework::getDebugger()->log('Loading Forms');
         $form = Framework::getForm();
         Helper::triggerEvent('onBeforeAstroidFormLoad', [&$template, &$form]);
@@ -98,8 +99,6 @@ class Admin extends Helper\Client
         Framework::getDebugger()->log('Loading Forms');
 
         $this->checkAndRedirect(); // Auth
-
-        $template = Framework::getTemplate();
         $form->loadParams($template->getParams());
 
         Framework::getDebugger()->log('Loading Languages');
