@@ -67,4 +67,9 @@ class Form
             $this->form->setValue($key, 'params', $value);
         }
     }
+
+    public function getForm()
+    {
+        return $this->form;
+    }
 }
