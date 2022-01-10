@@ -917,8 +917,7 @@ class Document
 
         $css = $scss->compile($content);
         Framework::getDebugger()->log('Rendering Scss');
-        $minifier = new Minify\CSS($css);
-        Helper::putContents($path, $minifier->minify());
+        Helper::putContents($path, $css);
     }
 
     public function renderCss()
