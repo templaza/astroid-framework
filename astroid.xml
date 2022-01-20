@@ -16,6 +16,7 @@
       <file>script.php</file>
       <folder>framework</folder>
       <folder>plugins</folder>
+      <folder>modules</folder>
    </files>
    <media folder="media" destination="astroid">
       <folder>assets</folder>
