@@ -163,8 +163,22 @@ class Admin extends Helper\Client
 
     protected function clearCache()
     {
-        $template = Framework::getTemplate()->template;
-        Helper::clearCacheByTemplate($template);
+	    $app = \JFactory::getApplication();
+	    $tpl = $app->input->get('template', '');
+		if (empty($tpl)) {
+			\JLoader::import('joomla.filesystem.folder');
+			$tpl_folders    =   \JFolder::folders(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates');
+			if ($tpl_folders && count($tpl_folders)) {
+				foreach ($tpl_folders as $tpl_item) {
+					if (file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json')) {
+						Helper::clearCacheByTemplate($tpl_item);
+					}
+				}
+			}
+		} else {
+			$template = Framework::getTemplate()->template;
+			Helper::clearCacheByTemplate($template);
+		}
         $this->response(['message' => \JText::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
     }
 

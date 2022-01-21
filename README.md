@@ -45,6 +45,12 @@
 
 ## Changelogs
 
+Version 2.5.13 - January 21st, 2022
+
+    [new feature] Add module clear all Astroid cache
+    [new feature] Add getForm() function to $form object
+    [improve] Update language file.
+
 Version 2.5.12 - January 6th, 2022
 
     [new feature] Add feature load inline CSS. Loading via inline would help speed up your website and improve CSS delivery. 
