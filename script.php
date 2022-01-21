@@ -30,11 +30,13 @@ class astroidInstallerScript
 			}
 		}
 
-		$module_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'modules' . '/';
-		$modules = array_filter(glob($module_dir . '*'), 'is_dir');
-		foreach ($modules as $module) {
-			if ($type == "uninstall") {
-				$this->uninstallModule($module, $module_dir);
+		if (JVERSION >= 4) {
+			$module_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'modules' . '/';
+			$modules = array_filter(glob($module_dir . '*'), 'is_dir');
+			foreach ($modules as $module) {
+				if ($type == "uninstall") {
+					$this->uninstallModule($module, $module_dir);
+				}
 			}
 		}
 	}
@@ -53,11 +55,13 @@ class astroidInstallerScript
 			}
 		}
 
-		$module_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'modules' . '/';
-		$modules = array_filter(glob($module_dir . '*'), 'is_dir');
-		foreach ($modules as $module) {
-			if ($type == "install" || $type == "update") {
-				$this->installModule($module, $module_dir);
+		if (JVERSION >= 4) {
+			$module_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'modules' . '/';
+			$modules = array_filter(glob($module_dir . '*'), 'is_dir');
+			foreach ($modules as $module) {
+				if ($type == "install" || $type == "update") {
+					$this->installModule($module, $module_dir);
+				}
 			}
 		}
 
@@ -108,6 +112,27 @@ class astroidInstallerScript
 		$query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
 		$db->setQuery($query);
 		$db->execute();
+
+		// Retrieve ID
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('id'));
+		$query->from($db->quoteName('#__modules'));
+		$query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
+		$db->setQuery($query);
+		$id = (int) $db->loadResult();
+
+		if ($id) {
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName('moduleid'));
+			$query->from($db->quoteName('#__modules_menu'));
+			$query->where($db->quoteName('moduleid') . ' = ' . $id);
+			$db->setQuery($query);
+			if (!$db->loadResult()) {
+				$db->getQuery(true);
+				$db->setQuery("INSERT INTO #__modules_menu (`moduleid`,`menuid`) VALUES (".$id.", 0)");
+				$db->execute();
+			}
+		}
 		return true;
 	}
 

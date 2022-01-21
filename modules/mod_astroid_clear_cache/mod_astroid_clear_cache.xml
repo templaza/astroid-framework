@@ -12,6 +12,7 @@
 	<files>
 		<filename module="mod_astroid_clear_cache">mod_astroid_clear_cache.php</filename>
 		<folder>tmpl</folder>
+		<folder>js</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/mod_astroid_clear_cache.ini</language>
