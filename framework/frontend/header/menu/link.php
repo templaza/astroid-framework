@@ -50,7 +50,7 @@ if ($item->anchor_css) {
 }
 
 if (isset($item->id)) {
-    $attributes['class'] = ' nav-link-item-id-'.$item->id;
+    $attributes['class'] .= ' nav-link-item-id-'.$item->id;
     if ($options->badge) {
         $style      =   '--as-nav-item-badge-background: '.$options->badge_bgcolor.';';
         $style      .=  '--as-nav-item-badge-color: '.$options->badge_color.';';
