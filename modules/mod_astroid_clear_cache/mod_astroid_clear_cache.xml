@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>support@templaza.com</authorEmail>
 	<authorUrl>www.templaza.com</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>Astroid Clear Cache Module</description>
 	<files>
 		<filename module="mod_astroid_clear_cache">mod_astroid_clear_cache.php</filename>
@@ -18,7 +18,6 @@
 		<language tag="en-GB">language/en-GB/mod_astroid_clear_cache.ini</language>
 		<language tag="en-GB">language/en-GB/mod_astroid_clear_cache.sys.ini</language>
 	</languages>
-	<help key="Admin_Modules:_Post_Installation_Messages" />
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
