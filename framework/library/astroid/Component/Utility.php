@@ -350,7 +350,13 @@ class Utility
         $document->addCustomTag($params->get('trackingcode', ''));
         $document->addStyleDeclaration($params->get('customcss', ''));
 
-        $customcssfiles = explode("\n", $params->get('customcssfiles'));
+	$paramcustomcssfiles = $params->get('customcssfiles');
+	if (isset($paramcustomcssfiles) && $paramcustomcssfiles) {
+        	$customcssfiles = explode("\n", $paramcustomcssfiles);
+	}
+	else {
+		$customcssfiles = array();
+	}
 
         foreach ($customcssfiles as $customcssfile) {
             @list($file, $shift) = \explode('|', $customcssfile);
@@ -376,7 +382,13 @@ class Utility
         $document->addCustomTag($params->get('astroid_trackingcode', ''));
         $document->addStyleDeclaration($params->get('astroid_customcss', ''));
 
-        $customcssfiles = explode("\n", $params->get('astroid_customcssfiles'));
+	$paramastroidcustomcssfiles = $params->get('astroid_customcssfiles');
+	if (isset($paramastroidcustomcssfiles) && $paramastroidcustomcssfiles) {
+        	$customcssfiles = explode("\n", $paramastroidcustomcssfiles);
+	}
+	else {
+		$customcssfiles = array();
+	}
 
         foreach ($customcssfiles as $customcssfile) {
             @list($file, $shift) = \explode('|', $customcssfile);
