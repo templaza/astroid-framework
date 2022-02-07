@@ -15,6 +15,7 @@ if ($hideLinks) {
 	return;
 }
 ?>
+<?php if ($app->getIdentity()->authorise('core.manage', 'com_modules')) : ?>
 <a class="header-item-content astroid-clear-cache"
    href="#"
    title="<?php echo Text::_('Astroid Clear Cache'); ?>">
@@ -27,3 +28,4 @@ if ($hideLinks) {
 		<?php echo Text::_('Astroid Clear Cache'); ?>
     </div>
 </a>
+<?php endif; ?>

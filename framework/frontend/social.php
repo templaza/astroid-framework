@@ -15,12 +15,16 @@ extract($displayData);
 $document   = Astroid\Framework::getDocument();
 $params     = Astroid\Framework::getTemplate()->getParams();
 
+$enable_social_profiler     = $params->get('enable_social_profiler', 1);
 $social_profiles            = $params->get('social_profiles', []);
 $style                      = $params->get('social_profiles_style', 1);
 $gutter                     = $params->get('social_profiles_gutter', '');
 $fontsize                   = $params->get('social_profiles_fontsize', '16px');
 $social_icon_color          = $params->get('social_icon_color', '');
 $social_icon_color_hover    = $params->get('social_icon_color_hover', '');
+
+if (!$enable_social_profiler) return false;
+
 if (!empty($social_profiles)) {
     $social_profiles = json_decode($social_profiles);
 }
