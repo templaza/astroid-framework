@@ -1,0 +1,25 @@
+div .jd-simple-contact-form .btn-primary {
+	background-color: $primary;
+	border-color: $primary;
+
+	&:hover,
+	&:focus {
+		background-color: lighten($primary, 10%);
+		border-color: lighten($primary, 10%);
+	}
+}
+
+.footer-section {
+	.jd-simple-contact-form .btn-primary {
+		color: $primary;
+		background-color: #fff;
+		border-color: #fff;
+		@extend .btn-lg;
+		&:hover,
+		&:focus {
+			color: $primary;
+			background-color: #f9f9f9;
+			border-color: #f9f9f9;
+		}
+	}
+}

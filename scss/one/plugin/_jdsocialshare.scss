@@ -1,0 +1,27 @@
+$divider-gap: 10px;
+
+.jd-social-btns {
+	>p {
+		color: $text-muted;
+		display: flex;
+		max-width: 250px;
+		margin: 0 auto 10px;
+		align-items: center;
+		&::before,
+		&::after {
+			content: "";
+			height: 1px;
+			background-color: currentColor;
+			flex-grow: 1;
+		}
+		&::before {
+			margin-right: $divider-gap;
+		}
+		&::after {
+			margin-left: $divider-gap;
+		}
+	}
+	.loginBtn {
+		margin: 5px;
+	}
+}

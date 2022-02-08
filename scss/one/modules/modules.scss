@@ -1,0 +1,11 @@
+@import "jd_simplecontactform";
+@import "jd_profiler";
+@import "registerlogin";
+@import "login";
+@import "skillset";
+
+.card-layout {
+   @extend .card;
+   @extend .shadow;
+   border: 0;
+}

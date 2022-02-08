@@ -1,0 +1,612 @@
+{
+   "preloader": "1",
+   "preloder_setting": "animations",
+   "preloader_image": "",
+   "preloader_image_repeat": "",
+   "preloader_image_size": "",
+   "preloader_image_position": "",
+   "preloader_animation": "cube-grid",
+   "preloader_fontawesome": "spinner",
+   "preloader_color": "rgb(69, 191, 85)",
+   "preloader_bgcolor": "rgb(255, 255, 255)",
+   "preloader_size": "20",
+   "sass_variables": {
+      "spinkit-size": "smooth_scroll_speed"
+   },
+   "backtotop": "1",
+   "backtotop_icon": "fas fa-arrow-up",
+   "backtotop_icon_size": "20",
+   "backtotop_icon_color": "rgb(255, 255, 255)",
+   "backtotop_icon_bgcolor": "rgb(69, 191, 85)",
+   "backtotop_icon_style": "square",
+   "backtotop_on_mobile": "1",
+   "template_layout": "wide",
+   "layout_background_image": "",
+   "layout_background_repeat": "",
+   "layout_background_size": "",
+   "layout_background_position": "",
+   "layout_background_attachment": "",
+   "enable_smooth_scroll": "0",
+   "smooth_scroll_speed": "300",
+   "header": "1",
+   "header_module_position": "astroid-header",
+   "header_mode": "horizontal",
+   "header_horizontal_menu_mode": "right",
+   "header_sidebar_menu_mode": "left",
+   "header_stacked_menu_mode": "seperated",
+   "odd_menu_items": "left",
+   "header_block_1_type": "position",
+   "header_block_1_position": "getintouch",
+   "header_block_1_custom": "",
+   "header_block_2_type": "blank",
+   "header_block_2_position": "",
+   "header_block_2_custom": "",
+   "header_menu": "mainmenu",
+   "header_startLevel": "1",
+   "header_endLevel": "0",
+   "header_mobile_menu": "mainmenu",
+   "header_mobile_startLevel": "1",
+   "header_mobile_endLevel": "0",
+   "dropdown_trigger": "hover",
+   "dropdown_arrow": "1",
+   "logo_type": "image",
+   "logo_text": "Astroid",
+   "tag_line": "Your Joomla site Title",
+   "logo_link_type": "default",
+   "logo_link_custom": "#",
+   "logo_link_target_blank": "0",
+   "defult_logo": "TEMPLATE_NAME\/logo.png",
+   "mobile_logo": "TEMPLATE_NAME\/logo_mobile.png",
+   "enable_sticky_menu": "1",
+   "stickey_horizontal_menu_mode": "center",
+   "stickey_header_logo": "TEMPLATE_NAME\/logo_sticky.png",
+   "stickey_block_1_type": "position",
+   "stickey_block_1_position": "getintouch",
+   "stickey_block_1_custom": "",
+   "stickyheader": "sticky",
+   "stickyheadertablet": "static",
+   "stickyheadermobile": "static",
+   "enable_offcanvas": "1",
+   "offcanvas_togglevisibility": "d-block d-xl-none",
+   "offcanvas_panelwidth": "320px",
+   "offcanvas_animation": "st-effect-2",
+   "offcanvas_direction": "offcanvasDirRight",
+   "dropdown_animation_type": "slide",
+   "dropdown_animation_speed": "100",
+   "dropdown_animation_ease": "linear",
+   "body_background_color": "rgb(255, 255, 255)",
+   "body_text_color": "rgb(44, 46, 54)",
+   "body_link_color": "rgb(44, 46, 54)",
+   "body_link_hover_color": "rgb(69, 191, 85)",
+   "header_bg": "rgb(255, 255, 255)",
+   "header_text_color": "rgb(44, 46, 54)",
+   "header_logo_text_color": "rgb(69, 191, 85)",
+   "header_logo_text_tagline_color": "rgb(44, 46, 54)",
+   "stick_header_bg_color": "rgb(255, 255, 255)",
+   "stick_header_menu_link_color": "rgb(44, 46, 54)",
+   "stick_header_menu_link_active_color": "rgb(69, 191, 85)",
+   "stick_header_menu_link_hover_color": "rgb(69, 191, 85)",
+   "main_menu_link_color": "rgb(44, 46, 54)",
+   "main_menu_link_active_color": "rgb(69, 191, 85)",
+   "main_menu_link_hover_color": "rgb(69, 191, 85)",
+   "dropdown_bg_color": "rgb(233, 255, 236)",
+   "dropdown_link_color": "rgb(0, 0, 0)",
+   "dropdown_menu_active_link_color": "rgb(255, 255, 255)",
+   "dropdown_menu_active_bg_color": "rgb(69, 191, 85)",
+   "dropdown_menu_link_hover_color": "rgb(255, 255, 255)",
+   "dropdown_menu_hover_bg_color": "rgb(69, 191, 85)",
+   "mobile_backgroundcolor": "rgb(255, 255, 255)",
+   "mobile_menu_text_color": "rgb(0, 0, 0)",
+   "mobile_menu_link_color": "rgb(0, 0, 0)",
+   "mobile_menu_active_link_color": "rgb(69, 191, 85)",
+   "mobile_menu_active_bg_color": "rgb(255, 255, 255)",
+   "mobile_menu_icon_color": "rgb(0, 0, 0)",
+   "mobile_menu_active_icon_color": "rgb(0, 0, 0)",
+   "mobilemenu_backgroundcolor": "rgb(255, 255, 255)",
+   "mobilemenu_menu_text_color": "rgb(0, 0, 0)",
+   "mobilemenu_menu_link_color": "rgb(0, 0, 0)",
+   "mobilemenu_menu_active_link_color": "rgb(69, 191, 85)",
+   "mobilemenu_menu_active_bg_color": "rgb(255, 255, 255)",
+   "mobilemenu_menu_icon_color": "rgb(0, 0, 0)",
+   "mobilemenu_menu_active_icon_color": "rgb(0, 0, 0)",
+   "layout": "{\"sections\":[{\"id\":\"1529472563843\",\"type\":\"section\",\"rows\":[{\"id\":\"1529472563843\",\"cols\":[{\"id\":\"1529472563843\",\"elements\":[{\"id\":\"1529472563843\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"astroid-header\"},{\"name\":\"title\",\"value\":\"Astroid Header\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"},{\"name\":\"animation\",\"value\":\"\"}]}],\"size\":12,\"type\":\"column\"}],\"type\":\"row\"}],\"params\":[{\"name\":\"title\",\"value\":\"Header Section\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"layout_type\",\"value\":\"container-with-no-gutters\"},{\"name\":\"custom_container_class\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"2000\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"2zhf89w67\",\"type\":\"section\",\"rows\":[{\"id\":\"63och5d96\",\"cols\":[{\"id\":\"wh463brki\",\"elements\":[{\"id\":\"55co0c1mw\",\"type\":\"banner\",\"params\":[{\"name\":\"title\",\"value\":\"Banner\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":12,\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"}]}],\"type\":\"row\"}],\"params\":[{\"name\":\"title\",\"value\":\"Banner Section\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"layout_type\",\"value\":\"no-container\"},{\"name\":\"custom_container_class\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"1528971561366\",\"type\":\"section\",\"rows\":[{\"id\":\"1528971561366\",\"cols\":[{\"id\":\"1530100662663\",\"elements\":[{\"id\":\"1532326898561\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"left\"},{\"name\":\"title\",\"value\":\"Left\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":\"3\",\"type\":\"column\"},{\"id\":\"1528971561366\",\"elements\":[{\"id\":\"1528971711775\",\"type\":\"message\",\"params\":[{\"name\":\"title\",\"value\":\"Messages\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"381539181673929\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"content-top\"},{\"name\":\"title\",\"value\":\"Content Top\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"1529739248826\",\"type\":\"component\",\"params\":[{\"name\":\"title\",\"value\":\"Component Area\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"581539181699144\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"content-bottom\"},{\"name\":\"title\",\"value\":\"Content Bottom\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":\"6\",\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"responsive\",\"value\":\"\"}]},{\"id\":\"321538984985652\",\"elements\":[{\"id\":\"231538985022445\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"right\"},{\"name\":\"title\",\"value\":\"Right\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"background\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":\"3\",\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"}]}],\"type\":\"row\"}],\"params\":[{\"name\":\"title\",\"value\":\"Content Section\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"layout_type\",\"value\":\"\"},{\"name\":\"custom_container_class\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]},{\"id\":\"1528971627712\",\"type\":\"section\",\"rows\":[{\"id\":\"941582093674805\",\"cols\":[{\"id\":\"851582093674805\",\"elements\":[{\"id\":\"901582093687823\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"footer-1\"},{\"name\":\"title\",\"value\":\"footer-1\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":7,\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"}]},{\"id\":\"381582093674805\",\"elements\":[{\"id\":\"741582093698225\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"footer-2\"},{\"name\":\"title\",\"value\":\"footer-2\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":5,\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"}]}],\"type\":\"row\"},{\"id\":\"1528971627712\",\"cols\":[{\"id\":\"1528971627712\",\"elements\":[{\"id\":\"1528971723326\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"footer-3\"},{\"name\":\"title\",\"value\":\"footer-3\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":6,\"type\":\"column\"},{\"id\":\"1529739273646\",\"elements\":[{\"id\":\"1529739275917\",\"type\":\"module_position\",\"params\":[{\"name\":\"position\",\"value\":\"footer-4\"},{\"name\":\"title\",\"value\":\"footer-4\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}],\"size\":6,\"type\":\"column\",\"params\":[{\"name\":\"title\",\"value\":\"\"},{\"name\":\"customclass\",\"value\":\"\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"0\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"\"},{\"name\":\"background_repeat\",\"value\":\"\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"0\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"responsive\",\"value\":\"\"}]}],\"type\":\"row\"}],\"params\":[{\"name\":\"title\",\"value\":\"Footer Section\"},{\"name\":\"customclass\",\"value\":\"footer-section\"},{\"name\":\"customid\",\"value\":\"\"},{\"name\":\"layout_type\",\"value\":\"\"},{\"name\":\"custom_container_class\",\"value\":\"\"},{\"name\":\"animation\",\"value\":\"\"},{\"name\":\"animation_delay\",\"value\":\"\"},{\"name\":\"animation_duration\",\"value\":\"\"},{\"name\":\"background_setting\",\"value\":\"image\"},{\"name\":\"background_color\",\"value\":\"\"},{\"name\":\"img_background_color\",\"value\":\"\"},{\"name\":\"background_image\",\"value\":\"footer-bg.png\"},{\"name\":\"background_repeat\",\"value\":\"no-repeat\"},{\"name\":\"background_size\",\"value\":\"\"},{\"name\":\"background_attchment\",\"value\":\"\"},{\"name\":\"background_position\",\"value\":\"right top\"},{\"name\":\"background_video\",\"value\":\"\"},{\"name\":\"background_gradient\",\"value\":\"{\\\"type\\\":\\\"linear\\\",\\\"start\\\":\\\"rgba(0, 0, 0, 1)\\\",\\\"stop\\\":\\\"rgba(0, 0, 0, 1)\\\"}\"},{\"name\":\"background_gradient[gradient_type]\",\"value\":\"linear\"},{\"name\":\"background_gradient[start_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"background_gradient[stop_color]\",\"value\":\"rgba(0, 0, 0, 1)\"},{\"name\":\"custom_colors\",\"value\":\"1\"},{\"name\":\"text_color\",\"value\":\"\"},{\"name\":\"link_color\",\"value\":\"\"},{\"name\":\"link_hover_color\",\"value\":\"\"},{\"name\":\"margin\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"padding\",\"value\":\"{\\\"desktop\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"tablet\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"},\\\"mobile\\\":{\\\"top\\\":null,\\\"right\\\":null,\\\"left\\\":null,\\\"bottom\\\":null,\\\"lock\\\":false,\\\"unit\\\":\\\"px\\\"}}\"},{\"name\":\"hideonxs\",\"value\":\"0\"},{\"name\":\"hideonsm\",\"value\":\"0\"},{\"name\":\"hideonmd\",\"value\":\"0\"},{\"name\":\"hideonlg\",\"value\":\"0\"},{\"name\":\"hideonxl\",\"value\":\"0\"}]}]}",
+   "astroidcontentlayouts": "header:astroid-header:after,social:footer-1:after,footer:footer-4:after,contactinfo:none:after",
+   "body_typography": "custom",
+   "body_typography_options": {
+      "font_face": "Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "400",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "16",
+         "tablet": "16",
+         "mobile": "16"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.7",
+         "tablet": "1.7",
+         "mobile": "1.7"
+      },
+      "text_transform": "none"
+   },
+   "menus_typography": "custom",
+   "menu_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "500",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "16",
+         "tablet": "16",
+         "mobile": "16"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.7",
+         "tablet": "1.7",
+         "mobile": "1.7"
+      },
+      "text_transform": "none"
+   },
+   "submenus_typography": "custom",
+   "submenu_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "500",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "16",
+         "tablet": "16",
+         "mobile": "16"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "2",
+         "tablet": "2",
+         "mobile": "2"
+      },
+      "text_transform": "none"
+   },
+   "h1_typography": "custom",
+   "h1_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "800",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "65",
+         "tablet": "55",
+         "mobile": "40"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.2",
+         "tablet": "1.2",
+         "mobile": "1.2"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "h2_typography": "custom",
+   "h2_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "800",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "45",
+         "tablet": "38",
+         "mobile": "32"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.2",
+         "tablet": "1.2",
+         "mobile": "1.2"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "h3_typography": "custom",
+   "h3_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "600",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "36",
+         "tablet": "32",
+         "mobile": "30"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.2",
+         "tablet": "1.2",
+         "mobile": "1.2"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "h4_typography": "custom",
+   "h4_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "500",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "28",
+         "tablet": "28",
+         "mobile": "26"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.2",
+         "tablet": "1.2",
+         "mobile": "1.2"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "h5_typography": "custom",
+   "h5_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "600",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "22",
+         "tablet": "22",
+         "mobile": "22"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.2",
+         "tablet": "1.2",
+         "mobile": "1.2"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "h6_typography": "custom",
+   "h6_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "600",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "18",
+         "tablet": "18",
+         "mobile": "18"
+      },
+      "letter_spacing_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "letter_spacing": {
+         "desktop": "0",
+         "tablet": "0",
+         "mobile": "0"
+      },
+      "line_height_unit": {
+         "desktop": "em",
+         "tablet": "em",
+         "mobile": "em"
+      },
+      "line_height": {
+         "desktop": "1.5",
+         "tablet": "1.5",
+         "mobile": "1.5"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "custom_typography": "inherit",
+   "custom_typography_selectors": "",
+   "custom_typography_options": {
+      "font_face": "__default",
+      "alt_font_face": "Arial, Helvetica, sans-serif",
+      "font_weight": "500",
+      "font_size_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "font_size": {
+         "desktop": "5.434",
+         "tablet": "0.7",
+         "mobile": "0.7"
+      },
+      "letter_spacing_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "letter_spacing": {
+         "desktop": "1",
+         "tablet": "1",
+         "mobile": "1"
+      },
+      "line_height_unit": {
+         "desktop": "px",
+         "tablet": "px",
+         "mobile": "px"
+      },
+      "line_height": {
+         "desktop": "1",
+         "tablet": "1",
+         "mobile": "1"
+      },
+      "font_color": "",
+      "text_transform": "none"
+   },
+   "article_authorinfo": "1",
+   "article_rating": "1",
+   "article_relatedposts": "1",
+   "article_relatedposts_count": "4",
+   "article_relatedposts_posttype": "1",
+   "article_relatedposts_badge": "1",
+   "astroid_article_readtime": "1",
+   "article_socialshare_type": "none",
+   "article_socialshare_addthis": "",
+   "article_socialshare_sharethis": "",
+   "article_opengraph": "0",
+   "article_opengraph_facebook": "",
+   "article_opengraph_twitter": "",
+   "twittercardtype": "summary_large_image",
+   "article_comments": "none",
+   "article_comments_fb_id": "",
+   "article_comments_fb_width": "200",
+   "article_comments_disqus_id": "",
+   "article_comments_hyper_id": "",
+   "article_comments_intense_id": "",
+   "article_posttype": "1",
+   "astroid_readtime": "1",
+   "astroid_badge": "1",
+   "social_profiles_position": "footer-1",
+   "social_profiles_load_position": "after",
+   "social_profiles_style": "1",
+   "social_profiles": "[{\"title\":\"Facebook\",\"link\":\"https:\/\/www.facebook.com\/joomdev\",\"icons\":[\"fab fa-facebook-f\",\"fab fa-facebook\",\"fab fa-facebook-square\"],\"color\":\"#39539E\",\"enabled\":false,\"icon\":\"fab fa-facebook-f\",\"id\":\"facebook\"},{\"title\":\"Twitter\",\"link\":\"https:\/\/twitter.com\/joomdev\",\"icons\":[\"fab fa-twitter\",\"fab fa-twitter-square\"],\"color\":\"#3DA9F6\",\"enabled\":false,\"icon\":\"fab fa-twitter\",\"id\":\"twitter\"},{\"title\":\"Github\",\"link\":\"https:\/\/github.com\/joomdev\/astroid-framework\",\"icons\":[\"fab fa-github\",\"fab fa-github-square\",\"fab fa-github-alt\"],\"color\":\"#171515\",\"enabled\":false,\"icon\":\"fab fa-github\",\"id\":\"github\"},{\"title\":\"LinkedIn\",\"link\":\"https:\/\/www.linkedin.com\/company\/joomdev-corporation\",\"icons\":[\"fab fa-linkedin-in\",\"fab fa-linkedin\"],\"color\":\"#006FB8\",\"enabled\":false,\"icon\":\"fab fa-linkedin-in\",\"id\":\"linkedin\"},{\"title\":\"YouTube\",\"link\":\"https:\/\/www.youtube.com\/watch?v=Ir2Vynkv5Lw&list=PLv9TlpLcSZTBBVpJqe3SdJ34A6VvicXqM\",\"icons\":[\"fab fa-youtube\",\"fab fa-youtube-square\"],\"color\":\"#DE0000\",\"enabled\":false,\"icon\":\"fab fa-youtube\",\"id\":\"youtube\"},{\"title\":\"Spotify\",\"link\":\"https:\/\/open.spotify.com\/show\/194E59N046qSazTsJurhSZ\",\"icons\":[\"fab fa-spotify\"],\"color\":\"#00E155\",\"enabled\":false,\"icon\":\"fab fa-spotify\",\"id\":\"spotify\"}]",
+   "trackingcode": "",
+   "beforehead": "",
+   "beforebody": "",
+   "customcss": "",
+   "customcssfiles": "",
+   "customjs": "",
+   "customjsfiles": "",
+   "footer": "1",
+   "footer_copyright": "<div class=\"text-left text-lg-right\">\u00a9 {sitename} {year}, Powered by <a href=\"https:\/\/astroidframework.com\" target=\"_blank\">Astroid<\/a>. Design by <a href=\"https:\/\/joomdev.com\" target=\"_blank\">JoomDev<\/a><\/div>",
+   "footer_module_position": "footer-4",
+   "footer_load_position": "after",
+   "contact_details": "0",
+   "contact_module_position": "none",
+   "contact_feature_load_position": "after",
+   "contact_address": "1826 Locust Street, Bainbridge, GA 31717",
+   "contact_phone_number": "+1 (212) 269-1000",
+   "contact_mobile_number": "",
+   "contact_email_address": "support@example.com",
+   "contact_open_hours": "",
+   "contact_display": "icons",
+   "icon_color": "rgb(0, 0, 0)",
+   "development_mode": "0",
+   "coming_soon_logo": "",
+   "coming_soon_content": "",
+   "coming_soon_countdown_date": "July 23rd 2020, 3:08 am",
+   "coming_soon_social": "1",
+   "background_setting": "0",
+   "background_color": "",
+   "img_background_color": "",
+   "background_image": "",
+   "background_repeat": "",
+   "background_size": "",
+   "background_attchment": "",
+   "background_position": "",
+   "background_video": "",
+   "error_404_content": "<img src=\"..\/..\/images\/error-img.png\">\r\n<p class=\"text-muted my-5 font-weight-bold\">It seems like the page that you are looking for is no longer here.<\/p>\r\n<div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-5\">\r\n        {loadmoduleid 106}\r\n    <\/div>\r\n<\/div>",
+   "error_call_to_action": "Go Home",
+   "background_setting_404": "0",
+   "background_color_404": "",
+   "img_background_color_404": "",
+   "background_image_404": "",
+   "background_repeat_404": "",
+   "background_size_404": "",
+   "background_attchment_404": "",
+   "background_position_404": "",
+   "background_video_404": "",
+   "favicon": "TEMPLATE_NAME\/favicon.png",
+   "lazyload": "0",
+   "lazyload_imgs": "",
+   "lazyload_imgs_action": "include",
+   "lazyload_components": "",
+   "lazyload_components_action": "include",
+   "lazyload_urls": "",
+   "lazyload_urls_action": "include",
+   "lazyload_classes": "",
+   "lazyload_classes_action": "include",
+   "lazyload_exclude_views": "",
+   "minify_css": "0",
+   "minify_js": "0",
+   "minify_js_excludes": "",
+   "minify_html": "0",
+   "minify_html_level": "basic",
+   "theme_blue": "rgb(0, 123, 255)",
+   "theme_indigo": "rgb(102, 16, 242)",
+   "theme_purple": "rgb(103, 58, 183)",
+   "theme_pink": "rgb(254, 89, 89)",
+   "theme_red": "rgb(220, 53, 69)",
+   "theme_orange": "rgb(253, 126, 20)",
+   "theme_yellow": "rgb(255, 190, 0)",
+   "theme_green": "rgb(40, 167, 69)",
+   "theme_teal": "rgb(32, 201, 151)",
+   "theme_cyan": "rgb(23, 162, 184)",
+   "theme_white": "rgb(255, 255, 255)",
+   "theme_gray100": "rgb(248, 249, 250)",
+   "theme_gray600": "rgb(108, 117, 125)",
+   "theme_gray800": "rgb(44, 46, 54)",
+   "theme_primary": "green",
+   "theme_primary_custom": "",
+   "theme_secondary": "gray800",
+   "theme_secondary_custom": "",
+   "theme_success": "green",
+   "theme_success_custom": "",
+   "theme_info": "cyan",
+   "theme_info_custom": "",
+   "theme_warning": "yellow",
+   "theme_warning_custom": "",
+   "theme_danger": "red",
+   "theme_danger_custom": "",
+   "theme_light": "gray100",
+   "theme_light_custom": "",
+   "theme_dark": "gray800",
+   "theme_dark_custom": "",
+   "sass_overrides": "[]"
+}

@@ -1,0 +1,15 @@
+.comingsoon-date {
+   .count {
+      color: rgba($primary, 0.5);
+   }
+   > div {
+      background: #fff;
+      box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      min-width: 120px;
+   }
+}
+
+#comingsoon > * + * {
+   margin-top: 100px;
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="template" client="site" method="upgrade">
+   <name>astroid_template_one</name>
+   <creationDate>January 2022</creationDate>
+   <author>JoomDev/Templaza</author>
+   <authorEmail>info@templaza.com</authorEmail>
+   <authorUrl>https://www.templaza.com</authorUrl>
+   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
+   <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
+   <version>2.5.13</version>
+   <description>TPL_ASTROID_XML_DESCRIPTION</description>
+   <scriptfile>script.php</scriptfile>
+   <updateservers>
+      <server type="extension" name="astroid_framework" priority="1">https://cdn.joomdev.com/updates/astroid_template_one.xml</server>
+   </updateservers>
+
+   <files>
+      <folder>css</folder>
+      <folder>scss</folder>
+      <folder>html</folder>
+      <folder>astroid</folder>
+      <folder>images</folder>
+      <folder>js</folder>
+      <folder>language</folder>
+      <filename>index.php</filename>
+      <filename>helper.php</filename>
+      <filename>templateDetails.xml</filename>
+      <filename>template_preview.png</filename>
+      <filename>template_thumbnail.png</filename>
+      <filename>component.php</filename>
+      <filename>error.php</filename>
+      <filename>offline.php</filename>
+      <filename>script.php</filename>
+   </files>
+   <positions>
+      <position>astroid-header</position>
+      <position>astroid-top-social</position>
+      <position>astroid-top-contact</position>
+      <position>content-top</position>
+      <position>content-bottom</position>
+      <position>left</position>
+      <position>right</position>
+      <position>footer-1</position>
+      <position>footer-2</position>
+      <position>footer-3</position>
+      <position>footer-4</position>
+      <position>offcanvas</position>
+      <position>debug</position>
+   </positions>
+   <languages folder="language/en-GB">
+      <language tag="en-GB">en-GB.tpl_astroid_template_one.ini</language>
+      <language tag="en-GB">en-GB.tpl_astroid_template_one.sys.ini</language>
+   </languages>
+   <config>
+      <fields name="params">
+         <fieldset name="basic" addfieldpath="/libraries/astroid/framework/fields">
+            <field name="astroid" type="astroidmanagerlink"></field>
+         </fieldset>
+      </fields>
+   </config>
+</extension>

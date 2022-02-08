@@ -1,0 +1,35 @@
+.form-signin {
+	.form-control {
+		box-shadow: 2px 2px 9px rgba(0,0,0,.06);
+		border: 1px solid #fdfdfd;
+	}
+	.input-group-text {
+		background-color: transparent;
+	}
+	.login-button {
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+	.login-helping-links {
+		color: $text-muted;
+		margin: 0;
+		padding: 0;
+		li {
+			display: block;
+		}
+		a {
+			color: currentColor;
+		}
+	}
+	.checkbox {
+		font-size: 14px;
+	}
+	.login-help-link {
+		color: $text-muted;
+	}
+	.forget-password-link {
+		color: $primary;
+		font-weight: 600;
+		font-size: 15px;
+	}
+}
