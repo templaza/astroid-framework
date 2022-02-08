@@ -1,0 +1,15 @@
+.astroid-header-section {
+   @extend .shadow-sm;
+   @extend .border-bottom;
+}
+
+.astroid-header-sticky {
+   border-bottom: $sticky-header-border-bottom;
+   box-shadow: $sticky-header-shadow;
+}
+
+.astroid-sidebar-header {
+   .astroid-social-icons {
+      justify-content: center;
+   }
+}

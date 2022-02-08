@@ -15,6 +15,7 @@ if (!isset($displayData['astroidArticle'])) {
 }
 ?>
 <dl class="article-info muted">
+   <?php $displayData['astroidArticle']->renderPostTypeIcon(); ?>
    <?php
    if ($displayData['position'] === 'above' && ($blockPosition == 0 || $blockPosition == 2) || $displayData['position'] === 'below' && ($blockPosition == 1)) :
    ?>

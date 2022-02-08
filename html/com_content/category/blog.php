@@ -76,8 +76,8 @@ $afterDisplayContent = trim(implode("\n", $results));
    <?php if (!empty($this->lead_items)) : ?>
       <div class="items-leading clearfix">
          <?php foreach ($this->lead_items as &$item) : ?>
-            <div class="article-wraper <?php echo $this->params->get('blog_class_leading'); ?>">
-               <div class="article-wraper-inner">
+            <div class="card-deck mt-0 mb-4 <?php echo $this->params->get('blog_class_leading'); ?>">
+               <div class="card h-100">
                   <article class="item leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?><?php echo $item->featured ? ' item-featured' : ''; ?>" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                      <?php
                      $this->item = &$item;
@@ -104,8 +104,8 @@ $afterDisplayContent = trim(implode("\n", $results));
             <?php $row = $counter / $columns; ?>
             <div class="items-row <?php echo 'row-' . $row; ?> row clearfix">
             <?php endif; ?>
-            <div class="col-lg-<?php echo round((12 / $columns)); ?>">
-               <div class="article-wraper <?php echo $this->params->get('blog_class', ''); ?>">
+            <div class="col-lg-<?php echo round((12 / $columns)); ?> p-3">
+               <div class="card h-100 <?php echo $this->params->get('blog_class', ''); ?>">
                   <div class="article-wraper-inner">
                      <article class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?><?php echo $item->featured ? ' item-featured' : ''; ?>" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                         <?php
@@ -135,10 +135,10 @@ $afterDisplayContent = trim(implode("\n", $results));
          <?php echo $this->loadTemplate('children'); ?> </div>
    <?php endif; ?>
    <?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-      <div class="pagination-wrapper">
+      <div class="mt-3">
          <?php echo $this->pagination->getPagesLinks(); ?>
          <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-            <p class="counter"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
+            <p class="counter d-flex justify-content-center"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
          <?php endif; ?>
       </div>
    <?php endif; ?>

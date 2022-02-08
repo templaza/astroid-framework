@@ -61,7 +61,6 @@ $isUnpublished = $this->item->state == 0 || strtotime($this->item->publish_up) >
    ?>
    <div class="card-body<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?>">
 
-      <?php $astroidArticle->renderPostTypeIcon(); ?>
       <?php $astroidArticle->renderArticleBadge(); ?>
 
       <?php echo LayoutHelper::render('joomla.content.post_formats.icons', $post_format); ?>

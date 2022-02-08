@@ -1,0 +1,15 @@
+.article-review {
+   @extend .border;
+   padding: 20px;
+   > div:not(:last-child) {
+      border-bottom: 1px solid $card-border-color;
+   }
+}
+
+.review-head {
+   padding-bottom: 20px;
+}
+
+.article-wraper .card-body:not(.has-image) {
+   padding-top: 60px;
+}

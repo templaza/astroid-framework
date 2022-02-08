@@ -29,7 +29,7 @@ if (!empty($content)) :
                                 echo htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass;
                                 ?>">
         <?php
-        echo '<div class="card-layout">';
+        echo '<div class="card">';
         echo '<div class="card-body">';
         ?>
         <?php

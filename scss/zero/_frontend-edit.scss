@@ -1,0 +1,220 @@
+#adminForm {
+
+	[class^="icon-"],
+	[class*=" icon-"] {
+		height: auto;
+		width: auto;
+		line-height: 1;
+	}
+
+	fieldset {
+		margin-bottom: 20px;
+	}
+
+	.controls {
+
+		>textarea,
+		>select,
+		>input[type="text"],
+		>input[type="password"],
+		>input[type="datetime"],
+		>input[type="datetime-local"],
+		>input[type="date"],
+		>input[type="month"],
+		>input[type="time"],
+		>input[type="week"],
+		>input[type="number"],
+		>input[type="email"],
+		>input[type="url"],
+		>input[type="search"],
+		>input[type="tel"],
+		>input[type="color"],
+		>.uneditable-input {
+			@extend .form-control;
+		}
+
+		.field-calendar {
+			input[type="text"] {
+				@extend .form-control;
+			}
+		}
+
+		.field-media-input {
+			@extend .form-control;
+		}
+	}
+
+	input[type="checkbox"],
+	input[type="radio"] {
+		@extend .form-check;
+		margin-right: 5px;
+		display: inline-block;
+
+		+label {
+			@extend .form-check-label;
+			margin-right: 10px;
+			color: #495057;
+		}
+	}
+
+	input[type="date"],
+	input[type="time"],
+	input[type="datetime-local"],
+	input[type="month"] {
+		appearance: none;
+	}
+
+	.controls {
+		@extend .form-group;
+	}
+
+	.btn:not(.btn-primary):not(.btn-secondary):not(.btn-success):not(.btn-danger) {
+		@extend .btn-outline-secondary;
+	}
+
+	.btn-toolbar {
+		.btn-group:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+}
+
+.layout-edit {
+	.tip-wrap {
+		box-shadow: 2px 2px 9px rgb(0 0 0 / 6%);
+		border: 1px solid #fdfdfd;
+		padding: 10px;
+		background-color: #fff;
+	}
+
+	.input-prepend.input-append {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+
+		.btn {
+			width: auto;
+		}
+	}
+}
+
+.choices__button_joomla {
+	position: relative;
+	padding: 0 10px;
+	color: inherit;
+	text-indent: -9999px;
+	cursor: pointer;
+	background: none;
+	border: 0;
+	opacity: .5;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.choices__button_joomla:before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	text-align: center;
+	text-indent: 0;
+	content: "×";
+}
+
+.sr-only,
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+   position: absolute !important;
+   width: 1px !important;
+   height: 1px !important;
+   padding: 0 !important;
+   margin: -1px !important;
+   overflow: hidden !important;
+   clip: rect(0, 0, 0, 0) !important;
+   white-space: nowrap !important;
+   border: 0 !important;
+}
+
+
+element.style {
+}
+.options-form, .options-form>legend {
+    color: #495057;
+    background-color: #fff;
+}
+.options-form {
+    width: 100%;
+    padding: 1vw 2vw;
+    margin-bottom: 1rem;
+    border: 1px solid #b2bfcd;
+}
+
+.options-form>legend {
+	float: none;
+	width: auto;
+	padding: 0 .5rem;
+	font-weight: 700;
+}
+
+.float-end {
+   float: right !important;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.field-media-wrapper {
+	display: block;
+	width: 100%;
+	max-width: calc(50vw - 5rem);
+}
+
+.field-media-wrapper .field-media-preview {
+	width: 100%;
+	max-width: none;
+}
+
+.btn-close {
+   box-sizing: content-box;
+   width: 1em;
+   height: 1em;
+   padding: .25em;
+   color: #000;
+   background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E") 50%/1em auto no-repeat;
+   border: 0;
+   border-radius: .25rem;
+   opacity: .5;
+}
+
+.btn-close:hover {
+   color: #000;
+   text-decoration: none;
+   opacity: .75;
+}
+
+.btn-close:focus {
+   outline: 0;
+   box-shadow: 0 0 0 .25rem rgba(var(--cassiopeia-color-primary), .25);
+   opacity: 1;
+}
+
+.btn-close.disabled,
+.btn-close:disabled {
+   pointer-events: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   opacity: .25;
+}
+
+.btn-close-white {
+   -webkit-filter: invert(1) grayscale(100%) brightness(200%);
+   filter: invert(1) grayscale(100%) brightness(200%);
+}

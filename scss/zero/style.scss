@@ -1,0 +1,33 @@
+@import "frontend-edit";
+@import "modules/modules";
+@import "plugin/plugin";
+@import "components/components";
+
+.fa-ul {
+	margin-left: 1.5em;
+}
+
+body.site {
+	&.astroid-framework {
+		&.layout-edit {
+			.chzn-container {
+				min-width: 200px;
+			}
+		}
+	}
+}
+
+// Footer Section
+.footer-section {
+	color: #fff;
+	background-color: $primary;
+	a {
+		color: #fff;
+		&:hover {
+			color: darken($color: #fff, $amount: 10);
+		}
+	}
+	.astroid-row {
+		padding: 50px 0 10px;
+	}
+}

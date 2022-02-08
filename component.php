@@ -65,14 +65,10 @@ if($view == 'history' && $option == 'com_contenthistory' && $layout == 'modal'){
  
 if($addtemplatejs){
 	JHtml::_('script', juri::root().'media/jui/js/bootstrap.min.js', array('version' => 'auto', 'relative' => true));
-	if (ASTROID_JOOMLA_VERSION < 4) {
-		JHtml::_('script', 'isis.js', array('version' => 'auto', 'relative' => true));
-	}
+	JHtml::_('script', 'isis.js', array('version' => 'auto', 'relative' => true)); 
 }
 
-if (ASTROID_JOOMLA_VERSION < 4) {
-	JHtml::_('stylesheet', 'isis/isis.css', array('version' => 'auto', 'relative' => true));
-}
+JHtml::_('stylesheet', 'isis/isis.css', array('version' => 'auto', 'relative' => true));
  
 // Add html5 shiv
 JHtml::_('script', 'jui/html5.js', array('version' => 'auto', 'relative' => true, 'conditional' => 'lt IE 9'));
