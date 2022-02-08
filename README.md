@@ -28,7 +28,7 @@
 
 ## Requirements
 * Joomla: 3.x, 4.x
-* PHP : 5.6+
+* PHP : 7.0+
 
 ## Browser Support
 | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)|![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)|![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)|![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)|
@@ -38,96 +38,8 @@
 ## Links
 * [Documentation](https://github.com/templaza/astroid-framework/wiki)
 * [Translations](https://github.com/templaza/astroid-framework/tree/language)
+* [Changelogs](https://github.com/templaza/astroid-framework/releases)
 
 ## Find an Astroid Template provider
 * [TemPlaza - Joomla Template](https://www.templaza.com/joomla-templates.html)
 * [JoomlaPlate - Joomla Template](https://www.joomlaplates.com/)
-
-## Changelogs
-
-Version 2.5.13 - January 21st, 2022
-
-    [new feature] Add module clear all Astroid cache
-    [new feature] Add getForm() function to $form object
-    [improve] Update language file.
-
-Version 2.5.12 - January 6th, 2022
-
-    [new feature] Add feature load inline CSS. Loading via inline would help speed up your website and improve CSS delivery. 
-    [new feature] Add feature enable/disable logo link. 
-    [new feature] Add feature load jQuery from Joomla Core instead of Astroid
-    [new feature] Add feature enable/disable badge in Sticky Menu.
-    [improve] Improve Menu Badge style
-    [improve] Update language file.
-    [fixbug] Fix issue when template.xml is not exists. 
-    [fixbug] Fix error 500 Library path when Uninstall package.
-    [fixbug] Fix issue fontawesome is not disabled when option is switch off
-    [fixbug] Fix issue Joomla font-awesome does not work.
-    [fixbug] Fix issue in Front-end module and article edit.
-    [fixbug] Fix issue Edit button style in front-end
-    [fixbug] Fix issue Favicon wrong url
-    [fixbug] Fix issue exif module is not installed
-
-Version 2.5.11 - December 6th, 2021
-
-    [update] Use Bootstrap from Joomla 4 Core
-    [improve] Improve favicon feature support Apple Touch & Manifest
-    [improve] Update language file.
-    [fixbug] Fix issue conflict style with Regular Lab Library
-    [fixbug] Fix warning Array to string conversion of SCSS library
-
-Version 2.5.10 - November 23th, 2021
-
-    [new feature] Add Background Image Overlay option for element.
-    [fixbug] Fix issue multi-condition does not work in Popup element.php configure
-    [fixbug] Fix issue cannot select article, category in menu
-    [fixbug] Fix issue can not create menu in Joomla 3
-    [fixbug] Fix issue order-undefined error in Order option.
-    [improve] Correct Element XML configure
-    [improve] Update language file.
-
-Version 2.5.9 - November 18th, 2021
-
-    [fixbug] Fix issue theme-width does not work
-    [fixbug] Fix Popover JS issue.
-    [fixbug] Fix animate wrong display
-    [fixbug] Fix issue not is_file of LazyLoad.php
-    [improve] Improve Megamenu white space
-    [improve] Add Bootstrap Bundle JS Library
-    [improve] Add Banner CTA Button for Banner Block
-    [update] Update AngularJS v1.8.2
-
-Version 2.5.8 - November 11th, 2021
-
-    [fixbug] Fix hideonxxl is missing.
-    [fixbug] Fix blog column not work on Featured Article view on One and Zero Template
-    [improve] Add Theme-Width option
-    [improve] Improve Social col style. Add trigger onBeforeAstroidTemplateFormLoad & onAfterAstroidTemplateFormLoad
-    [improve] Improve Responsive Stacked Divided header
-    [improve] Improve Contact Info style & Off-canvas RTL style 
-    [improve] Add font-size option for Heading on Category Blog Layout
-
-Version 2.5.7 - November 5th, 2021
-
-    [fixbug] Fix issue missing .form-group of Zero and One Template with BS5
-    [improve] Add Text Logo Typography.
-
-Version 2.5.6 - November 4th, 2021
-
-    [fixbug] Fix logo sticky disappear in xxl screen
-    [improve] Improve Social Style
-    [improve] Fix Pagination Buttons in mobile run out of screen and Add float-left, float-right class 
-
-Version 2.5.5 - November 2nd, 2021
-    
-    [update] Migrate to Bootstrap 5
-    [update] Update Social layout
-    [update] Update Blog post type
-    [update] Update Astroid Information
-    [add] Add Stacked Center Balance header
-    [add] Add Column Order in Responsive layout
-    [add] Add Color option for Back to top icon
-    [fixbug] Fix PHP warning when Itemid is null
-    [fixbug] Fix PHP warning when system redirect to admin login
-    [fixbug] Fix 404 error when load cassiopeia/css/vendor/fontawesome-free/fontawesome.min.css
-
