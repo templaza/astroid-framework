@@ -13,12 +13,12 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '2.5.13';
-    public static $fontawesome_version = '5.14.0';
+    public static $astroid_version = '2.5.14';
+    public static $fontawesome_version = '6.0.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://github.com/templaza/astroid-framework/wiki';
-    public static $video_tutorial_link = 'https://www.youtube.com/playlist?list=PLv9TlpLcSZTBBVpJqe3SdJ34A6VvicXqM';
+    public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
