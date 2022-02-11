@@ -22,10 +22,10 @@ class Constants
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
-    public static $joomdev_link = 'https://www.templaza.com';
-    public static $joomdev_products_link = 'https://www.templaza.com/joomla-templates.html';
-    public static $joomdev_templates_link = 'https://www.templaza.com/joomla-templates.html';
-    public static $jd_builder_link = 'https://www.templaza.com/joomla-templates.html';
+    public static $astroid_link = 'https://astroidframe.work/';
+    public static $joomdev_products_link = 'https://astroidframe.work/resources/template-providers';
+    public static $joomdev_templates_link = 'https://astroidframe.work/resources/template-providers';
+    public static $jd_builder_link = 'https://astroidframe.work/';
 
     public static $bootstrap_colors = [
         '' => 'TPL_COLOR_DEFAULT',
