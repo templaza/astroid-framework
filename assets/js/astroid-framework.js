@@ -829,10 +829,14 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
          var _typeInput = $(_gradeintPicker).find(".gradient-type");
          var _startInput = $(_gradeintPicker).find(".start-color");
          var _stopInput = $(_gradeintPicker).find(".stop-color");
+         var _gradientAngle = $(_gradeintPicker).find(".gradient-angle");
+         var _gradientPosition = $(_gradeintPicker).find(".gradient-radial-position");
          var _preview = $(_gradeintPicker).find(".gradient-preview");
          var updatePreview = function () {
             var _start = _startInput.val();
             var _stop = _stopInput.val();
+            var _angle = _gradientAngle.val();
+            var _position = _gradientPosition.val();
             var _type = "linear";
             _typeInput.each(function () {
                if ($(this).is(":checked")) {
@@ -840,9 +844,15 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
                }
             });
             if (_type == "radial") {
-               var _gradiant = "radial-gradient(" + _start + ", " + _stop + ")"
+               if (_position === '') _position = 'at center center';
+               var _gradiant = "radial-gradient("+_position+"," + _start + ", " + _stop + ")";
+               _gradientAngle.hide();
+               _gradientPosition.show();
             } else {
-               var _gradiant = "linear-gradient(to bottom, " + _start + " 0%, " + _stop + " 100%)"
+               if (_angle === '') _angle = 0;
+               var _gradiant = "linear-gradient("+_angle+"deg, " + _start + " 0%, " + _stop + " 100%)"
+               _gradientAngle.show();
+               _gradientPosition.hide();
             }
             _preview.css("background-image", _gradiant);
             var _params = {
@@ -851,6 +861,8 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
                stop: "transparent"
             };
             _params.type = _type;
+            _params.angle = _angle;
+            _params.position = _position;
             _params.start = _start;
             _params.stop = _stop;
             _params = JSON.stringify(_params);
@@ -861,6 +873,8 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
          _typeInput.bind("change", updatePreview);
          _startInput.bind("change", updatePreview);
          _stopInput.bind("change", updatePreview);
+         _gradientAngle.bind("change", updatePreview);
+         _gradientPosition.bind("change", updatePreview);
          var _initValue = false;
          var setValue = function () {
             if (!_initValue) {
@@ -872,19 +886,25 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
                      var _params = {
                         type: "linear",
                         start: "transparent",
-                        stop: "transparent"
+                        stop: "transparent",
+                        angle: '0',
+                        position: 'at center center'
                      }
                   }
                } else {
                   var _params = {
                      type: "linear",
                      start: "transparent",
-                     stop: "transparent"
+                     stop: "transparent",
+                     angle: '0',
+                     position: 'at center center'
                   }
                }
                $(_gradeintPicker).find(".gradient-type[value=" + _params.type + "]").prop("checked", true);
                _startInput.spectrum("set", _params.start);
                _stopInput.spectrum("set", _params.stop);
+               _gradientAngle.val(_params.angle);
+               _gradientPosition.val(_params.position);
                updatePreview()
             }
          };
