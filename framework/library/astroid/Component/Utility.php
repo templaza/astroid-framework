@@ -180,7 +180,7 @@ class Utility
             } else {
                 $status = $params->get($type . 's_typography');
             }
-            if (trim($status) !== 'custom') {
+            if (!empty($status) && trim($status) !== 'custom') {
                 continue;
             }
             $typography = $params->get($type . '_typography_options', null);
@@ -350,13 +350,13 @@ class Utility
         $document->addCustomTag($params->get('trackingcode', ''));
         $document->addStyleDeclaration($params->get('customcss', ''));
 
-	$paramcustomcssfiles = $params->get('customcssfiles');
-	if (isset($paramcustomcssfiles) && $paramcustomcssfiles) {
-        	$customcssfiles = explode("\n", $paramcustomcssfiles);
-	}
-	else {
-		$customcssfiles = array();
-	}
+        $paramcustomcssfiles = $params->get('customcssfiles');
+        if (isset($paramcustomcssfiles) && $paramcustomcssfiles) {
+            $customcssfiles = explode("\n", $paramcustomcssfiles);
+        }
+        else {
+            $customcssfiles = array();
+        }
 
         foreach ($customcssfiles as $customcssfile) {
             @list($file, $shift) = \explode('|', $customcssfile);
@@ -382,13 +382,13 @@ class Utility
         $document->addCustomTag($params->get('astroid_trackingcode', ''));
         $document->addStyleDeclaration($params->get('astroid_customcss', ''));
 
-	$paramastroidcustomcssfiles = $params->get('astroid_customcssfiles');
-	if (isset($paramastroidcustomcssfiles) && $paramastroidcustomcssfiles) {
-        	$customcssfiles = explode("\n", $paramastroidcustomcssfiles);
-	}
-	else {
-		$customcssfiles = array();
-	}
+        $paramastroidcustomcssfiles = $params->get('astroid_customcssfiles');
+        if (isset($paramastroidcustomcssfiles) && $paramastroidcustomcssfiles) {
+            $customcssfiles = explode("\n", $paramastroidcustomcssfiles);
+        }
+        else {
+            $customcssfiles = array();
+        }
 
         foreach ($customcssfiles as $customcssfile) {
             @list($file, $shift) = \explode('|', $customcssfile);

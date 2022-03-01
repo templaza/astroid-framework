@@ -21,4 +21,18 @@ extract($displayData);
          <div class=""><input name="<?php echo $name; ?>[stop_color]" class="stop-color" type="text" color-selector /></div>
       </div>
    </div>
+    <div class="gradient-toolbar">
+        <input name="<?php echo $name; ?>[gradient_angle]" type="text" class="form-control gradient-angle" placeholder="<?php echo JText::_('TPL_ASTROID_GRADIENT_ANGLE') ?>">
+        <select name="<?php echo $name; ?>[gradient_radial_position]" class="form-select gradient-radial-position">
+            <option value="at center top">Top Center</option>
+            <option value="at left top">Top Left</option>
+            <option value="at right top">Top Right</option>
+            <option value="at center center">Center Center</option>
+            <option value="at left center">Left Center</option>
+            <option value="at right center">Right Center</option>
+            <option value="at center bottom">Bottom Center</option>
+            <option value="at left bottom">Bottom Left</option>
+            <option value="at right bottom">Bottom Right</option>
+        </select>
+    </div>
 </div>

@@ -303,7 +303,11 @@ class Style
         }
         $gradient = \json_decode($value, true);
         if (isset($gradient['type']) && $gradient['start'] && $gradient['stop']) {
-            return $gradient['type'] . '-gradient(' . $gradient['start'] . ',' . $gradient['stop'] . ')';
+            if ($gradient['type'] == 'linear') {
+                return $gradient['type'] . '-gradient('. (isset($gradient['angle']) && $gradient['angle'] ? $gradient['angle'].'deg,' : '') . $gradient['start'] . ',' . $gradient['stop'] . ')';
+            } else {
+                return $gradient['type'] . '-gradient('. (isset($gradient['position']) && $gradient['position'] ? $gradient['position'].',' : '') . $gradient['start'] . ',' . $gradient['stop'] . ')';
+            }
         } else {
             return '';
         }
