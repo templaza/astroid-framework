@@ -858,7 +858,9 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
             var _params = {
                type: "linear",
                start: "transparent",
-               stop: "transparent"
+               stop: "transparent",
+               angle: '0',
+               position: 'at center center'
             };
             _params.type = _type;
             _params.angle = _angle;
