@@ -71,11 +71,8 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                // header nav ends
             }
             ?>
-            <?php if ($enable_offcanvas) { ?>
-               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-            <?php } ?>
             <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-lg-block align-self-center px-2">
+               <div class="header-right-block d-none d-lg-block align-self-center mx-4">
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item">';
@@ -90,6 +87,9 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                   ?>
                </div>
             <?php endif; ?>
+             <?php if ($enable_offcanvas) { ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+             <?php } ?>
          </div>
       <?php endif; ?>
    </div>
