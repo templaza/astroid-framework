@@ -87,7 +87,7 @@ $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none',
 
                  if ($enable_offcanvas) {
                      ?>
-                     <div class="d-flex justify-content-end ml-3">
+                     <div class="d-flex justify-content-end ms-3">
                          <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                      </div>
                      <?php
