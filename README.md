@@ -20,7 +20,7 @@
 * Enhanced User Experience
 * Import/Export Settings
 * Only Enable What You Need
-* Font Awesome 5
+* Font Awesome 6
 * Social Icons & Share
 * Sass ready
 * Responsive & Accessible Design
