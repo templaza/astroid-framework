@@ -122,7 +122,7 @@ img {
 
 	&.has-sidebar {
 		height: 100vh;
-		overflow-y: auto;
+		overflow-y: inherit;
 
 		&.sidebar-dir-left {
 
