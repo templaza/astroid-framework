@@ -75,12 +75,12 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                <div class="header-right-block d-none d-lg-block align-self-center mx-4">
                   <?php
                   if ($block_1_type == 'position') {
-                     echo '<div class="header-block-item">';
+                     echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
                      echo $document->position($block_1_position, 'xhtml');
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {
-                     echo '<div class="header-block-item">';
+                     echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
                      echo $block_1_custom;
                      echo '</div>';
                   }
