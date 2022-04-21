@@ -8,7 +8,7 @@
 
 ## Features
 * Bootstrap 5 Compatible
-* Built for Joomla 4
+* Built for Joomla 3 and Joomla 4
 * Drag and Drop Layout Builder
 * Advanced Responsive Control
 * Advanced Mega Menu
