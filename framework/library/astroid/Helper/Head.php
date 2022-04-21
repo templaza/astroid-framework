@@ -74,7 +74,7 @@ class Head
             $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
         }
         if ($layout !== 'edit' && $getPluginParams->get('astroid_bootstrap_js', 1)) {
-            if (ASTROID_JOOMLA_VERSION < 4) {
+            if (ASTROID_JOOMLA_VERSION < 4 || $getPluginParams->get('astroid_load_bootstrap_js', 'core') == 'astroid') {
                 $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
             } else {
                 // Depends on Bootstrap

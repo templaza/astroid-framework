@@ -2,8 +2,8 @@
 <extension version="3.1" type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
    <author>JoomDev/TemPlaza</author>
-   <creationDate>January 2022</creationDate>
-   <version>2.5.12</version>
+   <creationDate>April 2022</creationDate>
+   <version>2.5.16</version>
    <url>https://www.astroidframework.com</url>
    <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -27,11 +27,15 @@
             </field>
             <field name="astroid_load_jquery" type="radio" default="astroid" label="ASTROID_LOAD_JQUERY" description="ASTROID_LOAD_JQUERY_DESC" class="btn-group btn-group-yesno">
                <option value="astroid">Astroid</option>
-               <option value="core">Joomla Core</option>
+               <option value="core">Joomla</option>
             </field>
             <field name="astroid_bootstrap_js" type="radio" default="1" label="ASTROID_ENABLE_BOOTSTRAP_JS_LABEL" description="" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
+            </field>
+            <field name="astroid_load_bootstrap_js" type="radio" default="core" label="ASTROID_LOAD_BOOTSTRAP_JS_LABEL" description="ASTROID_LOAD_BOOTSTRAP_JS_DESC" class="btn-group btn-group-yesno">
+               <option value="astroid">Astroid</option>
+               <option value="core">Joomla</option>
             </field>
             <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
