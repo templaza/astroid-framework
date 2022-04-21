@@ -3,11 +3,15 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 
 # Changelogs
 
+Version 2.5.16 - 21 Feb, 2022
+
+  [UPDATE] Update "update-server" for One template
+
 Version 2.5.14 - 17 Feb, 2022
 
-[FIX] Offline.php
+  [FIX] Offline.php
 
 
 Version 2.5.13 - 8 Feb, 2022 - Init
 
-[FIX] Deprecated Bug for PHP 8.1
+  [FIX] Deprecated Bug for PHP 8.1
