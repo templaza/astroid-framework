@@ -1,0 +1,20 @@
+<updates>
+	<update>
+		<name>Zero Template</name>
+		<element>astroid_template_zero</element>
+		<version>2.5.16</version>
+		<type>template</type>
+		<client>0</client>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<infourl title="Zero Template">https://astroidframe.work/</infourl>
+		<maintainer>TemPlaza/Joomdev</maintainer>
+		<maintainerurl>https://www.templaza.com/</maintainerurl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/templaza/astroid-framework/archive/refs/heads/zero-template.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="(3.)|(4.)"/>
+		<php_minimum>7.0.0</php_minimum>
+	</update>
+</updates>
