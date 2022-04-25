@@ -260,11 +260,11 @@ class Font
                 Framework::getDocument()->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             case 'local':
-                Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['version' => Helper\Constants::$fontawesome_version]);
+                Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             default:
                 if (Framework::isAdmin()) {
-                    Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['version' => Helper\Constants::$fontawesome_version]);
+                    Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 }
                 break;
         }
