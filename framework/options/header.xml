@@ -36,7 +36,10 @@
             <option label="TPL_ASTROID_STACKED_CENTER" value="center">media/astroid/assets/images/header/stacked_style1.svg</option>
             <option label="TPL_ASTROID_STACKED_SEPERATED" value="seperated">media/astroid/assets/images/header/stacked_style2.svg</option>
             <option label="TPL_ASTROID_STACKED_DIVIDED" value="divided">media/astroid/assets/images/header/stacked_style3.svg</option>
+            <option label="TPL_ASTROID_STACKED_DIVIDED_LOGO_LEFT" value="divided-logo-left">media/astroid/assets/images/header/stacked_style4.svg</option>
          </field>
+
+         <field ngShow="header==true AND header_mode=='stacked' AND header_stacked_menu_mode=='divided-logo-left'" astroidgroup="header_element" name="divided_logo_width" type="astroidrange" min="20" max="600" step="1" postfix="px" default="200" label="TPL_ASTROID_HEADER_STACKED_DIVIDED_LOGO_WIDTH_LABEL" description="TPL_ASTROID_HEADER_STACKED_DIVIDED_LOGO_WIDTH_DESC" />
 
          <field ngShow="header==true AND header_mode=='stacked' AND header_stacked_menu_mode=='seperated'" astroidgroup="header_element" description="TPL_ASTROID_STICKY_ODD_NUMBER_POSITION_DESC" name="odd_menu_items" ngModel="odd_menu_items" type="astroidradio" default="left" label="TPL_ASTROID_STICKY_ODD_NUMBER_POSITION_LBL">
             <option value="left">JGLOBAL_LEFT</option>
