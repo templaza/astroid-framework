@@ -308,7 +308,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              echo '<div class="col d-none d-lg-flex flex-column justify-content-center">';
              echo '<div class="divided-menu-block">';
              if ($block_1_type != '' || $block_1_type != '') {
-                 echo '<div class="header-block-items py-3">';
+                 echo '<div class="header-block-items">';
                  echo '<div class="d-flex justify-content-between">';
                  // header block starts
                  if ($block_1_type == 'position') {
