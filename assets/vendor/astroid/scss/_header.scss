@@ -27,6 +27,26 @@
          background-color: $stacked-header-bg;
          z-index: $stacked-header-zindex;
       }
+
+      /* Divided left Header */
+      &.astroid-stacked-divided-logo-left-header:not(.astroid-header-sticky) {
+         padding: 0;
+         .divided-menu-block {
+            flex: auto;
+            display: flex;
+            flex-direction: column;
+            > div {
+               padding-left: 40px;
+               padding-right: 40px;
+            }
+         }
+         .header-block-items {
+            > div > div {
+               padding-top: 1rem;
+               padding-bottom: 1rem;
+            }
+         }
+      }
    }
 
    /* Sticky Header */
@@ -130,6 +150,17 @@ header .logo-wrapper {
    .astroid-logo-image {
       img {
          margin: auto;
+      }
+   }
+}
+
+.divided-logo-left.g-0 {
+   @media (max-width: 1200px) {
+      margin-left: 0;
+      margin-right: 0;
+      > div {
+         padding-left: 0;
+         padding-right: 0;
       }
    }
 }

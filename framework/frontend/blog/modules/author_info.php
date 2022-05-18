@@ -41,13 +41,13 @@ $hash_email = md5(strtolower(trim($user->email)));
             <div class="author-thumb">
                <?php if ($params->get('astroid_author_picture', 'gravatar') == "upload") { ?>
                   <?php if (!empty($params->get('upload', ''))) { ?>
-                     <img width="100" src="<?php echo JURI::base() . $params->get('upload', ''); ?>">
+                     <img width="100" src="<?php echo JURI::base() . $params->get('upload', ''); ?>" alt="<?php echo $user->name."'s Avatar"; ?>" />
                   <?php } else { ?>
-                     <img width="100" src="<?php echo JURI::base(); ?>images/<?php echo $template->template; ?>/user-avatar.png">
+                     <img width="100" src="<?php echo JURI::base(); ?>images/<?php echo $template->template; ?>/user-avatar.png" alt="<?php echo $user->name."'s Avatar"; ?>" />
                   <?php } ?>
                <?php } ?>
                <?php if ($params->get('astroid_author_picture', '') == "gravatar") { ?>
-                  <img src="https://www.gravatar.com/avatar/<?php echo $hash_email; ?>" />
+                  <img src="https://www.gravatar.com/avatar/<?php echo $hash_email; ?>" alt="<?php echo $user->name."'s Avatar"; ?>" />
                <?php } ?>
             </div>
          <?php } ?>
@@ -58,7 +58,7 @@ $hash_email = md5(strtolower(trim($user->email)));
                   <?php foreach ($socials['icon'] as $key => $icon) { ?>
                      <?php if (empty($socials['link'][$key])) continue; ?>
                      <li class="author-social-link">
-                        <a target="_blank" rel="noopener" href="<?php echo $socials['link'][$key]; ?>"><i class="<?php echo $icon; ?> fa-lg"></i></a>
+                        <a target="_blank" rel="noopener" href="<?php echo $socials['link'][$key]; ?>"><i class="<?php echo $icon; ?> fa-lg" aria-hidden="true"></i><span class="visually-hidden"><?php echo $icon; ?></span></a>
                      </li>
                   <?php } ?>
                </ul>
