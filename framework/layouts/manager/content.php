@@ -97,11 +97,11 @@ $form = Astroid\Framework::getForm();
                                 if (!empty($group['title']) && !empty($group['fields'])) {
                                     echo '<h3 class="astroid-group-title ' . (!empty($group['description']) ? 'mb-0' : '') . '">' . (!empty($group['icon']) ? '<i class="' . $group['icon'] . '"></i>&nbsp;' : '') . JText::_($group['title']) . '' . (!empty($group['help']) ? ' <a target="_blank" href="' . $group['help'] . '"><span class="far fa-question-circle"></span></a>' : '');
                                     if (!empty($group['preset'])) {
-                                        echo '<span class="dropdown ml-2">';
+                                        echo '<span class="astroid-form-preset-load dropdown ml-2">';
                                         echo '<a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="astroid-preset-dropdown-'.$groupname.'" data-toggle="dropdown" aria-expanded="false">'.JText::_('TPL_ASTROID_PRESET_DROPDOWN').'</a>';
                                         echo '<ul class="dropdown-menu" aria-labelledby="astroid-preset-dropdown-'.$groupname.'">';
                                         for ($i = 0; $i < count($presets); $i++) {
-                                            echo '<li><a class="dropdown-item" href="#">'.$presets[$i]['title'].'</a></li>';
+                                            echo '<li><a class="dropdown-item" href="#" data-preset=\''.$presets[$i]['preset'].'\'>'.$presets[$i]['title'].'</a></li>';
                                         }
                                         echo '</ul>';
                                         echo '</span>';
