@@ -65,7 +65,7 @@ $form = Astroid\Framework::getForm();
                         $groups = [];
                         foreach ($fieldsArr as $key => $field) {
                             if ($field->type == 'astroidgroup') {
-                                $groups[$field->fieldname] = ['title' => $field->getAttribute('title', ''), 'icon' => $field->getAttribute('icon', ''), 'description' => $field->getAttribute('description', ''), 'fields' => [], 'help' => $field->getAttribute('help', '')];
+                                $groups[$field->fieldname] = ['title' => $field->getAttribute('title', ''), 'icon' => $field->getAttribute('icon', ''), 'description' => $field->getAttribute('description', ''), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
                             }
                         }
                         $groups['none'] = ['fields' => []];
@@ -85,6 +85,8 @@ $form = Astroid\Framework::getForm();
                             $groups[$field_group]['fields'][] = $field;
                         }
 
+                        $presets    =   Astroid\Helper::getPresets();
+
                         foreach ($groups as $groupname => $group) {
                             if (empty($group['fields'])) {
                                 continue;
@@ -93,7 +95,18 @@ $form = Astroid\Framework::getForm();
                             <div style="padding-top:20px" id="astroid-form-fieldset-section-<?php echo $groupname; ?>">
                                 <?php
                                 if (!empty($group['title']) && !empty($group['fields'])) {
-                                    echo '<h3 class="astroid-group-title ' . (!empty($group['description']) ? 'mb-0' : '') . '">' . (!empty($group['icon']) ? '<i class="' . $group['icon'] . '"></i>&nbsp;' : '') . JText::_($group['title']) . '' . (!empty($group['help']) ? ' <a target="_blank" href="' . $group['help'] . '"><span class="far fa-question-circle"></span></a>' : '') . '</h3>';
+                                    echo '<h3 class="astroid-group-title ' . (!empty($group['description']) ? 'mb-0' : '') . '">' . (!empty($group['icon']) ? '<i class="' . $group['icon'] . '"></i>&nbsp;' : '') . JText::_($group['title']) . '' . (!empty($group['help']) ? ' <a target="_blank" href="' . $group['help'] . '"><span class="far fa-question-circle"></span></a>' : '');
+                                    if (!empty($group['preset'])) {
+                                        echo '<span class="dropdown ml-2">';
+                                        echo '<a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="astroid-preset-dropdown-'.$groupname.'" data-toggle="dropdown" aria-expanded="false">'.JText::_('TPL_ASTROID_PRESET_DROPDOWN').'</a>';
+                                        echo '<ul class="dropdown-menu" aria-labelledby="astroid-preset-dropdown-'.$groupname.'">';
+                                        for ($i = 0; $i < count($presets); $i++) {
+                                            echo '<li><a class="dropdown-item" href="#">'.$presets[$i]['title'].'</a></li>';
+                                        }
+                                        echo '</ul>';
+                                        echo '</span>';
+                                    }
+                                    echo '</h3>';
                                     if (!empty($group['description'])) {
                                         echo '<p><small>' . JText::_($group['description']) . '</small></p>';
                                     }
