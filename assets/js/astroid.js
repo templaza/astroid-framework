@@ -1059,7 +1059,7 @@ var Admin = new AstroidAdmin();
          placeholder: false,
          fullTextSearch: true,
          onChange: function onChange(value, text, $choice) {
-            _dropdown = $(this);
+            var _dropdown = $(this);
             var _preview = _dropdown.data('preview');
             loadGoogleFont(value, _dropdown, $('.' + _preview));
          }
