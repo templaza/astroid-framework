@@ -100,8 +100,10 @@ $form = Astroid\Framework::getForm();
                                         echo '<span class="astroid-form-preset-load dropdown ml-2">';
                                         echo '<a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="astroid-preset-dropdown-'.$groupname.'" data-toggle="dropdown" aria-expanded="false">'.JText::_('TPL_ASTROID_PRESET_DROPDOWN').'</a>';
                                         echo '<ul class="dropdown-menu" aria-labelledby="astroid-preset-dropdown-'.$groupname.'">';
+                                        $presets_name   =   explode(',', $group['preset']);
                                         for ($i = 0; $i < count($presets); $i++) {
-                                            echo '<li><a class="dropdown-item" href="#" data-preset=\''.$presets[$i]['preset'].'\'>'.$presets[$i]['title'].'</a></li>';
+                                            $preset     =   json_decode($presets[$i]['preset'], true);
+                                            echo '<li><a class="dropdown-item" href="javascript:void(0)" ng-click=\'selectPreset('.$i.','.json_encode($presets_name).')\'>'.$presets[$i]['title'].'</a></li>';
                                         }
                                         echo '</ul>';
                                         echo '</span>';

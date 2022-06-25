@@ -33,8 +33,21 @@ class Admin extends Helper\Client
         }
 
         $template = Framework::getTemplate();
-
         $params = \json_encode($params);
+
+        $astroid_preset = $app->input->post->get('astroid-preset', 0, 'INT');
+        if ($astroid_preset) {
+            $preset = [
+                'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
+                'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
+                'thumbnail' => '', 'demo' => '',
+                'preset' => $params
+            ];
+            jimport('joomla.filesystem.file');
+            \JFile::write(JPATH_SITE . "/templates/{$template->template}/astroid/presets/" . uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-') . '.json', \json_encode($preset));
+        }
+
+
         Helper::putContents(JPATH_SITE . "/templates/{$template->template}/params" . '/' . $template->id . '.json', $params);
 
         Helper::refreshVersion();
@@ -213,5 +226,52 @@ class Admin extends Helper\Client
             return $html;
         }, $body);
         $app->setBody($body);
+    }
+
+    public function loadpreset() {
+        try {
+            // Check for request forgeries.
+            if (!\JSession::checkToken()) {
+                throw new \Exception(\JText::_('JINVALID_TOKEN'));
+            }
+            $app = \JFactory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $presets_path   = JPATH_SITE . "/templates/$template_name/astroid/presets/";
+            $file           = $app->input->post->get('name', '', 'RAW');
+            $json           = file_get_contents($presets_path.$file.'.json');
+            if (!$json) {
+                throw new \Exception(\JText::_('JOLLYANY_LOAD_PRESET_FILE_ERROR').': '.$presets_path.$file.'.json');
+            }
+            $data = \json_decode($json, true);
+            if (!isset($data['preset']) || empty($data['preset'])) {
+                throw new \Exception(\JText::_('JOLLYANY_PRESET_EMPTY_ERROR'));
+            }
+            $this->response($data['preset']);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    public function removepreset() {
+        try {
+            // Check for request forgeries.
+            if (!\JSession::checkToken()) {
+                throw new \Exception(\JText::_('JOLLYANY_AJAX_ERROR'));
+            }
+            $app = \JFactory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $presets_path   = JPATH_SITE . "/templates/$template_name/astroid/presets/";
+            $file           = $app->input->post->get('name', '', 'RAW');
+            $file_name      = $presets_path.$file.'.json';
+            jimport('joomla.filesystem.file');
+            if (\JFile::exists($file_name)) {
+                \JFile::delete($file_name);
+            }
+            $this->response('Preset Removed!');
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
     }
 }

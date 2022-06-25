@@ -1,11 +1,11 @@
 <?php extract($displayData); ?>
 <div ng-cloak class="px-4" id="layoutController" ng-controller="layoutController">
    <textarea class="d-none" name="<?php echo $name; ?>">{{ layout}}</textarea>
-   <!--<div style="margin-right: -1rem;" class="text-right mb-4">
-      <button type="button" ng-click="exportLayout()" class="btn btn-secondary btn-sm mr-2"><i class="fas fa-download"></i> Export</button>
-      <button type="button" ng-click="importLayout()" class="btn btn-light btn-sm"><i class="fas fa-upload"></i> Import</button>
-      <input type="file" onchange="uploadLayoutJSON()" accept=".json" id="astroid-layout-import" class="d-none" />
-   </div>-->
+<!--   <div style="margin-right: -1rem;" class="text-right mb-4">-->
+<!--      <button type="button" ng-click="exportLayout()" class="btn btn-secondary btn-sm mr-2"><i class="fas fa-download"></i> Export</button>-->
+<!--      <button type="button" ng-click="importLayout()" class="btn btn-light btn-sm"><i class="fas fa-upload"></i> Import</button>-->
+<!--      <input type="file" onchange="uploadLayoutJSON()" accept=".json" id="astroid-layout-import" class="d-none" />-->
+<!--   </div>-->
    <div class="ezlb-pop" ng-class="{'open': chooseRow.open}">
       <div class="ezlb-pop-overlay"></div>
       <div class="ezlb-pop-body">
