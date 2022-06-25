@@ -93,7 +93,7 @@ class Head
         } else {
             $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
             if ($document->isFrontendEditing()) {
-                $document->addStyleSheet('templates/cassiopeia/css/template.css');
+                $document->addStyleSheet('media/templates/site/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
             }
         }

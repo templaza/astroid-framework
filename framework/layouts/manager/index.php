@@ -12,6 +12,11 @@ $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $plugin_params = Astroid\Helper::getPluginParams();
 $mediaVersion = Astroid\Helper::joomlaMediaVersion();
+$presets    =   Astroid\Helper::getPresets();
+$preset_arr =   array();
+for ($pidx = 0; $pidx < count($presets); $pidx++) {
+    $preset_arr[]   =   $presets[$pidx]['preset'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,9 +38,13 @@ $mediaVersion = Astroid\Helper::joomlaMediaVersion();
         var SITE_URL = '<?php echo \JURI::root(); ?>';
         var BASE_URL = '<?php echo \JURI::root(); ?>administrator/';
         var TEMPLATE_NAME = '<?php echo $template->template; ?>-<?php echo $template->id; ?>';
+        var TPL_TEMPLATE_NAME = '<?php echo $template->template; ?>';
         var SYSTEM_FONTS = <?php echo json_encode(array_keys(Astroid\Helper\Font::$system_fonts)); ?>;
         var LIBRARY_FONTS = <?php echo json_encode(array_keys(Astroid\Helper\Font::getUploadedFonts($template->template))); ?>;
         var TEMPLATE_PRESETS = <?php echo \json_encode($template->getPresets()); ?>;
+        <?php
+        echo 'var TPL_PRESETS = ['. implode(',', $preset_arr).'];';
+        ?>
         var ASTROID_IS_MOBILE = false;
         var ASTROID_GRIDS = <?php echo \json_encode(Astroid\Helper\Constants::$layout_grids); ?>;
         var astroid_shortcut_enable = <?php echo $plugin_params->get('astroid_shortcut_enable', 1) ? 'true' : 'false'; ?>;

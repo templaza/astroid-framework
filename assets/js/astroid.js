@@ -901,6 +901,7 @@ var Admin = new AstroidAdmin();
 
       getGoogleFonts();
       initAstroidUploader();
+      initPresetFunction();
       $('.astroid-code-editor-exit-fs').click(function () {
          $(this).parent('.head').parent('.astroid-code-editor').removeClass('full-screen');
          setTimeout(function () {
@@ -1059,7 +1060,7 @@ var Admin = new AstroidAdmin();
          placeholder: false,
          fullTextSearch: true,
          onChange: function onChange(value, text, $choice) {
-            _dropdown = $(this);
+            var _dropdown = $(this);
             var _preview = _dropdown.data('preview');
             loadGoogleFont(value, _dropdown, $('.' + _preview));
          }
@@ -1081,6 +1082,7 @@ var Admin = new AstroidAdmin();
          _preview.parent('.astroid-typography-preview-container').siblings('.library-font-warning').addClass('d-none');
          _preview.parent('.astroid-typography-preview-container').siblings('.default-font-warning').addClass('d-none');
       }
+      // if (_font === null || _font === '' || typeof _font === 'undefined') return false;
 
       var _isSystemFont = false;
       SYSTEM_FONTS.forEach(function (_sfont) {
@@ -1097,7 +1099,6 @@ var Admin = new AstroidAdmin();
             return false;
          }
       });
-
 
       if (_isLibraryFont) {
          if (_preview !== null) {
@@ -1185,6 +1186,80 @@ var Admin = new AstroidAdmin();
          $('[data-slider-id="' + _sliderid + '"]').attr('data-unit', $(this).val()).trigger('change');
       });
    };
+
+   var initPresetFunction = function () {
+      $('#astroid-save-preset').on('click', function (e) {
+         e.preventDefault();
+         if ($('#astroid-preset-name').val() === '') {
+            alert('Please insert name of preset!');
+            $('#astroid-preset-name').focus();
+            return false;
+         }
+         $('#astroid-preset').val(1);
+         $('#astroid-template').val(TPL_TEMPLATE_NAME);
+         $('#astroid-form').submit();
+         window.onbeforeunload = null;
+         window.location.reload();
+         return false;
+      });
+
+      $('.astroid-load-preset').on('click', function (e) {
+         e.preventDefault();
+         var token   =   $(this).data('token'),
+             $this   =   $(this);
+         if (confirm("Your current configure will be lost and overwritten by new data. Are you sure?")) {
+            var request = {};
+            request[token]      =   1;
+            request['name']     =   $this.data('name');
+            request['template'] =   TPL_TEMPLATE_NAME;
+            request['astroid'] =   'loadpreset';
+            request['option']   =   'com_ajax';
+            $.ajax({
+               url    : 'index.php?t='+Math.random().toString(36).substring(7),
+               type   : 'POST',
+               data   : request,
+               beforeSend: function(){
+                  $this.attr('disabled','disabled');
+                  $this.prepend('<i class="fas fa-spinner fa-pulse"></i>');
+               },
+               success: function (response) {
+                  $this.removeAttr('disabled','');
+                  $this.find('i').remove();
+                  if (response.status === 'success') {
+                     var _json = Admin.checkUploadedSettings(response.data);
+                     if (_json !== false) {
+                        Admin.saveImportedSettings(_json);
+                     }
+                  }
+               }
+            });
+         }
+         return 1;
+      });
+
+      $('.astroid-del-preset').on('click', function (e) {
+         var token   =   $(this).data('token'),
+             $this   =   $(this);
+         if (confirm("This preset will be deleted! Are you sure?")) {
+            var request = {};
+            request[token]      =   1;
+            request['name']     =   $this.data('name');
+            request['template'] =   TPL_TEMPLATE_NAME;
+            request['astroid'] =   'removepreset';
+            request['option']   =   'com_ajax';
+            $.ajax({
+               url    : 'index.php?t='+Math.random().toString(36).substring(7),
+               type   : 'POST',
+               data   : request,
+               success: function (response) {
+                  window.onbeforeunload = null;
+                  window.location.reload();
+               }
+            });
+         }
+         return 1;
+      });
+   }
 
    var winLoad = function winLoad() {
       initAstroidTypographyField();

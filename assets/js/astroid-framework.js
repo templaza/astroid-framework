@@ -372,6 +372,15 @@ astroidFramework.directive("astroidsassoverrides", ["$http", function () {
             if (_c) {
                var _overrides = $scope.overrides;
                _overrides.splice(_index, 1);
+               if (_overrides[_index]['color'] === true) {
+                  $(".sass-variable-" + _index + "-value").spectrum(spectrumConfig);
+                  $(".sass-variable-" + _index + "-value").spectrum("set", _overrides[_index]['value']);
+               }
+               for (let i = _index+1; i < _overrides.length; i++) {
+                  if (_overrides[i]['color'] === true) {
+                     $(".sass-variable-" + i + "-value").spectrum("set", _overrides[i]['value']);
+                  }
+               }
                $scope.overrides = _overrides
             }
          };

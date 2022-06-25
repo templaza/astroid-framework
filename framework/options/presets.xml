@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+      <fieldset label="TPL_ASTROID_PRESETS_MAIN_TITLE_LABEL" icon="fas fa-rocket" name="preset" addfieldpath="/libraries/astroid/framework/fields" order="12">
+
+         <field type="astroidgroup" name="presets" title="TPL_ASTROID_PRESETS_MAIN_TITLE_LABEL" description="TPL_ASTROID_PRESETS_DESC"/>
+
+         <field astroidgroup="presets" name="presets_style" type="astroidpreset" astroid-switch="true" default="1" />
+      </fieldset>
+   </fields>
+</form>

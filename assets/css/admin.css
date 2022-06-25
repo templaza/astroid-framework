@@ -201,3 +201,35 @@
 	position: relative;
 	color: #fff;
 }
+.astroid_placeholder {
+	width: 100%;
+	min-height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 5rem;
+	text-transform: uppercase;
+	color: #ffffff;
+	background-size: cover;
+	background-position: top;
+}
+.astroid-preset .close {position: absolute;top: 5px;right: 8px;}
+#astroid-content-wrapper .astroid-create-preset .form-control {max-width:100%;}
+#astroid-content-wrapper .astroid-create-preset textarea {min-height:auto;}
+.card-highlight {
+	box-shadow: 7px 7px 7px rgba(0,0,0,0.2);
+}
+@media (min-width: 1500px) {
+	.col-xxl-7 {
+		flex: 0 0 58.3333333333% !important;
+		max-width: 58.3333333333% !important;
+	}
+	.col-xxl-5 {
+		flex: 0 0 41.6666666667% !important;
+		max-width: 41.6666666667% !important;
+	}
+	.col-xxl-3 {
+		flex: 0 0 25% !important;
+		max-width: 25% !important;
+	}
+}

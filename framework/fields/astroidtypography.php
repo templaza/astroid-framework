@@ -205,7 +205,6 @@ class JFormFieldAstroidTypography extends JFormField
       $extraData['defaults'] = $defaults;
 
       $data = array_merge($data, $extraData);
-
       return $renderer->render($data);
    }
 }

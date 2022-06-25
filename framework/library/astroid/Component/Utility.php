@@ -66,19 +66,19 @@ class Utility
             $document->addMeta('', 'article', ['property' => 'og:type']);
         }
         if (!empty($og_title)) {
-            $document->addMeta('', $og_title, ['property' => 'og:title']);
+            $document->addMeta('og:title', $og_title, ['property' => 'og:title']);
         }
         if (!empty($og_sitename)) {
-            $document->addMeta('', $og_sitename, ['property' => 'og:site_name']);
+            $document->addMeta('og:site_name', $og_sitename, ['property' => 'og:site_name']);
         }
         if (!empty($og_siteurl)) {
-            $document->addMeta('', $og_siteurl, ['property' => 'og:url']);
+            $document->addMeta('og:url', $og_siteurl, ['property' => 'og:url']);
         }
         if (!empty($og_description)) {
-            $document->addMeta('', substr($og_description, 0, 200), ['property' => 'og:description']);
+            $document->addMeta('og:description', substr($og_description, 0, 200), ['property' => 'og:description']);
         }
         if (!empty($fb_id)) {
-            $document->addMeta('', $fb_id, ['property' => 'fb:app_id']);
+            $document->addMeta('fb:app_id', $fb_id, ['property' => 'fb:app_id']);
         }
         if (!empty($tw_id)) {
             $document->addMeta('twitter:creator', '@' . $tw_id);

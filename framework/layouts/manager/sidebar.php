@@ -62,12 +62,12 @@ $form = Astroid\Framework::getForm();
             </li>
             <?php $active = false; ?>
         <?php } ?>
-        <li data-sidebar-tooltip="<?php echo JText::_('TPL_ASTROID_EXPORT_PRESET'); ?>" class="nav-item row">
-            <a id="export-preset" ng-click="exportPreset()" class="nav-link col-12" href="javascript:void(0);">
-                <i class="fas fa-palette"></i>
-                <span><?php echo JText::_('TPL_ASTROID_EXPORT_PRESET'); ?></span>
-            </a>
-        </li>
+<!--        <li data-sidebar-tooltip="--><?php //echo JText::_('TPL_ASTROID_EXPORT_PRESET'); ?><!--" class="nav-item row">-->
+<!--            <a id="export-preset" ng-click="exportPreset()" class="nav-link col-12" href="javascript:void(0);">-->
+<!--                <i class="fas fa-palette"></i>-->
+<!--                <span>--><?php //echo JText::_('TPL_ASTROID_EXPORT_PRESET'); ?><!--</span>-->
+<!--            </a>-->
+<!--        </li>-->
         <li data-sidebar-tooltip="<?php echo JText::_('TPL_ASTROID_EXPORT'); ?>" class="nav-item row">
             <a id="export-options" class="nav-link col-12" href="javascript:void(0);">
                 <i class="fas fa-download"></i>

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * @package   Astroid Framework
@@ -33,7 +33,7 @@ $media_types = ['desktop', 'tablet', 'mobile'];
             <?php if ($fontpicker) { ?>
                <label class="astroid-label"><?php echo JText::_('TPL_ASTROID_FONT_FAMILY_LABEL'); ?></label>
 
-               <div data-preview="<?php echo $id; ?>-astroid-typography-preview" data-value="<?php echo $font_face; ?>" class="ui selection dropdown search optgroup astroid-font-selector form-control">
+               <div id="<?php echo $id; ?>_font_face" data-preview="<?php echo $id; ?>-astroid-typography-preview" data-value="<?php echo $font_face; ?>" class="ui selection dropdown search optgroup astroid-font-selector form-control">
                   <input type="hidden" name="<?php echo $name; ?>[font_face]" ng-model="<?php echo $id; ?>_font_face" value="<?php echo $font_face; ?>" />
                   <div class="text"><?php echo JText::_('JGLOBAL_INHERIT'); ?></div>
                   <i class="dropdown icon"></i>
@@ -54,11 +54,11 @@ $media_types = ['desktop', 'tablet', 'mobile'];
             <?php } ?>
             <?php if ($weightpicker) { ?>
                <label class="astroid-label"><?php echo JText::_('TPL_ASTROID_FONT_WEIGHT_LABEL'); ?></label>
-               <select data-typography-field="<?php echo $id; ?>" data-typography-property="font-weight" name="<?php echo $name; ?>[font_weight]" class="form-control" select-ui-div>
-                  <option <?php echo ($font_weight == '' ? ' selected' : ''); ?> value=""><?php JText::_('JDEFAULT'); ?></option>
+               <select data-typography-field="<?php echo $id; ?>" data-typography-property="font-weight" name="<?php echo $name; ?>[font_weight]" ng-model="<?php echo $id; ?>_font_weight" ng-init="<?php echo $id; ?>_font_weight = '<?php echo $font_weight; ?>'" class="form-control" select-ui>
+                  <option value=""><?php JText::_('JDEFAULT'); ?></option>
                   <?php
                   foreach (array(100, 200, 300, 400, 500, 600, 700, 800, 900) as $weight) {
-                     echo '<option ' . ($font_weight == $weight ? ' selected' : '') . ' value="' . $weight . '">' . $weight . '</option>';
+                     echo '<option value="' . $weight . '">' . $weight . '</option>';
                   }
                   ?>
                </select>
@@ -182,11 +182,11 @@ $media_types = ['desktop', 'tablet', 'mobile'];
             <?php } ?>
             <?php if ($transformpicker) { ?>
                <label class="astroid-label"><?php echo JText::_('TPL_ASTROID_TEXT_TRANSFORM_LABEL'); ?></label>
-               <select data-typography-field="<?php echo $id; ?>" data-typography-property="text-transform" name="<?php echo $name; ?>[text_transform]" class="form-control" select-ui-div>
-                  <option <?php echo ($text_transform == '' ? ' selected="selected"' : ''); ?> value="none"><?php echo JText::_('ASTROID_NONE'); ?></option>
+               <select data-typography-field="<?php echo $id; ?>" data-typography-property="text-transform" name="<?php echo $name; ?>[text_transform]" ng-model="<?php echo $id; ?>_text_transform" ng-init="<?php echo $id; ?>_text_transform = '<?php echo $text_transform; ?>'" class="form-control" select-ui>
+                  <option value="none"><?php echo JText::_('ASTROID_NONE'); ?></option>
                   <?php
                   foreach (array('uppercase' => 'JGLOBAL_UPPERCASE', 'lowercase' => 'JGLOBAL_LOWERCASE', 'capitalize' => 'JGLOBAL_CAPITALIZE') as $transform => $transform_title) {
-                     echo '<option ' . ($text_transform == $transform ? ' selected="selected"' : '') . ' value="' . $transform . '">' . JText::_($transform_title) . '</option>';
+                     echo '<option value="' . $transform . '">' . JText::_($transform_title) . '</option>';
                   }
                   ?>
                </select>
