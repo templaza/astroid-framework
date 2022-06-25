@@ -61,7 +61,7 @@ class JFormFieldAstroidPreset extends JFormFieldList {
 		$html[]     =   '<div class="form-group"><label for="astroid-preset-desc">Description</label><textarea class="form-control" name="astroid-preset-desc" id="astroid-preset-desc" rows="3"></textarea></div>';
 		$html[]     =   '<input type="hidden" name="astroid-preset" id="astroid-preset">';
 		$html[]     =   '<input type="hidden" name="astroid-template" id="astroid-template">';
-		$html[]     =   '<a href="#" class="btn btn-primary" id="astroid-save-preset">'.JText::_('JOLLYANY_SAVE_PRESET').'</a>';
+		$html[]     =   '<a href="#" class="btn btn-primary" id="astroid-save-preset">'.JText::_('TPL_ASTROID_SAVE_PRESET').'</a>';
 		$html[]     =   '</div></div>';
 		$html[]     =   '</div>';
 		$html[]     =   '</div>';
