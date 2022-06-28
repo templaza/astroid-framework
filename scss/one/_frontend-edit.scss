@@ -49,7 +49,7 @@
 		@extend .form-check;
 		margin-right: 5px;
 		display: inline-block;
-
+		float: inherit;
 		+label {
 			@extend .form-check-label;
 			margin-right: 10px;

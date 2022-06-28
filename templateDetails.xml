@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.1" type="template" client="site" method="upgrade">
    <name>astroid_template_one</name>
-   <creationDate>April 2022</creationDate>
+   <creationDate>June 2022</creationDate>
    <author>JoomDev/Templaza</author>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
-   <version>2.5.16</version>
+   <version>2.5.18</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <scriptfile>script.php</scriptfile>
    <updateservers>
-      <server type="extension" name="astroid_framework" priority="1">https://raw.githubusercontent.com/templaza/astroid-framework/one-template/one_template_update.xml</server>
+      <server type="extension" name="astroid_framework" priority="1">https://cdn.joomdev.com/updates/astroid_template_one.xml</server>
    </updateservers>
 
    <files>
