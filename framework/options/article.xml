@@ -2,8 +2,8 @@
 <form>
 	<fields name="params">
 		<fieldset label="ASTROID_OPTIONS_ARTICLE_BLOG" icon="far fa-newspaper" name="articles" addfieldpath="/libraries/astroid/framework/fields" order="6">
-			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS"/>
-			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" preset="article_relatedposts_count" />
+			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS" preset="article_listing_lead_heading_fontsize,article_listing_intro_heading_fontsize,article_posttype,astroid_readtime,astroid_badge"/>
+			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" preset="article_authorinfo,article_rating,article_relatedposts,article_relatedposts_count,article_relatedposts_posttype,article_relatedposts_badge,astroid_article_readtime,article_socialshare_type,article_socialshare_addthis,article_socialshare_sharethis,article_opengraph,article_opengraph_facebook,article_opengraph_twitter,twittercardtype,article_comments,article_comments_fb_id,article_comments_fb_width,article_comments_disqus_id,article_comments_hyper_id,article_comments_intense_id" />
 
 			<field astroidgroup="article_listing_options" name="article_listing_lead_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="32" label="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_DESC" />
 			<field astroidgroup="article_listing_options" name="article_listing_intro_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="26" label="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_DESC" />
