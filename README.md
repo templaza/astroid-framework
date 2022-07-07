@@ -3,6 +3,10 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 
 # Changelogs
 
+Version 2.5.18 - 7 July, 2022
+
+[UPDATE] Update Preset system for Zero template
+
 Version 2.5.16 - 21 April, 2022
 
 [UPDATE] Update "update-server" for Zero template
