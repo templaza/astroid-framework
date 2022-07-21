@@ -11,7 +11,7 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 
 defined('_JEXEC') or die;
 
@@ -50,6 +50,9 @@ class Overrides
                     Folder::move($path . 'com_config', $path . (str_replace(basename('com_config'), basename('com_config') . '-' . date('Y-m-d'), 'com_config')));
                 }
             }
+
+            //Fix alert issue.
+            File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/system/message.php', $path.'layouts/system/message.php');
         }
     }
 }
