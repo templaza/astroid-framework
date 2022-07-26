@@ -84,7 +84,7 @@ class Utility
             $document->addMeta('twitter:creator', '@' . $tw_id);
         }
         if (!empty($og_image)) {
-            $document->addMeta('og:image', $og_image);
+            $document->addMeta('og:image', $og_image, ['property' => 'og:image']);
         }
     }
 
