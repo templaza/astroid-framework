@@ -26,11 +26,11 @@ if (!empty($content)) :
     <<?php
         echo $moduleTag;
         ?> class="moduletable <?php
-                                echo htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass;
+                                echo $params->get('moduleclass_sfx') ? htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass : $moduleClass;
                                 ?>">
         <?php
-        echo '<div class="card">';
-        echo '<div class="card-body">';
+        echo '<div class="uk-card uk-card-default">';
+        echo '<div class="uk-card-body">';
         ?>
         <?php
         if ($module->showtitle != 0) :
