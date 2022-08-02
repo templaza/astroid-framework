@@ -17,7 +17,7 @@ $headerTag     = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 
 $headerClass   = htmlspecialchars($params->get('header_class', 'page-header'), ENT_COMPAT, 'UTF-8');
 
 if ($module->content) {
-    echo '<' . $moduleTag . ' class="moduletable split-title-module' . htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass . '">';
+    echo '<' . $moduleTag . ' class="moduletable split-title-module' . ($params->get('moduleclass_sfx') ? htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') : '') . $moduleClass . '">';
 
     if ($module->showtitle) {
         $title = explode('|', $module->title);

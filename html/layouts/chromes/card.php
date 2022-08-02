@@ -26,7 +26,7 @@ if (!empty($content)) :
     <<?php
         echo $moduleTag;
         ?> class="moduletable <?php
-                                echo htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass;
+                                echo $params->get('moduleclass_sfx') ? htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass : $moduleClass;
                                 ?>">
         <?php
         echo '<div class="card-layout">';
