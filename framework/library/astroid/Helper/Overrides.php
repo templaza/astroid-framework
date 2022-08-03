@@ -49,6 +49,9 @@ class Overrides
                 if (is_dir($path . 'com_config')) {
                     Folder::move($path . 'com_config', $path . (str_replace(basename('com_config'), basename('com_config') . '-' . date('Y-m-d'), 'com_config')));
                 }
+                if (is_dir($path . 'layouts/joomla/editors')) {
+                    Folder::delete($path . 'layouts/joomla/editors');
+                }
             }
 
             //Fix alert issue.
