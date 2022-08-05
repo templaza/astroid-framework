@@ -26,7 +26,7 @@ $ngHide = Astroid\Helper::replaceRelationshipOperators($field->getAttribute('ngH
 $ngShow = Astroid\Helper::replaceRelationshipOperators($field->getAttribute('ngShow'));
 $gclass = (string) $field->getAttribute('groupClass');
 
-$input = trim(str_replace('ng-media-class', 'ng-class', $field->input));
+$input = $field->input ? trim(str_replace('ng-media-class', 'ng-class', $field->input)) : $field->input;
 if (empty($input)) {
     return;
 }

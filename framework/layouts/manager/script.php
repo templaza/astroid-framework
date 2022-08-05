@@ -155,6 +155,13 @@ $form = Astroid\Framework::getForm();
                         } else {
                             $scope[_name[key]]  =   _preset[_name[key]];
                             $('[name="params[' + _name[key] + ']"]').val(_preset[_name[key]]);
+                            if ($('#params_'+ _name[key]).length && $('#params_'+ _name[key]).attr('type') === 'checkbox') {
+                                if (_preset[_name[key]] === '1') {
+                                    $('#params_'+ _name[key]).prop('checked', true);
+                                } else {
+                                    $('#params_'+ _name[key]).prop('checked', false);
+                                }
+                            }
                         }
                     }
                 }

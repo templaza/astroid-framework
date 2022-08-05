@@ -237,8 +237,8 @@ class Helper
 
     public static function replaceRelationshipOperators($str)
     {
-        $str = str_replace(" AND ", " && ", $str);
-        $str = str_replace(" OR ", " || ", $str);
+        $str = $str ? str_replace(" AND ", " && ", $str) : '';
+        $str = $str ? str_replace(" OR ", " || ", $str) : '';
         return $str;
     }
 

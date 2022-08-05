@@ -160,7 +160,7 @@ class AstroidFrameworkArticle
    public function renderReadTime()
    {
       if ($this->showReadTime()) {
-         $this->article->readtime = $this->calculateReadTime($this->article->fulltext);
+         $this->article->readtime = $this->calculateReadTime($this->article->introtext.$this->article->fulltext);
          Astroid\Framework::getDocument()->include('blog.modules.readtime', ['article' => $this->article]);
       }
    }
