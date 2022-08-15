@@ -11,7 +11,7 @@ if (!defined('_ASTROID')) {
    try {
       Astroid\Framework::init();
    } catch (\Exception $e) {
-      die('Please install and activate <a href="https://www.astroidframework.com/" target="_blank">Astroid Framework</a> in order to use this template.');
+      die('Please install and activate <a href="https://www.astroidframe.work/" target="_blank">Astroid Framework</a> in order to use this template.');
    }
 }
 
