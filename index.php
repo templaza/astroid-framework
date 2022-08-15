@@ -8,7 +8,7 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
-defined('_ASTROID') or die('Please install and activate <a href="https://www.astroidframework.com/" target="_blank">Astroid Framework</a> in order to use this template.');
+defined('_ASTROID') or die('Please install and activate <a href="https://www.astroidframe.work/" target="_blank">Astroid Framework</a> in order to use this template.');
 
 if (file_exists(__DIR__ . "/helper.php")) {
    require_once __DIR__ . "/helper.php"; // Template's Helper
