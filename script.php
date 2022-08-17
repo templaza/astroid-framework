@@ -8,6 +8,8 @@
  */
 
 use Astroid\Helper\Overrides;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 // no direct access
 defined('_JEXEC') or die;
@@ -15,7 +17,13 @@ jimport('joomla.filesystem.file');
 
 class astroidInstallerScript
 {
-
+    public static $rename = [
+        'com_content/form',
+        'layouts/joomla/form',
+        'layouts/joomla/content/icons/email.php',
+        'layouts/joomla/content/icons/print_popup.php',
+        'layouts/joomla/content/icons/print_screen.php'
+    ];
 	/**
 	 *
 	 * Function to run before installing the component
@@ -65,10 +73,88 @@ class astroidInstallerScript
 			}
 		}
 
-		if ($type == "update") {
-			Overrides::fix();
-		}
+        $templates = self::getAstroidTemplates(true);
+        $templates = array_unique(array_column($templates, 'template'));
+
+        foreach ($templates as $template) {
+            $path = JPATH_ROOT . '/templates/' . $template . '/html/';
+            foreach (self::$rename as $file) {
+                if (is_dir($path . $file)) {
+                    Folder::move($path . $file, $path . (str_replace(basename($file), basename($file) . '-' . date('Y-m-d'), $file)));
+                } else if (file_exists($path . $file)) {
+                    File::move($path . $file, $path . (str_replace(basename($file), basename($file, '.php') . '-' . date('Y-m-d') . '.php', $file)));
+                }
+            }
+            if (JVERSION >= 4) {
+                if (is_dir($path . 'com_config')) {
+                    Folder::move($path . 'com_config', $path . (str_replace(basename('com_config'), basename('com_config') . '-' . date('Y-m-d'), 'com_config')));
+                }
+                if (is_dir($path . 'layouts/joomla/editors')) {
+                    Folder::delete($path . 'layouts/joomla/editors');
+                }
+                //Fix module issue from Joomla 4.2
+                if (file_exists(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php') && file_exists($path.'mod_login/default.php')) {
+                    File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php', $path.'mod_login/default.php');
+                }
+            }
+
+            //Fix alert issue.
+            if (file_exists(JPATH_LIBRARIES.'/astroid/framework/layouts/system/message.php') && file_exists($path.'layouts/joomla/system/message.php')) {
+                File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/system/message.php', $path.'layouts/joomla/system/message.php');
+            }
+        }
 	}
+
+    public static function getAstroidTemplates($full = false)
+    {
+        $db = \JFactory::getDbo();
+        $query = $db
+            ->getQuery(true)
+            ->select('s.id, s.template, s.title')
+            ->from('#__template_styles as s')
+            ->where('s.client_id = 0')
+            ->where('e.enabled = 1')
+            ->leftJoin('#__extensions as e ON e.element=s.template AND e.type=' . $db->quote('template') . ' AND e.client_id=s.client_id');
+
+        $db->setQuery($query);
+        $templates = $db->loadObjectList();
+        $return = [];
+
+        foreach ($templates as $template) {
+            $astroidTemplate = self::isAstroidTemplate($template->template);
+            if ($astroidTemplate !== false) {
+                if (!$full) {
+                    $return[] = $template->id;
+                } else {
+                    $return[] = $template;
+                }
+            }
+        }
+        return $return;
+    }
+
+    public static function isAstroidTemplate($template)
+    {
+        if (!file_exists(JPATH_SITE . "/templates/{$template}/templateDetails.xml")) {
+            return false;
+        }
+        $xml = self::getXML(JPATH_SITE . "/templates/{$template}/templateDetails.xml");
+        $version    =   $xml->version;
+        $isAstroid  =   $xml->config->fields->fieldset->field['type'];
+        $return = false;
+        $item = array();
+        if ((string)$isAstroid === 'astroidmanagerlink') {
+            $item['version'] = $version;
+            $return = $item;
+        }
+        return $return;
+    }
+
+    public static function getXml($url)
+    {
+        if (!file_exists($url)) return;
+        return simplexml_load_file($url, 'SimpleXMLElement');
+    }
 
 	public function installPlugin($plugin, $plugin_dir)
 	{
