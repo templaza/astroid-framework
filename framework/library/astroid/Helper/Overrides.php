@@ -52,6 +52,10 @@ class Overrides
                 if (is_dir($path . 'layouts/joomla/editors')) {
                     Folder::delete($path . 'layouts/joomla/editors');
                 }
+                //Fix module issue from Joomla 4.2
+                if (file_exists(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php') && file_exists($path.'mod_login/default.php')) {
+                    File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php', $path.'mod_login/default.php');
+                }
             }
 
             //Fix alert issue.
