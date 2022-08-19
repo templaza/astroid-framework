@@ -59,7 +59,7 @@ $menuItem = $menu->getItem($itemId);
 if (isset($menuItem->language) && $menuItem->language == '*') {
     $items = $menu->getItems(['menutype'], $menu_type);
 } else {
-    $items = $menu->getItems(['menutype', 'language'], $menu_type);
+    $items = $menu->getItems(['menutype', 'language'], [$menu_type, $menuItem->language]);
 }
 
 $children = [];
