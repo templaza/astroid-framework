@@ -567,7 +567,9 @@ class AstroidFrameworkArticle
    {
       $parts = parse_url($url);
       if ($type == "youtube") {
-         parse_str($parts['query'], $query);
+          if (isset($parts['query'])) {
+              parse_str($parts['query'], $query);
+          }
          return (isset($query['v']) ? $query['v'] : '');
       } else {
          return (isset($parts['path']) ? str_replace('/', '', $parts['path']) : '');

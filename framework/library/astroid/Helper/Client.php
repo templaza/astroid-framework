@@ -12,6 +12,7 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -228,5 +229,23 @@ class Client
             })();
             ');
         }
+    }
+
+    public function onContentBeforeSave($context, $table, $isNew, $data)
+    {
+        if ($context === 'com_content.form' && Framework::isSite() && !$isNew) {
+            $tblClone   = clone($table);
+
+            $tblClone -> reset();
+            $tblClone -> load($table -> get($table -> getKeyName()));
+
+            $params = new Registry($tblClone -> get('attribs'));
+
+            $my_attribs = new Registry($data['attribs']);
+            $params -> merge($my_attribs);
+
+            $table -> set('attribs', $params -> toString());
+        }
+        return true;
     }
 }
