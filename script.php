@@ -3,7 +3,7 @@
 /**
  * @package   Astroid Framework
  * @author    TemPlaza https://www.templaza.com
- * @copyright Copyright (C) 201 - 2022 TemPlaza.
+ * @copyright Copyright (C) 2011 - 2022 TemPlaza.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
