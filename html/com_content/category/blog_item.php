@@ -43,7 +43,7 @@ $post_format = $post_attribs->get('post_format', 'standard');
 
 $info_block_layout = ASTROID_JOOMLA_VERSION > 3 ? 'joomla.content.info_block' : 'joomla.content.info_block.block';
 
-$isUnpublished = $this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate());
+$isUnpublished = $this->item->state == 0 || ($this->item->publish_up ? strtotime($this->item->publish_up) : 0) > strtotime(Factory::getDate()) || ((($this->item->publish_down ? strtotime($this->item->publish_down) : 0 ) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate());
 
 ?>
 <?php if ($isUnpublished) : ?>
