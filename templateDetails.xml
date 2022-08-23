@@ -11,7 +11,7 @@
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <scriptfile>script.php</scriptfile>
    <updateservers>
-      <server type="extension" name="astroid_framework" priority="1">https://cdn.joomdev.com/updates/astroid_template_one.xml</server>
+      <server type="extension" name="astroid_framework" priority="1">https://raw.githubusercontent.com/templaza/astroid-framework/one-template/one_template_update.xml</server>
    </updateservers>
 
    <files>
