@@ -27,6 +27,10 @@
             label="ASTROID_IMAGE"
             default=""
          />
+         <field showon="astroid_opengraph_menuitem:1" name="astroid_og_visibility" type="list" label="ASTROID_OPENGRAPH_VISIBILITY_LABEL" default="currentPage">
+            <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
+            <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
+         </field>
       </fieldset>
    </fields>
 </form>
