@@ -17,13 +17,7 @@ defined('_JEXEC') or die;
 
 class Overrides
 {
-    public static $rename = [
-        'com_content/form',
-        'layouts/joomla/form',
-        'layouts/joomla/content/icons/email.php',
-        'layouts/joomla/content/icons/print_popup.php',
-        'layouts/joomla/content/icons/print_screen.php'
-    ];
+    public static $rename = [];
 
     public static function fix()
     {

@@ -54,7 +54,7 @@ class plgSystemAstroid extends JPlugin
         Framework::getClient()->onContentPrepareForm($form, $data);
     }
 
-    public function onContentBeforeSave($context, $table, $isNew, $data)
+    public function onContentBeforeSave($context, $table, $isNew, $data = null)
     {
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;

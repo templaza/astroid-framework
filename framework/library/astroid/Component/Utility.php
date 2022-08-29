@@ -38,6 +38,12 @@ class Utility
         if (empty($enabled)) {
             return;
         }
+        $astroid_og_visibility = $params->get('astroid_og_visibility', "currentPage");
+        if ($astroid_og_visibility == "currentPage") {
+            if ((isset($item->query['option']) && $item->query['option'] != $app->input->get('option', '')) || (isset($item->query['view']) && $item->query['view'] != $app->input->get('view', '')) || (isset($item->query['layout']) && $item->query['layout'] != $app->input->get('layout', ''))) {
+                return;
+            }
+        }
 
         $fb_id = $template_params->get('article_opengraph_facebook', '');
         $tw_id = $template_params->get('article_opengraph_twitter', '');

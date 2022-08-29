@@ -64,7 +64,7 @@ if (!class_exists('astroidInstallerScript')) {
                 }
             }
 
-            if ($type == "install" || $type == "update") {
+            if ($type == "update") {
                 Overrides::fix();
             }
         }
