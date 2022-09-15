@@ -76,7 +76,7 @@
             display: none !important;
          }
 
-         .astroid-logo-sticky {
+         .astroid-logo-sticky:not([hidden]) {
             @include media-breakpoint-up(md) {
                display: block !important;
             }
