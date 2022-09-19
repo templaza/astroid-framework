@@ -49,7 +49,7 @@ class AstroidFrameworkArticle
       if ($itemId) {
          $menu = $mainframe->getMenu();
          $item = $menu->getItem($itemId);
-         if ($item->query['option'] == 'com_content' && ($item->query['view'] == 'category' || $item->query['view'] == 'article' || $item->query['view'] == 'featured')) {
+         if (isset($item->query) && is_array($item->query) && $item->query['option'] == 'com_content' && ($item->query['view'] == 'category' || $item->query['view'] == 'article' || $item->query['view'] == 'featured')) {
             $this->params = $item->getParams();
          }
       }
