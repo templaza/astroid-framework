@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.1" type="template" client="site" method="upgrade">
+<extension type="template" client="site" method="upgrade">
    <name>astroid_template_one</name>
-   <creationDate>August 2022</creationDate>
+   <creationDate>September 2022</creationDate>
    <author>JoomDev/Templaza</author>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <copyright>Copyright (C) 2021 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
-   <version>2.5.19</version>
+   <version>2.6.0</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
+   <inheritable>1</inheritable>
    <scriptfile>script.php</scriptfile>
    <updateservers>
       <server type="extension" name="astroid_framework" priority="1">https://raw.githubusercontent.com/templaza/astroid-framework/one-template/one_template_update.xml</server>
    </updateservers>
 
    <files>
-      <folder>css</folder>
-      <folder>scss</folder>
-      <folder>html</folder>
       <folder>astroid</folder>
-      <folder>images</folder>
-      <folder>js</folder>
+      <folder>html</folder>
       <folder>language</folder>
       <filename>index.php</filename>
       <filename>helper.php</filename>
       <filename>templateDetails.xml</filename>
-      <filename>template_preview.png</filename>
-      <filename>template_thumbnail.png</filename>
       <filename>component.php</filename>
       <filename>error.php</filename>
       <filename>offline.php</filename>
       <filename>script.php</filename>
    </files>
+   <media destination="templates/site/astroid_template_one" folder="media">
+      <folder>js</folder>
+      <folder>css</folder>
+      <folder>scss</folder>
+      <folder>images</folder>
+   </media>
    <positions>
       <position>astroid-header</position>
       <position>astroid-top-social</position>
