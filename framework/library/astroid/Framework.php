@@ -59,6 +59,7 @@ abstract class Framework
 
         $template = Framework::getTemplate();
         define('ASTROID_TEMPLATE_PATH', JPATH_SITE . '/templates/' . $template->template);
+        define('ASTROID_MEDIA_TEMPLATE_PATH', JPATH_SITE . '/media/templates/site/' . $template->template);
     }
 
     public static function addReporter(Reporter $reporter)
