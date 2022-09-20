@@ -57,9 +57,9 @@ class AstroidFrameworkTemplate
 
    public function templateVersion()
    {
-      $xml = JFactory::getXML(JPATH_SITE . "/templates/{$this->template}/templateDetails.xml");
-      $version = (string) $xml->version;
-      return $version;
+       $xml = Astroid\Helper::getXML(JPATH_SITE . "/templates/{$this->template}/templateDetails.xml");
+       $version = (string) $xml->version;
+       return $version;
    }
 
    public function addMeta()
