@@ -248,4 +248,11 @@ class Client
         }
         return true;
     }
+
+    public function onInstallerAfterInstaller($package)
+    {
+        if (!file_exists($package['dir'])) return false;
+        Helper::getXml($package['dir'] . '/templateDetails.xml');
+        return true;
+    }
 }

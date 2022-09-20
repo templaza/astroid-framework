@@ -94,6 +94,14 @@ class plgSystemAstroid extends JPlugin
         echo Helper::str_lreplace('</body>', Helper::debug() . '</body>', $contents);
     }
 
+    public function onInstallerAfterInstaller($installmodel, $package, $installer, $result)
+    {
+        if (!$result || Framework::isSite()) {
+            return false;
+        }
+        Framework::getClient()->onInstallerAfterInstaller($package);
+    }
+
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
