@@ -64,6 +64,9 @@ class Overrides
                 Folder::move($path_template . '/astroid', $path_template_media . '/astroid');
             }
             if (file_exists($path_template . '/params')) {
+                if (file_exists($path_template_media . '/params')) {
+                    Folder::delete($path_template_media . '/params');
+                }
                 Folder::move($path_template . '/params', $path_template_media . '/params');
             }
             if (file_exists($path_template . '/fonts')) {
