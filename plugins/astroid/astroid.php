@@ -94,12 +94,20 @@ class plgSystemAstroid extends JPlugin
         echo Helper::str_lreplace('</body>', Helper::debug() . '</body>', $contents);
     }
 
+    public function onInstallerAfterInstaller($installmodel, $package, $installer, $result)
+    {
+        if (!$result || Framework::isSite()) {
+            return false;
+        }
+        Framework::getClient()->onInstallerAfterInstaller($package);
+    }
+
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
-        if (Framework::isAdmin() && $context == "com_templates.style" && $isNew && Template::isAstroidTemplate($table->template)) {
+        if (Framework::isAdmin() && $context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
             $params = \json_decode($table->params, TRUE);
             $parent_id = $params['astroid'];
             Template::setTemplateDefaults($table->template, $table->id, $parent_id);

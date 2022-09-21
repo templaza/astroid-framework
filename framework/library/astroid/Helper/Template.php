@@ -30,7 +30,7 @@ class Template
         $templates = $db->loadObjectList();
         $return = [];
         foreach ($templates as $template) {
-            $astroidTemplate = self::isAstroidTemplate($template->template);
+            $astroidTemplate = self::isAstroidTemplate(JPATH_SITE . "/templates/{$template->template}/templateDetails.xml");
             if ($astroidTemplate !== false) {
                 self::setTemplateDefaults($template->template, $template->id);
                 if (!$full) {
@@ -43,15 +43,15 @@ class Template
         return $return;
     }
 
-    public static function isAstroidTemplate($template)
+    public static function isAstroidTemplate($template_xml_path)
     {
-        if (!file_exists(JPATH_SITE . "/templates/{$template}/templateDetails.xml")) {
+        if (!file_exists($template_xml_path)) {
             return false;
         }
-        $xml = Helper::getXML(JPATH_SITE . "/templates/{$template}/templateDetails.xml");
+        $xml = Helper::getXML($template_xml_path);
         $version = (string) $xml->version;
         $form = new \JForm('template');
-        $form->loadFile(JPATH_SITE . "/templates/{$template}/templateDetails.xml", false, '//config');
+        $form->loadFile($template_xml_path, false, '//config');
         $fields = $form->getFieldset('basic');
         $return = false;
         foreach ($fields as $field) {
@@ -66,17 +66,17 @@ class Template
 
     public static function setTemplateDefaults($template, $id, $parent_id = 0)
     {
-        $params_path = JPATH_SITE . "/templates/{$template}/params/{$id}.json";
+        $params_path = JPATH_SITE . "/media/templates/site/{$template}/params/{$id}.json";
         if (!file_exists($params_path)) {
-            if (!empty($parent_id) && file_exists(JPATH_SITE . "/templates/{$template}/params/" . $parent_id . '.json')) {
-                $params = file_get_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $parent_id . '.json');
-                Helper::putContents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', $params);
-            } else if (file_exists(JPATH_SITE . '/templates/' . $template . '/astroid/default.json')) {
-                $params = file_get_contents(JPATH_SITE . '/templates/' . $template . '/astroid/default.json');
+            if (!empty($parent_id) && file_exists(JPATH_SITE . "/media/templates/site/{$template}/params/" . $parent_id . '.json')) {
+                $params = file_get_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $parent_id . '.json');
+                Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
+            } else if (file_exists(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/default.json')) {
+                $params = file_get_contents(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/default.json');
                 $params = str_replace('TEMPLATE_NAME', $template, $params);
-                Helper::putContents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', $params);
+                Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
             } else {
-                Helper::putContents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', '');
+                Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }
             $db = \JFactory::getDbo();
             $object = new \stdClass();
@@ -87,13 +87,27 @@ class Template
         }
     }
 
-    public static function uploadTemplateDefaults($template, $id)
+    public static function uploadTemplateDefaults($template, $id = 0)
     {
-        $source = JPATH_SITE . '/templates/' . $template . '/images/default';
-        $destination = JPATH_SITE . '/images/' . $template;
+        $old_source         = JPATH_SITE . '/templates/' . $template . '/images/default';
+        $source             = JPATH_SITE . '/media/templates/site/' . $template . '/images/default';
+        $destination        = JPATH_SITE . '/images/' . $template;
         if (file_exists($source)) {
-            $files = \JFolder::files($source);
             \JFolder::copy($source, $destination, '', true);
+        }
+        elseif (file_exists($old_source)) {
+            \JFolder::copy($old_source, $destination, '', true);
+        }
+    }
+
+    public static function prepareChildTemplateDefaults($parent, $child) {
+        $source         =   JPATH_SITE . '/media/templates/site/' . $parent;
+        $destination    =   JPATH_SITE . '/media/templates/site/' . $child;
+        if (file_exists($source.'/astroid')) {
+            \JFolder::copy($source.'/astroid', $destination.'/astroid');
+        }
+        if (file_exists($source.'/fonts')) {
+            \JFolder::copy($source.'/fonts', $destination.'/fonts');
         }
     }
 }

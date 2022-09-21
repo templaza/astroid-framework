@@ -222,7 +222,6 @@ class Helper
                 'parent'    =>  (string) $xml->parent
             ];
         }
-
     }
 
     public static function clearJoomlaCache()
@@ -328,7 +327,7 @@ class Helper
         $template = Framework::getTemplate();
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
-        $template_elements_dir = JPATH_SITE . '/templates/' . $template->template . '/astroid/elements/';
+        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/elements/';
 
         // Getting Elements from Template Directories
         $elements = array_filter(glob($elements_dir . '*'), 'is_dir');
@@ -470,7 +469,7 @@ class Helper
      */
     public static function getPresets() {
         $template   =   Framework::getTemplate();
-        $presets_path = JPATH_SITE . "/templates/{$template->template}/astroid/presets/";
+        $presets_path = JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/";
 
         if (!file_exists($presets_path)) {
             return [];
@@ -488,7 +487,7 @@ class Helper
                 $preset['desc'] = \JText::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $preset['thumbnail'] = \JURI::root() . 'templates/' . $template->template . '/' . $data['thumbnail'];
+                $preset['thumbnail'] = \JURI::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
             }
             if (isset($data['demo'])) {
                 $preset['demo'] = $data['demo'];

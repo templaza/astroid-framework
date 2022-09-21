@@ -75,7 +75,7 @@ class Template
     private function _set($id)
     {
         $this->id = $id;
-        $path = JPATH_SITE . "/templates/{$this->template}/params/" . $this->id . '.json';
+        $path = JPATH_SITE . "/media/templates/site/{$this->template}/params/" . $this->id . '.json';
         if (file_exists($path)) {
             $json = file_get_contents($path);
             $this->params->loadString($json, 'JSON');
@@ -209,7 +209,7 @@ class Template
 
     protected function _getPresets()
     {
-        $presets_path = JPATH_SITE . "/templates/{$this->template}/astroid/presets/";
+        $presets_path = JPATH_SITE . "/media/templates/site/{$this->template}/astroid/presets/";
         if (!file_exists($presets_path)) {
             return [];
         }
@@ -263,7 +263,7 @@ class Template
 
     protected function loadParams()
     {
-        $path = JPATH_SITE . "/templates/{$this->template}/params/" . $this->id . '.json';
+        $path = JPATH_SITE . "/media/templates/site/{$this->template}/params/" . $this->id . '.json';
         $json = file_get_contents($path);
         $this->params->loadString($json, 'JSON');
     }
@@ -318,7 +318,7 @@ class Template
 
     public function getElementLayout($type)
     {
-        $template_path = JPATH_SITE . "/templates/{$this->template}/astroid/elements";
+        $template_path = JPATH_SITE . "/media/templates/site/{$this->template}/astroid/elements";
         if (file_exists($template_path . '/' . $type . '/' . $type . '.php')) {
             return $template_path . '/' . $type . '/' . $type . '.php';
         }

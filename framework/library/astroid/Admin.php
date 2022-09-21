@@ -44,11 +44,11 @@ class Admin extends Helper\Client
                 'preset' => $params
             ];
             jimport('joomla.filesystem.file');
-            \JFile::write(JPATH_SITE . "/templates/{$template->template}/astroid/presets/" . uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-') . '.json', \json_encode($preset));
+            \JFile::write(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-') . '.json', \json_encode($preset));
         }
 
 
-        Helper::putContents(JPATH_SITE . "/templates/{$template->template}/params" . '/' . $template->id . '.json', $params);
+        Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
 
         Helper::refreshVersion();
 
@@ -236,7 +236,7 @@ class Admin extends Helper\Client
             }
             $app = \JFactory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/templates/$template_name/astroid/presets/";
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');
             $json           = file_get_contents($presets_path.$file.'.json');
             if (!$json) {
@@ -261,7 +261,7 @@ class Admin extends Helper\Client
             }
             $app = \JFactory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/templates/$template_name/astroid/presets/";
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.$file.'.json';
             jimport('joomla.filesystem.file');
