@@ -16,7 +16,6 @@
    </updateservers>
 
    <files>
-      <folder>astroid</folder>
       <folder>html</folder>
       <folder>language</folder>
       <filename>index.php</filename>
@@ -28,6 +27,7 @@
       <filename>script.php</filename>
    </files>
    <media destination="templates/site/astroid_template_one" folder="media">
+      <folder>astroid</folder>
       <folder>js</folder>
       <folder>css</folder>
       <folder>scss</folder>
