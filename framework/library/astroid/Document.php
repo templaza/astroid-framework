@@ -1064,6 +1064,7 @@ class Document
 
     public static function getDir($dir, $extension = null, &$results = array())
     {
+        if (!file_exists($dir)) return $results;
         $files = scandir($dir);
 
         foreach ($files as $key => $value) {
@@ -1095,7 +1096,15 @@ class Document
         }
         Framework::getDebugger()->log('Checking Scss');
         $template = Framework::getTemplate();
-        $scss_files = self::getDir(JPATH_SITE . '/templates/' . $template->template . '/scss', 'scss');
+        if ( file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/scss') ) {
+            $scss_dir   =   JPATH_SITE . '/media/templates/site/' . $template->template . '/scss';
+        } elseif ( file_exists(JPATH_SITE . '/templates/' . $template->template . '/scss')) {
+            $scss_dir   =   JPATH_SITE . '/templates/' . $template->template . '/scss';
+        } else {
+            return '';
+        }
+        $scss_files = self::getDir($scss_dir, 'scss');
+        if (!is_array($scss_files) || !count($scss_files)) return '';
 
         $name = '';
         foreach ($scss_files as $scss) {
