@@ -45,6 +45,12 @@
                padding-top: 1rem;
                padding-bottom: 1rem;
             }
+            .header-block-item {
+               margin-left: -20px;
+               > div {
+                  padding-left: 20px;
+               }
+            }
          }
       }
    }
