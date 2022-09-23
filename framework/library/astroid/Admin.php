@@ -184,7 +184,7 @@ class Admin extends Helper\Client
 			$tpl_folders    =   \JFolder::folders(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates');
 			if ($tpl_folders && count($tpl_folders)) {
 				foreach ($tpl_folders as $tpl_item) {
-					if (file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json')) {
+					if (file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'media/templates/site'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json') || file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json')) {
 						Helper::clearCacheByTemplate($tpl_item);
 					}
 				}
