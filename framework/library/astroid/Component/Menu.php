@@ -168,9 +168,10 @@ class Menu
                                 foreach ($modules as $module) {
                                     if ($module->id == $element['id']) {
                                         $params = \json_decode($module->params, true);
-                                        $style = $params['style'];
-                                        if (empty($style)) {
+                                        if (!isset($params['style']) || empty($params['style'])) {
                                             $style = "html5";
+                                        } else {
+                                            $style = $params['style'];
                                         }
                                         echo '<div class="megamenu-item megamenu-module">';
                                         echo \JModuleHelper::renderModule($module, ['style' => $style]);
