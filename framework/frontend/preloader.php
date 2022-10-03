@@ -81,6 +81,22 @@ if($preloder_setting == "animations"){
          $preloaderHTML = '<div class="donut"></div>';
          $preloaderStyles = '@keyframes donut-spin{ 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } } .donut {display:inline-block;border:4px solid rgba(0, 0, 0, 0.1);border-left-color:' . $preloader_color . ';border-radius:50%;margin:0 auto;width: ' . $preloader_size . 'px;height: ' . $preloader_size . 'px;animation:donut-spin 1.2s linear infinite;}';
          break;
+       case 'triple-spinner':
+           $preloaderHTML = '<div class="triple-spinner"></div>';
+           $preloaderStyles = '.triple-spinner {display: block;position: relative;width: ' . $preloader_size . 'px;height: ' . $preloader_size . 'px;border-radius: 50%;border: 2px solid transparent;border-top: 2px solid ' . $preloader_color . ';-webkit-animation: preload-spin 2s linear infinite;animation: preload-spin 2s linear infinite;}.triple-spinner::before, .triple-spinner::after {content: "";position: absolute;border-radius: 50%;border: 2px solid transparent;}.triple-spinner::before {opacity: 0.85;top: 8%;left: 8%;right: 8%;bottom: 8%;border-top-color: ' . $preloader_color . ';-webkit-animation: preload-spin 3s linear infinite;animation: preload-spin 3.5s linear infinite;}.triple-spinner::after {opacity: 0.7;top: 18%;left: 18%;right: 18%;bottom: 18%;border-top-color: ' . $preloader_color . ';-webkit-animation: preload-spin 1.5s linear infinite;animation: preload-spin 1.75s linear infinite;}@-webkit-keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}@keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}';
+           break;
+       case 'cm-spinner':
+           $preloaderHTML = '<div class="cm-spinner"></div>';
+           $preloaderStyles = '.cm-spinner {height: ' . $preloader_size . 'px;width: ' . $preloader_size . 'px;border: 2px solid transparent;border-radius: 50%;border-top: 2px solid ' . $preloader_color . ';-webkit-animation: preload-spin 4s linear infinite;animation: preload-spin 4s linear infinite;position: relative;}.cm-spinner::before, .cm-spinner::after {content: "";position: absolute;top: 10%;bottom: 10%;left: 10%;right: 10%;border-radius: 50%;border: 2px solid transparent;}.cm-spinner::before {opacity: 0.8;border-top-color: ' . $preloader_color . ';-webkit-animation: 3s preload-spin linear infinite;animation: 3s preload-spin linear infinite;}.cm-spinner::after {opacity: 0.9;border-top-color: ' . $preloader_color . ';-webkit-animation: preload-spin 1.5s linear infinite;animation: preload-spin 1.5s linear infinite;}@-webkit-keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}@keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}';
+           break;
+       case 'hm-spinner':
+           $preloaderHTML = '<div class="hm-spinner"></div>';
+           $preloaderStyles = '.hm-spinner{height: ' . $preloader_size . 'px;width: ' . $preloader_size . 'px;border: 2px solid transparent;border-top-color: ' . $preloader_color . ';border-bottom-color: ' . $preloader_color . ';border-radius: 50%;position: relative;-webkit-animation: preload-spin 3s linear infinite;animation: preload-spin 3s linear infinite;}.hm-spinner::before{opacity: 0.7;content: "";position: absolute;top: 15%;right: 15%;bottom: 15%;left: 15%;border: 2px solid transparent;border-top-color: ' . $preloader_color . ';border-bottom-color: ' . $preloader_color . ';border-radius: 50%;-webkit-animation: preload-spin 1.5s linear infinite;animation: preload-spin 1.5s linear infinite;}@-webkit-keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}@keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}';
+           break;
+       case 'reverse-spinner':
+           $preloaderHTML = '<div class="reverse-spinner"></div>';
+           $preloaderStyles = '.reverse-spinner {position: relative;height: ' . $preloader_size . 'px;width: ' . $preloader_size . 'px;border: 2px solid transparent;border-top-color: ' . $preloader_color . ';border-left-color: ' . $preloader_color . ';border-radius: 50%;-webkit-animation: preload-spin 1.5s linear infinite;animation: preload-spin 1.5s linear infinite;}.reverse-spinner::before {position: absolute;top: 15%;left: 15%;right: 15%;bottom: 15%;content: "";border: 2px solid transparent;border-top-color: ' . $preloader_color . ';border-left-color: ' . $preloader_color . ';border-radius: 50%;-webkit-animation: preload-spin-back 1s linear infinite;animation: preload-spin-back 1s linear infinite;}@-webkit-keyframes preload-spin-back {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(-720deg);transform: rotate(-720deg);}}@keyframes preload-spin-back {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(-720deg);transform: rotate(-720deg);}}@-webkit-keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}@keyframes preload-spin {from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}';
+           break;
       default:
          $preloaderHTML = '';
          $preloaderStyles = '';
@@ -106,9 +122,10 @@ if($preloder_setting == "animations"){
    $preloaderHTML = '<div class="'.$preloader_fontawesome.'" style="font-size:'.$preloader_size.'px; color: '.$preloader_color.'; display: flex;justify-content: center;margin: 0 auto;"></div>';
    $preloaderStyles = '';
 }
-$document->addStyledeclaration('#astroid-preloader{display:flex;align-items:center;background:' . $preloader_bgcolor . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}');
-$document->addStyledeclaration($preloaderStyles);
+//$document->addStyledeclaration('#astroid-preloader{display:flex;align-items:center;background:' . $preloader_bgcolor . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}');
+//$document->addStyledeclaration($preloaderStyles);
 ?>
+<style><?php echo '#astroid-preloader{display:flex;align-items:center;background:' . $preloader_bgcolor . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}' . $preloaderStyles; ?></style>
 <div id="astroid-preloader">
    <?php echo $preloaderHTML; ?>
 </div>

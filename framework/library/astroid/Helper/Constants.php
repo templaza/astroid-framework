@@ -272,6 +272,22 @@ class Constants
             'name' => 'donut',
             'code' => '<div class="donut"></div>',
         ],
+        'triple-spinner' => [
+            'name' => 'triple-spinner',
+            'code' => '<div class="triple-spinner"></div>',
+        ],
+        'cm-spinner' => [
+            'name' => 'cm-spinner',
+            'code' => '<div class="cm-spinner"></div>',
+        ],
+        'hm-spinner' => [
+            'name' => 'hm-spinner',
+            'code' => '<div class="hm-spinner"></div>',
+        ],
+        'reverse-spinner' => [
+            'name' => 'reverse-spinner',
+            'code' => '<div class="reverse-spinner"></div>',
+        ]
     ];
 
     public static $preloadersFont = [
