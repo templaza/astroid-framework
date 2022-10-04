@@ -60,13 +60,17 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              <?php
              // header block 1 starts
              if ($block_1_type == 'position') {
-                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $document->position($block_1_position, 'xhtml');
+                 echo '</div>';
                  echo '</div>';
              }
              if ($block_1_type == 'custom') {
-                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $block_1_custom;
+                 echo '</div>';
                  echo '</div>';
              }
              // header block 1 ends
@@ -235,20 +239,24 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
             // header block starts
             if ($block_1_type == 'position') {
-               echo '<div class="d-none d-lg-flex w-100 header-block-item justify-content-end py-2 align-items-center">';
+               echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
+               echo '<div class="d-flex w-100 justify-content-end header-block-item">';
                echo $document->position($block_1_position, 'xhtml');
+               echo '</div>';
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
-               echo '<div class="d-none d-lg-flex w-100 header-block-item justify-content-end py-2 align-items-center">';
-               echo $block_1_custom;
-               echo '</div>';
+                echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
+                echo '<div class="d-flex w-100 justify-content-end header-block-item">';
+                echo $block_1_custom;
+                echo '</div>';
+                echo '</div>';
             }
             // header block ends
 
             if ($enable_offcanvas) {
             ?>
-               <div class="d-flex justify-content-end">
+               <div class="d-flex justify-content-end ms-3">
                   <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                </div>
             <?php
@@ -266,13 +274,17 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             // header nav ends
             // header block starts
             if ($block_2_type == 'position') {
-               echo '<div class="d-flex header-block-item justify-content-end py-3 align-items-center">';
+               echo '<div class="d-flex justify-content-end py-3 align-items-center">';
+               echo '<div class="header-block-item">';
                echo $document->position($block_2_position, 'xhtml');
+               echo '</div>';
                echo '</div>';
             }
             if ($block_2_type == 'custom') {
-               echo '<div class="d-flex header-block-item justify-content-end py-3 align-items-center">';
+               echo '<div class="d-flex justify-content-end py-3 align-items-center">';
+               echo '<div class="header-block-item">';
                echo $block_2_custom;
+               echo '</div>';
                echo '</div>';
             }
             echo '</div>';

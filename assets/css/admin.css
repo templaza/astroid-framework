@@ -241,6 +241,7 @@
 	border-radius: 50%;
 	border: 2px solid transparent;
 	border-top: 2px solid #210048;
+	border-left: 2px solid #210048;
 	-webkit-animation: preload-spin 2s linear infinite;
 	animation: preload-spin 2s linear infinite;
 }
@@ -259,6 +260,7 @@
 	right: 8%;
 	bottom: 8%;
 	border-top-color: #210048;
+	border-left-color: #210048;
 	-webkit-animation: preload-spin 3s linear infinite;
 	animation: preload-spin 3.5s linear infinite;
 }
@@ -269,6 +271,7 @@
 	right: 18%;
 	bottom: 18%;
 	border-top-color: #210048;
+	border-left-color: #210048;
 	-webkit-animation: preload-spin 1.5s linear infinite;
 	animation: preload-spin 1.75s linear infinite;
 }
