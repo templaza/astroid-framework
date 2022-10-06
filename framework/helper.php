@@ -907,7 +907,7 @@ class AstroidFrameworkHelper
 
    public static function frameworkVersion()
    {
-      $xml = JFactory::getXML(JPATH_ADMINISTRATOR . '/manifests/libraries/astroid.xml');
+      $xml = Astroid\Helper::getXML(JPATH_ADMINISTRATOR . '/manifests/libraries/astroid.xml');
       $version = (string) $xml->version;
       return $version;
    }
