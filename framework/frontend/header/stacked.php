@@ -31,6 +31,7 @@ $class = ['astroid-header', 'astroid-stacked-header', 'astroid-stacked-' . $mode
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
+$offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
 $navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
@@ -57,16 +58,25 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                      </div>
                  </div>
              <?php } ?>
+             <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
+             <?php } ?>
              <?php
              // header block 1 starts
              if ($block_1_type == 'position') {
-                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $document->position($block_1_position, 'xhtml');
+                 echo '</div>';
                  echo '</div>';
              }
              if ($block_1_type == 'custom') {
-                 echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $block_1_custom;
+                 echo '</div>';
                  echo '</div>';
              }
              // header block 1 ends
@@ -93,9 +103,9 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
                  if ($enable_offcanvas) {
                      ?>
-                     <div class="d-flex justify-content-end ms-3">
-                         <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                     </div>
+                     <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                     <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                     <?php echo '</div>'; ?>
                      <?php
                  }
                  echo '</div>';
@@ -124,6 +134,11 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                   </div>
                </div>
             <?php } ?>
+             <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
+             <?php } ?>
             <?php
             $logo = $document->include('logo', [], true);
             if (!empty($logo)) {
@@ -131,9 +146,9 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             }
             if ($enable_offcanvas) {
             ?>
-               <div class="d-flex justify-content-end">
-                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-               </div>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                <?php echo '</div>'; ?>
             <?php
             }
             echo '</div>';
@@ -183,7 +198,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                   </div>
                <?php
                }
-               echo '<div class="d-flex w-100 justify-content-center">';
+               if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                   <?php echo '<div class="d-none d-lg-flex justify-content-start offcanvas-button '.$offcanvas_position.'">'; ?>
+                   <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                   <?php echo '</div>'; ?>
+               <?php }
+               echo '<div class="d-flex w-100 align-items-center justify-content-center">';
                $logo = $document->include('logo', [], true);
                if (!empty($logo)) {
                   echo '<div class="d-lg-none">' . $logo . '</div>';
@@ -192,9 +212,9 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                echo '</div>';
                if ($enable_offcanvas) {
                ?>
-                  <div class="d-flex justify-content-end">
-                     <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                  </div>
+                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                   <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                   <?php echo '</div>'; ?>
                <?php
                }
                ?>
@@ -230,27 +250,36 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             } else {
                echo '<div class="d-flex w-100 justify-content-center py-3">';
             }
+             if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
+             <?php }
             $document->include('logo');
             echo '</div>';
 
             // header block starts
             if ($block_1_type == 'position') {
-               echo '<div class="d-none d-lg-flex w-100 header-block-item justify-content-end py-2 align-items-center">';
+               echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
+               echo '<div class="d-flex w-100 justify-content-end header-block-item">';
                echo $document->position($block_1_position, 'xhtml');
+               echo '</div>';
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
-               echo '<div class="d-none d-lg-flex w-100 header-block-item justify-content-end py-2 align-items-center">';
-               echo $block_1_custom;
-               echo '</div>';
+                echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
+                echo '<div class="d-flex w-100 justify-content-end header-block-item">';
+                echo $block_1_custom;
+                echo '</div>';
+                echo '</div>';
             }
             // header block ends
 
             if ($enable_offcanvas) {
             ?>
-               <div class="d-flex justify-content-end">
-                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-               </div>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-lg-4 offcanvas-button offcanvasRight">'; ?>
+                <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                <?php echo '</div>'; ?>
             <?php
             }
             echo '</div>';
@@ -266,13 +295,17 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             // header nav ends
             // header block starts
             if ($block_2_type == 'position') {
-               echo '<div class="d-flex header-block-item justify-content-end py-3 align-items-center">';
+               echo '<div class="d-flex justify-content-end py-3 align-items-center">';
+               echo '<div class="header-block-item">';
                echo $document->position($block_2_position, 'xhtml');
+               echo '</div>';
                echo '</div>';
             }
             if ($block_2_type == 'custom') {
-               echo '<div class="d-flex header-block-item justify-content-end py-3 align-items-center">';
+               echo '<div class="d-flex justify-content-end py-3 align-items-center">';
+               echo '<div class="header-block-item">';
                echo $block_2_custom;
+               echo '</div>';
                echo '</div>';
             }
             echo '</div>';
@@ -297,7 +330,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
              if ($enable_offcanvas) {
                  ?>
-                 <div class="d-lg-none d-flex justify-content-end">
+                 <div class="d-lg-none d-flex justify-content-end offcanvas-button offcanvasRight">
                      <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  </div>
                  <?php
@@ -337,6 +370,11 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              }
              // header nav starts -->
              echo '<div class="d-flex w-100 h-100">';
+             if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
+             <?php }
              ?>
              <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start flex-lg-grow-1">
                  <?php
@@ -347,9 +385,9 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              // header nav ends
              if ($enable_offcanvas) {
                  ?>
-                 <div class="d-flex justify-content-end ps-4">
-                     <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                 </div>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
                  <?php
              }
              echo '</div>';

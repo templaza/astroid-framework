@@ -243,6 +243,11 @@
             <option value="offcanvasDirRight">JGLOBAL_RIGHT</option>
          </field>
 
+         <field ngShow="header==true AND enable_offcanvas==true AND header_mode!='sidebar'" astroidgroup="header_offcanvas_options_element" description="TPL_ASTROID_OFF_CANVAS_POSITION_DESC" name="offcanvas_position" type="astroidradio" class="form-control" default="offcanvasRight" label="TPL_ASTROID_OFF_CANVAS_POSITION_LABEL">
+            <option value="offcanvasLeft">JGLOBAL_LEFT</option>
+            <option value="offcanvasRight">JGLOBAL_RIGHT</option>
+         </field>
+
          <!--Animation Options-->
          <field ngShow="header==true AND header_mode!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidradio" default="fade" label="TPL_ASTROID_HEADER_MENU_ANIMATION">
             <option class="btn-danger" value="none">ASTROID_NONE</option>

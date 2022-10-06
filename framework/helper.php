@@ -514,7 +514,7 @@ class AstroidFrameworkHelper
          $partials = self::getPartials($template_dir, $template_dir);
          return $partials;
       } else {
-         return $partials;
+         return '';
       }
    }
 
@@ -544,23 +544,23 @@ class AstroidFrameworkHelper
 
    public static function setTemplateDefaults($template, $id, $parent_id = 0)
    {
-      $params_path = JPATH_SITE . "/templates/{$template}/params/{$id}.json";
+      $params_path = JPATH_SITE . "/media/templates/site/{$template}/params/{$id}.json";
       if (!file_exists($params_path)) {
-         if (!empty($parent_id) && file_exists(JPATH_SITE . "/templates/{$template}/params/" . $parent_id . '.json')) {
-            $params = file_get_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $parent_id . '.json');
-            file_put_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', $params);
-         } else if (file_exists(JPATH_SITE . '/templates/' . $template . '/astroid/default.json')) {
-            $params = file_get_contents(JPATH_SITE . '/templates/' . $template . '/astroid/default.json');
-            if (!file_exists(JPATH_SITE . "/templates/{$template}/params")) {
-               mkdir(JPATH_SITE . "/templates/{$template}/params");
+         if (!empty($parent_id) && file_exists(JPATH_SITE . "/media/templates/site/{$template}/params/" . $parent_id . '.json')) {
+            $params = file_get_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $parent_id . '.json');
+            file_put_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
+         } else if (file_exists(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/default.json')) {
+            $params = file_get_contents(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/default.json');
+            if (!file_exists(JPATH_SITE . "/media/templates/site/{$template}/params")) {
+               mkdir(JPATH_SITE . "/media/templates/site/{$template}/params");
             }
             $params = str_replace('TEMPLATE_NAME', $template, $params);
-            file_put_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', $params);
+            file_put_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
          } else {
-            if (!file_exists(JPATH_SITE . "/templates/{$template}/params")) {
-               mkdir(JPATH_SITE . "/templates/{$template}/params");
+            if (!file_exists(JPATH_SITE . "/media/templates/site/{$template}/params")) {
+               mkdir(JPATH_SITE . "/media/templates/site/{$template}/params");
             }
-            file_put_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', '');
+            file_put_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
          }
          $db = JFactory::getDbo();
          $object = new stdClass();
@@ -573,7 +573,7 @@ class AstroidFrameworkHelper
 
    public static function setTemplateTypography($template, $id)
    {
-      $params_path = JPATH_SITE . "/templates/{$template}/params/{$id}.json";
+      $params_path = JPATH_SITE . "/media/templates/site/{$template}/params/{$id}.json";
       if (file_exists($params_path)) {
          $params = json_decode(file_get_contents($params_path));
          $typographys = array('body_typography', 'menus_typography', 'submenus_typography', 'h1_typography', 'h2_typography', 'h3_typography', 'h4_typography', 'h5_typography', 'h6_typography');
@@ -592,16 +592,21 @@ class AstroidFrameworkHelper
                }
             }
          }
-         file_put_contents(JPATH_SITE . "/templates/{$template}/params" . '/' . $id . '.json', json_encode($params));
+         file_put_contents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', json_encode($params));
       }
    }
 
    public static function uploadTemplateDefaults($template, $id)
    {
-      $source = JPATH_SITE . '/templates/' . $template . '/images/default';
-      $destination = JPATH_SITE . '/images/' . $template;
-      $files = JFolder::files($source);
-      JFolder::copy($source, $destination, '', true);
+       $old_source         = JPATH_SITE . '/templates/' . $template . '/images/default';
+       $source             = JPATH_SITE . '/media/templates/site/' . $template . '/images/default';
+       $destination        = JPATH_SITE . '/images/' . $template;
+       if (file_exists($source)) {
+           \JFolder::copy($source, $destination, '', true);
+       }
+       elseif (file_exists($old_source)) {
+           \JFolder::copy($old_source, $destination, '', true);
+       }
    }
 
    public static function getUploadedFonts($template)
@@ -902,7 +907,7 @@ class AstroidFrameworkHelper
 
    public static function frameworkVersion()
    {
-      $xml = JFactory::getXML(JPATH_ADMINISTRATOR . '/manifests/libraries/astroid.xml');
+      $xml = Astroid\Helper::getXML(JPATH_ADMINISTRATOR . '/manifests/libraries/astroid.xml');
       $version = (string) $xml->version;
       return $version;
    }

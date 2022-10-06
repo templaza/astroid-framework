@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '2.5.20';
+    public static $astroid_version = '2.6.0';
     public static $fontawesome_version = '6.0.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
@@ -272,6 +272,22 @@ class Constants
             'name' => 'donut',
             'code' => '<div class="donut"></div>',
         ],
+        'triple-spinner' => [
+            'name' => 'triple-spinner',
+            'code' => '<div class="triple-spinner"></div>',
+        ],
+        'cm-spinner' => [
+            'name' => 'cm-spinner',
+            'code' => '<div class="cm-spinner"></div>',
+        ],
+        'hm-spinner' => [
+            'name' => 'hm-spinner',
+            'code' => '<div class="hm-spinner"></div>',
+        ],
+        'reverse-spinner' => [
+            'name' => 'reverse-spinner',
+            'code' => '<div class="reverse-spinner"></div>',
+        ]
     ];
 
     public static $preloadersFont = [

@@ -14,6 +14,7 @@
 * Advanced Mega Menu
 * Off-Canvas Menu
 * Advanced Typography Controls
+* Child-Template Support
 * Advanced Blog Options
 * Unlimited Custom Code
 * Logo and Header Options

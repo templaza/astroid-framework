@@ -772,6 +772,8 @@ class Document
         }
         if (file_exists(ASTROID_MEDIA . '/' . $url)) {
             $url = $root . 'media/astroid/assets/' . $url;
+        } elseif (Framework::isSite() && file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/' . $url)) {
+            $url = $root . 'media/templates/site/' . Framework::getTemplate()->template . '/' . $url;
         } elseif (Framework::isSite() && file_exists(ASTROID_TEMPLATE_PATH . '/' . $url)) {
             $url = $root . 'templates/' . Framework::getTemplate()->template . '/' . $url;
         } else if (file_exists(JPATH_SITE . '/' . $url)) {
@@ -871,43 +873,86 @@ class Document
         ini_set('memory_limit', '1024M');
         Framework::getDebugger()->log('Rendering Scss');
         $template = Framework::getTemplate();
-        Helper::clearCache($template->template, ['compiled-scss']);
 
-        $mediaPath = '../../../media/astroid/assets';
-        $templatePath = './../../../../../templates/' . $template->template;
-        $templateScssPath = $templatePath . '/scss';
+        Helper::clearCache($template->template, ['compiled-scss']);
+        $isChildTemplate        =   Helper::isChildTemplate($template->template);
+
+        $parentTemplateMediaPath        =   '';
+        $parentTemplateMediaScssPath    =   '';
+        $isChild                        =   $isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild'];
+        if ($isChild) {
+            $parentTemplateMediaPath        =   './../../../../../media/templates/site/' . $isChildTemplate['parent'];
+            $parentTemplateMediaScssPath    =   $parentTemplateMediaPath . '/scss';
+        }
+
+        $templatePath           =   './../../../../../templates/' . $template->template;
+        $templateScssPath       =   $templatePath . '/scss';
+        $templateMediaPath      =   './../../../../../media/templates/site/' . $template->template;
+        $templateMediaScssPath  =   $templateMediaPath . '/scss';
 
         $scss = new Compiler();
-        $scss->setImportPaths(__DIR__ . '/' . $templatePath . '/scss');
+        if (file_exists(__DIR__ . '/' . $templateMediaPath . '/scss')) {
+            $scss->setImportPaths(__DIR__ . '/' . $templateMediaPath . '/scss');
+            $mediaPath              = '../../../../astroid/assets';
+        } else {
+            $scss->setImportPaths(__DIR__ . '/' . $templatePath . '/scss');
+            $mediaPath              = '../../../media/astroid/assets';
+        }
+
         $bootstrapPath = $mediaPath . '/vendor/bootstrap/scss';
-        if (file_exists(__DIR__ . '/' . $templateScssPath . '/vendor/bootstrap')) {
+
+        if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/vendor/bootstrap') || file_exists(__DIR__ . '/' . $templateScssPath . '/vendor/bootstrap')) {
             $bootstrapPath = 'vendor/bootstrap';
+        }
+        elseif ($isChild && file_exists(__DIR__ . '/' . $parentTemplateMediaScssPath . '/vendor/bootstrap'))
+        {
+            $bootstrapPath = '../../'.$isChildTemplate['parent'].'/scss/vendor/bootstrap';
         }
         $content = '';
         $functionsIncluded = false;
-        if (file_exists(__DIR__ . '/' . $templateScssPath . '/custom/variable_overrides.scss')) {
+        if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/custom/variable_overrides.scss') || file_exists(__DIR__ . '/' . $templateScssPath . '/custom/variable_overrides.scss')) {
             $functionsIncluded = true;
             $content .= '@import "' . $bootstrapPath . '/functions";';
             $content .= '@import "custom/variable_overrides";';
         }
+        elseif ($isChild && file_exists(__DIR__ . '/' . $parentTemplateMediaScssPath . '/custom/variable_overrides.scss'))
+        {
+            $functionsIncluded = true;
+            $content .= '@import "' . $bootstrapPath . '/functions";';
+            $content .= '@import "../../' . $isChildTemplate['parent'] . '/scss/custom/variable_overrides";';
+        }
 
-        if (file_exists(__DIR__ . '/' . $templateScssPath . '/variable_overrides.scss')) {
+        if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/variable_overrides.scss') || file_exists(__DIR__ . '/' . $templateScssPath . '/variable_overrides.scss')) {
             if (!$functionsIncluded) {
                 $content .= '@import "' . $bootstrapPath . '/functions";';
             }
             $content .= '@import "variable_overrides";';
         }
-
+        elseif ($isChild && file_exists(__DIR__ . '/' . $parentTemplateMediaScssPath . '/variable_overrides.scss'))
+        {
+            if (!$functionsIncluded) {
+                $content .= '@import "' . $bootstrapPath . '/functions";';
+            }
+            $content .= '@import "../../' . $isChildTemplate['parent'] . '/scss/variable_overrides";';
+        }
         $content .= '@import "' . $bootstrapPath . '/bootstrap";';
 
         $content .= '@import "' . $mediaPath . '/vendor/astroid/scss/astroid";';
 
-        if (file_exists(__DIR__ . '/' . $templateScssPath . '/style.scss')) {
+        if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/style.scss') || file_exists(__DIR__ . '/' . $templateScssPath . '/style.scss')) {
             $content .= '@import "style";';
         }
+        elseif ($isChild && file_exists(__DIR__ . '/' . $parentTemplateMediaScssPath . '/style.scss'))
+        {
+            $content .= '@import "../../' . $isChildTemplate['parent'] . '/scss/style";';
+        }
 
-        if (file_exists(__DIR__ . '/' . $templateScssPath . '/custom/custom.scss')) {
+        if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/custom/custom.scss') || file_exists(__DIR__ . '/' . $templateScssPath . '/custom/custom.scss')) {
             $content .= '@import "custom/custom";';
+        }
+        elseif ($isChild && file_exists(__DIR__ . '/' . $parentTemplateMediaScssPath . '/custom/custom.scss'))
+        {
+            $content .= '@import "../../' . $isChildTemplate['parent'] . '/scss/custom/custom";';
         }
 
         $variables = $template->getThemeVariables();
@@ -1019,6 +1064,7 @@ class Document
 
     public static function getDir($dir, $extension = null, &$results = array())
     {
+        if (!file_exists($dir)) return $results;
         $files = scandir($dir);
 
         foreach ($files as $key => $value) {
@@ -1050,7 +1096,15 @@ class Document
         }
         Framework::getDebugger()->log('Checking Scss');
         $template = Framework::getTemplate();
-        $scss_files = self::getDir(JPATH_SITE . '/templates/' . $template->template . '/scss', 'scss');
+        if ( file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/scss') ) {
+            $scss_dir   =   JPATH_SITE . '/media/templates/site/' . $template->template . '/scss';
+        } elseif ( file_exists(JPATH_SITE . '/templates/' . $template->template . '/scss')) {
+            $scss_dir   =   JPATH_SITE . '/templates/' . $template->template . '/scss';
+        } else {
+            return '';
+        }
+        $scss_files = self::getDir($scss_dir, 'scss');
+        if (!is_array($scss_files) || !count($scss_files)) return '';
 
         $name = '';
         foreach ($scss_files as $scss) {
@@ -1071,7 +1125,7 @@ class Document
             $scssVersion = md5(serialize($template->getThemeVariables())  . self::scssHash());
 
             // css file to be generated in template folder
-            $cssFile = ASTROID_TEMPLATE_PATH . '/css/compiled-' .  $scssVersion . '.css';
+            $cssFile = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' .  $scssVersion . '.css';
 
             // $scssFile = ASTROID_CACHE . '/compiled/' . $template->id . '-' . $scssVersion . '.css';
 
@@ -1100,14 +1154,14 @@ class Document
                 $css = $this->renderCss();
                 // page css
                 $pageCSSHash = md5($css);
-                $pageCSS = ASTROID_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+                $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
                 if (!file_exists($pageCSS)) {
                     Helper::putContents($pageCSS, $css);
                 }
                 $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             }
             // custom css
-            if (file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
+            if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
                 $this->addStyleSheet('css/custom.css');
             }
         }

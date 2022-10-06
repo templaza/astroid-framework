@@ -248,4 +248,22 @@ class Client
         }
         return true;
     }
+
+    public function onInstallerAfterInstaller($package)
+    {
+        if (!file_exists($package['dir'])) return false;
+        $astroidTemplate    =   Helper\Template::isAstroidTemplate($package['dir'] . '/templateDetails.xml');
+        if ($astroidTemplate !== false) {
+            $xml    =   Helper::getXml($package['dir'] . '/templateDetails.xml');
+            if (!$xml || !isset($xml->inheritable)) return false;
+            $inheritable = (int) $xml->inheritable;
+            if (!$inheritable) {
+                $template_name      =   (string) $xml->name;
+                $template_parent    =   (string) $xml->parent;
+                Helper\Template::prepareChildTemplateDefaults($template_parent, $template_name);
+                Helper\Template::uploadTemplateDefaults($template_name);
+            }
+        }
+        return true;
+    }
 }

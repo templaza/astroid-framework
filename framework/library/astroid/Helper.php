@@ -176,26 +176,52 @@ class Helper
 
     public static function clearCache($template = '', $prefix = 'style')
     {
-        $template_dir = JPATH_SITE . '/' . 'templates' . '/' . $template . '/' . 'css';
+        $template_media_dir = JPATH_SITE . '/media/templates/site/' . $template . '/' . 'css';
+        $template_dir = JPATH_SITE . '/templates/' . $template . '/' . 'css';
         $version = new \JVersion;
         $version->refreshMediaVersion();
-        if (!file_exists($template_dir)) {
+        if (!file_exists($template_dir) && !file_exists($template_media_dir)) {
             throw new \Exception("Template not found.", 404);
         }
+        if (file_exists($template_media_dir)) {
+            self::clearCSS($template_media_dir, $prefix);
+        } else {
+            self::clearCSS($template_dir, $prefix);
+        }
+        return true;
+    }
+
+    public static function clearCSS($dir, $prefix = 'style') {
         if (is_array($prefix)) {
             foreach ($prefix as $pre) {
-                $styles = preg_grep('~^' . $pre . '-.*\.(css)$~', scandir($template_dir));
+                $styles = preg_grep('~^' . $pre . '-.*\.(css)$~', scandir($dir));
                 foreach ($styles as $style) {
-                    unlink($template_dir . '/' . $style);
+                    unlink($dir . '/' . $style);
                 }
             }
         } else {
-            $styles = preg_grep('~^' . $prefix . '-.*\.(css)$~', scandir($template_dir));
+            $styles = preg_grep('~^' . $prefix . '-.*\.(css)$~', scandir($dir));
             foreach ($styles as $style) {
-                unlink($template_dir . '/' . $style);
+                unlink($dir . '/' . $style);
             }
         }
-        return true;
+    }
+
+    public static function isChildTemplate($template) {
+        $xml = self::getXML(JPATH_SITE . "/templates/{$template}/templateDetails.xml");
+        if (!$xml || !isset($xml->inheritable)) return false;
+        $inheritable = (int) $xml->inheritable;
+        if ($inheritable) {
+            return [
+                'isChild'   =>  false,
+                'parent'    =>  ''
+            ];
+        } else {
+            return [
+                'isChild'   =>  true,
+                'parent'    =>  (string) $xml->parent
+            ];
+        }
     }
 
     public static function clearJoomlaCache()
@@ -301,7 +327,7 @@ class Helper
         $template = Framework::getTemplate();
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
-        $template_elements_dir = JPATH_SITE . '/templates/' . $template->template . '/astroid/elements/';
+        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/elements/';
 
         // Getting Elements from Template Directories
         $elements = array_filter(glob($elements_dir . '*'), 'is_dir');
@@ -443,7 +469,7 @@ class Helper
      */
     public static function getPresets() {
         $template   =   Framework::getTemplate();
-        $presets_path = JPATH_SITE . "/templates/{$template->template}/astroid/presets/";
+        $presets_path = JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/";
 
         if (!file_exists($presets_path)) {
             return [];
@@ -461,7 +487,7 @@ class Helper
                 $preset['desc'] = \JText::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $preset['thumbnail'] = \JURI::root() . 'templates/' . $template->template . '/' . $data['thumbnail'];
+                $preset['thumbnail'] = \JURI::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
             }
             if (isset($data['demo'])) {
                 $preset['demo'] = $data['demo'];

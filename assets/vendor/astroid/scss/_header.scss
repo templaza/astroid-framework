@@ -47,6 +47,12 @@
             }
          }
       }
+      .header-block-item {
+         margin-left: -20px;
+         > div {
+            padding-left: 20px;
+         }
+      }
    }
 
    /* Sticky Header */
@@ -76,7 +82,7 @@
             display: none !important;
          }
 
-         .astroid-logo-sticky {
+         .astroid-logo-sticky:not([hidden]) {
             @include media-breakpoint-up(md) {
                display: block !important;
             }

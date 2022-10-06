@@ -57,9 +57,9 @@ class AstroidFrameworkTemplate
 
    public function templateVersion()
    {
-      $xml = JFactory::getXML(JPATH_SITE . "/templates/{$this->template}/templateDetails.xml");
-      $version = (string) $xml->version;
-      return $version;
+       $xml = Astroid\Helper::getXML(JPATH_SITE . "/templates/{$this->template}/templateDetails.xml");
+       $version = (string) $xml->version;
+       return $version;
    }
 
    public function addMeta()
@@ -155,7 +155,7 @@ class AstroidFrameworkTemplate
          }
       }
 
-      $params_path = JPATH_SITE . "/templates/{$this->template}/params/" . $id . '.json';
+      $params_path = JPATH_SITE . "/media/templates/site/{$this->template}/params/" . $id . '.json';
       $json = file_get_contents($params_path);
       $params = new JRegistry();
       $params->loadString($json, 'JSON');
