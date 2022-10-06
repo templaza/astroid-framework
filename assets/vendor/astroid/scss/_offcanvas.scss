@@ -97,23 +97,51 @@ $offcanvas-btn: 50px !default;
 			transition: bottom .1s .25s ease-in, transform .22s cubic-bezier(.55, .055, .675, .19);
 		}
 	}
+}
 
-	&.header-offcanvas-trigger {
-		.inner {
-			&::before {
-				width: $burger-layer-width - 10px;
-				margin-left: 10px;
+.offcanvasRight {
+	.burger-menu-button {
+		&.header-offcanvas-trigger {
+			.inner {
+				&::before {
+					width: $burger-layer-width - 10px;
+					margin-left: 10px;
+				}
+				&::after {
+					width: $burger-layer-width - 5px;
+					margin-left: 5px;
+				}
 			}
-			&::after {
-				width: $burger-layer-width - 5px;
-				margin-left: 5px;
+			&.active .inner {
+				&::before,
+				&::after {
+					width: $burger-layer-width;
+					margin-left: 0;
+				}
 			}
 		}
-		&.active .inner {
-			&::before,
-			&::after {
-				width: $burger-layer-width;
-				margin-left: 0;
+	}
+}
+
+.offcanvasLeft {
+	.burger-menu-button {
+		&.header-offcanvas-trigger {
+			.inner {
+				&::before {
+					width: $burger-layer-width - 10px;
+					margin-right: 10px;
+				}
+				&::after {
+					width: $burger-layer-width - 5px;
+					margin-right: 5px;
+				}
+			}
+			&.active .inner {
+				&::before,
+				&::after {
+					width: $burger-layer-width;
+					margin-right: 0;
+				}
 			}
 		}
 	}

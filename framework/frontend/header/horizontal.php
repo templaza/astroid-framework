@@ -25,6 +25,7 @@ $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
+$offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
@@ -41,6 +42,11 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
          </div>
       <?php } ?>
       <div class="header-left-section d-flex justify-content-start<?php echo $mode == 'left' ? ' flex-lg-grow-1' : ''; ?>">
+          <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+              <?php echo '<div class="d-none d-lg-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+              <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+              <?php echo '</div>'; ?>
+          <?php } ?>
          <?php $document->include('logo'); ?>
          <?php
          if ($mode == 'left') {
@@ -72,7 +78,7 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
             }
             ?>
             <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-lg-block align-self-center mx-4">
+               <div class="header-right-block d-none d-lg-block align-self-center ms-4">
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
@@ -88,7 +94,9 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                </div>
             <?php endif; ?>
              <?php if ($enable_offcanvas) { ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
              <?php } ?>
          </div>
       <?php endif; ?>
