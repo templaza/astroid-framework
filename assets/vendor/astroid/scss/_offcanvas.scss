@@ -228,7 +228,7 @@ $offcanvas-btn: 50px !default;
 	.astroid-offcanvas-inner {
 		position: relative;
 		display: block;
-		padding: 0 15px;
+		padding: 0 30px;
 		height: calc(100% - #{$offcanvas-btn});
 		.moduletable {
 			margin: 0 -15px;
