@@ -245,11 +245,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                </div>
             <?php
             }
-            if (!empty($block_1_type)) {
-               echo '<div class="d-flex w-100 w-auto@l justify-content-center justify-content-lg-start">';
-            } else {
-               echo '<div class="d-flex w-100 justify-content-center py-3">';
-            }
+             echo '<div class="d-flex flex-grow-1 justify-content-center justify-content-lg-start">';
              if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
                  <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
