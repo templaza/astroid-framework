@@ -613,11 +613,13 @@ class AstroidFrameworkHelper
    {
       require_once JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'library' . '/' . 'FontLib' . '/' . 'Autoloader.php';
       $template_fonts_path = JPATH_SITE . "/templates/{$template}/fonts";
-      if (!file_exists($template_fonts_path)) {
+      $template_media_fonts_path = JPATH_SITE . "/media/templates/site/{$template}/fonts";
+      if (!file_exists($template_fonts_path) && !file_exists($template_media_fonts_path)) {
          return [];
       }
       $fonts = [];
       $font_extensions = ['otf', 'ttf', 'woff'];
+      if (file_exists($template_media_fonts_path)) $template_fonts_path = $template_media_fonts_path;
       foreach (scandir($template_fonts_path) as $font_path) {
          if (is_file($template_fonts_path . '/' . $font_path)) {
             $pathinfo = pathinfo($template_fonts_path . '/' . $font_path);

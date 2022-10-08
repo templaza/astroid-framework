@@ -107,12 +107,14 @@ class Font
             return [];
         }
         require_once JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'library' . '/' . 'FontLib' . '/' . 'Autoloader.php';
-        $template_fonts_path = JPATH_SITE . "/media/templates/site/{$template}/fonts";
-        if (!file_exists($template_fonts_path)) {
+        $template_fonts_path = JPATH_SITE . "/templates/{$template}/fonts";
+        $template_media_fonts_path = JPATH_SITE . "/media/templates/site/{$template}/fonts";
+        if (!file_exists($template_fonts_path) && !file_exists($template_media_fonts_path)) {
             return [];
         }
         $fonts = [];
         $font_extensions = ['otf', 'ttf', 'woff'];
+        if (file_exists($template_media_fonts_path)) $template_fonts_path = $template_media_fonts_path;
         foreach (scandir($template_fonts_path) as $font_path) {
             if (is_file($template_fonts_path . '/' . $font_path)) {
                 $pathinfo = pathinfo($template_fonts_path . '/' . $font_path);
@@ -240,11 +242,17 @@ class Font
         $template = Framework::getTemplate();
         $document = Framework::getDocument();
         $uploaded_fonts = $template->getFonts();
+        $template_media_fonts_path = JPATH_SITE . "/media/templates/site/{$template->template}/fonts";
+        if (file_exists($template_media_fonts_path)) {
+            $font_path  =    \JURI::root() . "media/templates/site/{$template->template}/fonts/";
+        } else {
+            $font_path  =    \JURI::root() . "templates/{$template->template}/fonts/";
+        }
         if (isset($uploaded_fonts[$value])) {
             $files = $uploaded_fonts[$value]['files'];
             $value = $uploaded_fonts[$value]['name'];
             foreach ($files as $file) {
-                $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . \JURI::root() . "templates/{$template->template}/fonts/" . $file . '");}');
+                $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
             }
         }
         return $value;
