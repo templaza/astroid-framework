@@ -110,30 +110,33 @@ class Font
         $template_fonts_path        =   JPATH_SITE . "/templates/{$template}/fonts";
         $template_media_fonts_path  =   JPATH_SITE . "/media/templates/site/{$template}/fonts";
         $template_custom_fonts_path =   JPATH_SITE . "/images/{$template}/fonts";
-        if (!file_exists($template_fonts_path) && !file_exists($template_media_fonts_path)) {
+        if (!file_exists($template_fonts_path) && !file_exists($template_media_fonts_path) && !file_exists($template_custom_fonts_path)) {
             return [];
         }
         $fonts = [];
         $font_extensions = ['otf', 'ttf', 'woff'];
-        if (file_exists($template_media_fonts_path)) $template_fonts_path = $template_media_fonts_path;
-        foreach (scandir($template_fonts_path) as $font_path) {
-            if (is_file($template_fonts_path . '/' . $font_path)) {
-                $pathinfo = pathinfo($template_fonts_path . '/' . $font_path);
-                if (in_array($pathinfo['extension'], $font_extensions)) {
-                    $font = \FontLib\Font::load($template_fonts_path . '/' . $font_path);
-                    $font->parse();
-                    $fontname = $font->getFontFullName();
-                    $fontid = 'library-font-' . Helper::slugify($fontname);
-                    if (!isset($fonts[$fontid])) {
-                        $fonts[$fontid] = [];
-                        $fonts[$fontid]['id'] = $fontid;
-                        $fonts[$fontid]['name'] = $fontname;
-                        $fonts[$fontid]['files'] = [];
+        if (file_exists($template_media_fonts_path) || file_exists($template_fonts_path)) {
+            if (file_exists($template_media_fonts_path)) $template_fonts_path = $template_media_fonts_path;
+            foreach (scandir($template_fonts_path) as $font_path) {
+                if (is_file($template_fonts_path . '/' . $font_path)) {
+                    $pathinfo = pathinfo($template_fonts_path . '/' . $font_path);
+                    if (in_array($pathinfo['extension'], $font_extensions)) {
+                        $font = \FontLib\Font::load($template_fonts_path . '/' . $font_path);
+                        $font->parse();
+                        $fontname = $font->getFontFullName();
+                        $fontid = 'library-font-' . Helper::slugify($fontname);
+                        if (!isset($fonts[$fontid])) {
+                            $fonts[$fontid] = [];
+                            $fonts[$fontid]['id'] = $fontid;
+                            $fonts[$fontid]['name'] = $fontname;
+                            $fonts[$fontid]['files'] = [];
+                        }
+                        $fonts[$fontid]['files'][] = $font_path;
                     }
-                    $fonts[$fontid]['files'][] = $font_path;
                 }
             }
         }
+
         if (file_exists($template_custom_fonts_path)) {
             foreach (scandir($template_custom_fonts_path) as $font_path) {
                 if (is_file($template_custom_fonts_path . '/' . $font_path)) {
