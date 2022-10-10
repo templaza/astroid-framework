@@ -90,7 +90,9 @@ switch ($stickey_mode) {
             }
             ?>
             <?php if ($enable_offcanvas) { ?>
-               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                <?php echo '<div class="d-flex ms-3 offcanvas-button offcanvasRight">'; ?>
+                <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                <?php echo '</div>'; ?>
             <?php } ?>
             <?php if ($block_1_type != 'blank') : ?>
                <div class="header-right-block d-none d-lg-block align-self-center px-2">

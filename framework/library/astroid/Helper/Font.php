@@ -107,10 +107,26 @@ class Font
             return [];
         }
         require_once JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'library' . '/' . 'FontLib' . '/' . 'Autoloader.php';
-        $template_fonts_path = JPATH_SITE . "/media/templates/site/{$template}/fonts";
-        if (!file_exists($template_fonts_path)) {
+        $template_fonts_path        =   JPATH_SITE . "/templates/{$template}/fonts";
+        $template_media_fonts_path  =   JPATH_SITE . "/media/templates/site/{$template}/fonts";
+        $template_custom_fonts_path =   JPATH_SITE . "/images/{$template}/fonts";
+        if (!file_exists($template_fonts_path) && !file_exists($template_media_fonts_path) && !file_exists($template_custom_fonts_path)) {
             return [];
         }
+        $fonts = [];
+        if (file_exists($template_media_fonts_path) || file_exists($template_fonts_path)) {
+            if (file_exists($template_media_fonts_path)) $template_fonts_path = $template_media_fonts_path;
+            $fonts  =   self::getLocalFonts($template_fonts_path);
+        }
+
+        if (file_exists($template_custom_fonts_path)) {
+            $fonts  =   array_merge($fonts, self::getLocalFonts($template_custom_fonts_path));
+        }
+        Framework::getDebugger()->stop('local-fonts');
+        return $fonts;
+    }
+
+    public static function getLocalFonts($template_fonts_path) {
         $fonts = [];
         $font_extensions = ['otf', 'ttf', 'woff'];
         foreach (scandir($template_fonts_path) as $font_path) {
@@ -131,7 +147,6 @@ class Font
                 }
             }
         }
-        Framework::getDebugger()->stop('local-fonts');
         return $fonts;
     }
 
@@ -240,11 +255,23 @@ class Font
         $template = Framework::getTemplate();
         $document = Framework::getDocument();
         $uploaded_fonts = $template->getFonts();
+        $template_media_fonts_path  = JPATH_SITE . "/media/templates/site/{$template->template}/fonts";
+        $template_custom_fonts_path = JPATH_SITE . "/images/{$template->template}/fonts";
+        $font_custom_path           = \JURI::root() . "images/{$template->template}/fonts/";
+        if (file_exists($template_media_fonts_path)) {
+            $font_path      =       \JURI::root() . "media/templates/site/{$template->template}/fonts/";
+        } else {
+            $font_path      =       \JURI::root() . "templates/{$template->template}/fonts/";
+        }
         if (isset($uploaded_fonts[$value])) {
             $files = $uploaded_fonts[$value]['files'];
             $value = $uploaded_fonts[$value]['name'];
             foreach ($files as $file) {
-                $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . \JURI::root() . "templates/{$template->template}/fonts/" . $file . '");}');
+                if (file_exists($template_custom_fonts_path . '/' . $file)) {
+                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
+                } else {
+                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
+                }
             }
         }
         return $value;
