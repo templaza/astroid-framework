@@ -204,7 +204,10 @@ class Client
             $loaded = true;
         }
 
-        if (ASTROID_JOOMLA_VERSION == 4 && $loaded) {
+        $version = new \JVersion;
+        $version = $version->getShortVersion();
+        $version = substr($version, 0, 1);
+        if ($version == 4 && $loaded) {
             \JFactory::getDocument()->addScriptDeclaration('
             (function(){
                 var fixed = false;
