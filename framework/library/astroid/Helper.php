@@ -9,6 +9,8 @@
 
 namespace Astroid;
 
+use Joomla\CMS\Table\Table;
+
 defined('_JEXEC') or die;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -194,13 +196,13 @@ class Helper
     public static function clearCSS($dir, $prefix = 'style') {
         if (is_array($prefix)) {
             foreach ($prefix as $pre) {
-                $styles = preg_grep('~^' . $pre . '-.*\.(css)$~', scandir($dir));
+                $styles = preg_grep('~^' . $pre . '.*\.(css)$~', scandir($dir));
                 foreach ($styles as $style) {
                     unlink($dir . '/' . $style);
                 }
             }
         } else {
-            $styles = preg_grep('~^' . $prefix . '-.*\.(css)$~', scandir($dir));
+            $styles = preg_grep('~^' . $prefix . '.*\.(css)$~', scandir($dir));
             foreach ($styles as $style) {
                 unlink($dir . '/' . $style);
             }

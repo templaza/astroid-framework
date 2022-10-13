@@ -1134,10 +1134,11 @@ class Document
                 // rendering scss
                 Framework::getReporter('Logs')->add('Rendering Scss');
                 // clearing previous versions
-                Helper::clearCache($template->template, ['compiled', 'template']);
+                Helper::clearCache($template->template, ['compiled-' . $scssVersion]);
                 // adding compiled scss in css file
                 $this->renderScss($cssFile);
                 if ($template->isDefault()) {
+                    Helper::clearCache($template->template, ['template']);
                     File::copy($cssFile, ASTROID_MEDIA_TEMPLATE_PATH . '/css/template.css');
                 }
             } else {
