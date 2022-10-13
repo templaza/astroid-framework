@@ -9,8 +9,6 @@
 
 namespace Astroid;
 
-use Joomla\CMS\Table\Table;
-
 defined('_JEXEC') or die;
 
 require_once __DIR__ . '/../vendor/autoload.php';
