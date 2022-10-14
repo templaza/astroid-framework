@@ -3,7 +3,7 @@
  * @package php-font-lib
  * @link    https://github.com/PhenX/php-font-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @version $Id: Font_Table_glyf.php 46 2012-04-02 20:22:38Z fabien.menager $
  */
 namespace FontLib\Glyph;
@@ -33,6 +33,9 @@ class Outline extends BinaryStream {
   public $xMax;
   public $yMax;
 
+  /**
+   * @var string|null
+   */
   public $raw;
 
   /**
@@ -75,11 +78,7 @@ class Outline extends BinaryStream {
   function parse(BinaryStream $font) {
     $font->seek($this->offset);
 
-    if (!$this->size) {
-      return;
-    }
-
-    $this->raw = $font->read($this->size);
+      $this->raw = $font->read($this->size);
   }
 
   function parseData() {
@@ -96,7 +95,7 @@ class Outline extends BinaryStream {
   function encode() {
     $font = $this->getFont();
 
-    return $font->write($this->raw, strlen($this->raw));
+    return $font->write($this->raw, mb_strlen((string) $this->raw, '8bit'));
   }
 
   function getSVGContours() {
