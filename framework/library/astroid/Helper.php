@@ -194,13 +194,13 @@ class Helper
     public static function clearCSS($dir, $prefix = 'style') {
         if (is_array($prefix)) {
             foreach ($prefix as $pre) {
-                $styles = preg_grep('~^' . $pre . '-.*\.(css)$~', scandir($dir));
+                $styles = preg_grep('~^' . $pre . '.*\.(css)$~', scandir($dir));
                 foreach ($styles as $style) {
                     unlink($dir . '/' . $style);
                 }
             }
         } else {
-            $styles = preg_grep('~^' . $prefix . '-.*\.(css)$~', scandir($dir));
+            $styles = preg_grep('~^' . $prefix . '.*\.(css)$~', scandir($dir));
             foreach ($styles as $style) {
                 unlink($dir . '/' . $style);
             }

@@ -173,6 +173,22 @@ class Template
         return $variables;
     }
 
+    public function isDefault($id = 0)
+    {
+        if (!$id) {
+            $id = $this->id;
+        }
+        $db = \JFactory::getDbo();
+        $query = "SELECT `home` FROM `#__template_styles` WHERE `id`='$id'";
+        $db->setQuery($query);
+        $result = $db->loadResult();
+        if ($result == 1)  {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     protected function _variableOverrides($variables)
     {
         $sass_overrides = $this->params->get('sass_overrides');

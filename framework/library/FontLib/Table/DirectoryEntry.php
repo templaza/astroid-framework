@@ -3,7 +3,7 @@
  * @package php-font-lib
  * @link    https://github.com/PhenX/php-font-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace FontLib\Table;
 
@@ -36,15 +36,20 @@ class DirectoryEntry extends BinaryStream {
 
   protected $origF;
 
+  /**
+   * @param string $data
+   *
+   * @return int
+   */
   static function computeChecksum($data) {
-    $len = strlen($data);
+    $len = mb_strlen($data, '8bit');
     $mod = $len % 4;
 
     if ($mod) {
       $data = str_pad($data, $len + (4 - $mod), "\0");
     }
 
-    $len = strlen($data);
+    $len = mb_strlen($data, '8bit');
 
     $hi = 0x0000;
     $lo = 0x0000;

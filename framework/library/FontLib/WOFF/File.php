@@ -3,7 +3,7 @@
  * @package php-font-lib
  * @link    https://github.com/PhenX/php-font-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
 namespace FontLib\WOFF;
@@ -46,11 +46,11 @@ class File extends \FontLib\TrueType\File {
       $data = $this->read($entry->length);
 
       if ($entry->length < $entry->origLength) {
-        $data = gzuncompress($data);
+        $data = (string) gzuncompress($data);
       }
 
       // Prepare data ...
-      $length        = strlen($data);
+      $length        = mb_strlen($data, '8bit');
       $entry->length = $entry->origLength = $length;
       $entry->offset = $dataOffset;
 

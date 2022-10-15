@@ -3,7 +3,7 @@
  * @package php-font-lib
  * @link    https://github.com/PhenX/php-font-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @version $Id: Font_Table_glyf.php 46 2012-04-02 20:22:38Z fabien.menager $
  */
 
@@ -265,7 +265,7 @@ class OutlineSimple extends Outline {
       $points = $this->points;
     }
 
-    $length     = count($points);
+    $length     = (empty($points) ? 0 : count($points));
     $firstIndex = 0;
     $count      = 0;
 

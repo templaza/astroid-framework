@@ -3,7 +3,7 @@
  * @package php-font-lib
  * @link    https://github.com/PhenX/php-font-lib
  * @author  Fabien Ménager <fabien.menager@gmail.com>
- * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
 namespace FontLib\Table\Type;
@@ -57,7 +57,9 @@ class post extends Table {
             $names[$g] = File::$macCharNames[$index];
           }
           else {
-            $names[$g] = $namesPascal[$index - 258];
+            if (array_key_exists($index - 258, $namesPascal)) {
+              $names[$g] = $namesPascal[$index - 258];
+            }
           }
         }
 
