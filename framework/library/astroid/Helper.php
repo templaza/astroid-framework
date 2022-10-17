@@ -171,7 +171,7 @@ class Helper
 
     public static function clearCacheByTemplate($template)
     {
-        return self::clearCache($template, ['style', 'custom', 'astroid', 'preset', 'compiled']);
+        return self::clearCache($template, ['style', 'astroid', 'preset', 'compiled']);
     }
 
     public static function clearCache($template = '', $prefix = 'style')
