@@ -43,7 +43,7 @@ class Includer
 
         foreach ($includers as $includer) {
             $func = $includer['func'];
-            $body = ($includer['replace'] && self::$func()) ? str_replace($includer['replace'], self::$func(), $body) : $body;
+            $body = ($includer['replace']) ? str_replace($includer['replace'], self::$func(), $body) : $body;
         }
 
         if ($content === null) {
