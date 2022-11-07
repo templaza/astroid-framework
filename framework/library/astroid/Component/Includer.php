@@ -42,8 +42,12 @@ class Includer
         $includers = array_reverse($includers);
 
         foreach ($includers as $includer) {
-            $func = $includer['func'];
-            $body = ($includer['replace']) ? str_replace($includer['replace'], self::$func(), $body) : $body;
+            $func           =   $includer['func'];
+            $func_content   =   self::$func();
+            if (!is_string($func_content)) {
+                $func_content = '';
+            }
+            $body = ($includer['replace']) ? str_replace($includer['replace'], $func_content, $body) : $body;
         }
 
         if ($content === null) {
