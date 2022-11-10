@@ -1,14 +1,5 @@
 <?php
-
-/**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 defined('JPATH_BASE') or die;
-
 use Joomla\CMS\Language\Text;
 
 $msgList = $displayData['msgList'];
@@ -17,11 +8,9 @@ $msgList = $displayData['msgList'];
    <?php if (is_array($msgList) && !empty($msgList)) : ?>
       <div id="system-message">
          <?php foreach ($msgList as $type => $msgs) : ?>
-            <div class="alert alert-<?php echo $type == "error" ? "danger" : ($type == "message" ? "info" : $type); ?>">
+            <div class="alert alert-<?php echo $type == "error" ? "danger" : ($type == "message" ? "info" : $type); ?> alert-dismissible fade show">
                <?php // This requires JS so we should add it through JS. Progressive enhancement and stuff. 
                ?>
-               <a class="close" data-dismiss="alert">×</a>
-
                <?php if (!empty($msgs)) : ?>
                   <h4 class="alert-heading mb-0"><?php echo Text::_($type); ?></h4>
                   <div>
@@ -30,6 +19,7 @@ $msgList = $displayData['msgList'];
                      <?php endforeach; ?>
                   </div>
                <?php endif; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
          <?php endforeach; ?>
       </div>
