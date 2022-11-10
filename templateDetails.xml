@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
    <name>astroid_template_one</name>
-   <creationDate>September 2022</creationDate>
+   <creationDate>November 2022</creationDate>
    <author>JoomDev/Templaza</author>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
    <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
-   <version>2.6.2</version>
+   <version>2.6.3</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <inheritable>1</inheritable>
    <scriptfile>script.php</scriptfile>
