@@ -215,14 +215,15 @@ class Document
     {
         Framework::getDebugger()->log('Minifying CSS');
         $stylesheets = [];
+        $stylesheetLinks = [];
         $stylesheetsUrls = [];
-        $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheets, &$stylesheetsUrls) {
+        $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
 
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
                 $url = $this->_cssPath($matches[2]);
                 $ext = pathinfo($url, PATHINFO_EXTENSION);
                 if ($ext !== 'css' && !Helper::startsWith($url, '@import')) return $matches[0];
-                $stylesheets[] = $url;
+                $stylesheetLinks[] = $url;
                 $stylesheetsUrls[] = $this->beutifyURL($matches[2]);
                 return '';
             }
@@ -248,10 +249,15 @@ class Document
             Framework::getReporter('Logs')->add('Minify &amp; Combine Files <code>' . implode('</code>, <code>', $stylesheetsUrls) . '</code>.');
             Helper::putContents($cssFile, '');
             $minifier = new Minify\CSS($cssFile);
-            foreach ($stylesheets as $stylesheet) {
-                if (file_exists(JPATH_SITE . '/' . $stylesheet)) {
-                    $minifier->add(JPATH_SITE . '/' . $stylesheet);
-                } else {
+            if (count($stylesheetLinks)) {
+                foreach ($stylesheetLinks as $stylesheet) {
+                    if (file_exists(JPATH_SITE . '/' . $stylesheet)) {
+                        $minifier->add(JPATH_SITE . '/' . $stylesheet);
+                    }
+                }
+            }
+            if (count($stylesheets)) {
+                foreach ($stylesheets as $stylesheet) {
                     $minifier->add($stylesheet);
                 }
             }
