@@ -11,11 +11,12 @@ https://sourceforge.net/projects/initranslator/
 * Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cs-CZ.zip)
 * Dutch (nl-NL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_nl-NL.zip)
 * French (fr-FR) for Astroid 2.5.14 [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_fr-FR.zip)
-* German (de-DE) for Astroid 2.5.18 [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
+* German (de-DE) for Astroid 2.6.2 [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_de-DE.zip)
 * Greek(el-GR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_el-GR.zip)
 * Polish (pl-PL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_pl-PL.zip)
 * Russian (ru-RU) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ru-RU.zip)
 * Spanish (es-ES)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_es-ES.zip)
+* Slovenian (sl-SL)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_sl-SL.zip)
 
 ## How to install a language file
 * Download the language file
