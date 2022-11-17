@@ -257,14 +257,14 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             // header block starts
             if ($block_1_type == 'position') {
                echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
-               echo '<div class="d-flex w-100 justify-content-end header-block-item">';
+               echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
                echo $document->position($block_1_position, 'xhtml');
                echo '</div>';
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
                 echo '<div class="d-none d-lg-flex w-100 justify-content-end py-2 align-items-center">';
-                echo '<div class="d-flex w-100 justify-content-end header-block-item">';
+                echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
                 echo $block_1_custom;
                 echo '</div>';
                 echo '</div>';
