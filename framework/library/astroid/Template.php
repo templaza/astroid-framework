@@ -241,26 +241,22 @@ class Template
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
                 $preset['thumbnail'] = \JURI::root() . 'templates/' . $this->template . '/' . $data['thumbnail'];
             }
-            if (isset($data['colors'])) {
-                $colors = [];
-                $properties = [];
-                foreach ($data['colors'] as $prop => $color) {
-                    if (is_array($color)) {
-                        foreach ($color as $subprop => $color2) {
-                            if (!empty($color2)) {
-                                $properties[$prop][$subprop] = $color2;
-                                $colors[] = $color2;
+            if (isset($data['preset'])) {
+                $properties =   [];
+                $preset_data=   \json_decode($data['preset'], true);
+                foreach ($preset_data as $prop => $value) {
+                    if (is_array($value)) {
+                        foreach ($value as $subprop => $value2) {
+                            if (!empty($value2)) {
+                                $properties[$prop][$subprop] = $value2;
                             }
                         }
                     } else {
-                        if (!empty($color)) {
-                            $properties[$prop] = $color;
-                            $colors[] = $color;
+                        if (!empty($value)) {
+                            $properties[$prop] = $value;
                         }
                     }
                 }
-                $colors = array_keys(array_count_values($colors));
-                $preset['colors'] = array_unique($colors);
                 $preset['preset'] = $properties;
             }
             $presets[$preset['name']] = $preset;
