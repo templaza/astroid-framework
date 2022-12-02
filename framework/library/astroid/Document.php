@@ -218,8 +218,10 @@ class Document
         $stylesheetLinks = [];
         $stylesheetsUrls = [];
         $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
-
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
+                if (strpos($matches[2], 'fonts.googleapis.com') > 0) {
+                    return $matches[0];
+                }
                 $url = $this->_cssPath($matches[2]);
                 $ext = pathinfo($url, PATHINFO_EXTENSION);
                 if ($ext !== 'css' && !Helper::startsWith($url, '@import')) return $matches[0];
