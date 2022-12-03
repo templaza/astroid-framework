@@ -123,6 +123,7 @@ class Menu
                 }
                 // The next item is shallower.
                 elseif ($item->shallower) {
+                    echo '</li>';
                     $l = $item->level;
                     for ($i = 0; $i < $item->level_diff; $i++) {
                         if ($l > 2) {
