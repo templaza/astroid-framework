@@ -285,7 +285,7 @@ class Document
             // print_r($matches);
             $script = [];
             if (isset($matches[5]) && $matches[5] == '</script>' && !empty($matches[2])) {
-                if (strpos($matches[0], 'type="module"') > 0 || strpos($matches[0], 'media/system/js/joomla-hidden-mail-es5.min.js')) {
+                if (strpos($matches[0], 'type="module"') > 0 || strpos($matches[0], 'media/system/js/joomla-hidden-mail-es5.min.js') > 0 || strpos($matches[0], 'webcomponents-bundle.min.js') > 0) {
                     return $matches[0];
                 }
                 $script = ['content' => $this->beutifyURL($matches[2]), 'type' => 'url'];
