@@ -20,6 +20,7 @@ $header_menu = $params->get('header_menu', 'mainmenu');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
+$offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $class = ['astroid-header', 'astroid-header-sticky'];
 $stickyheader = $params->get('stickyheader', 'static');
@@ -30,7 +31,7 @@ $class[] = 'header-' . $stickyheadermobile . '-mobile';
 $stickyheadertablet = $params->get('stickyheadertablet', 'static');
 $class[] = 'header-' . $stickyheadertablet . '-tablet';
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
-$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none', 'd-lg-block'];
+$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-3', 'd-none', 'd-lg-block'];
 $mode = $params->get('header_horizontal_menu_mode', 'left');
 $stickey_mode = $params->get('stickey_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('stickey_block_1_type', 'left');
@@ -59,6 +60,11 @@ switch ($stickey_mode) {
          </div>
       <?php } ?>
       <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-lg-grow-1' : ''; ?>">
+          <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+              <?php echo '<div class="d-none d-lg-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+              <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+              <?php echo '</div>'; ?>
+          <?php } ?>
          <?php $document->include('logo'); ?>
          <?php
          if ($stickey_mode == 'left') {
@@ -89,27 +95,27 @@ switch ($stickey_mode) {
                // header nav ends
             }
             ?>
-            <?php if ($enable_offcanvas) { ?>
-                <?php echo '<div class="d-flex ms-3 offcanvas-button offcanvasRight">'; ?>
-                <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                <?php echo '</div>'; ?>
-            <?php } ?>
             <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-lg-block align-self-center px-2">
+               <div class="header-right-block d-none d-lg-block align-self-center">
                   <?php
                   if ($block_1_type == 'position') {
-                     echo '<div class="header-block-item">';
+                     echo '<div class="header-block-item d-flex">';
                      echo $document->position($block_1_position, 'xhtml');
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {
-                     echo '<div class="header-block-item">';
+                     echo '<div class="header-block-item d-flex">';
                      echo $block_1_custom;
                      echo '</div>';
                   }
                   ?>
                </div>
             <?php endif; ?>
+             <?php if ($enable_offcanvas) { ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                 <?php echo '</div>'; ?>
+             <?php } ?>
          </div>
       <?php endif; ?>
    </div>
