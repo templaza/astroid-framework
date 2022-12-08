@@ -56,15 +56,15 @@
 
          <field ngShow="header==true AND header_block_1_type=='custom'" astroidgroup="header_element" name="header_block_1_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_1_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_1_CUSTOM_DESC" />
 
-         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='sidebar'))" astroidgroup="header_element" name="header_block_2_type" type="astroidlist" default="blank" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_TYPE_DESC">
+         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='horizontal') OR (header_mode=='sidebar'))" astroidgroup="header_element" name="header_block_2_type" type="astroidlist" default="blank" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_TYPE_DESC">
             <option value="blank">TPL_ASTROID_BLANK_OPTIONS</option>
             <option value="position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
             <option value="custom">TPL_ASTROID_CUSTOM_HTML_OPTIONS</option>
          </field>
 
-         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='sidebar')) AND header_block_2_type=='position'" astroidgroup="header_element" name="header_block_2_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_POSITION_DESC" />
+         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='horizontal') OR (header_mode=='sidebar')) AND header_block_2_type=='position'" astroidgroup="header_element" name="header_block_2_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_POSITION_DESC" />
 
-         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='sidebar')) AND header_block_2_type=='custom'" astroidgroup="header_element" name="header_block_2_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_DESC" />
+         <field ngShow="header==true AND ((header_mode=='stacked' AND header_stacked_menu_mode!='center') OR (header_mode=='horizontal') OR (header_mode=='sidebar')) AND header_block_2_type=='custom'" astroidgroup="header_element" name="header_block_2_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_DESC" />
 
          <field ngShow="header==true" astroidgroup="header_element" name="header_menu" type="sql" query="SELECT * FROM #__menu_types" default="mainmenu" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MENU_LABEL" description="TPL_ASTROID_HEADER_MENU_DESC"></field>
 
