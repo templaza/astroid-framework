@@ -219,7 +219,7 @@ class Document
         $stylesheetsUrls = [];
         $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
-                if (strpos($matches[2], 'fonts.googleapis.com') > 0) {
+                if (strpos($matches[2], 'fonts.googleapis.com') > 0 || strpos($matches[2], 'use.fontawesome.com') > 0) {
                     return $matches[0];
                 }
                 $url = $this->_cssPath($matches[2]);
