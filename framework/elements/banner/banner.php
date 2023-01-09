@@ -126,7 +126,8 @@ if ($astroid_banner_enabled) {
             echo '<div class="astroid-banner-cta mt-3">';
             foreach ($astroid_banner_buttons as $banner_button) {
                 if (isset($banner_button->text) && isset($banner_button->link) && isset($banner_button->class) && $banner_button->text && $banner_button->link) {
-                    echo '<a class="'.$banner_button->class.'" href="'.$banner_button->link.'">'.$banner_button->text.'</a> ';
+                    $link_target = isset($banner_button->target) && $banner_button->target ? ' target="'.$banner_button->target.'"' : '';
+                    echo '<a class="'.$banner_button->class.'" href="'.$banner_button->link.'"'.$link_target.'>'.$banner_button->text.'</a> ';
                 }
             }
             echo '</div>';
