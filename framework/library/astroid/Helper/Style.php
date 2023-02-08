@@ -256,9 +256,11 @@ class Style
             if (is_object($line_height)) {
                 foreach (['desktop', 'tablet', 'mobile'] as $device) {
                     $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
-                    $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
+                    if ($line_height->{$device}) {
+                        $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
+                    }
                 }
-            } else {
+            } elseif ($line_height) {
                 $style->addCss('line-height', $line_height . $line_height_unit);
             }
         }
