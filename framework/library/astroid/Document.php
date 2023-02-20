@@ -244,7 +244,7 @@ class Document
             return $matches[0];
         }, $html);
 
-        $version = md5(serialize($stylesheets));
+        $version = md5(serialize($stylesheets).serialize($stylesheetLinks));
 
         $cssFile = ASTROID_CACHE . '/css/' . $version . '.css';
         if (!file_exists($cssFile)) {
