@@ -4,7 +4,7 @@
 
 # Astroid Framework - Powerful Joomla Template Framework
 
-[![Watch Intro Video here](https://www.joomdev.com/images/githubassets/astroid-play.jpg)](https://www.youtube.com/watch?v=ZflNq3fDaXE)
+[Watch Intro Video here](https://www.youtube.com/watch?v=ZflNq3fDaXE)
 
 ## Features
 * Bootstrap 5 Compatible

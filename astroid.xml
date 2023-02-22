@@ -2,7 +2,7 @@
 <extension version="3.1" type="library" method="upgrade">
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
-   <author>JoomDev/TemPlaza</author>
+   <author>Astroid Framework Team</author>
    <creationDate>December 2022</creationDate>
    <version>2.6.3</version>
    <url>https://astroidframe.work/</url>

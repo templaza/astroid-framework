@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension version="3.1" type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
-   <author>JoomDev/TemPlaza</author>
+   <author>Astroid Framework Team</author>
    <creationDate>December 2022</creationDate>
    <version>2.6.3</version>
    <url>https://www.astroidframe.work</url>
