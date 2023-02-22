@@ -77,7 +77,7 @@
 
       var _breakpoint = deviceBreakpoint(true);
 
-      if (_breakpoint == 'xl' || _breakpoint == 'lg') {
+      if (_breakpoint === 'xl' || _breakpoint === 'lg') {
          if (stickyHeader.hasClass('header-sticky-desktop') && (_winScroll > _headerBottom)) {
             stickyHeader.removeClass('d-none');
             stickyHeader.addClass('d-flex');
@@ -88,8 +88,12 @@
             stickyHeader.removeClass('d-flex');
             stickyHeader.addClass('d-none');
          }
-      } else if (_breakpoint == 'sm' || _breakpoint == 'md') {
+      } else if (_breakpoint === 'sm' || _breakpoint === 'md') {
          if (stickyHeader.hasClass('header-static-tablet')) {
+            if (stickyHeader.hasClass('d-flex')) {
+               stickyHeader.addClass('d-none');
+               stickyHeader.removeClass('d-flex');
+            }
             return;
          }
          if (stickyHeader.hasClass('header-sticky-tablet') && (_winScroll > _headerBottom)) {
@@ -104,6 +108,10 @@
          }
       } else {
          if (stickyHeader.hasClass('header-static-mobile')) {
+            if (stickyHeader.hasClass('d-flex')) {
+               stickyHeader.addClass('d-none');
+               stickyHeader.removeClass('d-flex');
+            }
             return;
          }
          if (stickyHeader.hasClass('header-sticky-mobile') && (_winScroll > _headerBottom)) {
