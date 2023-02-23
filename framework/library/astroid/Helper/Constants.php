@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '2.6.3';
-    public static $fontawesome_version = '6.2.0';
+    public static $astroid_version = '2.6.4';
+    public static $fontawesome_version = '6.3.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://github.com/templaza/astroid-framework/wiki';

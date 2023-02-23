@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  * You can easily override all files under /astroid/ folder.
@@ -126,7 +126,8 @@ if ($astroid_banner_enabled) {
             echo '<div class="astroid-banner-cta mt-3">';
             foreach ($astroid_banner_buttons as $banner_button) {
                 if (isset($banner_button->text) && isset($banner_button->link) && isset($banner_button->class) && $banner_button->text && $banner_button->link) {
-                    echo '<a class="'.$banner_button->class.'" href="'.$banner_button->link.'">'.$banner_button->text.'</a> ';
+                    $link_target = isset($banner_button->target) && $banner_button->target ? ' target="'.$banner_button->target.'"' : '';
+                    echo '<a class="'.$banner_button->class.'" href="'.$banner_button->link.'"'.$link_target.'>'.$banner_button->text.'</a> ';
                 }
             }
             echo '</div>';

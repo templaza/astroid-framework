@@ -2,11 +2,11 @@
 <extension version="3.1" type="library" method="upgrade">
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
-   <author>JoomDev/TemPlaza</author>
-   <creationDate>December 2022</creationDate>
-   <version>2.6.3</version>
+   <author>Astroid Framework Team</author>
+   <creationDate>February 2023</creationDate>
+   <version>2.6.4</version>
    <url>https://astroidframe.work/</url>
-   <copyright>Copyright (C) 2022 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2023 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>

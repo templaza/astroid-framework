@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_BASE') or die;
@@ -56,7 +56,7 @@ $menu = $app->getMenu('site');
 
 $itemId = $app->input->get('id');
 $menuItem = $menu->getItem($itemId);
-if (isset($menuItem->language) && $menuItem->language == '*') {
+if ($menuItem === null || (isset($menuItem->language) && $menuItem->language == '*')) {
     $items = $menu->getItems(['menutype'], $menu_type);
 } else {
     $items = $menu->getItems(['menutype', 'language'], [$menu_type, $menuItem->language]);

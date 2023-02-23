@@ -18,14 +18,14 @@ if ($hideLinks) {
 <?php if ($app->getIdentity()->authorise('core.manage', 'com_modules')) : ?>
 <a class="header-item-content astroid-clear-cache"
    href="#"
-   title="<?php echo Text::_('Astroid Clear Cache'); ?>">
+   title="<?php echo Text::_('ASTROID_SHORTCUT_CACHE_DESC'); ?>">
     <div class="header-item-icon">
         <div class="w-auto">
             <span class="icon-refresh" aria-hidden="true"></span>
         </div>
     </div>
     <div class="header-item-text">
-		<?php echo Text::_('Astroid Clear Cache'); ?>
+		<?php echo Text::_('ASTROID_CLEAR_CACHE'); ?>
     </div>
 </a>
 <?php endif; ?>

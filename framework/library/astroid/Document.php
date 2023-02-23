@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -219,7 +219,7 @@ class Document
         $stylesheetsUrls = [];
         $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
-                if (strpos($matches[2], 'fonts.googleapis.com') > 0) {
+                if (strpos($matches[2], 'fonts.googleapis.com') > 0 || strpos($matches[2], 'use.fontawesome.com') > 0) {
                     return $matches[0];
                 }
                 $url = $this->_cssPath($matches[2]);
@@ -244,7 +244,7 @@ class Document
             return $matches[0];
         }, $html);
 
-        $version = md5(serialize($stylesheets));
+        $version = md5(serialize($stylesheets).serialize($stylesheetLinks));
 
         $cssFile = ASTROID_CACHE . '/css/' . $version . '.css';
         if (!file_exists($cssFile)) {

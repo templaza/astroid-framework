@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * 	DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  *  You can easily override all files under /frontend/ folder.
@@ -20,6 +20,9 @@ $mode = $params->get('header_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
 $block_1_custom = $params->get('header_block_1_custom', '');
+$block_2_type = $params->get('header_block_2_type', 'blank');
+$block_2_position = $params->get('header_block_2_position', '');
+$block_2_custom = $params->get('header_block_2_custom', '');
 $header_menu = $params->get('header_menu', 'mainmenu');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
@@ -48,6 +51,22 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
               <?php echo '</div>'; ?>
           <?php } ?>
          <?php $document->include('logo'); ?>
+          <?php if ($block_2_type != 'blank') : ?>
+              <div class="header-left-block d-none d-lg-block align-self-center ms-4">
+                  <?php
+                  if ($block_2_type == 'position') {
+                      echo '<div class="header-block-item d-flex justify-content-start align-items-center">';
+                      echo $document->position($block_2_position, 'xhtml');
+                      echo '</div>';
+                  }
+                  if ($block_2_type == 'custom') {
+                      echo '<div class="header-block-item d-flex justify-content-start align-items-center">';
+                      echo $block_2_custom;
+                      echo '</div>';
+                  }
+                  ?>
+              </div>
+          <?php endif; ?>
          <?php
          if ($mode == 'left') {
             // header nav starts

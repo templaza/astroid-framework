@@ -20,6 +20,10 @@
 					<field name="text" label="ASTROID_BANNER_CTA_BUTTON_TEXT_LABEL" type="text" />
 					<field name="link" label="ASTROID_BANNER_CTA_BUTTON_LINK_LABEL" type="text" />
 					<field name="class" label="ASTROID_BANNER_CTA_BUTTON_CLASS_LABEL" type="text" default="btn btn-primary" />
+					<field name="target" type="list" default="" label="ASTROID_BANNER_CTA_BUTTON_TARGET_LABEL">
+						<option value="">JDEFAULT</option>
+						<option value="_blank">JBROWSERTARGET_NEW</option>
+					</field>
 				</form>
 			</field>
 			<field name="astroid_banner_textcolor" type="color" showon="astroid_banner_title_enabled:1[AND]astroid_banner_enabled:1" label="TPL_ASTROID_TEXT_COLOR_LABEL">

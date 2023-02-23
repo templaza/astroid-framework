@@ -2,8 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    JoomDev https://www.joomdev.com
- * @copyright Copyright (C) 2009 - 2020 JoomDev.
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -256,9 +256,11 @@ class Style
             if (is_object($line_height)) {
                 foreach (['desktop', 'tablet', 'mobile'] as $device) {
                     $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
-                    $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
+                    if ($line_height->{$device}) {
+                        $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
+                    }
                 }
-            } else {
+            } elseif ($line_height) {
                 $style->addCss('line-height', $line_height . $line_height_unit);
             }
         }
