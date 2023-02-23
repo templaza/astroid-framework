@@ -524,7 +524,7 @@
    "customjs": "",
    "customjsfiles": "",
    "footer": "1",
-   "footer_copyright": "<div class=\"text-left text-lg-right\">\u00a9 {sitename} {year}, Powered by <a href=\"https:\/\/astroidframe.work\" target=\"_blank\">Astroid<\/a>. Design by <a href=\"https:\/\/joomdev.com\" target=\"_blank\">JoomDev<\/a><\/div>",
+   "footer_copyright": "<div class=\"text-left text-lg-right\">\u00a9 {sitename} {year}, Powered by <a href=\"https:\/\/astroidframe.work\" target=\"_blank\">Astroid<\/a>. Design by <a href=\"https:\/\/astroidframe.work\" target=\"_blank\">Astroid Framework<\/a><\/div>",
    "footer_module_position": "footer-4",
    "footer_load_position": "after",
    "contact_details": "0",
