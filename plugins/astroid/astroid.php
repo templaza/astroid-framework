@@ -1,12 +1,6 @@
 <?php
 /**
  * @package   Astroid Framework
- * @author    TemPlaza https://www.templaza.com
- * @copyright Copyright (C) 2011 - 2022 TemPlaza.
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
- */
-/**
- * @package   Astroid Framework
  * @author    Astroid Framework Team https://astroidframe.work
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
