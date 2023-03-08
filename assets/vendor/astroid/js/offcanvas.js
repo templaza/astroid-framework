@@ -22,21 +22,21 @@
             _class = 'astroid-offcanvas';
          }
 
-         // Added for click then close the Offcanvas the Menu  
-            var _li  = $(_content).find('li');
-            var _li_a  = _li.find("a");
-            _li_a.click(function(){
+         // Added for click then close the Offcanvas the Menu
+         var _li  = $(_content).find('li');
+         var _li_a  = _li.find("a");
+         _li_a.click(function(){
+            if (!_li_a.hasClass('item-link-heading')) {
                _reset();
-            });
-      
-            
+            }
+         });
+
          $('body').addClass(_dir);
          var _reset = function () {
             _container.removeClass(_class + '-open');
             _trigger.removeClass('active');
             setTimeout(function () {
                $('body').removeClass(_class + '-opened');
-      
             }, 500);
          };
 
@@ -59,7 +59,6 @@
                $(document).unbind(_eventtype, _bodyClick);
                $(_close).unbind(_eventtype, _bodyClick);
             }
-
          };
 
          _content.addClass(_effect);
