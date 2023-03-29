@@ -125,6 +125,13 @@
             <option value="10">J10</option>
          </field>
 
+         <field name="header_breakpoint" type="astroidlist" label="TPL_ASTROID_HEADER_BREAKPOINT_LABEL" description="TPL_ASTROID_HEADER_BREAKPOINT_DESC" default="lg" ngShow="header==true AND header_mode!='sidebar'" astroidgroup="header_element">
+            <option value="sm">ASTROID_SMALL</option>
+            <option value="md">ASTROID_MEDIUM</option>
+            <option value="lg">ASTROID_LARGE</option>
+            <option value="xl">ASTROID_EXTRA_LARGE</option>
+            <option value="xxl">ASTROID_EXTRA_EXTRA_LARGE</option>
+         </field>
 
          <field ngShow="header==true AND header_mode!='sidebar'" astroidgroup="header_element" name="dropdown_trigger" type="astroidradio" default="hover" label="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_LABEL" description="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_DESC">
             <option value="hover">JGLOBAL_HOVER</option>

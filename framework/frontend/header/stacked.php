@@ -25,6 +25,7 @@ $block_2_position = $params->get('header_block_2_position', '');
 $block_2_custom = $params->get('header_block_2_custom', '');
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $header_menu = $params->get('header_menu', '');
+$header_breakpoint = $params->get('header_breakpoint', 'lg');
 $odd_menu_items = $params->get('odd_menu_items', 'left');
 $divided_logo_width = $params->get('divided_logo_width', 200);
 $class = ['astroid-header', 'astroid-stacked-header', 'astroid-stacked-' . $mode . '-header'];
@@ -37,11 +38,35 @@ $navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-it
 $navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
 $navClassDivided = ['nav', 'astroid-nav'];
 if ($mode == 'divided-logo-left') {
-    $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-lg-block', 'w-100'];
+    $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
 } else {
-    $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none', 'd-lg-block', 'w-100'];
+    $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
 }
-$document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+if ($mode == 'divided-logo-left') {
+    switch ($header_breakpoint) {
+        case 'sm': {
+            $document->addStyleDeclaration('@media (min-width: 576px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+            break;
+        }
+        case 'md': {
+            $document->addStyleDeclaration('@media (min-width: 768px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+            break;
+        }
+        case 'lg': {
+            $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+            break;
+        }
+        case 'xl': {
+            $document->addStyleDeclaration('@media (min-width: 1200px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+            break;
+        }
+        case 'xxl': {
+            $document->addStyleDeclaration('@media (min-width: 1400px) {.col-divided-logo{width: '.$divided_logo_width.'px;}}');
+            break;
+        }
+    }
+}
+
 ?>
 <header id="astroid-header" class="<?php echo implode(' ', $class); ?>">
    <div class="d-flex">
@@ -52,28 +77,28 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              echo '<div class="astroid-header-center-balance w-100 d-flex justify-content-center">';
              ?>
              <?php if (!empty($header_mobile_menu)) { ?>
-                 <div class="w-100 d-flex d-lg-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+                 <div class="w-100 d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                          <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
                      </div>
                  </div>
              <?php } ?>
              <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>
              <?php
              // header block 1 starts
              if ($block_1_type == 'position') {
-                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
                  echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $document->position($block_1_position, 'xhtml');
                  echo '</div>';
                  echo '</div>';
              }
              if ($block_1_type == 'custom') {
-                 echo '<div class="w-100 d-none d-lg-flex justify-content-start align-items-center">';
+                 echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
                  echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
                  echo $block_1_custom;
                  echo '</div>';
@@ -90,12 +115,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
                  echo '<div class="w-100 d-flex justify-content-end align-items-center">';
                  // header block 2 starts
                  if ($block_2_type == 'position') {
-                     echo '<div class="header-block-item d-none d-lg-flex justify-content-end align-items-center">';
+                     echo '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
                      echo $document->position($block_2_position, 'xhtml');
                      echo '</div>';
                  }
                  if ($block_2_type == 'custom') {
-                     echo '<div class="header-block-item d-none d-lg-flex justify-content-end align-items-center">';
+                     echo '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
                      echo $block_2_custom;
                      echo '</div>';
                  }
@@ -103,7 +128,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
                  if ($enable_offcanvas) {
                      ?>
-                     <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                     <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
                      <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                      <?php echo '</div>'; ?>
                      <?php
@@ -114,7 +139,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              echo '</div>';
              // header nav starts -->
              ?>
-             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-header-center-balance-menu w-100 d-none d-lg-flex justify-content-center pt-3">
+             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-header-center-balance-menu w-100 d-none d-<?php echo $header_breakpoint; ?>-flex justify-content-center pt-3">
                  <?php
                  Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass);
                  ?>
@@ -128,14 +153,14 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             echo '<div class="w-100 d-flex justify-content-center">';
          ?>
             <?php if (!empty($header_mobile_menu)) { ?>
-               <div class="d-flex d-lg-none justify-content-start">
-                  <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+               <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+                  <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                      <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
                   </div>
                </div>
             <?php } ?>
              <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>
@@ -146,7 +171,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             }
             if ($enable_offcanvas) {
             ?>
-                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                 <?php echo '</div>'; ?>
             <?php
@@ -154,7 +179,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             echo '</div>';
             // header nav starts -->
             ?>
-            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu w-100 d-none d-lg-flex justify-content-center pt-3">
+            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu w-100 d-none d-<?php echo $header_breakpoint; ?>-flex justify-content-center pt-3">
                <?php
                Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass);
                ?>
@@ -163,12 +188,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             // header nav ends
             // header block starts
             if ($block_1_type == 'position') {
-               echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-center py-3">';
+               echo '<div class="w-100 header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-center py-3">';
                echo $document->position($block_1_position, 'xhtml');
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
-               echo '<div class="w-100 header-block-item d-none d-lg-flex justify-content-center py-3">';
+               echo '<div class="w-100 header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-center py-3">';
                echo $block_1_custom;
                echo '</div>';
             }
@@ -178,12 +203,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
          if ($mode == 'seperated') {
             // header block starts
             if ($block_1_type == 'position') {
-               echo '<div class="header-block-item header-block-1 d-none d-lg-flex justify-content-center">';
+               echo '<div class="header-block-item header-block-1 d-none d-'.$header_breakpoint.'-flex justify-content-center">';
                echo $document->position($block_1_position, 'xhtml');
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
-               echo '<div class="header-block-item header-block-1 d-none d-lg-flex justify-content-center">';
+               echo '<div class="header-block-item header-block-1 d-none d-'.$header_breakpoint.'-flex justify-content-center">';
                echo $block_1_custom;
                echo '</div>';
             }
@@ -191,28 +216,28 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             ?>
             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu header-stacked-inner w-100 d-flex justify-content-center">
                <?php if (!empty($header_mobile_menu)) { ?>
-                  <div class="d-flex d-lg-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+                  <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
                      </div>
                   </div>
                <?php
                }
                if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                   <?php echo '<div class="d-none d-lg-flex justify-content-start offcanvas-button '.$offcanvas_position.'">'; ?>
+                   <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start offcanvas-button '.$offcanvas_position.'">'; ?>
                    <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                    <?php echo '</div>'; ?>
                <?php }
                echo '<div class="d-flex w-100 align-items-center justify-content-center">';
                $logo = $document->include('logo', [], true);
                if (!empty($logo)) {
-                  echo '<div class="d-lg-none">' . $logo . '</div>';
+                  echo '<div class="d-'.$header_breakpoint.'-none">' . $logo . '</div>';
                }
                Astroid\Component\Menu::getMenu($header_menu, $navClass, true, $odd_menu_items, 'stacked', $navWrapperClass);
                echo '</div>';
                if ($enable_offcanvas) {
                ?>
-                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
                    <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                    <?php echo '</div>'; ?>
                <?php
@@ -223,12 +248,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             // header nav ends
             // header block starts
             if ($block_2_type == 'position') {
-               echo '<div class="header-block-item header-block-2 d-none d-lg-flex justify-content-center">';
+               echo '<div class="header-block-item header-block-2 d-none d-'.$header_breakpoint.'-flex justify-content-center">';
                echo $document->position($block_2_position, 'xhtml');
                echo '</div>';
             }
             if ($block_2_type == 'custom') {
-               echo '<div class="header-block-item header-block-2 d-none d-lg-flex justify-content-center">';
+               echo '<div class="header-block-item header-block-2 d-none d-'.$header_breakpoint.'-flex justify-content-center">';
                echo $block_2_custom;
                echo '</div>';
             }
@@ -238,16 +263,16 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
             echo '<div class="w-100 d-flex justify-content-center">';
             ?>
             <?php if (!empty($header_mobile_menu)) { ?>
-               <div class="d-flex d-lg-none justify-content-start">
-                  <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+               <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+                  <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                      <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
                   </div>
                </div>
             <?php
             }
-             echo '<div class="d-flex flex-md-shrink-0 flex-grow-1 justify-content-center justify-content-lg-start">';
+             echo '<div class="d-flex flex-md-shrink-0 flex-grow-1 justify-content-center justify-content-'.$header_breakpoint.'-start">';
              if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php }
@@ -256,14 +281,14 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
             // header block starts
             if ($block_1_type == 'position') {
-               echo '<div class="d-none d-lg-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
+               echo '<div class="d-none d-'.$header_breakpoint.'-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
                echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
                echo $document->position($block_1_position, 'xhtml');
                echo '</div>';
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
-                echo '<div class="d-none d-lg-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
+                echo '<div class="d-none d-'.$header_breakpoint.'-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
                 echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
                 echo $block_1_custom;
                 echo '</div>';
@@ -273,16 +298,16 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
 
             if ($enable_offcanvas) {
             ?>
-                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-lg-4 offcanvas-button offcanvasRight">'; ?>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-lg-4 offcanvas-button offcanvasRight">'; ?>
                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                 <?php echo '</div>'; ?>
             <?php
             }
             echo '</div>';
             // header nav starts -->
-            echo '<div class="w-100 d-none d-lg-flex">';
+            echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex">';
             ?>
-            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start pt-3 flex-lg-grow-1">
+            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start pt-3 flex-<?php echo $header_breakpoint; ?>-grow-1">
                <?php
                Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', $navWrapperClass);
                ?>
@@ -313,20 +338,20 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              echo '<div class="w-100 h-100 d-flex justify-content-center">';
              ?>
              <?php if (!empty($header_mobile_menu)) { ?>
-                 <div class="d-flex d-lg-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+                 <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                          <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
                      </div>
                  </div>
                  <?php
              }
-             echo '<div class="d-flex w-100 w-auto@l justify-content-center justify-content-lg-start">';
+             echo '<div class="d-flex w-100 w-auto@'.$header_breakpoint.' justify-content-center justify-content-'.$header_breakpoint.'-start">';
              $document->include('logo');
              echo '</div>';
 
              if ($enable_offcanvas) {
                  ?>
-                 <div class="d-lg-none d-flex justify-content-end offcanvas-button offcanvasRight">
+                 <div class="d-<?php echo $header_breakpoint; ?>-none d-flex justify-content-end offcanvas-button offcanvasRight">
                      <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  </div>
                  <?php
@@ -334,7 +359,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              echo '</div>';
              echo '</div>';
 
-             echo '<div class="col d-none d-lg-flex flex-column justify-content-center">';
+             echo '<div class="col d-none d-'.$header_breakpoint.'-flex flex-column justify-content-center">';
              echo '<div class="divided-menu-block">';
              if ($block_1_type != '' || $block_1_type != '') {
                  echo '<div class="header-block-items">';
@@ -367,12 +392,12 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              // header nav starts -->
              echo '<div class="d-flex w-100 h-100">';
              if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                 <?php echo '<div class="d-none d-lg-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                 <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php }
              ?>
-             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start flex-lg-grow-1">
+             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start flex-<?php echo $header_breakpoint; ?>-grow-1">
                  <?php
                  Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', $navWrapperClass);
                  ?>
@@ -381,7 +406,7 @@ $document->addStyleDeclaration('@media (min-width: 992px) {.col-divided-logo{wid
              // header nav ends
              if ($enable_offcanvas) {
                  ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
                  <?php

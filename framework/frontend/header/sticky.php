@@ -17,6 +17,7 @@ $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
@@ -30,8 +31,8 @@ $stickyheadermobile = $params->get('stickyheadermobile', 'static');
 $class[] = 'header-' . $stickyheadermobile . '-mobile';
 $stickyheadertablet = $params->get('stickyheadertablet', 'static');
 $class[] = 'header-' . $stickyheadertablet . '-tablet';
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
-$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-3', 'd-none', 'd-lg-block'];
+$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-3', 'd-none', 'd-'.$header_breakpoint.'-block'];
 $mode = $params->get('header_horizontal_menu_mode', 'left');
 $stickey_mode = $params->get('stickey_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('stickey_block_1_type', 'left');
@@ -53,15 +54,15 @@ switch ($stickey_mode) {
 <header id="astroid-sticky-header" data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="<?php echo implode(' ', $class); ?> d-none">
    <div class="container d-flex flex-row justify-content-between">
       <?php if (!empty($header_mobile_menu)) { ?>
-         <div class="d-flex d-lg-none justify-content-start">
-            <div class="header-mobilemenu-trigger d-lg-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+         <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
+            <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
                <button class="button" type="button" aria-label="Mobile Menu Toggle"><span class="box"><span class="inner"></span></span></button>
             </div>
          </div>
       <?php } ?>
-      <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-lg-grow-1' : ''; ?>">
+      <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
           <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-              <?php echo '<div class="d-none d-lg-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+              <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
               <?php echo '</div>'; ?>
           <?php } ?>
@@ -79,7 +80,7 @@ switch ($stickey_mode) {
       <?php endif; ?>
       <?php
       if ($stickey_mode == 'center') {
-         echo '<div class="header-center-section d-none d-lg-flex justify-content-center' . ($stickey_mode == 'center' ? ' flex-lg-grow-1' : '') . '">';
+         echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
          // header nav starts
          Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
          // header nav ends
@@ -87,7 +88,7 @@ switch ($stickey_mode) {
       }
       ?>
       <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
-         <div class="header-right-section d-flex justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-lg-grow-1' : ''; ?>">
+         <div class="header-right-section d-flex justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($stickey_mode == 'right') {
                // header nav starts
@@ -96,7 +97,7 @@ switch ($stickey_mode) {
             }
             ?>
             <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-lg-block align-self-center">
+               <div class="header-right-block d-none d-<?php echo $header_breakpoint; ?>-block align-self-center">
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex">';
@@ -112,7 +113,7 @@ switch ($stickey_mode) {
                </div>
             <?php endif; ?>
              <?php if ($enable_offcanvas) { ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-lg-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>

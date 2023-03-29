@@ -33,9 +33,28 @@
 		display: none !important;
 	}
 }
-
-.w-auto\@l {
+.w-auto\@sm {
+	@include media-breakpoint-up(sm) {
+		width: auto !important;
+	}
+}
+.w-auto\@md {
+	@include media-breakpoint-up(md) {
+		width: auto !important;
+	}
+}
+.w-auto\@lg {
 	@include media-breakpoint-up(lg) {
+		width: auto !important;
+	}
+}
+.w-auto\@xl {
+	@include media-breakpoint-up(xl) {
+		width: auto !important;
+	}
+}
+.w-auto\@xxl {
+	@include media-breakpoint-up(xxl) {
 		width: auto !important;
 	}
 }
