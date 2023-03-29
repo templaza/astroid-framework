@@ -250,6 +250,18 @@ class Utility
         $link->active('.active')->addCss('color', $params->get('dropdown_menu_active_link_color', ''))->addCss('background-color', $params->get('dropdown_menu_active_bg_color', ''));
         $dropdown->render(); // render dropdown
 
+        // Sticky Menu
+        $stick_header_mobile_menu_icon_color = $params->get('stick_header_mobile_menu_icon_color', '');
+        $stick_header_mobile_menu_active_icon_color = $params->get('stick_header_mobile_menu_active_icon_color', '');
+        $sticky_menu_styles = [];
+        if (!empty($stick_header_mobile_menu_icon_color)) {
+            $sticky_menu_styles[] = '#astroid-sticky-header .header-mobilemenu-trigger.burger-menu-button .inner, #astroid-sticky-header .header-mobilemenu-trigger.burger-menu-button .inner::before, #astroid-sticky-header .header-mobilemenu-trigger.burger-menu-button .inner::after{background-color: ' . $stick_header_mobile_menu_icon_color . ';}';
+        }
+        if (!empty($stick_header_mobile_menu_active_icon_color)) {
+            $sticky_menu_styles[] = '#astroid-sticky-header .astroid-mobilemenu-open .burger-menu-button .inner, #astroid-sticky-header .astroid-mobilemenu-open .burger-menu-button .inner::before, #astroid-sticky-header .astroid-mobilemenu-open .burger-menu-button .inner::after{background-color: ' . $stick_header_mobile_menu_active_icon_color . ';}';
+        }
+        Framework::getDocument()->addStyleDeclaration(implode('', $sticky_menu_styles));
+
         // Offcanvas Menu
         $mobile_background_color = $params->get('mobile_backgroundcolor', '');
         $mobile_link_color = $params->get('mobile_menu_link_color', '');
