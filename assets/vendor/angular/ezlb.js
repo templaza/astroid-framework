@@ -561,7 +561,6 @@ astroidFramework.controller('layoutController', function ($scope, $compile) {
                var _f = $('#element-settings-form').find('[name="' + _key + '"]');
                if (_f.length) {
                   if (_f.attr('type') == 'radio') {
-                     //console.log(_value);
                      $scope.elementParams[_key] = _value;
                      _change = true;
                   }
@@ -570,7 +569,6 @@ astroidFramework.controller('layoutController', function ($scope, $compile) {
             if (_change) {
                $scope.$apply();
             }
-
 
             Admin.ringLoading($('#element-settings').children('.ezlb-pop-body'), false);
             if (typeof _focus != 'undefined') {

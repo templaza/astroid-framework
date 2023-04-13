@@ -767,7 +767,7 @@ var AstroidAdmin = function AstroidAdmin() {
          this.initSelect();
          this.initSelectGrouping();
          //this.initAnimationSelector();
-         //this.initColorPicker();
+         // this.initColorPicker();
       } catch (e) {}
    };
 
