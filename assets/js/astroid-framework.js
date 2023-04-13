@@ -483,22 +483,30 @@ astroidFramework.directive("colorPicker", function ($parse) {
          if (typeof $ == "undefined") {
             var $ = jQuery
          }
+         // console.log(ngModel);
          if ($(element).hasClass("color-picker-lg")) {
             var spectrumConfigExtend = angular.copy(spectrumConfig);
             spectrumConfigExtend.replacerClassName = "color-picker-lg";
-            $(element).spectrum(spectrumConfigExtend)
+            $(element).spectrum(spectrumConfigExtend);
          } else {
             $(element).spectrum(spectrumConfig)
          }
          $(element).on("move.spectrum", function (e, tinycolor) {
-            $(element).spectrum("set", tinycolor.toRgbString())
+            if (tinycolor !== null && tinycolor !== undefined) {
+               $(element).spectrum("set", tinycolor.toRgbString());
+            }
          });
+
          var setColor = function () {
-            $(element).spectrum("set", ngModel.$modelValue)
+            if (ngModel.$modelValue !== undefined) {
+               $(element).spectrum("set", ngModel.$modelValue);
+            } else if (ngModel.$$attr.value !== undefined) {
+               $(element).spectrum("set", ngModel.$$attr.value);
+            }
          };
          setTimeout(function () {
-            var _value = $(element).val();
-            $(element).spectrum("set", _value);
+            // var _value = $(element).val();
+            // $(element).spectrum("set", _value);
             scope.$watch(attrs["ngModel"], setColor)
          }, 200)
       }
@@ -916,6 +924,66 @@ astroidFramework.directive("astroidgradient", ["$http", function ($http) {
                _stopInput.spectrum("set", _params.stop);
                _gradientAngle.val(_params.angle);
                _gradientPosition.val(_params.position);
+               updatePreview()
+            }
+         };
+         setTimeout(function () {
+            setValue()
+         }, 100)
+      }
+   }
+}]);
+astroidFramework.directive("astroidcolor", ["$http", function ($http) {
+   return {
+      restrict: "A",
+      scope: true,
+      require: "ngModel",
+      link: function ($scope, $element, $attrs, ngModel) {
+         if (typeof $ == "undefined") {
+            var $ = jQuery
+         }
+         var _colorPicker = $($element).parent(".astroid-color"),
+             _colorLight = $(_colorPicker).find(".color-light"),
+             _colorDark = $(_colorPicker).find(".color-dark"),
+             _initValue = false;
+         var updatePreview = function () {
+            var _light = _colorLight.val();
+            var _dark = _colorDark.val();
+
+            var _params = {
+               light: "",
+               dark: "",
+            };
+            _params.light = _light;
+            _params.dark = _dark;
+            _params = JSON.stringify(_params);
+            ngModel.$setViewValue(_params);
+            $($element).val(_params);
+            $scope.$apply()
+         };
+         _colorLight.bind("change", updatePreview);
+         _colorDark.bind("change", updatePreview);
+
+         var setValue = function () {
+            if (!_initValue) {
+               _initValue = true;
+               if (typeof ngModel.$modelValue != "undefined") {
+                  try {
+                     var _params = JSON.parse(ngModel.$modelValue)
+                  } catch (e) {
+                     _params = {
+                        light: "",
+                        dark: "",
+                     }
+                  }
+               } else {
+                  var _params = {
+                     light: "",
+                     dark: "",
+                  }
+               }
+               _colorLight.spectrum("set", _params.light);
+               _colorDark.spectrum("set", _params.dark);
                updatePreview()
             }
          };

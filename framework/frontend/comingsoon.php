@@ -12,7 +12,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-
+use Astroid\Helper\Style;
 $document = Astroid\Framework::getDocument();
 $params = Astroid\Framework::getTemplate()->getParams();
 
@@ -24,46 +24,48 @@ $app = JFactory::getApplication();
 // Background Image
 
 $background_setting = $params->get('background_setting');
+$comming_soon_style         =   new Style('.comingsoon-wrap');
+$comming_soon_style_dark    =   new Style('.comingsoon-wrap', 'dark');
+
 $styles = [];
 $video = [];
 if ($background_setting) {
    if ($background_setting == "color") {
-      $background_color = $params->get('background_color', '');
-      if (!empty($background_color)) {
-         $styles[] = 'background-color:' . $background_color;
-      }
+      $background_color = Style::getColor($params->get('background_color', ''));
+      $comming_soon_style->addCss('background-color', $background_color['light']);
+      $comming_soon_style_dark->addCss('background-color', $background_color['dark']);
    }
    if ($background_setting == "image") {
 
-      $img_background_color = $params->get('img_background_color', '');
-      $img_background_color = empty($img_background_color) ? 'inherit' : $img_background_color;
-      $styles[] = 'background-color:' . $img_background_color;
+      $img_background_color = Style::getColor($params->get('img_background_color', ''));
+       $comming_soon_style->addCss('background-color', $img_background_color['light']);
+       $comming_soon_style_dark->addCss('background-color', $img_background_color['dark']);
 
       $background_image = $params->get('background_image', '');
       if (!empty($background_image)) {
-         $styles[] = 'background-image: url(' . JURI::root() . Astroid\Helper\Media::getPath() . '/' . $background_image . ')';
-         $background_repeat = $params->get('background_repeat', '');
-         $background_repeat = empty($background_repeat) ? 'inherit' : $background_repeat;
-         $styles[] = 'background-repeat:' . $background_repeat;
+          $comming_soon_style->addCss('background-image', 'url(' . JURI::root() . Astroid\Helper\Media::getPath() . '/' . $background_image . ')');
+          $background_repeat = $params->get('background_repeat', '');
+          $background_repeat = empty($background_repeat) ? 'inherit' : $background_repeat;
+          $comming_soon_style->addCss('background_repeat', $background_repeat);
 
-         $background_size = $params->get('background_size', '');
-         $background_size = empty($background_size) ? 'inherit' : $background_size;
-         $styles[] = 'background-size:' . $background_size;
+          $background_size = $params->get('background_size', '');
+          $background_size = empty($background_size) ? 'inherit' : $background_size;
+          $comming_soon_style->addCss('background-size', $background_size);
 
-         $background_attchment = $params->get('background_attchment', '');
-         $background_attchment = empty($background_attchment) ? 'inherit' : $background_attchment;
-         $styles[] = 'background-attachment:' . $background_attchment;
+          $background_attchment = $params->get('background_attchment', '');
+          $background_attchment = empty($background_attchment) ? 'inherit' : $background_attchment;
+          $comming_soon_style->addCss('background-attachment', $background_attchment);
 
-         $background_position = $params->get('background_position', '');
-         $background_position = empty($background_position) ? 'inherit' : $background_position;
-         $styles[] = 'background-position:' . $background_position;
+          $background_position = $params->get('background_position', '');
+          $background_position = empty($background_position) ? 'inherit' : $background_position;
+          $comming_soon_style->addCss('background-position', $background_position);
       }
    }
 
    if ($background_setting == "gradient") {
       $background_gradient = $params->get('background_gradient', '');
       if (!empty($background_gradient)) {
-         $styles[] = 'background-image: ' . $background_gradient->gradient_type . '-gradient(' . $background_gradient->start_color . ',' . $background_gradient->stop_color . ')';
+          $comming_soon_style->addCss('background-image', $background_gradient->gradient_type . '-gradient(' . $background_gradient->start_color . ',' . $background_gradient->stop_color);
       }
    }
 
@@ -94,10 +96,11 @@ if(isset($comingsoon_date)){
    $date = new DateTime($comingsoon_date, new DateTimeZone(JFactory::getConfig()->get('offset')));
    $comingsoon_date = $date->format('Y/m/d H:i:s');
 }
-
+$comming_soon_style->render();
+$comming_soon_style_dark->render();
 ?>
 
-<div class="comingsoon-wrap" style="<?php echo implode(';', $styles); ?>" <?php echo implode(' ', $video); ?>>
+<div class="comingsoon-wrap" <?php echo implode(' ', $video); ?>>
    <div class="container">
       <div class="text-center">
          <div id="comingsoon">
@@ -135,7 +138,9 @@ if(isset($comingsoon_date)){
             <?php } ?>
             <?php
             if ($params->get('coming_soon_social', 1)) {
-               $document->include('social', ['class' => 'd-inline-block']);
+                echo '<div class="coming_soon_social d-flex justify-content-center">';
+                $document->include('social', ['class' => 'd-inline-block']);
+                echo '</div>';
             }
             ?>
          </div>

@@ -2,11 +2,10 @@
 <form>
    <fields name="params">
       <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
-
+         <field type="astroidgroup" name="page_setting" title="TPL_ASTROID_PAGE_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
          <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#preloader"/>
          <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#favicon" />
          <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#back-to-top"/>
-         <field type="astroidgroup" name="layout_setting" title="TPL_ASTROID_LAYOUT_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
          <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
 		
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"/>
@@ -83,16 +82,22 @@
          </field>
 
          <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"/>
-		 
-         <field astroidgroup="layout_setting" description="TPL_ASTROID_ADVANCED_LAYOUT_SELECT_DESC" name="template_layout" type="astroidradio" default="wide" label="TPL_ASTROID_ADVANCED_LAYOUT_SELECT">
+
+         <field astroidgroup="page_setting" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" />
+         <field astroidgroup="page_setting" ngShow="astroid_color_mode_enable=='1'" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
+            <option value="auto">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_AUTO</option>
+            <option value="light">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHT</option>
+            <option value="dark">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_DARK</option>
+         </field>
+         <field astroidgroup="page_setting" description="TPL_ASTROID_ADVANCED_LAYOUT_SELECT_DESC" name="template_layout" type="astroidradio" default="wide" label="TPL_ASTROID_ADVANCED_LAYOUT_SELECT">
             <option value="wide">TPL_ASTROID_ADVANCED_LAYOUT_OPTION_WIDE</option>
             <option value="boxed">TPL_ASTROID_ADVANCED_LAYOUT_OPTION_BOXED</option>
          </field>
 
-         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL">
          </field>
 
-         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_repeat" type="astroidlist" class="form-control" label="ASTROID_BACKGROUND_REPEAT">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_repeat" type="astroidlist" class="form-control" label="ASTROID_BACKGROUND_REPEAT">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="no-repeat">ASTROID_BACKGROUND_NO_REPEAT</option>
             <option value="repeat">ASTROID_BACKGROUND_REPEAT_ALL</option>
@@ -100,13 +105,13 @@
             <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
          </field>
   
-         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_size" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_SIZE_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_size" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_SIZE_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
             <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
          </field>
   
-         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_position" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_POSITION_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_position" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_POSITION_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
             <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
@@ -119,13 +124,13 @@
             <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
          </field>
 
-         <field astroidgroup="layout_setting" ngShow="template_layout=='boxed'" name="layout_background_attachment" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_ATTCHMENT_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_attachment" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_ATTCHMENT_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
             <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
          </field>
 
-         <field astroidgroup="layout_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
+         <field astroidgroup="page_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
          </field>
          
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>

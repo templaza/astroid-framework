@@ -14,7 +14,9 @@ defined('_JEXEC') or die;
 extract($displayData);
 
 $document = Astroid\Framework::getDocument();
-$params = Astroid\Framework::getTemplate()->getParams();
+$template = Astroid\Framework::getTemplate();
+$params = $template->getParams();
+$color_mode = $template->getColorMode();
 
 $mode = $params->get('header_stacked_menu_mode', 'center');
 $block_1_type = $params->get('header_block_1_type', 'blank');
@@ -34,6 +36,7 @@ $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
+
 $navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
 $navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
 $navClassDivided = ['nav', 'astroid-nav'];
@@ -111,7 +114,7 @@ if ($mode == 'divided-logo-left') {
                  echo '<div class="d-flex w-100 justify-content-center">' . $logo . '</div>';
              }
 
-             if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom') {
+             if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom' || $color_mode) {
                  echo '<div class="w-100 d-flex justify-content-end align-items-center">';
                  // header block 2 starts
                  if ($block_2_type == 'position') {
@@ -125,6 +128,13 @@ if ($mode == 'divided-logo-left') {
                      echo '</div>';
                  }
                  // header block 2 ends
+
+                 //Color Mode
+                 if ($color_mode) {
+                     echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
+                     $document->include('colormode');
+                     echo '</div>';
+                 }
 
                  if ($enable_offcanvas) {
                      ?>
@@ -169,9 +179,15 @@ if ($mode == 'divided-logo-left') {
             if (!empty($logo)) {
                echo '<div class="d-flex w-100 justify-content-center">' . $logo . '</div>';
             }
+             //Color Mode
+             if ($color_mode) {
+                 echo '<div class="d-flex justify-content-end align-items-center astroid-color-mode">';
+                 $document->include('colormode');
+                 echo '</div>';
+             }
             if ($enable_offcanvas) {
             ?>
-                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                 <?php echo '</div>'; ?>
             <?php
@@ -235,9 +251,15 @@ if ($mode == 'divided-logo-left') {
                }
                Astroid\Component\Menu::getMenu($header_menu, $navClass, true, $odd_menu_items, 'stacked', $navWrapperClass);
                echo '</div>';
+               //Color Mode
+               if ($color_mode) {
+                   echo '<div class="d-flex justify-content-end align-items-center astroid-color-mode">';
+                   $document->include('colormode');
+                   echo '</div>';
+               }
                if ($enable_offcanvas) {
                ?>
-                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
                    <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                    <?php echo '</div>'; ?>
                <?php
@@ -295,6 +317,13 @@ if ($mode == 'divided-logo-left') {
                 echo '</div>';
             }
             // header block ends
+
+             //Color Mode
+            if ($color_mode) {
+                echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
+                $document->include('colormode');
+                echo '</div>';
+            }
 
             if ($enable_offcanvas) {
             ?>
@@ -361,9 +390,9 @@ if ($mode == 'divided-logo-left') {
 
              echo '<div class="col d-none d-'.$header_breakpoint.'-flex flex-column justify-content-center">';
              echo '<div class="divided-menu-block">';
-             if ($block_1_type != '' || $block_1_type != '') {
-                 echo '<div class="header-block-items">';
-                 echo '<div class="d-flex justify-content-between">';
+             if ($block_1_type != '' || $block_2_type != '' || $color_mode) {
+                 echo '<div class="header-block-items d-flex">';
+                 echo '<div class="d-flex justify-content-between w-100">';
                  // header block starts
                  if ($block_1_type == 'position') {
                      echo '<div class="d-flex header-block-item justify-content-start align-items-center">';
@@ -387,6 +416,13 @@ if ($mode == 'divided-logo-left') {
                  }
                  // header block ends
                  echo '</div>';
+
+                 //Color Mode
+                 if ($color_mode) {
+                     echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
+                     $document->include('colormode');
+                     echo '</div>';
+                 }
                  echo '</div>';
              }
              // header nav starts -->

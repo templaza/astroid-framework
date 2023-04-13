@@ -26,7 +26,7 @@ $form = Astroid\Framework::getForm();
                 if (is_string($field->value)) {
                     $value = "'" . addslashes($field->value) . "'";
                 } elseif (is_array($field->value)) {
-                    $value = \json_encode($value);
+                    $value = \json_encode($field->value);
                 } elseif (is_object($field->value)) {
                     $value = \json_encode($field->value);
                 } else {

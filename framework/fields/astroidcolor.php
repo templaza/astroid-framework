@@ -78,7 +78,7 @@ class JFormFieldAstroidColor extends JFormField {
     * @var    string
     * @since  3.5
     */
-   protected $layout = 'fields.text';
+   protected $layout = 'fields.astroidcolor';
 
    /**
     * Method to get certain otherwise inaccessible properties from the form field object.
@@ -183,47 +183,47 @@ class JFormFieldAstroidColor extends JFormField {
     *
     * @since 3.5
     */
-   protected function getLayoutData() {
-      $lang = JFactory::getLanguage();
-      $data = parent::getLayoutData();
-      $color = strtolower($this->value);
-      $color = !$color ? '' : $color;
+    protected function getLayoutData() {
+        $lang = JFactory::getLanguage();
+        $data = parent::getLayoutData();
+//        $color = is_string($this->value) ? strtolower($this->value) : $this->value;
+//        $color = !$color ? '' : $color;
 
-      // Position of the panel can be: right (default), left, top or bottom (default RTL is left)
-      $position = ' data-position="' . (($lang->isRTL() && $this->position == 'default') ? 'left' : $this->position) . '"';
+        // Position of the panel can be: right (default), left, top or bottom (default RTL is left)
+        $position = ' data-position="' . (($lang->isRTL() && $this->position == 'default') ? 'left' : $this->position) . '"';
 
-      if (!$color || in_array($color, array('none', 'transparent'))) {
-         $color = 'none';
-      } elseif ($color['0'] != '#' && $this->format == 'hex') {
-         $color = '#' . $color;
-      }
+//        if (!$color || in_array($color, array('none', 'transparent'))) {
+//            $color = 'none';
+//        } elseif ($color['0'] != '#' && $this->format == 'hex') {
+//            $color = '#' . $color;
+//        }
 
-      // Assign data for simple/advanced mode
-      $controlModeData = $this->control === 'simple' ? $this->getSimpleModeLayoutData() : $this->getAdvancedModeLayoutData($lang);
+        // Assign data for simple/advanced mode
+        $controlModeData = $this->control === 'simple' ? $this->getSimpleModeLayoutData() : $this->getAdvancedModeLayoutData($lang);
 
-      $large = empty($this->element['large']) ? 'false' : (string) $this->element['large'];
+        $large = empty($this->element['large']) ? 'false' : (string) $this->element['large'];
 
-      $large = $large === 'true' ? true : false;
+        $large = $large === 'true' ? true : false;
 
-      $extraData = array(
-          'color' => $color,
-          'format' => $this->format,
-          'keywords' => $this->keywords,
-          'position' => $position,
-          'validate' => $this->validate,
-          'ngShow' => Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']),
-          'ngHide' => Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']),
-          'colorpicker' => true,
-          'sassVariable' => $this->element['astroid-scss-variable'],
-          'ngRequired' => Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']),
-          'isLarge' => $large,
-          'fieldname' => $this->fieldname,
-      );
+        $extraData = array(
+//            'color' => $color,
+            'format' => $this->format,
+            'keywords' => $this->keywords,
+            'position' => $position,
+            'validate' => $this->validate,
+            'ngShow' => Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']),
+            'ngHide' => Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']),
+            'colorpicker' => true,
+            'sassVariable' => $this->element['astroid-scss-variable'],
+            'ngRequired' => Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']),
+            'isLarge' => $large,
+            'fieldname' => $this->fieldname,
+        );
 
-      $data['class'] = empty($data['class']) ? 'astroid-color-picker' . ($large ? ' color-picker-lg' : '') : $data['class'] . ' astroid-color-picker' . ($large ? ' color-picker-lg' : '');
+        $data['class'] = empty($data['class']) ? 'astroid-color-picker' . ($large ? ' color-picker-lg' : '') : $data['class'] . ' astroid-color-picker' . ($large ? ' color-picker-lg' : '');
 
-      return array_merge($data, $extraData, $controlModeData);
-   }
+        return array_merge($data, $extraData, $controlModeData);
+    }
 
    /**
     * Method to get the data for the simple mode to be passed to the layout for rendering.

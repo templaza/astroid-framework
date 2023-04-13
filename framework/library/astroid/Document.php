@@ -966,7 +966,29 @@ class Document
 
         $variables = $template->getThemeVariables();
         if (!empty($variables)) {
+            $plugin_params  =   Helper::getPluginParams();
+            $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
+            $color_mode_dark    =   '@include color-mode(dark) {';
+            foreach ($variables as $key => $variable) {
+                $result = json_decode($variable);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $value_light    =   $result->light;
+                    $value_dark     =   $result->dark;
+                    if (!empty($value_light)) {
+                        $variables[$key]    =  $value_light;
+                    } else {
+                        unset($variables[$key]);
+                    }
+                    if (!empty($value_dark)) {
+                        $color_mode_dark    .=  '$'.$key.':'.$value_dark.' !default;';
+                    }
+                }
+            }
+            $color_mode_dark    .=  '}';
             $scss->setVariables($variables);
+            if ($color_mode) {
+                $content    .=  $color_mode_dark;
+            }
         }
 
         $css = $scss->compile($content);

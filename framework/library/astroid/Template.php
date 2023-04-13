@@ -342,4 +342,17 @@ class Template
 
         throw new \Exception("Astroid can not found layout for `" . $type . "` element.");
     }
+
+    public function getColorMode() {
+        $pluginParams   =   Helper::getPluginParams();
+        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+        $color_mode = $this->params->get('astroid_color_mode_enable', 1);
+        $color_mode_default = $this->params->get('astroid_color_mode_default', 'auto');
+
+        $color_mode_theme = '';
+        if ($plg_color_mode && $color_mode) {
+            $color_mode_theme   =   (isset($_COOKIE['astroid-color-mode-'.md5($this->id)]) && $_COOKIE['astroid-color-mode-'.md5($this->id)] ? $_COOKIE['astroid-color-mode-'.md5($this->id)] : $color_mode_default);
+        }
+        return $color_mode_theme;
+    }
 }

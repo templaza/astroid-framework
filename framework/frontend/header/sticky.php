@@ -13,8 +13,10 @@
 defined('_JEXEC') or die;
 
 extract($displayData);
-$params = Astroid\Framework::getTemplate()->getParams();
+$template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
+$params = $template->getParams();
+$color_mode = $template->getColorMode();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
@@ -87,7 +89,7 @@ switch ($stickey_mode) {
          echo '</div>';
       }
       ?>
-      <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
+      <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas || $color_mode) : ?>
          <div class="header-right-section d-flex justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($stickey_mode == 'right') {
@@ -112,6 +114,14 @@ switch ($stickey_mode) {
                   ?>
                </div>
             <?php endif; ?>
+             <?php
+             //Color Mode
+             if ($color_mode) {
+                 echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
+                 $document->include('colormode');
+                 echo '</div>';
+             }
+             ?>
              <?php if ($enable_offcanvas) { ?>
                  <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>

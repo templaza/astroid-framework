@@ -14,6 +14,8 @@
 
 			<field astroidgroup="body" name="body_background_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_BODY_COLOR_BOX_LAYPUT_BACKGROUND_DESC">
 			</field>
+			<field astroidgroup="body" name="body_heading_color" type="astroidcolor" large="true" label="TPL_ASTROID_HEADING_COLOR_LABEL" description="TPL_ASTROID_HEADING_COLOR_DESC">
+			</field>
 			<field astroidgroup="body" name="body_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL" description="TPL_ASTROID_BODY_TEXT_COLOR_DESC">
 			</field>
 			<field astroidgroup="body" name="body_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_COLOR_DESC">
@@ -24,6 +26,12 @@
 			</field>
 			<field astroidgroup="header_colors" name="header_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL"
 			description="TPL_ASTROID_HEADER_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_heading_color" type="astroidcolor" large="true" label="TPL_ASTROID_HEADING_COLOR_LABEL" description="TPL_ASTROID_HEADING_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_HOVER_COLOR_DESC">
 			</field>
 			<field astroidgroup="header_colors" name="header_logo_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_COLOR_DESC">
 			</field>
