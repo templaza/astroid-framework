@@ -971,9 +971,16 @@ astroidFramework.directive("astroidcolor", ["$http", function ($http) {
                   try {
                      var _params = JSON.parse(ngModel.$modelValue)
                   } catch (e) {
-                     _params = {
-                        light: "",
-                        dark: "",
+                     if (ngModel.$modelValue) {
+                        _params = {
+                           light: ngModel.$modelValue,
+                           dark: ngModel.$modelValue,
+                        }
+                     } else {
+                        _params = {
+                           light: "",
+                           dark: "",
+                        }
                      }
                   }
                } else {
