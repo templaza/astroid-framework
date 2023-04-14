@@ -36,8 +36,11 @@ if ($logo_type == 'text') {
 } else {
     // Logo file
     $default_logo = $params->get('defult_logo', false);
+    $default_logo_dark = $params->get('default_logo_dark', false);
     $mobile_logo = $params->get('mobile_logo', false);
+    $mobile_logo_dark = $params->get('mobile_logo_dark', false);
     $stickey_header_logo = $params->get('stickey_header_logo', false);
+    $stickey_header_logo_dark = $params->get('stickey_header_logo_dark', false);
 }
 $class = ['astroid-logo', 'astroid-logo-' . $logo_type, 'd-flex align-items-center'];
 
@@ -80,11 +83,22 @@ if ($logo_link_type === 'custom') {
             <?php if (!empty($default_logo)) { ?>
                 <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" />
             <?php } ?>
+            <?php if (!empty($default_logo_dark)) { ?>
+                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" />
+            <?php } ?>
+
             <?php if (!empty($mobile_logo)) { ?>
                 <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" />
             <?php } ?>
+            <?php if (!empty($mobile_logo_dark)) { ?>
+                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" />
+            <?php } ?>
+
             <?php if (!empty($stickey_header_logo)) { ?>
                 <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" />
+            <?php } ?>
+            <?php if (!empty($stickey_header_logo_dark)) { ?>
+                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" />
             <?php } ?>
         <?php if ($logo_link_type != 'none') : ?>
         </a>
