@@ -483,7 +483,6 @@ astroidFramework.directive("colorPicker", function ($parse) {
          if (typeof $ == "undefined") {
             var $ = jQuery
          }
-         // console.log(ngModel);
          if ($(element).hasClass("color-picker-lg")) {
             var spectrumConfigExtend = angular.copy(spectrumConfig);
             spectrumConfigExtend.replacerClassName = "color-picker-lg";
@@ -498,10 +497,13 @@ astroidFramework.directive("colorPicker", function ($parse) {
          });
 
          var setColor = function () {
-            if (ngModel.$modelValue !== undefined) {
-               $(element).spectrum("set", ngModel.$modelValue);
-            } else if (ngModel.$$attr.value !== undefined) {
-               $(element).spectrum("set", ngModel.$$attr.value);
+            if (ngModel.$modelValue !== undefined && ngModel.$modelValue) {
+               try {
+                  var _params = JSON.parse(ngModel.$modelValue);
+                  $(element).spectrum("set", _params.light);
+               } catch (e) {
+                  $(element).spectrum("set", ngModel.$modelValue);
+               }
             }
          };
          setTimeout(function () {
