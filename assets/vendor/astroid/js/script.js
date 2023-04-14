@@ -253,21 +253,22 @@
 
    var initColorMode = function () {
       if ($('.astroid-color-mode').length) {
-         var switcher   =  $('.astroid-color-mode .switcher');
+         var switcher   =  $('.astroid-color-mode .switcher'),
+             color_mode =  'light';
          if (ASTROID_COLOR_MODE === 'auto') {
-            var cur_hour   =  new Date().getHours(),
-                color_mode =  'light';
-
+            var cur_hour   =  new Date().getHours();
             if ( (24 - cur_hour < 7) || (cur_hour < 6) ) {
                color_mode  =  'dark';
             }
-            $('html').attr('data-bs-theme', color_mode);
             if (color_mode === 'dark') {
                switcher.prop('checked', true);
             } else {
                switcher.prop('checked', false);
             }
+         } else {
+            color_mode  =  ASTROID_COLOR_MODE;
          }
+         $('html').attr('data-bs-theme', color_mode);
 
          switcher.on('change', function() {
             if(this.checked) {
