@@ -202,10 +202,10 @@ class Font
         $type = self::getFontType($value);
         switch ($type) {
             case 'google':
-                $value = self::loadGoogleFont($value);
+                $value = '"'.self::loadGoogleFont($value).'"';
                 break;
             case 'local':
-                $value = self::loadLocalFont($value);
+                $value = '"'.self::loadLocalFont($value).'"';
                 break;
             case 'system':
                 return $value;
