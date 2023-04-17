@@ -292,18 +292,24 @@ class Utility
         $main_menu_link_color           =   Style::getColor($params->get('main_menu_link_color', ''));
         $main_menu_link_hover_color     =   Style::getColor($params->get('main_menu_link_hover_color', ''));
         $main_menu_link_active_color    =   Style::getColor($params->get('main_menu_link_active_color', ''));
+        $main_menu_active_background    =   Style::getColor($params->get('main_menu_active_background', ''));
+        $main_menu_hover_background     =   Style::getColor($params->get('main_menu_hover_background', ''));
         $navLink = new Style(['.astroid-nav .nav-link', '.astroid-sidebar-menu .nav-link']);
         $navLink->addCss('color', $main_menu_link_color['light']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['light']);
+        $navLink->hover()->addCss('background-color', $main_menu_hover_background['light']);
         $navLink->focus()->addCss('color', $main_menu_link_hover_color['light']);
         $navLink->active('.active')->addCss('color', $main_menu_link_active_color['light']);
+        $navLink->active('.active')->addCss('background-color', $main_menu_active_background['light']);
         $navLink->render(); // render navlink
 
         $navLink = new Style(['.astroid-nav .nav-link', '.astroid-sidebar-menu .nav-link'], 'dark');
         $navLink->addCss('color', $main_menu_link_color['dark']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['dark']);
+        $navLink->hover()->addCss('background-color', $main_menu_hover_background['dark']);
         $navLink->focus()->addCss('color', $main_menu_link_hover_color['dark']);
         $navLink->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
+        $navLink->active('.active')->addCss('background-color', $main_menu_active_background['dark']);
         $navLink->render(); // render navlink
 
         // Dropdown Menu

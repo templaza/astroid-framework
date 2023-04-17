@@ -57,6 +57,10 @@
 			</field>
 			<field astroidgroup="main_menu" name="main_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_HOVER_COLOR_DESC">
 			</field>
+			<field astroidgroup="main_menu" name="main_menu_active_background" type="astroidcolor" large="true" label="TPL_ASTROID_BG_ACTIVE_COLOR_LABEL" description="TPL_ASTROID_BG_ACTIVE_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_hover_background" type="astroidcolor" large="true" label="TPL_ASTROID_BG_COLOR_HOVER_LABEL" description="TPL_ASTROID_BG_COLOR_HOVER_DESC">
+			</field>
 			<field astroidgroup="dropdown_menu" name="dropdown_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_BACKGROUND_COLOR_DESC">
 			</field>
 			<field astroidgroup="dropdown_menu" name="dropdown_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_LINK_COLOR_DESC">
