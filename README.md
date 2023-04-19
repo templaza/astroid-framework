@@ -1,6 +1,7 @@
 [![Github All Releases](https://img.shields.io/github/downloads/templaza/astroid-framework/total.svg)](https://github.com/templaza/astroid-framework/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/templaza/astroid-framework.svg)](https://github.com/templaza/astroid-framework/releases)
+[![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/2MwtsAX4Py)
 
 # Astroid Framework - Powerful Joomla Template Framework
 
@@ -26,6 +27,7 @@
 * Sass ready
 * Responsive & Accessible Design
 * Refactored Codebase
+* RTL Support
 
 ## Requirements
 * Joomla: 3.x, 4.x
@@ -37,9 +39,11 @@
 | &nbsp;&nbsp;Chrome 64+&nbsp;&nbsp; | &nbsp;&nbsp;Firefox 58+&nbsp;&nbsp; | &nbsp;&nbsp;Edge 14+&nbsp;&nbsp; | &nbsp;&nbsp;Safari 10+ &nbsp;&nbsp; |
 
 ## Links
-* [Documentation](https://github.com/templaza/astroid-framework/wiki)
-* [Translations](https://github.com/templaza/astroid-framework/tree/language)
-* [Changelogs](https://github.com/templaza/astroid-framework/releases)
+* [Homepage](https://astroidframe.work/) - Learn more about Astroid
+* [Documentation](https://docs.astroidframe.work/) - How to use Astroid
+* [Translations](https://github.com/templaza/astroid-framework/tree/language) - Join to translate Astroid
+* [Changelogs](https://github.com/templaza/astroid-framework/releases) - View our Changelogs
+* [Discord Chat](https://discord.gg/2MwtsAX4Py) - Join our developer chat on Discord.
 
 ## Find an Astroid Template provider
 * [TemPlaza - Joomla Template](https://www.templaza.com/joomla-templates.html)
