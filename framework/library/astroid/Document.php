@@ -968,7 +968,8 @@ class Document
         if (!empty($variables)) {
             $plugin_params  =   Helper::getPluginParams();
             $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
-            $color_mode_dark    =   '@include color-mode(dark) {';
+            $color_mode_light   =   '';
+            $color_mode_dark    =   '';
             foreach ($variables as $key => $variable) {
                 $result = json_decode($variable);
                 if (json_last_error() === JSON_ERROR_NONE) {
@@ -980,14 +981,22 @@ class Document
                         unset($variables[$key]);
                     }
                     if (!empty($value_dark)) {
-                        $color_mode_dark    .=  '$'.$key.':'.$value_dark.' !default;';
+                        $color_mode_dark    .=  '--bs-'.$key.':'.$value_dark.';';
+                    }
+                } else {
+                    if (strpos($key, '[light]')) {
+                        $color_mode_light   .=  substr($key, 0, strpos($key, '[light]')). ':' . $variable . ';';
+                    } elseif (strpos($key, '[dark]')) {
+                        $color_mode_dark    .=  substr($key, 0, strpos($key, '[dark]')). ':' . $variable . ';';
                     }
                 }
             }
-            $color_mode_dark    .=  '}';
             $scss->setVariables($variables);
-            if ($color_mode) {
-                $content    .=  $color_mode_dark;
+            if ($color_mode && $color_mode_light) {
+                $content    .=  '@include color-mode(light) {'. $color_mode_light .'}';
+            }
+            if ($color_mode && $color_mode_dark) {
+                $content    .=  '@include color-mode(dark) {'. $color_mode_dark .'}';
             }
         }
 
