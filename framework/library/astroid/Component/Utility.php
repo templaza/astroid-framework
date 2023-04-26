@@ -210,6 +210,9 @@ class Utility
         $body_link_color        =   Style::getColor($params->get('body_link_color', ''));
         $body_link_hover_color  =   Style::getColor($params->get('body_link_hover_color', ''));
         $body_heading_color     =   Style::getColor($params->get('body_heading_color', ''));
+        Style::addCssBySelector('html', 'background-color', $body_background_color['light']);
+        Style::addCssBySelector('[data-bs-theme=dark]', 'background-color', $body_background_color['dark']);
+
         $body = new Style('body');
         $body->addCss('background-color', $body_background_color['light']);
         $body->addCss('color', $body_text_color['light']);
