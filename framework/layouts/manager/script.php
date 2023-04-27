@@ -126,6 +126,13 @@ $form = Astroid\Framework::getForm();
                 }, 50)
             }
 
+            var _astroidcolor = function (key, data) {
+                var _data = JSON.parse(data);
+                $scope[key]      =   data;
+                $('#params_'+key+'_light').spectrum('set', _data.light);
+                $('#params_'+key+'_dark').spectrum('set', _data.dark);
+            }
+
             if(_idx in TPL_PRESETS){
                 _preset = TPL_PRESETS[_idx];
             }
@@ -147,6 +154,9 @@ $form = Astroid\Framework::getForm();
                                     break;
                                 case 'astroidsassoverrides':
                                     _astroidsassoverrides(_param_name, _preset[_param_name]);
+                                    break;
+                                case 'astroidcolor':
+                                    _astroidcolor(_param_name, _preset[_param_name]);
                                     break;
                                 case 'layout':
                                     _astroidlayout(_param_name, _preset[_param_name]);
