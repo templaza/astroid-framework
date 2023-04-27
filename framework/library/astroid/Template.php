@@ -351,7 +351,7 @@ class Template
 
         $color_mode_theme = '';
         if ($plg_color_mode && $color_mode) {
-            $color_mode_theme   =   (isset($_COOKIE['astroid-color-mode-'.md5($this->id)]) && $_COOKIE['astroid-color-mode-'.md5($this->id)] ? $_COOKIE['astroid-color-mode-'.md5($this->id)] : $color_mode_default);
+            $color_mode_theme   =   (isset($_COOKIE['astroid-color-mode-'.md5($this->template)]) && $_COOKIE['astroid-color-mode-'.md5($this->template)] ? $_COOKIE['astroid-color-mode-'.md5($this->template)] : $color_mode_default);
         }
         return $color_mode_theme;
     }

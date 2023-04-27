@@ -85,7 +85,7 @@ class Head
         $document->addScript('vendor/jquery/jquery.noConflict.js', 'body');
         $color_mode = $template->getColorMode();
         if ($color_mode) {
-            $document->addScriptDeclaration('var TEMPLATE_HASH = "'. md5($template->id).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
+            $document->addScriptDeclaration('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
         }
     }
 
