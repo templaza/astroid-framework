@@ -14,15 +14,15 @@ if (file_exists(__DIR__ . "/helper.php")) {
    require_once __DIR__ . "/helper.php"; // Template's Helper
 }
 
-$color_mode         =   Astroid\Framework::getTemplate()->getColorMode();
-$color_mode_theme   =   $color_mode ? ' data-bs-theme="'.$color_mode.'"' : '';
+//$color_mode         =   Astroid\Framework::getTemplate()->getColorMode();
+//$color_mode_theme   =   $color_mode ? ' data-bs-theme="'.$color_mode.'"' : '';
 
 $document = Astroid\Framework::getDocument(); // Astroid Document
 // Output as HTML5
 $this->setHtml5(true);
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"<?php echo $color_mode_theme; ?>>
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"<?php //echo $color_mode_theme; ?>>
 
 <head>
    <astroid:include type="head-meta" /> <!-- document meta -->
