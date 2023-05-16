@@ -28,6 +28,7 @@
 * Responsive & Accessible Design
 * Refactored Codebase
 * RTL Support
+* Light & Dark Color Mode
 
 ## Requirements
 * Joomla: 3.x, 4.x
