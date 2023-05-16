@@ -14,8 +14,11 @@ defined('_JEXEC') or die;
 
 extract($displayData);
 
+$template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
-$params = Astroid\Framework::getTemplate()->getParams();
+$params = $template->getParams();
+$color_mode = $template->getColorMode();
+
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
 
@@ -94,6 +97,14 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                 ?>
             </div>
         <?php endif; ?>
+        <?php
+        //Color Mode
+        if ($color_mode) {
+            echo '<div class="d-flex align-items-center astroid-color-mode">';
+            $document->include('colormode');
+            echo '</div>';
+        }
+        ?>
     </div>
 </div>
 <!-- header ends -->

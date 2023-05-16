@@ -65,6 +65,7 @@ class Head
     {
         $document = Framework::getDocument();
         $app = \JFactory::getApplication();
+        $template = Framework::getTemplate();
         $layout = $app->input->get('layout', '', 'STRING');
         $getPluginParams = Helper::getPluginParams();
         $load_jquery    =   $getPluginParams->get('astroid_load_jquery', 'astroid');
@@ -82,6 +83,10 @@ class Head
             }
         }
         $document->addScript('vendor/jquery/jquery.noConflict.js', 'body');
+        $color_mode = $template->getColorMode();
+        if ($color_mode) {
+            $document->addScriptDeclaration('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
+        }
     }
 
     public static function styles()
@@ -90,7 +95,6 @@ class Head
         if (ASTROID_JOOMLA_VERSION != 4) {
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
-            $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
             if ($document->isFrontendEditing()) {
                 $document->addStyleSheet('media/templates/site/cassiopeia/css/template.css');
                 $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');

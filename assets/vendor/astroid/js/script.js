@@ -241,6 +241,57 @@
       $("#astroid-preloader").removeClass('d-flex').addClass('d-none');
    };
 
+   var setCookie = function (name, value, days) {
+      if (days) {
+         var date = new Date();
+         date.setTime(date.getTime()+(days*24*60*60*1000));
+         var expires = "; expires="+date.toGMTString();
+      }
+      else var expires = "";
+      document.cookie = name+"="+value+expires+"; path=/";
+   }
+
+   var initColorMode = function () {
+      if ($('.astroid-color-mode').length) {
+         var switcher   =  $('.astroid-color-mode .switcher'),
+             color_mode =  'light';
+         if (ASTROID_COLOR_MODE === 'auto') {
+            var cur_hour   =  new Date().getHours();
+            if ( (24 - cur_hour < 7) || (cur_hour < 6) ) {
+               color_mode  =  'dark';
+            }
+            if (color_mode === 'dark') {
+               switcher.prop('checked', true);
+            } else {
+               switcher.prop('checked', false);
+            }
+         } else {
+            color_mode  =  ASTROID_COLOR_MODE;
+         }
+         $('html').attr('data-bs-theme', color_mode);
+
+         switcher.on('change', function() {
+            if(this.checked) {
+               switcher.each(function (i, el){
+                  if (!this.checked){
+                     $(el).prop('checked', true);
+                  }
+               });
+               $('html').attr('data-bs-theme', 'dark');
+               setCookie('astroid-color-mode-'+TEMPLATE_HASH, 'dark', 3);
+            } else {
+               switcher.each(function (i, el){
+                  if (this.checked){
+                     $(el).prop('checked', false);
+                  }
+               });
+               $('html').attr('data-bs-theme', 'light');
+               setCookie('astroid-color-mode-'+TEMPLATE_HASH, 'light', 3);
+            }
+         });
+      }
+   }
+
    // Events
    var docReady = function () {
       initDisplay();
@@ -249,6 +300,7 @@
       initSidebarMenu();
       //initMegamenu();
       //initSubmenu();
+      initColorMode();
       initBackToTop();
       initHeader();
       initEmptyHeaderContent();

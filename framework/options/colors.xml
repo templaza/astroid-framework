@@ -2,17 +2,19 @@
 <form>
 	<fields name="params">
 		<fieldset icon="fas fa-paint-brush" label="ASTROID_OPTIONS_COLOURS" name="astroid_colours" addfieldpath="/libraries/astroid/framework/fields" order="3">
-			<field type="astroidgroup" name="body" title="TPL_ASTROID_COLOURS_BODY_TITLE_LABEL" description="TPL_ASTROID_COLOURS_BODY_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-body-colors" preset="body_background_color,body_text_color,body_link_color,body_link_hover_color" />
-			<field type="astroidgroup" name="header_colors" title="TPL_ASTROID_COLOURS_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-header-colors" preset="header_bg,header_text_color,header_logo_text_color,header_logo_text_tagline_color" />
-			<field type="astroidgroup" name="sticky_header" title="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-sticky-header-colors" preset="stick_header_bg_color,stick_header_menu_link_color,stick_header_menu_link_active_color,stick_header_menu_link_hover_color" />
-			<field type="astroidgroup" name="main_menu" title="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-main-menu-colors" preset="main_menu_link_color,main_menu_link_active_color,stick_header_menu_link_hover_color" />
-			<field type="astroidgroup" name="dropdown_menu" title="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-dropdown-menu-colors"  preset="dropdown_bg_color,dropdown_link_color,dropdown_menu_active_link_color,dropdown_menu_active_bg_color,dropdown_menu_link_hover_color,dropdown_menu_hover_bg_color"/>
+			<field type="astroidgroup" name="body" title="TPL_ASTROID_COLOURS_BODY_TITLE_LABEL" description="TPL_ASTROID_COLOURS_BODY_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-body-colors" preset="body_background_color:astroidcolor,body_heading_color:astroidcolor,body_text_color:astroidcolor,body_link_color:astroidcolor,body_link_hover_color:astroidcolor" />
+			<field type="astroidgroup" name="header_colors" title="TPL_ASTROID_COLOURS_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-header-colors" preset="header_bg:astroidcolor,header_text_color:astroidcolor,header_logo_text_color:astroidcolor,header_logo_text_tagline_color:astroidcolor" />
+			<field type="astroidgroup" name="sticky_header" title="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-sticky-header-colors" preset="stick_header_bg_color:astroidcolor,stick_header_menu_link_color:astroidcolor,stick_header_menu_link_active_color:astroidcolor,stick_header_menu_link_hover_color:astroidcolor" />
+			<field type="astroidgroup" name="main_menu" title="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-main-menu-colors" preset="main_menu_link_color:astroidcolor,main_menu_link_active_color:astroidcolor,stick_header_menu_link_hover_color:astroidcolor" />
+			<field type="astroidgroup" name="dropdown_menu" title="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MAIN_DROPDWON_MENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-dropdown-menu-colors"  preset="dropdown_bg_color:astroidcolor,dropdown_link_color:astroidcolor,dropdown_menu_active_link_color:astroidcolor,dropdown_menu_active_bg_color:astroidcolor,dropdown_menu_link_hover_color:astroidcolor,dropdown_menu_hover_bg_color:astroidcolor"/>
 			
-			<field type="astroidgroup" name="off_canvas" title="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_LABEL" description="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" preset="mobile_backgroundcolor,mobile_menu_text_color,mobile_menu_link_color,mobile_menu_active_link_color,mobile_menu_active_bg_color,mobile_menu_icon_color,mobile_menu_active_icon_color" />
+			<field type="astroidgroup" name="off_canvas" title="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_LABEL" description="TPL_ASTROID_COLOURS_OFF_CANVAS_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" preset="mobile_backgroundcolor:astroidcolor,mobile_menu_text_color:astroidcolor,mobile_menu_link_color:astroidcolor,mobile_menu_active_link_color:astroidcolor,mobile_menu_active_bg_color:astroidcolor,mobile_menu_icon_color:astroidcolor,mobile_menu_active_icon_color:astroidcolor" />
 
-			<field type="astroidgroup" name="mobilemenu" title="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" preset="mobilemenu_backgroundcolor,mobilemenu_menu_text_color,mobilemenu_menu_link_color,mobilemenu_menu_active_link_color,mobilemenu_menu_active_bg_color,mobilemenu_menu_icon_color,mobilemenu_menu_active_icon_color" />
+			<field type="astroidgroup" name="mobilemenu" title="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_LABEL" description="TPL_ASTROID_COLOURS_MOBILEMENU_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-off-canvas-colors" preset="mobilemenu_backgroundcolor:astroidcolor,mobilemenu_menu_text_color:astroidcolor,mobilemenu_menu_link_color:astroidcolor,mobilemenu_menu_active_link_color:astroidcolor,mobilemenu_menu_active_bg_color:astroidcolor,mobilemenu_menu_icon_color:astroidcolor,mobilemenu_menu_active_icon_color:astroidcolor" />
 
 			<field astroidgroup="body" name="body_background_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_BODY_COLOR_BOX_LAYPUT_BACKGROUND_DESC">
+			</field>
+			<field astroidgroup="body" name="body_heading_color" type="astroidcolor" large="true" label="TPL_ASTROID_HEADING_COLOR_LABEL" description="TPL_ASTROID_HEADING_COLOR_DESC">
 			</field>
 			<field astroidgroup="body" name="body_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL" description="TPL_ASTROID_BODY_TEXT_COLOR_DESC">
 			</field>
@@ -24,6 +26,12 @@
 			</field>
 			<field astroidgroup="header_colors" name="header_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_TEXT_COLOR_LABEL"
 			description="TPL_ASTROID_HEADER_TEXT_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_heading_color" type="astroidcolor" large="true" label="TPL_ASTROID_HEADING_COLOR_LABEL" description="TPL_ASTROID_HEADING_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_COLOR_DESC">
+			</field>
+			<field astroidgroup="header_colors" name="header_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_HOVER_COLOR_DESC">
 			</field>
 			<field astroidgroup="header_colors" name="header_logo_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_COLOR_DESC">
 			</field>
@@ -38,11 +46,20 @@
 			</field>
 			<field astroidgroup="sticky_header" name="stick_header_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_HOVER_COLOR_DESC">
 			</field>
+			<field astroidgroup="sticky_header" name="stick_header_mobile_menu_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_HAMBURGER_ICON_COLOR">
+			</field>
+			<field astroidgroup="sticky_header" name="stick_header_mobile_menu_active_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_HAMBURGER_ICON_COLOR">
+			</field>
+
 			<field astroidgroup="main_menu" name="main_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_COLOR_DESC">
 			</field>
 			<field astroidgroup="main_menu" name="main_menu_link_active_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_ACTIVE_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_ACTIVE_COLOR_DESC">
 			</field>
 			<field astroidgroup="main_menu" name="main_menu_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_HOVER_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_active_background" type="astroidcolor" large="true" label="TPL_ASTROID_BG_ACTIVE_COLOR_LABEL" description="TPL_ASTROID_BG_ACTIVE_COLOR_DESC">
+			</field>
+			<field astroidgroup="main_menu" name="main_menu_hover_background" type="astroidcolor" large="true" label="TPL_ASTROID_BG_COLOR_HOVER_LABEL" description="TPL_ASTROID_BG_COLOR_HOVER_DESC">
 			</field>
 			<field astroidgroup="dropdown_menu" name="dropdown_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_DROPDOWN_BACKGROUND_COLOR_DESC">
 			</field>

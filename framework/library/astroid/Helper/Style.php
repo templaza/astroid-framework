@@ -18,9 +18,16 @@ class Style
 {
     public $_selector, $_css = ['desktop' => [], 'tablet' => [], 'mobile' => []], $_styles = ['desktop' => [], 'tablet' => [], 'mobile' => []], $_child = [];
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
-    public function __construct($selector)
+    public function __construct($selectors, $mode = '')
     {
-        $this->_selector = $selector;
+        if (is_array($selectors)) {
+            for ($key = 0; $key < count($selectors); $key ++) {
+                $selectors[$key]    =   $mode ? '[data-bs-theme='.$mode.'] '. $selectors[$key] : $selectors[$key];
+            }
+            $this->_selector    =   implode(', ', $selectors);
+        } else {
+            $this->_selector    =   $mode ? '[data-bs-theme='.$mode.'] '. $selectors : $selectors;
+        }
     }
 
     protected function _selectorize($postfix = null, $prefix = null)
@@ -296,6 +303,16 @@ class Style
             $return[] = $alt_font;
         }
         return implode(', ', $return);
+    }
+
+    public static function getColor($color)
+    {
+        $result = json_decode($color);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return ['light'=>$result->light, 'dark'=>$result->dark];
+        } else {
+            return ['light'=>$color, 'dark'=>$color];
+        }
     }
 
     public static function getGradientValue($value)

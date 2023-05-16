@@ -202,10 +202,10 @@ class Font
         $type = self::getFontType($value);
         switch ($type) {
             case 'google':
-                $value = self::loadGoogleFont($value);
+                $value = '"'.self::loadGoogleFont($value).'"';
                 break;
             case 'local':
-                $value = self::loadLocalFont($value);
+                $value = '"'.self::loadLocalFont($value).'"';
                 break;
             case 'system':
                 return $value;
@@ -281,13 +281,15 @@ class Font
     {
         $params = Helper::getPluginParams();
         $source = $params->get('astroid_load_fontawesome', "cdn");
-
+        $document   =   Framework::getDocument();
         switch ($source) {
             case 'cdn':
-                Framework::getDocument()->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             case 'local':
-                Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             default:
                 if (Framework::isAdmin()) {

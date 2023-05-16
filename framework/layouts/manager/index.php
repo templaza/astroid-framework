@@ -17,6 +17,7 @@ $preset_arr =   array();
 for ($pidx = 0; $pidx < count($presets); $pidx++) {
     $preset_arr[]   =   $presets[$pidx]['preset'];
 }
+$color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,6 +42,7 @@ for ($pidx = 0; $pidx < count($presets); $pidx++) {
         var TPL_TEMPLATE_NAME = '<?php echo $template->template; ?>';
         var SYSTEM_FONTS = <?php echo json_encode(array_keys(Astroid\Helper\Font::$system_fonts)); ?>;
         var LIBRARY_FONTS = <?php echo json_encode(array_keys(Astroid\Helper\Font::getUploadedFonts($template->template))); ?>;
+        var ASTROID_COLOR_MODE = <?php echo $color_mode; ?>;
         var TEMPLATE_PRESETS = <?php echo \json_encode($template->getPresets()); ?>;
         <?php
         echo 'var TPL_PRESETS = ['. implode(',', $preset_arr).'];';

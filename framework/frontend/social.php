@@ -12,6 +12,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
+use Astroid\Helper\Style;
 $document   = Astroid\Framework::getDocument();
 $params     = Astroid\Framework::getTemplate()->getParams();
 
@@ -20,8 +21,8 @@ $social_profiles            = $params->get('social_profiles', []);
 $style                      = $params->get('social_profiles_style', 1);
 $gutter                     = $params->get('social_profiles_gutter', '');
 $fontsize                   = $params->get('social_profiles_fontsize', '16px');
-$social_icon_color          = $params->get('social_icon_color', '');
-$social_icon_color_hover    = $params->get('social_icon_color_hover', '');
+$social_icon_color          = Style::getColor($params->get('social_icon_color', ''));
+$social_icon_color_hover    = Style::getColor($params->get('social_icon_color_hover', ''));
 
 if (!$enable_social_profiler) return false;
 
@@ -30,16 +31,21 @@ if (!empty($social_profiles)) {
 }
 $class              = $gutter ? 'gx-'.$gutter : '';
 $styles             = '';
+$social_style       =   new Style('.astroid-social-icons');
+$social_style_dark  =   new Style('.astroid-social-icons', 'dark');
 if (!empty($fontsize)) {
-    $styles         .=  '.astroid-social-icons {font-size:'.$fontsize.'}';
+    $social_style->addCss('font-size', $fontsize);
 }
 if (!empty($social_icon_color) && $style == 1) {
-    $styles         .= '.astroid-social-icons a{ color: ' . $social_icon_color . ' !important;}';
+    $social_style->link()->addCss('color', $social_icon_color['light']. '!important');
+    $social_style_dark->link()->addCss('color', $social_icon_color['dark']. '!important');
 }
 if (!empty($social_icon_color_hover) && $style == 1) {
-    $styles         .= '.astroid-social-icons a:hover{ color: ' . $social_icon_color_hover . ' !important;}';
+    $social_style->link()->hover()->addCss('color', $social_icon_color_hover['light'] . '!important');
+    $social_style_dark->link()->hover()->addCss('color', $social_icon_color_hover['dark'] . '!important');
 }
-$document->addStyledeclaration($styles);
+$social_style->render();
+$social_style_dark->render();
 ?>
 
 <div class="astroid-social-icons row<?php echo !empty($class) ? ' ' . $class : ''; ?>">

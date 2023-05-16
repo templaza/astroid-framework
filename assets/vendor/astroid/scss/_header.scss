@@ -85,6 +85,9 @@
          .astroid-logo-sticky:not([hidden]) {
             @include media-breakpoint-up(md) {
                display: block !important;
+               &.dark {
+                  display: none !important;
+               }
             }
          }
       }
@@ -115,7 +118,10 @@ header .logo-wrapper {
 .astroid-logo {
    @include media-breakpoint-down(md) {
       .astroid-logo-default {
-         display: none;
+         display: none !important;
+         &.dark {
+            display: none !important;
+         }
       }
    }
 
@@ -135,6 +141,43 @@ header .logo-wrapper {
 
    .astroid-logo-sticky {
       display: none;
+   }
+}
+
+.astroid-logo-default {
+   &.dark {
+      display: none;
+   }
+}
+
+@include color-mode(dark) {
+   .astroid-header-section {
+      .astroid-header-sticky {
+         .astroid-logo {
+            .astroid-logo-sticky:not([hidden]) {
+               @include media-breakpoint-up(md) {
+                  display: none !important;
+                  &.dark {
+                     display: block !important;
+                  }
+               }
+            }
+         }
+      }
+   }
+   .astroid-logo-mobile {
+      @include media-breakpoint-down(md) {
+         display: none !important;
+         &.dark {
+            display: block !important;
+         }
+      }
+   }
+   .astroid-logo-default {
+      display: none;
+      &.dark {
+         display: block;
+      }
    }
 }
 

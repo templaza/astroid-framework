@@ -37,7 +37,11 @@ class AstroidFrameworkArticle
       $attribs = new JRegistry();
       $attribs->loadString($this->article->attribs, 'JSON');
       $this->attribs = $attribs;
+      if (empty($this->article->params)) {
+          $this->article->params = new JRegistry();
+      }
       $this->article->params->merge($attribs);
+
       $this->getCategoryParams();
 
       $this->type = $this->article->params->get('astroid_article_type', 'regular');

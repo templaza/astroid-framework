@@ -30,6 +30,12 @@
                // Add Button For Toggle Sub Menu
                if ($(this).children('a').length) {
                   $(this).children('a').after(_indicator);
+                  if ($(this).children('a').hasClass('item-link-heading')) {
+                     $(this).children('a').bind('click', function (event) {
+                        event.preventDefault();
+                        _indicator.next('.dropdown-menus').toggleClass('menu_open');
+                     });
+                  }
                }else{
                   $(this).children('span').after(_indicator);
                }

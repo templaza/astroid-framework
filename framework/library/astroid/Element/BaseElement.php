@@ -25,7 +25,7 @@ defined('_JEXEC') or die;
 class BaseElement
 {
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
-    public $id, $params, $type, $style, $content = '';
+    public $id, $params, $type, $style, $style_dark, $content = '';
     public function __construct($data)
     {
         $this->_data = $data;
@@ -41,7 +41,8 @@ class BaseElement
         }
         $this->addClass('astroid-' . Helper::slugify($this->type));
         $this->_id();
-        $this->style = new Style('#' . $this->getAttribute('id'));
+        $this->style        =   new Style('#' . $this->getAttribute('id'));
+        $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
     }
 
     protected function wrap()
@@ -122,6 +123,7 @@ class BaseElement
         $this->_typography();
         $this->_animation();
         $this->style->render();
+        $this->style_dark->render();
     }
 
     protected function _background()
@@ -132,10 +134,14 @@ class BaseElement
         }
         switch ($background) {
             case 'color': // if color background
-                $this->style->addCss('background-color', $this->params->get('background_color', ''));
+                $background_color   =   Style::getColor($this->params->get('background_color', ''));
+                $this->style->addCss('background-color', $background_color['light']);
+                $this->style_dark->addCss('background-color', $background_color['dark']);
                 break;
             case 'image': // if image background
-                $this->style->addCss('background-color', $this->params->get('img_background_color', ''));
+                $background_color   =   Style::getColor($this->params->get('img_background_color', ''));
+                $this->style->addCss('background-color', $background_color['light']);
+                $this->style_dark->addCss('background-color', $background_color['dark']);
                 $image = $this->params->get('background_image', '');
                 if (!empty($image)) {
                     $this->style->addCss('background-image', 'url(' . \JURI::root() . Media::getPath() . '/' . $image . ')');
