@@ -1,6 +1,11 @@
 .pagination {
 	flex-wrap: wrap;
 }
+@include color-mode(dark) {
+	.pagination {
+		--#{$prefix}pagination-active-border-color: #fff;
+	}
+}
 ul.pagination{
 	justify-content: center;
 	.page-item:first-child .page-link,
