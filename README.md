@@ -49,3 +49,6 @@
 ## Find an Astroid Template provider
 * [TemPlaza - Joomla Template](https://www.templaza.com/joomla-templates.html)
 * [JoomlaPlate - Joomla Template](https://www.joomlaplates.com/)
+
+## You love this project
+* [Buy me a coffee](https://www.buymeacoffee.com/isonny)

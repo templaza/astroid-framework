@@ -991,7 +991,7 @@ class Document
                     }
                 }
             }
-            $scss->setVariables($variables);
+            $scss->addVariables($variables);
             if ($color_mode && $color_mode_light) {
                 $content    .=  '@include color-mode(light) {'. $color_mode_light .'}';
             }
@@ -1000,9 +1000,9 @@ class Document
             }
         }
 
-        $css = $scss->compile($content);
+        $css = $scss->compileString($content);
         Framework::getDebugger()->log('Rendering Scss');
-        Helper::putContents($path, $css);
+        Helper::putContents($path, $css->getCss());
     }
 
     public function renderCss()
