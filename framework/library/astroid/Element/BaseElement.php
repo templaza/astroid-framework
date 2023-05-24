@@ -154,10 +154,14 @@ class BaseElement
                         $this->addClass('position-relative astroid-element-overlay');
                         switch ($overlay_type) {
                             case 'color':
-                                $background_image_overlay_color     =   $this->params->get('background_image_overlay_color', '');
+                                $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
                                 if (!empty($background_image_overlay_color)) {
                                     $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
-                                    $overlay_style->addCss('background-color', $background_image_overlay_color);
+                                    $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                                    $overlay_style->render();
+
+                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before', 'dark');
+                                    $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
                                     $overlay_style->render();
                                 }
                                 break;
