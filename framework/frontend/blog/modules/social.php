@@ -17,17 +17,6 @@ $type = $params->get('article_socialshare_type', 'none');
 if ($type == 'none') {
    return;
 }
-// Addthis Social Share Star
-if ($type == 'addthis') {
-	$article_socialshare_addthis = $params->get('article_socialshare_addthis', ''); ?>
-		<?php if(!empty($article_socialshare_addthis)){ ?>
-			<div class="astroid-socialshare uk-flex uk-flex-middle uk-flex-between">
-                <div class="ui-social-share-text"><span data-uk-icon="icon: social; ratio: 1.5;"></span></div>
-				<?php echo $article_socialshare_addthis; ?>
-			</div>
-		<?php } ?>
-	<?php
-}
 
 // Sharethis Social Share Start 
 if ($type == 'sharethis') {

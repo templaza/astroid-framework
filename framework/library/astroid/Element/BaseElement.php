@@ -154,10 +154,14 @@ class BaseElement
                         $this->addClass('position-relative astroid-element-overlay');
                         switch ($overlay_type) {
                             case 'color':
-                                $background_image_overlay_color     =   $this->params->get('background_image_overlay_color', '');
+                                $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
                                 if (!empty($background_image_overlay_color)) {
                                     $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
-                                    $overlay_style->addCss('background-color', $background_image_overlay_color);
+                                    $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                                    $overlay_style->render();
+
+                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before', 'dark');
+                                    $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
                                     $overlay_style->render();
                                 }
                                 break;
@@ -171,11 +175,14 @@ class BaseElement
                                 break;
                             case 'pattern':
                                 $background_image_overlay_pattern   =   $this->params->get('background_image_overlay_pattern', '');
-                                $background_image_overlay_color     =   $this->params->get('background_image_overlay_color', '');
+                                $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
                                 if (!empty($background_image_overlay_pattern)) {
                                     $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
                                     if ($background_image_overlay_color) {
-                                        $overlay_style->addCss('background-color', $background_image_overlay_color);
+                                        $overlay_style_dark   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before', 'dark');
+                                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                                        $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
+                                        $overlay_style_dark->render();
                                     }
                                     $overlay_style->addCss('background-image', 'url(' . \JURI::root() . Media::getPath() . '/' . $background_image_overlay_pattern . ')');
                                     $overlay_style->render();
@@ -226,12 +233,21 @@ class BaseElement
         if (!$this->params->get('custom_colors', 0)) {
             return;
         }
-        $this->style->addCss('color', $this->params->get('text_color', ''));
+        $text_color =   Style::getColor($this->params->get('text_color', ''));
+        $this->style->addCss('color', $text_color['light']);
+        $this->style_dark->addCss('color', $text_color['dark']);
 
+        $link_color         =   Style::getColor($this->params->get('link_color', ''));
+        $link_hover_color   =   Style::getColor($this->params->get('link_hover_color', ''));
         $link = $this->style->addChild('a');
         $linkHover = $this->style->addChild('a:hover');
-        $link->addCss('color', $this->params->get('link_color', ''));
-        $linkHover->addCss('color', $this->params->get('link_hover_color', ''));
+        $link->addCss('color', $link_color['light']);
+        $linkHover->addCss('color', $link_hover_color['light']);
+
+        $link_dark      = $this->style_dark->addChild('a');
+        $linkHover_dark = $this->style_dark->addChild('a:hover');
+        $link_dark->addCss('color', $link_color['dark']);
+        $linkHover_dark->addCss('color', $link_hover_color['dark']);
     }
 
     protected function _animation()

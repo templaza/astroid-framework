@@ -25,6 +25,9 @@ $block_1_custom = $params->get('header_block_1_custom', '');
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
 $block_2_custom = $params->get('header_block_2_custom', '');
+$block_3_type = $params->get('header_block_3_type', 'blank');
+$block_3_position = $params->get('header_block_3_position', '');
+$block_3_custom = $params->get('header_block_3_custom', '');
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $header_menu = $params->get('header_menu', '');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
@@ -390,7 +393,7 @@ if ($mode == 'divided-logo-left') {
 
              echo '<div class="col d-none d-'.$header_breakpoint.'-flex flex-column justify-content-center">';
              echo '<div class="divided-menu-block">';
-             if ($block_1_type != '' || $block_2_type != '' || $color_mode) {
+             if ($block_1_type != '' || $block_2_type != '') {
                  echo '<div class="header-block-items d-flex">';
                  echo '<div class="d-flex justify-content-between w-100">';
                  // header block starts
@@ -416,13 +419,6 @@ if ($mode == 'divided-logo-left') {
                  }
                  // header block ends
                  echo '</div>';
-
-                 //Color Mode
-                 if ($color_mode) {
-                     echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
-                     $document->include('colormode');
-                     echo '</div>';
-                 }
                  echo '</div>';
              }
              // header nav starts -->
@@ -439,6 +435,23 @@ if ($mode == 'divided-logo-left') {
                  ?>
              </div>
              <?php
+             if ($block_3_type != '') {
+                 if ($block_3_type == 'position') {
+                     echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
+                     echo $document->position($block_3_position, 'xhtml');
+                     echo '</div>';
+                 }
+                 if ($block_3_type == 'custom') {
+                     echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
+                     echo $block_3_custom;
+                     echo '</div>';
+                 }
+             }
+             if ($color_mode) {
+                 echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
+                 $document->include('colormode');
+                 echo '</div>';
+             }
              // header nav ends
              if ($enable_offcanvas) {
                  ?>
