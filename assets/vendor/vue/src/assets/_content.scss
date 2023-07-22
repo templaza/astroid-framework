@@ -1,0 +1,39 @@
+@media (min-width: 992px) {
+  .bd-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    display: block !important;
+    height: calc(100vh - 6rem);
+    padding-left: .25rem;
+    margin-left: -.25rem;
+    overflow-y: auto
+  }
+}
+
+@media (max-width: 991.98px) {
+  .bd-sidebar .offcanvas-lg {
+    border-right-color: var(--bs-border-color);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
+  }
+}
+
+@media (min-width: 992px) {
+  .bd-layout {
+    display: grid;
+    grid-template-areas:"sidebar main";
+    grid-template-columns:1fr 5fr;
+    gap: 1.5rem
+  }
+}
+
+.bd-sidebar {
+  grid-area: sidebar
+}
+
+@media (max-width: 991.98px) {
+  .bd-main {
+    max-width: 760px;
+    margin-inline: auto
+  }
+}

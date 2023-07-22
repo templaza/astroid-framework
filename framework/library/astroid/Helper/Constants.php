@@ -17,7 +17,7 @@ class Constants
     public static $fontawesome_version = '6.3.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
-    public static $documentation_link = 'https://docs.jollyany.co/';
+    public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
@@ -44,6 +44,16 @@ class Constants
         'gray600' => 'TPL_COLOR_GREY',
         'gray800' => 'TPL_COLOR_GREY_DARK',
         'custom' => 'TPL_COLOR_CUSTOM'
+    ];
+
+    public static $translationStrings = [
+        'ASTROID_SAVE',
+        'ASTROID_TEMPLATE_SAVING',
+        'ASTROID_TEMPLATE_CLEAR_CACHE',
+        'ASTROID_TEMPLATE_CLEARING_CACHE',
+        'ASTROID_TEMPLATE_PREVIEW',
+        'TPL_ASTROID_BACK_TO_JOOMLA',
+        'ASTROID_TEMPLATE_CLOSE',
     ];
 
     public static $animations = [

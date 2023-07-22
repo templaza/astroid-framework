@@ -8,7 +8,8 @@
  */
 
 namespace Astroid;
-
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Astroid\Component\Includer;
 
 defined('_JEXEC') or die;
@@ -120,15 +121,51 @@ class Admin extends Helper\Client
         Helper::loadLanguage(ASTROID_TEMPLATE_NAME);
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
-
+//        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
+        $document->addScript('vendor/vue/dist/index.js', 'body', [], [], 'module');
         // scripts
-//        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/jquery/jquery.cookie.js', 'vendor/bootstrap/js/popper.min.js', 'vendor/bootstrap/js/bootstrap.min.old.js', 'vendor/lodash/lodash.min.js', 'vendor/spectrum/spectrum.js', 'vendor/ace/1.3.3/ace.js', 'vendor/dropzone/dropzone.min.js', 'vendor/moment/moment.min.js', 'vendor/moment/moment-timezone.min.js', 'vendor/moment/moment-timezone-with-data-2012-2022.min.js', 'vendor/bootstrap/js/bootstrap-datetimepicker.min.js', 'vendor/bootstrap-slider/js/bootstrap-slider.min.js', 'vendor/angular/angular.min.js', 'vendor/angular/angular-animate.min.js', 'vendor/angular/sortable.min.js', 'vendor/angular/angular-legacy-sortable.js', 'js/parsley.min.js', 'js/notify.min.js', 'js/jquery.hotkeys.js', 'js/jquery.nicescroll.min.js', 'vendor/semantic-ui/components/transition.min.js', 'vendor/semantic-ui/components/api.min.js', 'vendor/semantic-ui/components/dropdown.min.js', 'js/astroid.min.js'];
-        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/jquery/jquery.cookie.js', 'vendor/bootstrap/js/popper.min.js', 'vendor/bootstrap/js/bootstrap.min.old.js', 'vendor/lodash/lodash.min.js', 'vendor/spectrum/spectrum.js', 'vendor/ace/1.3.3/ace.js', 'vendor/dropzone/dropzone.min.js', 'vendor/moment/moment.min.js', 'vendor/moment/moment-timezone.min.js', 'vendor/moment/moment-timezone-with-data-2012-2022.min.js', 'vendor/bootstrap/js/bootstrap-datetimepicker.min.js', 'vendor/bootstrap-slider/js/bootstrap-slider.min.js', 'vendor/angular/angular.min.js', 'vendor/angular/angular-animate.min.js', 'vendor/angular/sortable.min.js', 'vendor/angular/angular-legacy-sortable.js', 'js/parsley.min.js', 'js/notify.min.js', 'js/jquery.hotkeys.js', 'js/jquery.nicescroll.min.js', 'vendor/semantic-ui/components/transition.min.js', 'vendor/semantic-ui/components/api.min.js', 'vendor/semantic-ui/components/dropdown.min.js', 'js/astroid-framework.js', 'vendor/angular/ezlb.js', 'js/astroid.js'];
+        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/spectrum/spectrum.js'];
         $document->addScript($scripts, 'body');
-        $document->addScriptDeclaration('moment.tz.setDefault(\'' . \JFactory::getConfig()->get('offset') . '\');', 'body');
+        $doc = Factory::getDocument();
+        $config = [
+            'site_url'              =>  \JURI::root(),
+            'astroid_media_url'     => ASTROID_MEDIA_URL,
+            'template_name'         => $template->template.'-'.$template->id,
+            'tpl_template_name'     => $template->template,
+            'astroid_version'       => Helper\Constants::$astroid_version,
+            'astroid_link'          => Helper\Constants::$astroid_link,
+            'document_link'         => Helper\Constants::$documentation_link,
+            'video_tutorial'        => Helper\Constants::$video_tutorial_link,
+            'github_link'           => Helper\Constants::$github_link,
+        ];
+        $doc->addScriptOptions('astroid_lib', $config);
+
+        // Get Language
+        $lang = array();
+        foreach (Helper\Constants::$translationStrings as $string) {
+            $lang[strtoupper($string)] = Factory::getLanguage()->_($string);
+        }
+        $doc->addScriptOptions('astroid_lang', $lang);
+
+        // Get Sidebar
+        $sidebar = array();
+        $form = Framework::getForm();
+        foreach ($form->getFieldsets() as $key => $fieldset) {
+            $fields = $form->getFields($key);
+            $groups = [];
+            foreach ($fields as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', '')];
+                }
+            }
+            $fieldset->label    = Text::_($fieldset->label);
+            $fieldset->childs   = $groups;
+            $sidebar[] = $fieldset;
+        }
+        $doc->addScriptOptions('astroid_sidebar', $sidebar);
 
         // styles
-        $stylesheets = ['https://fonts.googleapis.com/css?family=Nunito:300,400,600', 'css/astroid-framework.css', 'css/admin.css', 'css/animate.min.css', 'vendor/semantic-ui/components/icon.min.css', 'vendor/semantic-ui/components/transition.min.css', 'vendor/semantic-ui/components/dropdown.min.css'];
+        $stylesheets = ['vendor/vue/dist/index.css'];
         $document->addStyleSheet($stylesheets);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
