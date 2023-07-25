@@ -14,7 +14,7 @@
          <field astroidgroup="contact_info" name="contact_module_position" astroid-content-layout="contactinfo" type="astroidmodulesposition" default="astroid-top-contact" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control" ngShow="contact_details" ngRequired="contact_details">
          </field>
 
-         <field astroidgroup="contact_info" name="contact_feature_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="contact_module_position" default="after" ngShow="contact_details=='1'" ngRequired="contact_details=='1'">
+         <field astroidgroup="contact_info" name="contact_feature_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-select" astroid-content-layout-load="contact_module_position" default="after" ngShow="contact_details=='1'" ngRequired="contact_details=='1'">
             <option value="after">TPL_ASTROID_AFTER_MODULE</option>
             <option value="before">TPL_ASTROID_BEFORE_MODULE</option>
          </field>

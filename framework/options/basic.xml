@@ -75,7 +75,7 @@
          <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_DESC" name="backtotop_icon_bgcolor" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_LABEL" />
          <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_BORDER_COLOR_DESC" name="backtotop_icon_bordercolor" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_BORDER_COLOR_LABEL" />
 
-         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_STYLE_DESC" name="backtotop_icon_style" type="astroidlist" class="form-control" default="circle" label="TPL_ASTROID_BASIC_ICON_STYLE_LABEL">
+         <field astroidgroup="enable_back_to_top" ngShow="backtotop=='1'" description="TPL_ASTROID_BASIC_ICON_STYLE_DESC" name="backtotop_icon_style" type="astroidlist" class="form-select" default="circle" label="TPL_ASTROID_BASIC_ICON_STYLE_LABEL">
             <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
             <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
             <option value="square">TPL_ASTROID_ICON_STYLE_SQUARE</option>
@@ -97,7 +97,7 @@
          <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL">
          </field>
 
-         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_repeat" type="astroidlist" class="form-control" label="ASTROID_BACKGROUND_REPEAT">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_repeat" type="astroidlist" class="form-select" label="ASTROID_BACKGROUND_REPEAT">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="no-repeat">ASTROID_BACKGROUND_NO_REPEAT</option>
             <option value="repeat">ASTROID_BACKGROUND_REPEAT_ALL</option>
@@ -105,13 +105,13 @@
             <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
          </field>
   
-         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_size" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_SIZE_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_size" type="astroidlist" class="form-select" label="TPL_ASTROID_BACKGROUND_SIZE_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
             <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
          </field>
   
-         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_position" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_POSITION_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_position" type="astroidlist" class="form-select" label="TPL_ASTROID_BACKGROUND_POSITION_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
             <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
@@ -124,7 +124,7 @@
             <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
          </field>
 
-         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_attachment" type="astroidlist" class="form-control" label="TPL_ASTROID_BACKGROUND_ATTCHMENT_LABEL">
+         <field astroidgroup="page_setting" ngShow="template_layout=='boxed'" name="layout_background_attachment" type="astroidlist" class="form-select" label="TPL_ASTROID_BACKGROUND_ATTCHMENT_LABEL">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
             <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>

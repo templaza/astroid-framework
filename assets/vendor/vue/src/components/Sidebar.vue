@@ -20,12 +20,13 @@ const props = defineProps({
       <div class="offcanvas-body">
         <nav class="bd-links w-100" id="bd-sidebar-nav" aria-label="Sidebar navigation">
           <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-            <li class="bd-links-group py-2" v-for="group in props.config.astroid_sidebar" :key="group.name">
-              <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
-                <font-awesome-icon :icon="group.icon" class="me-2" />
-                {{ group.label }}
-              </strong>
-              {{ group.childs.length }}
+            <li class="bd-links-group py-2" v-for="group in props.config.astroid_content" :key="group.name">
+              <a :href="`#`+group.name" class="bd-page-link" @click.prevent="$emit('sidebarActive', group.name)">
+                <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
+                  <font-awesome-icon :icon="group.icon" class="me-2" />
+                  {{ group.label }}
+                </strong>
+              </a>
               <ul class="list-unstyled fw-normal pb-2 small" v-if="Object.keys(group.childs).length > 0">
                 <li v-for="(item, index) in group.childs" :key="index"><a href="#" class="bd-links-link d-inline-block rounded">{{ item.title }}</a></li>
               </ul>

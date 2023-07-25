@@ -40,7 +40,7 @@
 
 			<field ngShow="article_opengraph" astroidgroup="article_single_options" name="article_opengraph_twitter" type="astroidtext" filter="raw" class="form-control" label="ASTROID_TWITTER_USERNAME_LBL" description="ASTROID_TWITTER_USERNAME_DESC" />
 
-			<field ngShow="article_opengraph" astroidgroup="article_single_options" name="twittercardtype" type="astroidlist" class="form-control" label="Twitter Card Type" description="" default="summary_large_image">
+			<field ngShow="article_opengraph" astroidgroup="article_single_options" name="twittercardtype" type="astroidlist" class="form-select" label="Twitter Card Type" description="" default="summary_large_image">
 				<option value="summary_large_image">Summary Card with Large Image</option>
 				<option value="summary">Summary Card</option>
 			</field>

@@ -48,32 +48,28 @@ const social_menu = [
             <div class="vr d-none d-lg-flex h-100 me-lg-4"></div>
             <ul class="navbar-nav flex-row flex-wrap">
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd-primary" type="button"
-                        style="--bs-btn-padding-y: .5rem; --bs-btn-padding-x: 1.2rem; --bs-btn-font-size: .85rem;">
+                <button class="btn btn-sm btn-bd btn-bd-primary" type="button">
                   <font-awesome-icon :icon="['fas', 'floppy-disk']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_SAVE }}
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd-light" type="button"
-                        style="--bs-btn-padding-y: .5rem; --bs-btn-padding-x: 1.2rem; --bs-btn-font-size: .85rem;">
+                <button class="btn btn-sm btn-bd btn-bd-light" type="button">
                   <font-awesome-icon :icon="['fas', 'eraser']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLEAR_CACHE }}
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd-light" type="button"
-                        style="--bs-btn-padding-y: .5rem; --bs-btn-padding-x: 1.2rem; --bs-btn-font-size: .85rem;">
+                <a class="btn btn-sm btn-bd btn-bd-light" type="button" :href="props.config.astroid_lib.site_url" target="_blank">
                   <font-awesome-icon :icon="['fas', 'up-right-from-square']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_PREVIEW }}
-                </button>
+                </a>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd-light" type="button"
-                        style="--bs-btn-padding-y: .5rem; --bs-btn-padding-x: 1.2rem; --bs-btn-font-size: .85rem;">
+                <a class="btn btn-sm btn-bd btn-bd-light" type="button" :href="props.config.astroid_lib.jtemplate_link">
                   <font-awesome-icon :icon="['fas', 'xmark']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLOSE }}
-                </button>
+                </a>
               </li>
             </ul>
           </div>

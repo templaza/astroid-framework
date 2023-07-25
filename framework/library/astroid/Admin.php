@@ -137,6 +137,7 @@ class Admin extends Helper\Client
             'document_link'         => Helper\Constants::$documentation_link,
             'video_tutorial'        => Helper\Constants::$video_tutorial_link,
             'github_link'           => Helper\Constants::$github_link,
+            'jtemplate_link'        => Helper::getJoomlaUrl()
         ];
         $doc->addScriptOptions('astroid_lib', $config);
 
@@ -147,22 +148,90 @@ class Admin extends Helper\Client
         }
         $doc->addScriptOptions('astroid_lang', $lang);
 
-        // Get Sidebar
-        $sidebar = array();
+        // Prepare content
+        $form_content = array();
         $form = Framework::getForm();
         foreach ($form->getFieldsets() as $key => $fieldset) {
             $fields = $form->getFields($key);
-            $groups = [];
+
+            // Ordering
+            $fieldsArr = [];
+            $order = 1;
+            $orders = [];
+            $reorders = [];
+
             foreach ($fields as $key => $field) {
-                if ($field->type == 'astroidgroup') {
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', '')];
+                // Ordering
+                $ordering = $field->getAttribute('after', '');
+                if (empty($ordering)) {
+                    $field->ordering = $order++;
+                    $fieldsArr[] = $field;
+                    $orders[$field->name] = $field->ordering;
+                } else {
+                    if (isset($orders[$ordering])) {
+                        $field->ordering = $orders[$ordering];
+                        $fieldsArr[] = $field;
+                        $orders[$field->name] = $field->ordering;
+                    } else {
+                        $reorders[] = $field;
+                    }
                 }
             }
+
+            // Reorder group
+            foreach ($reorders as &$reorder) {
+                $ordering = $reorder->getAttribute('after', '');
+                $reorder->ordering = $orders[$ordering];
+                $fieldsArr[] = $reorder;
+            }
+
+            usort($fieldsArr, 'Astroid\Helper::orderingFields');
+
+            $groups = [];
+            foreach ($fieldsArr as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
+                }
+            }
+
+            $groups['none'] = ['fields' => []];
+
+            foreach ($fieldsArr as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    continue;
+                }
+
+                if (empty($field->getAttribute('name'))) {
+                    continue;
+                }
+                $input = $field->input ? trim(str_replace('ng-media-class', 'ng-class', $field->input)) : $field->input;
+                $field_group = $field->getAttribute('astroidgroup', 'none');
+                $field_tmp  =   [
+                    'id'            =>  $field->id,
+                    'label'         =>  Text::_($field->getAttribute('label')),
+                    'description'   =>  Text::_($field->getAttribute('description')),
+                    'input'         =>  $input,
+                    'group'         =>  $fieldset->name,
+                    'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow')),
+                ];
+                $groups[$field_group]['fields'][] = $field_tmp;
+            }
+
+            // Get sidebar data
             $fieldset->label    = Text::_($fieldset->label);
             $fieldset->childs   = $groups;
-            $sidebar[] = $fieldset;
+            $form_content[] = $fieldset;
+
+            $presets    =   Helper::getPresets();
+
+            //Generate form
+            foreach ($groups as $groupname => $group) {
+                if (empty($group['fields'])) {
+                    continue;
+                }
+            }
         }
-        $doc->addScriptOptions('astroid_sidebar', $sidebar);
+        $doc->addScriptOptions('astroid_content', $form_content);
 
         // styles
         $stylesheets = ['vendor/vue/dist/index.css'];

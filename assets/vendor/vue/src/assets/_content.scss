@@ -31,9 +31,37 @@
   grid-area: sidebar
 }
 
+.bd-main {
+  grid-area: main;
+}
+
 @media (max-width: 991.98px) {
   .bd-main {
     max-width: 760px;
     margin-inline: auto
+  }
+}
+
+.bd-group-content {
+  --bd-example-padding: 1rem;
+  position: relative;
+  padding: var(--bd-example-padding);
+  margin: 0 -1.5rem 1rem;
+  border: solid var(--bs-border-color);
+  border-width: 1px 0;
+  &::after {
+    display: block;
+    clear: both;
+    content: ""
+  }
+  @media (min-width: 768px) {
+    --bd-example-padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px;
+    border-radius: var(--bs-border-radius)
+  }
+  & + p {
+    margin-top: 2rem
   }
 }

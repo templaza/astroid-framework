@@ -7,12 +7,12 @@
 			<field astroidgroup="social_profile" class="astroid-header-switch" name="enable_social_profiler" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_SOCIAL_ENABLE_LABEL" description="TPL_ASTROID_SOCIAL_ENABLE_DESC"/>
 			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_position" astroid-content-layout="social" type="astroidmodulesposition" default="astroid-top-social" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control"/>
 
-			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="social_profiles_position" default="after">
+			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-select" astroid-content-layout-load="social_profiles_position" default="after">
 				<option value="after">TPL_ASTROID_AFTER_MODULE</option>
 				<option value="before">TPL_ASTROID_BEFORE_MODULE</option>
 			</field>
 
-			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_gutter" type="astroidlist" class="form-control" default="" label="TPL_ASTROID_SOCIAL_GUTTER" description="TPL_ASTROID_SOCIAL_GUTTER_DESC">
+			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_gutter" type="astroidlist" class="form-select" default="" label="TPL_ASTROID_SOCIAL_GUTTER" description="TPL_ASTROID_SOCIAL_GUTTER_DESC">
 				<option value="">Default</option>
 				<option value="1">X-Small</option>
 				<option value="2">Small</option>
@@ -24,7 +24,7 @@
 			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_fontsize" type="astroidtext" label="TPL_ASTROID_SOCIAL_FONTSIZE" hint="16px" class="form-control">
 			</field>
 
-			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_style" type="astroidlist" class="form-control" default="1" label="TPL_ASTROID_SOCIAL_STYLE" description="TPL_ASTROID_SOCIAL_STYLE_DESC">
+			<field astroidgroup="social_profile" ngShow="enable_social_profiler==true" name="social_profiles_style" type="astroidlist" class="form-select" default="1" label="TPL_ASTROID_SOCIAL_STYLE" description="TPL_ASTROID_SOCIAL_STYLE_DESC">
 				<option value="1">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_INHERIT_COLOR</option>
 				<option value="2">TPL_ASTROID_SOCIAL_STYLE_OPTIONS_BRAND_COLOR</option>
 			</field>

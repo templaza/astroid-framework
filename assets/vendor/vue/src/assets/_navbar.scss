@@ -1,6 +1,6 @@
 .bd-navbar {
   padding: .75rem 0;
-  background-color: transparent;
+  background-color: var(--bs-body-bg);
   border-bottom: 1px solid var(--bs-border-color);
   &::after {
     position: absolute;
