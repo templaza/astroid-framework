@@ -51,7 +51,7 @@ if (isset($images) && $images == 'true') {
  *     %3 - value
  *     %4 = any other attributes
  */
-$format = '<label class="btn-radio-astroid' . (!$imageRadio ? ' btn-round' : ' btn-image') . ' btn-wide btn" ng-class="{\'btn-white\':' . $fieldname . '!=\'%3$s\',\'%7$s\':' . $fieldname . '==\'%3$s\'}" for="%1$s" ng-class="%6$s"><input ng-model="' . $fieldname . '" ' . (!empty($ngRequired) ? ' ng-required="' . $ngRequired . '"' : '') . ' autocomplete="off" type="radio" id="%1$s" name="%2$s" value="%3$s" %4$s />%5$s</label>';
+$format = '<label class="btn-radio-astroid' . (!$imageRadio ? ' btn-round' : ' btn-image') . ' btn-wide btn" ng-class="{\'btn-white\':' . $fieldname . '!=\'%3$s\',\'%7$s\':' . $fieldname . '==\'%3$s\'}" for="%1$s" ng-class="%6$s"><input v-model="' . $fieldname . '" ' . (!empty($ngRequired) ? ' ng-required="' . $ngRequired . '"' : '') . ' autocomplete="off" type="radio" id="%1$s" name="%2$s" value="%3$s" %4$s />%5$s</label>';
 $alt = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo $imageRadio ? '' : 'btn-group astroid-radio-btn'; ?> btn-group-toggle"

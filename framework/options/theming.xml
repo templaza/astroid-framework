@@ -24,28 +24,28 @@
          <field astroidgroup="colors" name="theme_scheme_heading" type="astroidheading" title="AF_THEMING_ALL_THEME_COLORS" description="AF_THEMING_ALL_THEME_COLORS_DESC"></field>
 
          <field astroidgroup="colors" name="theme_primary" type="astroidlist" class="form-select" default="" label="Primary" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_primary_custom" type="astroidcolor" default="" label="Custom Primary" ngShow="theme_primary=='custom'" />
+         <field astroidgroup="colors" name="theme_primary_custom" type="astroidcolor" default="" label="Custom Primary" ngShow="[theme_primary]=='custom'" />
 
          <field astroidgroup="colors" name="theme_secondary" type="astroidlist" class="form-select" default="" label="Secondary" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_secondary_custom" type="astroidcolor" default="" label="Custom Secondary" ngShow="theme_secondary=='custom'" />
+         <field astroidgroup="colors" name="theme_secondary_custom" type="astroidcolor" default="" label="Custom Secondary" ngShow="[theme_secondary]=='custom'" />
 
          <field astroidgroup="colors" name="theme_success" type="astroidlist" class="form-select" default="" label="Success" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_success_custom" type="astroidcolor" default="" label="Custom Success" ngShow="theme_success=='custom'" />
+         <field astroidgroup="colors" name="theme_success_custom" type="astroidcolor" default="" label="Custom Success" ngShow="[theme_success]=='custom'" />
 
          <field astroidgroup="colors" name="theme_info" type="astroidlist" class="form-select" default="" label="Info" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_info_custom" type="astroidcolor" default="" label="Custom Info" ngShow="theme_info=='custom'" />
+         <field astroidgroup="colors" name="theme_info_custom" type="astroidcolor" default="" label="Custom Info" ngShow="[theme_info]=='custom'" />
 
          <field astroidgroup="colors" name="theme_warning" type="astroidlist" class="form-select" default="" label="Warning" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_warning_custom" type="astroidcolor" default="" label="Custom Warning" ngShow="theme_warning=='custom'" />
+         <field astroidgroup="colors" name="theme_warning_custom" type="astroidcolor" default="" label="Custom Warning" ngShow="[theme_warning]=='custom'" />
 
          <field astroidgroup="colors" name="theme_danger" type="astroidlist" class="form-select" default="" label="Danger" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_danger_custom" type="astroidcolor" default="" label="Custom Danger" ngShow="theme_danger=='custom'" />
+         <field astroidgroup="colors" name="theme_danger_custom" type="astroidcolor" default="" label="Custom Danger" ngShow="[theme_danger]=='custom'" />
 
          <field astroidgroup="colors" name="theme_light" type="astroidlist" class="form-select" default="" label="Light" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_light_custom" type="astroidcolor" default="" label="Custom Light" ngShow="theme_light=='custom'" />
+         <field astroidgroup="colors" name="theme_light_custom" type="astroidcolor" default="" label="Custom Light" ngShow="[theme_light]=='custom'" />
 
          <field astroidgroup="colors" name="theme_dark" type="astroidlist" class="form-select" default="" label="Dark" bootstrap-color="true" />
-         <field astroidgroup="colors" name="theme_dark_custom" type="astroidcolor" default="" label="Custom Dark" ngShow="theme_dark=='custom'" />
+         <field astroidgroup="colors" name="theme_dark_custom" type="astroidcolor" default="" label="Custom Dark" ngShow="[theme_dark]=='custom'" />
 
          <field astroidgroup="sassoverrides" name="sass_overrides" type="astroidsassoverrides" default='[{"variable":"btn-border-radius-lg","value":"0.2rem","color":false},{"variable":"btn-padding-y-lg","value":"0.6rem","color":false},{"variable":"btn-padding-x-lg","value":"2.5rem","color":false}]'></field>
       </fieldset>

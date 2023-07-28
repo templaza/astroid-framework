@@ -1,12 +1,12 @@
-.bd-links-heading {
+.as-links-heading {
   color: var(--bs-emphasis-color);
 }
-.bd-page-link {
+.as-page-link {
   display: inline-block;
   text-decoration: none;
   margin-bottom: .3rem;
 }
-.bd-links-link {
+.as-links-link {
   padding: .1875rem .5rem;
   margin-top: .125rem;
   margin-left: 1.125rem;
@@ -14,30 +14,30 @@
   text-decoration: none;
   &:hover {
     color: var(--bs-emphasis-color);
-    background-color: var(--bd-sidebar-link-bg);
+    background-color: var(--as-sidebar-link-bg);
   }
   &:focus {
     color: var(--bs-emphasis-color);
-    background-color: var(--bd-sidebar-link-bg);
+    background-color: var(--as-sidebar-link-bg);
   }
   &.active {
     color: var(--bs-emphasis-color);
-    background-color: var(--bd-sidebar-link-bg);
+    background-color: var(--as-sidebar-link-bg);
     font-weight: 600;
   }
 }
 @media (max-width: 991.98px) {
-  .bd-links-nav {
+  .as-links-nav {
     font-size: .875rem;
     -moz-column-count: 2;
     column-count: 2;
     -moz-column-gap: 1.5rem;
     column-gap: 1.5rem;
-    .bd-links-group {
+    .as-links-group {
       -moz-column-break-inside: avoid;
       break-inside: avoid;
     }
-    .bd-links-span-all {
+    .as-links-span-all {
       -moz-column-span: all;
       column-span: all;
     }

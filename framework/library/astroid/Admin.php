@@ -205,15 +205,24 @@ class Admin extends Helper\Client
                     continue;
                 }
                 $input = $field->input ? trim(str_replace('ng-media-class', 'ng-class', $field->input)) : $field->input;
+                $js_input   =   json_decode($input);
                 $field_group = $field->getAttribute('astroidgroup', 'none');
                 $field_tmp  =   [
                     'id'            =>  $field->id,
+                    'name'          =>  $field->fieldname,
+                    'value'         =>  $field->value,
                     'label'         =>  Text::_($field->getAttribute('label')),
                     'description'   =>  Text::_($field->getAttribute('description')),
                     'input'         =>  $input,
+                    'type'          =>  'string',
                     'group'         =>  $fieldset->name,
                     'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow')),
                 ];
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $field_tmp['input']     =   $js_input;
+                    $field_tmp['type']      =   'json';
+                }
                 $groups[$field_group]['fields'][] = $field_tmp;
             }
 

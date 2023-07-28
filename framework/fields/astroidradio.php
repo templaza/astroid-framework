@@ -42,13 +42,27 @@ class JFormFieldAstroidRadio extends JFormFieldList {
     * @since   11.1
     */
    protected function getInput() {
-      if (empty($this->layout)) {
-         throw new UnexpectedValueException(sprintf('%s has no layout assigned.', $this->name));
-      }
+       if (empty($this->layout)) {
+           throw new UnexpectedValueException(sprintf('%s has no layout assigned.', $this->name));
+       }
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $this->value,
+           'type'    =>  strtolower($this->type),
+       ];
+       if ($this->element['astroid-switch'] == 'true') {
+           $json['role'] = 'switch';
+       } else {
+           $json['role'] = 'default';
+           $json['options'] = $this->getOptions();
+       }
 
-      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
+       return json_encode($json);
 
-      return $renderer->render($this->getLayoutData());
+//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
+//
+//      return $renderer->render($this->getLayoutData());
    }
 
    /**

@@ -17,10 +17,10 @@ const social_menu = [
 ]
 </script>
 <template>
-  <header class="navbar navbar-expand-lg bd-navbar sticky-top">
-    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
-      <div class="bd-navbar-toggle">
-        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar" aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+  <header class="navbar navbar-expand-lg as-navbar sticky-top">
+    <nav class="container-xxl as-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
+      <div class="as-navbar-toggle">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#asSidebar" aria-controls="asSidebar" aria-label="Toggle docs navigation">
           <font-awesome-icon :icon="['fas', 'bars']" />
           <span class="d-none fs-6 pe-1">Browse</span>
         </button>
@@ -48,25 +48,25 @@ const social_menu = [
             <div class="vr d-none d-lg-flex h-100 me-lg-4"></div>
             <ul class="navbar-nav flex-row flex-wrap">
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd btn-bd-primary" type="button">
+                <button class="btn btn-sm btn-as btn-as-primary" type="button">
                   <font-awesome-icon :icon="['fas', 'floppy-disk']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_SAVE }}
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-bd btn-bd-light" type="button">
+                <button class="btn btn-sm btn-as btn-as-light" type="button">
                   <font-awesome-icon :icon="['fas', 'eraser']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLEAR_CACHE }}
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <a class="btn btn-sm btn-bd btn-bd-light" type="button" :href="props.config.astroid_lib.site_url" target="_blank">
+                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="props.config.astroid_lib.site_url" target="_blank">
                   <font-awesome-icon :icon="['fas', 'up-right-from-square']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_PREVIEW }}
                 </a>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <a class="btn btn-sm btn-bd btn-bd-light" type="button" :href="props.config.astroid_lib.jtemplate_link">
+                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="props.config.astroid_lib.jtemplate_link">
                   <font-awesome-icon :icon="['fas', 'xmark']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLOSE }}
                 </a>

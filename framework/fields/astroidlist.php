@@ -92,7 +92,17 @@ class JFormFieldAstroidList extends JFormField {
          $html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
       }
 
-      return implode($html);
+      $json =   [
+          'id'      =>  $this->id,
+          'name'    =>  $this->name,
+          'value'   =>  htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+          'options' =>  $options,
+          'attr'    =>  trim($attr),
+          'type'    =>  strtolower($this->type),
+      ];
+      return json_encode($json);
+
+//      return implode($html);
    }
 
    /**

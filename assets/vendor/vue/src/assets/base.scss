@@ -463,9 +463,9 @@
 }
 
 .bd-masthead {
-  --bd-pink-rgb: 214, 51, 132;
+  --as-pink-rgb: 214, 51, 132;
   padding: 3rem 0;
-  background-image: linear-gradient(180deg, rgba(var(--bs-body-bg-rgb), 0.01), rgba(var(--bs-body-bg-rgb), 1) 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--bd-accent-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center right, rgba(var(--bd-violet-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center left, rgba(var(--bd-pink-rgb), 0.5), transparent 50%)
+  background-image: linear-gradient(180deg, rgba(var(--bs-body-bg-rgb), 0.01), rgba(var(--bs-body-bg-rgb), 1) 85%), radial-gradient(ellipse at top left, rgba(var(--bs-primary-rgb), 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(var(--as-accent-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center right, rgba(var(--as-violet-rgb), 0.5), transparent 50%), radial-gradient(ellipse at center left, rgba(var(--as-pink-rgb), 0.5), transparent 50%)
 }
 
 .bd-masthead h1 {
@@ -565,7 +565,7 @@
 }
 
 .masthead-notice {
-  background-color: var(--bd-accent);
+  background-color: var(--as-accent);
   box-shadow: inset 0 -1px 1px rgba(var(--bs-body-color-rgb), 0.15), 0 0.25rem 1.5rem rgba(var(--bs-body-bg-rgb), 0.75)
 }
 
@@ -803,8 +803,8 @@
 }
 
 .bd-toc nav a:hover, .bd-toc nav a.active {
-  color: var(--bd-toc-color);
-  border-left-color: var(--bd-toc-color)
+  color: var(--as-toc-color);
+  border-left-color: var(--as-toc-color)
 }
 
 .bd-toc nav a.active {
@@ -834,12 +834,12 @@
     border-radius: var(--bs-border-radius)
   }
   .bd-toc-toggle:hover, .bd-toc-toggle:focus, .bd-toc-toggle:active, .bd-toc-toggle[aria-expanded="true"] {
-    color: var(--bd-violet);
+    color: var(--as-violet);
     background-color: var(--bs-body-bg);
-    border-color: var(--bd-violet)
+    border-color: var(--as-violet)
   }
   .bd-toc-toggle:focus, .bd-toc-toggle[aria-expanded="true"] {
-    box-shadow: 0 0 0 3px rgba(var(--bd-violet-rgb), 0.25)
+    box-shadow: 0 0 0 3px rgba(var(--as-violet-rgb), 0.25)
   }
 }
 
@@ -1014,7 +1014,7 @@
 }
 
 .simple-list-example-scrollspy .active {
-  background-color: rgba(var(--bd-violet-rgb), 0.15)
+  background-color: rgba(var(--as-violet-rgb), 0.15)
 }
 
 .bd-example-border-utils [class^="border"] {
@@ -1068,8 +1068,8 @@
 
 .bd-example-zindex-levels > div {
   color: var(--bs-body-bg);
-  background-color: var(--bd-violet);
-  border: 1px solid var(--bd-purple)
+  background-color: var(--as-violet);
+  border: 1px solid var(--as-purple)
 }
 
 .bd-example-zindex-levels > div > span {
@@ -1101,7 +1101,7 @@
 .highlight {
   position: relative;
   padding: 0.75rem 1.5rem;
-  background-color: var(--bd-pre-bg)
+  background-color: var(--as-pre-bg)
 }
 
 @media (min-width: 768px) {
@@ -1134,7 +1134,7 @@
 }
 
 .highlight-toolbar {
-  background-color: var(--bd-pre-bg)
+  background-color: var(--as-pre-bg)
 }
 
 .highlight-toolbar + .highlight {
@@ -1154,14 +1154,14 @@
 }
 
 .bd-callout {
-  --bs-link-color-rgb: var(--bd-callout-link);
-  --bs-code-color: var(--bd-callout-code-color);
+  --bs-link-color-rgb: var(--as-callout-link);
+  --bs-code-color: var(--as-callout-code-color);
   padding: 1.25rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  color: var(--bd-callout-color, inherit);
-  background-color: var(--bd-callout-bg, var(--bs-gray-100));
-  border-left: 0.25rem solid var(--bd-callout-border, var(--bs-gray-300))
+  color: var(--as-callout-color, inherit);
+  background-color: var(--as-callout-bg, var(--bs-gray-100));
+  border-left: 0.25rem solid var(--as-callout-border, var(--bs-gray-300))
 }
 
 .bd-callout h4 {
@@ -1181,21 +1181,21 @@
 }
 
 .bd-callout-info {
-  --bd-callout-color: var(--bs-info-text-emphasis);
-  --bd-callout-bg: var(--bs-info-bg-subtle);
-  --bd-callout-border: var(--bs-info-border-subtle)
+  --as-callout-color: var(--bs-info-text-emphasis);
+  --as-callout-bg: var(--bs-info-bg-subtle);
+  --as-callout-border: var(--bs-info-border-subtle)
 }
 
 .bd-callout-warning {
-  --bd-callout-color: var(--bs-warning-text-emphasis);
-  --bd-callout-bg: var(--bs-warning-bg-subtle);
-  --bd-callout-border: var(--bs-warning-border-subtle)
+  --as-callout-color: var(--bs-warning-text-emphasis);
+  --as-callout-bg: var(--bs-warning-bg-subtle);
+  --as-callout-border: var(--bs-warning-border-subtle)
 }
 
 .bd-callout-danger {
-  --bd-callout-color: var(--bs-danger-text-emphasis);
-  --bd-callout-bg: var(--bs-danger-bg-subtle);
-  --bd-callout-border: var(--bs-danger-border-subtle)
+  --as-callout-color: var(--bs-danger-text-emphasis);
+  --as-callout-bg: var(--bs-danger-bg-subtle);
+  --as-callout-border: var(--bs-danger-border-subtle)
 }
 
 .bd-brand-logos {
@@ -2076,7 +2076,7 @@
   padding: .5em;
   line-height: 1;
   color: var(--bs-body-color);
-  background-color: var(--bd-pre-bg);
+  background-color: var(--as-pre-bg);
   border: 0;
   border-radius: .25rem
 }

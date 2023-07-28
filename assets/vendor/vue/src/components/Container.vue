@@ -7,26 +7,37 @@ const props = defineProps({
   config: { type: Object, default: null }
 });
 
-const pageIndex = ref(new Object());
+const pageIndex     = ref(new Object());
+
 onMounted(() => {
   props.config.astroid_content.forEach((fieldSet, idx) => {
     if (idx === 0) {
-      pageIndex.value[fieldSet.name] = 'block';
+      pageIndex.value[fieldSet.name] = 'd-block opacity-100';
     } else {
-      pageIndex.value[fieldSet.name] = 'none';
+      pageIndex.value[fieldSet.name] = 'd-none opacity-0';
     }
   });
 })
 
-function pageActive(pgIndex) {
+function pageActive(pgIndex, group = null) {
   props.config.astroid_content.forEach(fieldSet => {
-    pageIndex.value[fieldSet.name] = 'none';
+    pageIndex.value[fieldSet.name] = 'd-none opacity-0';
   });
-  pageIndex.value[pgIndex] = 'block';
+  pageIndex.value[pgIndex] = 'd-block opacity-100';
+  setTimeout(function () {
+    if (group !== null) {
+      const el = document.getElementById('astroid-page-'+group);
+      const y = el.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    } else {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }, 100);
 }
+
 </script>
 <template>
-  <div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
+  <div class="container-xxl as-gutter mt-3 my-md-4 as-layout">
     <Sidebar :config="props.config" @sidebar-active="pageActive" />
     <Content :config="props.config" :page-index="pageIndex" />
   </div>

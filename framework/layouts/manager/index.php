@@ -21,6 +21,7 @@ for ($pidx = 0; $pidx < count($presets); $pidx++) {
 }
 $color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
 $doc = Factory::getDocument();
+
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="dark">
