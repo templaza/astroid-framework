@@ -22,8 +22,10 @@ function checkShow(field) {
   if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
     const expression = field.ngShow.replace(/\[(.+?)\]/g, "$scope.value\['$1'\]");
     try {
-      return new Function('return ' + expression)();
+      const checkExpression = new Function('$scope', 'return ' + expression);
+      return checkExpression($scope);
     } catch (error) {
+      console.log(error);
       console.log('Error at: '+expression);
     }
   }
