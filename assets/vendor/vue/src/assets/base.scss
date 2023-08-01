@@ -3,6 +3,7 @@
 @import "buttons";
 @import "content";
 @import "sidebar";
+@import "astroidcolor";
 .grid {
   display: grid;
   grid-template-rows:repeat(var(--bs-rows, 1), 1fr);
@@ -622,68 +623,6 @@
   color: var(--bs-body-color) !important
 }
 
-.bd-content > h2, .bd-content > h3, .bd-content > h4 {
-  --bs-heading-color: var(--bs-emphasis-color)
-}
-
-.bd-content > h2:not(:first-child) {
-  margin-top: 3rem
-}
-
-.bd-content > h3 {
-  margin-top: 2rem
-}
-
-.bd-content > ul li, .bd-content > ol li {
-  margin-bottom: .25rem
-}
-
-.bd-content > ul li > p ~ ul, .bd-content > ol li > p ~ ul {
-  margin-top: -.5rem;
-  margin-bottom: 1rem
-}
-
-.bd-content > .table, .bd-content > .table-responsive .table {
-  --bs-table-border-color: var(--bs-border-color);
-  max-width: 100%;
-  margin-bottom: 1.5rem;
-  font-size: .875rem
-}
-
-@media (max-width: 991.98px) {
-  .bd-content > .table.table-bordered, .bd-content > .table-responsive .table.table-bordered {
-    border: 0
-  }
-}
-
-.bd-content > .table thead, .bd-content > .table-responsive .table thead {
-  border-bottom: 2px solid currentcolor
-}
-
-.bd-content > .table tbody:not(:first-child), .bd-content > .table-responsive .table tbody:not(:first-child) {
-  border-top: 2px solid currentcolor
-}
-
-.bd-content > .table th:first-child, .bd-content > .table td:first-child, .bd-content > .table-responsive .table th:first-child, .bd-content > .table-responsive .table td:first-child {
-  padding-left: 0
-}
-
-.bd-content > .table th:not(:last-child), .bd-content > .table td:not(:last-child), .bd-content > .table-responsive .table th:not(:last-child), .bd-content > .table-responsive .table td:not(:last-child) {
-  padding-right: 1.5rem
-}
-
-.bd-content > .table th, .bd-content > .table-responsive .table th {
-  color: var(--bs-emphasis-color)
-}
-
-.bd-content > .table strong, .bd-content > .table-responsive .table strong {
-  color: var(--bs-emphasis-color)
-}
-
-.bd-content > .table th, .bd-content > .table td:first-child > code, .bd-content > .table-responsive .table th, .bd-content > .table-responsive .table td:first-child > code {
-  white-space: nowrap
-}
-
 .table-options td:nth-child(2) {
   min-width: 160px
 }
@@ -763,7 +702,7 @@
   grid-area: toc
 }
 
-.bd-content {
+.as-content {
   grid-area: content;
   min-width: 1px
 }
@@ -1149,7 +1088,7 @@
   }
 }
 
-.bd-content .bd-code-snippet {
+.as-content .bd-code-snippet {
   margin-bottom: 1rem
 }
 

@@ -22,8 +22,7 @@ function checkShow(field) {
   if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
     const expression = field.ngShow.replace(/\[(.+?)\]/g, "$scope.value\['$1'\]");
     try {
-      const checkExpression = new Function('$scope', 'return ' + expression);
-      return checkExpression($scope);
+      return new Function('$scope', 'return ' + expression)($scope);
     } catch (error) {
       console.log(error);
       console.log('Error at: '+expression);
@@ -40,14 +39,21 @@ function checkShow(field) {
         <p v-if="group.description !== ''">{{ group.description }}</p>
         <div v-if="group.fields.length > 0" class="as-group-content">
           <div :class="(idx !== 0 ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
-            <fieldset>
-              <legend>{{ field.label }}</legend>
-              <p v-if="field.description !== ''" v-html="field.description"></p>
-              <div v-if="field.type === `string`" v-html="field.input"></div>
-              <div v-else-if="field.type === `json`">
-                <Fields :field="field" :scope="$scope" />
+            <div class="row">
+              <div v-if="field.label || field.description" class="col-sm-6 col-md-5">
+                <label :for="field.input.id" class="form-label">{{ field.label }}</label>
+                <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
               </div>
-            </fieldset>
+              <div :class="{
+                'col-sm-6 col-md-5' : (field.label || field.description),
+                'col-12': !(field.label || field.description)
+              }">
+                <div v-if="field.type === `string`" v-html="field.input"></div>
+                <div v-else-if="field.type === `json`">
+                  <Fields :field="field" :scope="$scope" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

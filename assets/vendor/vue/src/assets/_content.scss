@@ -82,7 +82,143 @@
   grid-area: toc
 }
 
+.as-page {
+  >div.as-content:first-child {
+    >h2, >h3, >h4 {
+      margin-top: 0;
+    }
+  }
+}
+
 .as-content {
   grid-area: content;
-  min-width: 1px
+  min-width: 1px;
+  >h2 {
+    --bs-heading-color: var(--bs-emphasis-color);
+    margin-top: 3rem;
+  }
+  >h3 {
+    --bs-heading-color: var(--bs-emphasis-color);
+    margin-top: 2rem;
+  }
+  >h4 {
+    --bs-heading-color: var(--bs-emphasis-color);
+  }
+  >ul {
+    li {
+      margin-bottom: .25rem;
+      >p {
+        ~ {
+          ul {
+            margin-top: -.5rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+  >ol {
+    li {
+      margin-bottom: .25rem;
+      >p {
+        ~ {
+          ul {
+            margin-top: -.5rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+  >.table {
+    --bs-table-border-color: var(--bs-border-color);
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    font-size: .875rem;
+    thead {
+      border-bottom: 2px solid currentcolor;
+    }
+    tbody {
+      &:not(:first-child) {
+        border-top: 2px solid currentcolor;
+      }
+    }
+    th {
+      &:first-child {
+        padding-left: 0;
+      }
+      &:not(:last-child) {
+        padding-right: 1.5rem;
+      }
+      color: var(--bs-emphasis-color);
+      white-space: nowrap;
+    }
+    td {
+      &:first-child {
+        padding-left: 0;
+        >code {
+          white-space: nowrap;
+        }
+      }
+      &:not(:last-child) {
+        padding-right: 1.5rem;
+      }
+    }
+    strong {
+      color: var(--bs-emphasis-color);
+    }
+  }
+  >.table-responsive {
+    .table {
+      --bs-table-border-color: var(--bs-border-color);
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+      font-size: .875rem;
+      thead {
+        border-bottom: 2px solid currentcolor;
+      }
+      tbody {
+        &:not(:first-child) {
+          border-top: 2px solid currentcolor;
+        }
+      }
+      th {
+        &:first-child {
+          padding-left: 0;
+        }
+        &:not(:last-child) {
+          padding-right: 1.5rem;
+        }
+        color: var(--bs-emphasis-color);
+        white-space: nowrap;
+      }
+      td {
+        &:first-child {
+          padding-left: 0;
+          >code {
+            white-space: nowrap;
+          }
+        }
+        &:not(:last-child) {
+          padding-right: 1.5rem;
+        }
+      }
+      strong {
+        color: var(--bs-emphasis-color);
+      }
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .as-content {
+    >.table.table-bordered {
+      border: 0;
+    }
+    >.table-responsive {
+      .table.table-bordered {
+        border: 0;
+      }
+    }
+  }
 }
