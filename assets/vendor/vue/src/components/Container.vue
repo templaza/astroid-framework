@@ -12,18 +12,18 @@ const pageIndex     = ref(new Object());
 onMounted(() => {
   props.config.astroid_content.forEach((fieldSet, idx) => {
     if (idx === 0) {
-      pageIndex.value[fieldSet.name] = 'd-block opacity-100';
+      pageIndex.value[fieldSet.name] = 'd-block';
     } else {
-      pageIndex.value[fieldSet.name] = 'd-none opacity-0';
+      pageIndex.value[fieldSet.name] = 'd-none';
     }
   });
 })
 
 function pageActive(pgIndex, group = null) {
   props.config.astroid_content.forEach(fieldSet => {
-    pageIndex.value[fieldSet.name] = 'd-none opacity-0';
+    pageIndex.value[fieldSet.name] = 'd-none';
   });
-  pageIndex.value[pgIndex] = 'd-block opacity-100';
+  pageIndex.value[pgIndex] = 'd-block';
   setTimeout(function () {
     if (group !== null) {
       const el = document.getElementById('astroid-page-'+group);

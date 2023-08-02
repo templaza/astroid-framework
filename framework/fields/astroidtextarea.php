@@ -117,7 +117,6 @@ class JFormFieldAstroidTextarea extends JFormField {
     */
    public function setup(SimpleXMLElement $element, $value, $group = null) {
       $return = parent::setup($element, $value, $group);
-
       if ($return) {
          $this->rows = isset($this->element['rows']) ? (int) $this->element['rows'] : false;
          $this->columns = isset($this->element['cols']) ? (int) $this->element['cols'] : false;

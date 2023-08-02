@@ -1,0 +1,36 @@
+.astroid-radio {
+    .astroid-btn-group {
+        .btn {
+            border-radius: 0;
+        }
+        >span {
+            &:first-child {
+                > .btn {
+                    border-top-left-radius: var(--bs-border-radius);
+                    border-bottom-left-radius: var(--bs-border-radius);
+                }
+            }
+            &:last-child {
+                > .btn {
+                    border-top-right-radius: var(--bs-border-radius);
+                    border-bottom-right-radius: var(--bs-border-radius);
+                }
+            }
+            &:not(:first-child) {
+                > .btn {
+                    border-left: none;
+                }
+            }
+        }
+    }
+    .form-switch {
+        .form-check-input {
+            width: 3.5rem;
+            height: 1.9rem;
+            &:checked {
+                background-color: var(--as-violet-bg);
+                border-color: var(--as-violet-bg);
+            }
+        }
+    }
+}

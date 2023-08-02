@@ -45,7 +45,7 @@ function checkShow(field) {
                 <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
               </div>
               <div :class="{
-                'col-sm-6 col-md-5' : (field.label || field.description),
+                'col-sm-6 col-md-7' : (field.label || field.description),
                 'col-12': !(field.label || field.description)
               }">
                 <div v-if="field.type === `string`" v-html="field.input"></div>

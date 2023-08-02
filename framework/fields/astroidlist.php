@@ -45,7 +45,6 @@ class JFormFieldAstroidList extends JFormField {
       $attr .= ' ng-model="' . $this->fieldname . '"';
       $attr .= ' data-fieldname="' . $this->fieldname . '"';
       $attr .= $this->element['ngRequired'] ? ' ng-required="' . Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']) . '"' : '';
-
       if (isset($this->element['astroid-content-layout']) && !empty($this->element['astroid-content-layout'])) {
          $attr .= ' data-astroid-content-layout="' . $this->element['astroid-content-layout'] . '"';
       }

@@ -32,7 +32,7 @@ class JFormFieldAstroidicon extends JFormField {
     * @since   3.7.0
     */
    protected function getInput() {
-      $html = '<div class="form-control ui fluid search selection dropdown" select-ui-div><input type="hidden" value="' . $this->value . '" name="' . $this->name . '"><i class="dropdown icon"></i><div class="default text">Select Icon</div><div class="menu">';
+//      $html = '<div class="form-control ui fluid search selection dropdown" select-ui-div><input type="hidden" value="' . $this->value . '" name="' . $this->name . '"><i class="dropdown icon"></i><div class="default text">Select Icon</div><div class="menu">';
       $groups = Astroid\Helper\Constants::$icons;
       $options = array();
       foreach ($groups as $group => $icons) {
@@ -41,7 +41,15 @@ class JFormFieldAstroidicon extends JFormField {
          }
       }
       $html .= '</div></div>';
-      return $html;
+//      return $html;
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $this->value,
+           'options' =>  $groups[0],
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
    }
 
    /**

@@ -79,14 +79,15 @@ function changeColor(color) {
 }
 </script>
 <template>
-    <select v-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="form-select" :aria-label="props.field.label">
+    <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" :aria-label="props.field.label" :placeholder="props.field.input.hint">
+    <select v-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
-    <div v-if="props.field.input.type === `astroidradio`">
-        <div v-if="props.field.input.role === `default`" class="btn-group" role="group" :aria-label="props.field.label">
+    <div v-if="props.field.input.type === `astroidradio`" class="astroid-radio">
+        <div v-if="props.field.input.role === `default`" class="astroid-btn-group" role="group" :aria-label="props.field.label">
             <span v-for="(option, idx) in props.field.input.options" :key="idx">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
-                <label class="btn btn-outline-primary" :for="props.field.input.id+idx">{{ option.text }}</label>
+                <label class="btn btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx">{{ option.text }}</label>
             </span>
         </div>
         <div v-if="props.field.input.role === `switch`" class="form-check form-switch">
@@ -121,4 +122,11 @@ function changeColor(color) {
             @changeColor="changeColor"
         />
     </div>
+    <div v-if="props.field.input.type === `astroidrange`">
+        <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}px</label>
+        <input type="range" class="form-range" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
+    </div>
+    <select v-if="props.field.input.type === `astroidicon`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-icon form-select" :aria-label="props.field.label">
+        <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
+    </select>
 </template>
