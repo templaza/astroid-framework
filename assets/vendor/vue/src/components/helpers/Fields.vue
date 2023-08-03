@@ -4,6 +4,7 @@ import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
+import ArrowIconPicker from './ArrowIconPicker.vue';
 library.add(faCircle, faArrowsLeftRight);
 
 const props = defineProps({
@@ -126,7 +127,7 @@ function changeColor(color) {
         <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}px</label>
         <input type="range" class="form-range" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
     </div>
-    <select v-if="props.field.input.type === `astroidicon`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-icon form-select" :aria-label="props.field.label">
-        <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
-    </select>
+    <div v-if="props.field.input.type === `astroidicon`">
+        <ArrowIconPicker v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
 </template>

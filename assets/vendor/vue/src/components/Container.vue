@@ -1,6 +1,6 @@
 <script setup>
 import Sidebar from './Sidebar.vue'
-import Content from './Content.vue'
+import Main from './Main.vue'
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
@@ -39,6 +39,6 @@ function pageActive(pgIndex, group = null) {
 <template>
   <div class="container-xxl as-gutter mt-3 my-md-4 as-layout">
     <Sidebar :config="props.config" @sidebar-active="pageActive" />
-    <Content :config="props.config" :page-index="pageIndex" />
+    <Main :config="props.config" :page-index="pageIndex" />
   </div>
 </template>
