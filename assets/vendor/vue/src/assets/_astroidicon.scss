@@ -11,5 +11,10 @@
         &:hover {
             color: var(--as-violet);
         }
+        &.active {
+            --bs-border-color: var(--as-violet);
+            background-color: var(--as-violet);
+            color: white;
+        }
     }
 }

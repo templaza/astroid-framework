@@ -31,7 +31,7 @@ function updateIcon(icon) {
       <div class="icon-display mb-4"><font-awesome-icon :icon="modelValue" size="3x" /></div>
       <div class="row g-2 g-lg-3">
         <div v-for="icon in iconList" class="col-auto">
-          <a class="icon border rounded p-2" @click.prevent="updateIcon(icon)">
+          <a class="icon border rounded p-2" @click.prevent="updateIcon(icon)" :class="{'active' : icon.join(' ') === modelValue}">
             <font-awesome-icon :icon="icon" />
           </a>
         </div>

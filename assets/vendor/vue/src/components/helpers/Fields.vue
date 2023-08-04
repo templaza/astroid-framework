@@ -4,7 +4,8 @@ import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
-import ArrowIconPicker from './ArrowIconPicker.vue';
+import BackToTopIcon from './BackToTopIcon.vue';
+import MediaManager from './MediaManager.vue';
 library.add(faCircle, faArrowsLeftRight);
 
 const props = defineProps({
@@ -128,6 +129,9 @@ function changeColor(color) {
         <input type="range" class="form-range" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
     </div>
     <div v-if="props.field.input.type === `astroidicon`">
-        <ArrowIconPicker v-model="props.scope[props.field.name]" :field="props.field" />
+        <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-if="props.field.input.type === `astroidmedia`" class="astroid-media">
+        <MediaManager v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>
