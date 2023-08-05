@@ -1,5 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { faFolder, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faFolder, faLeftLong);
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -7,36 +10,46 @@ const props = defineProps({
   modelValue: { type: String, default: '' }
 });
 
-const _showMediaContent = ref('');
-const _showDirLocation  = ref(['Images']);
+const _showMediaContent = ref([]);
+const _showDirLocation  = ref([]);
 const _currentFolder    = ref('');
 
 onMounted(() => {
-    const mediaContent = document.getElementById(props.field.input.id+'modal')
-    if (mediaContent) {
-        mediaContent.addEventListener('show.bs.modal', event => {
-            callAjax();
-        })
-        mediaContent.addEventListener('hide.bs.modal', event => {
-            _showMediaContent.value = '';
-        })
-    }
+  const mediaContent = document.getElementById(props.field.input.id+'modal')
+  if (mediaContent) {
+    mediaContent.addEventListener('show.bs.modal', event => {
+      callAjax();
+    })
+    mediaContent.addEventListener('hide.bs.modal', event => {
+      _showMediaContent.value = [];
+    })
+  }
 })
 
-function callAjax() {
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-        const jsonData = JSON.parse(this.responseText);
-        if (jsonData.status === 'success') {
+function generateData(json = null) {
+  if (!json) return false;
+  _showDirLocation.value = json.current_folder.split('/');
+  _showMediaContent.value = [];
+  _showMediaContent.value.push({
+    icon: ['fas', 'left-long'],
+    name: 'Go back'
+  })
+}
 
-        }
+function callAjax() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    const jsonData = JSON.parse(this.responseText);
+    if (jsonData.status === 'success') {
+      generateData(jsonData.data);
     }
-    if (process.env.NODE_ENV === 'development') {
-        xhttp.open("GET", "media_ajax.txt?ts="+Date.now());
-    } else {
-        xhttp.open("GET", props.field.input.ajax+"&folder="+_currentFolder.value+"&ts="+Date.now());
-    }
-    xhttp.send();
+  }
+  if (process.env.NODE_ENV === 'development') {
+    xhttp.open("GET", "media_ajax.txt?ts="+Date.now());
+  } else {
+    xhttp.open("GET", props.field.input.ajax+"&folder="+_currentFolder.value+"&ts="+Date.now());
+  }
+  xhttp.send();
 }
 </script>
 <template>
@@ -48,11 +61,19 @@ function callAjax() {
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ _showDirLocation.join(' / ') }}</h5>
+                    <h5 class="modal-title"><font-awesome-icon :icon="['fas', 'folder']" /> / {{ _showDirLocation.join(' / ') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{ _showMediaContent }}
+                    <div class="row">
+                      <div v-for="item in _showMediaContent" class="col-xl-2 col-lg-3 col-sm-4 col-4">
+                        <div class="card card-default card-body text-center">
+                          <font-awesome-icon v-if="item.icon !== undefined && item.icon" :icon="item.icon" />
+                          <div v-if="item.name !== undefined && item.name" class="form-text">{{ item.name }}</div>
+                        </div>
+                      </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
