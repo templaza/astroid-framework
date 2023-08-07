@@ -6,6 +6,7 @@
 @import "astroidcolor";
 @import "astroidradio";
 @import "astroidicon";
+@import "astroidmedia";
 .grid {
   display: grid;
   grid-template-rows:repeat(var(--bs-rows, 1), 1fr);

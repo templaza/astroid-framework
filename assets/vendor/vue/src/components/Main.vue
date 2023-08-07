@@ -50,7 +50,10 @@ function checkShow(field) {
               }">
                 <div v-if="field.type === `string`" v-html="field.input"></div>
                 <div v-else-if="field.type === `json`">
-                  <Fields :field="field" :scope="$scope" />
+                  <Fields 
+                    :field="field" 
+                    :scope="$scope" 
+                    :constant="props.config.astroid_lib" />
                 </div>
               </div>
             </div>

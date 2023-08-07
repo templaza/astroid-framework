@@ -10,7 +10,8 @@ library.add(faCircle, faArrowsLeftRight);
 
 const props = defineProps({
   field: { type: Object, default: null },
-  scope: { type: Object, default: null }
+  scope: { type: Object, default: null },
+  constant: { type: Object, default: null }
 });
 
 onMounted(()=>{
@@ -132,6 +133,6 @@ function changeColor(color) {
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-if="props.field.input.type === `astroidmedia`" class="astroid-media">
-        <MediaManager v-model="props.scope[props.field.name]" :field="props.field" />
+        <MediaManager v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
     </div>
 </template>
