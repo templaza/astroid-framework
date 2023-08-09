@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, ref, reactive, watch } from 'vue';
+import { onMounted, ref } from 'vue';
+import axios from "axios";
 import { faFolder, faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { useDropzone } from "vue3-dropzone";
+import DropZone from './DropZone.vue';
 
 library.add(faFolder, faLeftLong);
 const emit = defineEmits(['update:modelValue']);
@@ -64,23 +65,23 @@ function generateData(json = null) {
       })
     });
   }
-  
 }
 
 function callAjax() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function() {
-    const jsonData = JSON.parse(this.responseText);
-    if (jsonData.status === 'success') {
-      generateData(jsonData.data);
-    }
-  }
+  let url = props.field.input.ajax+"&action=library&asset=com_templates&folder="+_currentFolder.value+"&ts="+Date.now();
   if (process.env.NODE_ENV === 'development') {
-    xhttp.open("GET", "media_ajax.txt?ts="+Date.now());
-  } else {
-    xhttp.open("GET", props.field.input.ajax+"&folder="+_currentFolder.value+"&ts="+Date.now());
+    url = "media_ajax.txt?ts="+Date.now();
   }
-  xhttp.send();
+  axios.get(url)
+  .then(function (response) {
+    if (response.data.status === 'success') {
+      generateData(response.data.data);
+    }
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  });
 }
 
 function selectMedia(item) {
@@ -110,41 +111,29 @@ function clearMedia() {
   emit('update:modelValue', '');
 }
 
-// Upload media files
 const _uploadForm = ref(false);
-const state = reactive({
-  files: [],
-});
-
-const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({
-  onDrop,
-});
-
-watch(state, () => {
-  console.log('state', state);
-});
-
-watch(isDragActive, () => {
-  console.log('isDragActive', isDragActive.value, rest);
-});
-
-function onDrop(acceptFiles, rejectReasons) {
-  console.log('acceptFile: ',acceptFiles);
-  console.log('rejectReason: ',rejectReasons);
-  state.files = acceptFiles;
-}
-
-function handleClickDeleteFile(index) {
-  state.files.splice(index, 1);
-}
-
+const _clickUpload = ref(false);
+const _uploadBtnText = ref('Upload');
 function uploadFile() {
-  _uploadForm.value = true;
+  if (_uploadForm.value === true) {
+    _clickUpload.value = true;
+  } else {
+    _uploadForm.value = true;
+    _clickUpload.value = false;
+    _uploadBtnText.value = 'Click to Upload';
+  }
+}
+
+function uploadReset() {
+  _uploadForm.value = false;
+  _clickUpload.value = false;
+  _uploadBtnText.value = 'Upload';
+  callAjax();
 }
 </script>
 <template>
     <div v-if="_imagePreview !== ''" class="image-preview mb-3"><img :src="_imagePreview" :alt="props.field.name" /></div>
-    <div v-if="_imagePreview === ''" class="astroid-media-selector">
+    <div v-else class="astroid-media-selector">
       <button class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['select_media'] }}</button>
     </div>
     <div v-if="_imagePreview !== ''" class="astroid-media-selector btn-group" role="group">
@@ -168,32 +157,17 @@ function uploadFile() {
                         <div v-if="item.name !== undefined && item.name" class="form-text">{{ item.name }}</div>
                       </div>
                     </div>
-                    <div v-if="_uploadForm">
-                      <div v-if="state.files.length > 0" class="files">
-                        <div class="file-item" v-for="(file, index) in state.files" :key="index">
-                          <span>{{ file.name }}</span>
-                          <span class="delete-file" @click="handleClickDeleteFile(index)"
-                            >Delete</span
-                          >
-                        </div>
-                      </div>
-                      <div v-else class="dropzone" v-bind="getRootProps()">
-                        <div
-                          class="border"
-                          :class="{
-                            isDragActive,
-                          }"
-                        >
-                          <input v-bind="getInputProps()" />
-                          <p v-if="isDragActive">Drop the files here ...</p>
-                          <p v-else>Drag and drop files here, or Click to select files</p>
-                        </div>
-                      </div>
+                    <div v-else>
+                      <DropZone 
+                        :url="props.field.input.ajax+`&action=upload&media=images&dir=images/`+_currentFolder" 
+                        :click-upload="_clickUpload"
+                        @update:media="uploadReset" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click="uploadFile">Upload</button>
+                    <button v-if="!_uploadForm" type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal">Close</button>
+                    <button v-else type="button" class="btn btn-sm btn-as btn-as-light" @click="uploadReset">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click="uploadFile">{{ _uploadBtnText }}</button>
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@
         }
         &.isDragActive {
             border: 2px dashed #ffb300;
-            background: rgb(255 167 18 / 20%);
+            background: var(--as-sidebar-link-bg);
         }
     }
 
@@ -60,7 +60,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgb(255 167 18 / 20%);
+        background: var(--as-sidebar-link-bg);
         padding: 7px;
         padding-left: 15px;
         margin-top: 10px;
