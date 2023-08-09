@@ -36,33 +36,41 @@ class JFormFieldAstroidpreloaders extends JFormField {
       if (empty($this->value)) {
          $this->value = $selected['name'];
       }
-      $html = '<div class="astroid-preloader-field d-inline-block">';
-      $html .= '<span class="astroid-preloader-field-select"></span>';
-      $html .= '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '" />';
+//      $html = '<div class="astroid-preloader-field d-inline-block">';
+//      $html .= '<span class="astroid-preloader-field-select"></span>';
+//      $html .= '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '" />';
+//
+//      $html .= '<div class="astroid-preloaders-selector">';
+//      $html .= '<div class="overlay"></div>';
+//      $html .= '<div class="head">Select Preloader Style<span class="astroid-preloaders-selector-exit-fs"><i class="fas fa-times"></i></span></div>';
+//      $html .= '<div class="body">';
+//      $html .= '<div class="">';
+//
+//      foreach (Astroid\Helper\Constants::$preloaders as $preloader) {
+//         $html .= '<div class="astroid-preloader-select" data-value="' . $preloader['name'] . '"><div class="astroid-preloader-select-inner">';
+//         $html .= $preloader['code'];
+//         $html .= '</div></div>';
+//         if ($this->value == $preloader['name']) {
+//            $selected = $preloader;
+//         }
+//      }
+//      $html .= '</div>';
+//      $html .= '</div>';
+//      $html .= '</div>';
+//      $html .= '<div class="select-preloader">';
+//      $html .= $selected['code'];
+//      $html .= '</div>';
+//      $html .= '<div class="clearfix"></div></div>';
 
-      $html .= '<div class="astroid-preloaders-selector">';
-      $html .= '<div class="overlay"></div>';
-      $html .= '<div class="head">Select Preloader Style<span class="astroid-preloaders-selector-exit-fs"><i class="fas fa-times"></i></span></div>';
-      $html .= '<div class="body">';
-      $html .= '<div class="">';
+//      return $html;
 
-      foreach (Astroid\Helper\Constants::$preloaders as $preloader) {
-         $html .= '<div class="astroid-preloader-select" data-value="' . $preloader['name'] . '"><div class="astroid-preloader-select-inner">';
-         $html .= $preloader['code'];
-         $html .= '</div></div>';
-         if ($this->value == $preloader['name']) {
-            $selected = $preloader;
-         }
-      }
-      $html .= '</div>';
-      $html .= '</div>';
-      $html .= '</div>';
-      $html .= '<div class="select-preloader">';
-      $html .= $selected['code'];
-      $html .= '</div>';
-      $html .= '<div class="clearfix"></div></div>';
-
-      return $html;
+       $json =   [
+           'id'         =>  $this->id,
+           'name'       =>  $this->name,
+           'value'      =>  $this->value,
+           'preloader'  =>  Astroid\Helper\Constants::$preloaders,
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
    }
-
 }
