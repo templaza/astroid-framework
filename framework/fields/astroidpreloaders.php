@@ -63,14 +63,16 @@ class JFormFieldAstroidpreloaders extends JFormField {
 //      $html .= '<div class="clearfix"></div></div>';
 
 //      return $html;
-
        $json =   [
            'id'         =>  $this->id,
            'name'       =>  $this->name,
            'value'      =>  $this->value,
-           'preloader'  =>  Astroid\Helper\Constants::$preloaders,
-           'type'    =>  strtolower($this->type),
+           'preloader'  =>  ($this->element['astroid-preload-type'] == 'fontawesome') ? Astroid\Helper\Constants::$preloadersFont : Astroid\Helper\Constants::$preloaders,
+           'style'      =>  ($this->element['astroid-preload-type'] == 'fontawesome') ? 'fontawesome' : 'animation',
+           'type'       =>  strtolower($this->type),
        ];
+       if ($this->element['astroid-preload-type'] == 'fontawesome') {
+       }
        return json_encode($json);
    }
 }

@@ -8,7 +8,7 @@
          <field type="astroidgroup" name="lazyloadgroup" title="TPL_ASTROID_LAZYLOAD_TITLE_LABEL" />
          <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" />
 
-         <field astroidgroup="contact_info" name="contact_details" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_CONTACT_DEATILS_LABEL" description="TPL_ASTROID_CONTACT_DEATILS_DESC">
+         <field astroidgroup="contact_info" name="contact_details" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_CONTACT_DEATILS_LABEL" description="TPL_ASTROID_CONTACT_DEATILS_DESC">
          </field>
 
          <field astroidgroup="contact_info" name="contact_module_position" astroid-content-layout="contactinfo" type="astroidmodulesposition" default="astroid-top-contact" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-control" ngShow="[contact_details]" ngRequired="contact_details">
@@ -42,7 +42,7 @@
          <field astroidgroup="contact_info" ngShow="contact_details=='1' AND contact_display=='icons'" description="TPL_ASTROID_ICON_COLOR_DESC" name="icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ICON_COLOR_LABEL">
          </field>
 
-         <field astroidgroup="coming_soon" name="development_mode" type="astroidtext" astroid-switch="true" default="0" label="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_LABEL" description="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_DESC">
+         <field astroidgroup="coming_soon" name="development_mode" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_LABEL" description="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_DESC">
          </field>
 
          <field astroidgroup="coming_soon" name="coming_soon_logo" type="astroidmedia" label="TPL_ASTROID_MISCELL_COMING_LOGO_LABEL" description="TPL_ASTROID_MISCELL_COMING_LOGO_DESC" ngShow="[development_mode]=='1'" ngRequired="development_mode=='1'" class="form-control">
@@ -54,7 +54,7 @@
          <field astroidgroup="coming_soon" name="coming_soon_countdown_date" type="astroidcalendar" label="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_LABEL" description="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_DESC" default="01/01/2020 00:00 AM" ngShow="[development_mode]=='1'" ngRequired="development_mode=='1'">
          </field>
 
-         <field astroidgroup="coming_soon" name="coming_soon_social" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_LABEL" ngShow="[development_mode]=='1'" description="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_DESC">
+         <field astroidgroup="coming_soon" name="coming_soon_social" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_LABEL" ngShow="[development_mode]=='1'" description="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_DESC">
          </field>
 
          <field astroidgroup="coming_soon" ngShow="[development_mode]=='1'" description="TPL_ASTROID_MISCELL_COMING_BG_TYPE_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_MISCELL_COMING_BG_TYPE_LABEL">
@@ -149,7 +149,7 @@
          </field>
          <field astroidgroup="error_404" ngShow="[background_setting_404] =='video'" name="background_video_404" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
 
-         <field astroidgroup="lazyloadgroup" name="lazyload" type="astroidtext" astroid-switch="true" default="0" label="Enable Lazy Load" description="">
+         <field astroidgroup="lazyloadgroup" name="lazyload" type="astroidradio" astroid-switch="true" default="0" label="Enable Lazy Load" description="">
          </field>
 
          <field astroidgroup="lazyloadgroup" name="lazyload_imgs" type="astroidtextarea" label="Selected Images" class="form-control" ngShow="[lazyload]==1" description="TPL_ASTROID_LAZYLOAD_IMAGE_SELECTION_DESC">
@@ -189,15 +189,15 @@
 
          <field astroidgroup="minifygroup" description="" title="CSS Minify" type="astroidheading" name="minify_css_heading" />
 
-         <field astroidgroup="minifygroup" name="minify_css" type="astroidtext" astroid-switch="true" default="0" label="Minify CSS" description="Minify &amp; combine all CSS.">
+         <field astroidgroup="minifygroup" name="minify_css" type="astroidradio" astroid-switch="true" default="0" label="Minify CSS" description="Minify &amp; combine all CSS.">
          </field>
 
-         <field astroidgroup="minifygroup" name="minify_js" type="astroidtext" astroid-switch="true" default="0" label="Minify JS" description="Minify &amp; combine all JS.">
+         <field astroidgroup="minifygroup" name="minify_js" type="astroidradio" astroid-switch="true" default="0" label="Minify JS" description="Minify &amp; combine all JS.">
          </field>
 
          <field astroidgroup="minifygroup" ngShow="[minify_js]==true" name="minify_js_excludes" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_MINIFYJS_EXCLUDES_LABEL" description="TPL_ASTROID_MINIFYJS_EXCLUDES_DESC" hint="jquery.*,.min.js" />
 
-         <field astroidgroup="minifygroup" name="minify_html" type="astroidtext" astroid-switch="true" default="0" label="Minify HTML" description="">
+         <field astroidgroup="minifygroup" name="minify_html" type="astroidradio" astroid-switch="true" default="0" label="Minify HTML" description="">
          </field>
 
          <field astroidgroup="minifygroup" name="minify_html_level" type="astroidradio" label="HTML Minify Level" description="" default="basic" ngShow="[minify_html]=='1'">

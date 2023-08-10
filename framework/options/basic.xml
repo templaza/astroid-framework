@@ -45,7 +45,7 @@
 
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_DESC" name="preloader_animation" type="astroidpreloaders" class="form-control" default="circle" label="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_LABEL" ngShow="[preloader]=='1' AND [preloder_setting] =='animations'" astroid-variable="preloder_animations" />
 
-         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_DESC" name="preloader_fontawesome" type="astroidpreloadersFont" class="form-control" default="spinner" label="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_LABEL" ngShow="[preloader]=='1' AND [preloder_setting] =='fontawesome'" />
+         <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_DESC" name="preloader_fontawesome" type="astroidpreloaders" astroid-preload-type="fontawesome" class="form-control" default="spinner" label="TPL_ASTROID_BASIC_PRELOADER_ANIMATION_LABEL" ngShow="[preloader]=='1' AND [preloder_setting] =='fontawesome'" />
 
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_PRELOADER_COLOR_DESC" name="preloader_color" type="astroidcolor" ngShow="[preloader]=='1' AND ([preloder_setting] =='animations' OR [preloder_setting] =='fontawesome')" label="TPL_ASTROID_BASIC_PRELOADER_COLOR_LABEL">
          </field>
@@ -62,9 +62,9 @@
          <field astroidgroup="favicongroup" name="site_webmanifest" type="astroidtext" label="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_LABEL" description="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_DESC" hint="/manifest.json" class="form-control">
          </field>
 
-         <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" />
+         <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" />
 
-         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_DESC" name="backtotop_icon" type="astroidicon" class="form-control" label="TPL_ASTROID_BASIC_ICON_LABEL" />
+         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_DESC" name="backtotop_icon" type="astroidicon"  class="form-control" label="TPL_ASTROID_BASIC_ICON_LABEL" />
 
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_icon_size" type="astroidrange" min="20" max="200" step="1" postfix="px" default="20" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_icon_padding" type="astroidrange" min="5" max="100" step="1" postfix="px" default="10" label="TPL_ASTROID_BASIC_ICON_PADDING_LABEL" description="TPL_ASTROID_BASIC_ICON_PADDING_DESC" />
@@ -81,7 +81,7 @@
             <option value="square">TPL_ASTROID_ICON_STYLE_SQUARE</option>
          </field>
 
-         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidtext" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"/>
+         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_DESC" name="backtotop_on_mobile" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_DISABLE_TOP_ON_MOBILE_LABEL"/>
 
          <field astroidgroup="page_setting" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" />
          <field astroidgroup="page_setting" ngShow="[astroid_color_mode_enable]=='1'" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
@@ -133,7 +133,7 @@
          <field astroidgroup="page_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
          </field>
          
-         <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidtext" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
+         <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
          
 		   <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
          

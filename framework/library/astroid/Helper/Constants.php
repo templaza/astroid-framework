@@ -302,88 +302,94 @@ class Constants
 
     public static $preloadersFont = [
         'spinner' => [
-            'name' => 'fas fa-spinner fa-spin',
-            'code' => '<div class="fas fa-spinner fa-spin" style="font-size: 40px; margin: 0 auto;"></div>',
+            'name'      => 'fas fa-spinner fa-spin',
+            'code'      => 'fas fa-spinner',
+            'animate'   => 'spin'
         ],
         'circle-notch' => [
             'name' => 'fas fa-circle-notch fa-spin',
-            'code' => '<div class="fas fa-circle-notch fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-circle-notch',
+            'animate'   => 'spin'
         ],
         'sync' => [
             'name' => 'fas fa-sync fa-spin',
-            'code' => '<div class="fas fa-sync fa-spin fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-sync',
+            'animate'   => 'spin'
         ],
         'cog' => [
             'name' => 'fas fa-cog fa-spin',
-            'code' => '<div class="fas fa-cog fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-cog',
+            'animate'   => 'spin'
         ],
         'spinner fa-pulse' => [
             'name' => 'fas fa-spinner fa-pulse',
-            'code' => '<div class="fas fa-spinner fa-pulse" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-spinner',
+            'animate'   => 'spin-pulse'
         ],
         'stroopwafel' => [
             'name' => 'fas fa-stroopwafel fa-spin',
-            'code' => '<div class="fas fa-stroopwafel fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-stroopwafel',
+            'animate'   => 'spin'
         ],
         'sun' => [
             'name' => 'fas fa-sun fa-spin',
-            'code' => '<div class="fas fa-sun fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'sun-fr' => [
-            'name' => 'far fa-sun fa-spin',
-            'code' => '<div class="far fa-sun fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-sun',
+            'animate'   => 'spin'
         ],
         'asterisk' => [
             'name' => 'fas fa-asterisk fa-spin',
-            'code' => '<div class="fas fa-asterisk fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-asterisk',
+            'animate'   => 'spin'
         ],
         'atom' => [
             'name' => 'fas fa-atom fa-spin',
-            'code' => '<div class="fas fa-atom fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-atom',
+            'animate'   => 'spin'
         ],
         'certificate' => [
             'name' => 'fas fa-certificate fa-spin',
-            'code' => '<div class="fas fa-certificate fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-certificate',
+            'animate'   => 'spin'
         ],
         'compact-disc' => [
             'name' => 'fas fa-compact-disc fa-spin',
-            'code' => '<div class="fas fa-compact-disc fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-compact-disc',
+            'animate'   => 'spin'
         ],
         'compass' => [
             'name' => 'fas fa-compass fa-spin',
-            'code' => '<div class="fas fa-compact-compass fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'compass' => [
-            'name' => 'far fa-compass fa-spin',
-            'code' => '<div class="far fa-compass fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-compass',
+            'animate'   => 'spin'
         ],
         'crosshairs' => [
             'name' => 'fas fa-crosshairs fa-spin',
-            'code' => '<div class="fas fa-crosshairs fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-crosshairs',
+            'animate'   => 'spin'
         ],
         'dharmachakra' => [
             'name' => 'fas fa-dharmachakra fa-spin',
-            'code' => '<div class="fas fa-dharmachakra fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-dharmachakra',
+            'animate'   => 'spin'
         ],
         'bahai' => [
             'name' => 'fas fa-bahai fa-spin',
-            'code' => '<div class="fas fa-bahai fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-bahai',
+            'animate'   => 'spin'
         ],
         'life-ring' => [
             'name' => 'fas fa-life-ring fa-spin',
-            'code' => '<div class="fas fa-life-ring fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'life-ring' => [
-            'name' => 'fas fa-life-ring fa-spin',
-            'code' => '<div class="fas fa-life-ring fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-life-ring',
+            'animate'   => 'spin'
         ],
         'yin-yang' => [
             'name' => 'fas fa-yin-yang fa-spin',
-            'code' => '<div class="fas fa-yin-yang fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-yin-yang',
+            'animate'   => 'spin'
         ],
         'sync-alt' => [
             'name' => 'fas fa-sync-alt fa-spin',
-            'code' => '<div class="fas fa-sync-alt fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-sync-alt',
+            'animate'   => 'spin'
         ],
 
     ];
