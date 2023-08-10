@@ -53,6 +53,9 @@ class JFormFieldAstroidRadio extends JFormFieldList {
        ];
        if ($this->element['astroid-switch'] == 'true') {
            $json['role'] = 'switch';
+       } elseif ($this->element['radio-image'] == 'true') {
+           $json['role'] = 'image';
+           $json['options'] = $this->getOptions();
        } else {
            $json['role'] = 'default';
            $json['options'] = $this->getOptions();

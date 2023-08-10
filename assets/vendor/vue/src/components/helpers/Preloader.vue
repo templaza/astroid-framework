@@ -40,7 +40,7 @@ const updatePreloader = (item) => {
                 </div>
                 <div class="modal-body">
                     <div v-if="_showPreloaders" class="row g-3">
-                        <div class="col col-auto" v-for="(item, key) in props.field.input.preloader">
+                        <div class="col col-auto" v-for="(item, key) in props.field.input.preloader" :key="key">
                             <div class="preloader-item d-flex justify-content-center align-items-center border rounded" @click="updatePreloader(key)">
                                 <div v-if="props.field.input.style === `fontawesome`">
                                     <font-awesome-icon v-if="item.animate === 'spin'" :icon="item.code" spin size="3x" />

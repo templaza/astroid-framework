@@ -46,6 +46,10 @@ onMounted(()=>{
             }    
         });
     }
+
+    if (props.field.input.name === `params[header_mode]`) {
+        console.log(props.field.input);
+    }
 })
 
 // Astroid Color Field
@@ -87,6 +91,9 @@ function changeColor(color) {
     <select v-else-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
+    <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-select form-select" :aria-label="props.field.label">
+        <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
+    </select>
     <div v-else-if="props.field.input.type === `astroidradio`" class="astroid-radio">
         <div v-if="props.field.input.role === `default`" class="astroid-btn-group" role="group" :aria-label="props.field.label">
             <span v-for="(option, idx) in props.field.input.options" :key="idx">
@@ -94,8 +101,14 @@ function changeColor(color) {
                 <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx">{{ option.text }}</label>
             </span>
         </div>
-        <div v-if="props.field.input.role === `switch`" class="form-check form-switch">
+        <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
             <input v-model="props.scope[props.field.name]" :name="props.field.input.name" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
+        </div>
+        <div v-else-if="props.field.input.role === `image`" class="radio-image">
+            <span v-for="(option, idx) in props.field.input.options" :key="idx">
+                <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
+                <label class="btn btn-outline-light" :for="props.field.input.id+idx"><img :src="props.constant.site_url+option.text" width="150" /></label>
+            </span>
         </div>
     </div>
     <div v-else-if="props.field.input.type === `astroidcolor`" class="astroid-color">
