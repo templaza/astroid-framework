@@ -5,33 +5,43 @@ import { ModelListSelect } from "vue-search-select"
 import "vue-search-select/dist/VueSearchSelect.css"
 
 const emit = defineEmits(['update:modelValue']);
-const props = defineProps(['modelValue', 'field']);
-const options= ref([
-    { code: "01", name: "aa", desc: "desc01" },
-    { code: "02", name: "ab", desc: "desc02" },
-    { code: "03", name: "bc", desc: "desc03" },
-    { code: "04", name: "cd", desc: "desc04" },
-    { code: "05", name: "de", desc: "desc05" },
-    { code: "06", name: "ef", desc: "desc06" },
-]);
-const objectItem= ref({
-    code: "",
-    name: "",
-    desc: "",
+const props = defineProps(['modelValue', 'field', 'constant']);
+const options= ref([]);
+const fontSelected= ref({
+    value: "",
+    text: "",
 });
-const searchText= ref('');
-function codeAndNameAndDesc(item) {
-    return `${item.code} - ${item.name} - ${item.desc}`
-}
-function reset() {
-    objectItem = {}
-}
-function selectOption() {
-    // select option from parent component
-    objectItem = options.value[0]
-}
+// const searchText= ref('');
+// function codeAndNameAndDesc(item) {
+//     return `${item.code} - ${item.name} - ${item.desc}`
+// }
+// function reset() {
+//     objectItem = {}
+// }
+// function selectOption() {
+//     // select option from parent component
+//     objectItem = options.value[0]
+// }
 onMounted(()=>{
-
+    let url = props.constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&ts="+Date.now();
+    if (process.env.NODE_ENV === 'development') {
+        url = "fonts_ajax.txt?ts="+Date.now();
+    }
+    axios.get(url)
+    .then(function (response) {
+        if (response.status === 200) {
+            options.value = response.data;
+            response.data.forEach(element => {
+                if (props.field.input.value.font_face === element.value) {
+                    fontSelected.value = element;
+                }
+            });
+        }
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
 })
 </script>
 <template>
@@ -41,13 +51,17 @@ onMounted(()=>{
                 <label :for="props.field.input.id+`_font_face`" class="form-label">{{ props.field.input.lang.font_family }}</label>
                 <model-list-select
                     :list="options"
-                    v-model="objectItem"
-                    option-value="code"
-                    option-text="name"
+                    v-model="fontSelected"
+                    option-value="value"
+                    option-text="text"
                     :id="props.field.input.id+`_font_face`"
                     :name="props.field.input.name+`[font_face]`"
                     :placeholder="props.field.input.lang.inherit">
                 </model-list-select>
+                <label :for="props.field.input.id+`_alt_font_face`" class="form-label">{{ props.field.input.lang.font_family_alt }}</label>
+                <select :id="props.field.input.id+`_alt_font_face`" :name="props.field.input.name+`[alt_font_face]`" class="form-select">
+                    <option v-for="option in props.field.input.options.system_fonts" :value="option.value">{{ option.text }}</option>
+                </select>
             </div>
         </div>
     </div>

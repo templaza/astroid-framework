@@ -200,6 +200,14 @@ class JFormFieldAstroidTypography extends JFormField
 //      $extraData['defaults'] = $defaults;
 //      $data = array_merge($data, $extraData);
 //       var_dump(property_exists((object) $value['font_size'], 'desktop')); die();
+       $system_fonts = array();
+       foreach (Astroid\Helper\Font::$system_fonts as $s_font_value => $s_font_title) {
+           $system_fonts[]  =   [
+               'value'  =>  $s_font_value,
+               'text'   =>  $s_font_title
+           ];
+       }
+       $extraData['system_fonts']   =   $system_fonts;
        $json     =   [
            'id'                  =>  $this->id,
            'name'                =>  $this->name,

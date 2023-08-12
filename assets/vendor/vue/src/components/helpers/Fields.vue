@@ -47,6 +47,13 @@ onMounted(()=>{
             }    
         });
     }
+    if (props.field.input.type === `astroidradio`) {
+        if (props.field.input.role === `switch`) {
+            if (props.scope[props.field.name] === '1') {
+                props.scope[props.field.name] = true;
+            }
+        }
+    }
 })
 
 // Astroid Color Field
@@ -150,6 +157,6 @@ function changeColor(color) {
         <Preloader v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtypography`" class="astroid-typography">
-        <Typography v-model="props.scope[props.field.name]" :field="props.field" />
+        <Typography v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
     </div>
 </template>
