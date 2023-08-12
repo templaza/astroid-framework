@@ -30,11 +30,24 @@ function checkShow(field) {
   }
   return true;
 }
+
+function checkShowGroup(fields) {
+  let hasField = false;
+  if (fields.length) {
+    fields.forEach(field => {
+      if (typeof field.ngShow === 'string' && checkShow(field)) {
+        hasField = true;
+        return hasField;
+      }
+    });
+  }
+  return hasField;
+}
 </script>
 <template>
   <main class="as-main order-1">
     <div class="as-page ps-lg-2" :class="props.pageIndex[fieldSet.name]" v-for="fieldSet in props.config.astroid_content" :key="fieldSet.name">
-      <div :id="`astroid-page-`+index" class="as-content" v-if="Object.keys(fieldSet.childs).length > 0" v-for="(group, index) in fieldSet.childs" :key="index">
+      <div :id="`astroid-page-`+index" class="as-content" v-if="Object.keys(fieldSet.childs).length > 0" v-for="(group, index) in fieldSet.childs" :key="index" v-show="checkShowGroup(group.fields)">
         <h3 v-if="group.title !== ''">{{ group.title }}</h3>
         <p v-if="group.description !== ''">{{ group.description }}</p>
         <div v-if="group.fields.length > 0" class="as-group-content">

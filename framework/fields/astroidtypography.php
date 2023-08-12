@@ -59,12 +59,7 @@ class JFormFieldAstroidTypography extends JFormField
          'text_transform' => '',
       ];
 
-      $extraData = array(
-         'value' => $value,
-         'fieldname' => $this->fieldname,
-         'ngShow' => $this->element['ngShow'],
-         'ngHide' => $this->element['ngHide'],
-      );
+      $extraData = array();
 
       if (isset($this->element['font-face'])) {
          $defaults['font_face'] = $this->element['font-face'];
@@ -143,7 +138,7 @@ class JFormFieldAstroidTypography extends JFormField
       }
 
       if (isset($this->element['font-style'])) {
-         $defaults['font_style'] = \explode(',', $this->element['font-style']);
+         $defaults['font_style'] = (string) $this->element['font-style'];
       }
 
       if (isset($this->element['font-weight'])) {
@@ -201,10 +196,45 @@ class JFormFieldAstroidTypography extends JFormField
       } else {
          $extraData['transformpicker'] = true;
       }
-
-      $extraData['defaults'] = $defaults;
-
-      $data = array_merge($data, $extraData);
-      return $renderer->render($data);
+//        var_dump($defaults); die();
+//      $extraData['defaults'] = $defaults;
+//      $data = array_merge($data, $extraData);
+//       var_dump(property_exists((object) $value['font_size'], 'desktop')); die();
+       $json     =   [
+           'id'                  =>  $this->id,
+           'name'                =>  $this->name,
+           'value'               =>  [
+               'font_face'           =>  (string) $value['font_face'] != '' ? (string) $value['font_face'] : (string) $defaults['font_face'],
+               'alt_font_face'       =>  (string) $value['alt_font_face'] != '' ? (string) $value['alt_font_face'] : (string) $defaults['alt_font_face'],
+               'font_unit'           =>  (string) $value['font_unit'] != '' ? (string) $value['font_unit'] : (string) $defaults['font_unit'],
+               'font_size'           =>  property_exists((object) $value['font_size'], 'desktop') ? (object) $value['font_size'] : (object) $defaults['font_size'],
+               'font_size_unit'      =>  property_exists((object) $value['font_size_unit'], 'desktop') ? (object) $value['font_size_unit'] : (object) $defaults['font_size_unit'],
+               'font_color'          =>  (string) $value['font_color'] != '' ? (string) $value['font_color'] : (string) $defaults['font_color'],
+               'letter_spacing'      =>  property_exists((object) $value['letter_spacing'], 'desktop') ? (object) $value['letter_spacing'] : (object) $defaults['letter_spacing'],
+               'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? (object) $value['letter_spacing_unit'] : (object) $defaults['letter_spacing_unit'],
+               'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? (object) $value['line_height'] : (object) $defaults['line_height'],
+               'line_height_unit'    =>  property_exists((object) $value['line_height_unit'], 'desktop') ? (object) $value['line_height_unit'] : (object) $defaults['line_height_unit'],
+               'font_style'          =>  (string) $value['font_style'] != '' ? (string) $value['font_style'] : (string) $defaults['font_style'],
+               'font_weight'         =>  (string) $value['font_weight'] != '' ? (string) $value['font_weight'] : (string) $defaults['font_weight'],
+               'text_transform'      =>  (string) $value['text_transform'] != '' ? (string) $value['text_transform'] : (string) $defaults['text_transform'],
+           ],
+           'options'             =>  $extraData,
+           'lang'                =>  [
+               'font_family'        =>  JText::_('TPL_ASTROID_FONT_FAMILY_LABEL'),
+               'font_family_alt'    =>  JText::_('TPL_ASTROID_ALT_FONT_FAMILY_LABEL'),
+               'font_weight'        =>  JText::_('TPL_ASTROID_FONT_WEIGHT_LABEL'),
+               'font_size'          =>  JText::_('TPL_ASTROID_FONT_SIZE_LABEL'),
+               'letter_spacing'     =>  JText::_('TPL_ASTROID_LETTER_SPACING_LABEL'),
+               'line_height'        =>  JText::_('TPL_ASTROID_LINE_HEIGHT_LABEL'),
+               'font_color'         =>  JText::_('TPL_ASTROID_FONT_COLOR_LABEL'),
+               'font_style'         =>  JText::_('TPL_ASTROID_FONT_STYLE_LABEL'),
+               'text_transform'     =>  JText::_('TPL_ASTROID_TEXT_TRANSFORM_LABEL'),
+               'preview'            =>  JText::_('TPL_ASTROID_OPTIONS_PREVIEW_LABEL'),
+               'inherit'            =>  JText::_('JGLOBAL_INHERIT'),
+           ],
+           'type'                =>  strtolower($this->type),
+       ];
+       return json_encode($json);
+//      return $renderer->render($data);
    }
 }

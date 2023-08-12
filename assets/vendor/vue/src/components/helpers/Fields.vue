@@ -7,6 +7,7 @@ import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
+import Typography from './Typography.vue';
 library.add(faCircle, faArrowsLeftRight);
 
 const props = defineProps({
@@ -45,10 +46,6 @@ onMounted(()=>{
                 }
             }    
         });
-    }
-
-    if (props.field.input.name === `params[header_mode]`) {
-        console.log(props.field.input);
     }
 })
 
@@ -104,11 +101,11 @@ function changeColor(color) {
         <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
             <input v-model="props.scope[props.field.name]" :name="props.field.input.name" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
         </div>
-        <div v-else-if="props.field.input.role === `image`" class="radio-image">
-            <span v-for="(option, idx) in props.field.input.options" :key="idx">
+        <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
+            <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
-                <label class="btn btn-outline-light" :for="props.field.input.id+idx"><img :src="props.constant.site_url+option.text" width="150" /></label>
-            </span>
+                <label class="btn btn-outline-light btn-outline-image" :for="props.field.input.id+idx"><img :src="props.constant.site_url+option.text" width="150" /></label>
+            </div>
         </div>
     </div>
     <div v-else-if="props.field.input.type === `astroidcolor`" class="astroid-color">
@@ -151,5 +148,8 @@ function changeColor(color) {
     </div>
     <div v-else-if="props.field.input.type === `astroidpreloaders`" class="astroid-preloader">
         <Preloader v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidtypography`" class="astroid-typography">
+        <Typography v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>

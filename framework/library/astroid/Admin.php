@@ -194,7 +194,7 @@ class Admin extends Helper\Client
                 }
             }
 
-            $groups['none'] = ['fields' => []];
+//            $groups['none'] = ['fields' => []];
 
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {

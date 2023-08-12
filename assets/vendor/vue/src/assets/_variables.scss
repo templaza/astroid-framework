@@ -20,7 +20,9 @@
   --as-sidebar-link-bg: rgba(var(--as-violet-rgb), .1);
   --as-callout-link: 10, 88, 202;
   --as-callout-code-color: #ab296a;
-  --as-pre-bg: var(--bs-tertiary-bg)
+  --as-pre-bg: var(--bs-tertiary-bg);
+  --as-btn-image-border: #ddb6ff;
+  --as-btn-image-hover-border: #590b9d;
 }
 
 [data-bs-theme="dark"] {
@@ -30,5 +32,7 @@
   --as-sidebar-link-bg: rgba(84, 33, 187, .5);
   --as-callout-link: 110, 168, 254;
   --as-callout-code-color: #e685b5;
-  --as-pre-bg: #1b1f22
+  --as-pre-bg: #1b1f22;
+  --as-btn-image-border: #a04aec;
+  --as-btn-image-hover-border: #b773f2;
 }

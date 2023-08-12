@@ -60,3 +60,14 @@
   --bs-btn-border-radius: .5rem;
   padding: .8125rem 2rem
 }
+
+.btn-outline-image {
+  --bs-btn-border-color: var(--as-btn-image-border);
+  --bs-btn-active-border-color: var(--as-btn-image-hover-border);
+  padding: 0;
+  filter: saturate(30%);
+}
+
+.btn-check:checked + .btn-outline-image {
+  filter: brightness(100%) contrast(110%) saturate(100%) blur(0.2px) hue-rotate(0deg);
+}
