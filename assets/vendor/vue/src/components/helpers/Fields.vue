@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -15,6 +15,19 @@ const props = defineProps({
   scope: { type: Object, default: null },
   constant: { type: Object, default: null }
 });
+
+onBeforeMount(()=>{
+    if (props.field.input.type === `astroidtypography`) {
+        if (props.scope[props.field.name] === '') {
+            props.scope[props.field.name] = new Object();
+        }
+        Object.keys(props.field.input.value).forEach(key => {
+            if (typeof props.scope[props.field.name][key] === 'undefined') {
+                props.scope[props.field.name][key] = props.field.input.value[key];
+            }
+        });
+    }
+})
 
 onMounted(()=>{
     if (props.field.input.type === 'astroidcolor') {

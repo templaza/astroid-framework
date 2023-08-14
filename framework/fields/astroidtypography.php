@@ -48,13 +48,12 @@ class JFormFieldAstroidTypography extends JFormField
          'alt_font_face' => '',
          'font_size' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
          'font_size_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
-         'font_unit' => '',
          'font_color' => '',
          'letter_spacing' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
          'letter_spacing_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
          'line_height' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
          'line_height_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
-         'font_style' => [],
+         'font_style' => '',
          'font_weight' => '',
          'text_transform' => '',
       ];
@@ -69,12 +68,6 @@ class JFormFieldAstroidTypography extends JFormField
          $defaults['alt_font_face'] = $this->element['alt-font-face'];
       }
 
-      if (isset($this->element['font-unit'])) {
-         $defaults['font_unit'] = $this->element['font-unit'];
-      } else {
-         $defaults['font_unit'] = 'px';
-      }
-
       if (isset($this->element['font-size'])) {
          $object = new \stdClass();
          $object->desktop = (string) $this->element['font-size'];
@@ -84,37 +77,30 @@ class JFormFieldAstroidTypography extends JFormField
       }
 
       if (isset($this->element['font-size-unit'])) {
-         if (!is_object($this->element['font-size-unit'])) {
-            $object = new \stdClass();
-            $object->desktop = (string) $this->element['font-size-unit'];
-            $object->tablet = (string) $this->element['font-size-unit'];
-            $object->mobile = (string) $this->element['font-size-unit'];
-            $defaults['font_size_unit'] = $object;
-         }
+          $object = new \stdClass();
+          $object->desktop = (string) $this->element['font-size-unit'];
+          $object->tablet = (string) $this->element['font-size-unit'];
+          $object->mobile = (string) $this->element['font-size-unit'];
+          $defaults['font_size_unit'] = $object;
       }
-
       if (isset($this->element['font-color'])) {
-         $defaults['font_color'] = $this->element['font-color'];
+         $defaults['font_color'] = (string) $this->element['font-color'];
       }
 
       if (isset($this->element['letter-spacing'])) {
-         if (!is_object($this->element['letter-spacing'])) {
-            $object = new \stdClass();
-            $object->desktop = (string) $this->element['letter-spacing'];
-            $object->tablet = (string) $this->element['letter-spacing'];
-            $object->mobile = (string) $this->element['letter-spacing'];
-            $defaults['letter_spacing'] = $object;
-         }
+          $object = new \stdClass();
+          $object->desktop = (string) $this->element['letter-spacing'];
+          $object->tablet = (string) $this->element['letter-spacing'];
+          $object->mobile = (string) $this->element['letter-spacing'];
+          $defaults['letter_spacing'] = $object;
       }
 
       if (isset($this->element['letter-spacing-unit'])) {
-         if (!is_object($this->element['letter-spacing-unit'])) {
-            $object = new \stdClass();
-            $object->desktop = (string) $this->element['letter-spacing-unit'];
-            $object->tablet = (string) $this->element['letter-spacing-unit'];
-            $object->mobile = (string) $this->element['letter-spacing-unit'];
-            $defaults['letter_spacing_unit'] = $object;
-         }
+          $object = new \stdClass();
+          $object->desktop = (string) $this->element['letter-spacing-unit'];
+          $object->tablet = (string) $this->element['letter-spacing-unit'];
+          $object->mobile = (string) $this->element['letter-spacing-unit'];
+          $defaults['letter_spacing_unit'] = $object;
       }
 
       if (isset($this->element['line-height'])) {
@@ -128,13 +114,11 @@ class JFormFieldAstroidTypography extends JFormField
       }
 
       if (isset($this->element['line-height-unit'])) {
-         if (!is_object($this->element['line-height-unit'])) {
-            $object = new \stdClass();
-            $object->desktop = (string) $this->element['line-height-unit'];
-            $object->tablet = (string) $this->element['line-height-unit'];
-            $object->mobile = (string) $this->element['line-height-unit'];
-            $defaults['line_height_unit'] = $object;
-         }
+          $object = new \stdClass();
+          $object->desktop = (string) $this->element['line-height-unit'];
+          $object->tablet = (string) $this->element['line-height-unit'];
+          $object->mobile = (string) $this->element['line-height-unit'];
+          $defaults['line_height_unit'] = $object;
       }
 
       if (isset($this->element['font-style'])) {
@@ -142,11 +126,11 @@ class JFormFieldAstroidTypography extends JFormField
       }
 
       if (isset($this->element['font-weight'])) {
-         $defaults['font_weight'] = $this->element['font-weight'];
+         $defaults['font_weight'] = (string) $this->element['font-weight'];
       }
 
       if (isset($this->element['text-transform'])) {
-         $defaults['text_transform'] = $this->element['text-transform'];
+         $defaults['text_transform'] = (string) $this->element['text-transform'];
       }
 
       if ($this->element['color-picker'] == 'false') {
@@ -196,10 +180,6 @@ class JFormFieldAstroidTypography extends JFormField
       } else {
          $extraData['transformpicker'] = true;
       }
-//        var_dump($defaults); die();
-//      $extraData['defaults'] = $defaults;
-//      $data = array_merge($data, $extraData);
-//       var_dump(property_exists((object) $value['font_size'], 'desktop')); die();
        $system_fonts = array();
        foreach (Astroid\Helper\Font::$system_fonts as $s_font_value => $s_font_title) {
            $system_fonts[]  =   [
@@ -214,14 +194,13 @@ class JFormFieldAstroidTypography extends JFormField
            'value'               =>  [
                'font_face'           =>  (string) $value['font_face'] != '' ? (string) $value['font_face'] : (string) $defaults['font_face'],
                'alt_font_face'       =>  (string) $value['alt_font_face'] != '' ? (string) $value['alt_font_face'] : (string) $defaults['alt_font_face'],
-               'font_unit'           =>  (string) $value['font_unit'] != '' ? (string) $value['font_unit'] : (string) $defaults['font_unit'],
-               'font_size'           =>  property_exists((object) $value['font_size'], 'desktop') ? (object) $value['font_size'] : (object) $defaults['font_size'],
-               'font_size_unit'      =>  property_exists((object) $value['font_size_unit'], 'desktop') ? (object) $value['font_size_unit'] : (object) $defaults['font_size_unit'],
+               'font_size'           =>  property_exists((object) $value['font_size'], 'desktop') ? $value['font_size'] : $defaults['font_size'],
+               'font_size_unit'      =>  property_exists((object) $value['font_size_unit'], 'desktop') ? $value['font_size_unit'] : $defaults['font_size_unit'],
                'font_color'          =>  (string) $value['font_color'] != '' ? (string) $value['font_color'] : (string) $defaults['font_color'],
-               'letter_spacing'      =>  property_exists((object) $value['letter_spacing'], 'desktop') ? (object) $value['letter_spacing'] : (object) $defaults['letter_spacing'],
-               'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? (object) $value['letter_spacing_unit'] : (object) $defaults['letter_spacing_unit'],
-               'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? (object) $value['line_height'] : (object) $defaults['line_height'],
-               'line_height_unit'    =>  property_exists((object) $value['line_height_unit'], 'desktop') ? (object) $value['line_height_unit'] : (object) $defaults['line_height_unit'],
+               'letter_spacing'      =>  property_exists((object) $value['letter_spacing'], 'desktop') ? $value['letter_spacing'] : $defaults['letter_spacing'],
+               'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? $value['letter_spacing_unit'] : $defaults['letter_spacing_unit'],
+               'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? $value['line_height'] : $defaults['line_height'],
+               'line_height_unit'    =>  property_exists((object) $value['line_height_unit'], 'desktop') ? $value['line_height_unit'] : $defaults['line_height_unit'],
                'font_style'          =>  (string) $value['font_style'] != '' ? (string) $value['font_style'] : (string) $defaults['font_style'],
                'font_weight'         =>  (string) $value['font_weight'] != '' ? (string) $value['font_weight'] : (string) $defaults['font_weight'],
                'text_transform'      =>  (string) $value['text_transform'] != '' ? (string) $value['text_transform'] : (string) $defaults['text_transform'],
