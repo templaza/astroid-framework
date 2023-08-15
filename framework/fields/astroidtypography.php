@@ -53,7 +53,7 @@ class JFormFieldAstroidTypography extends JFormField
          'letter_spacing_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
          'line_height' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
          'line_height_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
-         'font_style' => '',
+         'font_style' => [],
          'font_weight' => '',
          'text_transform' => '',
       ];
@@ -122,7 +122,7 @@ class JFormFieldAstroidTypography extends JFormField
       }
 
       if (isset($this->element['font-style'])) {
-         $defaults['font_style'] = (string) $this->element['font-style'];
+         $defaults['font_style'] = explode(',', (string) $this->element['font-style']);
       }
 
       if (isset($this->element['font-weight'])) {
@@ -188,6 +188,12 @@ class JFormFieldAstroidTypography extends JFormField
            ];
        }
        $extraData['system_fonts']   =   $system_fonts;
+       $extraData['text_transform_options'] =   array(
+           'none' => JText::_('JGLOBAL_INHERIT'),
+           'uppercase' => JText::_('JGLOBAL_UPPERCASE'),
+           'lowercase' => JText::_('JGLOBAL_LOWERCASE'),
+           'capitalize' => JText::_('JGLOBAL_CAPITALIZE')
+       );
        $json     =   [
            'id'                  =>  $this->id,
            'name'                =>  $this->name,
@@ -201,7 +207,7 @@ class JFormFieldAstroidTypography extends JFormField
                'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? $value['letter_spacing_unit'] : $defaults['letter_spacing_unit'],
                'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? $value['line_height'] : $defaults['line_height'],
                'line_height_unit'    =>  property_exists((object) $value['line_height_unit'], 'desktop') ? $value['line_height_unit'] : $defaults['line_height_unit'],
-               'font_style'          =>  (string) $value['font_style'] != '' ? (string) $value['font_style'] : (string) $defaults['font_style'],
+               'font_style'          =>  count((array) $value['font_style']) ? (array) $value['font_style'] : (array) $defaults['font_style'],
                'font_weight'         =>  (string) $value['font_weight'] != '' ? (string) $value['font_weight'] : (string) $defaults['font_weight'],
                'text_transform'      =>  (string) $value['text_transform'] != '' ? (string) $value['text_transform'] : (string) $defaults['text_transform'],
            ],

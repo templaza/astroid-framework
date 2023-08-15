@@ -71,3 +71,28 @@
 .btn-check:checked + .btn-outline-image {
   filter: brightness(100%) contrast(110%) saturate(100%) blur(0.2px) hue-rotate(0deg);
 }
+
+.astroid-btn-group {
+  .btn {
+      border-radius: 0;
+  }
+  >span {
+      &:first-child {
+          > .btn {
+              border-top-left-radius: var(--bs-border-radius);
+              border-bottom-left-radius: var(--bs-border-radius);
+          }
+      }
+      &:last-child {
+          > .btn {
+              border-top-right-radius: var(--bs-border-radius);
+              border-bottom-right-radius: var(--bs-border-radius);
+          }
+      }
+      &:not(:first-child) {
+          > .btn {
+              border-left: none;
+          }
+      }
+  }
+}

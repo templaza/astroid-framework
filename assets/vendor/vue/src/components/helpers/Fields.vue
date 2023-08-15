@@ -87,7 +87,11 @@ function showColorPicker(colorMode) {
 function updateColor(color) {
     try {
         if (!!props.scope[props.field.name]) {
-            const tmp = JSON.parse(props.scope[props.field.name]);
+            let tmp = JSON.parse(props.scope[props.field.name]);
+            tmp[_currentColorMode.value] = color;
+            props.scope[props.field.name] = JSON.stringify(tmp);
+        } else {
+            let tmp = {'light': '', 'dark': ''};
             tmp[_currentColorMode.value] = color;
             props.scope[props.field.name] = JSON.stringify(tmp);
         }
@@ -134,14 +138,14 @@ function changeColor(color) {
                 'col-4 text-center' : (props.field.input.colormode === '1'),
                 'col-12': (props.field.input.colormode !== '1')
             }">
-                <font-awesome-icon :id="props.field.input.id+`-colorcircle-light`" :icon="['fas', 'circle']" size="3x" class="border" :style="{'color': _color.light}" @click="showColorPicker('light')" />
+                <font-awesome-icon :id="props.field.input.id+`-colorcircle-light`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.light}" @click="showColorPicker('light')" />
                 <div v-if="props.field.input.colormode === '1'">Light</div>
             </div>
             <div v-if="props.field.input.colormode === '1'" class="col text-center py-3">
                 <font-awesome-icon :icon="['fas', 'arrows-left-right']" />
             </div>
             <div v-if="props.field.input.colormode === '1'" class="col-4 text-center">
-                <font-awesome-icon :id="props.field.input.id+`-colorcircle-dark`" :icon="['fas', 'circle']" size="3x" class="border" :style="{'color': _color.dark}" @click="showColorPicker('dark')" />
+                <font-awesome-icon :id="props.field.input.id+`-colorcircle-dark`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.dark}" @click="showColorPicker('dark')" />
                 <div>Dark</div>
             </div>
         </div>
