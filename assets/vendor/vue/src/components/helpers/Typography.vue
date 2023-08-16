@@ -175,10 +175,4 @@ function changeColor(color) {
             </div>
         </div>
     </div>
-    <input
-        :id="props.field.input.id"
-        :name="props.field.input.name"
-        :value="JSON.stringify(modelValue)"
-        type="hidden"
-    />
 </template>

@@ -54,7 +54,7 @@ function checkShowGroup(fields) {
           <div :class="(idx !== 0 ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
             <div class="row">
               <div v-if="field.label || field.description" class="col-sm-6 col-md-5">
-                <label :for="field.input.id" class="form-label">{{ field.label }}</label>
+                <label :for="field.input.id" class="form-label" v-html="field.label"></label>
                 <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
               </div>
               <div :class="{

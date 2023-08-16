@@ -19,7 +19,7 @@
          </field>
 
          <!-- Body Typography Options -->
-         <field ngShow="[body_typography]=='custom'" astroidgroup="body_typography_group" name="body_typography_options" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-size-unit="em" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="false"></field>
+         <field ngShow="[body_typography]=='custom'" astroidgroup="body_typography_group" name="body_typography_options" type="astroidtypography" font-style-picker="true" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-size-unit="em" letter-spacing="0" line-height="1" font-weight="400" font-style="bold,italic" text-transform="none" color-picker="false"></field>
 
          <!-- Menu Typography Options -->
          <field astroidgroup="menu_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="menus_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">

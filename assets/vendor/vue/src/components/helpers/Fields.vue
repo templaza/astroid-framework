@@ -8,6 +8,8 @@ import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
 import Typography from './Typography.vue';
+import TextArea from './TextArea.vue';
+import SocialProfiles from './SocialProfiles.vue';
 library.add(faCircle, faArrowsLeftRight);
 
 const props = defineProps({
@@ -175,5 +177,11 @@ function changeColor(color) {
     </div>
     <div v-else-if="props.field.input.type === `astroidtypography`" class="astroid-typography">
         <Typography v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidtextarea`" class="astroid-textarea">
+        <TextArea v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidsocialprofiles`" class="astroid-socialprofiles">
+        <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>

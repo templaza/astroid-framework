@@ -136,10 +136,26 @@ class JFormFieldAstroidTextarea extends JFormField {
     */
    protected function getInput() {
       // Trim the trailing line in the layout file
+       // Initialize some field attributes.
+       $columns = $this->columns ? ' cols="' . $this->columns . '"' : '';
+       $rows = $this->rows ? ' rows="' . $this->rows . '"' : '';
+       $maxlength = $this->maxlength ? ' maxlength="' . $this->maxlength . '"' : '';
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $this->value,
+           'hint'    =>  $this->hint,
+           'type'    =>  strtolower($this->type),
+           'maxlength' => $maxlength,
+           'rows' => $rows,
+           'columns' => $columns,
+           'code' => (string) $this->element['code'],
+       ];
 
-      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
-
-      return rtrim($renderer->render($this->getLayoutData()), PHP_EOL);
+       return json_encode($json);
+//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
+//
+//      return rtrim($renderer->render($this->getLayoutData()), PHP_EOL);
 
       //return rtrim($this->getRenderer($this->layout)->render($this->getLayoutData()), PHP_EOL);
    }
@@ -163,11 +179,13 @@ class JFormFieldAstroidTextarea extends JFormField {
           'maxlength' => $maxlength,
           'rows' => $rows,
           'columns' => $columns,
-          'ngShow' => Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']),
-          'ngHide' => Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']),
-          'ngRequired' => Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']),
+//          'ngShow' => Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']),
+//          'ngHide' => Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']),
+//          'ngRequired' => Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']),
           'code' => $this->element['code'],
       );
+
+//      var_dump($extraData); die();
 
       return array_merge($data, $extraData);
    }
