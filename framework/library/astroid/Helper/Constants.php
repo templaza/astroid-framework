@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 class Constants 
 {
     public static $astroid_version = '2.6.6';
-    public static $fontawesome_version = '6.3.0';
+    public static $fontawesome_version = '6.4.2';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
@@ -222,6 +222,7 @@ class Constants
         ['title' => 'SoundCloud', 'link' => '', 'icons' => ['fab fa-soundcloud'], 'color' => '#FF0000', 'enabled' => false, 'icon' => 'fab fa-soundcloud'],
         ['title' => 'Spotify', 'link' => '', 'icons' => ['fab fa-spotify'], 'color' => '#00E155', 'enabled' => false, 'icon' => 'fab fa-spotify'],
         ['title' => 'Twitter', 'link' => '', 'icons' => ['fab fa-twitter', 'fab fa-twitter-square'], 'color' => '#3DA9F6', 'enabled' => false, 'icon' => 'fab fa-twitter'],
+        ['title' => 'X Twitter', 'link' => '', 'icons' => ['fa-brands fa-x-twitter', 'fa-brands fa-square-x-twitter'], 'color' => '#3DA9F6', 'enabled' => false, 'icon' => 'fa-brands fa-x-twitter'],
         ['title' => 'Telegram', 'link' => '', 'icons' => ['fab fa-telegram-plane', 'fab fa-telegram'], 'color' => '#004056', 'enabled' => false, 'icon' => 'fab fa-telegram-plane'],
         ['title' => 'Tumblr', 'link' => '', 'icons' => ['fab fa-tumblr', 'fab fa-tumblr-square'], 'color' => '#00263C', 'enabled' => false, 'icon' => 'fab fa-tumblr'],
         ['title' => 'VK', 'link' => '', 'icons' => ['fab fa-vk'], 'color' => '#4273AD', 'enabled' => false, 'icon' => 'fab fa-vk'],
