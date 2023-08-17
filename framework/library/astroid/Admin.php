@@ -124,8 +124,8 @@ class Admin extends Helper\Client
 //        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
         $document->addScript('vendor/vue/dist/index.js', 'body', [], [], 'module');
         // scripts
-        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/spectrum/spectrum.js'];
-        $document->addScript($scripts, 'body');
+//        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/spectrum/spectrum.js'];
+//        $document->addScript($scripts, 'body');
         $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  \JURI::root(),
