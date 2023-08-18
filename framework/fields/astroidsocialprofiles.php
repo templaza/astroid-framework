@@ -51,6 +51,7 @@ class JFormFieldAstroidsocialprofiles extends JFormField {
                'astroid_link'  => JText::_('TPL_ASTROID_LINK'),
                'astroid_mobile_number'  => JText::_('TPL_ASTROID_MOBILE_NUMBER'),
                'astroid_skype_id'  => JText::_('TPL_ASTROID_SKYPE_ID'),
+               'astroid_username'  => JText::_('TPL_ASTROID_MOBILE_USERNAME'),
                'astroid_social_link_placeholder'  => JText::_('TPL_ASTROID_SOCIAL_LINK_PLACEHOLDER'),
                'astroid_social_whatsapp_placeholder'  => JText::_('TPL_ASTROID_SOCIAL_WHATSAPP_PLACEHOLDER'),
                'astroid_social_telegram_placeholder'  => JText::_('TPL_ASTROID_SOCIAL_TELEGRAM_PLACEHOLDER'),
@@ -62,5 +63,4 @@ class JFormFieldAstroidsocialprofiles extends JFormField {
 //      $renderer = new JLayoutFile('fields.astroidsocialprofiles', JPATH_LIBRARIES . '/astroid/framework/layouts');
 //      return $renderer->render($this->getLayoutData());
    }
-
 }
