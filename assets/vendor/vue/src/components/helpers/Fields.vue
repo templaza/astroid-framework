@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, reactive, ref } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -10,8 +10,9 @@ import Preloader from './Preloader.vue';
 import Typography from './Typography.vue';
 import TextArea from './TextArea.vue';
 import SocialProfiles from './SocialProfiles.vue';
+import LayoutBuilder from "./LayoutBuilder.vue"
 library.add(faCircle, faArrowsLeftRight);
-
+const emit = defineEmits(['update:contentlayout']);
 const props = defineProps({
   field: { type: Object, default: null },
   scope: { type: Object, default: null },
@@ -29,6 +30,14 @@ onBeforeMount(()=>{
             }
         });
     }
+    if (props.field.input.type === `layout`) {
+        layout.value    =   props.field.input.value;
+    }
+    updateContentLayout();
+})
+
+onUpdated(()=>{
+    updateContentLayout();
 })
 
 onMounted(()=>{
@@ -71,6 +80,20 @@ onMounted(()=>{
     }
 })
 
+// Update state for Astroid Content Layout
+function updateContentLayout() {
+    if (props.field.input.type === `astroidmodulesposition`) {
+        if (typeof props.field.input.astroid_content_layout !== 'undefined' && props.field.input.astroid_content_layout !== '') {
+            emit('update:contentlayout', props.field.name, {'astroid_content_layout': props.field.input.astroid_content_layout, 'module_position': props.scope[props.field.name]});
+        }
+    }
+    if (props.field.input.type === `astroidlist`) {
+        if (typeof props.field.input.astroid_content_layout_load !== 'undefined' && props.field.input.astroid_content_layout_load !=='') {
+            emit('update:contentlayout', props.field.input.astroid_content_layout_load, {'position' : props.scope[props.field.name]});
+        }
+    }
+}
+
 // Astroid Color Field
 const _color = reactive({
     light: '',
@@ -108,6 +131,9 @@ function changeColor(color) {
     _color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
     updateColor(_color[_currentColorMode.value]);
 }
+
+// Layout Builder
+const layout = ref([]);
 </script>
 <template>
     <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" :aria-label="props.field.label" :placeholder="props.field.input.hint">
@@ -183,5 +209,11 @@ function changeColor(color) {
     </div>
     <div v-else-if="props.field.input.type === `astroidsocialprofiles`" class="astroid-socialprofiles">
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `layout`" class="astroid-layout">
+        <LayoutBuilder :list="layout" group="root" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
+        <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">
     </div>
 </template>

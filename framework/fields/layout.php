@@ -29,9 +29,17 @@ class JFormFieldLayout extends JFormField
       } else {
          $options = \json_decode($value, true);
       }
-      $fieldset = $this->element['data-fieldset'];
-      $renderer = new JLayoutFile('fields.astroidlayout', JPATH_LIBRARIES . '/astroid/framework/layouts');
-      return $renderer->render(array('fieldname' => $this->fieldname, 'name' => $this->name, 'options' => $options, 'fieldset' => $fieldset));
-      return $output;
+
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $options,
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
+//      $fieldset = $this->element['data-fieldset'];
+//      $renderer = new JLayoutFile('fields.astroidlayout', JPATH_LIBRARIES . '/astroid/framework/layouts');
+//      return $renderer->render(array('fieldname' => $this->fieldname, 'name' => $this->name, 'options' => $options, 'fieldset' => $fieldset));
+//      return $output;
    }
 }

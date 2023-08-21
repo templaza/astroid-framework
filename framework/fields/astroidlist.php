@@ -96,6 +96,8 @@ class JFormFieldAstroidList extends JFormField {
           'name'    =>  $this->name,
           'value'   =>  htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
           'options' =>  $options,
+          'astroid_content_layout'    =>  (string) $this->element['astroid-content-layout'],
+          'astroid_content_layout_load'    =>  (string) $this->element['astroid-content-layout-load'],
           'attr'    =>  trim($attr),
           'type'    =>  strtolower($this->type),
       ];

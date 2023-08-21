@@ -1,0 +1,24 @@
+.astroid-layout {
+    .ghost {
+        border-width: 2px;
+        border-style: dashed;
+    }
+    .astroid-section {
+        .card + .card {
+            margin-top: 0.5rem;
+        }
+    }
+    .astroid-sections, .astroid-rows, .astroid-cols {
+        &:empty {
+            &::after{
+                display: flex;
+                content: 'Empty';
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                border: 1px dashed var(--bs-border-color-translucent);
+                border-radius: var(--bs-border-radius);
+            }
+        }
+    }
+}

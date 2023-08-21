@@ -131,7 +131,8 @@ class JFormFieldAstroidModulesPosition extends JFormFieldList
            'name'    =>  $this->name,
            'value'   =>  htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
            'options' =>  $options,
-           'attr'    =>  trim($attr),
+           'astroid_content_layout'    =>  (string) $this->element['astroid-content-layout'],
+           'astroid_content_layout_load'    =>  (string) $this->element['astroid-content-layout-load'],
            'type'    =>  strtolower($this->type),
        ];
        return json_encode($json);

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import draggable from "vuedraggable";
@@ -29,7 +29,7 @@ function removeAt(idx) {
         listUpdated();
     }
 }
-const customSocial = reactive({
+const customSocial = {
     title   : 'My Social Link',
     link    : '#',
     icons   : [],
@@ -37,7 +37,7 @@ const customSocial = reactive({
     enabled : false,
     icon    : '',
     id      : ''
-})
+}
 function addSocial(item){
     const sec = Date.now() * 1000 + Math.random() * 1000;
     const newItem = {
@@ -67,7 +67,7 @@ function showColorPicker(id) {
                 @start="dragging=true" 
                 @end="dragging=false" 
                 @change="listUpdated"
-                class="row row-cols-1 g-4"
+                class="astroid-profile row row-cols-1 g-4"
                 item-key="id">
                 <template #item="{element, index}">
                     <div>

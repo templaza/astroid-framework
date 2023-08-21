@@ -7,6 +7,7 @@ const props = defineProps({
 });
 
 const $scope = ref(new Object());
+const astroidcontentlayouts = ref(new Object());
 
 onBeforeMount(() => {
   props.config.astroid_content.forEach((fieldSet, idx) => {
@@ -43,6 +44,24 @@ function checkShowGroup(fields) {
   }
   return hasField;
 }
+
+function updateContentLayout(index, value) {
+  if (typeof astroidcontentlayouts.value[index] === 'undefined') {
+    astroidcontentlayouts.value[index] = {
+      'astroid_content_layout' : '',
+      'module_position' : '',
+      'position' : 'after'
+    }
+  }
+  Object.keys(value).forEach(key => {
+    astroidcontentlayouts.value[index][key] = value[key];
+  })
+  let tmp = [];
+  Object.keys(astroidcontentlayouts.value).forEach(key => {
+    tmp.push(astroidcontentlayouts.value[key]['astroid_content_layout']+':'+astroidcontentlayouts.value[key]['module_position']+':'+astroidcontentlayouts.value[key]['position']);
+  })
+  $scope.value['astroidcontentlayouts'] = tmp.join(',');
+}
 </script>
 <template>
   <main class="as-main order-1">
@@ -51,7 +70,7 @@ function checkShowGroup(fields) {
         <h3 v-if="group.title !== ''">{{ group.title }}</h3>
         <p v-if="group.description !== ''">{{ group.description }}</p>
         <div v-if="group.fields.length > 0" class="as-group-content">
-          <div :class="(idx !== 0 ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
+          <div :class="(idx !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
             <div class="row">
               <div v-if="field.label || field.description" class="col-sm-6 col-md-5">
                 <label :for="field.input.id" class="form-label" v-html="field.label"></label>
@@ -61,13 +80,15 @@ function checkShowGroup(fields) {
                 'col-sm-6 col-md-7' : (field.label || field.description),
                 'col-12': !(field.label || field.description)
               }">
-                <div v-if="field.type === `string`" v-html="field.input"></div>
-                <div v-else-if="field.type === `json`">
+                <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
                   <Fields 
                     :field="field" 
-                    :scope="$scope" 
-                    :constant="props.config.astroid_lib" />
+                    :scope="$scope"
+                    :constant="props.config.astroid_lib" 
+                    @update:contentlayout="updateContentLayout"
+                    />
                 </div>
+                <div v-else v-html="field.input"></div>
               </div>
             </div>
           </div>
