@@ -20,6 +20,7 @@
   --as-violet-bg: var(--as-violet);
   --as-toc-color: var(--as-violet);
   --as-sidebar-link-bg: rgba(var(--as-violet-rgb), .1);
+  --as-layout-block-bg: rgba(var(--as-violet-rgb), .05);
   --as-callout-link: 10, 88, 202;
   --as-callout-code-color: #ab296a;
   --as-pre-bg: var(--bs-tertiary-bg);
@@ -32,9 +33,15 @@
   --as-violet-bg: #712cf9;
   --as-toc-color: var(--bs-emphasis-color);
   --as-sidebar-link-bg: rgba(84, 33, 187, .5);
+  --as-layout-block-bg: rgba(84, 33, 187, .05);
   --as-callout-link: 110, 168, 254;
   --as-callout-code-color: #e685b5;
   --as-pre-bg: #1b1f22;
   --as-btn-image-border: #a04aec;
   --as-btn-image-hover-border: #b773f2;
+}
+
+.nav {
+  --bs-nav-link-color: var(--bs-dark-text-emphasis);
+  --bs-nav-link-hover-color: var(--as-violet);
 }

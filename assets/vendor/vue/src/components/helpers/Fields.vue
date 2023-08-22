@@ -32,6 +32,7 @@ onBeforeMount(()=>{
     }
     if (props.field.input.type === `layout`) {
         layout.value    =   props.field.input.value;
+        console.log(layout);
     }
     updateContentLayout();
 })
@@ -210,7 +211,7 @@ const layout = ref([]);
     <div v-else-if="props.field.input.type === `astroidsocialprofiles`" class="astroid-socialprofiles">
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
-    <div v-else-if="props.field.input.type === `layout`" class="astroid-layout">
+    <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
         <LayoutBuilder :list="layout" group="root" />
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
