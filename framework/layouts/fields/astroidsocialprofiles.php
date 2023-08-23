@@ -25,7 +25,12 @@ if (empty($value)) {
 
    $value = \json_encode($value);
 }
-
+//$json = [
+//        'id' => $id,
+//        'name' => $name,
+//        'value' => $value,
+//
+//]
 ?>
 <script>
    var AstroidSocialProfiles = <?php echo json_encode(Astroid\Helper\Constants::$social_profiles); ?>;

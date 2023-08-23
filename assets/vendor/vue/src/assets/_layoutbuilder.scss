@@ -88,7 +88,11 @@
         font-size: 0.7rem;
         opacity: 0;
         a {
+            opacity: 0.85;
             text-decoration: none;
+            &:hover {
+                opacity: 1;
+            }
         }
     }
     .astroid-col-container {
@@ -96,7 +100,6 @@
             .column-toolbar {
                 opacity: 1;
             }
-            
         }
     }
     .row-toolbar {

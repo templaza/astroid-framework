@@ -212,7 +212,7 @@ const layout = ref([]);
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <LayoutBuilder :list="layout" group="root" />
+        <LayoutBuilder :field="props.field" :list="layout" group="root" />
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">

@@ -1,8 +1,8 @@
 <script setup>
-import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import draggable from "vuedraggable";
-const emit = defineEmits(['update:layoutBuilder']);
-const props = defineProps(['list', 'group']);
+import Modal from "./Modal.vue";
+const props = defineProps(['field', 'list', 'group']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -30,11 +30,14 @@ onBeforeMount(()=>{
     } else if (props.group === 'elements') {
         elClass = 'astroid-elements';
     }
+    console.log(props.field.input.form);
 })
-function updateLayout() {
-    emit('update:layoutBuilder', layout);
-}
 
+const showModal = ref(false);
+
+function editSection() {
+    showModal.value = true;
+}
 </script>
 <template>
     <draggable
@@ -44,7 +47,6 @@ function updateLayout() {
         :group="{ name: map[props.group] }"
         ghost-class="ghost"
         :handle="handle"
-        @change="updateLayout"
         item-key="id"
     >
         <template #item="{ element }">
@@ -53,7 +55,7 @@ function updateLayout() {
                     <span class="navbar-text" href="#"><span class="section-handle handle bg-body-secondary px-1 py-1 rounded me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span> {{ element.params.find((param) => param.name === 'title').value }}</span>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="nav-link px-1" href="#" data-bs-toggle="modal" :data-bs-target="`#section-modal-`+element.id" @click.prevent="editSection"><i class="fas fa-pencil-alt"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#"><i class="fas fa-copy"></i></a>
@@ -69,7 +71,16 @@ function updateLayout() {
                         </li>
                     </ul>
                 </nav>
-                <LayoutBuilder :list="element" :group="map[props.group]" />
+                <Modal :id="`section-modal-`+element.id">
+                    <template #general>{{ element.params.find((param) => param.name === 'title').value }}</template>
+                    <template #design>
+                        <p>Modal body text goes here.</p>
+                    </template>
+                    <template #responsive>
+                        Hallo
+                    </template>
+                </Modal>
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
             </div>
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
                 <div class="row-toolbar position-absolute">
@@ -78,7 +89,7 @@ function updateLayout() {
                     <div><a href="#" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
             </div>
             <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="`col-`+element.size">
                 <div class="d-flex justify-content-between">
@@ -89,7 +100,7 @@ function updateLayout() {
                         <a href="#"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis"><i class="fas fa-plus"></i><span class="d-none d-md-inline">Element</span></span></a>
                     </div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
             </div>
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body">
                 <div class="d-flex justify-content-between">
@@ -114,7 +125,7 @@ function updateLayout() {
             </div>
             <div v-else>
                 {{ element.id }}
-                <LayoutBuilder :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
             </div>
         </template>
     </draggable>
