@@ -1,11 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from "axios";
-import { faFolder, faLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { library } from '@fortawesome/fontawesome-svg-core'
 import DropZone from './DropZone.vue';
 
-library.add(faFolder, faLeftLong);
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   field: { type: Object, default: null },
@@ -40,7 +37,7 @@ function generateData(json = null) {
   if (_currentFolder.value !== '') {
     _showMediaContent.value.push({
       id: 'go-back',
-      icon: ['fas', 'left-long'],
+      icon: 'fas fa-left-long',
       name: 'Go back',
       type: 'back'
     })
@@ -48,7 +45,7 @@ function generateData(json = null) {
   json.folders.forEach((element,id) => {
     _showMediaContent.value.push({
       id: 'folder'+id,
-      icon: ['fas', 'folder'],
+      icon: 'fas fa-folder',
       name: element.name,
       path_relative: element.path_relative,
       type: 'folder'
@@ -62,6 +59,17 @@ function generateData(json = null) {
         path_relative: element.path_relative,
         path: props.constant.site_url + `images/` + element.path_relative,
         type: 'image'
+      })
+    });
+  }
+  if (props.field.input.media === 'videos') {
+    json.images.forEach((element,id) => {
+      _showMediaContent.value.push({
+        id: 'video'+id,
+        name: element.name,
+        path_relative: element.path_relative,
+        path: props.constant.site_url + `images/` + element.path_relative,
+        type: 'video'
       })
     });
   }
@@ -87,6 +95,11 @@ function callAjax() {
 function selectMedia(item) {
   let dirLocation = _showDirLocation.value.join('/');
   if (item.type === 'image') {
+    _imagePreview.value = props.constant.site_url + `images/` + item.path_relative;
+    emit('update:modelValue', item.path_relative);
+    document.getElementById(props.field.input.id+'close').click();
+  }
+  if (item.type === 'video') {
     _imagePreview.value = props.constant.site_url + `images/` + item.path_relative;
     emit('update:modelValue', item.path_relative);
     document.getElementById(props.field.input.id+'close').click();
@@ -144,14 +157,14 @@ function uploadReset() {
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><font-awesome-icon :icon="['fas', 'folder']" /> / {{ _showDirLocation.join(' / ') }}</h5>
+                    <h5 class="modal-title"><i class="fas fa-folder"></i> / {{ _showDirLocation.join(' / ') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" :id="props.field.input.id+'close'"></button>
                 </div>
                 <div class="modal-body">
                     <div v-if="!_uploadForm" class="row row-cols-2 row-cols-lg-4 row-cols-xl-5 g-3">
                       <div v-for="item in _showMediaContent" :key="item.id" class="col">
                         <div class="card card-default media-icon justify-content-center align-items-center" :class="item.type+`-type`" @click="selectMedia(item)">
-                          <font-awesome-icon v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :icon="item.icon" size="3x" class="icon-folder" />
+                          <i v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :class="item.icon" class="icon-folder fa-3x"></i>
                           <img v-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" :alt="item.name" />
                         </div>
                         <div v-if="item.name !== undefined && item.name" class="form-text">{{ item.name }}</div>

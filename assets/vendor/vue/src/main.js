@@ -1,10 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min'
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import './assets/base.scss'
+window.bootstrap = bootstrap;
 const app = createApp(App);
 app.use(VueMonacoEditorPlugin, {
     paths: {

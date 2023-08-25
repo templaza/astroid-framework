@@ -234,11 +234,11 @@ class Admin extends Helper\Client
             $presets    =   Helper::getPresets();
 
             //Generate form
-            foreach ($groups as $groupname => $group) {
-                if (empty($group['fields'])) {
-                    continue;
-                }
-            }
+//            foreach ($groups as $groupname => $group) {
+//                if (empty($group['fields'])) {
+//                    continue;
+//                }
+//            }
         }
         $doc->addScriptOptions('astroid_content', $form_content);
 

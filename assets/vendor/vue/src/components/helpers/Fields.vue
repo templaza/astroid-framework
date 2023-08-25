@@ -10,7 +10,8 @@ import Preloader from './Preloader.vue';
 import Typography from './Typography.vue';
 import TextArea from './TextArea.vue';
 import SocialProfiles from './SocialProfiles.vue';
-import LayoutBuilder from "./LayoutBuilder.vue"
+import LayoutBuilder from "./LayoutBuilder.vue";
+import Spacing from './Spacing.vue';
 library.add(faCircle, faArrowsLeftRight);
 const emit = defineEmits(['update:contentlayout']);
 const props = defineProps({
@@ -32,7 +33,6 @@ onBeforeMount(()=>{
     }
     if (props.field.input.type === `layout`) {
         layout.value    =   props.field.input.value;
-        console.log(layout);
     }
     updateContentLayout();
 })
@@ -144,6 +144,9 @@ const layout = ref([]);
     <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-select form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
     </select>
+    <select v-else-if="props.field.input.type === `astroidanimations`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
+        <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
+    </select>
     <div v-else-if="props.field.input.type === `astroidradio`" class="astroid-radio">
         <div v-if="props.field.input.role === `default`" class="astroid-btn-group" role="group" :aria-label="props.field.label">
             <span v-for="(option, idx) in props.field.input.options" :key="idx">
@@ -212,7 +215,10 @@ const layout = ref([]);
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <LayoutBuilder :field="props.field" :list="layout" group="root" />
+        <LayoutBuilder :field="props.field" :list="layout" group="root" :constant="props.constant" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-astroidspacing">
+        <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">

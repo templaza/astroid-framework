@@ -21,55 +21,19 @@ class JFormFieldLayout extends JFormField
       return '';
    }
 
-   private function renderData($astroidElement) {
-       $form = $astroidElement->getForm();
-       $fieldsets = $form->getFieldsets();
-       $form_content = array();
-       foreach ($fieldsets as $key => $fieldset) {
-           $fields = $form->getFieldset($key);
-           $groups = [];
-           foreach ($fields as $key => $field) {
-               if ($field->type == 'astroidgroup') {
-                   $groups[$field->fieldname] = ['title' => $field->getAttribute('title', ''), 'icon' => $field->getAttribute('icon', ''), 'description' => $field->getAttribute('description', ''), 'fields' => []];
-               }
-           }
-           foreach ($fields as $key => $field) {
-               if ($field->type == 'astroidgroup') {
-                   continue;
-               }
-               $field_group = $field->getAttribute('astroidgroup', 'none');
-               $field_tmp  =   [
-                   'id'            =>  $field->id,
-                   'name'          =>  $field->fieldname,
-                   'value'         =>  $field->value,
-                   'label'         =>  JText::_($field->getAttribute('label')),
-                   'description'   =>  JText::_($field->getAttribute('description')),
-                   'type'          =>  $field->type,
-                   'group'         =>  $fieldset->name,
-                   'ngShow'        =>  Astroid\Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
-               ];
-               $groups[$field_group]['fields'][] = $field_tmp;
-           }
-           $fieldset->label    = JText::_($fieldset->label);
-           $fieldset->childs   = $groups;
-           $form_content[] = $fieldset;
-       }
-       return $form_content;
-   }
-
    public function getInput()
    {
        $form_template = array();
        $astroidElements = Astroid\Helper::getAllAstroidElements();
        foreach ($astroidElements as $astroidElement) {
-           $form_template[$astroidElement->type] = $this->renderData($astroidElement);
+           $form_template[$astroidElement->type] = $astroidElement->renderJson();
        }
        $sectionElement = new AstroidElement('section');
-       $form_template['section'] = $this->renderData($sectionElement);
+       $form_template['section'] = $sectionElement->renderJson();
        $rowElement = new AstroidElement('row');
-       $form_template['row'] = $this->renderData($rowElement);
+       $form_template['row'] = $rowElement->renderJson();
        $columnElement = new AstroidElement('column');
-       $form_template['column'] = $this->renderData($columnElement);
+       $form_template['column'] = $columnElement->renderJson();
 
        $value = $this->value;
        if (empty($value)) {
@@ -86,9 +50,5 @@ class JFormFieldLayout extends JFormField
            'form'    =>  $form_template
        ];
        return json_encode($json);
-//      $fieldset = $this->element['data-fieldset'];
-//      $renderer = new JLayoutFile('fields.astroidlayout', JPATH_LIBRARIES . '/astroid/framework/layouts');
-//      return $renderer->render(array('fieldname' => $this->fieldname, 'name' => $this->name, 'options' => $options, 'fieldset' => $fieldset));
-//      return $output;
    }
 }

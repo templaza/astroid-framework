@@ -2,7 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import draggable from "vuedraggable";
 import Modal from "./Modal.vue";
-const props = defineProps(['field', 'list', 'group']);
+const props = defineProps(['field', 'list', 'group', 'showModal', 'constant']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -30,13 +30,19 @@ onBeforeMount(()=>{
     } else if (props.group === 'elements') {
         elClass = 'astroid-elements';
     }
-    console.log(props.field.input.form);
+    layout.value[map[props.group]].forEach(element => {
+        showModal.value[element.id] = false;
+    });
 })
 
-const showModal = ref(false);
+const showModal = ref(new Object());
 
-function editSection() {
-    showModal.value = true;
+function editElement(id) {
+    showModal.value[id] = true;
+}
+
+function closeElement(id) {
+    showModal.value[id] = false;
 }
 </script>
 <template>
@@ -55,7 +61,7 @@ function editSection() {
                     <span class="navbar-text" href="#"><span class="section-handle handle bg-body-secondary px-1 py-1 rounded me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span> {{ element.params.find((param) => param.name === 'title').value }}</span>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="modal" :data-bs-target="`#section-modal-`+element.id" @click.prevent="editSection"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="nav-link px-1" href="#" @click.prevent="editElement(element.id)"><i class="fas fa-pencil-alt"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#"><i class="fas fa-copy"></i></a>
@@ -71,36 +77,36 @@ function editSection() {
                         </li>
                     </ul>
                 </nav>
-                <Modal :id="`section-modal-`+element.id">
-                    <template #general>{{ element.params.find((param) => param.name === 'title').value }}</template>
-                    <template #design>
-                        <p>Modal body text goes here.</p>
-                    </template>
-                    <template #responsive>
-                        Hallo
-                    </template>
-                </Modal>
                 <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <Transition name="fade">
+                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:close-element="closeElement" />
+                </Transition>
             </div>
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
                 <div class="row-toolbar position-absolute">
                     <div class="row-handle handle text-dark-emphasis"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>
                     <div><a href="#" class="text-dark-emphasis"><i class="fa-solid fa-table-columns"></i></a></div>
-                    <div><a href="#" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
+                    <div><a href="#" @click.prevent="editElement(element.id)" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
                 <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <Transition name="fade">
+                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:close-element="closeElement" />
+                </Transition>
             </div>
             <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="`col-`+element.size">
                 <div class="d-flex justify-content-between">
                     <div class="font-monospace text-body-tertiary mb-2">col-lg-{{ element.size }}</div>
                     <div class="column-toolbar">
                         <span class="column-handle handle bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>
-                        <a href="#"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
+                        <a href="#" @click.prevent="editElement(element.id)"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                         <a href="#"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis"><i class="fas fa-plus"></i><span class="d-none d-md-inline">Element</span></span></a>
                     </div>
                 </div>
                 <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <Transition name="fade">
+                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:close-element="closeElement" />
+                </Transition>
             </div>
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body">
                 <div class="d-flex justify-content-between">
@@ -111,7 +117,7 @@ function editSection() {
                     <div class="element-toolbar">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link py-0 ps-0 pe-1" href="#"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="nav-link py-0 ps-0 pe-1" href="#" @click.prevent="editElement(element.id)"><i class="fas fa-pencil-alt"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-0 px-1" href="#"><i class="fas fa-copy"></i></a>
@@ -122,6 +128,9 @@ function editSection() {
                         </ul>
                     </div>
                 </div>
+                <Transition name="fade">
+                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:close-element="closeElement" />
+                </Transition>
             </div>
             <div v-else>
                 {{ element.id }}

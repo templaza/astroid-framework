@@ -35,16 +35,12 @@ class JFormFieldAstroidSpacing extends JFormField
      */
     protected function getInput()
     {
-        $units = isset($this->element['units']) ? (string) $this->element['units'] : [];
-        $this->units = !empty($units) ? explode(',', $units) : [];
-
-        $this->unit = isset($this->element['unit']) ? (string) $this->element['unit'] : '';
-
-        $renderer = new JLayoutFile('fields.astroidspacing', JPATH_LIBRARIES . '/astroid/framework/layouts');
-
-        $data = $this->getLayoutData();
-        $data['fieldname'] = $this->fieldname;
-        $data['name'] = $this->name;
-        return $renderer->render($data);
+        $json =   [
+            'id'      =>  $this->id,
+            'name'    =>  $this->name,
+            'value'   =>  $this->value,
+            'type'    =>  strtolower($this->type),
+        ];
+        return json_encode($json);
     }
 }

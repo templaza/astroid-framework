@@ -60,7 +60,7 @@
             }
         }
     }
-    .astroid-element{
+    .astroid-element {
         cursor: move;
         &:hover {
             .element-toolbar {
@@ -68,6 +68,9 @@
                     opacity: 1;
                 }
             }
+        }
+        .astroid-modal {
+            cursor: initial;
         }
     }
     .section-toolbar {
