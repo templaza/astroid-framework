@@ -28,7 +28,7 @@
          <field astroidgroup="contact_info" name="contact_mobile_number" type="astroidtext" label="TPL_ASTROID_MISCELL_MOBILE_NUMBER_LABEL" description="TPL_ASTROID_MISCELL_MOBILE_NUMBER_DESC" hint="+1 123 456 7890" ngShow="[contact_details]=='1'" class="form-control">
          </field>
 
-         <field astroidgroup="contact_info" name="contact_email_address" type="astroidtext" label="JGLOBAL_EMAIL" description="TPL_ASTROID_MISCELL_EMAIL_DESC" hint="email@yourcompany.com" ngShow="contact_details=='1'" class="form-control">
+         <field astroidgroup="contact_info" name="contact_email_address" type="astroidtext" label="JGLOBAL_EMAIL" description="TPL_ASTROID_MISCELL_EMAIL_DESC" hint="email@yourcompany.com" ngShow="[contact_details]=='1'" class="form-control">
          </field>
 
          <field astroidgroup="contact_info" name="contact_open_hours" type="astroidtext" label="TPL_ASTROID_MISCELL_OPEN_HOURS_LABEL" description="TPL_ASTROID_MISCELL_OPEN_HOURS_DESC" hint="Mon-Fri : 9:00am - 6:00pm" ngShow="[contact_details]=='1'" class="form-control">
@@ -39,7 +39,7 @@
             <option value="icons">TPL_ASTROID_ICONS</option>
          </field>
 
-         <field astroidgroup="contact_info" ngShow="contact_details=='1' AND contact_display=='icons'" description="TPL_ASTROID_ICON_COLOR_DESC" name="icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ICON_COLOR_LABEL">
+         <field astroidgroup="contact_info" ngShow="[contact_details]=='1' AND [contact_display]=='icons'" description="TPL_ASTROID_ICON_COLOR_DESC" name="icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ICON_COLOR_LABEL">
          </field>
 
          <field astroidgroup="coming_soon" name="development_mode" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_LABEL" description="TPL_ASTROID_MISCELL_ENABLE_DEVELOPMENT_MODE_DESC">

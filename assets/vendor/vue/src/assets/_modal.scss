@@ -1,5 +1,8 @@
 .astroid-modal {
     background-color: rgba(0,0,0, 0.5);
+    .modal.show {
+        background-color: rgba(0,0,0, 0.5);
+    }
     .nav {
         --bs-nav-link-padding-y: 1rem;
         background: transparent linear-gradient(to right, var(--as-violet-bg), #171124) repeat scroll 0 0 !important;
