@@ -1,7 +1,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import Fields from './Fields.vue';
-const emit = defineEmits(['update:closeElement']);
+const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
 const params = ref(new Object());
 onBeforeMount(()=>{
@@ -24,6 +24,17 @@ function checkShow(field) {
     }
     return true;
 }
+function saveModal(){
+    let tmp = [];
+    Object.keys(params.value).forEach(key => {
+        tmp.push({
+            'name': key,
+            'value': params.value[key]
+        });
+    });
+    emit('update:saveElement', tmp);
+    emit('update:closeElement', props.element.id)
+}
 </script>
 <template>
     <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" @click.self="emit('update:closeElement', props.element.id)">
@@ -42,12 +53,12 @@ function checkShow(field) {
                         <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid">
                             <div v-for="(field, fid) in group.fields" :key="field.id" :class="(fid !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-show="checkShow(field)">
                                 <div class="row">
-                                    <div v-if="field.label || field.description" class="col-sm-6 col-md-5">
+                                    <div v-if="field.label || field.description" class="col-lg-5">
                                         <label :for="field.input.id" class="form-label" v-html="field.label"></label>
                                         <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
                                     </div>
                                     <div :class="{
-                                        'col-sm-6 col-md-7' : (field.label || field.description),
+                                        'col-lg-7' : (field.label || field.description),
                                         'col-12': !(field.label || field.description)
                                     }">
                                         <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
@@ -66,7 +77,7 @@ function checkShow(field) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-as btn-as-light" @click="emit('update:closeElement', props.element.id)">Close</button>
-                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary">Save changes</button>
+                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click="saveModal">Save changes</button>
                 </div>
             </div>
         </div>

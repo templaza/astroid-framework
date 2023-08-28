@@ -196,7 +196,7 @@ class AstroidElement
                 if ($field->type == 'astroidgroup') {
                     continue;
                 }
-                $model_form[$field->type] = $field->value;
+                $model_form[$field->fieldname] = $field->value;
                 $field_group = $field->getAttribute('astroidgroup', 'none');
                 $js_input   =   json_decode($field->input);
                 $field_tmp  =   [

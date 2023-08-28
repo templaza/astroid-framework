@@ -33,8 +33,11 @@ const data = ref({
     }
 });
 onBeforeMount(()=>{
-    if (props.modelValue !== '') {
-        data.value = JSON.parse(props.modelValue);
+    if (typeof props.modelValue !== 'undefined' && props.modelValue !== '') {
+        data.value = {
+            ...data.value,
+            ...JSON.parse(props.modelValue)
+        };
     }
 })
 function changeDevice(device) {
