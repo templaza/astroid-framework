@@ -12,12 +12,11 @@ namespace Astroid\Component;
 defined('_JEXEC') or die;
 
 use Astroid\Framework;
+use \Joomla\Module\Menu\Site\Helper\MenuHelper;
 
 if (ASTROID_JOOMLA_VERSION == 3) {
     \JLoader::register('ModMenuHelper', JPATH_SITE . '/modules/mod_menu/helper.php');
     \JLoader::registerAlias('MenuHelper', '\\ModMenuHelper');
-} else {
-    \JLoader::registerAlias('MenuHelper', '\\Joomla\\Module\\Menu\\Site\\Helper\\MenuHelper');
 }
 
 class Menu
@@ -46,10 +45,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
@@ -582,10 +581,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
@@ -631,10 +630,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
