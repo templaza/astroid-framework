@@ -5,7 +5,9 @@ const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
 const params = ref(new Object());
 onBeforeMount(()=>{
-    params.value = props.form.model;
+    Object.keys(props.form.model).forEach(key => {
+        params.value[key] = props.form.model[key];
+    })
     if (typeof props.element.params !== 'undefined') {
         props.element.params.forEach(el => {
             params.value[el.name] = el.value;

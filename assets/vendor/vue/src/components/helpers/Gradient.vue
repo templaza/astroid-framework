@@ -101,11 +101,11 @@ const getGradientStyle = computed(() => {
     <div class="gradient-start-stop-position mb-3">
         <div class="row row-cols-2">
             <div>
-                <label :for="props.field.input.id+`-gradient-start-pos`" class="form-label form-text">Start Color Position: {{ gradient.start_pos }}</label>
+                <label :for="props.field.input.id+`-gradient-start-pos`" class="form-label form-text">Start Color Position: {{ gradient.start_pos }}%</label>
                 <input type="range" v-model="gradient.start_pos" :id="props.field.input.id+`-gradient-start-pos`" class="form-range" min="0" max="100">
             </div>
             <div>
-                <label :for="props.field.input.id+`-gradient-stop-pos`" class="form-label form-text">Stop Color Position: {{ gradient.stop_pos }}</label>
+                <label :for="props.field.input.id+`-gradient-stop-pos`" class="form-label form-text">Stop Color Position: {{ gradient.stop_pos }}%</label>
                 <input type="range" v-model="gradient.stop_pos" :id="props.field.input.id+`-gradient-stop-pos`" class="form-range" min="0" max="100">
             </div>
         </div>

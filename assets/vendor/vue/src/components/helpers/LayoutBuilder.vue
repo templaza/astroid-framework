@@ -2,6 +2,8 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import draggable from "vuedraggable";
 import Modal from "./Modal.vue";
+import LayoutGrid from "./LayoutGrid.vue";
+
 const props = defineProps(['field', 'list', 'group', 'showModal', 'constant']);
 const layout = ref([]);
 const map = {
@@ -32,6 +34,7 @@ onBeforeMount(()=>{
     }
     layout.value[map[props.group]].forEach(element => {
         showModal.value[element.id] = false;
+        showGrid.value[element.id] = false;
     });
 })
 
@@ -41,6 +44,7 @@ onMounted(()=>{
 })
 
 const showModal = ref(new Object());
+const showGrid  = ref(new Object());
 
 function editElement(id) {
     showModal.value[id] = true;
@@ -48,6 +52,31 @@ function editElement(id) {
 
 function closeElement(id) {
     showModal.value[id] = false;
+}
+
+function addElement(type, index) {
+    const sec = Date.now() * 1000 + Math.random() * 1000;
+    switch (type) {
+        case 'section':
+            layout.value[map[props.group]].splice(index+1, 0, {
+                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                type: 'section',
+                rows: new Array(),
+                params: [
+                    {name: 'title', value: 'Astroid Section'}
+                ]
+            });
+            break;
+    
+        default:
+            break;
+    }
+}
+
+function deleteElement(index) {
+    if (confirm('Are you sure?')) {
+        layout.value[map[props.group]].splice(index, 1);
+    }
 }
 </script>
 <template>
@@ -60,7 +89,7 @@ function closeElement(id) {
         :handle="handle"
         item-key="id"
     >
-        <template #item="{ element }">
+        <template #item="{ element, index }">
             <div v-if="props.group === `root`" class="astroid-section-container">
                 <nav class="section-toolbar navbar">
                     <span class="navbar-text" href="#"><span class="section-handle handle bg-body-secondary px-1 py-1 rounded me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span> {{ element.params.find((param) => param.name === 'title').value }}</span>
@@ -72,13 +101,13 @@ function closeElement(id) {
                             <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Section"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Remove Section"><i class="fas fa-trash-alt"></i></a>
+                            <a class="nav-link px-1" href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Section"><i class="fas fa-trash-alt"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#"><i class="fas fa-plus"></i> New Row</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#"><i class="fas fa-plus"></i> New Section</a>
+                            <a class="nav-link px-1" href="#" @click.prevent="showGrid[element.id] = true"><i class="fas fa-plus"></i> New Section</a>
                         </li>
                     </ul>
                 </nav>
@@ -86,13 +115,16 @@ function closeElement(id) {
                 <Transition name="fade">
                     <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
                 </Transition>
+                <Transition name="fade">
+                    <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" />
+                </Transition>
             </div>
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
                 <div class="row-toolbar position-absolute">
                     <div class="row-handle handle text-dark-emphasis"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>
                     <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis"><i class="fa-solid fa-table-columns"></i></a></div>
                     <div><a href="#" @click.prevent="editElement(element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
-                    <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
+                    <div><a href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
                 <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
                 <Transition name="fade">
@@ -128,7 +160,7 @@ function closeElement(id) {
                                 <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element"><i class="fas fa-copy"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-0 pe-0 ps-1" href="#" data-bs-toggle="tooltip" data-bs-title="Remove Element"><i class="fas fa-trash-alt"></i></a>
+                                <a class="nav-link py-0 pe-0 ps-1" href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Element"><i class="fas fa-trash-alt"></i></a>
                             </li>
                         </ul>
                     </div>
