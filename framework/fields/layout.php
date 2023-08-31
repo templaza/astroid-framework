@@ -26,7 +26,7 @@ class JFormFieldLayout extends JFormField
        $form_template = array();
        $astroidElements = Astroid\Helper::getAllAstroidElements();
        foreach ($astroidElements as $astroidElement) {
-           $form_template[$astroidElement->type] = $astroidElement->renderJson();
+           $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
        }
        $sectionElement = new AstroidElement('section');
        $form_template['section'] = $sectionElement->renderJson();

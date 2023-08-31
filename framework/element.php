@@ -18,6 +18,7 @@ class AstroidElement
    public $type = '';
    public $title = '';
    public $icon = '';
+   public $category = '';
    public $multiple = true;
    public $classname = '';
    public $description = '';
@@ -62,7 +63,11 @@ class AstroidElement
             $this->default_xml_file = $library_elements_directory . 'row-default.xml';
             break;
          default:
-            $this->default_xml_file = $library_elements_directory . 'default.xml';
+             if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
+                 $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
+             } else {
+                 $this->default_xml_file = $library_elements_directory . 'default.xml';
+             }
             break;
       }
 
@@ -100,9 +105,11 @@ class AstroidElement
       $description = (string) @$xml->description;
       $color = (string) @$xml->color;
       $multiple = (string) @$xml->multiple;
+      $category = (string) @$xml->category;
 
       $this->title = $title;
       $this->icon = $icon;
+      $this->category = explode(',', $category);
       $this->description = $description;
       $this->color = $color;
       $this->multiple = $multiple == "false" ? false : true;
@@ -137,6 +144,7 @@ class AstroidElement
          'type' => $this->type,
          'title' => JText::_($this->title),
          'icon' => $this->icon,
+          'category' => $this->category,
          'description' => JText::_($this->description),
          'color' => $this->color,
          'multiple' => $this->multiple,
@@ -178,7 +186,7 @@ class AstroidElement
       return $form;
    }
 
-    public function renderJson() {
+    public function renderJson($type = 'system') {
         $form = $this->getForm();
         $fieldsets = $form->getFieldsets();
         $form_content = array();
@@ -220,8 +228,7 @@ class AstroidElement
             $fieldset->childs   = $groups;
             $form_content[] = $fieldset;
         }
-
-        return array('content' => $form_content, 'model' => $model_form);
+        return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
     }
 
    public function getForm()

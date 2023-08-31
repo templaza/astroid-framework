@@ -36,6 +36,7 @@
     }
     .astroid-rows:empty::after{
         content: 'Empty Row';
+        margin-top: 29px;
     }
     .astroid-cols:empty::after{
         content: 'Empty Column';
@@ -122,6 +123,51 @@
             .row-toolbar {
                 opacity: 1;
             }
+        }
+    }
+    .add-element {
+        margin-top: -13px;
+        font-size: 0.7rem;
+        > a {
+            z-index: 9;
+            text-decoration: none;
+            &:hover {
+                .add-element-text {
+                    display: inline;
+                }
+            }
+        }
+        .add-element-text {
+            display: none;
+        }
+        
+    }
+    .astroid-grid {
+        cursor: pointer;
+        &:hover {
+            .astroid-grid-column {
+                background-color: var(--as-layout-block-bg);
+            }
+        }
+    }
+    .astroid-element-nav {
+        @media (min-width: 992px) {
+            width: 200px;
+        }
+        .nav-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .active .nav-link {
+            background-color: var(--as-sidebar-link-bg);
+        }
+    }
+    .addon-block {
+        cursor: pointer;
+        min-height: 150px;
+        &:hover {
+            background-color: var(--as-layout-block-bg);
         }
     }
 }

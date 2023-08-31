@@ -1,8 +1,9 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import Modal from "./Modal.vue";
 import LayoutGrid from "./LayoutGrid.vue";
+import SelectElement from "./SelectElement.vue";
 
 const props = defineProps(['field', 'list', 'group', 'showModal', 'constant']);
 const layout = ref([]);
@@ -35,6 +36,7 @@ onBeforeMount(()=>{
     layout.value[map[props.group]].forEach(element => {
         showModal.value[element.id] = false;
         showGrid.value[element.id] = false;
+        showElement.value[element.id] = false;
     });
 })
 
@@ -54,23 +56,84 @@ function closeElement(id) {
     showModal.value[id] = false;
 }
 
-function addElement(type, index) {
+function addGrid(element, index, grid = []) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
-    switch (type) {
+    let tmp_grid = [];
+    
+    switch (_addtype.value) {
         case 'section':
+            grid.forEach(col => {
+                if (col > 0) {
+                    tmp_grid.push({
+                        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                        type: 'column',
+                        size: col,
+                        elements: []
+                    })
+                }
+            });
             layout.value[map[props.group]].splice(index+1, 0, {
                 id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                 type: 'section',
-                rows: new Array(),
+                rows: [
+                    {
+                        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                        type: 'row',
+                        cols: tmp_grid
+                    }
+                ],
                 params: [
                     {name: 'title', value: 'Astroid Section'}
                 ]
+            });
+            break;
+
+        case 'row':
+            grid.forEach(col => {
+                if (col > 0) {
+                    tmp_grid.push({
+                        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                        type: 'column',
+                        size: col,
+                        elements: []
+                    })
+                }
+            });
+            layout.value[map[props.group]][index].rows.push({
+                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                type: 'row',
+                cols: tmp_grid
             });
             break;
     
         default:
             break;
     }
+    showGrid.value[element.id] = false;
+}
+
+const showElement = ref(new Object());
+function selectElement(id) {
+    showElement.value[id] = true;
+}
+
+function addElement(addon, index) {
+    let id = Date.now() * 1000 + Math.random() * 1000;
+    id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
+    layout.value[map[props.group]][index].elements.push({
+        id: id,
+        type: addon.type,
+        params: [
+            {name: 'title', value: addon.title}
+        ]
+    });
+    showModal.value[id] = true;
+}
+
+const _addtype = ref('');
+function showGridModal(id, type) {
+    _addtype.value = type;
+    showGrid.value[id] = true;
 }
 
 function deleteElement(index) {
@@ -104,10 +167,10 @@ function deleteElement(index) {
                             <a class="nav-link px-1" href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Section"><i class="fas fa-trash-alt"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#"><i class="fas fa-plus"></i> New Row</a>
+                            <a class="nav-link px-1" href="#" @click.prevent="showGridModal(element.id, 'row')"><i class="fas fa-plus"></i> New Row</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" @click.prevent="showGrid[element.id] = true"><i class="fas fa-plus"></i> New Section</a>
+                            <a class="nav-link px-1" href="#" @click.prevent="showGridModal(element.id, 'section')"><i class="fas fa-plus"></i> New Section</a>
                         </li>
                     </ul>
                 </nav>
@@ -116,7 +179,7 @@ function deleteElement(index) {
                     <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
                 </Transition>
                 <Transition name="fade">
-                    <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" />
+                    <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {addGrid(element, index, grid)}" />
                 </Transition>
             </div>
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
@@ -137,12 +200,17 @@ function deleteElement(index) {
                     <div class="column-toolbar">
                         <span class="column-handle handle bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>
                         <a href="#" @click.prevent="editElement(element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
-                        <a href="#"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis"><i class="fas fa-plus"></i><span class="d-none d-md-inline">Element</span></span></a>
                     </div>
                 </div>
                 <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <div class="add-element d-flex justify-content-center">
+                    <a href="#" @click.prevent="selectElement(element.id)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
+                </div>
                 <Transition name="fade">
                     <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                </Transition>
+                <Transition name="fade">
+                    <SelectElement v-if="showElement[element.id]" :element="element" :form="props.field.input.form" @update:close-element="showElement[element.id] = false" @update:selectElement="(addon) => {addElement(addon, index)}" />
                 </Transition>
             </div>
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body">

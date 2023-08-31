@@ -5,9 +5,9 @@ const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
 const params = ref(new Object());
 onBeforeMount(()=>{
-    Object.keys(props.form.model).forEach(key => {
-        params.value[key] = props.form.model[key];
-    })
+    props.form.info.params.forEach(param => {
+        params.value[param.name] = param.value;
+    });
     if (typeof props.element.params !== 'undefined') {
         props.element.params.forEach(el => {
             params.value[el.name] = el.value;
@@ -43,7 +43,7 @@ function saveModal(){
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="position-absolute top-0 end-0 p-3">
-                    <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement', props.element.id)"></button>
+                    <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement', props.element.id)"></button>
                 </div>
                 <ul class="nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
                     <li v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="nav-item" role="presentation">
