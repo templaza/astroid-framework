@@ -34,44 +34,41 @@ onBeforeMount(()=>{
         elClass = 'astroid-elements';
     }
     layout.value[map[props.group]].forEach(element => {
-        showModal.value[element.id] = false;
+        props.showModal[element.type + '-' + element.id] = false;
         showGrid.value[element.id] = false;
         showElement.value[element.id] = false;
     });
 })
 
 onMounted(()=>{
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 })
 
-const showModal = ref(new Object());
+// Grid layout configure
 const showGrid  = ref(new Object());
+const _addtype = ref('');
 
-function editElement(id) {
-    showModal.value[id] = true;
-}
-
-function closeElement(id) {
-    showModal.value[id] = false;
+function showGridModal(id, type) {
+    _addtype.value = type;
+    showGrid.value[id] = true;
 }
 
 function addGrid(element, index, grid = []) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
     let tmp_grid = [];
-    
+    grid.forEach(col => {
+        if (col > 0) {
+            tmp_grid.push({
+                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                type: 'column',
+                size: col,
+                elements: []
+            })
+        }
+    });
     switch (_addtype.value) {
         case 'section':
-            grid.forEach(col => {
-                if (col > 0) {
-                    tmp_grid.push({
-                        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
-                        type: 'column',
-                        size: col,
-                        elements: []
-                    })
-                }
-            });
             layout.value[map[props.group]].splice(index+1, 0, {
                 id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                 type: 'section',
@@ -89,16 +86,6 @@ function addGrid(element, index, grid = []) {
             break;
 
         case 'row':
-            grid.forEach(col => {
-                if (col > 0) {
-                    tmp_grid.push({
-                        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
-                        type: 'column',
-                        size: col,
-                        elements: []
-                    })
-                }
-            });
             layout.value[map[props.group]][index].rows.push({
                 id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                 type: 'row',
@@ -112,6 +99,31 @@ function addGrid(element, index, grid = []) {
     showGrid.value[element.id] = false;
 }
 
+function editGrid(element, grid = []) {
+    const sec = Date.now() * 1000 + Math.random() * 1000;
+    let col_idx = 0;
+    grid.forEach(col => {
+        if (col > 0) {
+            if (col_idx < element.cols.length) {
+                element.cols[col_idx].size = col;
+            } else {
+                element.cols.push({
+                    id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                    type: 'column',
+                    size: col,
+                    elements: []
+                });
+            }
+            col_idx ++
+        } 
+    });
+    while (col_idx < element.cols.length) {
+        element.cols.splice(col_idx, 1);
+    }
+    showGrid.value[element.id] = false;
+}
+
+// Element Configure
 const showElement = ref(new Object());
 function selectElement(id) {
     showElement.value[id] = true;
@@ -127,13 +139,38 @@ function addElement(addon, index) {
             {name: 'title', value: addon.title}
         ]
     });
-    showModal.value[id] = true;
+    props.showModal[addon.type + '-' + id] = true;
 }
 
-const _addtype = ref('');
-function showGridModal(id, type) {
-    _addtype.value = type;
-    showGrid.value[id] = true;
+function cloneElement(element) {
+    let id = Date.now() * 1000 + Math.random() * 1000;
+    id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
+    let tmp = {};
+    Object.keys(element).forEach(key => {
+        if (key === 'rows' || key === 'cols' || key === 'elements') {
+            tmp[key] = [];
+            element[key].forEach(el => {
+                tmp[key].push(cloneElement(el));
+            });
+        } else if (key === 'id') {
+            tmp.id = id;
+        } else {
+            tmp[key] = element[key];
+        }
+    });
+    return tmp;
+}
+
+function duplicateElement(element, index) {
+    layout.value[map[props.group]].splice(index+1, 0, cloneElement(element));
+}
+
+function editElement(id) {
+    props.showModal[id] = true;
+}
+
+function closeElement(id) {
+    props.showModal[id] = false;
 }
 
 function deleteElement(index) {
@@ -158,10 +195,10 @@ function deleteElement(index) {
                     <span class="navbar-text" href="#"><span class="section-handle handle bg-body-secondary px-1 py-1 rounded me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span> {{ element.params.find((param) => param.name === 'title').value }}</span>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Section" @click.prevent="editElement(element.id)"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Section" @click.prevent="editElement(element.type + '-' + element.id)"><i class="fas fa-pencil-alt"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Section"><i class="fas fa-copy"></i></a>
+                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Section" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Section"><i class="fas fa-trash-alt"></i></a>
@@ -174,9 +211,9 @@ function deleteElement(index) {
                         </li>
                     </ul>
                 </nav>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :show-modal="props.showModal" />
                 <Transition name="fade">
-                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                    <Modal v-if="props.showModal[element.type + '-' + element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
                 </Transition>
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {addGrid(element, index, grid)}" />
@@ -185,13 +222,16 @@ function deleteElement(index) {
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
                 <div class="row-toolbar position-absolute">
                     <div class="row-handle handle text-dark-emphasis"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>
-                    <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis"><i class="fa-solid fa-table-columns"></i></a></div>
-                    <div><a href="#" @click.prevent="editElement(element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
+                    <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis" @click.prevent="showGridModal(element.id, 'row')"><i class="fa-solid fa-table-columns"></i></a></div>
+                    <div><a href="#" @click.prevent="editElement(element.type + '-' + element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :show-modal="props.showModal" />
                 <Transition name="fade">
-                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                    <Modal v-if="props.showModal[element.type + '-' + element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                </Transition>
+                <Transition name="fade">
+                    <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {editGrid(element, grid)}" />
                 </Transition>
             </div>
             <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="`col-`+element.size">
@@ -199,15 +239,15 @@ function deleteElement(index) {
                     <div class="font-monospace text-body-tertiary mb-2">col-lg-{{ element.size }}</div>
                     <div class="column-toolbar">
                         <span class="column-handle handle bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>
-                        <a href="#" @click.prevent="editElement(element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
+                        <a href="#" @click.prevent="editElement(element.type + '-' + element.id)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                     </div>
                 </div>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :show-modal="props.showModal" />
                 <div class="add-element d-flex justify-content-center">
                     <a href="#" @click.prevent="selectElement(element.id)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
                 <Transition name="fade">
-                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                    <Modal v-if="props.showModal[element.type + '-' + element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
                 </Transition>
                 <Transition name="fade">
                     <SelectElement v-if="showElement[element.id]" :element="element" :form="props.field.input.form" @update:close-element="showElement[element.id] = false" @update:selectElement="(addon) => {addElement(addon, index)}" />
@@ -222,10 +262,10 @@ function deleteElement(index) {
                     <div class="element-toolbar">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="editElement(element.id)"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="editElement(element.type + '-' + element.id)"><i class="fas fa-pencil-alt"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element"><i class="fas fa-copy"></i></a>
+                                <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-0 pe-0 ps-1" href="#" @click.prevent="deleteElement(index)" data-bs-toggle="tooltip" data-bs-title="Remove Element"><i class="fas fa-trash-alt"></i></a>
@@ -234,12 +274,12 @@ function deleteElement(index) {
                     </div>
                 </div>
                 <Transition name="fade">
-                    <Modal v-if="showModal[element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
+                    <Modal v-if="props.showModal[element.type + '-' + element.id]" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="(value)=>{element.params = value}" @update:close-element="closeElement" />
                 </Transition>
             </div>
             <div v-else>
                 {{ element.id }}
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" />
+                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :show-modal="props.showModal" />
             </div>
         </template>
     </draggable>

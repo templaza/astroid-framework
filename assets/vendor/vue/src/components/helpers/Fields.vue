@@ -136,6 +136,7 @@ function changeColor(color) {
 
 // Layout Builder
 const layout = ref([]);
+const showModal = ref(new Object());
 </script>
 <template>
     <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" :aria-label="props.field.label" :placeholder="props.field.input.hint">
@@ -216,7 +217,7 @@ const layout = ref([]);
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <LayoutBuilder :field="props.field" :list="layout" group="root" :constant="props.constant" />
+        <LayoutBuilder :field="props.field" :list="layout" group="root" :show-modal="showModal" :constant="props.constant" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
