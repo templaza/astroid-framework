@@ -10,7 +10,7 @@ import Preloader from './Preloader.vue';
 import Typography from './Typography.vue';
 import TextArea from './TextArea.vue';
 import SocialProfiles from './SocialProfiles.vue';
-import LayoutBuilder from "./LayoutBuilder.vue";
+import Layout from "./Layout.vue";
 import Spacing from './Spacing.vue';
 import Gradient from './Gradient.vue';
 library.add(faCircle, faArrowsLeftRight);
@@ -31,9 +31,6 @@ onBeforeMount(()=>{
                 props.scope[props.field.name][key] = props.field.input.value[key];
             }
         });
-    }
-    if (props.field.input.type === `layout`) {
-        layout.value    =   props.field.input.value;
     }
     updateContentLayout();
 })
@@ -133,10 +130,6 @@ function changeColor(color) {
     _color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
     updateColor(_color[_currentColorMode.value]);
 }
-
-// Layout Builder
-const layout = ref([]);
-const showModal = ref(new Object());
 </script>
 <template>
     <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" :aria-label="props.field.label" :placeholder="props.field.input.hint">
@@ -217,7 +210,8 @@ const showModal = ref(new Object());
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <LayoutBuilder :field="props.field" :list="layout" group="root" :show-modal="showModal" :constant="props.constant" />
+        
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
