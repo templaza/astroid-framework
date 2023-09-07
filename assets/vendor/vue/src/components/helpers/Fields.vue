@@ -13,6 +13,7 @@ import SocialProfiles from './SocialProfiles.vue';
 import Layout from "./Layout.vue";
 import Spacing from './Spacing.vue';
 import Gradient from './Gradient.vue';
+import SassOverrides from './SassOverrides.vue';
 library.add(faCircle, faArrowsLeftRight);
 const emit = defineEmits(['update:contentlayout']);
 const props = defineProps({
@@ -218,6 +219,9 @@ function changeColor(color) {
     </div>
     <div v-else-if="props.field.input.type === `astroidgradient`" class="astroid-gradient">
         <Gradient v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidsassoverrides`" class="astroid-sass-overrides">
+        <SassOverrides v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">

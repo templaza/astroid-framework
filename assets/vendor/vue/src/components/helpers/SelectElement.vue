@@ -2,16 +2,19 @@
 import { onMounted, ref } from 'vue';
 
 const emit = defineEmits(['update:closeElement', 'update:selectElement']);
-const props = defineProps(['element', 'form']);
+const props = defineProps(['form', 'system']);
 const currentFilter = ref('');
 const addons = ref([]);
 let filters = [];
 let counter = {};
 onMounted(()=> {
     let addon = {};
-    Object.keys(props.form).forEach(key => {
+    Object.keys(props.form).every(key => {
         if (props.form[key].type === 'addon') {
             addon = props.form[key].info;
+            if (['component', 'banner', 'message'].includes(addon.type) && !props.system[addon.type]) {
+                return true;
+            }
             addons.value.push(addon);
             addon.category.forEach(cat => {
                 if (filters.includes(cat)) {
@@ -21,21 +24,22 @@ onMounted(()=> {
                     counter[cat] = 1;
                 }
             });
+            return true;
         }
     });
 })
 function selectElement(addon) {
     emit('update:selectElement', addon);
-    emit('update:closeElement', props.element.id);
+    emit('update:closeElement');
 }
 </script>
 <template>
-    <div class="astroid-modal modal d-block" tabindex="-1" @click.self="emit('update:closeElement', props.element.id)">
+    <div class="astroid-modal modal d-block" tabindex="-1" @click.self="emit('update:closeElement')">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Select an Element</h5>
-                    <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement', props.element.id)"></button>
+                    <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement')"></button>
                 </div>
 
                 <div class="modal-body">

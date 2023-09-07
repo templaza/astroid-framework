@@ -35,15 +35,15 @@ function saveModal(){
         });
     });
     emit('update:saveElement', tmp);
-    emit('update:closeElement', props.element.type + '-' + props.element.id)
+    emit('update:closeElement')
 }
 </script>
 <template>
-    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" @click.self="emit('update:closeElement', props.element.type + '-' + props.element.id)">
+    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" @click.self="emit('update:closeElement')">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="position-absolute top-0 end-0 p-3">
-                    <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement', props.element.type + '-' + props.element.id)"></button>
+                    <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement')"></button>
                 </div>
                 <ul class="nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
                     <li v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="nav-item" role="presentation">
@@ -78,7 +78,7 @@ function saveModal(){
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-as btn-as-light" @click="emit('update:closeElement', props.element.type + '-' + props.element.id)">Close</button>
+                    <button type="button" class="btn btn-sm btn-as btn-as-light" @click="emit('update:closeElement')">Close</button>
                     <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click="saveModal">Save changes</button>
                 </div>
             </div>

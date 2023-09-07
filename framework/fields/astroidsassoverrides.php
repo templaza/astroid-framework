@@ -22,8 +22,14 @@ class JFormFieldAstroidsassoverrides extends JFormField {
    }
 
    public function getInput() {
-      $renderer = new JLayoutFile('fields.astroidsassoverrides', JPATH_LIBRARIES . '/astroid/framework/layouts');
-      return $renderer->render($this->getLayoutData());
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
+//      $renderer = new JLayoutFile('fields.astroidsassoverrides', JPATH_LIBRARIES . '/astroid/framework/layouts');
+//      return $renderer->render($this->getLayoutData());
    }
 
 }

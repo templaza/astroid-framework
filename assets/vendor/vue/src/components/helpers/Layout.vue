@@ -1,8 +1,9 @@
 <script setup>
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
 import SelectElement from "./SelectElement.vue";
+import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
@@ -13,8 +14,19 @@ onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
 })
 const layout = ref([]);
+const system = reactive({
+    component: true,
+    banner: true,
+    message: true
+});
+
+function updateSystem(addonType, value = false) {
+    system[addonType] = value;
+}
+
 const _showModal = ref(false);
 const _showElement = ref(false);
+const _showGrid = ref(false);
 const layout_text = computed(() => {
   return JSON.stringify(layout.value);
 })
@@ -79,6 +91,9 @@ function addElement(addon) {
             row.cols.every(column => {
                 if (element.value.id === column.id) {
                     column.elements.push(new_element);
+                    if (['component', 'banner', 'message'].includes(addon.type)) {
+                        system[addon.type] = false;
+                    }
                     element.value = {};
                     return false;
                 }
@@ -90,17 +105,53 @@ function addElement(addon) {
     });
     editElement(new_element);
 }
-function closeElement(id) {
+function closeElement() {
     _showModal.value = false;
+}
+
+function addGrid(grid = []) {
+    const sec = Date.now() * 1000 + Math.random() * 1000;
+    let tmp_grid = [];
+    grid.forEach(col => {
+        if (col > 0) {
+            tmp_grid.push({
+                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                type: 'column',
+                size: col,
+                elements: []
+            })
+        }
+    });
+    layout.value.sections.push({
+        id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+        type: 'section',
+        rows: [
+            {
+                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                type: 'row',
+                cols: tmp_grid
+            }
+        ],
+        params: [
+            {name: 'title', value: 'Astroid Section'}
+        ]
+    });
+    _showGrid.value = false;
 }
 </script>
 <template>
-    <LayoutBuilder :field="props.field" :list="layout" group="root" :constant="props.constant" @edit:Element="editElement" @select:Element="selectElement" />
+    <div v-if="(typeof layout.sections === 'undefined' || layout.sections.length === 0)" class="text-center">
+        <button class="btn btn-lg btn-as btn-as-primary" @click="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
+        <Transition name="fade">
+            <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
+        </Transition>
+    </div>
+    <LayoutBuilder :field="props.field" :list="layout" group="root" :system="system" :constant="props.constant" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
     <Transition name="fade">
         <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
-        <SelectElement v-if="_showElement" :element="element" :form="props.field.input.form" @update:close-element="_showElement = false" @update:selectElement="addElement" />
+        <SelectElement v-if="_showElement" :form="props.field.input.form" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />
     </Transition>
     <input
         :id="props.field.input.id"
