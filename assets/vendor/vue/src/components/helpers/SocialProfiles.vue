@@ -84,30 +84,30 @@ function showColorPicker(id) {
                             <div class="card-body">
                                 <div class="row g-2 mb-2">
                                     <div class="col-sm-4">
-                                        <label v-if="element.title === 'WhatsApp'" class="form-label">{{ props.field.input.lang.astroid_mobile_number }}</label>
-                                        <label v-else-if="element.title === 'Telegram'" class="form-label">{{ props.field.input.lang.astroid_username }}</label>
-                                        <label v-else-if="element.title === 'Skype'" class="form-label">{{ props.field.input.lang.astroid_skype_id }}</label>
-                                        <label v-else class="form-label">{{ props.field.input.lang.astroid_link }}</label>
+                                        <label v-if="element.title === 'WhatsApp'" class="form-label" :for="`astroid_profile_link`+index">{{ props.field.input.lang.astroid_mobile_number }}</label>
+                                        <label v-else-if="element.title === 'Telegram'" class="form-label" :for="`astroid_profile_link`+index">{{ props.field.input.lang.astroid_username }}</label>
+                                        <label v-else-if="element.title === 'Skype'" class="form-label" :for="`astroid_profile_link`+index">{{ props.field.input.lang.astroid_skype_id }}</label>
+                                        <label v-else class="form-label" :for="`astroid_profile_link`+index">{{ props.field.input.lang.astroid_link }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.link" @input="listUpdated()" type="text" class="form-control">
+                                        <input v-model="element.link" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_link`+index">
                                     </div>
                                 </div>
                                 <div v-if="element.icons.length === 0" class="row g-2">
                                     <div class="col-sm-4">
-                                        <label class="form-label">{{ props.field.input.lang.astroid_icon_class }}</label>
+                                        <label class="form-label" :for="`astroid_profile_icon_class`+index">{{ props.field.input.lang.astroid_icon_class }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.icon" @input="listUpdated()" type="text" class="form-control">
+                                        <input v-model="element.icon" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_icon_class`+index">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="form-label">{{ props.field.input.lang.astroid_title }}</label>
+                                        <label class="form-label" :for="`astroid_profile_title`+index">{{ props.field.input.lang.astroid_title }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.title" @input="listUpdated()" type="text" class="form-control">
+                                        <input v-model="element.title" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_title`+index">
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="form-label">{{ props.field.input.lang.astroid_color }}</label>
+                                        <div class="form-label">{{ props.field.input.lang.astroid_color }}</div>
                                     </div>
                                     <div class="col-sm-8">
                                         <i :id="props.field.input.id+`-colorcircle-`+element.id" class="fas fa-circle fa-3x border astroid-color-picker" :style="{'color': element.color}" @click="showColorPicker(element.id)"></i>
@@ -131,7 +131,7 @@ function showColorPicker(id) {
                                 </div>
                                 <div v-else class="row g-2">
                                     <div class="col-sm-4">
-                                        <label class="form-label">{{ props.field.input.lang.astroid_icon }}</label>
+                                        <div class="form-label">{{ props.field.input.lang.astroid_icon }}</div>
                                     </div>
                                     <div class="col-sm-8">
                                         <ul class="list-inline">
@@ -147,14 +147,14 @@ function showColorPicker(id) {
                 </template>
             </draggable>
             <div class="text-center mt-4">
-                <button @click="addSocial(customSocial)" class="btn btn-as btn-primary btn-as-primary">{{ props.field.input.lang.add_custom_social_label }}</button>
+                <button @click.prevent="addSocial(customSocial)" class="btn btn-as btn-primary btn-as-primary">{{ props.field.input.lang.add_custom_social_label }}</button>
             </div>
         </div>
         <div class="col-lg-3">
             <h3>{{ props.field.input.lang.social_brands }}</h3>
             <input type="text" class="form-control" :placeholder="props.field.input.lang.social_search" v-model="socialSearch">
             <div class="d-grid gap-2 mt-3">
-                <button v-for="(social, key) in filterSocial" :key="key" class="btn btn-outline-secondary" @click="addSocial(social)">
+                <button v-for="(social, key) in filterSocial" :key="key" class="btn btn-outline-secondary" @click.prevent="addSocial(social)">
                     <i :class="social.icon"></i>
                     {{ social.title }}
                 </button>

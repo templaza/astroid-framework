@@ -137,7 +137,9 @@ class Admin extends Helper\Client
             'document_link'         => Helper\Constants::$documentation_link,
             'video_tutorial'        => Helper\Constants::$video_tutorial_link,
             'github_link'           => Helper\Constants::$github_link,
-            'jtemplate_link'        => Helper::getJoomlaUrl()
+            'jtemplate_link'        => Helper::getJoomlaUrl(),
+            'astroid_admin_token'   => \JSession::getFormToken(),
+            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
         ];
         $doc->addScriptOptions('astroid_lib', $config);
 

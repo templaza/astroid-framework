@@ -52,13 +52,13 @@ onUpdated(() => {
 <template>
     <div class="row g-3">
         <div class="col col-auto">
-            <label>{{ props.field.input.lang[props.fieldname] }}</label>
+            {{ props.field.input.lang[props.fieldname] }}
         </div>
         <div class="col">
             <div class="row row-cols-auto g-3 justify-content-end">
                 <div v-for="device in devices" :key="device">
                     <a href="#" @click.prevent="changeDevice(device)" :class="{'link-primary' : props.currentDevice === device, 'link-secondary' : props.currentDevice !== device}">
-                        <font-awesome-icon :icon="['fas', device]" />
+                        <i class="fas" :class="`fa-`+device"></i>
                     </a>
                 </div>
             </div>

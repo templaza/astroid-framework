@@ -15,6 +15,7 @@ JFormHelper::loadFieldClass('list');
  *
  * @since  11.1
  */
+
 class JFormFieldSQL extends JFormFieldList
 {
 	/**
@@ -122,6 +123,7 @@ class JFormFieldSQL extends JFormFieldList
 	 */
 	public function setup(SimpleXMLElement $element, $value, $group = null)
 	{
+
 		$return = parent::setup($element, $value, $group);
 
 		if ($return)

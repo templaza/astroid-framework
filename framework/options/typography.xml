@@ -61,7 +61,7 @@
             <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
          </field>
 
-         <field astroidgroup="h3_header_typography" ngShow="h3_typography=='custom'" name="h3_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="2" font-size-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
+         <field astroidgroup="h3_header_typography" ngShow="[h3_typography]=='custom'" name="h3_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="2" font-size-unit="em" letter-spacing="0" line-height="1" font-weight="500" text-transform="none"></field>
 
          <!-- H4 Typography Options -->
          <field astroidgroup="h4_header_typography" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" name="h4_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">

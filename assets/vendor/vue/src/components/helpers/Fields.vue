@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, reactive, ref, watch } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -74,10 +74,16 @@ onMounted(()=>{
     if (props.field.input.type === `astroidradio`) {
         if (props.field.input.role === `switch`) {
             if (props.scope[props.field.name] === '1') {
-                props.scope[props.field.name] = true;
+                switchField.value = true;
             }
         }
     }
+})
+
+// Switch Field
+const switchField = ref(false);
+watch(switchField, (newValue) => {
+    props.scope[props.field.name] = newValue ? 1 : 0;
 })
 
 // Update state for Astroid Content Layout
@@ -151,7 +157,8 @@ function changeColor(color) {
             </span>
         </div>
         <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
-            <input v-model="props.scope[props.field.name]" :name="props.field.input.name" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
+            <input v-model="switchField" @input="" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
+            <input type="hidden" :name="props.field.input.name" :value="props.scope[props.field.name]">
         </div>
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
             <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
@@ -211,7 +218,6 @@ function changeColor(color) {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        
         <Layout v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
@@ -222,6 +228,10 @@ function changeColor(color) {
     </div>
     <div v-else-if="props.field.input.type === `astroidsassoverrides`" class="astroid-sass-overrides">
         <SassOverrides v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
+        <h3>{{ props.field.input.title }}</h3>
+        <div>{{ props.field.input.description }}</div>
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">

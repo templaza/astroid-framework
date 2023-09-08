@@ -147,11 +147,11 @@ function uploadReset() {
 <template>
     <div v-if="_imagePreview !== ''" class="image-preview mb-3"><img :src="_imagePreview" :alt="props.field.name" /></div>
     <div v-if="_imagePreview === ''" class="astroid-media-selector">
-      <button class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['select_media'] }}</button>
+      <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['select_media'] }}</button>
     </div>
     <div v-else="_imagePreview !== ''" class="astroid-media-selector btn-group" role="group">
-        <button class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['change_media'] }}</button>
-        <button class="btn btn-sm btn-as btn-as-light" @click="clearMedia">{{ props.field.input.lang['clear'] }}</button>
+        <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['change_media'] }}</button>
+        <button class="btn btn-sm btn-as btn-as-light" @click.prevent="clearMedia">{{ props.field.input.lang['clear'] }}</button>
     </div>
     <div class="modal fade" :id="props.field.input.id+`modal`" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">

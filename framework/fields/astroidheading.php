@@ -36,25 +36,36 @@ class JFormFieldAstroidHeading extends JFormField
    protected function getInput()
    {
 
-      $attrs = [];
-      $ngShow = Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']);
-      if (!empty($ngShow)) {
-         $attrs[] = 'ng-show="' . $ngShow . '"';
-      }
-      $ngHide = Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']);
-      if (!empty($ngHide)) {
-         $attrs[] = 'ng-hide="' . $ngHide . '"';
-      }
-      $ngRequired = Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']);
-      if (!empty($ngRequired)) {
-         $attrs[] = 'ng-hide="' . $ngRequired . '"';
-      }
+//      $attrs = [];
+//      $ngShow = Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']);
+//      if (!empty($ngShow)) {
+//         $attrs[] = 'ng-show="' . $ngShow . '"';
+//      }
+//      $ngHide = Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']);
+//      if (!empty($ngHide)) {
+//         $attrs[] = 'ng-hide="' . $ngHide . '"';
+//      }
+//      $ngRequired = Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']);
+//      if (!empty($ngRequired)) {
+//         $attrs[] = 'ng-hide="' . $ngRequired . '"';
+//      }
 
       $helpLink = '';
       if (!empty($this->element['help'])) {
-         $helpLink = ' <a target="_blank" href="' . $this->element['help'] . '"><span class="far fa-question-circle"></span></a>';
+         $helpLink = (string)$this->element['help'];
       }
 
-      return "<div " . implode(' ', $attrs) . " class='form-group form-group-heading'><h3 class='mb-0'>" . ((!empty($this->element['icon']) ? "<i class='" . $this->element['icon'] . "'></i> " : "")) . JText::_($this->element['title']) . $helpLink . "</h3><p class='mb-0'>" . JText::_($this->description) . "</p></div>";
+       $json =   [
+           'id'         =>  $this->id,
+           'name'       =>  $this->name,
+           'title'              =>  JText::_((string)$this->element['title']),
+           'description'        =>  JText::_($this->description),
+           'icon'       =>  $this->element['icon'],
+           'help'       =>  $helpLink,
+           'type'       =>  strtolower($this->type),
+       ];
+       return json_encode($json);
+
+//      return "<div " . implode(' ', $attrs) . " class='form-group form-group-heading'><h3 class='mb-0'>" . ((!empty($this->element['icon']) ? "<i class='" . $this->element['icon'] . "'></i> " : "")) . JText::_($this->element['title']) . $helpLink . "</h3><p class='mb-0'>" . JText::_($this->description) . "</p></div>";
    }
 }

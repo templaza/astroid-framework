@@ -1,7 +1,9 @@
 <script setup>
+import axios from "axios";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMeteor, faBars, faEllipsis, faBook, faSave, faEraser, faUpRightFromSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { ref } from "vue";
 
 library.add(faMeteor, faBars, faEllipsis, faGithub, faYoutube, faBook, faSave, faEraser, faUpRightFromSquare, faXmark);
 
@@ -9,12 +11,42 @@ const props = defineProps({
   config: { type: Object, default: null }
 });
 
+const template_link = props.config.astroid_lib.jtemplate_link.replace(/\&amp\;/g, '&');
+const save_icon = ref('fa-floppy-disk');
+const toast_msg = ref('');
+
 const social_menu = [
   {title: 'Docs', href: props.config.astroid_lib.document_link, icon: ['fas', 'book']},
   {title: 'GitHub', href: props.config.astroid_lib.github_link, icon: ['fab', 'github']},
   {title: 'Videos Tutorial', href: props.config.astroid_lib.video_tutorial, icon: ['fab', 'youtube']},
   {title: 'Astroid Website', href: props.config.astroid_lib.astroid_link, icon: ['fas', 'meteor']},
 ]
+
+function submitForm() {
+  const action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&');
+  const form = document.getElementById('astroid-form');
+  const formData = new FormData(form); // pass data as a form;
+  const toastLiveExample = document.getElementById('saveMessage');
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  save_icon.value = 'fa-sync fa-spin'
+  axios.post(action_link, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then((response) => {
+    if (response.data.status === 'success') {
+      toast_msg.value = 'Template Saved'
+    } else {
+      toast_msg.value = response.data.message;
+    }
+    save_icon.value = 'fa-floppy-disk';
+    toastBootstrap.show();
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
 </script>
 <template>
   <header class="navbar navbar-expand-lg as-navbar sticky-top">
@@ -48,8 +80,8 @@ const social_menu = [
             <div class="vr d-none d-lg-flex h-100 me-lg-4"></div>
             <ul class="navbar-nav flex-row flex-wrap">
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-as btn-as-primary" type="button">
-                  <font-awesome-icon :icon="['fas', 'floppy-disk']" class="me-1" />
+                <button class="btn btn-sm btn-as btn-as-primary" type="button" @click.prevent="submitForm">
+                  <i class="fas me-1" :class="save_icon"></i>
                   {{ props.config.astroid_lang.ASTROID_SAVE }}
                 </button>
               </li>
@@ -66,7 +98,7 @@ const social_menu = [
                 </a>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="props.config.astroid_lib.jtemplate_link">
+                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="template_link">
                   <font-awesome-icon :icon="['fas', 'xmark']" class="me-1" />
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLOSE }}
                 </a>
@@ -86,4 +118,17 @@ const social_menu = [
       </div>
     </nav>
   </header>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="saveMessage" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <i class="fa-solid fa-floppy-disk me-2" :style="{color: 'darkviolet'}"></i>
+        <strong class="me-auto">Astroid Template</strong>
+        <small>1 second ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        {{ toast_msg }}
+      </div>
+    </div>
+  </div>
 </template>
