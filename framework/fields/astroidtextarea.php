@@ -25,6 +25,7 @@ class JFormFieldAstroidTextarea extends JFormField {
     * @since  11.1
     */
    protected $type = 'AstroidTextarea';
+    protected $ordering;
 
    /**
     * The number of rows in textarea.

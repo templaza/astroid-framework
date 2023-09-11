@@ -23,6 +23,7 @@ class JFormFieldAstroidtext extends JFormField {
     * @since  11.1
     */
    protected $type = 'astroidtext';
+    protected $ordering;
 
    /**
     * The allowable maxlength of the field.

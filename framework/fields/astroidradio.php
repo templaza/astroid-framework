@@ -25,6 +25,7 @@ class JFormFieldAstroidRadio extends JFormFieldList {
     * @since  11.1
     */
    protected $type = 'AstroidRadio';
+    protected $ordering;
 
    /**
     * Name of the layout being used to render the field

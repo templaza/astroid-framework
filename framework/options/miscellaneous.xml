@@ -51,7 +51,7 @@
          <field astroidgroup="coming_soon" name="coming_soon_content" code="html" class="form-control" type="astroidtextarea" label="TPL_ASTROID_MISCELL_COMING_CONTENT_LABEL" description="TPL_ASTROID_MISCELL_COMING_CONTENT_DESC" ngShow="[development_mode]=='1'" ngRequired="development_mode=='1'">
          </field>
 
-         <field astroidgroup="coming_soon" name="coming_soon_countdown_date" type="astroidcalendar" label="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_LABEL" description="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_DESC" default="01/01/2020 00:00 AM" ngShow="[development_mode]=='1'" ngRequired="development_mode=='1'">
+         <field astroidgroup="coming_soon" name="coming_soon_countdown_date" type="astroidcalendar" label="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_LABEL" description="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_DESC" default="01/01/2023 00:00" ngShow="[development_mode]=='1'" ngRequired="development_mode=='1'">
          </field>
 
          <field astroidgroup="coming_soon" name="coming_soon_social" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_LABEL" ngShow="[development_mode]=='1'" description="TPL_ASTROID_MISCELL_ENABLE_SOCIAL_DESC">

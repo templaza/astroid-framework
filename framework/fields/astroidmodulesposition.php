@@ -26,6 +26,7 @@ class JFormFieldAstroidModulesPosition extends JFormFieldList
     * @since  3.4.2
     */
    protected $type = 'AstroidModulesPosition';
+    protected $ordering;
 
    /**
     * Method to get the field options.

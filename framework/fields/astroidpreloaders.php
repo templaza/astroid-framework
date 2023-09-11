@@ -22,6 +22,7 @@ class JFormFieldAstroidpreloaders extends JFormField {
     * @since  11.1
     */
    protected $type = 'astroidpreloaders';
+    protected $ordering;
 
    /**
     * Method to get the field input markup for a generic list.

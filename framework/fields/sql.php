@@ -25,6 +25,7 @@ class JFormFieldSQL extends JFormFieldList
 	 * @since  11.1
 	 */
 	public $type = 'SQL';
+    protected $ordering;
 
 	/**
 	 * The keyField.

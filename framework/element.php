@@ -18,6 +18,7 @@ class AstroidElement
    public $type = '';
    public $title = '';
    public $icon = '';
+   public $color = '';
    public $category = '';
    public $multiple = true;
    public $classname = '';

@@ -48,7 +48,8 @@ class Form
     public function getFieldsets()
     {
         $astroidfieldsets = $this->form->getFieldsets();
-        usort($astroidfieldsets, 'self::_ording');
+
+        usort($astroidfieldsets, self::class.'::_ording');
         $fieldsets = [];
         foreach ($astroidfieldsets as $af) {
             $fieldsets[$af->name] = $af;

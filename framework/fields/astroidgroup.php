@@ -25,6 +25,7 @@ class JFormFieldAstroidGroup extends JFormField {
     * @since  11.1
     */
    protected $type = 'astroidgroup';
+   protected $ordering;
 
    protected function getLabel() {
       return FALSE;

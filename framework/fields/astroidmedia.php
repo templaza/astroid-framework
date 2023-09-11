@@ -13,6 +13,7 @@ jimport('joomla.form.formfield');
 class JFormFieldAstroidMedia extends JFormField {
 
    protected $type = 'AstroidMedia';
+    protected $ordering;
    protected $layout = 'fields.astroidmedia';
 
    public function getInput() {

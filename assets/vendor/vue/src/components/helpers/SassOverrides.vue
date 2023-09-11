@@ -80,11 +80,11 @@ const _showColorPicker = ref([]);
                         <input class="form-check-input" type="checkbox" role="switch" :id="`color-`+index" v-model="item.color">
                     </div>
                 </td>
-                <td class="text-center"><button class="btn btn-danger" @click="removeVariable(index)"><i class="fa-solid fa-trash"></i></button></td>
+                <td class="text-center"><button class="btn btn-danger" @click.prevent="removeVariable(index)"><i class="fa-solid fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>
-    <div class="text-center"><button class="btn btn-lg btn-as btn-as-primary" @click="addVariable">Add Variable</button></div>
+    <div class="text-center"><button class="btn btn-lg btn-as btn-as-primary" @click.prevent="addVariable">Add Variable</button></div>
     <input
         :id="props.field.input.id"
         :name="props.field.input.name"

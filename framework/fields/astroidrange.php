@@ -16,6 +16,7 @@ class JFormFieldAstroidRange extends JFormField {
 
 //The field class must know its own type through the variable $type.
    protected $type = 'AstroidRange';
+    protected $ordering;
 
    public function getInput() {
 //       var_dump($this->element['min']); die();

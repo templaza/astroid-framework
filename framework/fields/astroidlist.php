@@ -23,6 +23,7 @@ class JFormFieldAstroidList extends JFormField {
     * @since  11.1
     */
    protected $type = 'AstroidList';
+    protected $ordering;
 
    /**
     * Method to get the field input markup for a generic list.

@@ -23,6 +23,7 @@ class JFormFieldAstroidColor extends JFormField {
     * @since  11.3
     */
    protected $type = 'AstroidColor';
+    protected $ordering;
 
    /**
     * The control.

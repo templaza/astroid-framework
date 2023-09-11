@@ -121,11 +121,7 @@ class Admin extends Helper\Client
         Helper::loadLanguage(ASTROID_TEMPLATE_NAME);
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
-//        $document->addScript('vendor/jquery/jquery-3.5.1.min.js', 'body');
         $document->addScript('vendor/vue/dist/index.js', 'body', [], [], 'module');
-        // scripts
-//        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/spectrum/spectrum.js'];
-//        $document->addScript($scripts, 'body');
         $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  \JURI::root(),
@@ -166,20 +162,21 @@ class Admin extends Helper\Client
                 // Ordering
                 $ordering = $field->getAttribute('after', '');
                 if (empty($ordering)) {
-                    $field->ordering = $order++;
+//                    $field->ordering = $order++;
                     $fieldsArr[] = $field;
-                    $orders[$field->name] = $field->ordering;
+                    $orders[$field->name] = $order++;
                 } else {
                     if (isset($orders[$ordering])) {
-                        $field->ordering = $orders[$ordering];
+//                        $field->ordering = $orders[$ordering];
                         $fieldsArr[] = $field;
-                        $orders[$field->name] = $field->ordering;
+                        $orders[$field->name] = $orders[$ordering];
+
                     } else {
                         $reorders[] = $field;
+
                     }
                 }
             }
-
             // Reorder group
             foreach ($reorders as &$reorder) {
                 $ordering = $reorder->getAttribute('after', '');
@@ -187,7 +184,7 @@ class Admin extends Helper\Client
                 $fieldsArr[] = $reorder;
             }
 
-            usort($fieldsArr, 'Astroid\Helper::orderingFields');
+//            usort($fieldsArr, 'Astroid\Helper::orderingFields');
 
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
@@ -226,21 +223,14 @@ class Admin extends Helper\Client
                     $field_tmp['type']      =   'json';
                 }
                 $groups[$field_group]['fields'][] = $field_tmp;
-            }
 
+            }
             // Get sidebar data
             $fieldset->label    = Text::_($fieldset->label);
             $fieldset->childs   = $groups;
             $form_content[] = $fieldset;
 
             $presets    =   Helper::getPresets();
-
-            //Generate form
-//            foreach ($groups as $groupname => $group) {
-//                if (empty($group['fields'])) {
-//                    continue;
-//                }
-//            }
         }
         $doc->addScriptOptions('astroid_content', $form_content);
 
