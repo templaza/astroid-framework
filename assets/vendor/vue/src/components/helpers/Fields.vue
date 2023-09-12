@@ -104,7 +104,7 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
         <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}px</label>
-        <input type="range" class="form-range" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
+        <input type="range" class="form-range" :name="props.field.input.name" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />

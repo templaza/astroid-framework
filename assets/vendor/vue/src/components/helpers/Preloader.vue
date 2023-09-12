@@ -1,8 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { faSpinner, faCircleNotch, faSync, faCog, faStroopwafel, faSun, faAsterisk, faAtom, faCertificate, faCompactDisc, faCompass, faCrosshairs, faDharmachakra, faBahai, faLifeRing, faYinYang, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
-import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faSpinner, faCircleNotch, faSync, faCog, faStroopwafel, faSun, faAsterisk, faAtom, faCertificate, faCompactDisc, faCompass, faCrosshairs, faDharmachakra, faBahai, faLifeRing, faYinYang, faSyncAlt);
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     field: { type: Object, default: null },
@@ -27,8 +24,7 @@ const updatePreloader = (item) => {
 </script>
 <template>
     <div v-if="props.field.input.style === `fontawesome`" class="select-preloader" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">
-        <font-awesome-icon v-if="props.field.input.preloader[props.modelValue].animate === 'spin'" :icon="props.field.input.preloader[props.modelValue].code" spin size="3x" />
-        <font-awesome-icon v-else :icon="props.field.input.preloader[props.modelValue].code" spin-pulse size="3x" />
+        <i :class="props.modelValue" class="fa-3x"></i>
     </div>
     <div v-else class="select-preloader" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`" v-html="props.field.input.preloader[props.modelValue].code"></div>
     <div class="modal fade" :id="props.field.input.id+`modal`" tabindex="-1">
@@ -41,10 +37,9 @@ const updatePreloader = (item) => {
                 <div class="modal-body">
                     <div v-if="_showPreloaders" class="row g-3">
                         <div class="col col-auto" v-for="(item, key) in props.field.input.preloader" :key="key">
-                            <div class="preloader-item d-flex justify-content-center align-items-center border rounded" @click="updatePreloader(key)">
+                            <div class="preloader-item d-flex justify-content-center align-items-center border rounded" @click="updatePreloader(item.name)">
                                 <div v-if="props.field.input.style === `fontawesome`">
-                                    <font-awesome-icon v-if="item.animate === 'spin'" :icon="item.code" spin size="3x" />
-                                    <font-awesome-icon v-else :icon="item.code" spin-pulse size="3x" />
+                                    <i :class="item.name" class="fa-3x"></i>
                                 </div>
                                 <div v-else class="preloader-code" v-html="item.code"></div>
                             </div>
