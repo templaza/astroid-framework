@@ -1,12 +1,15 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import axios from "axios";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import { ModelListSelect } from "vue-search-select"
 import TypoResponsive from './TypoResponsive.vue';
 import "vue-search-select/dist/VueSearchSelect.css"
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 
+library.add(faCircle, faArrowsLeftRight);
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field', 'constant']);
 const font_styles = [

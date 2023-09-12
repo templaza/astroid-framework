@@ -125,6 +125,7 @@ class Admin extends Helper\Client
         $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  \JURI::root(),
+            'base_url'              =>  \JURI::base(true),
             'astroid_media_url'     => ASTROID_MEDIA_URL,
             'template_name'         => $template->template.'-'.$template->id,
             'tpl_template_name'     => $template->template,
@@ -193,7 +194,7 @@ class Admin extends Helper\Client
                 }
             }
 
-//            $groups['none'] = ['fields' => []];
+            $groups['none'] = ['fields' => []];
 
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {

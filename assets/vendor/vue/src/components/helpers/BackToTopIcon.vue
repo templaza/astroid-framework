@@ -1,7 +1,4 @@
 <script setup>
-import { faLongArrowAltUp, faArrowUp, faArrowCircleUp, faArrowAltCircleUp, faAngleDoubleUp, faSortUp, faLevelUpAlt, faCloudUploadAlt, faChevronUp, faChevronCircleUp, faHandPointUp, faCaretSquareUp } from "@fortawesome/free-solid-svg-icons";
-import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faLongArrowAltUp, faArrowUp, faArrowCircleUp, faArrowAltCircleUp, faAngleDoubleUp, faSortUp, faLevelUpAlt, faCloudUploadAlt, faChevronUp, faChevronCircleUp, faHandPointUp, faCaretSquareUp);
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   field: { type: Object, default: null },
@@ -28,11 +25,11 @@ function updateIcon(icon) {
 </script>
 <template>
     <div class="arrow-icon-picker">
-      <div class="icon-display mb-4"><font-awesome-icon :icon="modelValue" size="3x" /></div>
+      <div class="icon-display mb-4"><i class="fa-3x" :class="modelValue"></i></div>
       <div class="row g-2 g-lg-3">
         <div v-for="icon in iconList" class="col-auto">
-          <a class="icon border rounded p-2" @click.prevent="updateIcon(icon)" :class="{'active' : icon.join(' ') === modelValue}">
-            <font-awesome-icon :icon="icon" />
+          <a class="icon border rounded p-2 link-underline link-underline-opacity-0 link-underline-opacity-0-hover" @click.prevent="updateIcon(icon)" :class="{'active' : icon.join(' ') === modelValue}">
+            <i :class="icon.join(' ')"></i>
           </a>
         </div>
       </div>

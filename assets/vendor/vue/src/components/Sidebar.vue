@@ -1,10 +1,4 @@
 <script setup>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faHeading, faPaintbrush, faColumns, faFont, faShareNodes, faCode, faCogs, faPaintBrush, faRocket } from "@fortawesome/free-solid-svg-icons";
-import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
-
-library.add(faHome, faHeading, faPaintbrush, faColumns, faFont, faShareNodes, faCode, faCogs, faPaintBrush, faRocket, faNewspaper);
-
 const props = defineProps({
   config: { type: Object, default: null }
 });
@@ -23,7 +17,7 @@ const props = defineProps({
             <li class="as-links-group py-2" v-for="group in props.config.astroid_content" :key="group.name">
               <a :href="`#`+group.name" class="as-page-link" @click.prevent="$emit('sidebarActive', group.name)">
                 <strong class="as-links-heading d-flex w-100 align-items-center fw-semibold">
-                  <font-awesome-icon :icon="group.icon" class="me-2" />
+                  <i :class="group.icon" class="me-2"></i>
                   {{ group.label }}
                 </strong>
               </a>

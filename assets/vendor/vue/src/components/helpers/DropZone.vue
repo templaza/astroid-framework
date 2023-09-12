@@ -1,11 +1,8 @@
 <script setup>
 import { reactive, onUpdated } from 'vue';
 import axios from "axios";
-import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { useDropzone } from "vue3-dropzone";
 
-library.add(faCloudArrowUp);
 const props = defineProps({
   url: { type: String, default: '' },
   clickUpload: { type: Boolean, default: false },
@@ -18,14 +15,6 @@ const state = reactive({
 const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({
   onDrop,
 });
-
-// watch(state, () => {
-//   console.log('state', state);
-// });
-
-// watch(isDragActive, () => {
-//   console.log('isDragActive', isDragActive.value, rest);
-// });
 
 function onDrop(acceptFiles, rejectReasons) {
 //   console.log('acceptFile: ',acceptFiles);
@@ -82,11 +71,11 @@ onUpdated(()=>{
     >
         <input v-bind="getInputProps()" />
         <div v-if="isDragActive" class="text-center py-5">
-            <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" size="4x" class="mb-3" />
+            <i class="fas fa-cloud-arrow-up fa-4x mb-3"></i>
             <div>Drop the files here ...</div>
         </div>
         <div v-else class="text-center py-5">
-            <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" size="4x" class="mb-3" />
+            <i class="fas fa-cloud-arrow-up fa-4x mb-3"></i>
             <div>Drag and drop files here, or Click to select files</div>
         </div>
     </div>

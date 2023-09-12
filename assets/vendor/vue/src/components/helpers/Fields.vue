@@ -1,7 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, reactive, ref, watch } from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
+import { onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -14,7 +12,8 @@ import Gradient from './Gradient.vue';
 import SassOverrides from './SassOverrides.vue';
 import DatePicker from './DatePicker.vue';
 import Colors from './Colors.vue';
-library.add(faCircle, faArrowsLeftRight);
+import Presets from './Presets.vue';
+
 const emit = defineEmits(['update:contentlayout']);
 const props = defineProps({
   field: { type: Object, default: null },
@@ -138,6 +137,9 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidcalendar`" class="astroid-calendar">
         <DatePicker v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidpreset`" class="astroid-preset">
+        <Presets :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
         <h3>{{ props.field.input.title }}</h3>
