@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, onUpdated, reactive, ref } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import { ColorPicker } from 'vue-color-kit'
@@ -13,7 +13,7 @@ const props = defineProps({
 
 onMounted(() => {
     if (props.field.input.value.trim() !== '') {
-        const tmp = JSON.parse(props.field.input.value)
+        const tmp = JSON.parse(props.field.input.value);
         _color.light    = tmp.light;
         _color.dark     = tmp.dark;
     }
@@ -40,6 +40,18 @@ onMounted(() => {
             }
         }    
     });
+})
+onUpdated(()=>{
+    try {
+        if (!!props.modelValue) {
+            let tmp = JSON.parse(props.modelValue);
+            _color.light = tmp.light;
+            _color.dark = tmp.dark;
+        }
+    } catch (e) {
+        _color.light = props.modelValue;
+        _color.dark = props.modelValue;
+    }
 })
 const _color = reactive({
     light: '',

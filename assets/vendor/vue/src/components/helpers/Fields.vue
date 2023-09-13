@@ -14,7 +14,7 @@ import DatePicker from './DatePicker.vue';
 import Colors from './Colors.vue';
 import Presets from './Presets.vue';
 
-const emit = defineEmits(['update:contentlayout']);
+const emit = defineEmits(['update:contentlayout', 'update:loadPreset']);
 const props = defineProps({
   field: { type: Object, default: null },
   scope: { type: Object, default: null },
@@ -139,7 +139,7 @@ function updateContentLayout() {
         <DatePicker v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidpreset`" class="astroid-preset">
-        <Presets :field="props.field" />
+        <Presets :field="props.field" :config="props.constant" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
         <h3>{{ props.field.input.title }}</h3>

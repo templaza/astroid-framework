@@ -64,6 +64,13 @@ function updateContentLayout(index, value) {
   })
   $scope.value['astroidcontentlayouts'] = tmp.join(',');
 }
+
+function loadPreset(value) {
+  let tmp = JSON.parse(value);
+  Object.keys(tmp).forEach(key => {
+    $scope.value[key] = tmp[key];
+  })
+}
 </script>
 <template>
   <main class="as-main order-1">
@@ -77,7 +84,7 @@ function updateContentLayout(index, value) {
             <div :class="(idx !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
               <div class="row">
                 <div v-if="(field.label || field.description) && field.input.type !== `astroidheading`" class="col-sm-6 col-md-5">
-                  <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar'].includes(field.input.type))" class="form-label" v-html="field.label"></div>
+                  <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label" v-html="field.label"></div>
                   <label v-else :for="(typeof field.type !== 'undefined' && field.type === `json` ? field.input.id : 'params_'+field.name)" class="form-label" v-html="field.label"></label>
                   <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
                 </div>
@@ -91,6 +98,7 @@ function updateContentLayout(index, value) {
                       :scope="$scope"
                       :constant="props.config.astroid_lib" 
                       @update:contentlayout="updateContentLayout"
+                      @update:loadPreset="loadPreset"
                       />
                   </div>
                   <div v-else v-html="field.input"></div>

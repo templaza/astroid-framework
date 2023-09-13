@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['edit:Element', 'select:Element', 'update:System']);
@@ -16,6 +16,30 @@ let elClass = '';
 let handle = '';
 
 onBeforeMount(()=>{
+    layout.value = props.list;
+    if (props.group === 'root') {
+        elClass = 'astroid-sections row row-cols-1 g-3'; 
+        handle = '.section-handle';
+    } else if (props.group === 'sections') {
+        elClass = 'astroid-section';
+        handle = '.row-handle';
+    } else if (props.group === 'rows') {
+        elClass = 'astroid-rows row g-2';
+        handle = '.column-handle';
+    } else if (props.group === 'cols') {
+        elClass = 'astroid-cols';
+    } else if (props.group === 'elements') {
+        elClass = 'astroid-elements';
+    }
+    layout.value[map[props.group]].forEach(element => {
+        if (['component', 'banner', 'message'].includes(element.type)) {
+            updateSystem(element.type);
+        }
+        showGrid.value[element.id] = false;
+    });
+})
+
+onUpdated(()=>{
     layout.value = props.list;
     if (props.group === 'root') {
         elClass = 'astroid-sections row row-cols-1 g-3'; 

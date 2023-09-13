@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import axios from "axios";
 import DropZone from './DropZone.vue';
 
@@ -28,6 +28,12 @@ onMounted(() => {
           _showMediaContent.value = [];
         })
     }
+})
+
+onUpdated(()=>{
+  if (props.modelValue !== _imagePreview.value.replace(props.constant.site_url + `images/`,'')) {
+    _imagePreview.value = props.constant.site_url + `images/`+ props.modelValue;
+  }
 })
 
 function generateData(json = null) {

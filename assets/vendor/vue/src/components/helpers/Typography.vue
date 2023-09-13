@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, onUpdated, ref, watch } from 'vue';
 import axios from "axios";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
@@ -60,6 +60,12 @@ onMounted(()=>{
             }
         }    
     });
+})
+
+onUpdated(()=>{
+    if (fontSelected.value.value !== '' && fontSelected.value.value !== props.modelValue['font_face']) {
+        fontSelected.value = options.value.find((option) => option.value === props.modelValue['font_face']);
+    }
 })
 
 watch(fontSelected, (newFont) => {
@@ -168,7 +174,7 @@ function changeColor(color) {
                 </div>
                 <div v-if="props.field.input.options.stylepicker">
                     <div class="form-label">{{ props.field.input.lang.font_style }}</div>
-                    <div>
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                         <span v-for="(option, key) in font_styles">
                             <input type="checkbox" class="btn-check" v-model="props.modelValue['font_style']" :name="props.field.input.name+`[font_style]`" :id="props.field.input.id+`_font_style_`+key" :value="option.value" autocomplete="off">
                             <label class="btn btn-sm" :for="props.field.input.id+`_font_style_`+key" v-html="option.text"></label>

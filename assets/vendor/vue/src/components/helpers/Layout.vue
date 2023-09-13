@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
+import { computed, onBeforeMount, onUpdated, reactive, ref, watch } from 'vue';
 import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
 import SelectElement from "./SelectElement.vue";
@@ -12,6 +12,12 @@ const props = defineProps({
 });
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
+})
+onUpdated(()=>{
+    if (layout_text.value !== props.modelValue) {
+        const tmp = JSON.parse(props.modelValue);
+        layout.value.sections = tmp.sections;
+    }
 })
 const layout = ref([]);
 const system = reactive({
@@ -31,7 +37,9 @@ const layout_text = computed(() => {
   return JSON.stringify(layout.value);
 })
 watch(layout_text, (newText) => {
-    emit('update:modelValue', newText);
+    if (newText !== props.modelValue) {
+        emit('update:modelValue', newText);
+    }
 })
 const element = ref({});
 function editElement(el) {
