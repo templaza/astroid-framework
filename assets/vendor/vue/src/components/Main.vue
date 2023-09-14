@@ -1,6 +1,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import Fields from './helpers/Fields.vue'
+
 const props = defineProps({
   config: { type: Object, default: null },
   pageIndex: { type: Object, default: null }

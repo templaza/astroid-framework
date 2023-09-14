@@ -38,8 +38,8 @@ function submitForm() {
   .then((response) => {
     toast_msg.icon = 'fa-solid fa-floppy-disk';
     if (response.data.status === 'success') {
-      toast_msg.header= 'Style Saved';
-      toast_msg.body = 'Style '+props.config.astroid_lib.template_name+' Saved';
+      toast_msg.header= 'Style has been saved';
+      toast_msg.body = 'Style '+props.config.astroid_lib.template_name+' has been saved';
       toast_msg.color = 'darkviolet';
     } else {
       toast_msg.header= 'Style did not saved yet';

@@ -44,16 +44,14 @@ class Admin extends Helper\Client
                 'thumbnail' => '', 'demo' => '',
                 'preset' => $params
             ];
-            jimport('joomla.filesystem.file');
-            \JFile::write(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-') . '.json', \json_encode($preset));
+            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
+            $this->response($preset_name);
+        } else {
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
+            Helper::refreshVersion();
+            $this->response("saved");
         }
-
-
-        Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
-
-        Helper::refreshVersion();
-
-        $this->response("saved");
     }
 
     protected function media()

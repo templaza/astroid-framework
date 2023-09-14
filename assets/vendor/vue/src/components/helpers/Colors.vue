@@ -1,10 +1,7 @@
 <script setup>
 import { onMounted, onUpdated, reactive, ref } from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircle, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
-library.add(faCircle, faArrowsLeftRight);
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: { type: String, default: '' },

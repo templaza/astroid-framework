@@ -1,0 +1,18 @@
+.add-preset {
+    cursor: pointer;
+    min-height: 250px;
+    &:hover {
+        background-color: rgba(86, 86, 86, 0.1);
+    }
+}
+.add-preset-cta {
+    cursor: pointer;
+    min-height: 150px;
+    &:hover {
+        background-color: rgba(86, 86, 86, 0.1);
+    }
+}
+.preset-keyword {
+    min-height: 168px;
+    font-size: 3rem;
+}
