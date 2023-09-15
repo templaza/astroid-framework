@@ -208,7 +208,7 @@ class JFormFieldAstroidTypography extends JFormField
                'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? $value['letter_spacing_unit'] : $defaults['letter_spacing_unit'],
                'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? $value['line_height'] : $defaults['line_height'],
                'line_height_unit'    =>  property_exists((object) $value['line_height_unit'], 'desktop') ? $value['line_height_unit'] : $defaults['line_height_unit'],
-               'font_style'          =>  isset($value['font_style']) && $value['font_style'] && count((array) $value['font_style']) ? (array) $value['font_style'] : (array) $defaults['font_style'],
+               'font_style'          =>  isset($value['font_style']) && $value['font_style'] && is_array($value['font_style']) ? $value['font_style'] : $defaults['font_style'],
                'font_weight'         =>  (string) $value['font_weight'] != '' ? (string) $value['font_weight'] : (string) $defaults['font_weight'],
                'text_transform'      =>  (string) $value['text_transform'] != '' ? (string) $value['text_transform'] : (string) $defaults['text_transform'],
            ],
@@ -229,6 +229,7 @@ class JFormFieldAstroidTypography extends JFormField
            'type'                =>  strtolower($this->type),
        ];
        return json_encode($json);
+
 //      return $renderer->render($data);
    }
 }

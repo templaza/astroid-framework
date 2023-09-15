@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
 const MONACO_EDITOR_OPTIONS = {
@@ -14,6 +14,11 @@ function handleChange(newValue) {
 }
 onMounted(()=>{
     code.value = props.modelValue;
+})
+onUpdated(()=>{
+    if (code.value !== props.modelValue) {
+        code.value = props.modelValue;
+    }
 })
 </script>
 <template>

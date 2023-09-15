@@ -16,3 +16,17 @@
     min-height: 168px;
     font-size: 3rem;
 }
+.preset-toolbar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+.preset-item {
+    &:hover {
+        .preset-toolbar {
+            opacity: 1;
+        }
+    }
+}

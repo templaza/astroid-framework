@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUpdated, ref } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import draggable from "vuedraggable";
@@ -17,7 +17,12 @@ const filterSocial = computed(() => {
 });
 const list = ref([]);
 onMounted(()=>{
-    list.value = props.field.input.value;
+    list.value = JSON.parse(props.modelValue);
+})
+onUpdated(()=>{
+    if (JSON.stringify(list.value) !== props.modelValue) {
+        list.value = JSON.parse(props.modelValue);
+    }
 })
 const dragging = ref(false);
 function listUpdated() {

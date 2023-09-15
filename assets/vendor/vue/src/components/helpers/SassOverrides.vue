@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, onUpdated, ref, watch } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 
@@ -15,8 +15,14 @@ onBeforeMount(() => {
     list.value = JSON.parse(props.modelValue);
 });
 
+onUpdated(()=>{
+    if (JSON.stringify(list.value) !== props.modelValue) {
+        list.value = JSON.parse(props.modelValue);
+    }
+})
+
 const override_text = computed(() => {
-  return JSON.stringify(list.value);
+    return JSON.stringify(list.value);
 });
 watch(override_text, (newText) => {
     emit('update:modelValue', newText);

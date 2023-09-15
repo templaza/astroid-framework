@@ -114,6 +114,7 @@ function showModal() {
     myModal.show();
 }
 
+// Save Preset
 const presetTitle = ref(null);
 const formInfo = reactive({
     title: '',
@@ -170,49 +171,90 @@ function savePreset() {
     });
 }
 
+// Import preset
+const files = ref(null);
+function initImportPreset() {
+    modalType.value = 'import';
+    formInfo.title = '';
+    formInfo.description = '';
+}
+function onFileChange(e) {
+    files.value = e.target.files || e.dataTransfer.files;
+}
 function uploadPreset() {
-    // const toastAstroidMsg = document.getElementById('loadPreset');
-    // const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
-    // let url = 'index.php?t='+Math.random().toString(36).substring(7);
-    // if (process.env.NODE_ENV === 'development') {
-    //     url = "preset_ajax.txt?ts="+Date.now();
-    // }
-    // const formData = new FormData(); // pass data as a form
-    // formData.append(props.config.astroid_admin_token, 1);
-    // formData.append('name', preset.name);
-    // formData.append('astroid', 'uploadpreset');
-    // formData.append('option', 'com_ajax');
-    // formData.append('template', props.config.tpl_template_name);
-    // axios.post(url, formData, {
-    //     headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     },
-    // })
-    // .then((response) => {
-    //     if (response.data.status === 'success') {
-    //         emit('update:loadPreset', response.data.data);
-    //         toast_msg.icon = 'fa-solid fa-rocket';
-    //         toast_msg.header = 'Preset '+preset.title+' Applied.';
-    //         toast_msg.body = 'Please click "Save" button to save your changes!';
-    //         toast_msg.color = 'green';
-    //         toastBootstrap.show();
-    //     } else {
-    //         toast_msg.icon = 'fa-regular fa-face-sad-tear';
-    //         toast_msg.header = 'Preset '+preset.title+' is not Applied.';
-    //         toast_msg.body = response.data.message;
-    //         toast_msg.color = 'red';
-    //         toastBootstrap.show();
-    //     }
-    // })
-    // .catch((err) => {
-    //     console.error(err);
-    // });
+    if (files.value === null || !files.value.length) {
+        alert('You have to select a JSON file to upload.')
+        return false;
+    }
+    if (!formInfo.title) {
+        alert('Title cannot be empty!')
+        presetTitle.value.focus();
+        return false;
+    }
+    let url = 'index.php?t='+Math.random().toString(36).substring(7);
+    const toastAstroidMsg = document.getElementById('loadPreset');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+    const formData = new FormData(); // pass data as a form;
+    formData.append(props.config.astroid_admin_token, 1);
+    formData.append('title', formInfo.title);
+    formData.append('desc', formInfo.description);
+    formData.append('file', files.value[0]);
+    formData.append('astroid', 'importpreset');
+    formData.append('option', 'com_ajax');
+    formData.append('template', props.config.tpl_template_name);
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
+    .then((response) => {
+        toast_msg.icon = 'fa-solid fa-upload';
+        if (response.data.status === 'success') {
+            toast_msg.header= 'Preset has been uploaded';
+            toast_msg.body = 'Preset '+formInfo.title+' has been created. Click "Load Preset" to load your settings.';
+            toast_msg.color = 'green';
+            list.value.push({
+                title: formInfo.title,
+                desc: formInfo.description,
+                keyword: formInfo.title.charAt(0),
+                thumbnail: '',
+                demo: '',
+                name: response.data.data
+            })
+        } else {
+            toast_msg.header= 'Preset did not uploaded yet';
+            toast_msg.body = response.data.message;
+            toast_msg.color = 'red';
+        }
+        toastBootstrap.show();
+        document.getElementById('closePresetModal').click();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
+const download = async (url, filename) => {
+    const data = await fetch(url);
+    const blob = await data.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', objectUrl);
+    link.setAttribute('download', filename);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportPreset(preset) {
+    download(props.config.site_url+'/media/templates/site/'+props.config.tpl_template_name+'/astroid/presets/'+preset.name+'.json', preset.name+'.json');
 }
 </script>
 <template>
     <div class="row row-cols-lg-3 row-cols-2 g-3 g-lg-4">
         <div v-for="(preset, index) in list">
-            <div class="card card-default position-relative">
+            <div class="preset-item card card-default position-relative">
                 <img v-if="preset.thumbnail !== ''" :src="preset.thumbnail" :alt="preset.title" class="card-img-top">
                 <div v-else class="preset-keyword d-flex justify-content-center align-items-center card-img-top" :style="{'background-color' : key_bg[Math.floor(Math.random() * 5)]}">
                     {{ preset.keyword }}
@@ -222,12 +264,20 @@ function uploadPreset() {
                     <p v-if="preset.desc !==''">{{ preset.desc }}</p>
                     <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="loadPreset(preset)">Load Preset</button>
                     <a v-if="preset.demo" class="btn btn-sm btn-as btn-as-light ms-2" :href="preset.demo">Demo</a>
-                    <a href="#" @click.prevent="deletePreset(index)" class="link-danger position-absolute top-0 start-100 translate-middle">
-                        <font-awesome-layers class="fa-2x">
-                            <font-awesome-icon icon="fa-solid fa-circle" />
-                            <font-awesome-icon icon="fa-solid fa-trash" transform="shrink-9" :style="{ color: 'white' }" />
-                        </font-awesome-layers>
-                    </a>
+                    <div class="preset-toolbar">
+                        <a href="#" @click.prevent="exportPreset(preset)" class="link-primary me-2" title="Export">
+                            <font-awesome-layers class="fa-2x">
+                                <font-awesome-icon :icon="['fas', 'circle']" />
+                                <font-awesome-icon :icon="['fas', 'download']" transform="shrink-9" :style="{ color: 'white' }" />
+                            </font-awesome-layers>
+                        </a>
+                        <a href="#" @click.prevent="deletePreset(index)" class="link-danger" title="Delete">
+                            <font-awesome-layers class="fa-2x">
+                                <font-awesome-icon :icon="['fas', 'circle']" />
+                                <font-awesome-icon :icon="['fas', 'trash']" transform="shrink-9" :style="{ color: 'white' }" />
+                            </font-awesome-layers>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,7 +304,7 @@ function uploadPreset() {
                             </div>
                         </div>
                         <div>
-                            <div class="add-preset-cta card card-default card-body d-flex justify-content-center align-items-center" @click.prevent="modalType = `import`">
+                            <div class="add-preset-cta card card-default card-body d-flex justify-content-center align-items-center" @click.prevent="initImportPreset">
                                 <i class="fa-solid fa-upload fa-2x"></i>
                                 <div class="mt-2 form-text">Import Preset</div>
                             </div>
@@ -271,7 +321,7 @@ function uploadPreset() {
                         </div>
                         <div v-if="modalType === `import`" class="mb-3">
                             <label for="presetFile" class="form-label">Select your preset file</label>
-                            <input class="form-control" type="file" id="presetFile">
+                            <input class="form-control" type="file" @change="onFileChange" id="presetFile">
                         </div>
                     </div>
                 </div>

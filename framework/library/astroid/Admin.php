@@ -335,6 +335,76 @@ class Admin extends Helper\Client
         $app->setBody($body);
     }
 
+    public function importpreset() {
+        try {
+            // Check for request forgeries.
+            if (!\JSession::checkToken()) {
+                throw new \Exception(\JText::_('JINVALID_TOKEN'));
+            }
+            $app = \JFactory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
+            $preset = [
+                'title' => $app->input->post->get('title', '', 'RAW'),
+                'desc' => $app->input->post->get('desc', '', 'RAW'),
+                'thumbnail' => '', 'demo' => '',
+                'preset' => ''
+            ];
+            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            $fieldName = 'file';
+
+            $fileError = $_FILES[$fieldName]['error'];
+            if ($fileError > 0) {
+                switch ($fileError) {
+                    case 1:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_LARGE_FILE'));
+                        break;
+
+                    case 2:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
+                        break;
+
+                    case 3:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
+                        break;
+
+                    case 4:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_NO_FILE'));
+                        break;
+                }
+            }
+
+            $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+            $uploadedFileExtension = $pathinfo['extension'];
+            $uploadedFileExtension = strtolower($uploadedFileExtension);
+            if ($uploadedFileExtension != 'json') {
+                throw new \Exception(\JText::_('INVALID EXTENSION'));
+            }
+
+            $fileTemp = $_FILES[$fieldName]['tmp_name'];
+            $json           = file_get_contents($fileTemp);
+            $config         = json_decode($json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                if (!isset($config['preset'])) {
+                    $preset['preset'] = $json;
+                } else {
+                    $preset['preset'] = $config['preset'];
+                }
+            } else {
+                throw new \Exception(\JText::_('INVALID FILETYPE'));
+            }
+
+            $uploadPath = $presets_path . $preset_name . '.json';
+
+            Helper::putContents($uploadPath, \json_encode($preset));
+            unlink($fileTemp);
+            $this->response($preset_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
     public function loadpreset() {
         try {
             // Check for request forgeries.

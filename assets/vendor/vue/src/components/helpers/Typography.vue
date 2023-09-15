@@ -27,6 +27,11 @@ onMounted(()=>{
     if (process.env.NODE_ENV === 'development') {
         url = "fonts_ajax.txt?ts="+Date.now();
     }
+
+    Object.keys(props.field.input.value).forEach(key => {
+        props.modelValue[key] = props.field.input.value[key];
+    })
+
     axios.get(url)
     .then(function (response) {
         if (response.status === 200) {
