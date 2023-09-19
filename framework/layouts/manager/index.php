@@ -21,10 +21,10 @@ for ($pidx = 0; $pidx < count($presets); $pidx++) {
 }
 $color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
 $doc = Factory::getDocument();
-
+$color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astroid_colormode'] ? $_COOKIE['astroid_colormode'] : 'light');
 ?>
 <!DOCTYPE html>
-<html>
+<html id="astroid-html" data-bs-theme="<?php echo $color_mode_theme; ?>">
 <head>
     <meta charset="utf-8" />
     <meta name="generator" content="Astroid Framework | Template Manager" />

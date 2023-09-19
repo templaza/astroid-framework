@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, reactive, ref } from 'vue';
+import { onMounted, onUpdated, reactive, ref, inject } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 const emit = defineEmits(['update:modelValue']);
@@ -7,6 +7,7 @@ const props = defineProps({
     modelValue: { type: String, default: '' },
     field: { type: Object, default: null },
 });
+const theme = inject('theme', 'light');
 
 onMounted(() => {
     if (props.field.input.value.trim() !== '') {
@@ -106,7 +107,7 @@ function changeColor(color) {
     </div>
     <input type="hidden" :name="props.field.input.name" :id="props.field.input.id" :value="modelValue" />
     <ColorPicker v-if="_showColorPicker"
-        theme="light"
+        :theme="theme"
         :color="_currentColor"
         :sucker-hide="true"
         :sucker-canvas="null"

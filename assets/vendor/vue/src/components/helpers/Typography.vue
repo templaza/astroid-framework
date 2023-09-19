@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, ref, watch } from 'vue';
+import { onMounted, onUpdated, ref, watch, inject } from 'vue';
 import axios from "axios";
 import { ModelListSelect } from "vue-search-select"
 import TypoResponsive from './TypoResponsive.vue';
@@ -9,6 +9,7 @@ import 'vue-color-kit/dist/vue-color-kit.css'
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field', 'constant']);
+const theme = inject('theme', 'light');
 const font_styles = [
     {'value':'bold', 'text':'<strong>Bold</strong>'},
     {'value':'italic', 'text':'<em>Italic</em>'},
@@ -158,7 +159,7 @@ function changeColor(color) {
                         <font-awesome-icon :id="props.field.input.id+`-colorcircle`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': props.modelValue['font_color']}" @click="showColorPicker()" />
                         <input type="hidden" :name="props.field.input.name+`[font_color]`" :id="props.field.input.id+`_font_color`" v-model="props.modelValue['font_color']" />
                         <ColorPicker v-if="_showColorPicker"
-                            theme="light"
+                            :theme="theme"
                             :color="props.modelValue['font_color']"
                             :sucker-hide="true"
                             :sucker-canvas="null"

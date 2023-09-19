@@ -1,11 +1,13 @@
 <script setup>
 import axios from "axios";
-import { reactive, ref } from "vue";
+import { inject, onMounted, reactive, ref, watch } from "vue";
 
+const emit = defineEmits(['update:ColorMode']);
 const props = defineProps({
-  config: { type: Object, default: null }
+  config: { type: Object, default: null },
 });
 
+const theme = inject('theme', 'light');
 const template_link = props.config.astroid_lib.jtemplate_link.replace(/\&amp\;/g, '&');
 const save_icon = ref('fa-floppy-disk');
 const cache_icon = ref('fa-eraser');
@@ -15,6 +17,16 @@ const toast_msg = reactive({
   icon: '',
   color:'darkviolet'
 });
+
+const switcher = ref(false);
+
+onMounted (() => {
+  switcher.value = theme.value === 'light' ? false : true;
+})
+
+watch(switcher, (newValue) => {
+  emit('update:ColorMode', newValue ? 'dark' : 'light');
+})
 
 const social_menu = [
   {title: 'Docs', href: props.config.astroid_lib.document_link, icon: 'fas fa-book'},
@@ -150,6 +162,10 @@ function clearCache() {
               </a>
             </li>
           </ul>
+          <div class="astroid-color-mode d-lg-flex align-items-center ms-lg-2">
+            <hr class="d-lg-none">
+            <div class="form-check form-switch"><input class="form-check-input switcher" id="astroid-color-mode-switcher" type="checkbox" role="switch" v-model="switcher"></div>
+          </div>
         </div>
       </div>
     </nav>

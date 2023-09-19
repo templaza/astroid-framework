@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUpdated, ref, inject } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
+const theme = inject('theme', 'light');
 const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
     formatOnType: true,
@@ -24,7 +25,7 @@ onUpdated(()=>{
 <template>
     <vue-monaco-editor v-if="typeof props.field.input.code !== 'undefined' && props.field.input.code !== ''"
         v-model:value="code"
-        theme="light"
+        :theme="(theme === 'light' ? 'light' : 'vs-dark')"
         :language="props.field.input.code"
         height="200px"
         className="border"
