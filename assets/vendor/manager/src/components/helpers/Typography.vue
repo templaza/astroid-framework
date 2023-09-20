@@ -24,7 +24,7 @@ const fontSelected= ref({
 const currentDevice = ref('desktop');
 
 onMounted(()=>{
-    let url = props.constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&ts="+Date.now();
+    let url = props.constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&template="+props.constant.template_name+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "fonts_ajax.txt?ts="+Date.now();
     }

@@ -112,6 +112,7 @@ class Font
         if (empty($template)) {
             return [];
         }
+
         require_once JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'library' . '/' . 'FontLib' . '/' . 'Autoloader.php';
         $template_fonts_path        =   JPATH_SITE . "/templates/{$template}/fonts";
         $template_media_fonts_path  =   JPATH_SITE . "/media/templates/site/{$template}/fonts";

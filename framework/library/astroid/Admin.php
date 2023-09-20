@@ -119,7 +119,7 @@ class Admin extends Helper\Client
         Helper::loadLanguage(ASTROID_TEMPLATE_NAME);
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
-        $document->addScript('vendor/vue/dist/index.js', 'body', [], [], 'module');
+        $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  \JURI::root(),
@@ -234,7 +234,7 @@ class Admin extends Helper\Client
         $doc->addScriptOptions('astroid_content', $form_content);
 
         // styles
-        $stylesheets = ['vendor/vue/dist/index.css'];
+        $stylesheets = ['vendor/manager/dist/index.css'];
         $document->addStyleSheet($stylesheets);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
