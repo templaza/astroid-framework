@@ -1,0 +1,24 @@
+.astroid-radio {
+    .form-switch {
+        .form-check-input {
+            width: 3.5rem;
+            height: 1.8rem;
+        }
+    }
+}
+.fontawesome-modal {
+    .modal-body {
+        padding: 1rem;
+        .card {
+            cursor: pointer;
+            min-height: 150px;
+            > i {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+            &:hover {
+                background-color: rgba(86, 86, 86, 0.1);
+            }
+        }
+    }
+}
