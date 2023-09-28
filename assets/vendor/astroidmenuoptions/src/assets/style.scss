@@ -1,3 +1,11 @@
+#astroid-menu-options {
+    .card {
+        border: 1px solid #eee;
+    }
+    .modal-body {
+        padding: 1rem;
+    }
+}
 .astroid-radio {
     .form-switch {
         .form-check-input {
@@ -8,7 +16,6 @@
 }
 .fontawesome-modal {
     .modal-body {
-        padding: 1rem;
         .card {
             cursor: pointer;
             min-height: 150px;
@@ -20,5 +27,149 @@
                 background-color: rgba(86, 86, 86, 0.1);
             }
         }
+    }
+}
+.astroid-elements {
+    div+div {
+        margin-top: 0.5rem;
+    }
+}
+.astroid-rows {
+    .ghost {
+        border: 2px dashed #dee2e6 !important;
+    }
+    .font-monospace {
+        font-size: .7rem;
+    }
+    .column-toolbar {
+        font-size: .7rem;
+        opacity: 0;
+    }
+    .astroid-col-container {
+        &:hover {
+            .column-toolbar {
+                opacity: 1;
+            }
+        }
+    }
+    .add-element {
+        margin-top: -13px;
+        font-size: 0.7rem;
+        > a {
+            z-index: 9;
+            text-decoration: none;
+            &:hover {
+                .add-element-text {
+                    display: inline;
+                }
+            }
+        }
+        .add-element-text {
+            display: none;
+        }
+    }
+}
+.astroid-rows, .astroid-elements {
+    &:empty {
+        &::after{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 83px;
+            border: 1px dashed #dee2e6;
+            border-radius: 5px;
+        }
+    }
+}
+.astroid-rows:empty::after{
+    content: 'Empty Row';
+    margin-top: 29px;
+}
+.astroid-elements:empty::after{
+    content: 'Empty Column';
+}
+.astroid-grid {
+    cursor: pointer;
+    &:hover {
+        .astroid-grid-column {
+            background-color: rgba(86, 86, 86, 0.05);
+        }
+    }
+}
+.astroid-element {
+    cursor: move;
+    padding: 1rem;
+    border-radius: 5px;
+    .element-toolbar {
+        opacity: 0;
+    }
+    &:hover {
+        .element-toolbar {
+            opacity: 1;
+        }
+    }
+}
+.column-handle, .row-handle {
+    cursor: move !important;
+}
+.bg-body-secondary {
+    background-color: #eee;
+}
+.row-container {
+    .nav {
+        font-size: 0.8rem;
+        margin-bottom: 0.8rem;
+        opacity: 0;
+        .nav-item+.nav-item {
+            margin-left: 0.3rem;
+        }
+        .nav-item {
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+    &:hover {
+        .nav {
+            opacity: 1;
+        }
+    }
+}
+.astroid-element-nav {
+    @media (min-width: 992px) {
+        width: 200px;
+    }
+    .nav-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+    }
+    .active .nav-link {
+        background-color: rgba(86, 86, 86, 0.05);
+    }
+}
+#astroid-select-element {
+    .addon-block {
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(86, 86, 86, 0.05);
+        }
+    }
+}
+
+.astroid-color-picker {
+    border-radius: 50%;
+    &.svg-inline--fa.fa-circle {
+        background: var(--as-color-background);
+        border-radius: 50%;
+        cursor: pointer;
+        color: transparent;
+    }
+    &.fas {
+        cursor: pointer;
+        background: var(--as-color-background);
+        color: transparent;
     }
 }

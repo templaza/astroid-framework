@@ -23,10 +23,36 @@ $document->addScriptDeclaration("(function ($) {
    });
 })(jQuery)");
 $document->addCustomTag($astDocument->getStylesheets());
+
+// Get Menu
+$app = JFactory::getApplication('site');
+$menu = $app->getMenu('site');
+
+$itemId = $app->input->get('id');
+$menuItem = $menu->getItem($itemId);
+if ($menuItem === null || (isset($menuItem->language) && $menuItem->language == '*')) {
+    $items = $menu->getItems(['menutype'], $menu_type);
+} else {
+    $items = $menu->getItems(['menutype', 'language'], [$menu_type, $menuItem->language]);
+}
+
+$children = [];
+
+foreach ($items as $i => $item) {
+    if ($item->parent_id != $menu_item_id) {
+        continue;
+    }
+    $children[] = $item;
+}
+
 $astroidMenu = [
     'id' => $id,
     'name' => $name,
     'value' => $value,
+    'options' => [
+        'submenu' => $children,
+        'module' => Astroid\Helper::getModules()
+    ],
     'language' => [
         'TPL_ASTROID_MENU_OPTIONS' => JText::_('TPL_ASTROID_MENU_OPTIONS'),
         'TPL_ASTROID_MENU_TEXT' => JText::_('TPL_ASTROID_MENU_TEXT'),
