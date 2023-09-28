@@ -1,11 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min'
+import 'bootstrap/scss/bootstrap.scss'
+import { Tooltip, Toast, Modal } from 'bootstrap/js/index.esm'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import './assets/base.scss'
-window.bootstrap = bootstrap;
+window.Tooltip = Tooltip;
+window.Toast = Toast;
+window.Modal = Modal;
 const app = createApp(App);
 app.use(VueMonacoEditorPlugin, {
     paths: {

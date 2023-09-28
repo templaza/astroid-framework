@@ -39,7 +39,7 @@ function submitForm() {
   const action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&');
   const form = document.getElementById('astroid-form');
   const toastAstroidMsg = document.getElementById('astroidMessage');
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+  const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
   const formData = new FormData(form); // pass data as a form;
   save_icon.value = 'fa-sync fa-spin'
   axios.post(action_link, formData, {
@@ -68,7 +68,7 @@ function submitForm() {
 
 function clearCache() {
   const toastAstroidMsg = document.getElementById('astroidMessage');
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+  const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
   cache_icon.value = 'fa-sync fa-spin';
   axios.get(props.config.astroid_lib.base_url+'/index.php?option=com_ajax&astroid=clear-cache&template='+props.config.astroid_lib.template_name)
   .then(function (response) {

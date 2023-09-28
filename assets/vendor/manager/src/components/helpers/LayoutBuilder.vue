@@ -3,7 +3,7 @@ import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['edit:Element', 'select:Element', 'update:System']);
-const props = defineProps(['field', 'list', 'group', 'system', 'constant']);
+const props = defineProps(['list', 'group', 'system', 'constant']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -65,7 +65,7 @@ onUpdated(()=>{
 
 onMounted(()=>{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
 })
 
 function updateSystem(addonType, value = false) {
@@ -249,7 +249,7 @@ function deleteElement(element, index) {
                         </li>
                     </ul>
                 </nav>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {addGrid(element, index, grid)}" />
                 </Transition>
@@ -261,7 +261,7 @@ function deleteElement(element, index) {
                     <div><a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {editGrid(element, grid)}" />
                 </Transition>
@@ -276,7 +276,7 @@ function deleteElement(element, index) {
                         <a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                     </div>
                 </div>
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <div class="add-element d-flex justify-content-center">
                     <a href="#" @click.prevent="selectElement(element)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
@@ -304,7 +304,7 @@ function deleteElement(element, index) {
             </div>
             <div v-else>
                 {{ element.id }}
-                <LayoutBuilder :field="props.field" :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
             </div>
         </template>
     </draggable>

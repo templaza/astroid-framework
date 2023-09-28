@@ -154,7 +154,7 @@ function addGrid(grid = []) {
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>
     </div>
-    <LayoutBuilder :field="props.field" :list="layout" group="root" :system="system" :constant="props.constant" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
+    <LayoutBuilder :list="layout" group="root" :system="system" :constant="props.constant" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
     <Transition name="fade">
         <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>

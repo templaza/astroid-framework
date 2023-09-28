@@ -29,7 +29,7 @@ onMounted(()=>{
 function loadPreset(preset) {
     if (confirm('Your current configure will be lost and overwritten by new data. Are you sure?')) {
         const toastAstroidMsg = document.getElementById('loadPreset');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+        const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
         let url = 'index.php?t='+Math.random().toString(36).substring(7);
         if (process.env.NODE_ENV === 'development') {
             url = "preset_ajax.txt?ts="+Date.now();
@@ -70,7 +70,7 @@ function loadPreset(preset) {
 function deletePreset(index) {
     if (confirm('Are you sure?')) {
         const toastAstroidMsg = document.getElementById('loadPreset');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+        const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
         let url = 'index.php?t='+Math.random().toString(36).substring(7);
         if (process.env.NODE_ENV === 'development') {
             url = "preset_ajax.txt?ts="+Date.now();
@@ -110,7 +110,7 @@ function deletePreset(index) {
 
 const modalType = ref('');
 function showModal() {
-    const myModal = new bootstrap.Modal('#addPresetModal');
+    const myModal = new Modal('#addPresetModal');
     myModal.show();
 }
 
@@ -134,7 +134,7 @@ function savePreset() {
     const action_link = props.config.astroid_action.replace(/\&amp\;/g, '&');
     const form = document.getElementById('astroid-form');
     const toastAstroidMsg = document.getElementById('loadPreset');
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+    const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
     const formData = new FormData(form); // pass data as a form;
     formData.append('astroid-preset', 1);
     formData.append('astroid-preset-name', formInfo.title);
@@ -193,7 +193,7 @@ function uploadPreset() {
     }
     let url = 'index.php?t='+Math.random().toString(36).substring(7);
     const toastAstroidMsg = document.getElementById('loadPreset');
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastAstroidMsg);
+    const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
     const formData = new FormData(); // pass data as a form;
     formData.append(props.config.astroid_admin_token, 1);
     formData.append('title', formInfo.title);
