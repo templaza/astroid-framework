@@ -127,6 +127,7 @@ class Admin extends Helper\Client
             'astroid_media_url'     => ASTROID_MEDIA_URL,
             'template_name'         => $template->template.'-'.$template->id,
             'tpl_template_name'     => $template->template,
+            'template_title'        => $template->title,
             'astroid_version'       => Helper\Constants::$astroid_version,
             'astroid_link'          => Helper\Constants::$astroid_link,
             'document_link'         => Helper\Constants::$documentation_link,

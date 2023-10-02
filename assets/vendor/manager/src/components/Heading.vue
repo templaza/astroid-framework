@@ -119,7 +119,7 @@ function clearCache() {
       </div>
       <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel" data-bs-scroll="true">
         <div class="offcanvas-header px-4 pb-0">
-          <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">Astroid</h5>
+          <h5 class="offcanvas-title" id="bdNavbarOffcanvasLabel">{{ props.config.astroid_lib.template_title }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
         </div>
         <div class="offcanvas-body p-4 pt-0 p-lg-0">
@@ -153,6 +153,7 @@ function clearCache() {
               </li>
             </ul>
           </div>
+          <div class="template-title m-auto d-none d-lg-block">{{ props.config.astroid_lib.template_title }}</div>
           <hr class="d-lg-none">
           <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
             <li class="nav-item col-6 col-lg-auto" v-for="item in social_menu" :key="item.value">
