@@ -1,4 +1,31 @@
 .astroid-layout {
+    .responsive-devices {
+        &.astroid-btn-group {
+            @media (min-width: 768px) {
+                margin-top: -1.5rem;
+            }
+            margin-top: -1rem;
+            >span {
+                .btn {
+                    border-top: none;
+                    border-color: var(--bs-border-color);
+                }
+                &:first-child {
+                    .btn {
+                        border-top-left-radius: 0;
+                    }
+                }
+                &:last-child {
+                    .btn {
+                        border-top-right-radius: 0;
+                    }
+                }
+                .btn-check:checked + .btn {
+                    border-color: var(--bs-btn-active-border-color);
+                }
+            }
+        }
+    }
     .ghost {
         border-width: 2px;
         border-style: dashed;
@@ -47,7 +74,7 @@
     .handle {
         cursor: move;
     }
-    .font-monospace {
+    .column-size > .form-select-sm {
         font-size: 0.7rem;
     }
     .element-toolbar {

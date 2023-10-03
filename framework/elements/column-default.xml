@@ -79,7 +79,6 @@
             <field name="padding" type="astroidspacing" label="Padding" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field default="" name="responsive" type="astroidresponsive" label=""/>
             <field name="column_order_xl" type="astroidlist" default="0" label="ASTROID_EXTRA_LARGE_COLUMN_ORDER_LABEL">
                <option value="0">JDEFAULT</option>
                <option value="1">1</option>

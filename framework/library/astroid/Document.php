@@ -32,6 +32,7 @@ class Document
     protected static $_fontawesome = false;
     protected static $_layout_paths = [];
     protected $type = null;
+    protected $modules = null;
 
     public function __construct()
     {

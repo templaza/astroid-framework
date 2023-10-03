@@ -52,16 +52,18 @@ class Column extends BaseElement
             }
         }
 
-        $sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+        $sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
         foreach ($sizes as $size) {
-            if ($size == 'lg') {
-                $this->addClass('col-' . $size . '-' . $this->size);
+            if ($size != 'xs') {
+                if (isset($this->size[$size]) && $this->size[$size]) {
+                    $this->addClass('col-' . $size . '-' . $this->size[$size]);
+                }
                 if (isset($responsive_utilities['hide_' . $size]) && $responsive_utilities['hide_' . $size] != 1) {
                     $this->addClass('hideon' . $size);
                 }
             } else {
-                if (isset($responsive_utilities['size_' . $size]) && $responsive_utilities['size_' . $size] != 'inherit') {
-                    $this->addClass($size == 'xs' ? 'col-' . $responsive_utilities['size_' . $size] : 'col-' . $size . '-' . $responsive_utilities['size_' . $size]);
+                if (isset($this->size[$size]) && $this->size[$size]) {
+                    $this->addClass('col-' . $this->size[$size]);
                 }
                 if (isset($responsive_utilities['hide_' . $size]) && $responsive_utilities['hide_' . $size] != 1) {
                     $this->addClass('hideon' . $size);

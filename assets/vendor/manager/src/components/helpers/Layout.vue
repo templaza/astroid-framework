@@ -25,6 +25,39 @@ const system = reactive({
     banner: true,
     message: true
 });
+const activeDevice = ref('lg');
+const responsive = [
+    {
+        code: 'xxl',
+        icon: 'fa-solid fa-tv',
+        title: 'Extra Extra Large'
+    },
+    {
+        code: 'xl',
+        icon: 'fa-solid fa-desktop',
+        title: 'Extra Large'
+    },
+    {
+        code: 'lg',
+        icon: 'fa-solid fa-computer',
+        title: 'Large Device'
+    },
+    {
+        code: 'md',
+        icon: 'fa-solid fa-laptop',
+        title: 'Medium Device'
+    },
+    {
+        code: 'sm',
+        icon: 'fa-solid fa-tablet-screen-button',
+        title: 'On Tablet'
+    },
+    {
+        code: 'xs',
+        icon: 'fa-solid fa-mobile-screen',
+        title: 'On Mobile'
+    },
+]
 
 function updateSystem(addonType, value = false) {
     system[addonType] = value;
@@ -125,7 +158,14 @@ function addGrid(grid = []) {
             tmp_grid.push({
                 id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                 type: 'column',
-                size: col,
+                size: {
+                    xxl: col,
+                    xl: col,
+                    lg: col,
+                    md: 12,
+                    sm: 12,
+                    xs: 12
+                },
                 elements: []
             })
         }
@@ -148,13 +188,19 @@ function addGrid(grid = []) {
 }
 </script>
 <template>
+    <div class="astroid-btn-group responsive-devices text-center" role="group" aria-label="Responsive Devices">
+        <span v-for="(option, idx) in responsive" :key="idx">
+            <input type="radio" class="btn-check" v-model="activeDevice" :id="`responsive-device-`+option.code" :value="option.code" autocomplete="off">
+            <label class="btn btn-sm btn-as btn-outline-secondary" data-bs-toggle="tooltip" :data-bs-title="option.title" :for="`responsive-device-`+option.code"><i class="fa-xl" :class="option.icon"></i></label>
+        </span>
+    </div>
     <div v-if="(typeof layout.sections === 'undefined' || layout.sections.length === 0)" class="text-center">
         <button class="btn btn-lg btn-as btn-as-primary" @click="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
         <Transition name="fade">
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>
     </div>
-    <LayoutBuilder :list="layout" group="root" :system="system" :constant="props.constant" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
+    <LayoutBuilder :list="layout" group="root" :system="system" :constant="props.constant" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
     <Transition name="fade">
         <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>

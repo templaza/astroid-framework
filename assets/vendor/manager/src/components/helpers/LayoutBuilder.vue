@@ -3,7 +3,7 @@ import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['edit:Element', 'select:Element', 'update:System']);
-const props = defineProps(['list', 'group', 'system', 'constant']);
+const props = defineProps(['list', 'group', 'system', 'constant', 'device']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -35,6 +35,19 @@ onBeforeMount(()=>{
         if (['component', 'banner', 'message'].includes(element.type)) {
             updateSystem(element.type);
         }
+        if (element.type === 'column') {
+            if (['1','2','3','4','5','6','7','8','9','10','11','12'].includes(element.size+'')) {
+                const tmp = element.size;
+                element.size = {
+                    xxl: tmp,
+                    xl: tmp,
+                    lg: tmp,
+                    md: 12,
+                    sm: 12,
+                    xs: 12
+                }
+            }
+        }
         showGrid.value[element.id] = false;
     });
 })
@@ -58,6 +71,19 @@ onUpdated(()=>{
     layout.value[map[props.group]].forEach(element => {
         if (['component', 'banner', 'message'].includes(element.type)) {
             updateSystem(element.type);
+        }
+        if (element.type === 'column') {
+            if (['1','2','3','4','5','6','7','8','9','10','11','12'].includes(element.size+'')) {
+                const tmp = element.size;
+                element.size = {
+                    xxl: tmp,
+                    xl: tmp,
+                    lg: tmp,
+                    md: 12,
+                    sm: 12,
+                    xs: 12
+                }
+            }
         }
         showGrid.value[element.id] = false;
     });
@@ -89,7 +115,14 @@ function addGrid(element, index, grid = []) {
             tmp_grid.push({
                 id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                 type: 'column',
-                size: col,
+                size: {
+                    xxl: col,
+                    xl: col,
+                    lg: col,
+                    md: 12,
+                    sm: 12,
+                    xs: 12
+                },
                 elements: []
             })
         }
@@ -132,12 +165,19 @@ function editGrid(element, grid = []) {
     grid.forEach(col => {
         if (col > 0) {
             if (col_idx < element.cols.length) {
-                element.cols[col_idx].size = col;
+                element.cols[col_idx].size[props.device] = col;
             } else {
                 element.cols.push({
                     id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
                     type: 'column',
-                    size: col,
+                    size: {
+                        xxl: col,
+                        xl: col,
+                        lg: col,
+                        md: 12,
+                        sm: 12,
+                        xs: 12
+                    },
                     elements: []
                 });
             }
@@ -249,7 +289,7 @@ function deleteElement(element, index) {
                         </li>
                     </ul>
                 </nav>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {addGrid(element, index, grid)}" />
                 </Transition>
@@ -261,22 +301,24 @@ function deleteElement(element, index) {
                     <div><a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {editGrid(element, grid)}" />
                 </Transition>
             </div>
-            <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="`col-`+element.size">
-                <div class="d-flex justify-content-between">
-                    <div class="font-monospace text-body-tertiary mb-2">
-                        col-lg-{{ element.size }}
+            <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="(props.device !== 'xs' ? `col-`+element.size[props.device] : `col-`+element.size.xs)">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="column-size text-body-tertiary mb-2">
+                        <select class="form-select form-select-sm" v-model="element.size[props.device]" aria-label="Small select example">
+                            <option v-for="option in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="option">{{ 'col'+(props.device !== 'xs' ? '-'+props.device+'-'+option : '-'+option) }}</option>
+                        </select>
                     </div>
                     <div class="column-toolbar">
                         <span class="column-handle handle bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>
                         <a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                     </div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <div class="add-element d-flex justify-content-center">
                     <a href="#" @click.prevent="selectElement(element)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
@@ -304,7 +346,7 @@ function deleteElement(element, index) {
             </div>
             <div v-else>
                 {{ element.id }}
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
             </div>
         </template>
     </draggable>
