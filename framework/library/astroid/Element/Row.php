@@ -57,6 +57,7 @@ class Row extends BaseElement
                     if ($this->section->hasComponent) {
                         foreach ($columns[$componentIndex]->size as $key => $size) {
                             $columns[$componentIndex]->size[$key] += $bufferSize[$key];
+                            if ($columns[$componentIndex]->size[$key] > 12) $columns[$componentIndex]->size[$key] = 12;
                         }
                         $bufferSize = [
                             'xxl' => 0,
