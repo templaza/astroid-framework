@@ -19,7 +19,7 @@ class Row extends BaseElement
     public function __construct($data, $section)
     {
         $this->section = $section;
-        $this->_data['fill'] = isset($this->_data['fill']) && $this->_data['fill'] ? $this->_data['fill'] : true;
+        $data['fill'] = isset($data['fill']) && $data['fill'] ? $data['fill'] : true;
         parent::__construct($data, $section->devices);
     }
 
