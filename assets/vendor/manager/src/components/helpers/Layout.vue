@@ -69,7 +69,12 @@ const responsive = [
 ]
 
 function onSelectDevice(items, lastSelectItem) {
-    layout.value.devices = items
+    if (items.length) {
+        layout.value.devices = items
+        activeDevice.value = layout.value.devices[0].code;
+    } else {
+        alert('You can not remove all devices!');
+    }
 }
 
 function updateSystem(addonType, value = false) {
