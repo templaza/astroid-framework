@@ -79,6 +79,14 @@
             <field name="padding" type="astroidspacing" label="Padding" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
+            <field description="TPL_ASTROID_ROW_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ROW_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ROW_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ROW_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ROW_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
+            <field description="TPL_ASTROID_ROW_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
+            <field name="device_order_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_ORDER_LABEL" />
             <field name="column_order_xl" type="astroidlist" default="0" label="ASTROID_EXTRA_LARGE_COLUMN_ORDER_LABEL">
                <option value="0">JDEFAULT</option>
                <option value="1">1</option>

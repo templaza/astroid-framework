@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUpdated, reactive, ref, inject } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
-import 'vue-color-kit/dist/vue-color-kit.css'
+
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
@@ -84,7 +84,11 @@ function updateColor(color) {
 
 function changeColor(color) {
     const { r, g, b, a } = color.rgba;
-    _color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
+    if (r === 0, g === 0, b === 0, a === 0) {
+        _color[_currentColorMode.value] = '';
+    } else {
+        _color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
     updateColor(_color[_currentColorMode.value]);
 }
 </script>

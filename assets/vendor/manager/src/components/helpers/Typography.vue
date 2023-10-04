@@ -3,9 +3,7 @@ import { onMounted, onUpdated, ref, watch, inject } from 'vue';
 import axios from "axios";
 import { ModelListSelect } from "vue-search-select"
 import TypoResponsive from './TypoResponsive.vue';
-import "vue-search-select/dist/VueSearchSelect.css"
 import { ColorPicker } from 'vue-color-kit'
-import 'vue-color-kit/dist/vue-color-kit.css'
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field', 'constant']);
@@ -89,7 +87,11 @@ function showColorPicker() {
 
 function changeColor(color) {
     const { r, g, b, a } = color.rgba;
-    props.modelValue['font_color'] = `rgba(${r}, ${g}, ${b}, ${a})`;
+    if (r === 0, g === 0, b === 0, a === 0) {
+        props.modelValue['font_color'] = ``;
+    } else {
+        props.modelValue['font_color'] = `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
 }
 </script>
 <template>

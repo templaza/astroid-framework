@@ -26,9 +26,11 @@ class BaseElement
 {
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
     public $id, $params, $type, $style, $style_dark, $content = '';
-    public function __construct($data)
+    public array $devices = [];
+    public function __construct($data, $devices)
     {
         $this->_data = $data;
+        $this->devices = $devices;
         $this->id = $data['id'];
         $this->type = isset($data['type']) ? $data['type'] : 'element';
         $this->params = new \JRegistry();

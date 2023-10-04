@@ -20,8 +20,20 @@ class Column extends BaseElement
     {
         $this->section = $section;
         $this->row = $row;
-        $this->size = $data['size'];
-        parent::__construct($data);
+        if (is_int($data['size'])) {
+            $tmp = $data['size'];
+            $this->size = [
+                'xxl' => $tmp,
+                'xl' => $tmp,
+                'lg' => $tmp,
+                'md' => 12,
+                'sm' => 12,
+                'xs' => 12,
+            ];
+        } else {
+            $this->size = $data['size'];
+        }
+        parent::__construct($data, $section->devices);
     }
 
     public function render()
@@ -51,23 +63,19 @@ class Column extends BaseElement
                 $responsive_utilities[$responsive_utility['name']] = $responsive_utility['value'];
             }
         }
-
-        $sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
-        foreach ($sizes as $size) {
+        foreach ($this->devices as $device) {
+            $size = $device['code'];
             if ($size != 'xs') {
                 if (isset($this->size[$size]) && $this->size[$size]) {
                     $this->addClass('col-' . $size . '-' . $this->size[$size]);
-                }
-                if (isset($responsive_utilities['hide_' . $size]) && $responsive_utilities['hide_' . $size] != 1) {
-                    $this->addClass('hideon' . $size);
                 }
             } else {
                 if (isset($this->size[$size]) && $this->size[$size]) {
                     $this->addClass('col-' . $this->size[$size]);
                 }
-                if (isset($responsive_utilities['hide_' . $size]) && $responsive_utilities['hide_' . $size] != 1) {
-                    $this->addClass('hideon' . $size);
-                }
+            }
+            if ($this->params->get('hideon'.$size, 0)) {
+                $this->addClass('hideon' . $size);
             }
         }
 

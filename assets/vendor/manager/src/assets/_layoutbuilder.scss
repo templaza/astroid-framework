@@ -9,6 +9,9 @@
                 .btn {
                     border-top: none;
                     border-color: var(--bs-border-color);
+                    &.layout-config:hover {
+                        border-color: var(--bs-btn-hover-border-color);
+                    }
                 }
                 &:first-child {
                     .btn {

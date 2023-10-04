@@ -19,7 +19,7 @@ class Row extends BaseElement
     public function __construct($data, $section)
     {
         $this->section = $section;
-        parent::__construct($data);
+        parent::__construct($data, $section->devices);
     }
 
     public function render()
@@ -45,63 +45,67 @@ class Row extends BaseElement
             }
         }
 
-        foreach ($columns as $colIndex => $column) {
-            if (empty($column->content)) {
-                foreach ($column->size as $key => $size) {
-                    $bufferSize[$key] += $column->size[$key];
-                }
-                unset($columns[$colIndex]);
-            } else {
-                if ($this->section->hasComponent) {
-                    foreach ($columns[$componentIndex]->size as $key => $size) {
-                        $columns[$componentIndex]->size[$key] += $bufferSize[$key];
+        if (isset($this->_data['fill']) && $this->_data['fill']) {
+            foreach ($columns as $colIndex => $column) {
+                if (empty($column->content)) {
+                    foreach ($column->size as $key => $size) {
+                        $bufferSize[$key] += $column->size[$key];
                     }
-                    $bufferSize = [
-                        'xxl' => 0,
-                        'xl' => 0,
-                        'lg' => 0,
-                        'md' => 0,
-                        'sm' => 0,
-                        'xs' => 0,
-                    ];
+                    unset($columns[$colIndex]);
                 } else {
-                    if (isset($columns[$prevColIndex])) {
-                        foreach ($columns[$prevColIndex]->size as $key => $size) {
-                            $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
-                            if ($columns[$prevColIndex]->size[$key] > 12) $columns[$prevColIndex]->size[$key] = 12;
+                    if ($this->section->hasComponent) {
+                        foreach ($columns[$componentIndex]->size as $key => $size) {
+                            $columns[$componentIndex]->size[$key] += $bufferSize[$key];
                         }
+                        $bufferSize = [
+                            'xxl' => 0,
+                            'xl' => 0,
+                            'lg' => 0,
+                            'md' => 0,
+                            'sm' => 0,
+                            'xs' => 0,
+                        ];
                     } else {
-                        foreach ($columns[$colIndex]->size as $key => $size) {
-                            $columns[$colIndex]->size[$key] += $bufferSize[$key];
-                            if ($columns[$colIndex]->size[$key] > 12) $columns[$colIndex]->size[$key] = 12;
+                        if (isset($columns[$prevColIndex])) {
+                            foreach ($columns[$prevColIndex]->size as $key => $size) {
+                                $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
+                                if ($columns[$prevColIndex]->size[$key] > 12) $columns[$prevColIndex]->size[$key] = 12;
+                            }
+                        } else {
+                            foreach ($columns[$colIndex]->size as $key => $size) {
+                                $columns[$colIndex]->size[$key] += $bufferSize[$key];
+                                if ($columns[$colIndex]->size[$key] > 12) $columns[$colIndex]->size[$key] = 12;
+                            }
                         }
+                        $bufferSize = [
+                            'xxl' => 0,
+                            'xl' => 0,
+                            'lg' => 0,
+                            'md' => 0,
+                            'sm' => 0,
+                            'xs' => 0,
+                        ];
                     }
-                    $bufferSize = [
-                        'xxl' => 0,
-                        'xl' => 0,
-                        'lg' => 0,
-                        'md' => 0,
-                        'sm' => 0,
-                        'xs' => 0,
-                    ];
+                    $prevColIndex = $colIndex;
                 }
-                $prevColIndex = $colIndex;
             }
         }
 
         if (!empty($columns)) {
-            if ($this->section->hasComponent) {
-                foreach ($columns[$componentIndex]->size as $key => $size) {
-                    if ($bufferSize[$key]) {
-                        $columns[$componentIndex]->size[$key] += $bufferSize[$key];
-                        if ($columns[$componentIndex]->size[$key] > 12) $columns[$componentIndex]->size[$key] = 12;
+            if (isset($this->_data['fill']) && $this->_data['fill']) {
+                if ($this->section->hasComponent) {
+                    foreach ($columns[$componentIndex]->size as $key => $size) {
+                        if ($bufferSize[$key]) {
+                            $columns[$componentIndex]->size[$key] += $bufferSize[$key];
+                            if ($columns[$componentIndex]->size[$key] > 12) $columns[$componentIndex]->size[$key] = 12;
+                        }
                     }
-                }
-            } else if ($prevColIndex !== null) {
-                foreach ($columns[$prevColIndex]->size as $key => $size) {
-                    if ($bufferSize[$key]) {
-                        $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
-                        if ($columns[$prevColIndex]->size[$key]>12) $columns[$prevColIndex]->size[$key] = 12;
+                } else if ($prevColIndex !== null) {
+                    foreach ($columns[$prevColIndex]->size as $key => $size) {
+                        if ($bufferSize[$key]) {
+                            $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
+                            if ($columns[$prevColIndex]->size[$key]>12) $columns[$prevColIndex]->size[$key] = 12;
+                        }
                     }
                 }
             }

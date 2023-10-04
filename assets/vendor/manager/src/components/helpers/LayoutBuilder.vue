@@ -15,7 +15,7 @@ const map = {
 let elClass = '';
 let handle = '';
 
-onBeforeMount(()=>{
+function initLayout() {
     layout.value = props.list;
     if (props.group === 'root') {
         elClass = 'astroid-sections row row-cols-1 g-3'; 
@@ -48,45 +48,21 @@ onBeforeMount(()=>{
                 }
             }
         }
+        if (element.type === 'row') {
+            if (typeof element.fill === 'undefined') {
+                element.fill = true;
+            }
+        }
         showGrid.value[element.id] = false;
     });
+}
+
+onBeforeMount(()=>{
+    initLayout();
 })
 
 onUpdated(()=>{
-    layout.value = props.list;
-    if (props.group === 'root') {
-        elClass = 'astroid-sections row row-cols-1 g-3'; 
-        handle = '.section-handle';
-    } else if (props.group === 'sections') {
-        elClass = 'astroid-section';
-        handle = '.row-handle';
-    } else if (props.group === 'rows') {
-        elClass = 'astroid-rows row g-2';
-        handle = '.column-handle';
-    } else if (props.group === 'cols') {
-        elClass = 'astroid-cols';
-    } else if (props.group === 'elements') {
-        elClass = 'astroid-elements';
-    }
-    layout.value[map[props.group]].forEach(element => {
-        if (['component', 'banner', 'message'].includes(element.type)) {
-            updateSystem(element.type);
-        }
-        if (element.type === 'column') {
-            if (['1','2','3','4','5','6','7','8','9','10','11','12'].includes(element.size+'')) {
-                const tmp = element.size;
-                element.size = {
-                    xxl: tmp,
-                    xl: tmp,
-                    lg: tmp,
-                    md: 12,
-                    sm: 12,
-                    xs: 12
-                }
-            }
-        }
-        showGrid.value[element.id] = false;
-    });
+    initLayout();
 })
 
 onMounted(()=>{
@@ -300,6 +276,9 @@ function deleteElement(element, index) {
                     <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis" @click.prevent="showGridModal(element.id, 'row')"><i class="fa-solid fa-table-columns"></i></a></div>
                     <div><a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
+                    <div>
+                        <input class="form-check-input" type="checkbox" v-model="element.fill" :id="`fill-row-`+element.id" data-bs-toggle="tooltip" data-bs-title="Fill Up Row">
+                    </div>
                 </div>
                 <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
@@ -309,8 +288,8 @@ function deleteElement(element, index) {
             <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="(props.device !== 'xs' ? `col-`+element.size[props.device] : `col-`+element.size.xs)">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="column-size text-body-tertiary mb-2">
-                        <select class="form-select form-select-sm" v-model="element.size[props.device]" aria-label="Small select example">
-                            <option v-for="option in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="option">{{ 'col'+(props.device !== 'xs' ? '-'+props.device+'-'+option : '-'+option) }}</option>
+                        <select class="form-select form-select-sm" v-model="element.size[props.device]" aria-label="Select column size" :id="`select-column-size-`+element.id">
+                            <option v-for="option in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="option" :key="option">{{ 'col'+(props.device !== 'xs' ? '-'+props.device+'-'+option : '-'+option) }}</option>
                         </select>
                     </div>
                     <div class="column-toolbar">

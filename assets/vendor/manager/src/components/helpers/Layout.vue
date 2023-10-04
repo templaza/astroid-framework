@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeMount, onUpdated, reactive, ref, watch } from 'vue';
+import { MultiListSelect } from "vue-search-select"
 import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
 import SelectElement from "./SelectElement.vue";
@@ -12,6 +13,14 @@ const props = defineProps({
 });
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
+    if (typeof layout.value.devices === 'undefined') {
+        layout.value.devices = [ 
+            { "code": "lg", "icon": "fa-solid fa-computer", "title": "Large Device" }, 
+            { "code": "md", "icon": "fa-solid fa-laptop", "title": "Medium Device" }, 
+            { "code": "sm", "icon": "fa-solid fa-tablet-screen-button", "title": "On Tablet" }, 
+            { "code": "xs", "icon": "fa-solid fa-mobile-screen", "title": "On Mobile" } 
+        ];
+    }
 })
 onUpdated(()=>{
     if (layout_text.value !== props.modelValue) {
@@ -58,6 +67,10 @@ const responsive = [
         title: 'On Mobile'
     },
 ]
+
+function onSelectDevice(items, lastSelectItem) {
+    layout.value.devices = items
+}
 
 function updateSystem(addonType, value = false) {
     system[addonType] = value;
@@ -189,10 +202,35 @@ function addGrid(grid = []) {
 </script>
 <template>
     <div class="astroid-btn-group responsive-devices text-center" role="group" aria-label="Responsive Devices">
-        <span v-for="(option, idx) in responsive" :key="idx">
+        <span v-for="(option, idx) in layout.devices" :key="idx">
             <input type="radio" class="btn-check" v-model="activeDevice" :id="`responsive-device-`+option.code" :value="option.code" autocomplete="off">
             <label class="btn btn-sm btn-as btn-outline-secondary" data-bs-toggle="tooltip" :data-bs-title="option.title" :for="`responsive-device-`+option.code"><i class="fa-xl" :class="option.icon"></i></label>
         </span>
+        <span>
+            <button class="layout-config btn btn-sm btn-as btn-outline-secondary" @click.prevent="" data-bs-toggle="modal" data-bs-target="#selectDevices"><i class="fas fa-cog"></i></button>
+        </span>
+    </div>
+    <div class="modal fade" id="selectDevices" tabindex="-1" aria-labelledby="selectDevicesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="selectDevicesLabel">Select layout devices</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <multi-list-select
+                        :list="responsive"
+                        option-value="code"
+                        option-text="title"
+                        id="responsive-device-select"
+                        :selected-items="layout.devices"
+                        placeholder="Select a device"
+                        @select="onSelectDevice"
+                    >
+                    </multi-list-select>
+                </div>
+            </div>
+        </div>
     </div>
     <div v-if="(typeof layout.sections === 'undefined' || layout.sections.length === 0)" class="text-center">
         <button class="btn btn-lg btn-as btn-as-primary" @click="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>

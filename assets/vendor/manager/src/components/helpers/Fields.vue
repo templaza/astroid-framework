@@ -42,7 +42,7 @@ onUpdated(()=>{
 onMounted(()=>{
     if (props.field.input.type === `astroidradio`) {
         if (props.field.input.role === `switch`) {
-            if (props.scope[props.field.name] === '1') {
+            if (parseInt(props.scope[props.field.name]) === 1) {
                 switchField.value = true;
             }
         }
@@ -88,7 +88,7 @@ function updateContentLayout() {
             </span>
         </div>
         <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
-            <input v-model="switchField" @input="" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
+            <input v-model="switchField" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
             <input type="hidden" :name="props.field.input.name" :value="props.scope[props.field.name]">
         </div>
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">

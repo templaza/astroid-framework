@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onMounted, onUpdated, ref } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
-import 'vue-color-kit/dist/vue-color-kit.css'
 import draggable from "vuedraggable";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
@@ -127,7 +126,7 @@ function showColorPicker(id) {
                                                         :sucker-canvas="null"
                                                         :sucker-area="[]"
                                                         :id="props.field.input.id+`-colorpicker-`+element.id"
-                                                        @changeColor="(color) => {element.color = `rgba(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}, ${color.rgba.a})`; listUpdated();}"
+                                                        @changeColor="(color) => {element.color = color.rgba.r || color.rgba.g || color.rgba.b || color.rgba.a ? `rgba(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}, ${color.rgba.a})` : ''; listUpdated();}"
                                                     />
                                                 </div>
                                             </div>
