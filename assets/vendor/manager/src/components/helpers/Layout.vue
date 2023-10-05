@@ -219,20 +219,23 @@ function addGrid(grid = []) {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title fs-5" id="selectDevicesLabel">Select layout devices</h3>
+                    <h3 class="modal-title fs-5" id="selectDevicesLabel">Layout Configurations</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <multi-list-select
-                        :list="responsive"
-                        option-value="code"
-                        option-text="title"
-                        id="responsive-device-select"
-                        :selected-items="layout.devices"
-                        placeholder="Select a device"
-                        @select="onSelectDevice"
-                    >
-                    </multi-list-select>
+                    <div>
+                        <label :for="props.field.id+`-responsive-device-select`" class="form-label">Select your devices</label>
+                        <multi-list-select
+                            :list="responsive"
+                            option-value="code"
+                            option-text="title"
+                            :id="props.field.id+`-responsive-device-select`"
+                            :selected-items="layout.devices"
+                            placeholder="Select a device"
+                            @select="onSelectDevice"
+                        >
+                        </multi-list-select>
+                    </div>
                 </div>
             </div>
         </div>

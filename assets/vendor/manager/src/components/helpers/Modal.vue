@@ -55,14 +55,14 @@ function saveModal(){
                         <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid">
                             <div v-for="(field, fid) in group.fields" :key="field.id" :class="(fid !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-show="checkShow(field)">
                                 <div class="row">
-                                    <div v-if="field.label || field.description" class="col-lg-5">
+                                    <div v-if="(field.label || field.description) && field.input.type !== `astroidheading`" class="col-lg-5">
                                         <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label" v-html="field.label"></div>
                                         <label v-else :for="field.input.id" class="form-label" v-html="field.label"></label>
                                         <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
                                     </div>
                                     <div :class="{
-                                        'col-lg-7' : (field.label || field.description),
-                                        'col-12': !(field.label || field.description)
+                                        'col-lg-7' : (field.label || field.description) && field.input.type !== `astroidheading`,
+                                        'col-12': !(field.label || field.description) || field.input.type === `astroidheading`
                                     }">
                                         <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
                                             <Fields 

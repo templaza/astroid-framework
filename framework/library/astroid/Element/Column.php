@@ -50,19 +50,6 @@ class Column extends BaseElement
 
     protected function _getclasses()
     {
-        $responsive = $this->params->get('responsive', '');
-        if (!empty($responsive)) {
-            $responsive = \json_decode($responsive, true);
-        } else {
-            $responsive = [];
-        }
-
-        $responsive_utilities = [];
-        foreach ($responsive as $responsive_utility) {
-            if (array_key_exists('name', $responsive_utility)) {
-                $responsive_utilities[$responsive_utility['name']] = $responsive_utility['value'];
-            }
-        }
         foreach ($this->devices as $device) {
             $size = $device['code'];
             if ($size != 'xs') {
