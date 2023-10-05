@@ -8,18 +8,19 @@
  */
 
 use Astroid\Framework;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 jimport('astroid.framework.helper');
 jimport('astroid.framework.constants');
 jimport('astroid.framework.astroid');
 
-if (ASTROID_JOOMLA_VERSION == 3) {
-   JLoader::register('ModRelatedItemsHelper', JPATH_ROOT . '/modules/mod_related_items/helper.php');
-   \JLoader::registerAlias('RelatedItemsHelper', 'ModRelatedItemsHelper');
-} else {
-   \JLoader::registerAlias('RelatedItemsHelper', '\\Joomla\\Module\\RelatedItems\\Site\\Helper\\RelatedItemsHelper');
-}
+//if (ASTROID_JOOMLA_VERSION == 3) {
+//   JLoader::register('ModRelatedItemsHelper', JPATH_ROOT . '/modules/mod_related_items/helper.php');
+//   \JLoader::registerAlias('RelatedItemsHelper', 'ModRelatedItemsHelper');
+//} else {
+//   \JLoader::registerAlias('RelatedItemsHelper', '\\Joomla\\Module\\RelatedItems\\Site\\Helper\\RelatedItemsHelper');
+//}
 
 class AstroidFrameworkArticle
 {
@@ -266,7 +267,8 @@ class AstroidFrameworkArticle
 
          $params = new JRegistry();
          $params->loadArray(['maximum' => $count]);
-         $items = RelatedItemsHelper::getList($params);
+//         $items = RelatedItemsHelper::getList($params);
+         $items = Factory::getApplication()->bootModule('mod_related_items', 'site')->getHelper('RelatedItemsHelper')->getRelatedArticles($params, Factory::getApplication());
          Astroid\Framework::getDocument()->include('blog.modules.related', ['items' => $items, 'display_posttypeicon' => $this->showRelatedPostTypeIcon(), 'display_badge' => $this->showRelatedArticleBadge()]);
       }
    }
