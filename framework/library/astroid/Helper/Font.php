@@ -291,11 +291,11 @@ class Font
         $document   =   Framework::getDocument();
         switch ($source) {
             case 'cdn':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
                 $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             case 'local':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
                 $document->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             default:
