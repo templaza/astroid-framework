@@ -194,7 +194,6 @@ class JFormFieldAstroidTypography extends JFormField
            'lowercase' => JText::_('JGLOBAL_LOWERCASE'),
            'capitalize' => JText::_('JGLOBAL_CAPITALIZE')
        );
-
        $json     =   [
            'id'                  =>  $this->id,
            'name'                =>  $this->name,
@@ -203,7 +202,7 @@ class JFormFieldAstroidTypography extends JFormField
                'alt_font_face'       =>  (string) $value['alt_font_face'] != '' ? (string) $value['alt_font_face'] : (string) $defaults['alt_font_face'],
                'font_size'           =>  property_exists((object) $value['font_size'], 'desktop') ? $value['font_size'] : $defaults['font_size'],
                'font_size_unit'      =>  property_exists((object) $value['font_size_unit'], 'desktop') ? $value['font_size_unit'] : $defaults['font_size_unit'],
-               'font_color'          =>  isset($value['font_color']) && (string) $value['font_color'] != '' ? (string) $value['font_color'] : (string) $defaults['font_color'],
+               'font_color'          =>  isset($value['font_color']) ? (string) $value['font_color'] : (string) $defaults['font_color'],
                'letter_spacing'      =>  property_exists((object) $value['letter_spacing'], 'desktop') ? $value['letter_spacing'] : $defaults['letter_spacing'],
                'letter_spacing_unit' =>  property_exists((object) $value['letter_spacing_unit'], 'desktop') ? $value['letter_spacing_unit'] : $defaults['letter_spacing_unit'],
                'line_height'         =>  property_exists((object) $value['line_height'], 'desktop') ? $value['line_height'] : $defaults['line_height'],

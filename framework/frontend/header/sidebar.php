@@ -97,14 +97,6 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                 ?>
             </div>
         <?php endif; ?>
-        <?php
-        //Color Mode
-        if ($color_mode) {
-            echo '<div class="d-flex align-items-center astroid-color-mode">';
-            $document->include('colormode');
-            echo '</div>';
-        }
-        ?>
     </div>
 </div>
 <!-- header ends -->

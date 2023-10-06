@@ -13,4 +13,4 @@ defined('_JEXEC') or die;
 extract($displayData);
 $template   = Astroid\Framework::getTemplate();
 $color_mode = $template->getColorMode();
-echo '<div class="form-check form-switch"><input class="form-check-input switcher" type="checkbox" role="switch"'.($color_mode == 'dark' ? ' checked' : '').'></div>';
+echo '<div class="d-flex align-items-center astroid-color-mode"><div class="form-check form-switch"><input class="form-check-input switcher" type="checkbox" role="switch"'.($color_mode == 'dark' ? ' checked' : '').'></div></div>';
