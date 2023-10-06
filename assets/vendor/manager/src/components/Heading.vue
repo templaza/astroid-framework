@@ -11,6 +11,7 @@ const theme = inject('theme', 'light');
 const template_link = props.config.astroid_lib.jtemplate_link.replace(/\&amp\;/g, '&');
 const save_icon = ref('fa-floppy-disk');
 const cache_icon = ref('fa-eraser');
+const save_disabled = ref(false);
 const toast_msg = reactive({
   header: '',
   body:'',
@@ -42,6 +43,7 @@ function submitForm() {
   const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
   const formData = new FormData(form); // pass data as a form;
   save_icon.value = 'fa-sync fa-spin'
+  save_disabled.value = true;
   axios.post(action_link, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -59,6 +61,7 @@ function submitForm() {
       toast_msg.color = 'red';
     }
     save_icon.value = 'fa-floppy-disk';
+    save_disabled.value = false;
     toastBootstrap.show();
   })
   .catch((err) => {
@@ -128,7 +131,7 @@ function clearCache() {
             <div class="vr d-none d-lg-flex h-100 me-lg-4"></div>
             <ul class="navbar-nav flex-row flex-wrap">
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-as btn-as-primary" type="button" @click.prevent="submitForm">
+                <button class="btn btn-sm btn-as btn-as-primary" type="button" @click.prevent="submitForm" :disabled="save_disabled">
                   <i class="fas me-1" :class="save_icon"></i>
                   {{ props.config.astroid_lang.ASTROID_SAVE }}
                 </button>
