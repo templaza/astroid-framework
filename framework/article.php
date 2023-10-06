@@ -11,9 +11,6 @@ use Astroid\Framework;
 use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
-jimport('astroid.framework.helper');
-jimport('astroid.framework.constants');
-jimport('astroid.framework.astroid');
 
 if (ASTROID_JOOMLA_VERSION == 3) {
    JLoader::register('ModRelatedItemsHelper', JPATH_ROOT . '/modules/mod_related_items/helper.php');
@@ -66,7 +63,6 @@ class AstroidFrameworkArticle
 
    public function addMeta()
    {
-
       $app = JFactory::getApplication();
       $itemid = $app->input->get('Itemid', '', 'INT');
 
