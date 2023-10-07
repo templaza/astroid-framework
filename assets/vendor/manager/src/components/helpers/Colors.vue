@@ -10,19 +10,23 @@ const props = defineProps({
 const theme = inject('theme', 'light');
 
 onMounted(() => {
-    if (props.field.input.value.trim() !== '') {
-        const tmp = JSON.parse(props.field.input.value);
-        _color.light    = tmp.light;
-        _color.dark     = tmp.dark;
+    if (props.modelValue.trim() !== '') {
+        try {
+            const tmp = JSON.parse(props.modelValue);
+            _color.light    = tmp.light;
+            _color.dark     = tmp.dark;
+        } catch (e) {
+            _color.light = props.modelValue;
+            _color.dark = props.modelValue;
+        }
     }
-        
     document.addEventListener('click', function(event) {
         const elem          = document.getElementById(props.field.input.id+'-colorpicker');
         const circle_light  = document.getElementById(props.field.input.id+'-colorcircle-light');
         const circle_dark   = document.getElementById(props.field.input.id+'-colorcircle-dark');
         if (_showColorPicker.value === true) {
             if (
-                    elem 
+                elem 
                 && circle_light 
                 && !circle_light.contains(event.target) 
                 && !elem.contains(event.target)
