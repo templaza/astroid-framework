@@ -29,7 +29,7 @@ function changeDevice(device) {
 function updateRange(device) {
     if (['em', 'rem'].includes(props.modelValue[props.fieldname+`_unit`][device])) {
         rangeConfig[device]['max']  = 10;
-        rangeConfig[device]['step'] = 0.1;
+        rangeConfig[device]['step'] = 0.01;
     }
     if (['px', 'pt'].includes(props.modelValue[props.fieldname+`_unit`][device])) {
         rangeConfig[device]['max']  = 100;
