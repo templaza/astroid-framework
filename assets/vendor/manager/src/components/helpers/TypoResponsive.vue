@@ -66,7 +66,7 @@ onUpdated(() => {
             <div class="col col-3">
                 <div class="row gx-1 align-items-center form-text">
                     <div class="col">
-                        <input class="form-control form-control-sm" :id="props.field.input.id+`_`+props.fieldname+`_value_`+device" type="text" v-model="props.modelValue[props.fieldname][device]">
+                        <input class="form-control form-control-sm" :id="props.field.input.id +`_`+ props.fieldname +`_`+ device" :name="props.field.input.name + `[` + props.fieldname + `]` + `[` + device + `]`" type="text" v-model="props.modelValue[props.fieldname][device]">
                     </div> 
                     <div class="col-auto">
                         {{ props.modelValue[props.fieldname+`_unit`][device] }}
@@ -82,6 +82,6 @@ onUpdated(() => {
                 </div>
             </div>
         </div>
-        <input type="range" class="form-range" min="0" :step="rangeConfig[device]['step']" :max="rangeConfig[device]['max']" v-model="props.modelValue[props.fieldname][device]" :name="props.field.input.name + `[` + props.fieldname + `]` + `[` + device + `]`" :id="props.field.input.id +`_`+ props.fieldname +`_`+ device">
+        <input type="range" class="form-range" min="0" :step="rangeConfig[device]['step']" :max="rangeConfig[device]['max']" v-model="props.modelValue[props.fieldname][device]" :id="props.field.input.id+`_`+props.fieldname+`_range_`+device">
     </div>
 </template>
