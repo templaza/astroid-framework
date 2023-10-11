@@ -1,8 +1,5 @@
 <script setup>
 import { onMounted, onUpdated, reactive, ref, watch } from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faDesktop, faTablet, faMobile } from "@fortawesome/free-solid-svg-icons";
-library.add(faDesktop, faTablet, faMobile);
 const emit = defineEmits(['update:changeDevice']);
 const props = defineProps(['modelValue', 'field', 'fieldname', 'currentDevice']);
 const devices = ['desktop', 'tablet', 'mobile'];
@@ -66,8 +63,15 @@ onUpdated(() => {
     </div>
     <div class="mt-2" v-for="device in devices" v-show="props.currentDevice===device">
         <div class="row align-items-center g-3 mb-2">
-            <div class="col col-auto">
-                <label :for="props.field.input.id+`_`+props.fieldname+`_`+device" class="form-label form-text mt-0 mb-0">{{ props.modelValue[props.fieldname][device] + props.modelValue[props.fieldname+`_unit`][device] }}</label>
+            <div class="col col-3">
+                <div class="row gx-1 align-items-center form-text">
+                    <div class="col">
+                        <input class="form-control form-control-sm" :id="props.field.input.id+`_`+props.fieldname+`_value_`+device" type="text" v-model="props.modelValue[props.fieldname][device]">
+                    </div> 
+                    <div class="col-auto">
+                        {{ props.modelValue[props.fieldname+`_unit`][device] }}
+                    </div>
+                </div>
             </div>
             <div class="col">
                 <div class="astroid-btn-group text-end">
