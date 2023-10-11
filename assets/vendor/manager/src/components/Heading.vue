@@ -137,19 +137,19 @@ function clearCache() {
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <button class="btn btn-sm btn-as btn-as-light" type="button" @click.prevent="clearCache">
+                <button class="btn btn-sm btn-as btn-as-light" type="button" @click.prevent="clearCache" :disabled="save_disabled">
                   <i class="fas me-1" :class="cache_icon"></i>
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLEAR_CACHE }}
                 </button>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="props.config.astroid_lib.site_url" target="_blank">
+                <a class="btn btn-sm btn-as btn-as-light" :href="props.config.astroid_lib.site_url" target="_blank" tabindex="-1" role="button" :aria-disabled="save_disabled" :class="{'disabled' : save_disabled}">
                   <i class="fas fa-up-right-from-square me-1"></i>
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_PREVIEW }}
                 </a>
               </li>
               <li class="nav-item col-6 col-lg-auto d-grid">
-                <a class="btn btn-sm btn-as btn-as-light" type="button" :href="template_link">
+                <a class="btn btn-sm btn-as btn-as-light" :href="template_link" tabindex="-1" role="button" :aria-disabled="save_disabled" :class="{'disabled' : save_disabled}">
                   <i class="fas fa-xmark me-1"></i>
                   {{ props.config.astroid_lang.ASTROID_TEMPLATE_CLOSE }}
                 </a>
