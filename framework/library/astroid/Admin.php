@@ -120,6 +120,8 @@ class Admin extends Helper\Client
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
+        $pluginParams   =   Helper::getPluginParams();
+        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  \JURI::root(),
@@ -189,6 +191,9 @@ class Admin extends Helper\Client
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {
+                    if (!$plg_color_mode && $field->fieldname == 'colormode') {
+                        continue;
+                    }
                     $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
                 }
             }
@@ -206,6 +211,9 @@ class Admin extends Helper\Client
                 $input = $field->input ? trim(str_replace('ng-media-class', 'ng-class', $field->input)) : $field->input;
                 $js_input   =   json_decode($input);
                 $field_group = $field->getAttribute('astroidgroup', 'none');
+                if (!$plg_color_mode && $field_group == 'colormode') {
+                    continue;
+                }
                 $field_tmp  =   [
                     'id'            =>  $field->id,
                     'name'          =>  $field->fieldname,
