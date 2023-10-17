@@ -23,6 +23,7 @@ class JFormFieldAstroidColor extends JFormField {
     * @since  11.3
     */
    protected $type = 'AstroidColor';
+    protected $ordering;
 
    /**
     * The control.
@@ -171,9 +172,26 @@ class JFormFieldAstroidColor extends JFormField {
     * @since   11.3
     */
    protected function getInput() {
-      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
-
-      return $renderer->render($this->getLayoutData());
+       $plugin_params  =   Astroid\Helper::getPluginParams();
+       $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
+       $value_light    =   $value_dark =   $value = $this->value;
+       if (!empty($value)) {
+           $result = json_decode($value);
+           if (json_last_error() !== JSON_ERROR_NONE) {
+               $value          =   json_encode(['light'=>$value_light, 'dark'=>$value_dark]);
+           }
+       }
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $value,
+           'type'    =>  strtolower($this->type),
+           'colormode'  =>  $color_mode,
+       ];
+       return json_encode($json);
+//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
+//
+//      return $renderer->render($this->getLayoutData());
    }
 
    /**

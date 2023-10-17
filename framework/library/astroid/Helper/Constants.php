@@ -13,11 +13,11 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '2.6.6';
-    public static $fontawesome_version = '6.3.0';
+    public static $astroid_version = '3.0.0';
+    public static $fontawesome_version = '6.4.2';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
-    public static $documentation_link = 'https://docs.jollyany.co/';
+    public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
@@ -44,6 +44,16 @@ class Constants
         'gray600' => 'TPL_COLOR_GREY',
         'gray800' => 'TPL_COLOR_GREY_DARK',
         'custom' => 'TPL_COLOR_CUSTOM'
+    ];
+
+    public static $translationStrings = [
+        'ASTROID_SAVE',
+        'ASTROID_TEMPLATE_SAVING',
+        'ASTROID_TEMPLATE_CLEAR_CACHE',
+        'ASTROID_TEMPLATE_CLEARING_CACHE',
+        'ASTROID_TEMPLATE_PREVIEW',
+        'TPL_ASTROID_BACK_TO_JOOMLA',
+        'ASTROID_TEMPLATE_CLOSE',
     ];
 
     public static $animations = [
@@ -212,6 +222,7 @@ class Constants
         ['title' => 'SoundCloud', 'link' => '', 'icons' => ['fab fa-soundcloud'], 'color' => '#FF0000', 'enabled' => false, 'icon' => 'fab fa-soundcloud'],
         ['title' => 'Spotify', 'link' => '', 'icons' => ['fab fa-spotify'], 'color' => '#00E155', 'enabled' => false, 'icon' => 'fab fa-spotify'],
         ['title' => 'Twitter', 'link' => '', 'icons' => ['fab fa-twitter', 'fab fa-twitter-square'], 'color' => '#3DA9F6', 'enabled' => false, 'icon' => 'fab fa-twitter'],
+        ['title' => 'X Twitter', 'link' => '', 'icons' => ['fa-brands fa-x-twitter', 'fa-brands fa-square-x-twitter'], 'color' => '#3DA9F6', 'enabled' => false, 'icon' => 'fa-brands fa-x-twitter'],
         ['title' => 'Telegram', 'link' => '', 'icons' => ['fab fa-telegram-plane', 'fab fa-telegram'], 'color' => '#004056', 'enabled' => false, 'icon' => 'fab fa-telegram-plane'],
         ['title' => 'Tumblr', 'link' => '', 'icons' => ['fab fa-tumblr', 'fab fa-tumblr-square'], 'color' => '#00263C', 'enabled' => false, 'icon' => 'fab fa-tumblr'],
         ['title' => 'VK', 'link' => '', 'icons' => ['fab fa-vk'], 'color' => '#4273AD', 'enabled' => false, 'icon' => 'fab fa-vk'],
@@ -292,88 +303,94 @@ class Constants
 
     public static $preloadersFont = [
         'spinner' => [
-            'name' => 'fas fa-spinner fa-spin',
-            'code' => '<div class="fas fa-spinner fa-spin" style="font-size: 40px; margin: 0 auto;"></div>',
+            'name'      => 'fas fa-spinner fa-spin',
+            'code'      => 'fas fa-spinner',
+            'animate'   => 'spin'
         ],
         'circle-notch' => [
             'name' => 'fas fa-circle-notch fa-spin',
-            'code' => '<div class="fas fa-circle-notch fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-circle-notch',
+            'animate'   => 'spin'
         ],
         'sync' => [
             'name' => 'fas fa-sync fa-spin',
-            'code' => '<div class="fas fa-sync fa-spin fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-sync',
+            'animate'   => 'spin'
         ],
         'cog' => [
             'name' => 'fas fa-cog fa-spin',
-            'code' => '<div class="fas fa-cog fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-cog',
+            'animate'   => 'spin'
         ],
         'spinner fa-pulse' => [
             'name' => 'fas fa-spinner fa-pulse',
-            'code' => '<div class="fas fa-spinner fa-pulse" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-spinner',
+            'animate'   => 'spin-pulse'
         ],
         'stroopwafel' => [
             'name' => 'fas fa-stroopwafel fa-spin',
-            'code' => '<div class="fas fa-stroopwafel fa-spin" style="font-size: 40px;margin: 0 auto;"></div>',
+            'code' => 'fas fa-stroopwafel',
+            'animate'   => 'spin'
         ],
         'sun' => [
             'name' => 'fas fa-sun fa-spin',
-            'code' => '<div class="fas fa-sun fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'sun-fr' => [
-            'name' => 'far fa-sun fa-spin',
-            'code' => '<div class="far fa-sun fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-sun',
+            'animate'   => 'spin'
         ],
         'asterisk' => [
             'name' => 'fas fa-asterisk fa-spin',
-            'code' => '<div class="fas fa-asterisk fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-asterisk',
+            'animate'   => 'spin'
         ],
         'atom' => [
             'name' => 'fas fa-atom fa-spin',
-            'code' => '<div class="fas fa-atom fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-atom',
+            'animate'   => 'spin'
         ],
         'certificate' => [
             'name' => 'fas fa-certificate fa-spin',
-            'code' => '<div class="fas fa-certificate fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-certificate',
+            'animate'   => 'spin'
         ],
         'compact-disc' => [
             'name' => 'fas fa-compact-disc fa-spin',
-            'code' => '<div class="fas fa-compact-disc fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-compact-disc',
+            'animate'   => 'spin'
         ],
         'compass' => [
             'name' => 'fas fa-compass fa-spin',
-            'code' => '<div class="fas fa-compact-compass fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'compass' => [
-            'name' => 'far fa-compass fa-spin',
-            'code' => '<div class="far fa-compass fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-compass',
+            'animate'   => 'spin'
         ],
         'crosshairs' => [
             'name' => 'fas fa-crosshairs fa-spin',
-            'code' => '<div class="fas fa-crosshairs fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-crosshairs',
+            'animate'   => 'spin'
         ],
         'dharmachakra' => [
             'name' => 'fas fa-dharmachakra fa-spin',
-            'code' => '<div class="fas fa-dharmachakra fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-dharmachakra',
+            'animate'   => 'spin'
         ],
         'bahai' => [
             'name' => 'fas fa-bahai fa-spin',
-            'code' => '<div class="fas fa-bahai fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-bahai',
+            'animate'   => 'spin'
         ],
         'life-ring' => [
             'name' => 'fas fa-life-ring fa-spin',
-            'code' => '<div class="fas fa-life-ring fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
-        ],
-        'life-ring' => [
-            'name' => 'fas fa-life-ring fa-spin',
-            'code' => '<div class="fas fa-life-ring fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-life-ring',
+            'animate'   => 'spin'
         ],
         'yin-yang' => [
             'name' => 'fas fa-yin-yang fa-spin',
-            'code' => '<div class="fas fa-yin-yang fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-yin-yang',
+            'animate'   => 'spin'
         ],
         'sync-alt' => [
             'name' => 'fas fa-sync-alt fa-spin',
-            'code' => '<div class="fas fa-sync-alt fa-spin" style="font-size: 40px;margin: 0 auto;"></div>'
+            'code' => 'fas fa-sync-alt',
+            'animate'   => 'spin'
         ],
 
     ];

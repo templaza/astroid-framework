@@ -1,0 +1,224 @@
+@media (min-width: 992px) {
+  .as-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    display: block !important;
+    height: calc(100vh - 6rem);
+    padding-left: .25rem;
+    margin-left: -.25rem;
+    overflow-y: auto
+  }
+}
+
+@media (max-width: 991.98px) {
+  .as-sidebar .offcanvas-lg {
+    border-right-color: var(--bs-border-color);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
+  }
+}
+
+@media (min-width: 992px) {
+  .as-layout {
+    display: grid;
+    grid-template-areas:"sidebar main";
+    grid-template-columns:1fr 5fr;
+    gap: 1.5rem
+  }
+}
+
+.as-sidebar {
+  grid-area: sidebar
+}
+
+.as-main {
+  grid-area: main;
+}
+
+.as-page {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+@media (max-width: 991.98px) {
+  .as-main {
+    max-width: 760px;
+    margin-inline: auto
+  }
+}
+
+.as-group-content {
+  --as-example-padding: 1rem;
+  position: relative;
+  padding: var(--as-example-padding);
+  margin: 0 -1.5rem 1rem;
+  border: solid var(--bs-border-color);
+  border-width: 1px 0;
+  &::after {
+    display: block;
+    clear: both;
+    content: ""
+  }
+  @media (min-width: 768px) {
+    --as-example-padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px;
+    border-radius: var(--bs-border-radius)
+  }
+  & + p {
+    margin-top: 2rem
+  }
+}
+
+.as-gutter {
+  --bs-gutter-x: 3rem
+}
+
+.as-intro {
+  grid-area: intro
+}
+
+.as-toc {
+  grid-area: toc
+}
+
+.as-page {
+  >div.as-content:first-child {
+    >h2, >h3, >h4 {
+      margin-top: 0;
+    }
+  }
+}
+
+.as-content {
+  grid-area: content;
+  min-width: 1px;
+  >h2 {
+    --bs-heading-color: var(--bs-emphasis-color);
+    margin-top: 3rem;
+  }
+  >h3 {
+    --bs-heading-color: var(--bs-emphasis-color);
+    margin-top: 2rem;
+  }
+  >h4 {
+    --bs-heading-color: var(--bs-emphasis-color);
+  }
+  >ul {
+    li {
+      margin-bottom: .25rem;
+      >p {
+        ~ {
+          ul {
+            margin-top: -.5rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+  >ol {
+    li {
+      margin-bottom: .25rem;
+      >p {
+        ~ {
+          ul {
+            margin-top: -.5rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+  >.table {
+    --bs-table-border-color: var(--bs-border-color);
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    font-size: .875rem;
+    thead {
+      border-bottom: 2px solid currentcolor;
+    }
+    tbody {
+      &:not(:first-child) {
+        border-top: 2px solid currentcolor;
+      }
+    }
+    th {
+      &:first-child {
+        padding-left: 0;
+      }
+      &:not(:last-child) {
+        padding-right: 1.5rem;
+      }
+      color: var(--bs-emphasis-color);
+      white-space: nowrap;
+    }
+    td {
+      &:first-child {
+        padding-left: 0;
+        >code {
+          white-space: nowrap;
+        }
+      }
+      &:not(:last-child) {
+        padding-right: 1.5rem;
+      }
+    }
+    strong {
+      color: var(--bs-emphasis-color);
+    }
+  }
+  >.table-responsive {
+    .table {
+      --bs-table-border-color: var(--bs-border-color);
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+      font-size: .875rem;
+      thead {
+        border-bottom: 2px solid currentcolor;
+      }
+      tbody {
+        &:not(:first-child) {
+          border-top: 2px solid currentcolor;
+        }
+      }
+      th {
+        &:first-child {
+          padding-left: 0;
+        }
+        &:not(:last-child) {
+          padding-right: 1.5rem;
+        }
+        color: var(--bs-emphasis-color);
+        white-space: nowrap;
+      }
+      td {
+        &:first-child {
+          padding-left: 0;
+          >code {
+            white-space: nowrap;
+          }
+        }
+        &:not(:last-child) {
+          padding-right: 1.5rem;
+        }
+      }
+      strong {
+        color: var(--bs-emphasis-color);
+      }
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .as-content {
+    >.table.table-bordered {
+      border: 0;
+    }
+    >.table-responsive {
+      .table.table-bordered {
+        border: 0;
+      }
+    }
+  }
+}

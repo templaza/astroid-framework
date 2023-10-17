@@ -1,0 +1,122 @@
+.as-navbar {
+  padding: .75rem 0;
+  background-color: var(--bs-body-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    content: "";
+  }
+  @media (max-width: 991.98px) {
+    .as-navbar-toggle {
+      width: 4.25rem
+    }
+  }
+  .navbar-toggler {
+    padding: 0;
+    margin-right: -.5rem;
+    border: 0;
+    &:first-child {
+      margin-left: -.5rem;
+    }
+    .bi {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+    &.active {
+      font-weight: 600;
+      color: #fff;
+    }
+    padding-right: .25rem;
+    padding-left: .25rem;
+  }
+  .navbar-brand {
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: rotate(-5deg) scale(1.1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+  .nav-link {
+    padding-right: .25rem;
+    padding-left: .25rem;
+  }
+  .cta-button {
+    .navbar-nav {
+      margin-left: -.25rem;
+      margin-right: -.25rem;
+    }
+    .nav-item {
+      padding-left: .25rem;
+      padding-right: .25rem;
+      @media (max-width: 991.98px) {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+      }
+    }
+  }
+  .nav-link.active {
+    font-weight: 600;
+    color: #fff;
+  }
+  .navbar-nav-svg {
+    display: inline-block;
+    vertical-align: -.125rem;
+  }
+  .offcanvas-lg {
+    border-left: 0;
+  }
+  .dropdown-toggle:focus:not(:focus-visible) {
+    outline: 0
+  }
+  .dropdown-menu {
+    --bs-dropdown-min-width: 12rem;
+    --bs-dropdown-padding-x: .25rem;
+    --bs-dropdown-padding-y: .25rem;
+    --bs-dropdown-link-hover-bg: rgba(var(--as-violet-rgb), .1);
+    --bs-dropdown-link-active-bg: rgba(var(--as-violet-rgb), 1);
+    --bs-dropdown-font-size: .875rem;
+    font-size: .875rem;
+    border-radius: .5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+  }
+  .dropdown-menu {
+    li {
+      + {
+        li {
+          margin-top: .125rem;
+        }
+      }
+    }
+    .dropdown-item {
+      border-radius: .25rem;
+      &:active {
+        .bi {
+          color: inherit !important;
+        }
+      }
+    }
+    .active {
+      font-weight: 600;
+      .bi {
+        display: block !important;
+      }
+    }
+  }
+  .dropdown-menu-end {
+    --bs-dropdown-min-width: 8rem;
+  }
+}
+
+[data-bs-theme="dark"] {
+  .as-navbar {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+  }
+}

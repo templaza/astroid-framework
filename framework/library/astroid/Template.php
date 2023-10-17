@@ -21,6 +21,7 @@ class Template
     public $hash = '';
     public $params = null;
     public $title = '';
+    public $version = null;
     protected static $presets = null;
     protected static $fonts = null;
 

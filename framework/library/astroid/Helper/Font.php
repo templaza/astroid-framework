@@ -70,34 +70,40 @@ class Font
 
     public static function getAllFonts()
     {
-        $app = \JFactory::getApplication();
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
         $googleFonts = self::googleFonts();
-
-        $return = '';
-        $return .= '<div class="item" data-value="__default">' . \JText::_('TPL_ASTROID_OPTIONS_DEFAULT') . '</div>';
-
-        $return .= '<div class="ui horizontal divider">' . \JText::_('TPL_ASTROID_TYPOGRAPHY_SYSTEM') . '</div>';
+        $rt_fonts   =   array([
+            'value' => '__default',
+            'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+        ]);
         foreach (self::$system_fonts as $name => $system_font) {
-            $return .= '<div class="item" data-value="' . $name . '">' . $system_font . '</div>';
+            $rt_fonts[]     =   [
+                'value' => $name,
+                'text'  => $system_font
+            ];
         }
 
         $uploadedFonts = self::getUploadedFonts(Framework::getTemplate()->template);
 
         if (!empty($uploadedFonts)) {
-            $return .= '<div class="ui horizontal divider">' . \JText::_('TPL_ASTROID_TYPOGRAPHY_CUSTOM') . '</div>';
             foreach ($uploadedFonts as $uploaded_font) {
-                $return .= '<div class="item" data-value="' . $uploaded_font['id'] . '">' . $uploaded_font['name'] . '</div>';
+                $rt_fonts[]     =   [
+                    'value' => $uploaded_font['id'],
+                    'text'  => $uploaded_font['name']
+                ];
             }
         }
 
-        $return .= '<div class="ui horizontal divider">' . \JText::_('TPL_ASTROID_TYPOGRAPHY_GOOGLE') . '</div>';
         foreach ($googleFonts as $group => $fonts) {
             foreach ($fonts as $fontValue => $font) {
-                $return .= '<div class="item" data-value="' . $fontValue . '">' . $font . '</div>';
+                $rt_fonts[]     =   [
+                    'value' => $fontValue,
+                    'text'  => $font
+                ];
             }
         }
-
-        return $return;
+        return \json_encode($rt_fonts);
     }
 
     public static function getUploadedFonts($template)
@@ -106,6 +112,7 @@ class Font
         if (empty($template)) {
             return [];
         }
+
         require_once JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'library' . '/' . 'FontLib' . '/' . 'Autoloader.php';
         $template_fonts_path        =   JPATH_SITE . "/templates/{$template}/fonts";
         $template_media_fonts_path  =   JPATH_SITE . "/media/templates/site/{$template}/fonts";
@@ -284,11 +291,11 @@ class Font
         $document   =   Framework::getDocument();
         switch ($source) {
             case 'cdn':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
                 $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             case 'local':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.css');
+                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
                 $document->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             default:

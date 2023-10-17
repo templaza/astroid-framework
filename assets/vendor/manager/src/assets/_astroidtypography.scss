@@ -1,0 +1,42 @@
+.astroid-typography {
+    .astroid-btn-group {
+        .btn {
+            --bs-btn-padding-y: 0.1rem;
+            --bs-btn-padding-x: 0.7rem;
+        }
+    }
+}
+.typography-underline {
+    text-decoration: underline;
+}
+
+[data-bs-theme=dark] .ui.selection{
+    &.dropdown {
+        background: var(--bs-body-bg);
+        border-color: var(--bs-border-color);
+        color: white;
+        &:hover {
+            border-color: var(--bs-border-color);
+        }
+        .menu>.item {
+            border-color: var(--bs-border-color);
+            color: var(--bs-body-color);
+        }
+    }
+    &.active.dropdown {
+        border-color: var(--bs-border-color);
+        .menu {
+            border-color: var(--bs-border-color);
+        }
+        &:hover {
+            border-color: var(--bs-border-color);
+            .menu {
+                border-color: var(--bs-border-color);
+            }
+        }
+    }
+}
+
+[data-bs-theme=dark] .ui.dropdown .menu {
+    background-color: var(--bs-body-bg);
+}

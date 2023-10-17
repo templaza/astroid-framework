@@ -18,6 +18,8 @@ class AstroidElement
    public $type = '';
    public $title = '';
    public $icon = '';
+   public $color = '';
+   public $category = '';
    public $multiple = true;
    public $classname = '';
    public $description = '';
@@ -62,7 +64,11 @@ class AstroidElement
             $this->default_xml_file = $library_elements_directory . 'row-default.xml';
             break;
          default:
-            $this->default_xml_file = $library_elements_directory . 'default.xml';
+             if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
+                 $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
+             } else {
+                 $this->default_xml_file = $library_elements_directory . 'default.xml';
+             }
             break;
       }
 
@@ -100,9 +106,11 @@ class AstroidElement
       $description = (string) @$xml->description;
       $color = (string) @$xml->color;
       $multiple = (string) @$xml->multiple;
+      $category = (string) @$xml->category;
 
       $this->title = $title;
       $this->icon = $icon;
+      $this->category = explode(',', $category);
       $this->description = $description;
       $this->color = $color;
       $this->multiple = $multiple == "false" ? false : true;
@@ -137,6 +145,7 @@ class AstroidElement
          'type' => $this->type,
          'title' => JText::_($this->title),
          'icon' => $this->icon,
+          'category' => $this->category,
          'description' => JText::_($this->description),
          'color' => $this->color,
          'multiple' => $this->multiple,
@@ -177,6 +186,51 @@ class AstroidElement
 
       return $form;
    }
+
+    public function renderJson($type = 'system') {
+        $form = $this->getForm();
+        $fieldsets = $form->getFieldsets();
+        $form_content = array();
+        $model_form = [];
+        foreach ($fieldsets as $key => $fieldset) {
+            $fields = $form->getFieldset($key);
+            $groups = [];
+            foreach ($fields as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    $groups[$field->fieldname] = ['title' => $field->getAttribute('title', ''), 'icon' => $field->getAttribute('icon', ''), 'description' => $field->getAttribute('description', ''), 'fields' => []];
+                }
+            }
+
+            foreach ($fields as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    continue;
+                }
+                $model_form[$field->fieldname] = $field->value;
+                $field_group = $field->getAttribute('astroidgroup', 'none');
+                $js_input   =   json_decode($field->input);
+                $field_tmp  =   [
+                    'id'            =>  $field->id,
+                    'name'          =>  $field->fieldname,
+                    'value'         =>  $field->value,
+                    'label'         =>  JText::_($field->getAttribute('label')),
+                    'description'   =>  JText::_($field->getAttribute('description')),
+                    'input'         =>  $field->input,
+                    'type'          =>  'string',
+                    'group'         =>  $fieldset->name,
+                    'ngShow'        =>  Astroid\Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
+                ];
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $field_tmp['input']     =   $js_input;
+                    $field_tmp['type']      =   'json';
+                }
+                $groups[$field_group]['fields'][] = $field_tmp;
+            }
+            $fieldset->label    = JText::_($fieldset->label);
+            $fieldset->childs   = $groups;
+            $form_content[] = $fieldset;
+        }
+        return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
+    }
 
    public function getForm()
    {

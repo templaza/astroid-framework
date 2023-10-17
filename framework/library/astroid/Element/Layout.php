@@ -20,9 +20,16 @@ class Layout
         Framework::getDebugger()->log('Render Layout');
         $template = Framework::getTemplate();
         $layout = $template->getLayout();
+        $devices = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] : [
+            [
+                'code'=> 'lg',
+                'icon'=> 'fa-solid fa-computer',
+                'title'=> 'title'
+            ]
+        ];
         $content = '';
         foreach ($layout['sections'] as $section) {
-            $section = new Section($section);
+            $section = new Section($section, $devices);
             $content .= $section->render();
         }
         Framework::getDebugger()->log('Render Layout');

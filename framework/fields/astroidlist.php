@@ -23,6 +23,7 @@ class JFormFieldAstroidList extends JFormField {
     * @since  11.1
     */
    protected $type = 'AstroidList';
+    protected $ordering;
 
    /**
     * Method to get the field input markup for a generic list.
@@ -33,7 +34,7 @@ class JFormFieldAstroidList extends JFormField {
     * @since   3.7.0
     */
    protected function getInput() {
-      $html = array();
+//      $html = array();
       $attr = '';
 
       // Initialize some field attributes.
@@ -45,7 +46,6 @@ class JFormFieldAstroidList extends JFormField {
       $attr .= ' ng-model="' . $this->fieldname . '"';
       $attr .= ' data-fieldname="' . $this->fieldname . '"';
       $attr .= $this->element['ngRequired'] ? ' ng-required="' . Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']) . '"' : '';
-
       if (isset($this->element['astroid-content-layout']) && !empty($this->element['astroid-content-layout'])) {
          $attr .= ' data-astroid-content-layout="' . $this->element['astroid-content-layout'] . '"';
       }
@@ -72,27 +72,39 @@ class JFormFieldAstroidList extends JFormField {
       $options = (array) $this->getOptions();
 
       // Create a read-only list (no name) with hidden input(s) to store the value(s).
-      if ((string) $this->readonly == '1' || (string) $this->readonly == 'true') {
-         $html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+//      if ((string) $this->readonly == '1' || (string) $this->readonly == 'true') {
+//         $html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+//
+//         // E.g. form field type tag sends $this->value as array
+//         if ($this->multiple && is_array($this->value)) {
+//            if (!count($this->value)) {
+//               $this->value[] = '';
+//            }
+//
+//            foreach ($this->value as $value) {
+//               $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"/>';
+//            }
+//         } else {
+//            $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"/>';
+//         }
+//      } else {
+//         // Create a regular list.
+//         $html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+//      }
 
-         // E.g. form field type tag sends $this->value as array
-         if ($this->multiple && is_array($this->value)) {
-            if (!count($this->value)) {
-               $this->value[] = '';
-            }
+      $json =   [
+          'id'      =>  $this->id,
+          'name'    =>  $this->name,
+          'value'   =>  htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+          'options' =>  $options,
+          'astroid_content_layout'    =>  (string) $this->element['astroid-content-layout'],
+          'astroid_content_layout_load'    =>  (string) $this->element['astroid-content-layout-load'],
+          'attr'    =>  trim($attr),
+          'type'    =>  strtolower($this->type),
+      ];
+      return json_encode($json);
 
-            foreach ($this->value as $value) {
-               $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"/>';
-            }
-         } else {
-            $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"/>';
-         }
-      } else {
-         // Create a regular list.
-         $html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
-      }
-
-      return implode($html);
+//      return implode($html);
    }
 
    /**

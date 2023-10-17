@@ -17,19 +17,12 @@ class JFormFieldAstroidGradient extends JFormField {
    protected $type = 'AstroidGradient';
 
    public function getInput() {
-      $renderer = new JLayoutFile('fields.astroidgradient', JPATH_LIBRARIES . '/astroid/framework/layouts');
-      $data = $this->getLayoutData();
-
-      $extraData = array(
-          'value' => $this->value,
-          'fieldname' => $this->fieldname,
-          'ngShow' => $this->element['ngShow'],
-          'ngHide' => $this->element['ngHide'],
-      );
-
-      $data = array_merge($data, $extraData);
-
-      return $renderer->render($data);
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  json_decode($this->value),
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
    }
-
 }

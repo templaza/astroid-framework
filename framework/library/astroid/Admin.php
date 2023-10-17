@@ -8,7 +8,8 @@
  */
 
 namespace Astroid;
-
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Astroid\Component\Includer;
 
 defined('_JEXEC') or die;
@@ -43,16 +44,14 @@ class Admin extends Helper\Client
                 'thumbnail' => '', 'demo' => '',
                 'preset' => $params
             ];
-            jimport('joomla.filesystem.file');
-            \JFile::write(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-') . '.json', \json_encode($preset));
+            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
+            $this->response($preset_name);
+        } else {
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
+            Helper::refreshVersion();
+            $this->response("saved");
         }
-
-
-        Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
-
-        Helper::refreshVersion();
-
-        $this->response("saved");
     }
 
     protected function media()
@@ -120,15 +119,131 @@ class Admin extends Helper\Client
         Helper::loadLanguage(ASTROID_TEMPLATE_NAME);
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
+        $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
+        $pluginParams   =   Helper::getPluginParams();
+        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+        $doc = Factory::getDocument();
+        $config = [
+            'site_url'              =>  \JURI::root(),
+            'base_url'              =>  \JURI::base(true),
+            'astroid_media_url'     => ASTROID_MEDIA_URL,
+            'template_name'         => $template->template.'-'.$template->id,
+            'tpl_template_name'     => $template->template,
+            'template_title'        => $template->title,
+            'astroid_version'       => Helper\Constants::$astroid_version,
+            'astroid_link'          => Helper\Constants::$astroid_link,
+            'document_link'         => Helper\Constants::$documentation_link,
+            'video_tutorial'        => Helper\Constants::$video_tutorial_link,
+            'github_link'           => Helper\Constants::$github_link,
+            'jtemplate_link'        => Helper::getJoomlaUrl(),
+            'astroid_admin_token'   => \JSession::getFormToken(),
+            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
+        ];
+        $doc->addScriptOptions('astroid_lib', $config);
 
-        // scripts
-//        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/jquery/jquery.cookie.js', 'vendor/bootstrap/js/popper.min.js', 'vendor/bootstrap/js/bootstrap.min.old.js', 'vendor/lodash/lodash.min.js', 'vendor/spectrum/spectrum.js', 'vendor/ace/1.3.3/ace.js', 'vendor/dropzone/dropzone.min.js', 'vendor/moment/moment.min.js', 'vendor/moment/moment-timezone.min.js', 'vendor/moment/moment-timezone-with-data-2012-2022.min.js', 'vendor/bootstrap/js/bootstrap-datetimepicker.min.js', 'vendor/bootstrap-slider/js/bootstrap-slider.min.js', 'vendor/angular/angular.min.js', 'vendor/angular/angular-animate.min.js', 'vendor/angular/sortable.min.js', 'vendor/angular/angular-legacy-sortable.js', 'js/parsley.min.js', 'js/notify.min.js', 'js/jquery.hotkeys.js', 'js/jquery.nicescroll.min.js', 'vendor/semantic-ui/components/transition.min.js', 'vendor/semantic-ui/components/api.min.js', 'vendor/semantic-ui/components/dropdown.min.js', 'js/astroid.min.js'];
-        $scripts = ['vendor/jquery/jquery-3.5.1.min.js', 'vendor/jquery/jquery.cookie.js', 'vendor/bootstrap/js/popper.min.js', 'vendor/bootstrap/js/bootstrap.min.old.js', 'vendor/lodash/lodash.min.js', 'vendor/spectrum/spectrum.js', 'vendor/ace/1.3.3/ace.js', 'vendor/dropzone/dropzone.min.js', 'vendor/moment/moment.min.js', 'vendor/moment/moment-timezone.min.js', 'vendor/moment/moment-timezone-with-data-2012-2022.min.js', 'vendor/bootstrap/js/bootstrap-datetimepicker.min.js', 'vendor/bootstrap-slider/js/bootstrap-slider.min.js', 'vendor/angular/angular.min.js', 'vendor/angular/angular-animate.min.js', 'vendor/angular/sortable.min.js', 'vendor/angular/angular-legacy-sortable.js', 'js/parsley.min.js', 'js/notify.min.js', 'js/jquery.hotkeys.js', 'js/jquery.nicescroll.min.js', 'vendor/semantic-ui/components/transition.min.js', 'vendor/semantic-ui/components/api.min.js', 'vendor/semantic-ui/components/dropdown.min.js', 'js/astroid-framework.js', 'vendor/angular/ezlb.js', 'js/astroid.js'];
-        $document->addScript($scripts, 'body');
-        $document->addScriptDeclaration('moment.tz.setDefault(\'' . \JFactory::getConfig()->get('offset') . '\');', 'body');
+        // Get Language
+        $lang = array();
+        foreach (Helper\Constants::$translationStrings as $string) {
+            $lang[strtoupper($string)] = Factory::getLanguage()->_($string);
+        }
+        $doc->addScriptOptions('astroid_lang', $lang);
+
+        // Prepare content
+        $form_content = array();
+        $form = Framework::getForm();
+        foreach ($form->getFieldsets() as $key => $fieldset) {
+            $fields = $form->getFields($key);
+
+            // Ordering
+            $fieldsArr = [];
+            $order = 1;
+            $orders = [];
+            $reorders = [];
+
+            foreach ($fields as $key => $field) {
+                // Ordering
+                $ordering = $field->getAttribute('after', '');
+                if (empty($ordering)) {
+//                    $field->ordering = $order++;
+                    $fieldsArr[] = $field;
+                    $orders[$field->name] = $order++;
+                } else {
+                    if (isset($orders[$ordering])) {
+//                        $field->ordering = $orders[$ordering];
+                        $fieldsArr[] = $field;
+                        $orders[$field->name] = $orders[$ordering];
+
+                    } else {
+                        $reorders[] = $field;
+
+                    }
+                }
+            }
+            // Reorder group
+            foreach ($reorders as &$reorder) {
+                $ordering = $reorder->getAttribute('after', '');
+                $reorder->ordering = $orders[$ordering];
+                $fieldsArr[] = $reorder;
+            }
+
+//            usort($fieldsArr, 'Astroid\Helper::orderingFields');
+
+            $groups = [];
+            foreach ($fieldsArr as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    if (!$plg_color_mode && $field->fieldname == 'colormode') {
+                        continue;
+                    }
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
+                }
+            }
+
+            $groups['none'] = ['fields' => []];
+
+            foreach ($fieldsArr as $key => $field) {
+                if ($field->type == 'astroidgroup') {
+                    continue;
+                }
+
+                if (empty($field->getAttribute('name'))) {
+                    continue;
+                }
+                $input = $field->input ? trim(str_replace('ng-media-class', 'ng-class', $field->input)) : $field->input;
+                $js_input   =   json_decode($input);
+                $field_group = $field->getAttribute('astroidgroup', 'none');
+                if (!$plg_color_mode && $field_group == 'colormode') {
+                    continue;
+                }
+                $field_tmp  =   [
+                    'id'            =>  $field->id,
+                    'name'          =>  $field->fieldname,
+                    'value'         =>  $field->value,
+                    'label'         =>  Text::_($field->getAttribute('label')),
+                    'description'   =>  Text::_($field->getAttribute('description')),
+                    'input'         =>  $input,
+                    'type'          =>  'string',
+                    'group'         =>  $fieldset->name,
+                    'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow')),
+                ];
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $field_tmp['input']     =   $js_input;
+                    $field_tmp['type']      =   'json';
+                }
+                $groups[$field_group]['fields'][] = $field_tmp;
+
+            }
+            // Get sidebar data
+            $fieldset->label    = Text::_($fieldset->label);
+            $fieldset->childs   = $groups;
+            $form_content[] = $fieldset;
+
+            $presets    =   Helper::getPresets();
+        }
+        $doc->addScriptOptions('astroid_content', $form_content);
 
         // styles
-        $stylesheets = ['https://fonts.googleapis.com/css?family=Nunito:300,400,600', 'css/astroid-framework.css', 'css/admin.css', 'css/animate.min.css', 'vendor/semantic-ui/components/icon.min.css', 'vendor/semantic-ui/components/transition.min.css', 'vendor/semantic-ui/components/dropdown.min.css'];
+        $stylesheets = ['vendor/manager/dist/index.css'];
         $document->addStyleSheet($stylesheets);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
@@ -227,6 +342,76 @@ class Admin extends Helper\Client
             return $html;
         }, $body);
         $app->setBody($body);
+    }
+
+    public function importpreset() {
+        try {
+            // Check for request forgeries.
+            if (!\JSession::checkToken()) {
+                throw new \Exception(\JText::_('JINVALID_TOKEN'));
+            }
+            $app = \JFactory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
+            $preset = [
+                'title' => $app->input->post->get('title', '', 'RAW'),
+                'desc' => $app->input->post->get('desc', '', 'RAW'),
+                'thumbnail' => '', 'demo' => '',
+                'preset' => ''
+            ];
+            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            $fieldName = 'file';
+
+            $fileError = $_FILES[$fieldName]['error'];
+            if ($fileError > 0) {
+                switch ($fileError) {
+                    case 1:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_LARGE_FILE'));
+                        break;
+
+                    case 2:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
+                        break;
+
+                    case 3:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
+                        break;
+
+                    case 4:
+                        throw new \Exception(\JText::_('ASTROID_ERROR_NO_FILE'));
+                        break;
+                }
+            }
+
+            $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+            $uploadedFileExtension = $pathinfo['extension'];
+            $uploadedFileExtension = strtolower($uploadedFileExtension);
+            if ($uploadedFileExtension != 'json') {
+                throw new \Exception(\JText::_('INVALID EXTENSION'));
+            }
+
+            $fileTemp = $_FILES[$fieldName]['tmp_name'];
+            $json           = file_get_contents($fileTemp);
+            $config         = json_decode($json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                if (!isset($config['preset'])) {
+                    $preset['preset'] = $json;
+                } else {
+                    $preset['preset'] = $config['preset'];
+                }
+            } else {
+                throw new \Exception(\JText::_('INVALID FILETYPE'));
+            }
+
+            $uploadPath = $presets_path . $preset_name . '.json';
+
+            Helper::putContents($uploadPath, \json_encode($preset));
+            unlink($fileTemp);
+            $this->response($preset_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
     }
 
     public function loadpreset() {

@@ -1,0 +1,22 @@
+.hu-color-picker {
+    box-sizing: initial;
+}
+.astroid-color {
+    .row {
+        max-width: 210px;
+    }
+}
+.astroid-color-picker {
+    border-radius: 50%;
+    &.svg-inline--fa.fa-circle {
+        background: var(--as-color-background);
+        border-radius: 50%;
+        cursor: pointer;
+        color: transparent;
+    }
+    &.fas {
+        cursor: pointer;
+        background: var(--as-color-background);
+        color: transparent;
+    }
+}

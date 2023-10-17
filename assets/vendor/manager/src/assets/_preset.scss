@@ -1,0 +1,32 @@
+.add-preset {
+    cursor: pointer;
+    min-height: 250px;
+    &:hover {
+        background-color: rgba(86, 86, 86, 0.1);
+    }
+}
+.add-preset-cta {
+    cursor: pointer;
+    min-height: 150px;
+    &:hover {
+        background-color: rgba(86, 86, 86, 0.1);
+    }
+}
+.preset-keyword {
+    min-height: 168px;
+    font-size: 3rem;
+}
+.preset-toolbar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+.preset-item {
+    &:hover {
+        .preset-toolbar {
+            opacity: 1;
+        }
+    }
+}

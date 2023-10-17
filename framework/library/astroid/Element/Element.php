@@ -21,7 +21,7 @@ class Element extends BaseElement
         $this->section = $section;
         $this->row = $row;
         $this->column = $column;
-        parent::__construct($data);
+        parent::__construct($data, $section->devices);
     }
 
     public function render()

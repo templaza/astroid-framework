@@ -1,0 +1,20 @@
+.arrow-icon-picker {
+    .icon {
+        box-sizing: initial;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        min-height: 20px;
+        cursor: pointer;
+        color: inherit;
+        &:hover {
+            color: var(--as-violet);
+        }
+        &.active {
+            --bs-border-color: var(--as-violet);
+            background-color: var(--as-violet);
+            color: white;
+        }
+    }
+}

@@ -223,7 +223,6 @@ class Media
             }
         }
 
-
         $fieldName = 'file';
 
         $fileError = $_FILES[$fieldName]['error'];
@@ -246,7 +245,6 @@ class Media
                     return;
             }
         }
-
 
         $pathinfo = pathinfo($_FILES[$fieldName]['name']);
         $uploadedFileExtension = $pathinfo['extension'];

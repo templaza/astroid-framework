@@ -64,6 +64,12 @@ class JFormFieldAstroidCalendar extends JFormField {
     * @since  3.7.0
     */
    protected $maxyear;
+   protected $todaybutton;
+   protected $weeknumbers;
+   protected $showtime;
+   protected $filltable;
+   protected $timeformat;
+   protected $singleheader;
 
    /**
     * Name of the layout being used to render the field
@@ -224,9 +230,9 @@ class JFormFieldAstroidCalendar extends JFormField {
         }
        */
 
-      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
+//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
 
-      return $renderer->render($this->getLayoutData());
+      return $this->getLayoutData();
    }
 
    /**
@@ -238,28 +244,11 @@ class JFormFieldAstroidCalendar extends JFormField {
     */
    protected function getLayoutData() {
       $data = parent::getLayoutData();
-      $tag = JFactory::getLanguage()->getTag();
-      $calendar = JFactory::getLanguage()->getCalendar();
       $direction = strtolower(JFactory::getDocument()->getDirection());
-
-      // Get the appropriate file for the current language date helper
-      $helperPath = 'system/fields/calendar-locales/date/gregorian/date-helper.min.js';
-
-      if (!empty($calendar) && is_dir(JPATH_ROOT . '/media/system/js/fields/calendar-locales/date/' . strtolower($calendar))) {
-         $helperPath = 'system/fields/calendar-locales/date/' . strtolower($calendar) . '/date-helper.min.js';
-      }
-
-      // Get the appropriate locale file for the current language
-      $localesPath = 'system/fields/calendar-locales/en.js';
-
-      if (is_file(JPATH_ROOT . '/media/system/js/fields/calendar-locales/' . strtolower($tag) . '.js')) {
-         $localesPath = 'system/fields/calendar-locales/' . strtolower($tag) . '.js';
-      } elseif (is_file(JPATH_ROOT . '/media/system/js/fields/calendar-locales/' . strtolower(substr($tag, 0, -3)) . '.js')) {
-         $localesPath = 'system/fields/calendar-locales/' . strtolower(substr($tag, 0, -3)) . '.js';
-      }
 
       $extraData = array(
           'value' => $this->value,
+          'type'    =>  strtolower($this->type),
           'maxLength' => $this->maxlength,
           'format' => $this->format,
           'filter' => $this->filter,
@@ -269,8 +258,6 @@ class JFormFieldAstroidCalendar extends JFormField {
           'filltable' => ($this->filltable === 'true') ? 1 : 0,
           'timeformat' => $this->timeformat,
           'singleheader' => ($this->singleheader === 'true') ? 1 : 0,
-          'helperPath' => $helperPath,
-          'localesPath' => $localesPath,
           'minYear' => $this->minyear,
           'maxYear' => $this->maxyear,
           'direction' => $direction,
@@ -280,7 +267,7 @@ class JFormFieldAstroidCalendar extends JFormField {
           'ngRequired' => $this->element['ngRequired'],
       );
 
-      return array_merge($data, $extraData);
+      return json_encode(array_merge($data, $extraData));
    }
 
 }

@@ -32,7 +32,6 @@ class JFormFieldAstroidanimations extends JFormField {
     * @since   3.7.0
     */
    protected function getInput() {
-      $html = array();
       $attr = '';
 
       // Initialize some field attributes.
@@ -48,83 +47,25 @@ class JFormFieldAstroidanimations extends JFormField {
       }
       // Initialize JavaScript field attributes.
       $attr .= $this->onchange ? ' onchange="' . $this->onchange . '"' : '';
-
-      $html = '<select name="' . $this->name . '" ng-model="' . $this->id . '" animation-selector ' . $attr . '>';
-      $groups = Astroid\Helper\Constants::$animations;
-      $options = array();
-      foreach ($groups as $group => $animations) {
-         if (!empty($group)) {
-            $html .= '<optgroup label="' . $group . '">';
-         }
-         foreach ($animations as $key => $value) {
-            $html .= '<option value="' . $key . '">' . $value . '</option>';
-         }
-         if (!empty($group)) {
-            $html .= '</optgroup>';
-         }
-      }
-      $html .= '</select>';
-
-      return $html;
-   }
-
-   /**
-    * Method to get the field options.
-    *
-    * @return  array  The field option objects.
-    *
-    * @since   3.7.0
-    */
-   protected function getOptions() {
-
       $groups = Astroid\Helper\Constants::$animations;
       $options = array();
       foreach ($groups as $group => $animations) {
          foreach ($animations as $key => $value) {
-            $options[] = array('text' => $value, 'value' => $key, '');
+             $options[] = [
+                 'value' => $key,
+                 'text'  => $value
+             ];
          }
       }
-
-      return $options;
-   }
-
-   /**
-    * Method to add an option to the list field.
-    *
-    * @param   string  $text        Text/Language variable of the option.
-    * @param   array   $attributes  Array of attributes ('name' => 'value' format)
-    *
-    * @return  JFormFieldList  For chaining.
-    *
-    * @since   3.7.0
-    */
-   public function addOption($text, $attributes = array()) {
-      if ($text && $this->element instanceof SimpleXMLElement) {
-         $child = $this->element->addChild('option', $text);
-
-         foreach ($attributes as $name => $value) {
-            $child->addAttribute($name, $value);
-         }
-      }
-
-      return $this;
-   }
-
-   /**
-    * Method to get certain otherwise inaccessible properties from the form field object.
-    *
-    * @param   string  $name  The property name for which to get the value.
-    *
-    * @return  mixed  The property value or null.
-    *
-    * @since   3.7.0
-    */
-   public function __get($name) {
-      if ($name == 'options') {
-         return $this->getOptions();
-      }
-
-      return parent::__get($name);
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+           'options' =>  $options,
+           'attr'    =>  trim($attr),
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
    }
 
 }

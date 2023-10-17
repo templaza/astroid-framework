@@ -92,7 +92,7 @@ class Head
     public static function styles()
     {
         $document = Framework::getDocument();
-        if (ASTROID_JOOMLA_VERSION != 4) {
+        if (ASTROID_JOOMLA_VERSION == 3) {
             $document->addStyleSheet('media/jui/css/icomoon.css');
         } else {
             if ($document->isFrontendEditing()) {

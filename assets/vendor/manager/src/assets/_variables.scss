@@ -1,0 +1,48 @@
+:root {
+  --bs-breakpoint-xs: 0;
+  --bs-breakpoint-sm: 576px;
+  --bs-breakpoint-md: 768px;
+  --bs-breakpoint-lg: 992px;
+  --bs-breakpoint-xl: 1200px;
+  --bs-breakpoint-xxl: 1400px;
+  --bs-primary-rgb: var(--as-violet-rgb);
+  --bs-tertiary-bg: #ded9e1;
+  --as-color-background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAACdJREFUKFNjPHP19n8GJGCspYLMZWCkg4L///+juOHstTuobqC9AgCYGinl3vgvfQAAAABJRU5ErkJggg==);
+}
+
+:root, [data-bs-theme="light"] {
+  --as-purple: #4c0bce;
+  --as-violet: #712cf9;
+  --as-accent: #ffe484;
+  --as-violet-rgb: 112.520718, 44.062154, 249.437846;
+  --as-accent-rgb: 255, 228, 132;
+  --as-pink-rgb: 214, 51, 132;
+  --as-teal-rgb: 32, 201, 151;
+  --as-violet-bg: var(--as-violet);
+  --as-toc-color: var(--as-violet);
+  --as-sidebar-link-bg: rgba(var(--as-violet-rgb), .1);
+  --as-layout-block-bg: rgba(var(--as-violet-rgb), .05);
+  --as-callout-link: 10, 88, 202;
+  --as-callout-code-color: #ab296a;
+  --as-pre-bg: var(--bs-tertiary-bg);
+  --as-btn-image-border: #ddb6ff;
+  --as-btn-image-hover-border: #590b9d;
+}
+
+[data-bs-theme="dark"] {
+  --as-violet: #9461fb;
+  --as-violet-bg: #712cf9;
+  --as-toc-color: var(--bs-emphasis-color);
+  --as-sidebar-link-bg: rgba(84, 33, 187, .5);
+  --as-layout-block-bg: rgba(84, 33, 187, .05);
+  --as-callout-link: 110, 168, 254;
+  --as-callout-code-color: #e685b5;
+  --as-pre-bg: #1b1f22;
+  --as-btn-image-border: #a04aec;
+  --as-btn-image-hover-border: #b773f2;
+}
+
+.nav {
+  --bs-nav-link-color: var(--bs-dark-text-emphasis);
+  --bs-nav-link-hover-color: var(--as-violet);
+}

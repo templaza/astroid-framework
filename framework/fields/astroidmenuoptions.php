@@ -26,8 +26,8 @@ class JFormFieldAstroidMenuOptions extends JFormField {
       if (!is_array($this->value) && empty($this->value)) {
          //$value = [];
          $value = [
-             'megamenu' => FALSE,
-             'showtitle' => FALSE,
+             'megamenu' => 0,
+             'showtitle' => 0,
              'icon' => '',
              'customclass' => '',
              'width' => '250px',
@@ -35,7 +35,7 @@ class JFormFieldAstroidMenuOptions extends JFormField {
              'alignment' => 'right',
              'megamenu_direction' => 'right',
              'subtitle' => '',
-             'badge' => FALSE,
+             'badge' => 0,
              'badge_text' => '',
              'badge_color' => '#FFF',
              'badge_bgcolor' => '#000'

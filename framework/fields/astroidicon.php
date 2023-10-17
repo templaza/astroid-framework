@@ -22,6 +22,7 @@ class JFormFieldAstroidicon extends JFormField {
     * @since  11.1
     */
    protected $type = 'astroidicon';
+    protected $ordering;
 
    /**
     * Method to get the field input markup for a generic list.
@@ -32,75 +33,12 @@ class JFormFieldAstroidicon extends JFormField {
     * @since   3.7.0
     */
    protected function getInput() {
-      $html = '<div class="form-control ui fluid search selection dropdown" select-ui-div><input type="hidden" value="' . $this->value . '" name="' . $this->name . '"><i class="dropdown icon"></i><div class="default text">Select Icon</div><div class="menu">';
-      $groups = Astroid\Helper\Constants::$icons;
-      $options = array();
-      foreach ($groups as $group => $icons) {
-         foreach ($icons as $key => $value) {
-            $html .= '<div class="item" data-value="' . $key . '"><i class="' . $key . '"></i> ' . $value . '</div>';
-         }
-      }
-      $html .= '</div></div>';
-      return $html;
+       $json =   [
+           'id'      =>  $this->id,
+           'name'    =>  $this->name,
+           'value'   =>  $this->value,
+           'type'    =>  strtolower($this->type),
+       ];
+       return json_encode($json);
    }
-
-   /**
-    * Method to get the field options.
-    *
-    * @return  array  The field option objects.
-    *
-    * @since   3.7.0
-    */
-   protected function getOptions() {
-
-      $groups = Astroid\Helper\Constants::$icons;
-      $options = array();
-      foreach ($groups as $group => $icons) {
-         foreach ($icons as $key => $value) {
-            $options[] = array('text' => $value, 'value' => $key, '');
-         }
-      }
-
-      return $options;
-   }
-
-   /**
-    * Method to add an option to the list field.
-    *
-    * @param   string  $text        Text/Language variable of the option.
-    * @param   array   $attributes  Array of attributes ('name' => 'value' format)
-    *
-    * @return  JFormFieldList  For chaining.
-    *
-    * @since   3.7.0
-    */
-   public function addOption($text, $attributes = array()) {
-      if ($text && $this->element instanceof SimpleXMLElement) {
-         $child = $this->element->addChild('option', $text);
-
-         foreach ($attributes as $name => $value) {
-            $child->addAttribute($name, $value);
-         }
-      }
-
-      return $this;
-   }
-
-   /**
-    * Method to get certain otherwise inaccessible properties from the form field object.
-    *
-    * @param   string  $name  The property name for which to get the value.
-    *
-    * @return  mixed  The property value or null.
-    *
-    * @since   3.7.0
-    */
-   public function __get($name) {
-      if ($name == 'options') {
-         return $this->getOptions();
-      }
-
-      return parent::__get($name);
-   }
-
 }

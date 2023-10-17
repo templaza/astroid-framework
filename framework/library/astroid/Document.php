@@ -32,6 +32,7 @@ class Document
     protected static $_fontawesome = false;
     protected static $_layout_paths = [];
     protected $type = null;
+    protected $modules = null;
 
     public function __construct()
     {
@@ -732,7 +733,7 @@ class Document
         return $url;
     }
 
-    public function addScript($url, $position = 'head', $options = [], $attribs = [])
+    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '')
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -743,6 +744,7 @@ class Document
                 $script['url'] = $u;
                 $script['attribs'] = $attribs;
                 $script['options'] = $options;
+                $script['type'] = $type;
                 $this->_javascripts[$position][md5(serialize($script))] = $script;
             }
         }
@@ -752,7 +754,7 @@ class Document
     {
         $html = '';
         foreach ($this->_javascripts[$position] as $javascript) {
-            $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '"></script>';
+            $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
         }
         foreach ($this->_scripts[$position] as $script) {
             $html .= '<script type="' . $script['type'] . '">' . $script['content'] . '</script>';

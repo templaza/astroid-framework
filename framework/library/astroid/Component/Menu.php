@@ -12,12 +12,11 @@ namespace Astroid\Component;
 defined('_JEXEC') or die;
 
 use Astroid\Framework;
+use \Joomla\Module\Menu\Site\Helper\MenuHelper;
 
 if (ASTROID_JOOMLA_VERSION == 3) {
     \JLoader::register('ModMenuHelper', JPATH_SITE . '/modules/mod_menu/helper.php');
     \JLoader::registerAlias('MenuHelper', '\\ModMenuHelper');
-} else {
-    \JLoader::registerAlias('MenuHelper', '\\Joomla\\Module\\Menu\\Site\\Helper\\MenuHelper');
 }
 
 class Menu
@@ -46,10 +45,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
@@ -414,11 +413,10 @@ class Menu
         $data->badge_color = '#FFF';
         $data->badge_bgcolor = '#000';
 
-
-        if (isset($astroid_menu_options['megamenu']) && $astroid_menu_options['megamenu']) {
+        if (isset($astroid_menu_options['megamenu']) && (int) $astroid_menu_options['megamenu']) {
             $data->megamenu = 1;
         }
-        if (isset($astroid_menu_options['showtitle']) && $astroid_menu_options['showtitle']) {
+        if (isset($astroid_menu_options['showtitle']) && (int) $astroid_menu_options['showtitle']) {
             $data->icononly = 1;
         }
         if (isset($astroid_menu_options['subtitle']) && !empty($astroid_menu_options['subtitle'])) {
@@ -466,7 +464,7 @@ class Menu
         if ($item->level > 1) {
             $data->megamenu = self::isParentMegamenu($item->parent_id, $list);
         }
-        if (isset($astroid_menu_options['badge']) && $astroid_menu_options['badge']) {
+        if (isset($astroid_menu_options['badge']) && (int) $astroid_menu_options['badge']) {
             $data->badge = 1;
         }
         if (isset($astroid_menu_options['badge_text']) && $astroid_menu_options['badge_text']) {
@@ -582,10 +580,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
@@ -631,10 +629,10 @@ class Menu
         $menu_params = new \JRegistry();
         $menu_params->loadString($header_menu_params);
 
-        $list = \MenuHelper::getList($menu_params);
-        $base = \MenuHelper::getBase($menu_params);
-        $active = \MenuHelper::getActive($menu_params);
-        $default = \MenuHelper::getDefault();
+        $list = MenuHelper::getList($menu_params);
+        $base = MenuHelper::getBase($menu_params);
+        $active = MenuHelper::getActive($menu_params);
+        $default = MenuHelper::getDefault();
 
         $active_id = $active->id;
         $default_id = $default->id;
