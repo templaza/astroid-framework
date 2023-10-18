@@ -41,6 +41,7 @@ const fontSelected= ref({
     value: "",
     text: "",
 });
+const fonttypes = ref(['system','google'])
 const font_type = ref('google');
 const currentDevice = ref('desktop');
 
@@ -69,6 +70,9 @@ onMounted(()=>{
             options.system = response.data.system;
             options.google = response.data.google;
             options.local = response.data.local;
+            if (options.local.length > 1) {
+                fonttypes.value.push('local');
+            }
             response.data[font_type.value].forEach(element => {
                 if (props.modelValue['font_face'] === element.value) {
                     fontSelected.value = element;
@@ -140,7 +144,7 @@ function changeColor(color) {
                         </div>
                         <div class="col">
                             <div class="astroid-btn-group text-end">
-                                <span v-for="fonttype in ['system','google','local']" :key="fonttype">
+                                <span v-for="fonttype in fonttypes" :key="fonttype">
                                     <input type="radio" class="btn-check" v-model="font_type" :id="props.field.input.id+`_font_type_`+fonttype" :value="fonttype" autocomplete="off">
                                     <label class="btn btn-sm btn-outline-primary btn-as-outline-primary text-capitalize" :for="props.field.input.id+`_font_type_`+fonttype">{{ fonttype }}</label>
                                 </span>
