@@ -15,8 +15,6 @@ defined('_JEXEC') or die;
 if (ASTROID_JOOMLA_VERSION == 3) {
    JLoader::register('ModRelatedItemsHelper', JPATH_ROOT . '/modules/mod_related_items/helper.php');
    \JLoader::registerAlias('RelatedItemsHelper', 'ModRelatedItemsHelper');
-} elseif (ASTROID_JOOMLA_VERSION == 4) {
-   \JLoader::registerAlias('RelatedItemsHelper', '\\Joomla\\Module\\RelatedItems\\Site\\Helper\\RelatedItemsHelper');
 }
 
 class AstroidFrameworkArticle
@@ -264,7 +262,7 @@ class AstroidFrameworkArticle
          $params = new JRegistry();
          $params->loadArray(['maximum' => $count]);
 
-         if (ASTROID_JOOMLA_VERSION == 5) {
+         if (ASTROID_JOOMLA_VERSION >= 4) {
              $items = Factory::getApplication()->bootModule('mod_related_items', 'site')->getHelper('RelatedItemsHelper')->getRelatedArticles($params, Factory::getApplication());
          } else {
              $items = RelatedItemsHelper::getList($params);
