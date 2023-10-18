@@ -130,13 +130,13 @@ function changeColor(color) {
 }
 </script>
 <template>
-    <div class="row  row-cols-lg-2 row-cols-xl-3 g-4">
+    <div class="row row-cols-lg-2 row-cols-xl-3 g-4">
         <div>
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.fontpicker">
-                    <div class="row g-3">
+                    <div class="row g-3 mb-2 justify-content-center">
                         <div class="col col-auto">
-                            <label :for="props.field.input.id+`_font_face_search`" class="form-label">{{ props.field.input.lang.font_family }}</label>
+                            <label :for="props.field.input.id+`_font_face_search`" class="form-label m-0">{{ props.field.input.lang.font_family }}</label>
                         </div>
                         <div class="col">
                             <div class="astroid-btn-group text-end">
