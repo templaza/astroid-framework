@@ -20,7 +20,7 @@ class Column extends BaseElement
     {
         $this->section = $section;
         $this->row = $row;
-        if (is_int($data['size'])) {
+        if (is_int($data['size']) || is_string($data['size'])) {
             $tmp = $data['size'];
             $this->size = [
                 'xxl' => $tmp,
