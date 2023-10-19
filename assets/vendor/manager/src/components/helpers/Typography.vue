@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, ref, watch, inject } from 'vue';
+import { onMounted, onUpdated, ref, watch, inject, reactive } from 'vue';
 import axios from "axios";
 import { ModelListSelect } from "vue-search-select"
 import TypoResponsive from './TypoResponsive.vue';
@@ -13,29 +13,67 @@ const font_styles = [
     {'value':'italic', 'text':'<em>Italic</em>'},
     {'value':'underline', 'text':'<span class="typography-underline">Underline</span>'},
 ]
-const options= ref([]);
+const system_fonts = {
+    "Arial, Helvetica, sans-serif" : 'Arial, Helvetica',
+    "Arial Black, Gadget, sans-serif" : 'Arial Black, Gadget',
+    "Bookman Old Style, serif" : 'Bookman Old Style',
+    "Comic Sans MS, cursive" : 'Comic Sans MS',
+    "Courier, monospace" : 'Courier',
+    "Garamond, serif" : 'Garamond',
+    "Georgia, serif" : 'Georgia',
+    "Impact, Charcoal, sans-serif" : 'Impact, Charcoal',
+    "Lucida Console, Monaco, monospace" : 'Lucida Console, Monaco',
+    "Lucida Sans Unicode, sans-serif" : 'Lucida Sans Unicode',
+    "MS Sans Serif, Geneva, sans-serif" : 'MS Sans Serif, Geneva',
+    "MS Serif, New York, sans-serif" : 'MS Serif, New York',
+    "Palatino Linotype, Book Antiqua, Palatino, serif" : 'Palatino Linotype, Book Antiqua, Palatino',
+    "Tahoma, Geneva, sans-serif" : 'Tahoma, Geneva',
+    "Times New Roman, Times, serif" : 'Times New Roman, Times',
+    "Trebuchet MS, Helvetica, sans-serif" : 'Trebuchet MS, Helvetica',
+    "Verdana, Geneva, sans-serif" : 'Verdana, Geneva'
+}
+const options= reactive({
+    'system': [],
+    'google': [],
+    'local' : [],
+});
 const fontSelected= ref({
     value: "",
     text: "",
 });
-
+const fonttypes = ref(['system','google'])
+const font_type = ref('google');
 const currentDevice = ref('desktop');
+
+function getFontType(font_face) {
+    if (font_face.search(/^library-font-/) !== -1) {
+        font_type.value = 'local';
+    } else if (typeof system_fonts[font_face] !== 'undefined') {
+        font_type.value = 'system';
+    } else {
+        font_type.value = 'google';
+    }
+}
 
 onMounted(()=>{
     let url = props.constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&template="+props.constant.template_name+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "fonts_ajax.txt?ts="+Date.now();
     }
-
     Object.keys(props.field.input.value).forEach(key => {
         props.modelValue[key] = props.field.input.value[key];
     })
-
+    getFontType(props.field.input.value.font_face);
     axios.get(url)
     .then(function (response) {
         if (response.status === 200) {
-            options.value = response.data;
-            response.data.forEach(element => {
+            options.system = response.data.system;
+            options.google = response.data.google;
+            options.local = response.data.local;
+            if (options.local.length > 1) {
+                fonttypes.value.push('local');
+            }
+            response.data[font_type.value].forEach(element => {
                 if (props.modelValue['font_face'] === element.value) {
                     fontSelected.value = element;
                 }
@@ -65,7 +103,8 @@ onMounted(()=>{
 
 onUpdated(()=>{
     if (fontSelected.value.value !== '' && fontSelected.value.value !== props.modelValue['font_face']) {
-        fontSelected.value = options.value.find((option) => option.value === props.modelValue['font_face']);
+        getFontType(props.modelValue['font_face']);
+        fontSelected.value = options[font_type.value].find((option) => option.value === props.modelValue['font_face']);
     }
 })
 
@@ -95,13 +134,25 @@ function changeColor(color) {
 }
 </script>
 <template>
-    <div class="row  row-cols-lg-2 row-cols-xl-3 g-4">
+    <div class="row row-cols-lg-2 row-cols-xl-3 g-4">
         <div>
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.fontpicker">
-                    <label :for="props.field.input.id+`_font_face_search`" class="form-label">{{ props.field.input.lang.font_family }}</label>
+                    <div class="row g-3 mb-2 justify-content-center">
+                        <div class="col col-auto">
+                            <label :for="props.field.input.id+`_font_face_search`" class="form-label m-0">{{ props.field.input.lang.font_family }}</label>
+                        </div>
+                        <div class="col">
+                            <div class="astroid-btn-group text-end">
+                                <span v-for="fonttype in fonttypes" :key="fonttype">
+                                    <input type="radio" class="btn-check" v-model="font_type" :id="props.field.input.id+`_font_type_`+fonttype" :value="fonttype" autocomplete="off">
+                                    <label class="btn btn-sm btn-outline-primary btn-as-outline-primary text-capitalize" :for="props.field.input.id+`_font_type_`+fonttype">{{ fonttype }}</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     <model-list-select
-                        :list="options"
+                        :list="options[font_type]"
                         v-model="fontSelected"
                         option-value="value"
                         option-text="text"

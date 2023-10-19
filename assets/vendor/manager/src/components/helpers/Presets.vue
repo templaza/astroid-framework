@@ -2,7 +2,7 @@
 import axios from "axios";
 import { onBeforeMount, ref, reactive, onMounted } from 'vue';
 
-const emit = defineEmits(['update:loadPreset']);
+const emit = defineEmits(['update:loadPreset', 'update:getPreset']);
 const props = defineProps({
     field: { type: Object, default: null },
     config: { type: Object, default: null },
@@ -17,6 +17,7 @@ const list = ref([]);
 const key_bg = ['#ffcdd2','#e1bee7','#bbdefb','#b2dfdb','#ffcc80'];
 onBeforeMount(() => {
     list.value = props.field.input.value;
+    emit('update:getPreset', props.field.input.value);
 })
 
 onMounted(()=>{

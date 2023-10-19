@@ -73,12 +73,23 @@ class Font
         header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
         $googleFonts = self::googleFonts();
-        $rt_fonts   =   array([
-            'value' => '__default',
-            'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
-        ]);
+        $rt_fonts   =   array(
+            'system' => array([
+                'value' => '__default',
+                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+            ]),
+            'google' => array([
+                'value' => '__default',
+                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+            ]),
+            'local'  => array([
+                'value' => '__default',
+                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+            ])
+        );
+
         foreach (self::$system_fonts as $name => $system_font) {
-            $rt_fonts[]     =   [
+            $rt_fonts['system'][]     =   [
                 'value' => $name,
                 'text'  => $system_font
             ];
@@ -88,7 +99,7 @@ class Font
 
         if (!empty($uploadedFonts)) {
             foreach ($uploadedFonts as $uploaded_font) {
-                $rt_fonts[]     =   [
+                $rt_fonts['local'][]     =   [
                     'value' => $uploaded_font['id'],
                     'text'  => $uploaded_font['name']
                 ];
@@ -97,7 +108,7 @@ class Font
 
         foreach ($googleFonts as $group => $fonts) {
             foreach ($fonts as $fontValue => $font) {
-                $rt_fonts[]     =   [
+                $rt_fonts['google'][]     =   [
                     'value' => $fontValue,
                     'text'  => $font
                 ];
