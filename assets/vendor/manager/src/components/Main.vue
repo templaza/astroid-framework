@@ -1,5 +1,6 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, reactive } from 'vue';
+import axios from "axios";
 import Fields from './helpers/Fields.vue'
 
 const props = defineProps({
@@ -66,11 +67,67 @@ function updateContentLayout(index, value) {
   $scope.value['astroidcontentlayouts'] = tmp.join(',');
 }
 
+const presets = ref([]);
+const toast_msg = reactive({
+  header: '',
+  body:'',
+  icon: '',
+  color:'darkviolet'
+});
 function loadPreset(value) {
   let tmp = JSON.parse(value);
   Object.keys(tmp).forEach(key => {
     $scope.value[key] = tmp[key];
   })
+}
+function getPreset(value) {
+  presets.value = value;
+}
+function selectPreset(event, group) {
+  if (event.target.value !== '' & confirm('Your current configure will be lost and overwritten by new data. Are you sure?')) {
+    const toastAstroidMsg = document.getElementById('loadGroupPreset');
+    const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
+    let url = 'index.php?t='+Math.random().toString(36).substring(7);
+    if (process.env.NODE_ENV === 'development') {
+        url = "preset_ajax.txt?ts="+Date.now();
+    }
+    const formData = new FormData(); // pass data as a form
+    formData.append(props.config.astroid_lib.astroid_admin_token, 1);
+    formData.append('name', event.target.value);
+    formData.append('astroid', 'loadpreset');
+    formData.append('option', 'com_ajax');
+    formData.append('template', props.config.astroid_lib.tpl_template_name);
+    axios.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      if (response.data.status === 'success') {
+        const tmp = JSON.parse(response.data.data);
+        group.fields.forEach(field => {
+          if (typeof tmp[field.name] !== 'undefined') {
+            $scope.value[field.name] = tmp[field.name]
+          }
+        });
+        toast_msg.icon = 'fa-solid fa-rocket';
+        toast_msg.header = 'Preset '+group.title+' Applied.';
+        toast_msg.body = 'Please click "Save" button to save your changes!';
+        toast_msg.color = 'green';
+        toastBootstrap.show();
+      } else {
+        toast_msg.icon = 'fa-regular fa-face-sad-tear';
+        toast_msg.header = 'Preset '+group.title+' is not Applied.';
+        toast_msg.body = response.data.message;
+        toast_msg.color = 'red';
+        toastBootstrap.show();
+      }
+      event.target.value = '';
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
 }
 </script>
 <template>
@@ -81,6 +138,13 @@ function loadPreset(value) {
         <div :id="`astroid-page-`+index" class="as-content" v-if="Object.keys(fieldSet.childs).length > 0" v-for="(group, index) in fieldSet.childs" :key="index" v-show="checkShowGroup(group.fields)">
           <h3 v-if="group.title !== ''">{{ group.title }}</h3>
           <p v-if="group.description !== ''">{{ group.description }}</p>
+          <div class="input-group mb-3">
+            <label :for="`preset_`+fieldSet.name+`_`+index" class="input-group-text">Load default configure</label>
+            <select class="form-select" :id="`preset_`+fieldSet.name+`_`+index" @change="selectPreset($event, group)">
+              <option value="">Select a preset</option>
+              <option v-for="(preset, preset_idx) in presets" :key="preset_idx" :value="preset.name">{{ preset.title }}</option>
+            </select>
+          </div>
           <div v-if="group.fields.length > 0" class="as-group-content">
             <div :class="(idx !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-for="(field, idx) in group.fields" :key="field.id" v-show="checkShow(field)">
               <div class="row">
@@ -100,6 +164,7 @@ function loadPreset(value) {
                       :constant="props.config.astroid_lib" 
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
+                      @update:getPreset="getPreset"
                       />
                   </div>
                   <div v-else v-html="field.input"></div>
@@ -110,5 +175,18 @@ function loadPreset(value) {
         </div>
       </div>
     </form>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
+                <strong class="me-auto">{{ toast_msg.header }}</strong>
+                <small>1 second ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ toast_msg.body }}
+            </div>
+        </div>
+    </div>
   </main>
 </template>
