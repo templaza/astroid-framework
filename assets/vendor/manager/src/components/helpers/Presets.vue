@@ -117,6 +117,7 @@ function showModal() {
 
 // Save Preset
 const presetTitle = ref(null);
+const save_disabled = ref(false);
 const formInfo = reactive({
     title: '',
     description: ''
@@ -140,6 +141,7 @@ function savePreset() {
     formData.append('astroid-preset', 1);
     formData.append('astroid-preset-name', formInfo.title);
     formData.append('astroid-preset-desc', formInfo.description);
+    save_disabled.value = true;
     axios.post(action_link, formData, {
         headers: {
         "Content-Type": "multipart/form-data",
@@ -164,6 +166,7 @@ function savePreset() {
             toast_msg.body = response.data.message;
             toast_msg.color = 'red';
         }
+        save_disabled.value = false;
         toastBootstrap.show();
         document.getElementById('closePresetModal').click();
     })
@@ -327,8 +330,8 @@ function exportPreset(preset) {
                     </div>
                 </div>
                 <div class="modal-footer" v-if="modalType === `save`">
-                    <button type="button" class="btn btn-sm btn-as btn-as-light" @click.prevent="modalType = ``">Back</button>
-                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="savePreset">Save Settings</button>
+                    <button type="button" class="btn btn-sm btn-as btn-as-light" @click.prevent="modalType = ``" :disabled="save_disabled">Back</button>
+                    <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="savePreset" :disabled="save_disabled">Save Settings</button>
                 </div>
                 <div class="modal-footer" v-else-if="modalType === `import`">
                     <button type="button" class="btn btn-sm btn-as btn-as-light" @click.prevent="modalType = ``">Back</button>
