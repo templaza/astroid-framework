@@ -52,4 +52,4 @@
 * [JoomlaPlate - Joomla Template](https://www.joomlaplates.com/)
 
 ## You love this project
-* [Buy me a coffee](https://www.buymeacoffee.com/isonny)
+* [Buy me a coffee](https://www.paypal.com/paypalme/sonvnn)
