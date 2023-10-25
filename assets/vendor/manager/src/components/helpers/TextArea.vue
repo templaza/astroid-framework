@@ -62,5 +62,5 @@ onUpdated(()=>{
         </div>
         <textarea class="d-none" :id="props.field.input.id" :name="props.field.input.name" v-text="modelValue"></textarea>
     </div>
-    <textarea v-else class="form-control" :id="props.field.input.id" :name="props.field.input.name" :rows="props.field.input.rows" :placeholder="props.field.input.hint" v-text="modelValue" @input="emit('update:modelValue', $event.target.value)"></textarea>
+    <textarea v-else class="form-control" :id="props.field.input.id" :name="props.field.input.name" rows="8" :placeholder="props.field.input.hint" v-text="modelValue" @input="emit('update:modelValue', $event.target.value)"></textarea>
 </template>
