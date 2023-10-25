@@ -72,12 +72,13 @@ class Column extends BaseElement
         $column_order_md     =   intval($this->params->get('column_order_md', 0));
         $column_order_sm     =   intval($this->params->get('column_order_sm', 0));
         $column_order_xs     =   intval($this->params->get('column_order_xs', 0));
-        $this->addClass('order-xl-'.$column_order_xl);
-        $this->addClass('order-lg-'.$column_order_lg);
-        $this->addClass('order-md-'.$column_order_md);
-        $this->addClass('order-sm-'.$column_order_sm);
-        $this->addClass('order-'.$column_order_xs);
-
+        if ($column_order_xl || $column_order_lg || $column_order_md || $column_order_sm || $column_order_xs) {
+            $this->addClass('order-xl-'.$column_order_xl);
+            $this->addClass('order-lg-'.$column_order_lg);
+            $this->addClass('order-md-'.$column_order_md);
+            $this->addClass('order-sm-'.$column_order_sm);
+            $this->addClass('order-'.$column_order_xs);
+        }
         parent::_getclasses();
     }
 }
