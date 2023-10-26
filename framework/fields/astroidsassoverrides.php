@@ -9,10 +9,10 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
 
 // The class name must always be the same as the filename (in camel case)
-class JFormFieldAstroidsassoverrides extends JFormField {
+class JFormFieldAstroidsassoverrides extends FormField {
 
 //The field class must know its own type through the variable $type.
    protected $type = 'astroidsassoverrides';
@@ -28,8 +28,6 @@ class JFormFieldAstroidsassoverrides extends JFormField {
            'type'    =>  strtolower($this->type),
        ];
        return json_encode($json);
-//      $renderer = new JLayoutFile('fields.astroidsassoverrides', JPATH_LIBRARIES . '/astroid/framework/layouts');
-//      return $renderer->render($this->getLayoutData());
    }
 
 }

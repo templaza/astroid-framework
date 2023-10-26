@@ -10,6 +10,12 @@
 namespace Astroid\Helper;
 
 use Astroid\Helper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -17,18 +23,18 @@ class Media
 {
     public static function getPath()
     {
-        $params = \JComponentHelper::getParams('com_media');
+        $params = ComponentHelper::getParams('com_media');
         return $params->get('image_path', 'images');
     }
 
     public static function library()
     {
-        $input = \JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $folder = $input->get('folder', '', 'RAW');
         $asset = $input->get('asset');
         $author = $input->get('author');
 
-        $user = \JFactory::getUser();
+        $user = Factory::getUser();
 
         if (!$user->authorise('core.manage', 'com_media') && (!$asset || (!$user->authorise('core.edit', $asset) && !$user->authorise('core.create', $asset) && count($user->getAuthorisedCategories($asset, 'core.create')) == 0) && !($user->id == $author && $user->authorise('core.edit.own', $asset)))) {
             throw new \JAccessExceptionNotallowed(JText::_('JERROR_ALERTNOAUTHOR'), 403);
@@ -43,7 +49,7 @@ class Media
     public static function getList($folder)
     {
         define('COM_MEDIA_BASE', JPATH_ROOT . '/' . self::getPath());
-        define('COM_MEDIA_BASEURL', \JUri::root() . self::getPath());
+        define('COM_MEDIA_BASEURL', Uri::root() . self::getPath());
 
         $current = $folder;
         $basePath = COM_MEDIA_BASE . ((strlen($current) > 0) ? '/' . $current : '');
@@ -59,24 +65,24 @@ class Media
 
         if (file_exists($basePath)) {
             // Get the list of files and folders from the given folder
-            $fileList = \JFolder::files($basePath);
-            $folderList = \JFolder::folders($basePath);
+            $fileList = Folder::files($basePath);
+            $folderList = Folder::folders($basePath);
         }
 
         // Iterate over the files if they exist
         if ($fileList !== false) {
-            $tmpBaseObject = new \JObject;
+            $tmpBaseObject = new \stdClass();
 
             foreach ($fileList as $file) {
                 if (is_file($basePath . '/' . $file) && substr($file, 0, 1) != '.' && strtolower($file) !== 'index.html') {
                     $tmp = clone $tmpBaseObject;
                     $tmp->name = $file;
                     $tmp->title = $file;
-                    $tmp->path = str_replace(DIRECTORY_SEPARATOR, '/', \JPath::clean($basePath . '/' . $file));
+                    $tmp->path = str_replace(DIRECTORY_SEPARATOR, '/', Path::clean($basePath . '/' . $file));
                     $tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
                     $tmp->size = filesize($tmp->path);
 
-                    $ext = strtolower(\JFile::getExt($file));
+                    $ext = strtolower(File::getExt($file));
 
                     switch ($ext) {
                             // Image
@@ -152,12 +158,12 @@ class Media
 
         // Iterate over the folders if they exist
         if ($folderList !== false) {
-            $tmpBaseObject = new \JObject;
+            $tmpBaseObject = new \stdClass();
 
             foreach ($folderList as $folder) {
                 $tmp = clone $tmpBaseObject;
                 $tmp->name = basename($folder);
-                $tmp->path = str_replace(DIRECTORY_SEPARATOR, '/', \JPath::clean($basePath . '/' . $folder));
+                $tmp->path = str_replace(DIRECTORY_SEPARATOR, '/', Path::clean($basePath . '/' . $folder));
                 $tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
                 $count = self::countFiles($tmp->path);
                 $tmp->files = $count[0];
@@ -206,7 +212,7 @@ class Media
 
     public static function upload()
     {
-        $input = \JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $dir = $input->get('dir', '', 'RAW');
         $media = $input->get('media', '', 'images');
 
@@ -280,7 +286,7 @@ class Media
             $uploadPath = $uploadDir . '/' . $fileName;
         }
 
-        if (!\JFile::upload($fileTemp, $uploadPath)) {
+        if (!File::upload($fileTemp, $uploadPath)) {
             throw new \Exception(\JText::_('ERROR MOVING FILE'));
         } else {
             return ['filepath' => $uploadPath, 'filename' => $fileName, 'uploadpath' => $uploadDir, 'folder' => $uploadFolder];
@@ -289,7 +295,7 @@ class Media
 
     public static function createFolder()
     {
-        $input = \JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $directory = $input->get('dir', '', 'RAW');
         $name = $input->get('name', '', 'RAW');
 

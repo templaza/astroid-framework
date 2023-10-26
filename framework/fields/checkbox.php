@@ -7,7 +7,7 @@
  */
 
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
 /**
  * Form Field class for the Joomla Platform.
  * Single checkbox field.
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * @see    JFormFieldCheckboxes
  * @since  11.1
  */
-class JFormFieldCheckbox extends JFormField
+class JFormFieldCheckbox extends FormField
 {
 	/**
 	 * The form field type.

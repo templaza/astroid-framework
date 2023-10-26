@@ -8,6 +8,14 @@
  */
 
 namespace Astroid;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Version;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -17,25 +25,25 @@ class Helper
 {
     public static function loadLanguage($extension, $client = 'site')
     {
-        $lang = \JFactory::getLanguage();
+        $lang = Factory::getLanguage();
         $lang->load($extension, ($client == 'site' ? JPATH_SITE : JPATH_ADMINISTRATOR));
     }
 
     public static function getPluginParams()
     {
-        $plugin = \JPluginHelper::getPlugin('system', 'astroid');
-        return new \JRegistry($plugin->params);
+        $plugin = PluginHelper::getPlugin('system', 'astroid');
+        return new Registry($plugin->params);
     }
 
     public static function getJoomlaUrl()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $atm = $app->input->get('atm', 0, 'INT');
         $id = $app->input->get('id', 0, 'INT');
         if ($atm) {
-            return \JRoute::_('index.php?option=com_advancedtemplates&view=style&layout=edit&id=' . $id);
+            return Route::_('index.php?option=com_advancedtemplates&view=style&layout=edit&id=' . $id);
         } else {
-            return \JRoute::_('index.php?option=com_templates&view=style&layout=edit&id=' . $id);
+            return Route::_('index.php?option=com_templates&view=style&layout=edit&id=' . $id);
         }
     }
 
@@ -46,7 +54,7 @@ class Helper
             $query[] = $key . '=' . $value;
         }
         $query = empty($query) ? '' : '&' . implode('&', $query);
-        return \JRoute::_('index.php?option=com_ajax&astroid=save' . $query);
+        return Route::_('index.php?option=com_ajax&astroid=save' . $query);
     }
 
     public static function classify($word)
@@ -125,12 +133,12 @@ class Helper
 
     public static function joomlaMediaVersion()
     {
-        return \JFactory::getDocument()->getMediaVersion();
+        return Factory::getDocument()->getMediaVersion();
     }
 
     public static function refreshVersion()
     {
-        $version = new \JVersion;
+        $version = new Version;
         $version->refreshMediaVersion();
     }
 
@@ -165,8 +173,8 @@ class Helper
 
     public static function triggerEvent($name, $data = [])
     {
-        \JPluginHelper::importPlugin('astroid');
-        \JFactory::getApplication()->triggerEvent($name, $data);
+        PluginHelper::importPlugin('astroid');
+        Factory::getApplication()->triggerEvent($name, $data);
     }
 
     public static function clearCacheByTemplate($template)
@@ -178,7 +186,7 @@ class Helper
     {
         $template_media_dir = JPATH_SITE . '/media/templates/site/' . $template . '/' . 'css';
         $template_dir = JPATH_SITE . '/templates/' . $template . '/' . 'css';
-        $version = new \JVersion;
+        $version = new Version;
         $version->refreshMediaVersion();
         if (!file_exists($template_dir) && !file_exists($template_media_dir)) {
             throw new \Exception("Template not found.", 404);
@@ -226,14 +234,15 @@ class Helper
 
     public static function clearJoomlaCache()
     {
-        $app = \JFactory::getApplication();
-        $conf = \JFactory::getConfig();
+        $app = Factory::getApplication();
+        $conf = $app->getConfig();
         $options = array(
             'cachebase' => $conf->get('cache_path', JPATH_SITE . '/cache')
         );
-        $cache = \JCache::getInstance('callback', $options);
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)
+            ->createCacheController('callback', $options);
         $cache->clean(null, 'notgroup');
-        $app->triggerEvent('onAfterPurge', array());
+        $app->getDispatcher()->dispatch('onAfterPurge');
     }
 
     public static function getFileHash($file)
@@ -270,7 +279,7 @@ class Helper
 
     public static function getJoomlaVersion()
     {
-        $version = new \JVersion;
+        $version = new Version;
         $version = $version->getShortVersion();
         $version = substr($version, 0, 1);
         return $version;
@@ -305,7 +314,7 @@ class Helper
 
     public static function getModules()
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = "SELECT #__modules.*, #__usergroups.title as access_title FROM #__modules JOIN #__usergroups ON #__usergroups.id=#__modules.access WHERE #__modules.client_id=0";
 
         $db->setQuery($query);
@@ -321,9 +330,6 @@ class Helper
 
     public static function getAllAstroidElements()
     {
-        \jimport('astroid.framework.template');
-        \jimport('astroid.framework.element');
-
         $template = Framework::getTemplate();
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
@@ -342,7 +348,7 @@ class Helper
             $xmlfile = $element_dir . '/' . (str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir))) . '.xml';
             if (file_exists($xmlfile)) {
                 $type = str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir));
-                $element = new \AstroidElement($type, [], $template);
+                $element = new Element($type, [], $template);
                 $return[] = $element;
             }
         }
@@ -481,13 +487,13 @@ class Helper
             $data = \json_decode($json, true);
             $preset = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'demo' => '', 'preset' => [], 'name' => pathinfo($file)['filename']];
             if (isset($data['title']) && !empty($data['title'])) {
-                $preset['title'] = \JText::_($data['title']);
+                $preset['title'] = Text::_($data['title']);
             }
             if (isset($data['desc'])) {
-                $preset['desc'] = \JText::_($data['desc']);
+                $preset['desc'] = Text::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $preset['thumbnail'] = \JURI::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
+                $preset['thumbnail'] = Uri::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
             }
             if (isset($data['demo'])) {
                 $preset['demo'] = $data['demo'];

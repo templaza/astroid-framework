@@ -7,14 +7,15 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a generic list of options.
  *
  * @since  11.1
  */
-class JFormFieldAstroidHeading extends JFormField
+class JFormFieldAstroidHeading extends FormField
 {
 
    /**
@@ -35,21 +36,6 @@ class JFormFieldAstroidHeading extends JFormField
     */
    protected function getInput()
    {
-
-//      $attrs = [];
-//      $ngShow = Astroid\Helper::replaceRelationshipOperators($this->element['ngShow']);
-//      if (!empty($ngShow)) {
-//         $attrs[] = 'ng-show="' . $ngShow . '"';
-//      }
-//      $ngHide = Astroid\Helper::replaceRelationshipOperators($this->element['ngHide']);
-//      if (!empty($ngHide)) {
-//         $attrs[] = 'ng-hide="' . $ngHide . '"';
-//      }
-//      $ngRequired = Astroid\Helper::replaceRelationshipOperators($this->element['ngRequired']);
-//      if (!empty($ngRequired)) {
-//         $attrs[] = 'ng-hide="' . $ngRequired . '"';
-//      }
-
       $helpLink = '';
       if (!empty($this->element['help'])) {
          $helpLink = (string)$this->element['help'];
@@ -58,14 +44,12 @@ class JFormFieldAstroidHeading extends JFormField
        $json =   [
            'id'         =>  $this->id,
            'name'       =>  $this->name,
-           'title'              =>  JText::_((string)$this->element['title']),
-           'description'        =>  JText::_($this->description),
+           'title'              =>  Text::_((string)$this->element['title']),
+           'description'        =>  Text::_($this->description),
            'icon'       =>  $this->element['icon'],
            'help'       =>  $helpLink,
            'type'       =>  strtolower($this->type),
        ];
        return json_encode($json);
-
-//      return "<div " . implode(' ', $attrs) . " class='form-group form-group-heading'><h3 class='mb-0'>" . ((!empty($this->element['icon']) ? "<i class='" . $this->element['icon'] . "'></i> " : "")) . JText::_($this->element['title']) . $helpLink . "</h3><p class='mb-0'>" . JText::_($this->description) . "</p></div>";
    }
 }

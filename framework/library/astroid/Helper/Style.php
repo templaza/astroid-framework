@@ -11,6 +11,7 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -213,7 +214,7 @@ class Style
 
     public static function renderTypography($selector, $object, $defaultObject = null)
     {
-        $typography = new \JRegistry();
+        $typography = new Registry();
         $typography->loadObject($object);
 
         $style = new Style($selector);
@@ -277,7 +278,7 @@ class Style
         $alt_font_face = $typography->get('alt_font_face', '');
 
         if ($defaultObject !== null) {
-            $defaultTypography = new \JRegistry();
+            $defaultTypography = new Registry();
             $defaultTypography->loadObject($defaultObject);
             $font_face = ($font_face == '__default' ? $defaultTypography->get('font_face', '') : $font_face);
             $alt_font_face = ($alt_font_face == '__default' ? $defaultTypography->get('alt_font_face', '') : $alt_font_face);

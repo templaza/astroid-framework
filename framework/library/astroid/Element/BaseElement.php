@@ -19,6 +19,7 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Media;
 use Astroid\Helper\Style;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -33,7 +34,7 @@ class BaseElement
         $this->devices = $devices;
         $this->id = $data['id'];
         $this->type = isset($data['type']) ? $data['type'] : 'element';
-        $this->params = new \JRegistry();
+        $this->params = new Registry();
         if (isset($data['params']) && !empty($data['params'])) {
             $params = [];
             foreach ($data['params'] as $param) {

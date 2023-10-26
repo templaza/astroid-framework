@@ -8,7 +8,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a multi line area for entry of plain text
@@ -16,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
  * @link   http://www.w3.org/TR/html-markup/textarea.html#textarea
  * @since  11.1
  */
-class JFormFieldAstroidTextarea extends JFormField {
+class JFormFieldAstroidTextarea extends FormField {
 
    /**
     * The form field type.
@@ -119,7 +119,7 @@ class JFormFieldAstroidTextarea extends JFormField {
    public function setup(SimpleXMLElement $element, $value, $group = null) {
       $return = parent::setup($element, $value, $group);
       if ($return) {
-         $this->rows = isset($this->element['rows']) ? (int) $this->element['rows'] : false;
+         $this->rows = isset($this->element['rows']) ? (int) $this->element['rows'] : 6;
          $this->columns = isset($this->element['cols']) ? (int) $this->element['cols'] : false;
          $this->maxlength = isset($this->element['maxlength']) ? (int) $this->element['maxlength'] : false;
       }

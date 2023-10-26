@@ -12,7 +12,12 @@ namespace Astroid\Component;
 defined('_JEXEC') or die;
 
 use Astroid\Framework;
-use \Joomla\Module\Menu\Site\Helper\MenuHelper;
+use Joomla\Module\Menu\Site\Helper\MenuHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Multilanguage;
 
 if (ASTROID_JOOMLA_VERSION == 3) {
     \JLoader::register('ModMenuHelper', JPATH_SITE . '/modules/mod_menu/helper.php');
@@ -41,7 +46,7 @@ class Menu
         $header_startLevel = $params->get('header_startLevel', 1);
         $header_menu_params = '{"menutype":"' . $menutype . '","base":"","startLevel":"' . $header_startLevel . '","endLevel":"' . $header_endLevel . '","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}';
 
-        $menu_params = new \JRegistry();
+        $menu_params = new Registry();
         $menu_params->loadString($header_menu_params);
 
         if (ASTROID_JOOMLA_VERSION == 3) {
@@ -173,7 +178,7 @@ class Menu
                     try {
                         foreach ($col['elements'] as $element) {
                             if ($element['type'] == "module") {
-                                $modules = \JModuleHelper::getModuleList();
+                                $modules = ModuleHelper::getModuleList();
                                 foreach ($modules as $module) {
                                     if ($module->id == $element['id']) {
                                         $params = \json_decode($module->params, true);
@@ -183,7 +188,7 @@ class Menu
                                             $style = $params['style'];
                                         }
                                         echo '<div class="megamenu-item megamenu-module">';
-                                        echo \JModuleHelper::renderModule($module, ['style' => $style]);
+                                        echo ModuleHelper::renderModule($module, ['style' => $style]);
                                         echo "</div>";
                                     }
                                 }
@@ -263,12 +268,12 @@ class Menu
 
     public static function getList($menutype)
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $menu = $app->getMenu();
 
         // Get active menu item
         $base = self::getBase();
-        $user = \JFactory::getUser();
+        $user = Factory::getUser();
         $levels = $user->getAuthorisedViewLevels();
         asort($levels);
 
@@ -341,9 +346,9 @@ class Menu
                 }
 
                 if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http')) {
-                    $item->flink = \JRoute::_($item->flink, true, $item_params->get('secure'));
+                    $item->flink = Route::_($item->flink, true, $item_params->get('secure'));
                 } else {
-                    $item->flink = \JRoute::_($item->flink);
+                    $item->flink = Route::_($item->flink);
                 }
 
                 // We prevent the double encoding because for some reason the $item is shared for menu modules and we get double encoding
@@ -369,7 +374,7 @@ class Menu
 
     public static function getBase()
     {
-        $menu = \JFactory::getApplication()->getMenu();
+        $menu = Factory::getApplication()->getMenu();
         $active = $menu->getActive();
 
 
@@ -382,17 +387,17 @@ class Menu
 
     public static function getActive()
     {
-        $menu = \JFactory::getApplication()->getMenu();
+        $menu = Factory::getApplication()->getMenu();
         return $menu->getActive() ?: self::getDefault();
     }
 
     public static function getDefault()
     {
-        $menu = \JFactory::getApplication()->getMenu();
-        $lang = \JFactory::getLanguage();
+        $menu = Factory::getApplication()->getMenu();
+        $lang = Factory::getLanguage();
 
         // Look for the home menu
-        if (\JLanguageMultilang::isEnabled()) {
+        if (Multilanguage::isEnabled()) {
             return $menu->getDefault($lang->getTag());
         } else {
             return $menu->getDefault();
@@ -583,7 +588,7 @@ class Menu
 
         $header_menu_params = '{"menutype":"' . $menutype . '","base":"","startLevel":"' . $params->get('header_mobile_startLevel', 1) . '","endLevel":"' . $params->get('header_mobile_endLevel', 0) . '","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}';
 
-        $menu_params = new \JRegistry();
+        $menu_params = new Registry();
         $menu_params->loadString($header_menu_params);
 
         if (ASTROID_JOOMLA_VERSION == 3) {
@@ -639,7 +644,7 @@ class Menu
 
         $header_menu_params = '{"menutype":"' . $menutype . '","base":"","startLevel":"1","endLevel":"' . $params->get('header_endLevel', 0) . '","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}';
 
-        $menu_params = new \JRegistry();
+        $menu_params = new Registry();
         $menu_params->loadString($header_menu_params);
 
         if (ASTROID_JOOMLA_VERSION == 3) {

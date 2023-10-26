@@ -9,9 +9,10 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
 
-class JFormFieldAstroidTypography extends JFormField
+class JFormFieldAstroidTypography extends FormField
 {
 
    //The field class must know its own type through the variable $type.
@@ -24,9 +25,6 @@ class JFormFieldAstroidTypography extends JFormField
 
    public function getInput()
    {
-      $renderer = new JLayoutFile('fields.astroidtypography', JPATH_LIBRARIES . '/astroid/framework/layouts');
-      $data = $this->getLayoutData();
-
       if (!is_array($this->value) && empty($this->value)) {
          $value = [];
       } else {
@@ -189,10 +187,10 @@ class JFormFieldAstroidTypography extends JFormField
        }
        $extraData['system_fonts']   =   $system_fonts;
        $extraData['text_transform_options'] =   array(
-           'none' => JText::_('JGLOBAL_INHERIT'),
-           'uppercase' => JText::_('JGLOBAL_UPPERCASE'),
-           'lowercase' => JText::_('JGLOBAL_LOWERCASE'),
-           'capitalize' => JText::_('JGLOBAL_CAPITALIZE')
+           'none' => Text::_('JGLOBAL_INHERIT'),
+           'uppercase' => Text::_('JGLOBAL_UPPERCASE'),
+           'lowercase' => Text::_('JGLOBAL_LOWERCASE'),
+           'capitalize' => Text::_('JGLOBAL_CAPITALIZE')
        );
        $json     =   [
            'id'                  =>  $this->id,
@@ -213,22 +211,20 @@ class JFormFieldAstroidTypography extends JFormField
            ],
            'options'             =>  $extraData,
            'lang'                =>  [
-               'font_family'        =>  JText::_('TPL_ASTROID_FONT_FAMILY_LABEL'),
-               'font_family_alt'    =>  JText::_('TPL_ASTROID_ALT_FONT_FAMILY_LABEL'),
-               'font_weight'        =>  JText::_('TPL_ASTROID_FONT_WEIGHT_LABEL'),
-               'font_size'          =>  JText::_('TPL_ASTROID_FONT_SIZE_LABEL'),
-               'letter_spacing'     =>  JText::_('TPL_ASTROID_LETTER_SPACING_LABEL'),
-               'line_height'        =>  JText::_('TPL_ASTROID_LINE_HEIGHT_LABEL'),
-               'font_color'         =>  JText::_('TPL_ASTROID_FONT_COLOR_LABEL'),
-               'font_style'         =>  JText::_('TPL_ASTROID_FONT_STYLE_LABEL'),
-               'text_transform'     =>  JText::_('TPL_ASTROID_TEXT_TRANSFORM_LABEL'),
-               'preview'            =>  JText::_('TPL_ASTROID_OPTIONS_PREVIEW_LABEL'),
-               'inherit'            =>  JText::_('JGLOBAL_INHERIT'),
+               'font_family'        =>  Text::_('TPL_ASTROID_FONT_FAMILY_LABEL'),
+               'font_family_alt'    =>  Text::_('TPL_ASTROID_ALT_FONT_FAMILY_LABEL'),
+               'font_weight'        =>  Text::_('TPL_ASTROID_FONT_WEIGHT_LABEL'),
+               'font_size'          =>  Text::_('TPL_ASTROID_FONT_SIZE_LABEL'),
+               'letter_spacing'     =>  Text::_('TPL_ASTROID_LETTER_SPACING_LABEL'),
+               'line_height'        =>  Text::_('TPL_ASTROID_LINE_HEIGHT_LABEL'),
+               'font_color'         =>  Text::_('TPL_ASTROID_FONT_COLOR_LABEL'),
+               'font_style'         =>  Text::_('TPL_ASTROID_FONT_STYLE_LABEL'),
+               'text_transform'     =>  Text::_('TPL_ASTROID_TEXT_TRANSFORM_LABEL'),
+               'preview'            =>  Text::_('TPL_ASTROID_OPTIONS_PREVIEW_LABEL'),
+               'inherit'            =>  Text::_('JGLOBAL_INHERIT'),
            ],
            'type'                =>  strtolower($this->type),
        ];
        return json_encode($json);
-
-//      return $renderer->render($data);
    }
 }

@@ -10,7 +10,12 @@
 namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
+use Joomla\CMS\Uri\Uri;
 use Astroid\Component\Includer;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Filter\OutputFilter;
 
 defined('_JEXEC') or die;
 
@@ -24,7 +29,7 @@ class Admin extends Helper\Client
     protected function save()
     {
         $this->checkAuth();
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
 
         $params = $app->input->post->get('params', array(), 'RAW');
         $export_settings = $app->input->post->get('export_settings', 0, 'INT');
@@ -44,7 +49,7 @@ class Admin extends Helper\Client
                 'thumbnail' => '', 'demo' => '',
                 'preset' => $params
             ];
-            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
             $this->response($preset_name);
         } else {
@@ -56,7 +61,7 @@ class Admin extends Helper\Client
 
     protected function media()
     {
-        $action = \JFactory::getApplication()->input->get('action', '', 'RAW');
+        $action = Factory::getApplication()->input->get('action', '', 'RAW');
         $func = Helper::classify($action);
         if (!method_exists(Helper\Media::class, $func)) {
             throw new \Exception("`{$func}` function not found in Astroid\\Helper\\Media");
@@ -66,7 +71,7 @@ class Admin extends Helper\Client
 
     protected function search()
     {
-        $search = \JFactory::getApplication()->input->get('search', '', 'RAW');
+        $search = Factory::getApplication()->input->get('search', '', 'RAW');
         switch ($search) {
             case 'icon':
                 $this->response(self::icons());
@@ -122,10 +127,11 @@ class Admin extends Helper\Client
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+
         $doc = Factory::getDocument();
         $config = [
-            'site_url'              =>  \JURI::root(),
-            'base_url'              =>  \JURI::base(true),
+            'site_url'              =>  Uri::root(),
+            'base_url'              =>  Uri::base(true),
             'astroid_media_url'     => ASTROID_MEDIA_URL,
             'template_name'         => $template->template.'-'.$template->id,
             'tpl_template_name'     => $template->template,
@@ -136,7 +142,7 @@ class Admin extends Helper\Client
             'video_tutorial'        => Helper\Constants::$video_tutorial_link,
             'github_link'           => Helper\Constants::$github_link,
             'jtemplate_link'        => Helper::getJoomlaUrl(),
-            'astroid_admin_token'   => \JSession::getFormToken(),
+            'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
         ];
         $doc->addScriptOptions('astroid_lib', $config);
@@ -144,7 +150,7 @@ class Admin extends Helper\Client
         // Get Language
         $lang = array();
         foreach (Helper\Constants::$translationStrings as $string) {
-            $lang[strtoupper($string)] = Factory::getLanguage()->_($string);
+            $lang[strtoupper($string)] = Factory::getApplication()->getLanguage()->_($string);
         }
         $doc->addScriptOptions('astroid_lang', $lang);
 
@@ -249,7 +255,7 @@ class Admin extends Helper\Client
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
 
         Framework::getDebugger()->log('Getting Manager');
-        $layout = new \JLayoutFile('manager.index', ASTROID_LAYOUTS);
+        $layout = new FileLayout('manager.index', ASTROID_LAYOUTS);
         $html = $layout->render();
         $html = Includer::run($html);
         Framework::getDebugger()->log('Getting Manager');
@@ -272,7 +278,7 @@ class Admin extends Helper\Client
         $document->addStyleSheet($stylesheets);
 
         Framework::getDebugger()->log('Getting Auditor');
-        $layout = new \JLayoutFile('auditor.index', ASTROID_LAYOUTS);
+        $layout = new FileLayout('auditor.index', ASTROID_LAYOUTS);
         $html = $layout->render();
         $html = Includer::run($html);
         Framework::getDebugger()->log('Getting Auditor');
@@ -281,23 +287,23 @@ class Admin extends Helper\Client
 
     protected function audit()
     {
-        $template = \JFactory::getApplication()->input->post->get('template', '', 'RAW');
+        $template = Factory::getApplication()->input->post->get('template', '', 'RAW');
         $this->response(Auditor::audit($template));
     }
 
     protected function migrate()
     {
-        $template = \JFactory::getApplication()->input->get->get('template', '', 'RAW');
+        $template = Factory::getApplication()->input->get->get('template', '', 'RAW');
         $this->response(Auditor::migrate($template));
     }
 
     protected function clearCache()
     {
-	    $app = \JFactory::getApplication();
+	    $app = Factory::getApplication();
 	    $tpl = $app->input->get('template', '');
 		if (empty($tpl)) {
 			\JLoader::import('joomla.filesystem.folder');
-			$tpl_folders    =   \JFolder::folders(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates');
+			$tpl_folders    =   Folder::folders(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates');
 			if ($tpl_folders && count($tpl_folders)) {
 				foreach ($tpl_folders as $tpl_item) {
 					if (file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'media/templates/site'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json') || file_exists(JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$tpl_item.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'default.json')) {
@@ -309,18 +315,18 @@ class Admin extends Helper\Client
 			$template = Framework::getTemplate()->template;
 			Helper::clearCacheByTemplate($template);
 		}
-        $this->response(['message' => \JText::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
+        $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
     }
 
     protected function clearJoomlaCache()
     {
         Helper::clearJoomlaCache();
-        $this->response(['message' => \JText::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
+        $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
     }
 
     public function addTemplateLabels()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $option = $app->input->get('option', '');
         $view = $app->input->get('view', '');
         if (!($option == 'com_templates' && ($view == 'styles' || empty($view)))) {
@@ -332,7 +338,7 @@ class Admin extends Helper\Client
         $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function ($matches) use ($astroid_templates) {
             $html = $matches[0];
             if (strpos($matches[2], 'task=style.edit')) {
-                $uri = new \JUri($matches[2]);
+                $uri = new Uri($matches[2]);
                 $id = (int) $uri->getVar('id');
                 if ($id && in_array($uri->getVar('option'), array('com_templates')) && (in_array($id, $astroid_templates))) {
                     $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
@@ -347,10 +353,10 @@ class Admin extends Helper\Client
     public function importpreset() {
         try {
             // Check for request forgeries.
-            if (!\JSession::checkToken()) {
-                throw new \Exception(\JText::_('JINVALID_TOKEN'));
+            if (!Session::checkToken()) {
+                throw new \Exception(Text::_('JINVALID_TOKEN'));
             }
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $preset = [
@@ -359,26 +365,26 @@ class Admin extends Helper\Client
                 'thumbnail' => '', 'demo' => '',
                 'preset' => ''
             ];
-            $preset_name = uniqid(\JFilterOutput::stringURLSafe($preset['title']).'-');
+            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
             $fieldName = 'file';
 
             $fileError = $_FILES[$fieldName]['error'];
             if ($fileError > 0) {
                 switch ($fileError) {
                     case 1:
-                        throw new \Exception(\JText::_('ASTROID_ERROR_LARGE_FILE'));
+                        throw new \Exception(Text::_('ASTROID_ERROR_LARGE_FILE'));
                         break;
 
                     case 2:
-                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
+                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
                         break;
 
                     case 3:
-                        throw new \Exception(\JText::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
+                        throw new \Exception(Text::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
                         break;
 
                     case 4:
-                        throw new \Exception(\JText::_('ASTROID_ERROR_NO_FILE'));
+                        throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
                         break;
                 }
             }
@@ -387,7 +393,7 @@ class Admin extends Helper\Client
             $uploadedFileExtension = $pathinfo['extension'];
             $uploadedFileExtension = strtolower($uploadedFileExtension);
             if ($uploadedFileExtension != 'json') {
-                throw new \Exception(\JText::_('INVALID EXTENSION'));
+                throw new \Exception(Text::_('INVALID EXTENSION'));
             }
 
             $fileTemp = $_FILES[$fieldName]['tmp_name'];
@@ -400,7 +406,7 @@ class Admin extends Helper\Client
                     $preset['preset'] = $config['preset'];
                 }
             } else {
-                throw new \Exception(\JText::_('INVALID FILETYPE'));
+                throw new \Exception(Text::_('INVALID FILETYPE'));
             }
 
             $uploadPath = $presets_path . $preset_name . '.json';
@@ -417,20 +423,20 @@ class Admin extends Helper\Client
     public function loadpreset() {
         try {
             // Check for request forgeries.
-            if (!\JSession::checkToken()) {
-                throw new \Exception(\JText::_('JINVALID_TOKEN'));
+            if (!Session::checkToken()) {
+                throw new \Exception(Text::_('JINVALID_TOKEN'));
             }
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');
             $json           = file_get_contents($presets_path.$file.'.json');
             if (!$json) {
-                throw new \Exception(\JText::_('JOLLYANY_LOAD_PRESET_FILE_ERROR').': '.$presets_path.$file.'.json');
+                throw new \Exception(Text::_('JOLLYANY_LOAD_PRESET_FILE_ERROR').': '.$presets_path.$file.'.json');
             }
             $data = \json_decode($json, true);
             if (!isset($data['preset']) || empty($data['preset'])) {
-                throw new \Exception(\JText::_('JOLLYANY_PRESET_EMPTY_ERROR'));
+                throw new \Exception(Text::_('JOLLYANY_PRESET_EMPTY_ERROR'));
             }
             $this->response($data['preset']);
         } catch (\Exception $e) {
@@ -442,10 +448,10 @@ class Admin extends Helper\Client
     public function removepreset() {
         try {
             // Check for request forgeries.
-            if (!\JSession::checkToken()) {
-                throw new \Exception(\JText::_('JOLLYANY_AJAX_ERROR'));
+            if (!Session::checkToken()) {
+                throw new \Exception(Text::_('JOLLYANY_AJAX_ERROR'));
             }
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');

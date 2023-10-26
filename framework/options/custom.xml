@@ -16,7 +16,7 @@
 
 			<field astroidgroup="custom" code="css" name="customcss" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_DESC">
 			</field>
-			<field astroidgroup="custom" name="customcssfiles" class="form-control mw-100" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_LABEL" hint="https://yourwebsite.com/style.css" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_DESC">
+			<field astroidgroup="custom" name="customcssfiles" class="form-control mw-100" rows="6" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_LABEL" hint="https://yourwebsite.com/style.css" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_FILES_DESC">
 			</field>
 
 			<field astroidgroup="custom" code="javascript" name="customjs" class="form-control" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCRIPT_DESC">

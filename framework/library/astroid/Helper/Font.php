@@ -11,6 +11,8 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -38,7 +40,7 @@ class Font
 
     public static function googleFonts()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $fonts = Helper::getJSONData('webfonts');
         $options = [];
 
@@ -76,15 +78,15 @@ class Font
         $rt_fonts   =   array(
             'system' => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ]),
             'google' => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ]),
             'local'  => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ])
         );
 
@@ -275,11 +277,11 @@ class Font
         $uploaded_fonts = $template->getFonts();
         $template_media_fonts_path  = JPATH_SITE . "/media/templates/site/{$template->template}/fonts";
         $template_custom_fonts_path = JPATH_SITE . "/images/{$template->template}/fonts";
-        $font_custom_path           = \JURI::root() . "images/{$template->template}/fonts/";
+        $font_custom_path           = Uri::root() . "images/{$template->template}/fonts/";
         if (file_exists($template_media_fonts_path)) {
-            $font_path      =       \JURI::root() . "media/templates/site/{$template->template}/fonts/";
+            $font_path      =       Uri::root() . "media/templates/site/{$template->template}/fonts/";
         } else {
-            $font_path      =       \JURI::root() . "templates/{$template->template}/fonts/";
+            $font_path      =       Uri::root() . "templates/{$template->template}/fonts/";
         }
         if (isset($uploaded_fonts[$value])) {
             $files = $uploaded_fonts[$value]['files'];

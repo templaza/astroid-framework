@@ -12,6 +12,8 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -34,7 +36,7 @@ class Head
 
         if (!empty($favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)) {
             $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon);
-            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
+            Framework::getDocument()->addLink(Uri::root() . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
                 'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));
@@ -42,7 +44,7 @@ class Head
         $apple_touch_icon = $params->get('apple_touch_icon', '');
         if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
             $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon);
-            Framework::getDocument()->addLink(\JURI::root() . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
+            Framework::getDocument()->addLink(Uri::root() . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
                 'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));
@@ -52,7 +54,7 @@ class Head
             if ( (strpos( $site_webmanifest, 'http://' ) !== false) || (strpos( $site_webmanifest, 'https://' ) !== false) ) {
                 $site_webmanifest = $site_webmanifest;
             } else {
-                $site_webmanifest = \JURI::root() . $site_webmanifest;
+                $site_webmanifest = Uri::root() . $site_webmanifest;
             }
 
             Framework::getDocument()->addLink($site_webmanifest, 'manifest', array(
@@ -64,7 +66,7 @@ class Head
     public static function scripts()
     {
         $document = Framework::getDocument();
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $template = Framework::getTemplate();
         $layout = $app->input->get('layout', '', 'STRING');
         $getPluginParams = Helper::getPluginParams();

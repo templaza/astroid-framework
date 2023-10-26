@@ -12,8 +12,9 @@
 defined('_JEXEC') or die;
 extract($displayData);
 use Astroid\Helper\Style;
+use Joomla\CMS\Factory;
 $params = Astroid\Framework::getTemplate()->getParams();
-$document = \JFactory::getDocument();
+$document = Factory::getDocument();
 
 $enable_preloader = $params->get('preloader', 1);
 if (!$enable_preloader) {

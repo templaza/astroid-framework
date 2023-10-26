@@ -13,9 +13,13 @@ defined('_JEXEC') or die;
 
 require_once __DIR__ . "/../scssphp/scss.inc.php";
 
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use ScssPhp\ScssPhp\Compiler;
 use MatthiasMullie\Minify;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Layout\FileLayout;
 
 class Document
 {
@@ -41,7 +45,7 @@ class Document
         $this->minify_js = $params->get('minify_js', false);
         $this->minify_html = $params->get('minify_html', false);
 
-        $doc = \JFactory::getDocument();
+        $doc = Factory::getDocument();
         $this->type = $doc->getType();
 
         $template = Framework::getTemplate();
@@ -80,11 +84,11 @@ class Document
             return '';
         }
 
-        $layout = new \JLayoutFile($section, $path);
+        $layout = new FileLayout($section, $path);
         $content = $layout->render($data);
 
         /* if (Framework::isAdmin()) {
-            $layout = new \JLayoutFile($section, $path);
+            $layout = new FileLayout($section, $path);
             $content = $layout->render($data);
         } else {
             $hash = Helper::getFileHash($path . '/' . $name . '.php');
@@ -95,7 +99,7 @@ class Document
             } else {
                 $beforeHash = $this->_assetsHash();;
 
-                $layout = new \JLayoutFile($section, $path);
+                $layout = new FileLayout($section, $path);
                 $content = $layout->render($data);
 
                 if ($beforeHash === $this->_assetsHash()) {
@@ -111,7 +115,7 @@ class Document
 
     public function compress()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $body = $app->getBody();
 
         // Stop Minification for RSSFeeds and other doc types.
@@ -132,7 +136,7 @@ class Document
             return false;
         }
 
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $option = $app->input->get('option', '', 'STRING');
         $view = $app->input->get('view', '', 'STRING');
         $layout = $app->input->get('layout', 'default', 'STRING');
@@ -152,7 +156,7 @@ class Document
 
     public function _cssPath($file)
     {
-        $site_path = parse_url(\JURI::root(), PHP_URL_PATH);
+        $site_path = parse_url(Uri::root(), PHP_URL_PATH);
 
         if (Helper::startsWith($file, $site_path)) {
             $file = preg_replace('/' . preg_quote($site_path, '/') . '/', '/', $file, 1);
@@ -160,9 +164,9 @@ class Document
 
         $file_info = parse_url($file);
         if (isset($file_info['host'])) {
-            if ($file_info['host'] == parse_url(\JURI::root(), PHP_URL_HOST)) {
+            if ($file_info['host'] == parse_url(Uri::root(), PHP_URL_HOST)) {
                 $file = strtok($file, '?');
-                $file = str_replace(\JURI::root(), '', $file);
+                $file = str_replace(Uri::root(), '', $file);
                 return $file;
             } else {
                 return '@import "' . $file . '"';
@@ -178,7 +182,7 @@ class Document
 
     public function _jsPath($file)
     {
-        $site_path = parse_url(\JURI::root(), PHP_URL_PATH);
+        $site_path = parse_url(Uri::root(), PHP_URL_PATH);
 
         if (Helper::startsWith($file, $site_path)) {
             $file = preg_replace('/' . preg_quote($site_path, '/') . '/', '/', $file, 1);
@@ -186,9 +190,9 @@ class Document
 
         $file_info = parse_url($file);
         if (isset($file_info['host'])) {
-            if ($file_info['host'] == parse_url(\JURI::root(), PHP_URL_HOST)) {
+            if ($file_info['host'] == parse_url(Uri::root(), PHP_URL_HOST)) {
                 $file = strtok($file, '?');
-                $file = str_replace(\JURI::root(), '', $file);
+                $file = str_replace(Uri::root(), '', $file);
                 return $file;
             } else {
                 return file_get_contents($this->addProtocol($file));
@@ -269,14 +273,14 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified CSS <code>' . (str_replace(JPATH_SITE . '/', '', $cssFile)) . '</code> from cache.');
         }
 
-        $html = str_replace('</head>', '<link rel="stylesheet" href="' . \JURI::root() . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
+        $html = str_replace('</head>', '<link rel="stylesheet" href="' . Uri::root() . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
         Framework::getDebugger()->log('Minifying CSS');
         return $html;
     }
 
     public function minifyJS($html)
     {
-        $juri = \JURI::getInstance();
+        $juri = Uri::getInstance();
         $base_path = str_replace($juri->getScheme() . '://' . $juri->getHost() . '/', '', $juri->root());
 
         Framework::getDebugger()->log('Minifying JS');
@@ -355,7 +359,7 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified JS <code>' . (str_replace(JPATH_SITE . '/', '', $jsFile)) . '</code>.');
         }
 
-        $html = Helper::str_lreplace('</body>', '<script src="' . \JURI::root() . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></body>', $html);
+        $html = Helper::str_lreplace('</body>', '<script src="' . Uri::root() . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></body>', $html);
         Framework::getDebugger()->log('Minifying JS');
         return $html;
     }
@@ -504,7 +508,7 @@ class Document
         $assets[] = \json_encode($this->_customtags);
         $assets[] = \json_encode($this->_metas);
         $assets[] = self::$_fontawesome;
-        $assets[] = \JFactory::getDocument()->getHeadData();
+        $assets[] = Factory::getDocument()->getHeadData();
         return md5(serialize($assets));
     }
 
@@ -528,7 +532,7 @@ class Document
 
     public function hasModule($position, $module)
     {
-        return in_array($module, array_column(\JModuleHelper::getModules($position), 'module'));
+        return in_array($module, array_column(ModuleHelper::getModules($position), 'module'));
     }
 
     public function loadModule($content)
@@ -564,9 +568,9 @@ class Document
     private function _modulePosition($position)
     {
         $this->modules[$position] = '';
-        $document = \JFactory::getDocument();
+        $document = Factory::getDocument();
         $renderer = $document->loadRenderer('module');
-        $modules = \JModuleHelper::getModules($position);
+        $modules = ModuleHelper::getModules($position);
         ob_start();
 
         foreach ($modules as $module) {
@@ -581,9 +585,9 @@ class Document
     private function _moduleId($id)
     {
         $this->modules[$id] = '';
-        $document = \JFactory::getDocument();
+        $document = Factory::getDocument();
         $renderer = $document->loadRenderer('module');
-        $modules = \JModuleHelper::getModuleById($id);
+        $modules = ModuleHelper::getModuleById($id);
         ob_start();
 
         if ($modules->id > 0) {
@@ -601,7 +605,7 @@ class Document
             return '';
         }
         $return = '';
-        $modules = \JModuleHelper::getModules($position);
+        $modules = ModuleHelper::getModules($position);
         if (count($modules)) {
             $return .= '<jdoc:include type="modules" name="' . $position . '" style="' . $style . '" />';
         }
@@ -721,7 +725,7 @@ class Document
     public function beutifyURL($url)
     {
         $url = str_replace('?' . Helper::joomlaMediaVersion(), '', $url);
-        $url = str_replace(\JURI::root(), '', $url);
+        $url = str_replace(Uri::root(), '', $url);
         $url = str_replace(JPATH_SITE . '/', '', $url);
         if (substr($url, 0, 1) == '/' && substr($url, 0, 2) != '//') {
             $url = substr($url, 1);
@@ -773,8 +777,8 @@ class Document
 
     protected function _systemUrl($url, $version = true)
     {
-        $root = \JURI::root();
-        $config = \JFactory::getConfig();
+        $root = Uri::root();
+        $config = Factory::getConfig();
         $params = Helper::getPluginParams();
         if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
@@ -1031,7 +1035,7 @@ class Document
         $template = Framework::getTemplate();
 
         $params = $template->getParams();
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $menu = $app->getMenu()->getActive();
 
         $class = [];
@@ -1098,7 +1102,7 @@ class Document
 
     public function isBuilder()
     {
-        $jinput = \JFactory::getApplication()->input;
+        $jinput = Factory::getApplication()->input;
         $option = $jinput->get('option', '');
         $view = $jinput->get('view', '');
         return (($option == "com_sppagebuilder" && $view == "page") || ($option == "com_quix" && $view == "page") || ($option == "com_jdbuilder" && $view == "page"));

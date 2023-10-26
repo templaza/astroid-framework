@@ -10,6 +10,9 @@
 namespace Astroid\Helper;
 
 use Astroid\Helper;
+use \Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Form\Form;
 
 defined('_JEXEC') or die;
 
@@ -17,7 +20,7 @@ class Template
 {
     public static function getAstroidTemplates($full = false)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db
             ->getQuery(true)
             ->select('s.id, s.template, s.title')
@@ -50,7 +53,7 @@ class Template
         }
         $xml = Helper::getXML($template_xml_path);
         $version = (string) $xml->version;
-        $form = new \JForm('template');
+        $form = new Form('template');
         $form->loadFile($template_xml_path, false, '//config');
         $fields = $form->getFieldset('basic');
         $return = false;
@@ -78,7 +81,7 @@ class Template
             } else {
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }
-            $db = \JFactory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $object = new \stdClass();
             $object->id = $id;
             $object->params = \json_encode(["astroid" => $id]);

@@ -7,16 +7,20 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_BASE') or die;
-
-JLoader::register('ModulesHelper', JPATH_ADMINISTRATOR . '/components/com_modules/helpers/modules.php');
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\ListField;
+use Joomla\Component\Modules\Administrator\Helper\ModulesHelper;
+use Joomla\CMS\Language\Text;
+//JLoader::register('ModulesHelper', JPATH_ADMINISTRATOR . '/components/com_modules/helpers/modules.php');
+FormHelper::loadFieldClass('list');
 
 /**
  * Modules Position field.
  *
  * @since  3.4.2
  */
-class JFormFieldAstroidModulesPosition extends JFormFieldList
+class JFormFieldAstroidModulesPosition extends ListField
 {
 
    /**
@@ -37,7 +41,7 @@ class JFormFieldAstroidModulesPosition extends JFormFieldList
     */
    public function getOptions()
    {
-      $clientId = JFactory::getApplication()->input->get('client_id', 0, 'int');
+      $clientId = Factory::getApplication()->input->get('client_id', 0, 'int');
       $options = ModulesHelper::getPositions($clientId);
       $positions = Astroid\Helper::getPositions();
       //$options = array();
@@ -45,7 +49,7 @@ class JFormFieldAstroidModulesPosition extends JFormFieldList
 
       $more_positions = [];
       foreach ($options as $option) {
-         $more_positions[$option->value] = JText::_($option->text);
+         $more_positions[$option->value] = Text::_($option->text);
       }
 
       $positions = array_merge($more_positions, $positions);

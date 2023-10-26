@@ -9,23 +9,23 @@
 
 namespace Astroid\Helper;
 
-use Astroid\Framework;
-use Astroid\Helper;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Form\Form;
 
 defined('_JEXEC') or die;
 
-class Form
+class AstroidForm
 {
     protected $form;
     public function __construct($name)
     {
-        $this->form = new \JForm($name);
+        $this->form = new Form($name);
     }
 
     public function loadOptions($dir = '')
     {
         $forms = array_filter(glob($dir . '/' . '*.xml'), 'is_file');
-        \JForm::addFormPath($dir);
+        Form::addFormPath($dir);
         foreach ($forms as $fname) {
             $fname = pathinfo($fname)['filename'];
             $this->form->loadFile($fname, true);
@@ -62,7 +62,7 @@ class Form
         return $this->form->getFieldset($key);
     }
 
-    public function loadParams(\JRegistry $params)
+    public function loadParams(Registry $params)
     {
         foreach ($params->toArray() as $key => $value) {
             $this->form->setValue($key, 'params', $value);

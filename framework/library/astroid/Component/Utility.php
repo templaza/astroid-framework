@@ -12,7 +12,8 @@ namespace Astroid\Component;
 use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
-use Joomla\CMS\Help\Help;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -20,14 +21,14 @@ class Utility
 {
     public static function meta()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $document = Framework::getDocument();
         $itemid = $app->input->get('Itemid', '', 'INT');
         $menu = $app->getMenu();
         $item = $menu->getItem($itemid);
 
         $template_params = Framework::getTemplate()->getParams();
-        $config = \JFactory::getConfig();
+        $config = Factory::getConfig();
 
         if (empty($item)) {
             return;
@@ -59,11 +60,11 @@ class Utility
         }
         $og_image = '';
         if (!empty($params->get('astroid_og_image_menuitem', ''))) {
-            $og_image = \JURI::root() . $params->get('astroid_og_image_menuitem', '');
+            $og_image = Uri::root() . $params->get('astroid_og_image_menuitem', '');
         }
 
         $og_sitename = $config->get('sitename');
-        $og_siteurl = \JURI::getInstance();
+        $og_siteurl = Uri::getInstance();
 
         $meta = [];
 
@@ -113,7 +114,7 @@ class Utility
         $layout_background_image = $params->get('layout_background_image', '');
         if (!empty($layout_background_image)) {
             $style = new Style('body');
-            $style->addCss('background-image', 'url(' . \JURI::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
+            $style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
             $style->addCss('background-repeat', $params->get('layout_background_repeat', 'inherit'));
             $style->addCss('background-size', $params->get('layout_background_size', 'inherit'));
             $style->addCss('background-position', $params->get('layout_background_position', 'inherit'));
@@ -156,7 +157,7 @@ class Utility
             // Let's add the image styles only if an image is selected.
             if ($params->get('basic_background_image')) {
                 $styles .= '
-                      background-image: url("' . \JURI::root() . Helper\Media::getPath() . '/' . $params->get('basic_background_image') . '");
+                      background-image: url("' . Uri::root() . Helper\Media::getPath() . '/' . $params->get('basic_background_image') . '");
                       background-repeat: ' . $params->get('basic_background_repeat') . ';
                       background-size: ' . $params->get('basic_background_size') . ';
                       background-position: ' . str_replace('_', ' ', $params->get('basic_background_position')) . ';
@@ -509,7 +510,7 @@ class Utility
         $document->addCustomTag($params->get('beforebody', ''), 'body');
 
         // Page level custom code
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $itemid = $app->input->get('Itemid', '', 'INT');
         if (empty($itemid)) return false;
 
@@ -563,7 +564,7 @@ class Utility
 
                     $background_image = $params->get('background_image_404', '');
                     if (!empty($background_image)) {
-                        $bodyStyle->addCss('background-image', 'url(' . \JURI::root() . Helper\Media::getPath() . '/' . $background_image . ')');
+                        $bodyStyle->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $background_image . ')');
                         $bodyStyle->addCss('background-repeat', $params->get('background_repeat_404', ''));
                         $bodyStyle->addCss('background-size', $params->get('background_size_404', ''));
                         $bodyStyle->addCss('background-attachment', $params->get('background_attchment_404', ''));

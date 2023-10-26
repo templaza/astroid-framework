@@ -6,7 +6,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
 /**
  * Form Field class for the Joomla Platform.
  * Provides an input field for files
@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
  * @link   http://www.w3.org/TR/html-markup/input.file.html#input.file
  * @since  11.1
  */
-class JFormFieldFile extends JFormField {
+class JFormFieldFile extends FormField {
 
    /**
     * The form field type.

@@ -10,6 +10,8 @@
  * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/module_position/module_position.php folder to create and override
  * See https://docs.joomdev.com/article/override-core-layouts/ for documentation
  */
+
+use Joomla\CMS\Helper\ModuleHelper;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -19,7 +21,7 @@ if (empty($position)) {
 }
 
 echo Astroid\Framework::getDocument()->_positionContent($position, 'before');
-$modules = \JModuleHelper::getModules($position);
+$modules = ModuleHelper::getModules($position);
 if (count($modules)) {
     echo '<jdoc:include type="modules" name="' . $position . '" style="astroidxhtml" />';
 }

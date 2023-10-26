@@ -11,6 +11,7 @@ namespace Astroid\Component;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -20,7 +21,7 @@ class Includer
     public static function run($content = null)
     {
         if ($content === null) {
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $body = $app->getBody();
         } else {
             $body = $content;

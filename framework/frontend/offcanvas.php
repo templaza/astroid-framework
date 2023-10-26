@@ -10,6 +10,7 @@
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
 // No direct access.
+use Joomla\CMS\Language\Text;
 defined('_JEXEC') or die;
 extract($displayData);
 $params = Astroid\Framework::getTemplate()->getParams();
@@ -39,7 +40,7 @@ $openfrom = $params->get('offcanvas_openfrom', 'left');
       <?php $content = $document->position($module_position, 'astroidxhtml');
 
       if (empty($content)) {
-         echo '<div class="alert alert-danger">' . \JText::_('TPL_OFFCANVAS_EMPTY_ERROR') . '</div>';
+         echo '<div class="alert alert-danger">' . Text::_('TPL_OFFCANVAS_EMPTY_ERROR') . '</div>';
       } else {
          echo $content;
       }

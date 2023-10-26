@@ -19,8 +19,9 @@
       <folder>modules</folder>
    </files>
    <media folder="media" destination="astroid">
-      <folder>assets</folder>
-      <folder>jd</folder>
+      <folder>assets/assets</folder>
+      <folder>assets/css</folder>
+      <folder>assets/js</folder>
    </media>
    <languages folder="language/en-GB">
       <language tag="en-GB">en-GB.astroid.ini</language>

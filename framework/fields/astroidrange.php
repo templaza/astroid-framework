@@ -9,10 +9,10 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
 
 // The class name must always be the same as the filename (in camel case)
-class JFormFieldAstroidRange extends JFormField {
+class JFormFieldAstroidRange extends FormField {
 
 //The field class must know its own type through the variable $type.
    protected $type = 'AstroidRange';

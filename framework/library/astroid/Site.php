@@ -8,6 +8,7 @@
  */
 
 namespace Astroid;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -37,7 +38,7 @@ class Site extends Helper\Client
     {
         $this->checkAuth();
 
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $id = $app->input->post->get('id', 0, 'INT');
         $vote = $app->input->post->get('vote', 0, 'INT');
 
