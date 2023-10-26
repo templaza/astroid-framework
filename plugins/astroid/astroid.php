@@ -9,6 +9,8 @@
 defined('_JEXEC') or die;
 define('COMPILE_SASS', 0);
 
+use Joomla\CMS\Plugin\CMSPlugin;
+
 if (file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
     JLoader::registerNamespace('Astroid', JPATH_LIBRARIES . '/astroid/framework/library/astroid', false, false, 'psr4');
 }
@@ -22,7 +24,7 @@ use Astroid\Helper\Template;
  *
  * @since  1.0
  */
-class plgSystemAstroid extends JPlugin
+class plgSystemAstroid extends CMSPlugin
 {
 
     protected $app;
