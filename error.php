@@ -6,6 +6,7 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die;
 if (!defined('_ASTROID')) {
    try {
@@ -36,7 +37,7 @@ $errorButton = $params->get('error_call_to_action', '');
 $bodyAttrs = [];
 if ($params->get('background_setting_404') == 'video' && !empty($params->get('background_video_404', ''))) {
    $document->addScript('vendor/astroid/js/videobg.js', 'body');
-   $bodyAttrs[] = 'data-jd-video-bg="' . JURI::root() . Astroid\Helper\Media::getPath() . '/' . $params->get('background_video_404', '') . '"';
+   $bodyAttrs[] = 'data-jd-video-bg="' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $params->get('background_video_404', '') . '"';
 }
 
 ?>
@@ -72,7 +73,7 @@ if ($params->get('background_setting_404') == 'video' && !empty($params->get('ba
             <?php
             }
             ?>
-            <a class="btn btn-backtohome" href="<?php echo JURI::root(); ?>" role="button"><?php echo $errorButton; ?></a>
+            <a class="btn btn-backtohome" href="<?php echo Uri::root(); ?>" role="button"><?php echo $errorButton; ?></a>
          </div>
       </div>
       <?php if ($this->debug) : ?>

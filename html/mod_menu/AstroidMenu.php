@@ -5,7 +5,7 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-
+use Joomla\CMS\Helper\ModuleHelper;
 defined('_JEXEC') or die;
 
 $id = '';
@@ -72,11 +72,11 @@ if ($tagId = $params->get('tag_id', ''))
 		case 'component':
 		case 'heading':
 		case 'url':
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_' . $item->type);
+			require ModuleHelper::getLayoutPath('mod_menu', 'default_' . $item->type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+			require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 			break;
 	endswitch;
 

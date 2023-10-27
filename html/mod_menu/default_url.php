@@ -8,6 +8,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Filter\OutputFilter;
 defined('_JEXEC') or die;
 
 $attributes = array();
@@ -32,9 +34,9 @@ $linktype = $item->title;
 if ($item->menu_image) {
 	if ($item->menu_image_css) {
 		$image_attributes['class'] = $item->menu_image_css;
-		$linktype = JHtml::_('image', $item->menu_image, $item->title, $image_attributes);
+		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
 	} else {
-		$linktype = JHtml::_('image', $item->menu_image, $item->title);
+		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
 
 	if ($item->getParams()->get('menu_text', 1)) {
@@ -80,4 +82,4 @@ if (isset($astroid_menu_options['subtitle']) && !empty($astroid_menu_options['su
 }
 // Show icon subtitle End here
 
-echo JHtml::_('link', JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), '<span class="nav-title">' . $iconHtml . $linktype . $badgeHtml . '</span>' . $subtitle, $attributes);
+echo HTMLHelper::_('link', OutputFilter::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)), '<span class="nav-title">' . $iconHtml . $linktype . $badgeHtml . '</span>' . $subtitle, $attributes);
