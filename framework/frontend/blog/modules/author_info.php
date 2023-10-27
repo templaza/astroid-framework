@@ -11,12 +11,15 @@
  */
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Uri\Uri;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
 
 // Get User Details
-$user = Factory::getApplication()->getIdentity()->load($article->created_by);
+$user = Factory::getApplication()->getIdentity();
+$user->load($article->created_by);
+
 $params = new Registry();
 $params->loadString($user->params, 'JSON');
 // Get social profiles
@@ -43,9 +46,9 @@ $hash_email = md5(strtolower(trim($user->email)));
             <div class="author-thumb">
                <?php if ($params->get('astroid_author_picture', 'gravatar') == "upload") { ?>
                   <?php if (!empty($params->get('upload', ''))) { ?>
-                     <img width="100" src="<?php echo JURI::base() . $params->get('upload', ''); ?>" alt="<?php echo $user->name."'s Avatar"; ?>" />
+                     <img width="100" src="<?php echo Uri::base() . $params->get('upload', ''); ?>" alt="<?php echo $user->name."'s Avatar"; ?>" />
                   <?php } else { ?>
-                     <img width="100" src="<?php echo JURI::base(); ?>images/<?php echo $template->template; ?>/user-avatar.png" alt="<?php echo $user->name."'s Avatar"; ?>" />
+                     <img width="100" src="<?php echo Uri::base(); ?>images/<?php echo $template->template; ?>/user-avatar.png" alt="<?php echo $user->name."'s Avatar"; ?>" />
                   <?php } ?>
                <?php } ?>
                <?php if ($params->get('astroid_author_picture', '') == "gravatar") { ?>
