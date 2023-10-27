@@ -30,7 +30,6 @@ class Admin extends Helper\Client
     {
         $this->checkAuth();
         $app = Factory::getApplication();
-
         $params = $app->input->post->get('params', array(), 'RAW');
         $export_settings = $app->input->post->get('export_settings', 0, 'INT');
 
