@@ -9,6 +9,7 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -24,9 +25,9 @@ if (!$status) {
 $type = $params->get('astroid_article_badge_type', 2);
 if ($type != 1) {
 ?>
-    <div class="article-badge article-badge-<?php echo $type; ?>"><?php echo \JText::_('ASTROID_ARTICLE_OPTIONS_BADGE_' . $type . '_LBL'); ?></div>
+    <div class="article-badge article-badge-<?php echo $type; ?>"><?php echo \Text::_('ASTROID_ARTICLE_OPTIONS_BADGE_' . $type . '_LBL'); ?></div>
 <?php } else { ?>
-    <div class="article-badge article-badge-1 article-badge-custom-<?php echo $article->id; ?>"><?php echo \JText::_($params->get('astroid_article_badge_text', '')); ?></div>
+    <div class="article-badge article-badge-1 article-badge-custom-<?php echo $article->id; ?>"><?php echo \Text::_($params->get('astroid_article_badge_text', '')); ?></div>
 <?php
     $color = $params->get('astroid_article_badge_text_color', '#fff');
     $bg = $params->get('astroid_article_badge_color', '#000');

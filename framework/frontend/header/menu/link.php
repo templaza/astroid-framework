@@ -6,6 +6,7 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+use Joomla\CMS\Uri\Uri;
 // No direct access.
 defined('_JEXEC') or die;
 
@@ -103,8 +104,8 @@ if ($item->type == 'url') {
    $validonepagelink = strpos($item->link, "#");
    if ($validonepagelink === 0 && (strlen($item->link) > 1)) {
       // Default we assume that you only want the one page for the homepage. If you want one page to work on other pages, please go ahead and hard code the full page URL i.e. https://yoursite.com/pageurl#onepageblockid
-      // $item->link = JURI::root().$item->link;
-      $item->link = JUri::getInstance() . $item->link;
+      // $item->link = Uri::root().$item->link;
+      $item->link = Uri::getInstance() . $item->link;
    }
 }
 ?>
@@ -115,7 +116,7 @@ if ($item->type == 'url') {
       <?php } ?>
       <?php if (!$options->icononly) { ?>
          <?php if (!empty($item->menu_image)) { ?>
-            <img src="<?php echo JURI::root() . $item->menu_image; ?>" alt="<?php echo $item->title; ?>" <?php echo !empty($item->menu_image_css) ? "class='$item->menu_image_css'" : "";?> />
+            <img src="<?php echo Uri::root() . $item->menu_image; ?>" alt="<?php echo $item->title; ?>" <?php echo !empty($item->menu_image_css) ? "class='$item->menu_image_css'" : "";?> />
          <?php } ?>
          <?php if (!empty($item->menu_image) && $item->getParams()->get('menu_text', 1)) { ?>
             <?php echo $item->title; ?>

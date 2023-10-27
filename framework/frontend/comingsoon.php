@@ -9,10 +9,14 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Astroid\Helper\Style;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-use Astroid\Helper\Style;
+
 $document = Astroid\Framework::getDocument();
 $params = Astroid\Framework::getTemplate()->getParams();
 
@@ -20,7 +24,7 @@ $document->addScript('vendor/astroid/js/countdown.min.js', 'body');
 $document->addScript('vendor/moment/moment.min.js');
 $document->addScript('vendor/moment/moment-timezone.min.js');
 $document->addScript('vendor/moment/moment-timezone-with-data-2012-2022.min.js');
-$app = JFactory::getApplication();
+$app = Factory::getApplication();
 // Background Image
 
 $background_setting = $params->get('background_setting');
@@ -43,7 +47,7 @@ if ($background_setting) {
 
       $background_image = $params->get('background_image', '');
       if (!empty($background_image)) {
-          $comming_soon_style->addCss('background-image', 'url(' . JURI::root() . Astroid\Helper\Media::getPath() . '/' . $background_image . ')');
+          $comming_soon_style->addCss('background-image', 'url(' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_image . ')');
           $background_repeat = $params->get('background_repeat', '');
           $background_repeat = empty($background_repeat) ? 'inherit' : $background_repeat;
           $comming_soon_style->addCss('background_repeat', $background_repeat);
@@ -73,7 +77,7 @@ if ($background_setting) {
       $attributes = [];
       $background_video = $params->get('background_video', '');
       if (!empty($background_video)) {
-         $attributes['data-jd-video-bg'] = JURI::root() . Astroid\Helper\Media::getPath() . '/' . $background_video;
+         $attributes['data-jd-video-bg'] = Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video;
          $document->addScript('vendor/astroid/js/videobg.js', 'body');
       }
 
@@ -88,12 +92,12 @@ if ($background_setting) {
 $comingsoon_logo = "";
 $hascs_logo = 0;
 if ($cs_logo = $params->get('coming_soon_logo')) {
-   $comingsoon_logo = JURI::root() . Astroid\Helper\Media::getPath() . '/' . $cs_logo;
+   $comingsoon_logo = Uri::root() . Astroid\Helper\Media::getPath() . '/' . $cs_logo;
    $hascs_logo = 1;
 }
 $comingsoon_date = $params->get("coming_soon_countdown_date");
 if(isset($comingsoon_date)){
-   $date = new DateTime($comingsoon_date, new DateTimeZone(JFactory::getConfig()->get('offset')));
+   $date = new DateTime($comingsoon_date, new DateTimeZone($app->getConfig()->get('offset')));
    $comingsoon_date = $date->format('Y/m/d H:i:s');
 }
 $comming_soon_style->render();
@@ -120,19 +124,19 @@ $comming_soon_style_dark->render();
                <div id="astroid-countdown" class="comingsoon-date text-center">
                   <div class="days mx-4">
                      <span class="count">-</span>
-                     <span class="label"><?php echo JText::_('ASTROID_DAYS'); ?></span>
+                     <span class="label"><?php echo Text::_('ASTROID_DAYS'); ?></span>
                   </div>
                   <div class="hours mx-4">
                      <span class="count">-</span>
-                     <span class="label"><?php echo JText::_('ASTROID_HOURS'); ?></span>
+                     <span class="label"><?php echo Text::_('ASTROID_HOURS'); ?></span>
                   </div>
                   <div class="minutes mx-4">
                      <span class="count">-</span>
-                     <span class="label"><?php echo JText::_('ASTROID_MINUTES'); ?></span>
+                     <span class="label"><?php echo Text::_('ASTROID_MINUTES'); ?></span>
                   </div>
                   <div class="seconds mx-4">
                      <span class="count">-</span>
-                     <span class="label"><?php echo JText::_('ASTROID_SECONDS'); ?></span>
+                     <span class="label"><?php echo Text::_('ASTROID_SECONDS'); ?></span>
                   </div>
                </div>
             <?php } ?>
@@ -151,8 +155,8 @@ $comming_soon_style_dark->render();
 <?php if (!empty($comingsoon_date)) {
    $document->addScriptDeclaration("(function($) {
    $(function() {
-      moment.tz.setDefault('" . JFactory::getConfig()->get('offset') . "');
-      var _timer = moment('" . $comingsoon_date . "', 'YYYY/MM/DD HH:mm:ss').tz('" . JFactory::getConfig()->get('offset') . "');
+      moment.tz.setDefault('" . $app->getConfig()->get('offset') . "');
+      var _timer = moment('" . $comingsoon_date . "', 'YYYY/MM/DD HH:mm:ss').tz('" . $app->getConfig()->get('offset') . "');
       var _timezone = moment.tz.guess();
       var _countdown = _timer.clone().tz(_timezone).format('YYYY/MM/DD HH:mm:ss');
       $('#astroid-countdown').countdown(_countdown).on('update.countdown', function(event) {

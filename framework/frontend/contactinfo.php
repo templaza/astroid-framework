@@ -9,6 +9,7 @@
  * You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -32,7 +33,7 @@ $contact_display = $params->get('contact_display', 'icons');
             <i class="fas fa-map-marker-alt"></i>
          <?php endif; ?>
          <?php if ($contact_display == "text") : ?>
-            <?php echo JText::_('TPL_ASTROID_ADDRESS_LABEL'); ?>:
+            <?php echo Text::_('TPL_ASTROID_ADDRESS_LABEL'); ?>:
          <?php endif; ?>
          <?php echo $address; ?>
       </span>
@@ -44,7 +45,7 @@ $contact_display = $params->get('contact_display', 'icons');
             <i class="fas fa-phone-alt"></i>
          <?php endif; ?>
          <?php if ($contact_display == "text") : ?>
-            <?php echo JText::_('TPL_ASTROID_PHONE_LABEL'); ?>:
+            <?php echo Text::_('TPL_ASTROID_PHONE_LABEL'); ?>:
          <?php endif; ?>
          <a href="tel:<?php echo str_replace(' ', '', $phone); ?>"><?php echo $phone; ?></a>
       </span>
@@ -56,7 +57,7 @@ $contact_display = $params->get('contact_display', 'icons');
             <i class="fas fa-mobile-alt"></i>
          <?php endif; ?>
          <?php if ($contact_display == "text") : ?>
-            <?php echo JText::_('TPL_ASTROID_MOBILE_LABEL'); ?>:
+            <?php echo Text::_('TPL_ASTROID_MOBILE_LABEL'); ?>:
          <?php endif; ?>
          <a href="tel:<?php echo $mobile; ?>"><?php echo $mobile; ?></a>
       </span>
@@ -68,7 +69,7 @@ $contact_display = $params->get('contact_display', 'icons');
             <i class="far fa-envelope"></i>
          <?php endif; ?>
          <?php if ($contact_display == "text") : ?>
-            <?php echo JText::_('JGLOBAL_EMAIL'); ?>:
+            <?php echo Text::_('JGLOBAL_EMAIL'); ?>:
          <?php endif; ?>
          <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
       </span>
@@ -80,7 +81,7 @@ $contact_display = $params->get('contact_display', 'icons');
             <i class="far fa-clock"></i>
          <?php endif; ?>
          <?php if ($contact_display == "text") : ?>:
-         <?php echo JText::_('TPL_ASTROID_OPENHOURS_LABEL'); ?>
+         <?php echo Text::_('TPL_ASTROID_OPENHOURS_LABEL'); ?>
       <?php endif; ?>
       <?php echo $openhours; ?>
       </span>

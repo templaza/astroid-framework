@@ -9,6 +9,7 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 jimport('astroid.framework.article');
@@ -19,7 +20,7 @@ if (empty($items)) {
 }
 ?>
 <div class="relatedposts-wrap">
-   <h4><?php echo JText::_('ASTROID_ARTICLE_RELATED_LBL'); ?></h4>
+   <h4><?php echo Text::_('ASTROID_ARTICLE_RELATED_LBL'); ?></h4>
    <div class="relateditems row">
       <?php foreach ($items as $item) : $images = json_decode($item->images);
          $astroidArticle = new AstroidFrameworkArticle($item, true);

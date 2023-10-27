@@ -9,13 +9,15 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
 
 // Get User Details
-$user = JFactory::getUser($article->created_by);
-$params = new JRegistry();
+$user = Factory::getApplication()->getIdentity()->load($article->created_by);
+$params = new Registry();
 $params->loadString($user->params, 'JSON');
 // Get social profiles
 $socials = $params->get('astroid_author_social', '[]');

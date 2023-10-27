@@ -9,6 +9,8 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -53,7 +55,7 @@ $hasItems = false;
          ?>
          <div class="carousel-item<?php echo $active ? ' active' : ''; ?>">
             <?php if (!empty($item['image'])) { ?>
-               <img class="d-block w-100" src="<?php echo JURI::root() . $item['image']; ?>" alt="<?php echo empty($item['title']) ? '' : $item['title']; ?>">
+               <img class="d-block w-100" src="<?php echo Uri::root() . $item['image']; ?>" alt="<?php echo empty($item['title']) ? '' : $item['title']; ?>">
             <?php } ?>
             <?php if (!empty($item['title']) || !empty($item['description'])) { ?>
                <div class="carousel-caption d-none d-md-block">
@@ -74,11 +76,11 @@ $hasItems = false;
    <?php if ($hasItems && !empty($params->get('astroid_article_gallery_navigation', 1))) { ?>
       <a class="carousel-control-prev" href="#article-gallery" role="button" data-bs-slide="prev">
          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-         <span class="sr-only"><?php echo JText::_('JPREVIOUS'); ?></span>
+         <span class="sr-only"><?php echo Text::_('JPREVIOUS'); ?></span>
       </a>
       <a class="carousel-control-next" href="#article-gallery" role="button" data-bs-slide="next">
          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         <span class="sr-only"><?php echo JText::_('JNEXT'); ?></span>
+         <span class="sr-only"><?php echo Text::_('JNEXT'); ?></span>
       </a>
    <?php } ?>
 </div>

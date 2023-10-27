@@ -9,6 +9,7 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -47,8 +48,8 @@ if ($article_comments == 'facebook') {
       </script>
    <?php } else { ?>
       <div class="alert alert-danger mt-4" role="alert">
-         <h4 class="alert-heading"><?php echo JText::_('ASTROID_FACEBOOK_COMMENT_ERROR_LBL'); ?></h4>
-         <p><?php echo JText::_('ASTROID_FACEBOOK_COMMENT_ERROR_DESC'); ?></h4>
+         <h4 class="alert-heading"><?php echo Text::_('ASTROID_FACEBOOK_COMMENT_ERROR_LBL'); ?></h4>
+         <p><?php echo Text::_('ASTROID_FACEBOOK_COMMENT_ERROR_DESC'); ?></p>
       </div>
    <?php } ?>
    <!--- Facebook Comment Section End --->
@@ -76,8 +77,8 @@ if ($article_comments == 'disqus') {
       </script>
    <?php } else { ?>
       <div class="alert alert-danger mt-4" role="alert">
-         <h4 class="alert-heading"><?php echo JText::_('ASTROID_DISQUS_COMMENT_ERROR_LBL'); ?></h4>
-         <p><?php echo JText::_('ASTROID_DISQUS_COMMENT_ERROR_DESC'); ?></h4>
+         <h4 class="alert-heading"><?php echo Text::_('ASTROID_DISQUS_COMMENT_ERROR_LBL'); ?></h4>
+         <p><?php echo Text::_('ASTROID_DISQUS_COMMENT_ERROR_DESC'); ?></p>
       </div>
    <?php } ?>
    <!--- Disqus Comment Section End --->
@@ -115,8 +116,8 @@ if ($article_comments == 'hyper') {
       </div>
    <?php } else { ?>
       <div class="alert alert-danger mt-4" role="alert">
-         <h4 class="alert-heading"><?php echo JText::_('ASTROID_HYPER_COMMENT_ERROR_LBL'); ?></h4>
-         <p><?php echo JText::_('ASTROID_HYPER_COMMENT_ERROR_DESC'); ?></h4>
+         <h4 class="alert-heading"><?php echo Text::_('ASTROID_HYPER_COMMENT_ERROR_LBL'); ?></h4>
+         <p><?php echo Text::_('ASTROID_HYPER_COMMENT_ERROR_DESC'); ?></p>
       </div>
    <?php } ?>
    <!--- Hyper Comment Section End --->
@@ -141,8 +142,8 @@ if ($article_comments == 'intense') {
       </div>
    <?php } else { ?>
       <div class="alert alert-danger mt-4" role="alert">
-         <h4 class="alert-heading"><?php echo JText::_('ASTROID_INTENSE_COMMENT_ERROR_LBL'); ?></h4>
-         <p><?php echo JText::_('ASTROID_INTENSE_COMMENT_ERROR_DESC'); ?></h4>
+         <h4 class="alert-heading"><?php echo Text::_('ASTROID_INTENSE_COMMENT_ERROR_LBL'); ?></h4>
+         <p><?php echo Text::_('ASTROID_INTENSE_COMMENT_ERROR_DESC'); ?></p>
       </div>
    <?php } ?>
    <!--- Intense Comment Section End --->
