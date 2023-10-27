@@ -9,6 +9,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Astroid\Helper\Overrides;
+use Joomla\Database\DatabaseInterface;
 
 // no direct access
 defined('_JEXEC') or die;
@@ -72,7 +73,7 @@ if (!class_exists('astroidInstallerScript')) {
 
         public function installPlugin($plugin, $plugin_dir)
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $plugin_name = str_replace($plugin_dir, '', $plugin);
 
             $installer = new Installer;
@@ -90,7 +91,7 @@ if (!class_exists('astroidInstallerScript')) {
 
         public function installModule($module, $module_dir)
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $module_name = str_replace($module_dir, '', $module);
 
             $installer = new Installer;
@@ -138,7 +139,7 @@ if (!class_exists('astroidInstallerScript')) {
 
         public function uninstallPlugin($plugin, $plugin_dir)
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $plugin_name = str_replace($plugin_dir, '', $plugin);
             $query = $db->getQuery(true);
             $query->update('#__extensions');
@@ -152,7 +153,7 @@ if (!class_exists('astroidInstallerScript')) {
 
         public function uninstallModule($module, $module_dir)
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $module_name = str_replace($module_dir, '', $module);
             $query = $db->getQuery(true);
             $query->update('#__extensions');
