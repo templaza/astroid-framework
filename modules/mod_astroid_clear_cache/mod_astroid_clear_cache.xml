@@ -2,17 +2,16 @@
 <extension type="module" client="administrator" method="upgrade">
 	<name>Astroid Clear Cache</name>
 	<author>TemPlaza</author>
-	<creationDate>February 2022</creationDate>
+	<creationDate>October 2023</creationDate>
 	<copyright>(C) 2022 TemPlaza.com.</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>support@templaza.com</authorEmail>
 	<authorUrl>www.templaza.com</authorUrl>
-	<version>1.0.1</version>
+	<version>3.0.3</version>
 	<description>Astroid Clear Cache Module</description>
 	<files>
 		<filename module="mod_astroid_clear_cache">mod_astroid_clear_cache.php</filename>
 		<folder>tmpl</folder>
-		<folder>js</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/mod_astroid_clear_cache.ini</language>
