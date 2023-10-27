@@ -11,6 +11,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
@@ -585,7 +586,7 @@ class Article
 
     public static function getArticleRating($id)
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = "SELECT * FROM `#__content_rating` WHERE `content_id`='$id'";
         $db->setQuery($query);
         $result = $db->loadObject();
@@ -600,7 +601,7 @@ class Article
     {
         $params = new Registry();
         if (Factory::getApplication()->input->get('view', '') == 'article' && !empty($this->article->catid)) {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = "SELECT `params` FROM `#__categories` WHERE `id`=" . $this->article->catid;
             $db->setQuery($query);
             $result = $db->loadObject();
