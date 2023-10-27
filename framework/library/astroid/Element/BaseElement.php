@@ -20,6 +20,7 @@ use Astroid\Helper;
 use Astroid\Helper\Media;
 use Astroid\Helper\Style;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -147,7 +148,7 @@ class BaseElement
                 $this->style_dark->addCss('background-color', $background_color['dark']);
                 $image = $this->params->get('background_image', '');
                 if (!empty($image)) {
-                    $this->style->addCss('background-image', 'url(' . \JURI::root() . Media::getPath() . '/' . $image . ')');
+                    $this->style->addCss('background-image', 'url(' . Uri::root() . Media::getPath() . '/' . $image . ')');
                     $this->style->addCss('background-repeat', $this->params->get('background_repeat', ''));
                     $this->style->addCss('background-size', $this->params->get('background_size', ''));
                     $this->style->addCss('background-attachment', $this->params->get('background_attchment', ''));
@@ -187,7 +188,7 @@ class BaseElement
                                         $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
                                         $overlay_style_dark->render();
                                     }
-                                    $overlay_style->addCss('background-image', 'url(' . \JURI::root() . Media::getPath() . '/' . $background_image_overlay_pattern . ')');
+                                    $overlay_style->addCss('background-image', 'url(' . Uri::root() . Media::getPath() . '/' . $background_image_overlay_pattern . ')');
                                     $overlay_style->render();
                                 }
                                 break;
@@ -198,7 +199,7 @@ class BaseElement
             case 'video': // if video background
                 $video = $this->params->get('background_video', '');
                 if (!empty($video)) {
-                    $this->addAttribute('data-jd-video-bg', \JURI::root() . Media::getPath() . '/' . $video);
+                    $this->addAttribute('data-jd-video-bg', Uri::root() . Media::getPath() . '/' . $video);
                     Framework::getDocument()->addScript('vendor/astroid/js/videobg.js', 'body');
                 }
                 break;
