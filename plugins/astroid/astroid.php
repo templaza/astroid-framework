@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 define('COMPILE_SASS', 0);
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
 
 if (file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
     JLoader::registerNamespace('Astroid', JPATH_LIBRARIES . '/astroid/framework/library/astroid', false, false, 'psr4');
@@ -76,7 +77,7 @@ class plgSystemAstroid extends CMSPlugin
             return;
         }
 
-        $cache = \JPluginHelper::getPlugin('system', 'cache');
+        $cache = PluginHelper::getPlugin('system', 'cache');
         if (Framework::isSite() && !empty($cache)) {
             return;
         }
