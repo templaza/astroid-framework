@@ -74,12 +74,12 @@ class plgSystemAstroid extends CMSPlugin
             return false;
         }
         if (!(Helper::getPluginParams()->get('astroid_debug', 0)) || Framework::isAdmin()) {
-            return;
+            return false;
         }
 
         $cache = PluginHelper::getPlugin('system', 'cache');
         if (Framework::isSite() && !empty($cache)) {
-            return;
+            return false;
         }
 
         // Capture output.
