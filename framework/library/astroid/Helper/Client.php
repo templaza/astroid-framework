@@ -155,8 +155,9 @@ class Client
 
     protected function checkAndRedirect()
     {
-        if (!Factory::getUser()->id) {
-            $uri = ASTROID_JOOMLA_VERSION > 3 ? Uri::getInstance() : Factory::getURI();
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->id) {
+            $uri = Uri::getInstance();
             $return = $uri->toString();
             Factory::getApplication()->redirect(Route::_('index.php?ast=' . urlencode(base64_encode($return))));
         }

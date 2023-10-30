@@ -33,31 +33,6 @@ class Overrides
             $path = JPATH_ROOT . '/templates/' . $template . '/html/';
             $path_template  =   JPATH_ROOT . '/templates/' . $template;
             $path_template_media    =   JPATH_ROOT . '/media/templates/site/' . $template;
-            foreach (self::$rename as $file) {
-                if (is_dir($path . $file)) {
-                    Folder::move($path . $file, $path . (str_replace(basename($file), basename($file) . '-' . date('Y-m-d'), $file)));
-                } else if (file_exists($path . $file)) {
-                    File::move($path . $file, $path . (str_replace(basename($file), basename($file, '.php') . '-' . date('Y-m-d') . '.php', $file)));
-                }
-            }
-
-            if (ASTROID_JOOMLA_VERSION == 4) {
-                if (is_dir($path . 'com_config')) {
-                    Folder::move($path . 'com_config', $path . (str_replace(basename('com_config'), basename('com_config') . '-' . date('Y-m-d'), 'com_config')));
-                }
-                if (is_dir($path . 'layouts/joomla/editors')) {
-                    Folder::delete($path . 'layouts/joomla/editors');
-                }
-                //Fix module issue from Joomla 4.2
-                if (file_exists(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php') && file_exists($path.'mod_login/default.php')) {
-                    File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/modules/mod_login/default.php', $path.'mod_login/default.php');
-                }
-            }
-
-            //Fix alert issue.
-            if (file_exists(JPATH_LIBRARIES.'/astroid/framework/layouts/system/message.php') && file_exists($path.'layouts/joomla/system/message.php')) {
-                File::copy(JPATH_LIBRARIES.'/astroid/framework/layouts/system/message.php', $path.'layouts/joomla/system/message.php');
-            }
 
             //Since Version 2.6.0
             if (file_exists($path_template . '/astroid')) {

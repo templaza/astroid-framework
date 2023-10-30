@@ -309,8 +309,9 @@ class Font
                 $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             case 'local':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
-                $document->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $root = Uri::root(true).'/';
+                $document->addStyleSheet($root.'media/system/css/joomla-fontawesome.min.css');
+                $document->addStyleSheet($root."media/astroid/assets/vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
                 break;
             default:
                 if (Framework::isAdmin()) {

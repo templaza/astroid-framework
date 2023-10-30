@@ -34,21 +34,12 @@ class JFormFieldJDRating extends FormField
             . '}'
             . ($clear ? ', clearable: true' : '')
             . '});';
-        if (ASTROID_JOOMLA_VERSION == 4) {
-            $script .= '$(document).on("subform-row-add", function(event){'
-                . '$(event.detail.row).find(".ui.rating").rating({'
-                . 'onRate:function(value){'
-                . '$(this).siblings("input[type=hidden]").val(value);'
-                . '}'
-                . '});';
-        } else {
-            $script .= '$(document).on("subform-row-add", function(event, row){'
-                . '$(row).find(".ui.rating").rating({'
-                . 'onRate:function(value){'
-                . '$(this).siblings("input[type=hidden]").val(value);'
-                . '}'
-                . '});';
-        }
+        $script .= '$(document).on("subform-row-add", function(event){'
+            . '$(event.detail.row).find(".ui.rating").rating({'
+            . 'onRate:function(value){'
+            . '$(this).siblings("input[type=hidden]").val(value);'
+            . '}'
+            . '});';
         $script .= '});'
             . '$(".btn-rating-clear").click(function(){'
             . '$(this).siblings(".ui.rating").rating("clear rating");'

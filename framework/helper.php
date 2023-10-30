@@ -17,7 +17,7 @@ use ScssPhp\ScssPhp\Compiler;
 
 \JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_cache/models', 'CacheModel');
 
-class AstroidFrameworkHelper
+class AstroidFrameworkHelper extends Astroid\Helper
 {
 
    public static function getAstroidElements()

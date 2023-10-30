@@ -38,6 +38,8 @@ class Document
     protected $type = null;
     protected $modules = null;
 
+    protected $scriptOptions = [];
+
     public function __construct()
     {
         $params = Framework::getTemplate()->getParams();
@@ -222,6 +224,7 @@ class Document
         $stylesheets = [];
         $stylesheetLinks = [];
         $stylesheetsUrls = [];
+
         $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
                 if (strpos($matches[2], 'fonts.googleapis.com') > 0 || strpos($matches[2], 'use.fontawesome.com') > 0) {
@@ -273,7 +276,7 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified CSS <code>' . (str_replace(JPATH_SITE . '/', '', $cssFile)) . '</code> from cache.');
         }
 
-        $html = str_replace('</head>', '<link rel="stylesheet" href="' . Uri::root() . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
+        $html = str_replace('</head>', '<link rel="stylesheet" href="' . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
         Framework::getDebugger()->log('Minifying CSS');
         return $html;
     }
@@ -359,7 +362,7 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified JS <code>' . (str_replace(JPATH_SITE . '/', '', $jsFile)) . '</code>.');
         }
 
-        $html = Helper::str_lreplace('</body>', '<script src="' . Uri::root() . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></body>', $html);
+        $html = Helper::str_lreplace('</head>', '<script src="' . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></head>', $html);
         Framework::getDebugger()->log('Minifying JS');
         return $html;
     }
@@ -775,10 +778,38 @@ class Document
         return $content;
     }
 
+    public function addScriptOptions($key, $options, $merge = true)
+    {
+        if (empty($this->scriptOptions[$key])) {
+            $this->scriptOptions[$key] = [];
+        }
+
+        if ($merge && \is_array($options)) {
+            $this->scriptOptions[$key] = array_replace_recursive($this->scriptOptions[$key], $options);
+        } else {
+            $this->scriptOptions[$key] = $options;
+        }
+
+        return $this;
+    }
+
+    public function getScriptOptions($key = null)
+    {
+        if ($key) {
+            return (empty($this->scriptOptions[$key])) ? [] : $this->scriptOptions[$key];
+        }
+
+        return $this->scriptOptions;
+    }
+
     protected function _systemUrl($url, $version = true)
     {
-        $root = Uri::root();
-        $config = Factory::getConfig();
+        if (Framework::isAdmin()) {
+            $root = Uri::root();
+        } else {
+            $root = '';
+        }
+        $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();
         if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
@@ -796,7 +827,7 @@ class Document
         } else {
             $postfix = '';
         }
-        return $url . $postfix;
+        return $url ;
     }
 
     public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript')
@@ -1191,40 +1222,43 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
-            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css');
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'compiled-' . $scssVersion . '.css');
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
-            $this->addStyleSheet('vendor/astroid/css/debug.css');
+            $wa->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
         }
+    }
+    public function astroidCustomCSS() {
+        // css on page
+        $getPluginParams = Helper::getPluginParams();
+        $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
 
-        if (Framework::isSite()) {
-            $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-            if (!$astroid_inline_css) {
-                $css = $this->renderCss();
-                // page css
-                $pageCSSHash = md5($css);
-                $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
-                if (!file_exists($pageCSS)) {
-                    Helper::putContents($pageCSS, $css);
-                }
-                $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
+        if (Framework::isSite() && !$astroid_inline_css) {
+            $css = $this->renderCss();
+            // page css
+            $pageCSSHash = md5($css);
+            $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+            if (!file_exists($pageCSS)) {
+                Helper::putContents($pageCSS, $css);
             }
+            $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             // custom css
             if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
                 $this->addStyleSheet('css/custom.css');
             }
         }
     }
+
     public function astroidInlineCSS() {
         // css on page
         $getPluginParams = Helper::getPluginParams();
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-        if (!Framework::isSite() || $astroid_inline_css) {
+        if (Framework::isSite() && $astroid_inline_css) {
             $css = $this->renderCss();
-            return '<style>' . $css . '</style>';
-//            $minifier = new Minify\CSS($css);
-//            return '<style>' . $minifier->minify() . '</style>';
+            return '<style>'.$css.'</style>';
         }
+        return '';
     }
 }

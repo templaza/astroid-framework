@@ -9,12 +9,14 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
+use Joomla\CMS\Factory;
 // No direct access.
 use Joomla\CMS\Language\Text;
 defined('_JEXEC') or die;
 extract($displayData);
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 $header = $params->get('header', TRUE);
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
@@ -23,10 +25,12 @@ if (!$header || !$enable_offcanvas) {
 }
 
 $module_position = 'offcanvas';
-$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
+$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+//$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
 $hasMenu = $document->hasModule($module_position, 'mod_menu');
 if ($hasMenu) {
-   $document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
+    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+//   $document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
 }
 
 $togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');

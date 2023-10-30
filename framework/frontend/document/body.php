@@ -10,13 +10,17 @@
  */
 
 // No direct access.
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die;
 extract($displayData);
 Astroid\Framework::getDebugger()->log('Render Body');
 
 $document = Astroid\Framework::getDocument();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 Astroid\Helper\Head::meta(); // site meta
+Astroid\Helper\Head::styles(); // site Styles
 Astroid\Helper\Head::scripts(); // site scripts
 Astroid\Helper\Head::favicon(); // site favicon
 
@@ -39,7 +43,7 @@ if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
     $astroid_content_class[] = 'sidebar-dir-' . $params->get('header_sidebar_menu_mode', 'left');
 }
 if ($header && !empty($header_mode) && $header_mode != 'sidebar') {
-    $document->addScript('vendor/jquery/jquery.easing.min.js', 'body');
+    $wa->registerAndUseScript('astroid.jquery.easing', 'astroid/jquery.easing.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 }
 ?>
 <!-- astroid container -->

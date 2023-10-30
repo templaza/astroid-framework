@@ -20,7 +20,6 @@ for ($pidx = 0; $pidx < count($presets); $pidx++) {
     $preset_arr[]   =   $presets[$pidx]['preset'];
 }
 $color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
-$doc = Factory::getDocument();
 $color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astroid_colormode'] ? $_COOKIE['astroid_colormode'] : 'light');
 ?>
 <!DOCTYPE html>
@@ -31,7 +30,7 @@ $color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astro
     <title><?php echo $template->title; ?></title>
     <link href="<?php echo ASTROID_MEDIA_URL . 'images/favicon.png'; ?>" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type="application/json" id="astroid-script-options"><?php echo json_encode($doc->getScriptOptions()) ?></script>
+    <script type="application/json" id="astroid-script-options"><?php echo json_encode($document->getScriptOptions()) ?></script>
     <astroid:include type="head-styles" /> <!-- head styles -->
     <astroid:include type="head-scripts" /> <!-- head scripts -->
 </head>

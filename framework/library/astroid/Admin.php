@@ -127,7 +127,6 @@ class Admin extends Helper\Client
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
 
-        $doc = Factory::getDocument();
         $config = [
             'site_url'              =>  Uri::root(),
             'base_url'              =>  Uri::base(true),
@@ -144,14 +143,14 @@ class Admin extends Helper\Client
             'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
         ];
-        $doc->addScriptOptions('astroid_lib', $config);
+        $document->addScriptOptions('astroid_lib', $config);
 
         // Get Language
         $lang = array();
         foreach (Helper\Constants::$translationStrings as $string) {
             $lang[strtoupper($string)] = Factory::getApplication()->getLanguage()->_($string);
         }
-        $doc->addScriptOptions('astroid_lang', $lang);
+        $document->addScriptOptions('astroid_lang', $lang);
 
         // Prepare content
         $form_content = array();
@@ -242,13 +241,12 @@ class Admin extends Helper\Client
             $fieldset->label    = Text::_($fieldset->label);
             $fieldset->childs   = $groups;
             $form_content[] = $fieldset;
-
-            $presets    =   Helper::getPresets();
         }
-        $doc->addScriptOptions('astroid_content', $form_content);
+        $document->addScriptOptions('astroid_content', $form_content);
 
         // styles
         $stylesheets = ['vendor/manager/dist/index.css'];
+        $document->loadFontAwesome();
         $document->addStyleSheet($stylesheets);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);

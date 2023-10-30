@@ -15,11 +15,6 @@ use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
-if (ASTROID_JOOMLA_VERSION == 3) {
-    JLoader::register('ModRelatedItemsHelper', JPATH_ROOT . '/modules/mod_related_items/helper.php');
-    \JLoader::registerAlias('RelatedItemsHelper', 'ModRelatedItemsHelper');
-}
-
 class Article
 {
 
@@ -47,6 +42,8 @@ class Article
         $this->template = Framework::getTemplate();
 
         $mainframe = Factory::getApplication();
+        $wa = $mainframe->getDocument()->getWebAssetManager();
+        $wa->useScript('bootstrap.carousel');
         $this->params = new Registry();
         $itemId = $mainframe->input->get('Itemid', 0, 'INT');
         if ($itemId) {
@@ -265,11 +262,7 @@ class Article
             $params = new Registry();
             $params->loadArray(['maximum' => $count]);
 
-            if (ASTROID_JOOMLA_VERSION >= 4) {
-                $items = Factory::getApplication()->bootModule('mod_related_items', 'site')->getHelper('RelatedItemsHelper')->getRelatedArticles($params, Factory::getApplication());
-            } else {
-                $items = RelatedItemsHelper::getList($params);
-            }
+            $items = Factory::getApplication()->bootModule('mod_related_items', 'site')->getHelper('RelatedItemsHelper')->getRelatedArticles($params, Factory::getApplication());
 
             Framework::getDocument()->include('blog.modules.related', ['items' => $items, 'display_posttypeicon' => $this->showRelatedPostTypeIcon(), 'display_badge' => $this->showRelatedArticleBadge()]);
         }
