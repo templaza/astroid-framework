@@ -335,7 +335,7 @@
    $(window).on('resize', winResize);
    $(window).on('scroll', winScroll);
    window.addEventListener("orientationchange", winResize);
-})($ast);
+})(jQuery);
 
 /* 
  * Add missing Mootools when Bootstrap is loaded
@@ -361,4 +361,4 @@
          });
       }
    });
-})($ast);
+})(jQuery);

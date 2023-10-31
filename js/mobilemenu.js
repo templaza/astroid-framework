@@ -54,4 +54,4 @@
       });
       return this;
    };
-}($ast));
+}(jQuery));

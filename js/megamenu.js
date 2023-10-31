@@ -282,4 +282,4 @@
    $(function () {
       $('[data-megamenu]').JDMegaMenu();
    });
-})($ast);
+})(jQuery);

@@ -79,4 +79,4 @@
    $(function () {
       $('[data-offcanvas]').offCanvas();
    });
-}($ast));
+}(jQuery));
