@@ -1223,7 +1223,7 @@ class Document
             }
             // adding compiled scss
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'compiled-' . $scssVersion . '.css');
+            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
