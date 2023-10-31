@@ -8,10 +8,12 @@
  */
 namespace Astroid;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 defined('_JEXEC') or die;
 
@@ -63,7 +65,6 @@ class Article
     {
         $app = Factory::getApplication();
         $itemid = $app->input->get('Itemid', '', 'INT');
-
         $menu = $app->getMenu();
         $item = $menu->getItem($itemid);
 
@@ -88,7 +89,8 @@ class Article
         if (empty($enabled)) {
             return;
         }
-        $config = Factory::getConfig();
+
+        $config = Factory::getApplication()->getConfig();
 
         $og_title = $this->article->title;
         if (!empty($this->article->params->get('astroid_og_title', ''))) {
@@ -107,7 +109,7 @@ class Article
         }
 
         $og_sitename = $config->get('sitename');
-        $og_siteurl = Uri::base() . ContentHelperRoute::getArticleRoute($this->article->slug, $this->article->catid, $this->article->language);
+        $og_siteurl = Route::_(RouteHelper::getArticleRoute($this->article->slug, $this->article->catid, $this->article->language), true, 0, true) ;
 
         $meta = [];
         $meta[] = '<meta property="og:type" content="article">';

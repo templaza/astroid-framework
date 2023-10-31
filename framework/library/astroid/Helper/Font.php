@@ -302,20 +302,17 @@ class Font
     {
         $params = Helper::getPluginParams();
         $source = $params->get('astroid_load_fontawesome', "cdn");
-        $document   =   Framework::getDocument();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         switch ($source) {
             case 'cdn':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
-                $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $wa->registerAndUseStyle('fontawesome', "https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css");
                 break;
             case 'local':
-                $root = Uri::root(true).'/';
-                $document->addStyleSheet($root.'media/system/css/joomla-fontawesome.min.css');
-                $document->addStyleSheet($root."media/astroid/assets/vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
                 break;
             default:
                 if (Framework::isAdmin()) {
-                    Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                    $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
                 }
                 break;
         }

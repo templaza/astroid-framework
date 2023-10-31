@@ -34,6 +34,9 @@ class Site extends Helper\Client
 
     public function onBeforeRender()
     {
+        if (!Framework::getTemplate()->isAstroid) {
+            return;
+        }
         Helper\Head::styles(); // site Styles
         Component\LazyLoad::run(); // to execute lazy load
         Component\Utility::smoothScroll(); // smooth scroll utility

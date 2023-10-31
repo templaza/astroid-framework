@@ -77,7 +77,7 @@ $offcanvas-btn: 50px !default;
 		&::before,
 		&::after {
 			content: "";
-			display: block;
+			display: block !important;
 		}
 		&::before {
 			top: ($burger-layer-spacing + $burger-layer-height) * -1;

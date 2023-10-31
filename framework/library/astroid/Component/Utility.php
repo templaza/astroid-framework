@@ -126,11 +126,11 @@ class Utility
     public static function smoothScroll()
     {
         $params = Framework::getTemplate()->getParams();
-        $document = Framework::getDocument();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $enable_smooth_scroll = $params->get('enable_smooth_scroll', '');
         if ($enable_smooth_scroll == '1') {
             $speed = $params->get('smooth_scroll_speed', '');
-            $document->addScript('vendor/astroid/js/smooth-scroll.polyfills.min.js', 'body');
+            $wa->registerAndUseScript('astroid.smooth-scroll', 'astroid/smooth-scroll.polyfills.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             $header = $params->get('header', TRUE);
             $mode = $params->get('header_mode', 'horizontal');
             $sidebar = ($header && $mode == 'sidebar');
@@ -140,7 +140,7 @@ class Utility
             speed: ' . $speed . '
             ' . ($sidebar ? '' : ', header: ".astroid-header"') . '
 			});';
-            $document->addScriptDeclaration($script, 'body');
+            $wa->addInlineScript($script);
         }
     }
 

@@ -82,10 +82,6 @@ class Head
     public static function styles()
     {
         $document = Framework::getDocument();
-        if ($document->isFrontendEditing()) {
-            $document->addStyleSheet('media/templates/site/cassiopeia/css/template.css');
-            $document->addStyleSheet('media/astroid/assets/css/frontend-editing-j4.css');
-        }
         $document->loadFontAwesome();
         $document->astroidCSS();
         return '';

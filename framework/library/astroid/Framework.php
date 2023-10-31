@@ -96,14 +96,6 @@ abstract class Framework
         return self::$template;
     }
 
-    public static function getAuditor($id = null): Auditor
-    {
-        if ($id !== null) {
-            self::$auditor = new Auditor($id);
-        }
-        return self::$auditor;
-    }
-
     public static function getClient(): Helper\Client
     {
         if (self::$client === null) {

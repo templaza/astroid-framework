@@ -60,6 +60,16 @@ class plgSystemAstroid extends CMSPlugin
         return Framework::getClient()->onContentBeforeSave($context, $table, $isNew, $data);
     }
 
+    public function onBeforeRender()
+    {
+        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
+            return false;
+        }
+        if (Framework::isSite()) {
+            Framework::getClient()->onBeforeRender();
+        }
+    }
+
     public function onAfterRender()
     {
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {

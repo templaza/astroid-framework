@@ -74,6 +74,19 @@ ul.categories-module {
 	border: 1px solid #58595a;
 	border-radius: 0.25rem;
 }
+.icon-edit{
+	font-family: "Font Awesome 6 Free";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 900;
+	line-height: 1;
+	&:before {
+		content: "\f044";
+	}
+}
 
 [dir=rtl] .btn.jmodedit {
 	right: auto;
