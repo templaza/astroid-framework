@@ -13,12 +13,6 @@ extract($displayData);
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $plugin_params = Astroid\Helper::getPluginParams();
-$mediaVersion = Astroid\Helper::joomlaMediaVersion();
-$presets    =   Astroid\Helper::getPresets();
-$preset_arr =   array();
-for ($pidx = 0; $pidx < count($presets); $pidx++) {
-    $preset_arr[]   =   $presets[$pidx]['preset'];
-}
 $color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
 $color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astroid_colormode'] ? $_COOKIE['astroid_colormode'] : 'light');
 ?>
@@ -37,6 +31,5 @@ $color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astro
 <body>
 <div id="astroid-app"></div>
 <astroid:include type="body-scripts" /> <!-- body scripts -->
-<astroid:include type="debug" /> <!-- astroid debug -->
 </body>
 </html>

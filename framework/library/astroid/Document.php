@@ -807,7 +807,7 @@ class Document
         if (Framework::isAdmin()) {
             $root = Uri::root();
         } else {
-            $root = '';
+            $root = Uri::root(true). '/';
         }
         $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();

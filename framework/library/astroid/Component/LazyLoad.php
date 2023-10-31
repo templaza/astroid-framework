@@ -24,6 +24,7 @@ class LazyLoad
         $app = Factory::getApplication();
         $template = Framework::getTemplate();
         $document = Framework::getDocument();
+        $wa    = $app->getDocument()->getWebAssetManager();
         $params = $template->getParams();
         $run = $params->get('lazyload', 0);
 
@@ -34,7 +35,8 @@ class LazyLoad
         if (!$run) return;
 
         Helper::createDir(ASTROID_CACHE . '/lazy-load/' . $template->id);
-        $document->addScript('vendor/astroid/js/lazyload.min.js');
+//        $document->addScript('vendor/astroid/js/lazyload.min.js');
+        $wa->registerAndUseScript('astroid.lazyload', 'astroid/lazyload.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 
         if ($params->get('lazyload_components', '')) {
             $run = self::selectedComponents($params->get('lazyload_components', ''), $params->get('lazyload_components_action', 'include'));

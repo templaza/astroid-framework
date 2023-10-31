@@ -26,12 +26,18 @@ class Site extends Helper\Client
         Component\Utility::background(); // site background
         Component\Utility::colors(); // site colors
         Component\Utility::article(); // site article
-        Component\Utility::smoothScroll(); // smooth scroll utility
         Component\Utility::custom(); // site custom codes
-        Component\LazyLoad::run(); // to execute lazy load
         Component\Includer::run(); // at last process all astroid:include
         Framework::getDocument()->compress(); // compress the html
         Helper::triggerEvent('onAfterAstroidRender'); // at last process all astroid:include
+    }
+
+    public function onBeforeRender()
+    {
+        Helper\Head::styles(); // site Styles
+        Component\LazyLoad::run(); // to execute lazy load
+        Component\Utility::smoothScroll(); // smooth scroll utility
+        Helper\Head::scripts(); // site scripts
     }
 
     protected function rate()

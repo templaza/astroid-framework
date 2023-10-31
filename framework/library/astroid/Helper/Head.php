@@ -35,7 +35,7 @@ class Head
 
         if (!empty($favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)) {
             $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon);
-            Framework::getDocument()->addLink(Media::getPath() . '/' . $favicon, 'shortcut icon', array(
+            Framework::getDocument()->addLink(Uri::root(true) . '/' . Media::getPath() . '/' . $favicon, 'shortcut icon', array(
                 'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));
@@ -43,7 +43,7 @@ class Head
         $apple_touch_icon = $params->get('apple_touch_icon', '');
         if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)) {
             $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon);
-            Framework::getDocument()->addLink( Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
+            Framework::getDocument()->addLink( Uri::root(true) . '/' . Media::getPath() . '/' . $apple_touch_icon, 'apple-touch-icon', array(
                 'type'  => $image_type['mime'],
                 'sizes' => 'any'
             ));

@@ -20,8 +20,6 @@ $document = Astroid\Framework::getDocument();
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 Astroid\Helper\Head::meta(); // site meta
-Astroid\Helper\Head::styles(); // site Styles
-Astroid\Helper\Head::scripts(); // site scripts
 Astroid\Helper\Head::favicon(); // site favicon
 
 if ($document->isDev()) { // check is dev
