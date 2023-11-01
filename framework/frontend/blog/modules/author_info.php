@@ -12,13 +12,13 @@
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\UserFactoryInterface;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
 
 // Get User Details
-$user = Factory::getApplication()->getIdentity();
-$user->load($article->created_by);
+$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($article->created_by);
 
 $params = new Registry();
 $params->loadString($user->params, 'JSON');
