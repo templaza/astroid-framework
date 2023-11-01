@@ -245,8 +245,7 @@ class Admin extends Helper\Client
         $document->addScriptOptions('astroid_content', $form_content);
 
         // styles
-        $stylesheets = ['vendor/manager/dist/index.css'];
-        $document->loadFontAwesome();
+        $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css'];
         $document->addStyleSheet($stylesheets);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
