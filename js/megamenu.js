@@ -1,6 +1,5 @@
 (function ($) {
    $.fn.JDMegaMenu = function (options) {
-
       var contentClass = $(this).data('megamenu-content-class');
       var submenuClass = $(this).data('megamenu-submenu-class');
       var megamenuClass = $(this).data('megamenu-class');

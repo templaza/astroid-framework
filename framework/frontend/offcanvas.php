@@ -25,12 +25,10 @@ if (!$header || !$enable_offcanvas) {
 }
 
 $module_position = 'offcanvas';
-$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-//$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
+$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 $hasMenu = $document->hasModule($module_position, 'mod_menu');
 if ($hasMenu) {
-    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-//   $document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
+    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 }
 
 $togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');

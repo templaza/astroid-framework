@@ -33,10 +33,8 @@ $header_mode = $params->get('header_mode', 'horizontal');
 $mode = $params->get('header_sidebar_menu_mode', 'left');
 $dir = $header ? ($header_mode == 'sidebar' ? $mode : $dir) : $dir;
 
-$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-$wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-//$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
-//$document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
+$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 ?>
 <div class="astroid-mobilemenu d-none d-init dir-<?php echo $dir; ?>" data-class-prefix="astroid-mobilemenu" id="astroid-mobilemenu">
    <div class="burger-menu-button active">

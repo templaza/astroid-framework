@@ -67,11 +67,11 @@ class Head
         $template = Framework::getTemplate();
         $wa = $app->getDocument()->getWebAssetManager();
         if (Framework::isSite()) {
-            $wa->registerAndUseScript('astroid.script', 'astroid/script.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->registerAndUseScript('astroid.script', 'astroid/script.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
         }
         if (Helper::getPluginParams()->get('astroid_debug', 0)) {
             $wa->useScript('bootstrap.tab');
-            $wa->registerAndUseScript('astroid.debug', 'astroid/debug.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->registerAndUseScript('astroid.debug', 'astroid/debug.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
         }
         $color_mode = $template->getColorMode();
         if ($color_mode) {

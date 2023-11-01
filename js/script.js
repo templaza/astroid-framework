@@ -74,7 +74,6 @@
       }
 
       var _winScroll = $(window).scrollTop();
-
       var _breakpoint = deviceBreakpoint(true);
 
       if (_breakpoint === 'xl' || _breakpoint === 'lg') {

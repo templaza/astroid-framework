@@ -20,7 +20,6 @@
 				var sub_menu_lable = $(this).children('span').html();
 			}
             if ($(this).hasClass('subMenu-wrapper')) {
-
                var _indicator = $('<span class="menu-indicator"><i class="fas fa-angle-right"></i></span>');
                var _indicatorBackItem = $('<li class="menu-item menu-go-back"></li>');
                var _indicatorBack = $('<span class="menu-indicator-back"><i class="fas fa-angle-left"></i></span>');

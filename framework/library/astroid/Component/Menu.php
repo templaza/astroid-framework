@@ -33,10 +33,8 @@ class Menu
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseScript('astroid.megamenu', 'astroid/megamenu.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+        $wa->registerAndUseScript('astroid.megamenu', 'astroid/megamenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
         $wa->registerAndUseScript('astroid.jquery.hoverIntent', 'astroid/jquery.hoverIntent.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-//        $document->addScript('vendor/astroid/js/megamenu.js', 'body');
-//        $document->addScript('vendor/hoverIntent/jquery.hoverIntent.min.js', 'body');
 
         $header_endLevel = $params->get('header_endLevel', 0);
         if ($endLevel !== null) {

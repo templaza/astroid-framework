@@ -38,6 +38,5 @@
         } else {
             $('#astroid-reporter').addClass('active');
         }
-
     });
 })(jQuery);
