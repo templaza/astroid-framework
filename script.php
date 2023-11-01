@@ -5,6 +5,7 @@
  * @copyright Copyright (C) 2009 - 2019 Astroid Framework.
  * @license   GNU/GPLv2 and later
  */
+use Joomla\Filesystem\File;
 // no direct access
 defined('_JEXEC') or die;
 
@@ -60,8 +61,8 @@ class astroid_template_oneInstallerScript {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 		foreach ($removefile as $file) {
-			if (JFile::exists(JPATH_ROOT.'/templates/astroid_template_one/'.$file)) {
-				JFile::delete(JPATH_ROOT.'/templates/astroid_template_one/'.$file);
+			if (file_exists(JPATH_ROOT.'/templates/astroid_template_one/'.$file)) {
+				File::delete(JPATH_ROOT.'/templates/astroid_template_one/'.$file);
 			}
 		}
 	}
