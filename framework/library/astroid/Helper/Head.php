@@ -65,8 +65,15 @@ class Head
     {
         $app = Factory::getApplication();
         $template = Framework::getTemplate();
+        $params = $template->getParams();
         $wa = $app->getDocument()->getWebAssetManager();
         if (Framework::isSite()) {
+            $bootstrap_js = json_decode($params->get('bootstrap_js', '[]'), true);
+            if (count($bootstrap_js)) {
+                foreach ($bootstrap_js as $bootstrap) {
+                    $wa->useScript('bootstrap.'.$bootstrap['value']);
+                }
+            }
             $wa->registerAndUseScript('astroid.script', 'astroid/script.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
         }
         if (Helper::getPluginParams()->get('astroid_debug', 0)) {

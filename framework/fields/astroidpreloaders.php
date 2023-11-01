@@ -45,8 +45,6 @@ class JFormFieldAstroidpreloaders extends FormField {
            'style'      =>  ($this->element['astroid-preload-type'] == 'fontawesome') ? 'fontawesome' : 'animation',
            'type'       =>  strtolower($this->type),
        ];
-       if ($this->element['astroid-preload-type'] == 'fontawesome') {
-       }
        return json_encode($json);
    }
 }
