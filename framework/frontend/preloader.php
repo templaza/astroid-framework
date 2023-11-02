@@ -14,7 +14,8 @@ extract($displayData);
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
 $params = Astroid\Framework::getTemplate()->getParams();
-$document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
+$wa = $document->getWebAssetManager();
 
 $enable_preloader = $params->get('preloader', 1);
 if (!$enable_preloader) {
@@ -142,7 +143,7 @@ if($preloder_setting == "animations"){
 }
 $preloaderStyles    .=  '#astroid-preloader{display:flex;align-items:center;justify-content:center;background:' . $preloader_bgcolor['light'] . ';height:100%;left:0;position:fixed;top:0;width:100%;z-index:99999}';
 $preloaderStyles    .=  '[data-bs-theme=dark] #astroid-preloader{background:' . $preloader_bgcolor['dark'] . ';}';
-$document->addStyledeclaration($preloaderStyles);
+$wa->addInlineStyle($preloaderStyles);
 ?>
 <div id="astroid-preloader">
    <?php echo $preloaderHTML; ?>
