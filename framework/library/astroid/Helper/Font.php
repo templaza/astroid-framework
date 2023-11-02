@@ -41,7 +41,6 @@ class Font
 
     public static function googleFonts()
     {
-        $app = Factory::getApplication();
         $fonts = Helper::getJSONData('webfonts');
         $options = [];
 
@@ -237,7 +236,8 @@ class Font
 
     public static function loadGoogleFont($value)
     {
-        $document = Framework::getDocument();
+        $document = Factory::getApplication()->getDocument();
+        $wa = $document->getWebAssetManager();
 
         $value = str_replace(',', ';', $value);
         $value = str_replace(':', ':ital,wght@', $value);
@@ -259,8 +259,8 @@ class Font
             $value = str_replace($wght, implode(';', $_value), $value);
         }
 
-        $document->addCustomTag('<link rel="preconnect" href="https://fonts.gstatic.com">');
-        $document->addStyleSheet('https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
+        $wa->registerAndUseStyle('astroid.googlefont', 'https://fonts.gstatic.com', ['version' => 'auto'], ['rel' => 'preconnect']);
+        $wa->registerAndUseStyle('astroid.googlefont.'.$value, 'https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
 
         @list($font, $variants) = explode(":", $value);
 
@@ -275,6 +275,8 @@ class Font
     {
         $template = Framework::getTemplate();
         $document = Framework::getDocument();
+        $document = Factory::getApplication()->getDocument();
+        $wa = $document->getWebAssetManager();
         $uploaded_fonts = $template->getFonts();
         $template_media_fonts_path  = JPATH_SITE . "/media/templates/site/{$template->template}/fonts";
         $template_custom_fonts_path = JPATH_SITE . "/images/{$template->template}/fonts";
@@ -289,9 +291,9 @@ class Font
             $value = $uploaded_fonts[$value]['name'];
             foreach ($files as $file) {
                 if (file_exists($template_custom_fonts_path . '/' . $file)) {
-                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
+                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
                 } else {
-                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
+                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
                 }
             }
         }

@@ -20,9 +20,7 @@ class Site extends Helper\Client
             return;
         }
         Helper::triggerEvent('onBeforeAstroidRender'); // at last process all astroid:include
-        Component\Utility::meta(); // site meta
         Component\Utility::layout(); // site layout
-        Component\Utility::typography(); // site typography
         Component\Utility::background(); // site background
         Component\Utility::colors(); // site colors
         Component\Utility::article(); // site article
@@ -37,6 +35,8 @@ class Site extends Helper\Client
         if (!Framework::getTemplate()->isAstroid) {
             return;
         }
+        Component\Utility::meta(); // site meta
+        Component\Utility::typography(); // site typography
         Helper\Head::styles(); // site Styles
         Component\LazyLoad::run(); // to execute lazy load
         Component\Utility::smoothScroll(); // smooth scroll utility

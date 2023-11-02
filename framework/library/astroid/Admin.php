@@ -123,6 +123,8 @@ class Admin extends Helper\Client
         Helper::loadLanguage(ASTROID_TEMPLATE_NAME);
         Helper::loadLanguage('mod_menu');
         Framework::getDebugger()->log('Loading Languages');
+        $document->addScript('media/system/js/core.min.js');
+        $document->addScript('media/system/js/keepalive.min.js');
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
