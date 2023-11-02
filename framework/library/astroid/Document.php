@@ -1194,6 +1194,7 @@ class Document
     public function astroidCSS()
     {
         $getPluginParams = Helper::getPluginParams();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         // Scss
         if (Framework::isSite()) {
             $template = Framework::getTemplate();
@@ -1222,8 +1223,9 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
+
+//            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
+            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css');
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
