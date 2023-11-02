@@ -21,7 +21,9 @@
       if (!$('#astroid-offcanvas').length) {
          return;
       }
-      $('#astroid-offcanvas').find('ul.menu').astroidMobileMenu();
+      if ($('#astroid-offcanvas').find('ul.menu').length) {
+         $('#astroid-offcanvas').find('ul.menu').astroidMobileMenu();
+      }
    };
    var initSidebarMenu = function () {
       if (!$('.astroid-sidebar-menu').length) {
