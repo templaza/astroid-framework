@@ -22,9 +22,9 @@ $document = Astroid\Framework::getDocument();
 $params = Astroid\Framework::getTemplate()->getParams();
 $wa = $app->getDocument()->getWebAssetManager();
 
-$wa->registerAndUseScript('astroid.coundown.moment', 'media/astroid/assets/vendor/moment/moment.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-$wa->registerAndUseScript('astroid.coundown.timezone', 'media/astroid/assets/vendor/moment/moment-timezone.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-$wa->registerAndUseScript('astroid.coundown.timezone.2022', 'media/astroid/assets/vendor/moment/moment-timezone-with-data-2012-2022.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.coundown.moment', 'astroid/moment/moment.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.coundown.timezone', 'astroid/moment/moment-timezone.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.coundown.timezone.10years', 'astroid/moment/moment-timezone-with-data-10-year-range.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 $document->addScript('vendor/astroid/js/countdown.min.js', 'body');
 
 // Background Image
