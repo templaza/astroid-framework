@@ -17,14 +17,16 @@ use Astroid\Helper\Style;
 defined('_JEXEC') or die;
 extract($displayData);
 
+$app = Factory::getApplication();
 $document = Astroid\Framework::getDocument();
 $params = Astroid\Framework::getTemplate()->getParams();
+$wa = $app->getDocument()->getWebAssetManager();
 
+$wa->registerAndUseScript('astroid.coundown.moment', 'media/astroid/assets/vendor/moment/moment.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.coundown.timezone', 'media/astroid/assets/vendor/moment/moment-timezone.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.coundown.timezone.2022', 'media/astroid/assets/vendor/moment/moment-timezone-with-data-2012-2022.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 $document->addScript('vendor/astroid/js/countdown.min.js', 'body');
-$document->addScript('vendor/moment/moment.min.js');
-$document->addScript('vendor/moment/moment-timezone.min.js');
-$document->addScript('vendor/moment/moment-timezone-with-data-2012-2022.min.js');
-$app = Factory::getApplication();
+
 // Background Image
 
 $background_setting = $params->get('background_setting');
