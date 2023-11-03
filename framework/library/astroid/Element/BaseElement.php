@@ -19,6 +19,7 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Media;
 use Astroid\Helper\Style;
+use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
 
@@ -200,7 +201,8 @@ class BaseElement
                 $video = $this->params->get('background_video', '');
                 if (!empty($video)) {
                     $this->addAttribute('data-jd-video-bg', Uri::root() . Media::getPath() . '/' . $video);
-                    Framework::getDocument()->addScript('vendor/astroid/js/videobg.js', 'body');
+                    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+                    $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
                 }
                 break;
             case 'gradient': // if gradient background

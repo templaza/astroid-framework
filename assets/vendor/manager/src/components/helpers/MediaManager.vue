@@ -69,7 +69,7 @@ function generateData(json = null) {
     });
   }
   if (props.field.input.media === 'videos') {
-    json.images.forEach((element,id) => {
+    json.videos.forEach((element,id) => {
       _showMediaContent.value.push({
         id: 'video'+id,
         name: element.name,
@@ -100,12 +100,7 @@ function callAjax() {
 
 function selectMedia(item) {
   let dirLocation = _showDirLocation.value.join('/');
-  if (item.type === 'image') {
-    _imagePreview.value = props.constant.site_url + `images/` + item.path_relative;
-    emit('update:modelValue', item.path_relative);
-    document.getElementById(props.field.input.id+'close').click();
-  }
-  if (item.type === 'video') {
+  if (item.type === 'image' || item.type === 'video') {
     _imagePreview.value = props.constant.site_url + `images/` + item.path_relative;
     emit('update:modelValue', item.path_relative);
     document.getElementById(props.field.input.id+'close').click();
@@ -151,7 +146,10 @@ function uploadReset() {
 }
 </script>
 <template>
-    <div v-if="_imagePreview !== ''" class="image-preview mb-3"><img :src="_imagePreview" :alt="props.field.name" /></div>
+    <div v-if="_imagePreview !== ''" class="image-preview mb-3">
+      <i v-if="props.field.input.media === 'videos'" class="fa-solid fa-video fa-3x"></i>
+      <img v-else :src="_imagePreview" :alt="props.field.name" />
+    </div>
     <div v-if="_imagePreview === ''" class="astroid-media-selector">
       <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['select_media'] }}</button>
     </div>
@@ -171,14 +169,15 @@ function uploadReset() {
                       <div v-for="item in _showMediaContent" :key="item.id" class="col">
                         <div class="card card-default media-icon justify-content-center align-items-center" :class="item.type+`-type`" @click="selectMedia(item)">
                           <i v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :class="item.icon" class="icon-folder fa-3x"></i>
-                          <img v-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" :alt="item.name" />
+                          <img v-else-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" :alt="item.name" />
+                          <i v-else-if="item.type === 'video'" class="fa-solid fa-video fa-3x"></i>
                         </div>
                         <div v-if="item.name !== undefined && item.name" class="form-text">{{ item.name }}</div>
                       </div>
                     </div>
                     <div v-else>
                       <DropZone 
-                        :url="props.field.input.ajax+`&action=upload&media=images&dir=images/`+_currentFolder" 
+                        :url="props.field.input.ajax+`&action=upload&media=`+props.field.input.media+`&dir=images/`+_currentFolder" 
                         :click-upload="_clickUpload"
                         @update:media="uploadReset" />
                     </div>

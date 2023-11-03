@@ -39,5 +39,5 @@
    $(function () {
       $('[data-jd-video-bg]').JDVideoBG();
    });
-}($ast));
+}(jQuery));
 

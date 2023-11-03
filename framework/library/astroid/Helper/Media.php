@@ -16,6 +16,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Path;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -37,7 +38,7 @@ class Media
         $user = Factory::getUser();
 
         if (!$user->authorise('core.manage', 'com_media') && (!$asset || (!$user->authorise('core.edit', $asset) && !$user->authorise('core.create', $asset) && count($user->getAuthorisedCategories($asset, 'core.create')) == 0) && !($user->id == $author && $user->authorise('core.edit.own', $asset)))) {
-            throw new \JAccessExceptionNotallowed(JText::_('JERROR_ALERTNOAUTHOR'), 403);
+            throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
         }
 
         $data = self::getList($folder);
@@ -230,25 +231,17 @@ class Media
         }
 
         $fieldName = 'file';
-
         $fileError = $_FILES[$fieldName]['error'];
         if ($fileError > 0) {
             switch ($fileError) {
                 case 1:
-                    throw new \Exception(\JText::_('ASTROID_ERROR_LARGE_FILE'));
-                    return;
-
+                    throw new \Exception(Text::_('ASTROID_ERROR_LARGE_FILE'));
                 case 2:
-                    throw new \Exception(\JText::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
-                    return;
-
+                    throw new \Exception(Text::_('ASTROID_ERROR_FILE_HTML_ALLOW'));
                 case 3:
-                    throw new \Exception(\JText::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
-                    return;
-
+                    throw new \Exception(Text::_('ASTROID_ERROR_FILE_PARTIAL_ALLOW'));
                 case 4:
-                    throw new \Exception(\JText::_('ASTROID_ERROR_NO_FILE'));
-                    return;
+                    throw new \Exception(Text::_('ASTROID_ERROR_NO_FILE'));
             }
         }
 
@@ -260,8 +253,9 @@ class Media
         } else {
             $validFileExts = explode(',', 'mp4,mpeg,mpg');
         }
+
         if (!in_array($uploadedFileExtension, $validFileExts)) {
-            throw new \Exception(\JText::_('INVALID EXTENSION'));
+            throw new \Exception(Text::_('INVALID EXTENSION'));
         }
 
         $fileTemp = $_FILES[$fieldName]['tmp_name'];
@@ -272,7 +266,7 @@ class Media
             $validFileTypes = explode(",", $okMIMETypes);
 
             if (!is_int($imageinfo[0]) || !is_int($imageinfo[1]) || !in_array($imageinfo['mime'], $validFileTypes)) {
-                throw new \Exception(\JText::_('INVALID FILETYPE'));
+                throw new \Exception(Text::_('INVALID FILETYPE'));
             }
         }
 
@@ -287,7 +281,7 @@ class Media
         }
 
         if (!File::upload($fileTemp, $uploadPath)) {
-            throw new \Exception(\JText::_('ERROR MOVING FILE'));
+            throw new \Exception(Text::_('ERROR MOVING FILE'));
         } else {
             return ['filepath' => $uploadPath, 'filename' => $fileName, 'uploadpath' => $uploadDir, 'folder' => $uploadFolder];
         }
