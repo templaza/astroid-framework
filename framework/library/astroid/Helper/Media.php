@@ -83,7 +83,7 @@ class Media
                     $tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
                     $tmp->size = filesize($tmp->path);
 
-                    $ext = strtolower(File::getExt($file));
+                    $ext = ASTROID_JOOMLA_VERSION == 4 ? strtolower(Joomla\CMS\Filesystem\File::getExt($file)) : strtolower(File::getExt($file));
 
                     switch ($ext) {
                             // Image
