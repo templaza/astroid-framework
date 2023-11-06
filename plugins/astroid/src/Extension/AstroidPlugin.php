@@ -1,43 +1,40 @@
 <?php
+
 /**
- * @package   Astroid Framework
- * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2023 AstroidFrame.work.
- * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ * @package     Joomla.Plugin
+ * @subpackage  System.log
+ *
+ * @copyright   (C) 2007 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-define('COMPILE_SASS', 0);
-
+namespace Joomla\Plugin\System\Astroid\Extension;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 
-if (file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-    JLoader::registerNamespace('Astroid', JPATH_LIBRARIES . '/astroid/framework/library/astroid', false, false, 'psr4');
-}
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Template;
 
 /**
- * Astroid system plugin
+ * Joomla! System Logging Plugin.
  *
- * @since  1.0
+ * @since  1.5
  */
-class plgSystemAstroid extends CMSPlugin
+final class AstroidPlugin extends CMSPlugin
 {
-
-    protected $app;
-
     public function onAfterRoute()
     {
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
         Framework::init();
-        $option = $this->app->input->get('option', '');
-        $astroid = $this->app->input->get('astroid', '');
+        $option = $this->getApplication()->input->get('option', '');
+        $astroid = $this->getApplication()->input->get('astroid', '');
         if ($option == 'com_ajax' && !empty($astroid)) {
             Framework::getClient()->execute($astroid);
         }
@@ -128,7 +125,4 @@ class plgSystemAstroid extends CMSPlugin
             $form->removeField('presets', 'params');
         }
     }
-
-    // onBeforeAstroidRender
-    // onAfterAstroidRender
 }

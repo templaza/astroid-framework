@@ -9,9 +9,11 @@
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <description>Astroid Framework Plugin Description Here</description>>
+   <description>Astroid Framework Plugin Description Here</description>
+   <namespace path="src">Joomla\Plugin\System\Astroid</namespace>
    <files>
-      <filename plugin="astroid">astroid.php</filename>
+      <folder plugin="astroid">services</folder>
+      <folder>src</folder>
    </files>
    <config>
       <fields name="params">
