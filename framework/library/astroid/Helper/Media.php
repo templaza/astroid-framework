@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Text;
 
@@ -83,7 +83,7 @@ class Media
                     $tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
                     $tmp->size = filesize($tmp->path);
 
-                    $ext = ASTROID_JOOMLA_VERSION == 4 ? strtolower(Joomla\CMS\Filesystem\File::getExt($file)) : strtolower(File::getExt($file));
+                    $ext = strtolower(File::getExt($file));
 
                     switch ($ext) {
                             // Image
