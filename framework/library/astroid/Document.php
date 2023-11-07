@@ -287,17 +287,30 @@ class Document
         $base_path = str_replace($juri->getScheme() . '://' . $juri->getHost() . '/', '', $juri->root());
 
         Framework::getDebugger()->log('Minifying JS');
+        $excludes = Framework::getTemplate()->getParams()->get('minify_js_excludes', '');
         $javascripts = [];
         $javascriptFiles = [];
-        $html = preg_replace_callback('/(<script\s[^>]*src=")([^"]*)("[^>]*>)(.*)(<\/script>)|(<script>)(.*)(<\/script>)|(<script\s[^>]*type=")([^"]*)("[^>]*>)(.*)(<\/script>)/siU', function ($matches) use (&$javascripts, &$javascriptFiles) {
+        $html = preg_replace_callback('/(<script\s[^>]*src=")([^"]*)("[^>]*>)(.*)(<\/script>)|(<script>)(.*)(<\/script>)|(<script\s[^>]*type=")([^"]*)("[^>]*>)(.*)(<\/script>)/siU', function ($matches) use (&$javascripts, &$javascriptFiles, $base_path, $excludes) {
             // print_r($matches);
             $script = [];
             if (isset($matches[5]) && $matches[5] == '</script>' && !empty($matches[2])) {
                 if (strpos($matches[0], 'type="module"') > 0 || strpos($matches[0], 'media/system/js/joomla-hidden-mail-es5.min.js') > 0 || strpos($matches[0], 'webcomponents-bundle.min.js') > 0 || strpos($matches[0], 'media/system/js/core') > 0 || strpos($matches[0], 'www.googletagmanager.com') > 0) {
                     return $matches[0];
                 }
-                $script = ['content' => $this->beutifyURL($matches[2]), 'type' => 'url'];
-                $javascriptFiles[] = $this->beutifyURL($matches[2]);
+
+                // Excludes scripts
+                $scriptName = $this->beutifyURL($matches[2]);
+                $file_path = strtok($scriptName, '?');
+                if (substr($file_path, 0, strlen($base_path)) === $base_path) {
+                    $file_path = preg_replace('/' . preg_quote($base_path, '/') . '/', '', $file_path, 1);
+                }
+
+                $file = basename($file_path);
+                if (Helper::matchFilename($file, \explode(',', $excludes))) {
+                    return $matches[0];
+                }
+                $script = ['content' => $scriptName, 'type' => 'url'];
+                $javascriptFiles[] = $scriptName;
             } else if (isset($matches[8]) && $matches[8] == '</script>' && !empty($matches[7])) {
                 $script = ['content' => $matches[7], 'type' => 'script'];
             } else if (isset($matches[13]) && $matches[13] == '</script>' && !empty($matches[10]) && ($matches[10] == 'text/javascript') && !empty($matches[12])) {
@@ -319,7 +332,7 @@ class Document
 
             Helper::putContents($jsFile, '');
             foreach ($javascripts as $javascript) {
-                $excludes = Framework::getTemplate()->getParams()->get('minify_js_excludes', '');
+
                 $minifier = new Minify\JS();
                 if ($javascript['type'] == 'url') {
                     $file_path = strtok($javascript['content'], '?');
