@@ -249,6 +249,7 @@ class Admin extends Helper\Client
         // styles
         $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css'];
         $document->addStyleSheet($stylesheets);
+        $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
 

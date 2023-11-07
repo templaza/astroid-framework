@@ -240,4 +240,20 @@ function changeColor(color) {
             </div>
         </div>
     </div>
+    <div class="typography-preview">
+        <link v-if="font_type === `google` && (typeof options[font_type].find((font) => font.value === fontSelected.value) !== 'undefined') && fontSelected.value !== `` && fontSelected.value !== `__default` && fontSelected.value.search(/^library-font-/) === -1" :href="`https://fonts.googleapis.com/css?family=`+fontSelected.value" rel="stylesheet" />
+        <div class="card card-default card-body mt-4" :style="
+            {
+            'font-family' : fontSelected.text,
+            'font-weight' : props.modelValue['font_weight'],
+            'text-transform': props.modelValue['text_transform'],
+            'font-size' : props.modelValue['font_size'][currentDevice]+props.modelValue['font_size_unit'][currentDevice],
+            'line-height' : props.modelValue['line_height'][currentDevice]+props.modelValue['line_height_unit'][currentDevice],
+            'letter-spacing' : props.modelValue['letter_spacing'][currentDevice]+props.modelValue['letter_spacing_unit'][currentDevice],
+            }">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut rutrum est, quis aliquet est. Vivamus in blandit purus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <p>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</p>
+            <p class="mb-0">0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</p>
+        </div>
+    </div>
 </template>

@@ -18,7 +18,7 @@
     "@vuepic/vue-datepicker": "^6.1.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
-    "vue": "^3.3.4",
+    "vue": "^3.3.8",
     "vue-color-kit": "^1.0.6",
     "vue-search-select": "^3.1.2",
     "vue3-dropzone": "^2.0.1",
