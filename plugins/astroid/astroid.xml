@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="3.1" type="plugin" method="upgrade" group="system">
+<extension type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>October 2023</creationDate>
