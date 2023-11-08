@@ -218,9 +218,12 @@ class Style
         $typography->loadObject($object);
 
         $style = new Style($selector);
+        $style_dark = new Style($selector, 'dark');
 
         // font color, weight and transfrom
-        $style->addCss('color', $typography->get('font_color', ''));
+        $font_color = Style::getColor($typography->get('font_color', ''));
+        $style->addCss('color', $font_color['light']);
+        $style_dark->addCss('color', $font_color['dark']);
         $style->addCss('font-weight', $typography->get('font_weight', ''));
         $style->addCss('text-transform', $typography->get('text_transform', ''));
 
@@ -285,6 +288,7 @@ class Style
         }
         $style->addCss('font-family', self::getFontFamilyValue($font_face, $alt_font_face));
         $style->render();
+        $style_dark->render();
     }
 
     public static function getFontFamilyValue($value, $alt_font = '')
