@@ -259,8 +259,12 @@ class Font
             $value = str_replace($wght, implode(';', $_value), $value);
         }
 
-        $wa->registerAndUseStyle('astroid.googlefont', 'https://fonts.gstatic.com', ['version' => 'auto'], ['rel' => 'preconnect']);
-        $wa->registerAndUseStyle('astroid.googlefont.'.$value, 'https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
+        if ($value) {
+            $wa->registerAndUseStyle('astroid.googlefont', 'https://fonts.gstatic.com', ['version' => 'auto'], ['rel' => 'preconnect']);
+            $wa->registerAndUseStyle('astroid.googlefont.'.$value, 'https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
+        } else {
+            return '';
+        }
 
         @list($font, $variants) = explode(":", $value);
 
@@ -274,7 +278,6 @@ class Font
     public static function loadLocalFont($value)
     {
         $template = Framework::getTemplate();
-        $document = Framework::getDocument();
         $document = Factory::getApplication()->getDocument();
         $wa = $document->getWebAssetManager();
         $uploaded_fonts = $template->getFonts();
