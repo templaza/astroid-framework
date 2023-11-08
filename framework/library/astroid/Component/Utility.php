@@ -175,7 +175,7 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         $customselector = $params->get('custom_typography_selectors', '');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => '.astroid-logo-text, .astroid-logo-text > a.site-title', 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a, .astroid-mobile-menu > .nav-item > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > a', 'custom' => $customselector);
+        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a, .astroid-mobile-menu > .nav-item > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > a', 'custom' => $customselector);
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {
@@ -258,18 +258,6 @@ class Utility
 
         Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header', 'background-color', $header_bg['light']);
         Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header', 'background-color', $header_bg['dark']);
-
-        $header_logo_text_color         =   Style::getColor($params->get('header_logo_text_color', ''));
-        $header_logo_text_tagline_color =   Style::getColor($params->get('header_logo_text_tagline_color', ''));
-        $textLogo = new Style('.astroid-logo-text');
-        $textLogo->child('.site-title')->addCss('color', $header_logo_text_color['light']);
-        $textLogo->child('.site-tagline')->addCss('color', $header_logo_text_tagline_color['light']);
-        $textLogo->render();  // render text logo colors
-
-        $textLogo = new Style('.astroid-logo-text', 'dark');
-        $textLogo->child('.site-title')->addCss('color', $header_logo_text_color['dark']);
-        $textLogo->child('.site-tagline')->addCss('color', $header_logo_text_tagline_color['dark']);
-        $textLogo->render();  // render text logo colors
 
         // Sticky Header
         $stick_header_bg_color              =   Style::getColor($params->get('stick_header_bg_color', ''));
