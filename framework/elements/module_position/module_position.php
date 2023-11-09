@@ -16,6 +16,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 defined('_JEXEC') or die;
 extract($displayData);
 $position = $params->get('position', '');
+$module_styles = $params->get('module_styles', 'astroidxhtml');
 if (empty($position)) {
     return;
 }
@@ -23,6 +24,6 @@ if (empty($position)) {
 echo Astroid\Framework::getDocument()->_positionContent($position, 'before');
 $modules = ModuleHelper::getModules($position);
 if (count($modules)) {
-    echo '<jdoc:include type="modules" name="' . $position . '" style="astroidxhtml" />';
+    echo '<jdoc:include type="modules" name="' . $position . '" style="'.$module_styles.'" />';
 }
 echo Astroid\Framework::getDocument()->_positionContent($position, 'after');

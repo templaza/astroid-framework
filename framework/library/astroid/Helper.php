@@ -11,6 +11,7 @@ namespace Astroid;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Version;
 use Joomla\CMS\Router\Route;
@@ -367,6 +368,26 @@ class Helper
             $positions[$p] = $p;
         }
         return $positions;
+    }
+
+    public static function getModuleStyles()
+    {
+        $template = Framework::getTemplate();
+        $styles = Folder::files(\JPATH_SITE . '/templates/' . $template->template . '/html/layouts/chromes', '.php');
+        $options = array();
+        if (count($styles)) {
+            foreach ($styles as $style) {
+                $tmp = new \stdClass();
+                $tmp->value = basename($style,".php");
+                $tmp->text  = basename($style,".php");
+                $options[] = $tmp;
+            }
+        }
+        $tmp = new \stdClass();
+        $tmp->value = 'none';
+        $tmp->text  = 'none';
+        $options[] = $tmp;
+        return $options;
     }
 
     public static function frameworkVersion()
