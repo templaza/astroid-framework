@@ -457,13 +457,13 @@ class Utility
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
         $intro_heading_fontsize =   $params->get('article_listing_intro_heading_fontsize', '');
         if (!empty($lead_heading_fontsize)) {
-            $article    =   new Style('.items-leading .article-title .page-header [itemprop="name"]');
+            $article    =   new Style('.items-leading .article-title .page-header h2');
             $article->addCss('font-size', $lead_heading_fontsize.'px');
             $article->render();
         }
 
         if (!empty($intro_heading_fontsize)) {
-            $article    =   new Style('.items-row .article-title .page-header [itemprop="name"]');
+            $article    =   new Style('.items-row .article-title .page-header h2');
             $article->addCss('font-size', $intro_heading_fontsize.'px');
             $article->render();
         }
