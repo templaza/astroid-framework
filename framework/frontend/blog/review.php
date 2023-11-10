@@ -10,6 +10,7 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\Language\Text;
 extract($displayData);
 
 $params = $article->params;
@@ -38,7 +39,7 @@ if (empty($overall_rating)) {
           <div class="review-total-score">
               <div class="review-total-score-wrapper">
                   <span class="score-value"><?php echo $overall_rating; ?></span>
-                  <span class="score-label"><?php echo JText::_('ASTROID_ARTICLE_TOTAL_SCORE'); ?></span>
+                  <span class="score-label"><?php echo Text::_('ASTROID_ARTICLE_TOTAL_SCORE'); ?></span>
               </div>
           </div>
       </div>
@@ -72,7 +73,7 @@ if (empty($overall_rating)) {
    </div>
    <div class="review-good-bad row">
       <div class="col-md-6">
-         <h4 class="pros-heading text-success"><?php echo JText::_('ASTROID_ARTICLE_PROS_LBL'); ?></h4>
+         <h4 class="pros-heading text-success"><?php echo Text::_('ASTROID_ARTICLE_PROS_LBL'); ?></h4>
          <ul class="pros-cons-list pros-list">
             <?php
             foreach (explode("\n", $good_things) as $good_thing) {
@@ -82,7 +83,7 @@ if (empty($overall_rating)) {
          </ul>
       </div>
       <div class="col-md-6">
-         <h4 class="cons-heading text-danger"><?php echo JText::_('ASTROID_ARTICLE_CONS_LBL'); ?></h4>
+         <h4 class="cons-heading text-danger"><?php echo Text::_('ASTROID_ARTICLE_CONS_LBL'); ?></h4>
          <ul class="pros-cons-list cons-list">
             <?php
             foreach (explode("\n", $bad_things) as $bad_thing) {

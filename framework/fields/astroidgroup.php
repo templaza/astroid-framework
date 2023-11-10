@@ -6,7 +6,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
 
 /**
  * Form Field class for the Joomla Platform.
@@ -16,7 +16,7 @@ jimport('joomla.form.formfield');
  *
  * @since  11.1
  */
-class JFormFieldAstroidGroup extends JFormField {
+class JFormFieldAstroidGroup extends FormField {
 
    /**
     * The form field type.

@@ -11,6 +11,7 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -213,13 +214,16 @@ class Style
 
     public static function renderTypography($selector, $object, $defaultObject = null)
     {
-        $typography = new \JRegistry();
+        $typography = new Registry();
         $typography->loadObject($object);
 
         $style = new Style($selector);
+        $style_dark = new Style($selector, 'dark');
 
         // font color, weight and transfrom
-        $style->addCss('color', $typography->get('font_color', ''));
+        $font_color = Style::getColor($typography->get('font_color', ''));
+        $style->addCss('color', $font_color['light']);
+        $style_dark->addCss('color', $font_color['dark']);
         $style->addCss('font-weight', $typography->get('font_weight', ''));
         $style->addCss('text-transform', $typography->get('text_transform', ''));
 
@@ -277,13 +281,14 @@ class Style
         $alt_font_face = $typography->get('alt_font_face', '');
 
         if ($defaultObject !== null) {
-            $defaultTypography = new \JRegistry();
+            $defaultTypography = new Registry();
             $defaultTypography->loadObject($defaultObject);
             $font_face = ($font_face == '__default' ? $defaultTypography->get('font_face', '') : $font_face);
             $alt_font_face = ($alt_font_face == '__default' ? $defaultTypography->get('alt_font_face', '') : $alt_font_face);
         }
         $style->addCss('font-family', self::getFontFamilyValue($font_face, $alt_font_face));
         $style->render();
+        $style_dark->render();
     }
 
     public static function getFontFamilyValue($value, $alt_font = '')

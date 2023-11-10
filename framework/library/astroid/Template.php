@@ -8,6 +8,8 @@
  */
 
 namespace Astroid;
+use \Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -27,18 +29,18 @@ class Template
 
     public function __construct()
     {
-        $menu = \JFactory::getApplication()->getMenu()->getActive();
+        $menu = Factory::getApplication()->getMenu()->getActive();
         $template_id = isset($menu->template_style_id) ? $menu->template_style_id : 0;
 
         if (!empty($template_id)) {
             $jtemplate = $this->_getById($template_id);
         } else {
-            $jtemplate = \JFactory::getApplication()->getTemplate(true);
+            $jtemplate = Factory::getApplication()->getTemplate(true);
         }
         $this->template = $jtemplate->template;
 
-        $this->language = \JFactory::getLanguage()->getTag();
-        $this->direction = \JFactory::getLanguage()->isRtl() ? 'rtl' : 'ltr';
+        $this->language = Factory::getLanguage()->getTag();
+        $this->direction = Factory::getLanguage()->isRtl() ? 'rtl' : 'ltr';
 
         $this->params = $jtemplate->params;
         $this->title = '';
@@ -46,7 +48,7 @@ class Template
         if (Framework::isSite()) {
             $this->_set($jtemplate->id);
         } else if (Framework::isAdmin()) {
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $option = $app->input->get('option', '');
             $view = $app->input->get('view', '');
             $layout = $app->input->get('layout', '');
@@ -67,7 +69,7 @@ class Template
         }
 
         if (Framework::isSite()) {
-            $preset = \JFactory::getApplication()->input->get('preset', '');
+            $preset = Factory::getApplication()->input->get('preset', '');
             if (!empty($preset)) {
                 $this->setPreset($preset);
             }
@@ -180,7 +182,7 @@ class Template
         if (!$id) {
             $id = $this->id;
         }
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = "SELECT `home` FROM `#__template_styles` WHERE `id`='$id'";
         $db->setQuery($query);
         $result = $db->loadResult();
@@ -213,12 +215,12 @@ class Template
 
     private function _getById($id)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = "SELECT `template`,`id`,`title`,`params`,`home` FROM `#__template_styles` WHERE `id`='$id'";
         $db->setQuery($query);
         $result = $db->loadObject();
 
-        $params = new \JRegistry();
+        $params = new Registry();
         $params->loadString($result->params);
 
         $result->params = $params;

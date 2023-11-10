@@ -13,6 +13,7 @@ import SassOverrides from './SassOverrides.vue';
 import DatePicker from './DatePicker.vue';
 import Colors from './Colors.vue';
 import Presets from './Presets.vue';
+import MultiSelect from './MultiSelect.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset']);
 const props = defineProps({
@@ -74,8 +75,11 @@ function updateContentLayout() {
     <select v-else-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
-    <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-select form-select" :aria-label="props.field.label">
+    <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-position form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
+    </select>
+    <select v-else-if="props.field.input.type === `astroidmodulesstyle`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-style form-select" :aria-label="props.field.label">
+        <option v-for="(option, key) in props.field.input.options" :key="key" :value="option.value">{{ option.text }}</option>
     </select>
     <select v-else-if="props.field.input.type === `astroidanimations`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
@@ -102,7 +106,7 @@ function updateContentLayout() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}px</label>
+        <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}{{ props.field.input.postfix }}</label>
         <input type="range" class="form-range" :name="props.field.input.name" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
@@ -137,6 +141,9 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidcalendar`" class="astroid-calendar">
         <DatePicker v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidmultiselect`" class="astroid-multi-select">
+        <MultiSelect v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidpreset`" class="astroid-preset">
         <Presets :field="props.field" :config="props.constant" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />

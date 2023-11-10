@@ -9,9 +9,10 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Astroid\Element;
 
-class JFormFieldLayout extends JFormField
+class JFormFieldLayout extends FormField
 {
 
    protected $type = 'layout';
@@ -28,11 +29,11 @@ class JFormFieldLayout extends JFormField
        foreach ($astroidElements as $astroidElement) {
            $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
        }
-       $sectionElement = new AstroidElement('section');
+       $sectionElement = new Element('section');
        $form_template['section'] = $sectionElement->renderJson();
-       $rowElement = new AstroidElement('row');
+       $rowElement = new Element('row');
        $form_template['row'] = $rowElement->renderJson();
-       $columnElement = new AstroidElement('column');
+       $columnElement = new Element('column');
        $form_template['column'] = $columnElement->renderJson();
 
        $value = $this->value;

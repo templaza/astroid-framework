@@ -11,6 +11,7 @@ namespace Astroid\Component;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -20,7 +21,7 @@ class Includer
     public static function run($content = null)
     {
         if ($content === null) {
-            $app = \JFactory::getApplication();
+            $app = Factory::getApplication();
             $body = $app->getBody();
         } else {
             $body = $content;
@@ -65,8 +66,8 @@ class Includer
 
     public static function _headStyles()
     {
-        Helper\Head::styles();
         $document = Framework::getDocument();
+        $document->astroidCustomCSS();
         $content  = $document->renderLinks();
         $content .= $document->getStylesheets();
         $content .= $document->astroidInlineCSS();
@@ -76,8 +77,7 @@ class Includer
     public static function _headScripts()
     {
         $document = Framework::getDocument();
-        $content = '';
-        $content .= $document->getScripts('head');
+        $content = $document->getScripts('head');
         $content .= $document->getCustomTags('head');
         return $content;
     }
@@ -85,18 +85,8 @@ class Includer
     public static function _bodyScripts()
     {
         $document = Framework::getDocument();
-        if (Framework::isSite()) {
-            $document->addScript('vendor/astroid/js/script.js', 'body');
-        }
-        if (Helper::getPluginParams()->get('astroid_debug', 0)) {
-            $document->addScript('vendor/astroid/js/debug.js', 'body');
-        }
-        $content = '';
-        $content .= $document->getScripts('body');
+        $content = $document->getScripts('body');
         $content .= $document->getCustomTags('body');
-        if (Framework::isSite()) {
-            $content .= '<script>jQuery.noConflict(true);</script>';
-        }
         return $content;
     }
 

@@ -9,12 +9,14 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
+use Joomla\CMS\Factory;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
 
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 $header = $params->get('header', TRUE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
@@ -31,8 +33,8 @@ $header_mode = $params->get('header_mode', 'horizontal');
 $mode = $params->get('header_sidebar_menu_mode', 'left');
 $dir = $header ? ($header_mode == 'sidebar' ? $mode : $dir) : $dir;
 
-$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
-$document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
+$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 ?>
 <div class="astroid-mobilemenu d-none d-init dir-<?php echo $dir; ?>" data-class-prefix="astroid-mobilemenu" id="astroid-mobilemenu">
    <div class="burger-menu-button active">

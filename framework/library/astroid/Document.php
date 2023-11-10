@@ -13,9 +13,13 @@ defined('_JEXEC') or die;
 
 require_once __DIR__ . "/../scssphp/scss.inc.php";
 
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use ScssPhp\ScssPhp\Compiler;
 use MatthiasMullie\Minify;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Layout\FileLayout;
 
 class Document
 {
@@ -34,6 +38,8 @@ class Document
     protected $type = null;
     protected $modules = null;
 
+    protected $scriptOptions = [];
+
     public function __construct()
     {
         $params = Framework::getTemplate()->getParams();
@@ -41,7 +47,7 @@ class Document
         $this->minify_js = $params->get('minify_js', false);
         $this->minify_html = $params->get('minify_html', false);
 
-        $doc = \JFactory::getDocument();
+        $doc = Factory::getDocument();
         $this->type = $doc->getType();
 
         $template = Framework::getTemplate();
@@ -80,11 +86,11 @@ class Document
             return '';
         }
 
-        $layout = new \JLayoutFile($section, $path);
+        $layout = new FileLayout($section, $path);
         $content = $layout->render($data);
 
         /* if (Framework::isAdmin()) {
-            $layout = new \JLayoutFile($section, $path);
+            $layout = new FileLayout($section, $path);
             $content = $layout->render($data);
         } else {
             $hash = Helper::getFileHash($path . '/' . $name . '.php');
@@ -95,7 +101,7 @@ class Document
             } else {
                 $beforeHash = $this->_assetsHash();;
 
-                $layout = new \JLayoutFile($section, $path);
+                $layout = new FileLayout($section, $path);
                 $content = $layout->render($data);
 
                 if ($beforeHash === $this->_assetsHash()) {
@@ -111,7 +117,7 @@ class Document
 
     public function compress()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $body = $app->getBody();
 
         // Stop Minification for RSSFeeds and other doc types.
@@ -132,7 +138,7 @@ class Document
             return false;
         }
 
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $option = $app->input->get('option', '', 'STRING');
         $view = $app->input->get('view', '', 'STRING');
         $layout = $app->input->get('layout', 'default', 'STRING');
@@ -152,7 +158,7 @@ class Document
 
     public function _cssPath($file)
     {
-        $site_path = parse_url(\JURI::root(), PHP_URL_PATH);
+        $site_path = parse_url(Uri::root(), PHP_URL_PATH);
 
         if (Helper::startsWith($file, $site_path)) {
             $file = preg_replace('/' . preg_quote($site_path, '/') . '/', '/', $file, 1);
@@ -160,9 +166,9 @@ class Document
 
         $file_info = parse_url($file);
         if (isset($file_info['host'])) {
-            if ($file_info['host'] == parse_url(\JURI::root(), PHP_URL_HOST)) {
+            if ($file_info['host'] == parse_url(Uri::root(), PHP_URL_HOST)) {
                 $file = strtok($file, '?');
-                $file = str_replace(\JURI::root(), '', $file);
+                $file = str_replace(Uri::root(), '', $file);
                 return $file;
             } else {
                 return '@import "' . $file . '"';
@@ -178,7 +184,7 @@ class Document
 
     public function _jsPath($file)
     {
-        $site_path = parse_url(\JURI::root(), PHP_URL_PATH);
+        $site_path = parse_url(Uri::root(), PHP_URL_PATH);
 
         if (Helper::startsWith($file, $site_path)) {
             $file = preg_replace('/' . preg_quote($site_path, '/') . '/', '/', $file, 1);
@@ -186,9 +192,9 @@ class Document
 
         $file_info = parse_url($file);
         if (isset($file_info['host'])) {
-            if ($file_info['host'] == parse_url(\JURI::root(), PHP_URL_HOST)) {
+            if ($file_info['host'] == parse_url(Uri::root(), PHP_URL_HOST)) {
                 $file = strtok($file, '?');
-                $file = str_replace(\JURI::root(), '', $file);
+                $file = str_replace(Uri::root(), '', $file);
                 return $file;
             } else {
                 return file_get_contents($this->addProtocol($file));
@@ -218,6 +224,7 @@ class Document
         $stylesheets = [];
         $stylesheetLinks = [];
         $stylesheetsUrls = [];
+
         $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
                 if (strpos($matches[2], 'fonts.googleapis.com') > 0 || strpos($matches[2], 'use.fontawesome.com') > 0) {
@@ -269,28 +276,41 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified CSS <code>' . (str_replace(JPATH_SITE . '/', '', $cssFile)) . '</code> from cache.');
         }
 
-        $html = str_replace('</head>', '<link rel="stylesheet" href="' . \JURI::root() . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
+        $html = str_replace('</head>', '<link rel="stylesheet" href="' . 'cache/astroid/css/' . $version . '.css?' . Helper::joomlaMediaVersion() . '" /></head>', $html);
         Framework::getDebugger()->log('Minifying CSS');
         return $html;
     }
 
     public function minifyJS($html)
     {
-        $juri = \JURI::getInstance();
+        $juri = Uri::getInstance();
         $base_path = str_replace($juri->getScheme() . '://' . $juri->getHost() . '/', '', $juri->root());
 
         Framework::getDebugger()->log('Minifying JS');
+        $excludes = Framework::getTemplate()->getParams()->get('minify_js_excludes', '');
         $javascripts = [];
         $javascriptFiles = [];
-        $html = preg_replace_callback('/(<script\s[^>]*src=")([^"]*)("[^>]*>)(.*)(<\/script>)|(<script>)(.*)(<\/script>)|(<script\s[^>]*type=")([^"]*)("[^>]*>)(.*)(<\/script>)/siU', function ($matches) use (&$javascripts, &$javascriptFiles) {
+        $html = preg_replace_callback('/(<script\s[^>]*src=")([^"]*)("[^>]*>)(.*)(<\/script>)|(<script>)(.*)(<\/script>)|(<script\s[^>]*type=")([^"]*)("[^>]*>)(.*)(<\/script>)/siU', function ($matches) use (&$javascripts, &$javascriptFiles, $base_path, $excludes) {
             // print_r($matches);
             $script = [];
             if (isset($matches[5]) && $matches[5] == '</script>' && !empty($matches[2])) {
-                if (strpos($matches[0], 'type="module"') > 0 || strpos($matches[0], 'media/system/js/joomla-hidden-mail-es5.min.js') > 0 || strpos($matches[0], 'webcomponents-bundle.min.js') > 0) {
+                if (strpos($matches[0], 'type="module"') > 0 || strpos($matches[0], 'media/system/js/joomla-hidden-mail-es5.min.js') > 0 || strpos($matches[0], 'webcomponents-bundle.min.js') > 0 || strpos($matches[0], 'media/system/js/core') > 0 || strpos($matches[0], 'www.googletagmanager.com') > 0) {
                     return $matches[0];
                 }
-                $script = ['content' => $this->beutifyURL($matches[2]), 'type' => 'url'];
-                $javascriptFiles[] = $this->beutifyURL($matches[2]);
+
+                // Excludes scripts
+                $scriptName = $this->beutifyURL($matches[2]);
+                $file_path = strtok($scriptName, '?');
+                if (substr($file_path, 0, strlen($base_path)) === $base_path) {
+                    $file_path = preg_replace('/' . preg_quote($base_path, '/') . '/', '', $file_path, 1);
+                }
+
+                $file = basename($file_path);
+                if (Helper::matchFilename($file, \explode(',', $excludes))) {
+                    return $matches[0];
+                }
+                $script = ['content' => $scriptName, 'type' => 'url'];
+                $javascriptFiles[] = $scriptName;
             } else if (isset($matches[8]) && $matches[8] == '</script>' && !empty($matches[7])) {
                 $script = ['content' => $matches[7], 'type' => 'script'];
             } else if (isset($matches[13]) && $matches[13] == '</script>' && !empty($matches[10]) && ($matches[10] == 'text/javascript') && !empty($matches[12])) {
@@ -312,7 +332,7 @@ class Document
 
             Helper::putContents($jsFile, '');
             foreach ($javascripts as $javascript) {
-                $excludes = Framework::getTemplate()->getParams()->get('minify_js_excludes', '');
+
                 $minifier = new Minify\JS();
                 if ($javascript['type'] == 'url') {
                     $file_path = strtok($javascript['content'], '?');
@@ -355,7 +375,7 @@ class Document
             Framework::getReporter('Logs')->add('Getting Minified JS <code>' . (str_replace(JPATH_SITE . '/', '', $jsFile)) . '</code>.');
         }
 
-        $html = Helper::str_lreplace('</body>', '<script src="' . \JURI::root() . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></body>', $html);
+        $html = Helper::str_lreplace('</head>', '<script src="' . 'cache/astroid/js/' . $version . '.js?' . Helper::joomlaMediaVersion() . '"></script></head>', $html);
         Framework::getDebugger()->log('Minifying JS');
         return $html;
     }
@@ -504,7 +524,7 @@ class Document
         $assets[] = \json_encode($this->_customtags);
         $assets[] = \json_encode($this->_metas);
         $assets[] = self::$_fontawesome;
-        $assets[] = \JFactory::getDocument()->getHeadData();
+        $assets[] = Factory::getDocument()->getHeadData();
         return md5(serialize($assets));
     }
 
@@ -528,7 +548,7 @@ class Document
 
     public function hasModule($position, $module)
     {
-        return in_array($module, array_column(\JModuleHelper::getModules($position), 'module'));
+        return in_array($module, array_column(ModuleHelper::getModules($position), 'module'));
     }
 
     public function loadModule($content)
@@ -564,9 +584,9 @@ class Document
     private function _modulePosition($position)
     {
         $this->modules[$position] = '';
-        $document = \JFactory::getDocument();
+        $document = Factory::getDocument();
         $renderer = $document->loadRenderer('module');
-        $modules = \JModuleHelper::getModules($position);
+        $modules = ModuleHelper::getModules($position);
         ob_start();
 
         foreach ($modules as $module) {
@@ -581,9 +601,9 @@ class Document
     private function _moduleId($id)
     {
         $this->modules[$id] = '';
-        $document = \JFactory::getDocument();
+        $document = Factory::getDocument();
         $renderer = $document->loadRenderer('module');
-        $modules = \JModuleHelper::getModuleById($id);
+        $modules = ModuleHelper::getModuleById($id);
         ob_start();
 
         if ($modules->id > 0) {
@@ -601,7 +621,7 @@ class Document
             return '';
         }
         $return = '';
-        $modules = \JModuleHelper::getModules($position);
+        $modules = ModuleHelper::getModules($position);
         if (count($modules)) {
             $return .= '<jdoc:include type="modules" name="' . $position . '" style="' . $style . '" />';
         }
@@ -721,7 +741,7 @@ class Document
     public function beutifyURL($url)
     {
         $url = str_replace('?' . Helper::joomlaMediaVersion(), '', $url);
-        $url = str_replace(\JURI::root(), '', $url);
+        $url = str_replace(Uri::root(), '', $url);
         $url = str_replace(JPATH_SITE . '/', '', $url);
         if (substr($url, 0, 1) == '/' && substr($url, 0, 2) != '//') {
             $url = substr($url, 1);
@@ -771,10 +791,38 @@ class Document
         return $content;
     }
 
+    public function addScriptOptions($key, $options, $merge = true)
+    {
+        if (empty($this->scriptOptions[$key])) {
+            $this->scriptOptions[$key] = [];
+        }
+
+        if ($merge && \is_array($options)) {
+            $this->scriptOptions[$key] = array_replace_recursive($this->scriptOptions[$key], $options);
+        } else {
+            $this->scriptOptions[$key] = $options;
+        }
+
+        return $this;
+    }
+
+    public function getScriptOptions($key = null)
+    {
+        if ($key) {
+            return (empty($this->scriptOptions[$key])) ? [] : $this->scriptOptions[$key];
+        }
+
+        return $this->scriptOptions;
+    }
+
     protected function _systemUrl($url, $version = true)
     {
-        $root = \JURI::root();
-        $config = \JFactory::getConfig();
+        if (Framework::isAdmin()) {
+            $root = Uri::root();
+        } else {
+            $root = Uri::root(true). '/';
+        }
+        $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();
         if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
@@ -792,7 +840,7 @@ class Document
         } else {
             $postfix = '';
         }
-        return $url . $postfix;
+        return $url ;
     }
 
     public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript')
@@ -1031,7 +1079,7 @@ class Document
         $template = Framework::getTemplate();
 
         $params = $template->getParams();
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $menu = $app->getMenu()->getActive();
 
         $class = [];
@@ -1098,7 +1146,7 @@ class Document
 
     public function isBuilder()
     {
-        $jinput = \JFactory::getApplication()->input;
+        $jinput = Factory::getApplication()->input;
         $option = $jinput->get('option', '');
         $view = $jinput->get('view', '');
         return (($option == "com_sppagebuilder" && $view == "page") || ($option == "com_quix" && $view == "page") || ($option == "com_jdbuilder" && $view == "page"));
@@ -1159,6 +1207,7 @@ class Document
     public function astroidCSS()
     {
         $getPluginParams = Helper::getPluginParams();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         // Scss
         if (Framework::isSite()) {
             $template = Framework::getTemplate();
@@ -1187,40 +1236,44 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
+
+//            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
             $this->addStyleSheet('css/compiled-' . $scssVersion . '.css');
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
-            $this->addStyleSheet('vendor/astroid/css/debug.css');
+            $wa->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
         }
+    }
+    public function astroidCustomCSS() {
+        // css on page
+        $getPluginParams = Helper::getPluginParams();
+        $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
 
-        if (Framework::isSite()) {
-            $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-            if (!$astroid_inline_css) {
-                $css = $this->renderCss();
-                // page css
-                $pageCSSHash = md5($css);
-                $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
-                if (!file_exists($pageCSS)) {
-                    Helper::putContents($pageCSS, $css);
-                }
-                $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
+        if (Framework::isSite() && !$astroid_inline_css) {
+            $css = $this->renderCss();
+            // page css
+            $pageCSSHash = md5($css);
+            $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+            if (!file_exists($pageCSS)) {
+                Helper::putContents($pageCSS, $css);
             }
+            $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             // custom css
             if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
                 $this->addStyleSheet('css/custom.css');
             }
         }
     }
+
     public function astroidInlineCSS() {
         // css on page
         $getPluginParams = Helper::getPluginParams();
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-        if (!Framework::isSite() || $astroid_inline_css) {
+        if (Framework::isSite() && $astroid_inline_css) {
             $css = $this->renderCss();
-            return '<style>' . $css . '</style>';
-//            $minifier = new Minify\CSS($css);
-//            return '<style>' . $minifier->minify() . '</style>';
+            return '<style>'.$css.'</style>';
         }
+        return '';
     }
 }

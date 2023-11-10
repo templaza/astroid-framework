@@ -2,13 +2,28 @@
 <form>
    <fields name="params">
       <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
+         <field type="astroidgroup" name="bootstrap" title="TPL_BOOTSTRAP_TITLE"/>
          <field type="astroidgroup" name="page_setting" title="TPL_ASTROID_PAGE_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
          <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#preloader"/>
          <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#favicon" />
          <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#back-to-top"/>
          <field type="astroidgroup" name="colormode" title="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" help="https://docs.astroidframe.work/basic-settings/color-mode"/>
          <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
-		
+
+         <field astroidgroup="bootstrap" name="bootstrap_js" type="astroidmultiselect" label="TPL_ASTROID_BOOTSTRAP_JS_LABEL" default="[]" description="TPL_ASTROID_BOOTSTRAP_JS_DESC">
+            <option value="alert">Alert</option>
+            <option value="button">Button</option>
+            <option value="carousel">Carousel</option>
+            <option value="collapse">Collapse</option>
+            <option value="dropdown">Dropdown</option>
+            <option value="modal">Modal</option>
+            <option value="offcanvas">Off-Canvas</option>
+            <option value="popover">Popover</option>
+            <option value="scrollspy">Scrollspy</option>
+            <option value="tab">Tab</option>
+            <option value="toast">Toast</option>
+         </field>
+
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"/>
          <field astroidgroup="preloader_options" ngShow="[preloader]=='1'" description="TPL_ASTROID_PRELOADER_TYPE_DESC" name="preloder_setting" type="astroidradio" default="animations" label="TPL_ASTROID_PRELOADER_TYPE">
             <option value="animations">ASTROID_ANIMATION</option>

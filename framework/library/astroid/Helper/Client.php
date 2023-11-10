@@ -13,6 +13,12 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Version;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -22,7 +28,7 @@ class Client
 
     public function __construct()
     {
-        $this->format = \JFactory::getApplication()->input->get('format', 'json', 'RAW');
+        $this->format = Factory::getApplication()->input->get('format', 'json', 'RAW');
     }
 
     protected function responseMime()
@@ -142,17 +148,18 @@ class Client
 
     protected function checkAuth()
     {
-        if (!\JSession::checkToken()) {
-            throw new \Exception(\JText::_('ASTROID_AJAX_ERROR'));
+        if (!Session::checkToken()) {
+            throw new \Exception(Text::_('ASTROID_AJAX_ERROR'));
         }
     }
 
     protected function checkAndRedirect()
     {
-        if (!\JFactory::getUser()->id) {
-            $uri = ASTROID_JOOMLA_VERSION > 3 ? Uri::getInstance() : \JFactory::getURI();
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->id) {
+            $uri = Uri::getInstance();
             $return = $uri->toString();
-            \JFactory::getApplication()->redirect(\JRoute::_('index.php?ast=' . urlencode(base64_encode($return))));
+            Factory::getApplication()->redirect(Route::_('index.php?ast=' . urlencode(base64_encode($return))));
         }
     }
 
@@ -163,7 +170,7 @@ class Client
         Helper::loadLanguage('astroid');
         $frontendVisibility = $pluginParams->get('frontend_tabs_visibility', 1);
 
-        \JForm::addFormPath(JPATH_SITE . '/' . $astroid_dir . '/framework/forms');
+        Form::addFormPath(JPATH_SITE . '/' . $astroid_dir . '/framework/forms');
 
         $loaded = false;
 
@@ -204,11 +211,11 @@ class Client
             $loaded = true;
         }
 
-        $version = new \JVersion;
+        $version = new Version;
         $version = $version->getShortVersion();
         $version = substr($version, 0, 1);
         if ($version == 4 && $loaded) {
-            \JFactory::getDocument()->addScriptDeclaration('
+            Factory::getDocument()->addScriptDeclaration('
             (function(){
                 var fixed = false;
                 var fixTabs = function () {

@@ -10,6 +10,10 @@
 namespace Astroid\Helper;
 
 use Astroid\Helper;
+use \Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Form\Form;
+use Joomla\Filesystem\Folder;
 
 defined('_JEXEC') or die;
 
@@ -17,7 +21,7 @@ class Template
 {
     public static function getAstroidTemplates($full = false)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db
             ->getQuery(true)
             ->select('s.id, s.template, s.title')
@@ -50,7 +54,7 @@ class Template
         }
         $xml = Helper::getXML($template_xml_path);
         $version = (string) $xml->version;
-        $form = new \JForm('template');
+        $form = new Form('template');
         $form->loadFile($template_xml_path, false, '//config');
         $fields = $form->getFieldset('basic');
         $return = false;
@@ -78,7 +82,7 @@ class Template
             } else {
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }
-            $db = \JFactory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $object = new \stdClass();
             $object->id = $id;
             $object->params = \json_encode(["astroid" => $id]);
@@ -93,10 +97,10 @@ class Template
         $source             = JPATH_SITE . '/media/templates/site/' . $template . '/images/default';
         $destination        = JPATH_SITE . '/images/' . $template;
         if (file_exists($source)) {
-            \JFolder::copy($source, $destination, '', true);
+            Folder::copy($source, $destination, '', true);
         }
         elseif (file_exists($old_source)) {
-            \JFolder::copy($old_source, $destination, '', true);
+            Folder::copy($old_source, $destination, '', true);
         }
     }
 
@@ -104,10 +108,10 @@ class Template
         $source         =   JPATH_SITE . '/media/templates/site/' . $parent;
         $destination    =   JPATH_SITE . '/media/templates/site/' . $child;
         if (file_exists($source.'/astroid')) {
-            \JFolder::copy($source.'/astroid', $destination.'/astroid');
+            Folder::copy($source.'/astroid', $destination.'/astroid');
         }
         if (file_exists($source.'/fonts')) {
-            \JFolder::copy($source.'/fonts', $destination.'/fonts');
+            Folder::copy($source.'/fonts', $destination.'/fonts');
         }
     }
 }

@@ -20,7 +20,8 @@
    </files>
    <media folder="media" destination="astroid">
       <folder>assets</folder>
-      <folder>jd</folder>
+      <folder>css</folder>
+      <folder>js</folder>
    </media>
    <languages folder="language/en-GB">
       <language tag="en-GB">en-GB.astroid.ini</language>

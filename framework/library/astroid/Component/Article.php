@@ -10,6 +10,7 @@
 namespace Astroid\Component;
 
 use Astroid\Helper;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -26,7 +27,7 @@ class Article
 
     protected function get()
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = "SELECT * FROM `#__content` as `c` LEFT JOIN `#__content_rating` as `r` ON `c`.`id`=`r`.`content_id` WHERE `c`.`id`='$this->id'";
         $db->setQuery($query);
         $result = $db->loadObject();

@@ -10,7 +10,7 @@
 
 ## Features
 * Bootstrap 5 Compatible
-* Built for Joomla 3, Joomla 4 and Joomla 5
+* Built for Joomla 4 and Joomla 5
 * Drag and Drop Layout Builder
 * Advanced Responsive Control
 * Advanced Mega Menu
@@ -32,8 +32,8 @@
 * Light & Dark Color Mode
 
 ## Requirements
-* Joomla: 3.x, 4.x, 5.x
-* PHP : 7.0+
+* Joomla: 4.x, 5.x
+* PHP : 8.0+
 
 ## Browser Support
 | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)|![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)|![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)|![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)|

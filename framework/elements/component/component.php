@@ -9,10 +9,11 @@
  * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/component/component.php folder to create and override
  * See https://docs.joomdev.com/article/override-core-layouts/ for documentation
  */
+use Joomla\CMS\Factory;
 // No direct access.
 defined('_JEXEC') or die;
 
-$doc = JFactory::getDocument();
+$doc = Factory::getApplication()->getDocument();
 $data = $doc->getBuffer('component');
 $sPattern = '/\s*/m';
 $sReplace = '';

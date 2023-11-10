@@ -8,32 +8,29 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
-class JFormFieldAstroidMedia extends JFormField {
+class JFormFieldAstroidMedia extends FormField {
 
    protected $type = 'AstroidMedia';
     protected $ordering;
    protected $layout = 'fields.astroidmedia';
 
    public function getInput() {
-//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
-//      $data = $this->getLayoutData();
-//      $data['fieldname'] = $this->fieldname;
-//      $data['media'] = empty($this->element['media']) ? 'images' : $this->element['media'];
-//      return $renderer->render($data);
        $mediaType   =   empty($this->element['media']) ? 'images' : $this->element['media'];
        $json =   [
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $this->value,
-           'media'   =>  $mediaType,
-           'ajax'    =>  JUri::root().'administrator/index.php?option=com_ajax&astroid=media',
+           'media'   =>  (string) $mediaType,
+           'ajax'    =>  Uri::root().'administrator/index.php?option=com_ajax&astroid=media',
            'type'    =>  strtolower($this->type),
            'lang'    =>  [
-               'select_media'   =>  JText::_('TPL_ASTROID_SELECT_'.strtoupper($mediaType)),
-               'change_media'   =>  JText::_('TPL_ASTROID_CHANGE_'.strtoupper($mediaType)),
-               'clear'          =>  JText::_('ASTROID_CLEAR')
+               'select_media'   =>  Text::_('TPL_ASTROID_SELECT_'.strtoupper($mediaType)),
+               'change_media'   =>  Text::_('TPL_ASTROID_CHANGE_'.strtoupper($mediaType)),
+               'clear'          =>  Text::_('ASTROID_CLEAR')
            ]
        ];
        return json_encode($json);

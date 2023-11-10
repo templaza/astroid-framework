@@ -1,6 +1,7 @@
 <?php
+
 /**
- * CSS Minifier
+ * CSS Minifier.
  *
  * Please report bugs on https://github.com/matthiasmullie/minify/issues
  *
@@ -12,15 +13,14 @@
 namespace MatthiasMullie\Minify;
 
 use MatthiasMullie\Minify\Exceptions\FileImportException;
-use MatthiasMullie\PathConverter\ConverterInterface;
 use MatthiasMullie\PathConverter\Converter;
+use MatthiasMullie\PathConverter\ConverterInterface;
 
 /**
- * CSS minifier
+ * CSS minifier.
  *
  * Please report bugs on https://github.com/matthiasmullie/minify/issues
  *
- * @package Minify
  * @author Matthias Mullie <minify@mullie.eu>
  * @author Tijs Verkoyen <minify@verkoyen.eu>
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
@@ -44,6 +44,10 @@ class CSS extends Minify
         'jpeg' => 'data:image/jpeg',
         'svg' => 'data:image/svg+xml',
         'woff' => 'data:application/x-font-woff',
+        'woff2' => 'data:application/x-font-woff2',
+        'avif' => 'data:image/avif',
+        'apng' => 'data:image/apng',
+        'webp' => 'data:image/webp',
         'tif' => 'image/tiff',
         'tiff' => 'image/tiff',
         'xbm' => 'image/x-xbitmap',
@@ -93,7 +97,7 @@ class CSS extends Minify
             }
 
             // add to top
-            $content = implode(';', $matches[2]).';'.trim($content, ';');
+            $content = implode(';', $matches[2]) . ';' . trim($content, ';');
         }
 
         return $content;
@@ -102,8 +106,8 @@ class CSS extends Minify
     /**
      * Combine CSS from import statements.
      *
-     * @import's will be loaded and their content merged into the original file,
-     * to save HTTP requests.
+     * Import statements will be loaded and their content merged into the original
+     * file, to save HTTP requests.
      *
      * @param string   $source  The file to combine imports for
      * @param string   $content The CSS content to combine imports for
@@ -200,7 +204,7 @@ class CSS extends Minify
         // loop the matches
         foreach ($matches as $match) {
             // get the path for the file that will be imported
-            $importPath = dirname($source).'/'.$match['path'];
+            $importPath = dirname($source) . '/' . $match['path'];
 
             // only replace the import with the content if we can grab the
             // content of the file
@@ -211,19 +215,19 @@ class CSS extends Minify
             // check if current file was not imported previously in the same
             // import chain.
             if (in_array($importPath, $parents)) {
-                throw new FileImportException('Failed to import file "'.$importPath.'": circular reference detected.');
+                throw new FileImportException('Failed to import file "' . $importPath . '": circular reference detected.');
             }
 
             // grab referenced file & minify it (which may include importing
             // yet other @import statements recursively)
-            $minifier = new static($importPath);
+            $minifier = new self($importPath);
             $minifier->setMaxImportSize($this->maxImportSize);
             $minifier->setImportExtensions($this->importExtensions);
             $importContent = $minifier->execute($source, $parents);
 
             // check if this is only valid for certain media
             if (!empty($match['media'])) {
-                $importContent = '@media '.$match['media'].'{'.$importContent.'}';
+                $importContent = '@media ' . $match['media'] . '{' . $importContent . '}';
             }
 
             // add to replacement array
@@ -262,7 +266,7 @@ class CSS extends Minify
 
                 // get the path for the file that will be imported
                 $path = $match[2];
-                $path = dirname($source).'/'.$path;
+                $path = dirname($source) . '/' . $path;
 
                 // only replace the import with the content if we're able to get
                 // the content of the file, and it's relatively small
@@ -273,7 +277,7 @@ class CSS extends Minify
 
                     // build replacement
                     $search[] = $match[0];
-                    $replace[] = 'url('.$this->importExtensions[$extension].';base64,'.$importContent.')';
+                    $replace[] = 'url(' . $this->importExtensions[$extension] . ';base64,' . $importContent . ')';
                 }
             }
 
@@ -289,7 +293,7 @@ class CSS extends Minify
      * Perform CSS optimizations.
      *
      * @param string[optional] $path    Path to write the data to
-     * @param string[]         $parents Parent paths, for circular reference checks
+     * @param string[] $parents Parent paths, for circular reference checks
      *
      * @return string The minified data
      */
@@ -307,7 +311,8 @@ class CSS extends Minify
              */
             $this->extractStrings();
             $this->stripComments();
-            $this->extractCalcs();
+            $this->extractMath();
+            $this->extractCustomProperties();
             $css = $this->replace($css);
 
             $css = $this->stripWhitespace($css);
@@ -464,9 +469,9 @@ class CSS extends Minify
             // build replacement
             $search[] = $match[0];
             if ($type === 'url') {
-                $replace[] = 'url('.$url.')';
+                $replace[] = 'url(' . $url . ')';
             } elseif ($type === 'import') {
-                $replace[] = '@import "'.$url.'"';
+                $replace[] = '@import "' . $url . '"';
             }
         }
 
@@ -525,7 +530,7 @@ class CSS extends Minify
         );
 
         return preg_replace_callback(
-            '/(?<=[: ])('.implode('|', array_keys($colors)).')(?=[; }])/i',
+            '/(?<=[: ])(' . implode('|', array_keys($colors)) . ')(?=[; }])/i',
             function ($match) use ($colors) {
                 return $colors[strtoupper($match[0])];
             },
@@ -548,10 +553,10 @@ class CSS extends Minify
         );
 
         $callback = function ($match) use ($weights) {
-            return $match[1].$weights[$match[2]];
+            return $match[1] . $weights[$match[2]];
         };
 
-        return preg_replace_callback('/(font-weight\s*:\s*)('.implode('|', array_keys($weights)).')(?=[;}])/', $callback, $content);
+        return preg_replace_callback('/(font-weight\s*:\s*)(' . implode('|', array_keys($weights)) . ')(?=[;}])/', $callback, $content);
     }
 
     /**
@@ -583,19 +588,19 @@ class CSS extends Minify
         // practice, Webkit (especially Safari) seems to stumble over at least
         // 0%, potentially other units as well. Only stripping 'px' for now.
         // @see https://github.com/matthiasmullie/minify/issues/60
-        $content = preg_replace('/'.$before.'(-?0*(\.0+)?)(?<=0)px'.$after.'/', '\\1', $content);
+        $content = preg_replace('/' . $before . '(-?0*(\.0+)?)(?<=0)px' . $after . '/', '\\1', $content);
 
         // strip 0-digits (.0 -> 0)
-        $content = preg_replace('/'.$before.'\.0+'.$units.'?'.$after.'/', '0\\1', $content);
+        $content = preg_replace('/' . $before . '\.0+' . $units . '?' . $after . '/', '0\\1', $content);
         // strip trailing 0: 50.10 -> 50.1, 50.10px -> 50.1px
-        $content = preg_replace('/'.$before.'(-?[0-9]+\.[0-9]+)0+'.$units.'?'.$after.'/', '\\1\\2', $content);
+        $content = preg_replace('/' . $before . '(-?[0-9]+\.[0-9]+)0+' . $units . '?' . $after . '/', '\\1\\2', $content);
         // strip trailing 0: 50.00 -> 50, 50.00px -> 50px
-        $content = preg_replace('/'.$before.'(-?[0-9]+)\.0+'.$units.'?'.$after.'/', '\\1\\2', $content);
+        $content = preg_replace('/' . $before . '(-?[0-9]+)\.0+' . $units . '?' . $after . '/', '\\1\\2', $content);
         // strip leading 0: 0.1 -> .1, 01.1 -> 1.1
-        $content = preg_replace('/'.$before.'(-?)0+([0-9]*\.[0-9]+)'.$units.'?'.$after.'/', '\\1\\2\\3', $content);
+        $content = preg_replace('/' . $before . '(-?)0+([0-9]*\.[0-9]+)' . $units . '?' . $after . '/', '\\1\\2\\3', $content);
 
         // strip negative zeroes (-0 -> 0) & truncate zeroes (00 -> 0)
-        $content = preg_replace('/'.$before.'-?0+'.$units.'?'.$after.'/', '0\\1', $content);
+        $content = preg_replace('/' . $before . '-?0+' . $units . '?' . $after . '/', '0\\1', $content);
 
         // IE doesn't seem to understand a unitless flex-basis value (correct -
         // it goes against the spec), so let's add it in again (make it `%`,
@@ -627,18 +632,7 @@ class CSS extends Minify
      */
     protected function stripComments()
     {
-        // PHP only supports $this inside anonymous functions since 5.4
-        $minifier = $this;
-        $callback = function ($match) use ($minifier) {
-            $count = count($minifier->extracted);
-            $placeholder = '/*'.$count.'*/';
-            $minifier->extracted[$placeholder] = $match[0];
-
-            return $placeholder;
-        };
-        $this->registerPattern('/\n?\/\*(!|.*?@license|.*?@preserve).*?\*\/\n?/s', $callback);
-
-        $this->registerPattern('/\/\*.*?\*\//s', '');
+        $this->stripMultilineComments();
     }
 
     /**
@@ -669,7 +663,7 @@ class CSS extends Minify
         // not in things like `calc(3px + 2px)`, shorthands like `3px -2px`, or
         // selectors like `div.weird- p`
         $pseudos = array('nth-child', 'nth-last-child', 'nth-last-of-type', 'nth-of-type');
-        $content = preg_replace('/:('.implode('|', $pseudos).')\(\s*([+-]?)\s*(.+?)\s*([+-]?)\s*(.*?)\s*\)/', ':$1($2$3$4$5)', $content);
+        $content = preg_replace('/:(' . implode('|', $pseudos) . ')\(\s*([+-]?)\s*(.+?)\s*([+-]?)\s*(.*?)\s*\)/', ':$1($2$3$4$5)', $content);
 
         // remove semicolon/whitespace followed by closing bracket
         $content = str_replace(';}', '}', $content);
@@ -678,38 +672,71 @@ class CSS extends Minify
     }
 
     /**
-     * Replace all `calc()` occurrences.
+     * Replace all occurrences of functions that may contain math, where
+     * whitespace around operators needs to be preserved (e.g. calc, clamp).
      */
-    protected function extractCalcs()
+    protected function extractMath()
     {
+        $functions = array('calc', 'clamp', 'min', 'max');
+        $pattern = '/\b(' . implode('|', $functions) . ')(\(.+?)(?=$|;|})/m';
+
         // PHP only supports $this inside anonymous functions since 5.4
         $minifier = $this;
-        $callback = function ($match) use ($minifier) {
-            $length = strlen($match[1]);
+        $callback = function ($match) use ($minifier, $pattern, &$callback) {
+            $function = $match[1];
+            $length = strlen($match[2]);
             $expr = '';
             $opened = 0;
 
-            for ($i = 0; $i < $length; $i++) {
-                $char = $match[1][$i];
+            // the regular expression for extracting math has 1 significant problem:
+            // it can't determine the correct closing parenthesis...
+            // instead, it'll match a larger portion of code to where it's certain that
+            // the calc() musts have ended, and we'll figure out which is the correct
+            // closing parenthesis here, by counting how many have opened
+            for ($i = 0; $i < $length; ++$i) {
+                $char = $match[2][$i];
                 $expr .= $char;
                 if ($char === '(') {
-                    $opened++;
+                    ++$opened;
                 } elseif ($char === ')' && --$opened === 0) {
                     break;
                 }
             }
-            $rest = str_replace($expr, '', $match[1]);
-            $expr = trim(substr($expr, 1, -1));
 
+            // now that we've figured out where the calc() starts and ends, extract it
             $count = count($minifier->extracted);
-            $placeholder = 'calc('.$count.')';
-            $minifier->extracted[$placeholder] = 'calc('.$expr.')';
+            $placeholder = 'math(' . $count . ')';
+            $minifier->extracted[$placeholder] = $function . '(' . trim(substr($expr, 1, -1)) . ')';
 
-            return $placeholder.$rest;
+            // and since we've captured more code than required, we may have some leftover
+            // calc() in here too - go recursive on the remaining but of code to go figure
+            // that out and extract what is needed
+            $rest = $minifier->str_replace_first($function . $expr, '', $match[0]);
+            $rest = preg_replace_callback($pattern, $callback, $rest);
+
+            return $placeholder . $rest;
         };
 
-        $this->registerPattern('/calc(\(.+?)(?=$|;|}|calc\()/', $callback);
-        $this->registerPattern('/calc(\(.+?)(?=$|;|}|calc\()/m', $callback);
+        $this->registerPattern($pattern, $callback);
+    }
+
+    /**
+     * Replace custom properties, whose values may be used in scenarios where
+     * we wouldn't want them to be minified (e.g. inside calc).
+     */
+    protected function extractCustomProperties()
+    {
+        // PHP only supports $this inside anonymous functions since 5.4
+        $minifier = $this;
+        $this->registerPattern(
+            '/(?<=^|[;}{])\s*(--[^:;{}"\'\s]+)\s*:([^;{}]+)/m',
+            function ($match) use ($minifier) {
+                $placeholder = '--custom-' . count($minifier->extracted) . ':0';
+                $minifier->extracted[$placeholder] = $match[1] . ':' . trim($match[2]);
+
+                return $placeholder;
+            }
+        );
     }
 
     /**

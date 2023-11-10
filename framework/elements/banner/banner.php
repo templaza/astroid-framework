@@ -10,10 +10,11 @@
  * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/banner/banner.php folder to create and override
  * See https://docs.joomdev.com/article/override-core-layouts/ for documentation
  */
+use Joomla\CMS\Factory;
 // No direct access.
 defined('_JEXEC') or die;
 
-$app = JFactory::getApplication();
+$app = Factory::getApplication();
 $jinput = $app->input;
 $menuId = $jinput->get('Itemid', 0, 'INT');
 

@@ -10,11 +10,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\ExtensionHelper;
 use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 
 $joomlaFilesExtensionId = ExtensionHelper::getExtensionRecord('joomla', 'file')->extension_id;
-$document   =   JFactory::getDocument();
-HTMLHelper::_('jquery.framework');
-$document->addScript(JUri::base('true').'/modules/mod_astroid_clear_cache/js/notify.min.js');
-$document->addScript(JUri::base('true').'/modules/mod_astroid_clear_cache/js/script.js');
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->registerAndUseScript('mod_astroid_clear_cache_notify', 'astroid/mod_astroid_clear_cache/notify.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseScript('mod_astroid_clear_cache_script', 'astroid/mod_astroid_clear_cache/script.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 require ModuleHelper::getLayoutPath('mod_astroid_clear_cache', $params->get('layout', 'default'));

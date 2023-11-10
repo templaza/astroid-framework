@@ -232,6 +232,24 @@ function deleteElement(element, index) {
         layout.value[map[props.group]].splice(index, 1);
     }
 }
+
+function getColumnClass(element) {
+    let column_class = props.device !== 'xs' ? `col-`+element.size[props.device] : `col-`+element.size.xs;
+    let column_order = 0;
+    if (typeof element.params !== 'undefined') {
+        element.params.every(param => {
+            if (param.name === 'column_order_' + props.device) {
+                column_order = parseInt(param.value);
+                return false;
+            }
+            return true;
+        });
+    }
+    if (column_order > 0) {
+        column_class += ' order-' + column_order;
+    }
+    return column_class;
+}
 </script>
 <template>
     <draggable
@@ -285,9 +303,9 @@ function deleteElement(element, index) {
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {editGrid(element, grid)}" />
                 </Transition>
             </div>
-            <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="(props.device !== 'xs' ? `col-`+element.size[props.device] : `col-`+element.size.xs)">
+            <div v-else-if="props.group === `rows`" class="astroid-col-container" :class="getColumnClass(element)">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="column-size text-body-tertiary mb-2">
+                    <div class="column-size mb-2">
                         <select class="form-select form-select-sm" v-model="element.size[props.device]" aria-label="Select column size" :id="`select-column-size-`+element.id">
                             <option v-for="option in [1,2,3,4,5,6,7,8,9,10,11,12]" :value="option" :key="option">{{ 'col'+(props.device !== 'xs' ? '-'+props.device+'-'+option : '-'+option) }}</option>
                         </select>

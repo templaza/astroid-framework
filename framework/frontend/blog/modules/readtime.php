@@ -8,6 +8,7 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
@@ -16,5 +17,5 @@ $params = $article->params;
 ?>
 <dd class="readtime">
    <i class="far fa-clock"></i>
-   <span><?php echo JText::sprintf('ASTROID_ARTICLE_BLOG_READTIME', $article->readtime); ?></span>
+   <span><?php echo Text::sprintf('ASTROID_ARTICLE_BLOG_READTIME', $article->readtime); ?></span>
 </dd>

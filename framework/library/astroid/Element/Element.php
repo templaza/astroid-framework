@@ -10,6 +10,7 @@
 namespace Astroid\Element;
 
 use Astroid\Framework;
+use Joomla\CMS\Layout\FileLayout;
 
 defined('_JEXEC') or die;
 
@@ -35,7 +36,7 @@ class Element extends BaseElement
     {
         $layout = Framework::getTemplate()->getElementLayout($this->type);
         $pathinfo = pathinfo($layout);
-        $layout = new \JLayoutFile($pathinfo['filename'], $pathinfo['dirname']);
+        $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
         return $layout->render(['params' => $this->params, 'element' => $this]);
     }
 

@@ -11,11 +11,14 @@
  */
 // No direct access.
 defined('_JEXEC') or die;
+use Joomla\CMS\Router\Route;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 extract($displayData);
 $params = $item->params;
+
 ?>
 <?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-    <a title="<?php echo @$title; ?>" href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+    <a title="<?php echo @$title; ?>" href="<?php echo Route::_(RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
         <img class="card-img-top" src="<?php echo @$image; ?>" alt="<?php echo @$title; ?>" />
     </a>
 <?php else : ?>

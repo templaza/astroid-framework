@@ -6,8 +6,11 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\Field\ListField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+FormHelper::loadFieldClass('list');
 
 /**
  * Form Field class for the Joomla Platform.
@@ -16,7 +19,7 @@ JFormHelper::loadFieldClass('list');
  * @link   http://www.w3.org/TR/html-markup/command.radio.html#command.radio
  * @since  11.1
  */
-class JFormFieldAstroidRadio extends JFormFieldList {
+class JFormFieldAstroidRadio extends ListField {
 
    /**
     * The form field type.
@@ -63,10 +66,6 @@ class JFormFieldAstroidRadio extends JFormFieldList {
        }
 
        return json_encode($json);
-
-//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
-//
-//      return $renderer->render($this->getLayoutData());
    }
 
    /**
@@ -124,7 +123,7 @@ class JFormFieldAstroidRadio extends JFormFieldList {
       $sortOptions = array();
 
       foreach ($this->element->children() as $option) {
-         $name = JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
+         $name = Text::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
 
          $sortOptions[$i] = new stdClass;
          $sortOptions[$i]->option = $option;
@@ -152,12 +151,12 @@ class JFormFieldAstroidRadio extends JFormFieldList {
             continue;
          }
 
-         $tmp = JHtml::_('select.option', (string) $option['value'], $name, 'value', 'text', ((string) $option['disabled'] == 'true'));
+         $tmp = HTMLHelper::_('select.option', (string) $option['value'], $name, 'value', 'text', ((string) $option['disabled'] == 'true'));
 
          // Set some option attributes.
          $tmp->class = (string) $option['class'];
          $label = (string) $option['label'];
-         $tmp->label = JText::_($label);
+         $tmp->label = Text::_($label);
          // Set some JavaScript option attributes.
          $tmp->onclick = (string) $option['onclick'];
 
@@ -202,10 +201,10 @@ class JFormFieldAstroidRadio extends JFormFieldList {
                      $value = (empty($source_value) || ($source_value == '*')) ? $v : $v[$source_value];
 
                      if ($source_translate) {
-                        $value = JText::_($value);
+                        $value = Text::_($value);
                      }
 
-                     $options[] = JHtml::_('select.option', $key, $value, 'value', 'text');
+                     $options[] = HTMLHelper::_('select.option', $key, $value, 'value', 'text');
                   }
                }
             }

@@ -11,6 +11,8 @@ namespace Astroid\Component;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -19,9 +21,10 @@ class LazyLoad
     public static function run()
     {
         Framework::getDebugger()->log('Lazy Load');
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $template = Framework::getTemplate();
         $document = Framework::getDocument();
+        $wa    = $app->getDocument()->getWebAssetManager();
         $params = $template->getParams();
         $run = $params->get('lazyload', 0);
 
@@ -32,7 +35,8 @@ class LazyLoad
         if (!$run) return;
 
         Helper::createDir(ASTROID_CACHE . '/lazy-load/' . $template->id);
-        $document->addScript('vendor/astroid/js/lazyload.min.js');
+//        $document->addScript('vendor/astroid/js/lazyload.min.js');
+        $wa->registerAndUseScript('astroid.lazyload', 'astroid/lazyload.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 
         if ($params->get('lazyload_components', '')) {
             $run = self::selectedComponents($params->get('lazyload_components', ''), $params->get('lazyload_components_action', 'include'));
@@ -55,7 +59,7 @@ class LazyLoad
             }
         }
 
-        $blankImage = \JURI::root() . 'media/astroid/assets/images/blank.png';
+        $blankImage = Uri::root() . 'media/astroid/assets/images/blank.png';
         $patternImage = "@<img[^>]*src=[\"\']([^\"\']*)[\"\'][^>]*>@";
         $body = $inputString = $app->getBody(false);
 
@@ -78,8 +82,8 @@ class LazyLoad
                 $imageMap = \json_decode(\file_get_contents($imageMapFile), true);
             }
 
-            $base = \JUri::base();
-            $basePath = \JUri::base(true);
+            $base = Uri::base();
+            $basePath = Uri::base(true);
 
             foreach ($matches[0] as $key => $match) {
                 if (strpos($matches[1][$key], 'http://') === false && strpos($matches[1][$key], 'https://') === false) {
@@ -188,7 +192,7 @@ class LazyLoad
 
     public static function selectedComponents($components = '', $toggle = '')
     {
-        $option = \JFactory::getApplication()->input->getWord('option');
+        $option = Factory::getApplication()->input->getWord('option');
         $components = array_map('trim', explode("\n", $components));
         $hit = false;
         $return = true;
@@ -215,7 +219,7 @@ class LazyLoad
 
     public static function selectedURLs($surls = '', $toggle = '')
     {
-        $url = \JUri::getInstance()->toString();
+        $url = Uri::getInstance()->toString();
         $surls = array_map('trim', explode("\n", $surls));
         $hit = false;
         $return = true;
@@ -244,7 +248,7 @@ class LazyLoad
 
     public static function exclidedViews($views = '')
     {
-        $view = \JFactory::getApplication()->input->getWord('tmpl', '');
+        $view = Factory::getApplication()->input->getWord('tmpl', '');
         $views = array_map('trim', explode(",", $views));
         $return = true;
 

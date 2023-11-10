@@ -9,9 +9,10 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Layout\FileLayout;
 
-class JFormFieldAstroidMenuOptions extends JFormField {
+class JFormFieldAstroidMenuOptions extends FormField {
 
    //The field class must know its own type through the variable $type.
    protected $type = 'AstroidMenuOptions';
@@ -21,7 +22,7 @@ class JFormFieldAstroidMenuOptions extends JFormField {
    }
 
    public function getInput() {
-      $renderer = new JLayoutFile('fields.astroidmenuoptions', JPATH_LIBRARIES . '/astroid/framework/layouts');
+      $renderer = new FileLayout('fields.astroidmenuoptions', JPATH_LIBRARIES . '/astroid/framework/layouts');
       $data = $this->getLayoutData();
       if (!is_array($this->value) && empty($this->value)) {
          //$value = [];

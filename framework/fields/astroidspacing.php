@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
 /**
  * Color Form Field class for the Joomla Platform.
  * This implementation is designed to be compatible with HTML5's `<input type="color">`
@@ -15,7 +15,7 @@ defined('JPATH_PLATFORM') or die;
  * @link   https://www.w3.org/TR/html-markup/input.color.html
  * @since  11.3
  */
-class JFormFieldAstroidSpacing extends JFormField
+class JFormFieldAstroidSpacing extends FormField
 {
 
     /**

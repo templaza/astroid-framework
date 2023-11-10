@@ -33,10 +33,6 @@
 			</field>
 			<field astroidgroup="header_colors" name="header_link_hover_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" description="TPL_ASTROID_BODY_LINK_HOVER_COLOR_DESC">
 			</field>
-			<field astroidgroup="header_colors" name="header_logo_text_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_COLOR_DESC">
-			</field>
-			<field astroidgroup="header_colors" name="header_logo_text_tagline_color" type="astroidcolor" large="true" label="TPL_ASTROID_LOGO_TAG_LINE_COLOR_LABEL" description="TPL_ASTROID_HEADER_LOGO_TEXT_TAGLINE_COLOR_DESC">
-			</field>
 			<field astroidgroup="sticky_header" name="stick_header_bg_color" type="astroidcolor" large="true" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" description="TPL_ASTROID_STICKY_HEADER_BACKGROUND_COLOR_DESC">
 			</field>
 

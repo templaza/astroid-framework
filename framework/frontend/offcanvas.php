@@ -9,11 +9,14 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
+use Joomla\CMS\Factory;
 // No direct access.
+use Joomla\CMS\Language\Text;
 defined('_JEXEC') or die;
 extract($displayData);
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 $header = $params->get('header', TRUE);
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
@@ -22,10 +25,10 @@ if (!$header || !$enable_offcanvas) {
 }
 
 $module_position = 'offcanvas';
-$document->addScript('vendor/astroid/js/offcanvas.js', 'body');
+$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 $hasMenu = $document->hasModule($module_position, 'mod_menu');
 if ($hasMenu) {
-   $document->addScript('vendor/astroid/js/mobilemenu.js', 'body');
+    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 }
 
 $togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
@@ -39,7 +42,7 @@ $openfrom = $params->get('offcanvas_openfrom', 'left');
       <?php $content = $document->position($module_position, 'astroidxhtml');
 
       if (empty($content)) {
-         echo '<div class="alert alert-danger">' . \JText::_('TPL_OFFCANVAS_EMPTY_ERROR') . '</div>';
+         echo '<div class="alert alert-danger">' . Text::_('TPL_OFFCANVAS_EMPTY_ERROR') . '</div>';
       } else {
          echo $content;
       }

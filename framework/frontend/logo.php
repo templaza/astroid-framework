@@ -10,6 +10,8 @@
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
 // No direct access.
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die;
 
 extract($displayData);
@@ -17,7 +19,7 @@ $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
 
 // Logo Alt Text
-$app = JFactory::getApplication();
+$app = Factory::getApplication();
 $sitename = $app->get('sitename');
 
 $logo_type = $params->get('logo_type', 'none'); // Logo Type
@@ -30,7 +32,7 @@ $header_mode = $params->get('header_mode', 'horizontal');
 $header_stacked_menu_mode = $params->get('header_stacked_menu_mode', 'center');
 
 if ($logo_type == 'text') {
-    $config = JFactory::getConfig();
+    $config = Factory::getConfig();
     $logo_text = $params->get('logo_text', $config->get('sitename')); // Logo Text
     $tag_line = $params->get('tag_line', ''); // Logo Tagline
 } else {
@@ -45,7 +47,7 @@ if ($logo_type == 'text') {
 $class = ['astroid-logo', 'astroid-logo-' . $logo_type, 'd-flex align-items-center'];
 
 $logo_link_type = $params->get('logo_link_type', 'default');
-$logo_link = \JURI::root();
+$logo_link = Uri::root();
 $logo_link_target = '_self';
 if ($logo_link_type === 'custom') {
     $logo_link = $params->get('logo_link_custom', '');
@@ -81,24 +83,24 @@ if ($logo_link_type === 'custom') {
         <a target="<?php echo $logo_link_target; ?>" class="<?php echo implode(' ', $class); ?><?php echo $mr; ?>" href="<?php echo $logo_link; ?>">
         <?php endif; ?>
             <?php if (!empty($default_logo)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" />
             <?php } ?>
             <?php if (!empty($default_logo_dark)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" />
             <?php } ?>
 
             <?php if (!empty($mobile_logo)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" />
             <?php } ?>
             <?php if (!empty($mobile_logo_dark)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" />
             <?php } ?>
 
             <?php if (!empty($stickey_header_logo)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" />
             <?php } ?>
             <?php if (!empty($stickey_header_logo_dark)) { ?>
-                <img src="<?php echo JURI::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" />
+                <img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" />
             <?php } ?>
         <?php if ($logo_link_type != 'none') : ?>
         </a>

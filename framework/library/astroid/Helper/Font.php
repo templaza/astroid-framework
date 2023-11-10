@@ -11,6 +11,9 @@ namespace Astroid\Helper;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -38,7 +41,6 @@ class Font
 
     public static function googleFonts()
     {
-        $app = \JFactory::getApplication();
         $fonts = Helper::getJSONData('webfonts');
         $options = [];
 
@@ -76,15 +78,15 @@ class Font
         $rt_fonts   =   array(
             'system' => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ]),
             'google' => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ]),
             'local'  => array([
                 'value' => '__default',
-                'text'  => \JText::_('TPL_ASTROID_OPTIONS_DEFAULT')
+                'text'  => Text::_('TPL_ASTROID_OPTIONS_DEFAULT')
             ])
         );
 
@@ -234,7 +236,8 @@ class Font
 
     public static function loadGoogleFont($value)
     {
-        $document = Framework::getDocument();
+        $document = Factory::getApplication()->getDocument();
+        $wa = $document->getWebAssetManager();
 
         $value = str_replace(',', ';', $value);
         $value = str_replace(':', ':ital,wght@', $value);
@@ -256,8 +259,12 @@ class Font
             $value = str_replace($wght, implode(';', $_value), $value);
         }
 
-        $document->addCustomTag('<link rel="preconnect" href="https://fonts.gstatic.com">');
-        $document->addStyleSheet('https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
+        if ($value) {
+            $wa->registerAndUseStyle('astroid.googlefont', 'https://fonts.gstatic.com', ['version' => 'auto'], ['rel' => 'preconnect']);
+            $wa->registerAndUseStyle('astroid.googlefont.'.$value, 'https://fonts.googleapis.com/css2?family=' . $value . '&display=swap');
+        } else {
+            return '';
+        }
 
         @list($font, $variants) = explode(":", $value);
 
@@ -271,24 +278,25 @@ class Font
     public static function loadLocalFont($value)
     {
         $template = Framework::getTemplate();
-        $document = Framework::getDocument();
+        $document = Factory::getApplication()->getDocument();
+        $wa = $document->getWebAssetManager();
         $uploaded_fonts = $template->getFonts();
         $template_media_fonts_path  = JPATH_SITE . "/media/templates/site/{$template->template}/fonts";
         $template_custom_fonts_path = JPATH_SITE . "/images/{$template->template}/fonts";
-        $font_custom_path           = \JURI::root() . "images/{$template->template}/fonts/";
+        $font_custom_path           = Uri::root() . "images/{$template->template}/fonts/";
         if (file_exists($template_media_fonts_path)) {
-            $font_path      =       \JURI::root() . "media/templates/site/{$template->template}/fonts/";
+            $font_path      =       Uri::root() . "media/templates/site/{$template->template}/fonts/";
         } else {
-            $font_path      =       \JURI::root() . "templates/{$template->template}/fonts/";
+            $font_path      =       Uri::root() . "templates/{$template->template}/fonts/";
         }
         if (isset($uploaded_fonts[$value])) {
             $files = $uploaded_fonts[$value]['files'];
             $value = $uploaded_fonts[$value]['name'];
             foreach ($files as $file) {
                 if (file_exists($template_custom_fonts_path . '/' . $file)) {
-                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
+                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
                 } else {
-                    $document->addStyleDeclaration('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
+                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
                 }
             }
         }
@@ -299,19 +307,17 @@ class Font
     {
         $params = Helper::getPluginParams();
         $source = $params->get('astroid_load_fontawesome', "cdn");
-        $document   =   Framework::getDocument();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         switch ($source) {
             case 'cdn':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
-                $document->addStyleSheet("https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $wa->registerAndUseStyle('fontawesome', "https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/css/all.css");
                 break;
             case 'local':
-                $document->addStyleSheet('media/system/css/joomla-fontawesome.min.css');
-                $document->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
                 break;
             default:
                 if (Framework::isAdmin()) {
-                    Framework::getDocument()->addStyleSheet("vendor/fontawesome/css/all.min.css", ['data-version' => Helper\Constants::$fontawesome_version]);
+                    $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
                 }
                 break;
         }

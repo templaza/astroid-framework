@@ -85,15 +85,33 @@ onMounted(()=>{
         console.log(error);
     });
 
+    if (props.modelValue['font_color'].trim() !== '') {
+        try {
+            const tmp = JSON.parse(props.modelValue['font_color']);
+            _color.light    = tmp.light;
+            _color.dark     = tmp.dark;
+        } catch (e) {
+            _color.light = props.modelValue['font_color'];
+            _color.dark = props.modelValue['font_color'];
+        }
+    }
     document.addEventListener('click', function(event) {
         const elem          = document.getElementById(props.field.input.id+'-colorpicker');
-        const circle_color  = document.getElementById(props.field.input.id+'-colorcircle');
+        const circle_light  = document.getElementById(props.field.input.id+'-colorcircle-light');
+        const circle_dark   = document.getElementById(props.field.input.id+'-colorcircle-dark');
         if (_showColorPicker.value === true) {
             if (
                 elem 
-                && circle_color 
-                && !circle_color.contains(event.target) 
+                && circle_light 
+                && !circle_light.contains(event.target) 
                 && !elem.contains(event.target)
+                && (
+                    (
+                        circle_dark
+                        && !circle_dark.contains(event.target)
+                    )
+                    || props.field.input.options.colormode === '0' 
+                )
             ) {
                 _showColorPicker.value = false;
             }
@@ -119,18 +137,44 @@ function changeDeviceStatus(device) {
 }
 
 const _showColorPicker = ref(false);
+const _currentColor = ref('');
+const _currentColorMode = ref('light');
+const _color = reactive({
+    light: '',
+    dark: ''
+})
 
-function showColorPicker() {
+function showColorPicker(colorMode) {
+    _currentColor.value     = _color[colorMode];
+    _currentColorMode.value = colorMode;
     _showColorPicker.value  = true;
+}
+
+function updateColor(color) {
+    try {
+        if (!!props.modelValue['font_color']) {
+            let tmp = JSON.parse(props.modelValue['font_color']);
+            tmp[_currentColorMode.value] = color;
+            props.modelValue['font_color'] = JSON.stringify(tmp);
+        } else {
+            let tmp = {'light': '', 'dark': ''};
+            tmp[_currentColorMode.value] = color;
+            props.modelValue['font_color'] = JSON.stringify(tmp);
+        }
+    } catch (e) {
+        const tmp = {'light': color, 'dark': color};
+        props.modelValue['font_color'] = JSON.stringify(tmp);
+    }
 }
 
 function changeColor(color) {
     const { r, g, b, a } = color.rgba;
     if (r === 0, g === 0, b === 0, a === 0) {
-        props.modelValue['font_color'] = ``;
+        _color[_currentColorMode.value] = '';
     } else {
-        props.modelValue['font_color'] = `rgba(${r}, ${g}, ${b}, ${a})`;
+        _color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
     }
+    updateColor(_color[_currentColorMode.value]);
 }
 </script>
 <template>
@@ -208,12 +252,27 @@ function changeColor(color) {
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.colorpicker">
                     <div class="form-label">{{ props.field.input.lang.font_color }}</div>
-                    <div>
-                        <font-awesome-icon :id="props.field.input.id+`-colorcircle`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': props.modelValue['font_color']}" @click="showColorPicker()" />
+                    <div class="astroid-color">
+                        <div class="row">
+                            <div :class="{
+                                'col-4 text-center' : (props.field.input.options.colormode === '1'),
+                                'col-12': (props.field.input.options.colormode !== '1')
+                            }">
+                                <font-awesome-icon :id="props.field.input.id+`-colorcircle-light`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.light}" @click="showColorPicker('light')" />
+                                <div v-if="props.field.input.options.colormode === '1'">Light</div>
+                            </div>
+                            <div v-if="props.field.input.options.colormode === '1'" class="col text-center py-3">
+                                <font-awesome-icon :icon="['fas', 'arrows-left-right']" />
+                            </div>
+                            <div v-if="props.field.input.options.colormode === '1'" class="col-4 text-center">
+                                <font-awesome-icon :id="props.field.input.id+`-colorcircle-dark`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.dark}" @click="showColorPicker('dark')" />
+                                <div>Dark</div>
+                            </div>
+                        </div>
                         <input type="hidden" :name="props.field.input.name+`[font_color]`" :id="props.field.input.id+`_font_color`" v-model="props.modelValue['font_color']" />
                         <ColorPicker v-if="_showColorPicker"
                             :theme="theme"
-                            :color="props.modelValue['font_color']"
+                            :color="_currentColor"
                             :sucker-hide="true"
                             :sucker-canvas="null"
                             :sucker-area="[]"
@@ -238,6 +297,22 @@ function changeColor(color) {
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="typography-preview">
+        <link v-if="font_type === `google` && (typeof options[font_type].find((font) => font.value === fontSelected.value) !== 'undefined') && fontSelected.value !== `` && fontSelected.value !== `__default` && fontSelected.value.search(/^library-font-/) === -1" :href="`https://fonts.googleapis.com/css?family=`+fontSelected.value" rel="stylesheet" />
+        <div class="card card-default card-body mt-4" :style="
+            {
+            'font-family' : fontSelected.text,
+            'font-weight' : props.modelValue['font_weight'],
+            'text-transform': props.modelValue['text_transform'],
+            'font-size' : props.modelValue['font_size'][currentDevice]+props.modelValue['font_size_unit'][currentDevice],
+            'line-height' : props.modelValue['line_height'][currentDevice]+props.modelValue['line_height_unit'][currentDevice],
+            'letter-spacing' : props.modelValue['letter_spacing'][currentDevice]+props.modelValue['letter_spacing_unit'][currentDevice],
+            }">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut rutrum est, quis aliquet est. Vivamus in blandit purus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <p>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</p>
+            <p class="mb-0">0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</p>
         </div>
     </div>
 </template>

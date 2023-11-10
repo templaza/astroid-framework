@@ -52,7 +52,7 @@
             <field type="jdrating" name="astroid_article_review_rating" label="ASTROID_OVERALL_RATING" description="ASTROID_OVERALL_RATING_DESC" default="5" max="10" rating-type="star" showon="astroid_article_type:review" clear="true" />
             <field type="text" name="astroid_article_button_action" label="ASTROID_CALL_ACTION_BUTTON" description="ASTROID_CALL_ACTION_BUTTON_DESC" showon="astroid_article_type:review" />
             <field type="text" name="astroid_article_button_link" label="ASTROID_BUTTON_LINK" description="ASTROID_BUTTON_LINK_DESC" showon="astroid_article_type:review" />
-            <field showon="astroid_article_type:review" name="astroid_article_review_criterias" type="subform" formsource="libraries/astroid/framework/forms/reviewcriteria.xml" multiple="true" label="ASTROID_REVIEW_CRITERIAS" description="ASTROID_REVIEW_CRITERIAS_DESC" />
+            <field showon="astroid_article_type:review" name="astroid_article_review_criterias" type="subform" formsource="libraries/astroid/framework/forms/reviewcriteria.xml" multiple="true" label="ASTROID_REVIEW_CRITERIAS" description="ASTROID_REVIEW_CRITERIAS_DESC"/>
             <!-- Quote Options -->
             <field type="spacer" showon="astroid_article_type:quote" name="astroidarticlequote" label="ASTROID_ARTICLE_OPTIONS_QUOTE_LABEL" />
             <field type="text" name="astroid_article_quote_text" label="ASTROID_ARTICLE_QUOTE_TEXT" description="ASTROID_ARTICLE_QUOTE_TEXT_DESC" showon="astroid_article_type:quote" />

@@ -1,41 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="3.1" type="plugin" method="upgrade" group="system">
+<extension type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>October 2023</creationDate>
-   <version>3.0.2</version>
+   <version>3.0.3</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2023 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <description>Astroid Framework Plugin Description Here</description>>
+   <description>Astroid Framework Plugin Description Here</description>
+   <namespace path="src">Joomla\Plugin\System\Astroid</namespace>
    <files>
-      <filename plugin="astroid">astroid.php</filename>
+      <folder plugin="astroid">services</folder>
+      <folder>src</folder>
    </files>
    <config>
       <fields name="params">
          <fieldset name="basic">
-            <field name="astroid_manager_loader" type="radio" default="1" label="ASTROID_MANAGER_LOADER" description="ASTROID_MANAGER_LOADER_DESC" class="btn-group btn-group-yesno">
-               <option value="1">JYES</option>
-               <option value="0">JNO</option>
-            </field>
             <field name="astroid_load_fontawesome" type="radio" default="cdn" label="ASTROID_LOAD_FONTAWESOME" description="ASTROID_LOAD_FONTAWESOME_DESC" class="btn-group btn-group-yesno">
                <option value="0">OFF</option>
                <option value="cdn">CDN</option>
                <option value="local">Local</option>
-            </field>
-            <field name="astroid_load_jquery" type="radio" default="astroid" label="ASTROID_LOAD_JQUERY" description="ASTROID_LOAD_JQUERY_DESC" class="btn-group btn-group-yesno">
-               <option value="astroid">Astroid</option>
-               <option value="core">Joomla</option>
-            </field>
-            <field name="astroid_bootstrap_js" type="radio" default="1" label="ASTROID_ENABLE_BOOTSTRAP_JS_LABEL" description="" class="btn-group btn-group-yesno">
-               <option value="1">JYES</option>
-               <option value="0">JNO</option>
-            </field>
-            <field name="astroid_load_bootstrap_js" type="radio" default="core" label="ASTROID_LOAD_BOOTSTRAP_JS_LABEL" description="ASTROID_LOAD_BOOTSTRAP_JS_DESC" class="btn-group btn-group-yesno">
-               <option value="astroid">Astroid</option>
-               <option value="core">Joomla</option>
             </field>
             <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>

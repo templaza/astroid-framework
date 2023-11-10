@@ -8,6 +8,9 @@
  */
 
 namespace Astroid;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die;
 
@@ -47,12 +50,12 @@ abstract class Framework
     public static function constants()
     {
         define('ASTROID_MEDIA', JPATH_SITE . '/media/astroid/assets');
-        define('ASTROID_MEDIA_URL', \JURI::root() . 'media/astroid/assets/');
+        define('ASTROID_MEDIA_URL', Uri::root() . 'media/astroid/assets/');
         define('ASTROID_LAYOUTS', JPATH_LIBRARIES . '/astroid/framework/layouts');
         define('ASTROID_ELEMENTS', JPATH_LIBRARIES . '/astroid/framework/elements');
         define('ASTROID_CACHE', JPATH_SITE . '/cache/astroid');
 
-        $version = new \JVersion;
+        $version = new Version;
         $version = $version->getShortVersion();
         $version = substr($version, 0, 1);
         define('ASTROID_JOOMLA_VERSION', $version);
@@ -93,14 +96,6 @@ abstract class Framework
         return self::$template;
     }
 
-    public static function getAuditor($id = null): Auditor
-    {
-        if ($id !== null) {
-            self::$auditor = new Auditor($id);
-        }
-        return self::$auditor;
-    }
-
     public static function getClient(): Helper\Client
     {
         if (self::$client === null) {
@@ -119,8 +114,8 @@ abstract class Framework
 
     public static function check()
     {
-        if (self::isAdmin() && \JFactory::getUser()->id) {
-            $app = \JFactory::getApplication();
+        if (self::isAdmin() && Factory::getUser()->id) {
+            $app = Factory::getApplication();
             $redirect = $app->input->get->get('ast', '', 'RAW');
             if (!empty($redirect)) {
                 $app->redirect(base64_decode(urldecode($redirect)));
@@ -134,7 +129,7 @@ abstract class Framework
 
     public static function getClientType()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         return $app->isClient('administrator') ? 'administrator' : 'site';
     }
 
@@ -148,10 +143,10 @@ abstract class Framework
         return self::getClientType() == 'site';
     }
 
-    public static function getForm(): Helper\Form
+    public static function getForm(): Helper\AstroidForm
     {
         if (self::$form === null) {
-            self::$form = new Helper\Form('template');
+            self::$form = new Helper\AstroidForm('template');
         }
         return self::$form;
     }

@@ -12,7 +12,8 @@ namespace Astroid\Component;
 use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
-use Joomla\CMS\Help\Help;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -20,14 +21,14 @@ class Utility
 {
     public static function meta()
     {
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $document = Framework::getDocument();
         $itemid = $app->input->get('Itemid', '', 'INT');
         $menu = $app->getMenu();
         $item = $menu->getItem($itemid);
 
         $template_params = Framework::getTemplate()->getParams();
-        $config = \JFactory::getConfig();
+        $config = Factory::getConfig();
 
         if (empty($item)) {
             return;
@@ -59,11 +60,11 @@ class Utility
         }
         $og_image = '';
         if (!empty($params->get('astroid_og_image_menuitem', ''))) {
-            $og_image = \JURI::root() . $params->get('astroid_og_image_menuitem', '');
+            $og_image = Uri::root() . $params->get('astroid_og_image_menuitem', '');
         }
 
         $og_sitename = $config->get('sitename');
-        $og_siteurl = \JURI::getInstance();
+        $og_siteurl = Uri::getInstance();
 
         $meta = [];
 
@@ -113,7 +114,7 @@ class Utility
         $layout_background_image = $params->get('layout_background_image', '');
         if (!empty($layout_background_image)) {
             $style = new Style('body');
-            $style->addCss('background-image', 'url(' . \JURI::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
+            $style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
             $style->addCss('background-repeat', $params->get('layout_background_repeat', 'inherit'));
             $style->addCss('background-size', $params->get('layout_background_size', 'inherit'));
             $style->addCss('background-position', $params->get('layout_background_position', 'inherit'));
@@ -125,11 +126,11 @@ class Utility
     public static function smoothScroll()
     {
         $params = Framework::getTemplate()->getParams();
-        $document = Framework::getDocument();
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $enable_smooth_scroll = $params->get('enable_smooth_scroll', '');
         if ($enable_smooth_scroll == '1') {
             $speed = $params->get('smooth_scroll_speed', '');
-            $document->addScript('vendor/astroid/js/smooth-scroll.polyfills.min.js', 'body');
+            $wa->registerAndUseScript('astroid.smooth-scroll', 'astroid/smooth-scroll.polyfills.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             $header = $params->get('header', TRUE);
             $mode = $params->get('header_mode', 'horizontal');
             $sidebar = ($header && $mode == 'sidebar');
@@ -139,7 +140,7 @@ class Utility
             speed: ' . $speed . '
             ' . ($sidebar ? '' : ', header: ".astroid-header"') . '
 			});';
-            $document->addScriptDeclaration($script, 'body');
+            $wa->addInlineScript($script);
         }
     }
 
@@ -156,7 +157,7 @@ class Utility
             // Let's add the image styles only if an image is selected.
             if ($params->get('basic_background_image')) {
                 $styles .= '
-                      background-image: url("' . \JURI::root() . Helper\Media::getPath() . '/' . $params->get('basic_background_image') . '");
+                      background-image: url("' . Uri::root() . Helper\Media::getPath() . '/' . $params->get('basic_background_image') . '");
                       background-repeat: ' . $params->get('basic_background_repeat') . ';
                       background-size: ' . $params->get('basic_background_size') . ';
                       background-position: ' . str_replace('_', ' ', $params->get('basic_background_position')) . ';
@@ -174,7 +175,7 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         $customselector = $params->get('custom_typography_selectors', '');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => '.astroid-logo-text, .astroid-logo-text > a.site-title', 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a, .astroid-mobile-menu > .nav-item > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > a', 'custom' => $customselector);
+        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > a, .astroid-sidebar-menu > li > a, .astroid-mobile-menu > .nav-item > a', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > a', 'custom' => $customselector);
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {
@@ -257,18 +258,6 @@ class Utility
 
         Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header', 'background-color', $header_bg['light']);
         Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header', 'background-color', $header_bg['dark']);
-
-        $header_logo_text_color         =   Style::getColor($params->get('header_logo_text_color', ''));
-        $header_logo_text_tagline_color =   Style::getColor($params->get('header_logo_text_tagline_color', ''));
-        $textLogo = new Style('.astroid-logo-text');
-        $textLogo->child('.site-title')->addCss('color', $header_logo_text_color['light']);
-        $textLogo->child('.site-tagline')->addCss('color', $header_logo_text_tagline_color['light']);
-        $textLogo->render();  // render text logo colors
-
-        $textLogo = new Style('.astroid-logo-text', 'dark');
-        $textLogo->child('.site-title')->addCss('color', $header_logo_text_color['dark']);
-        $textLogo->child('.site-tagline')->addCss('color', $header_logo_text_tagline_color['dark']);
-        $textLogo->render();  // render text logo colors
 
         // Sticky Header
         $stick_header_bg_color              =   Style::getColor($params->get('stick_header_bg_color', ''));
@@ -468,13 +457,13 @@ class Utility
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
         $intro_heading_fontsize =   $params->get('article_listing_intro_heading_fontsize', '');
         if (!empty($lead_heading_fontsize)) {
-            $article    =   new Style('.items-leading .article-title .page-header [itemprop="name"]');
+            $article    =   new Style('.items-leading .article-title .page-header h2');
             $article->addCss('font-size', $lead_heading_fontsize.'px');
             $article->render();
         }
 
         if (!empty($intro_heading_fontsize)) {
-            $article    =   new Style('.items-row .article-title .page-header [itemprop="name"]');
+            $article    =   new Style('.items-row .article-title .page-header h2');
             $article->addCss('font-size', $intro_heading_fontsize.'px');
             $article->render();
         }
@@ -509,7 +498,7 @@ class Utility
         $document->addCustomTag($params->get('beforebody', ''), 'body');
 
         // Page level custom code
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $itemid = $app->input->get('Itemid', '', 'INT');
         if (empty($itemid)) return false;
 
@@ -563,7 +552,7 @@ class Utility
 
                     $background_image = $params->get('background_image_404', '');
                     if (!empty($background_image)) {
-                        $bodyStyle->addCss('background-image', 'url(' . \JURI::root() . Helper\Media::getPath() . '/' . $background_image . ')');
+                        $bodyStyle->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $background_image . ')');
                         $bodyStyle->addCss('background-repeat', $params->get('background_repeat_404', ''));
                         $bodyStyle->addCss('background-size', $params->get('background_size_404', ''));
                         $bodyStyle->addCss('background-attachment', $params->get('background_attchment_404', ''));

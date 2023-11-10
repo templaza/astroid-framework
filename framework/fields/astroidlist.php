@@ -7,14 +7,16 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
-
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a generic list of options.
  *
  * @since  11.1
  */
-class JFormFieldAstroidList extends JFormField {
+class JFormFieldAstroidList extends FormField {
 
    /**
     * The form field type.
@@ -71,27 +73,6 @@ class JFormFieldAstroidList extends JFormField {
       // Get the field options.
       $options = (array) $this->getOptions();
 
-      // Create a read-only list (no name) with hidden input(s) to store the value(s).
-//      if ((string) $this->readonly == '1' || (string) $this->readonly == 'true') {
-//         $html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
-//
-//         // E.g. form field type tag sends $this->value as array
-//         if ($this->multiple && is_array($this->value)) {
-//            if (!count($this->value)) {
-//               $this->value[] = '';
-//            }
-//
-//            foreach ($this->value as $value) {
-//               $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"/>';
-//            }
-//         } else {
-//            $html[] = '<input type="hidden" name="' . $this->name . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"/>';
-//         }
-//      } else {
-//         // Create a regular list.
-//         $html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
-//      }
-
       $json =   [
           'id'      =>  $this->id,
           'name'    =>  $this->name,
@@ -103,8 +84,6 @@ class JFormFieldAstroidList extends JFormField {
           'type'    =>  strtolower($this->type),
       ];
       return json_encode($json);
-
-//      return implode($html);
    }
 
    /**
@@ -122,7 +101,7 @@ class JFormFieldAstroidList extends JFormField {
          foreach ($variables as $value => $label) {
             $object = new stdClass();
             $object->value = $value;
-            $object->text = \JText::_($label);
+            $object->text = Text::_($label);
             $options[] = $object;
          }
          return $options;
@@ -172,12 +151,12 @@ class JFormFieldAstroidList extends JFormField {
 
          $tmp = array(
              'value' => $value,
-             'text' => JText::alt($text, $fieldname),
+             'text' => Text::alt($text, $fieldname),
              'disable' => $disabled,
              'class' => (string) $option['class'],
              'selected' => ($checked || $selected),
              'checked' => ($checked || $selected),
-             'label' => JText::_($label),
+             'label' => Text::_($label),
          );
 
          // Set some event handler attributes. But really, should be using unobtrusive js.
@@ -191,8 +170,8 @@ class JFormFieldAstroidList extends JFormField {
       if ($this->element['useglobal']) {
          $tmp = new stdClass;
          $tmp->value = '';
-         $tmp->text = JText::_('JGLOBAL_USE_GLOBAL');
-         $component = JFactory::getApplication()->input->getCmd('option');
+         $tmp->text = Text::_('JGLOBAL_USE_GLOBAL');
+         $component = Factory::getApplication()->input->getCmd('option');
 
          // Get correct component for menu items
          if ($component == 'com_menus') {
@@ -206,11 +185,11 @@ class JFormFieldAstroidList extends JFormField {
 
          // Try with global configuration
          if (is_null($value)) {
-            $value = JFactory::getConfig()->get($this->fieldname);
+            $value = Factory::getConfig()->get($this->fieldname);
          }
 
          // Try with menu configuration
-         if (is_null($value) && JFactory::getApplication()->input->getCmd('option') == 'com_menus') {
+         if (is_null($value) && Factory::getApplication()->input->getCmd('option') == 'com_menus') {
             $value = JComponentHelper::getParams('com_menus')->get($this->fieldname);
          }
 
@@ -225,7 +204,7 @@ class JFormFieldAstroidList extends JFormField {
                }
             }
 
-            $tmp->text = JText::sprintf('JGLOBAL_USE_GLOBAL_VALUE', $value);
+            $tmp->text = Text::sprintf('JGLOBAL_USE_GLOBAL_VALUE', $value);
          }
 
          array_unshift($options, $tmp);

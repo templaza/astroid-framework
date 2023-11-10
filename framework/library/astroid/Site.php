@@ -8,6 +8,7 @@
  */
 
 namespace Astroid;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -19,25 +20,34 @@ class Site extends Helper\Client
             return;
         }
         Helper::triggerEvent('onBeforeAstroidRender'); // at last process all astroid:include
-        Component\Utility::meta(); // site meta
         Component\Utility::layout(); // site layout
-        Component\Utility::typography(); // site typography
         Component\Utility::background(); // site background
         Component\Utility::colors(); // site colors
         Component\Utility::article(); // site article
-        Component\Utility::smoothScroll(); // smooth scroll utility
         Component\Utility::custom(); // site custom codes
-        Component\LazyLoad::run(); // to execute lazy load
         Component\Includer::run(); // at last process all astroid:include
         Framework::getDocument()->compress(); // compress the html
         Helper::triggerEvent('onAfterAstroidRender'); // at last process all astroid:include
+    }
+
+    public function onBeforeRender()
+    {
+        if (!Framework::getTemplate()->isAstroid) {
+            return;
+        }
+        Component\Utility::meta(); // site meta
+        Component\Utility::typography(); // site typography
+        Helper\Head::styles(); // site Styles
+        Component\LazyLoad::run(); // to execute lazy load
+        Component\Utility::smoothScroll(); // smooth scroll utility
+        Helper\Head::scripts(); // site scripts
     }
 
     protected function rate()
     {
         $this->checkAuth();
 
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $id = $app->input->post->get('id', 0, 'INT');
         $vote = $app->input->post->get('vote', 0, 'INT');
 

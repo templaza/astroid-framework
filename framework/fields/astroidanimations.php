@@ -6,6 +6,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('JPATH_PLATFORM') or die;
+use Joomla\CMS\Form\FormField;
 
 /**
  * Form Field class for the Joomla Platform.
@@ -13,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
  *
  * @since  11.1
  */
-class JFormFieldAstroidanimations extends JFormField {
+class JFormFieldAstroidanimations extends FormField {
 
    /**
     * The form field type.
