@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('astroid.framework.article');
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
@@ -23,7 +21,7 @@ if (ASTROID_JOOMLA_VERSION > 3) {
 }
 
 // Astroid Article/Blog
-$astroidArticle = new AstroidFrameworkArticle($this->item, true);
+$astroidArticle = new Astroid\Article($this->item, true);
 
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();

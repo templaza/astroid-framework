@@ -6,6 +6,7 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+
 use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die;
 if (!defined('_ASTROID')) {
@@ -33,13 +34,11 @@ Astroid\Component\Utility::typography();
 $errorContent = $params->get('error_404_content', '');
 $errorButton = $params->get('error_call_to_action', '');
 
-
 $bodyAttrs = [];
 if ($params->get('background_setting_404') == 'video' && !empty($params->get('background_video_404', ''))) {
    $document->addScript('vendor/astroid/js/videobg.js', 'body');
    $bodyAttrs[] = 'data-jd-video-bg="' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $params->get('background_video_404', '') . '"';
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -47,13 +46,18 @@ if ($params->get('background_setting_404') == 'video' && !empty($params->get('ba
 <head>
    <meta charset="utf-8" />
    <title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
+    <jdoc:include type="metas" />
+    <jdoc:include type="styles" />
+    <jdoc:include type="scripts" />
    <?php
    echo $document->renderMeta();
    echo Astroid\Helper\Head::styles();
+   $document->astroidCustomCSS();
    echo $document->renderLinks();
    echo $document->getStylesheets();
    echo $document->getScripts('head');
    echo $document->getCustomTags('head');
+   echo $document->astroidInlineCSS();
    ?>
 </head>
 
