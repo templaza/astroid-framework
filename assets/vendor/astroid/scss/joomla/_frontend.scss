@@ -82,6 +82,11 @@ ul.categories-module {
 	border: 1px solid #58595a;
 	border-radius: 0.25rem;
 }
+.item-page {
+	div+.page-header {
+		margin-top: 2rem;
+	}
+}
 .icon-joomla, [class*=" icon-"], [class^=icon-]{
 	font-family: "Font Awesome 6 Free";
 	-webkit-font-smoothing: antialiased;
