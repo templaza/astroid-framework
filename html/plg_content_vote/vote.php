@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('jquery.framework');
 
@@ -25,7 +26,7 @@ HTMLHelper::_('jquery.framework');
  * @var   array    $parts    The context segments
  * @var   string   $path     Path to this file
  */
-jimport('astroid.framework.template');
+
 $template = Astroid\Framework::getTemplate();
 if (!$template->params->get('article_rating', 1)) {
    $uri = clone Uri::getInstance();
@@ -90,7 +91,7 @@ if (!$template->params->get('article_rating', 1)) {
                      data: {
                         vote: value,
                         id: '<?php echo $row->id; ?>',
-                        '<?php echo JSession::getFormToken(); ?>': 1
+                        '<?php echo Session::getFormToken(); ?>': 1
                      },
                      dataType: 'json',
                      error: function() {

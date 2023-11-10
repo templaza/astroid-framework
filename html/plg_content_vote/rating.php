@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
  * @var   array    $parts    The context segments
  * @var   string   $path     Path to this file
  */
-jimport('astroid.framework.template');
+
 $template = Astroid\Framework::getTemplate();
 
 if (!$template->params->get('article_rating', 1)) {
