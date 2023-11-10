@@ -383,10 +383,13 @@ class Helper
                 $options[] = $tmp;
             }
         }
-        $tmp = new \stdClass();
-        $tmp->value = 'none';
-        $tmp->text  = 'none';
-        $options[] = $tmp;
+        $systems = Folder::files(\JPATH_SITE . '/layouts/chromes', '.php');
+        foreach ($systems as $system) {
+            $tmp = new \stdClass();
+            $tmp->value = basename($system,".php");
+            $tmp->text  = basename($system,".php");
+            $options[] = $tmp;
+        }
         return $options;
     }
 
