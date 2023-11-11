@@ -16,71 +16,34 @@ class Overrides
 {
     public static $rename = [];
 
-    /**
-     * Extract the path string by splitting it using a backslash.
-     * returns the splitted array.
-     *
-     * @param 	string 	$path	The path string to extract.
-     *
-     * @return 	array	The splitted array of the path.
-     * @since 	3.0.3
-     */
-    private static function extractPath(string $path): array
-    {
-        return explode('/', trim($path, '/'));
-    }
-
-    /**
-     * If the system could not detect the override file at template's `overrides`
-     * folder or the plugin's `override` folder, then it search the template
-     * file at the extension's path.
-     *
-     * @param 	string 	$path	The path to identify the extension template location.
-     *
-     * @return 	string	The extension path after parsing the location $path.
-     * @since 3.0.3
-     */
     private static function generateExtensionPath(string $path) : string
     {
-        if (empty($path))
-        {
+        if (empty($path)) {
             return '';
         }
 
-        $path = self::extractPath($path);
+        $path = explode('/', trim($path, '/'));
 
         $version = JVERSION;
         $extension = $path[0];
 
-        /** If the path is for a component- */
-        if (\strpos($extension, 'com_') === 0)
-        {
-            if ($version < 4)
-            {
+        if (\strpos($extension, 'com_') === 0) {
+            if ($version < 4) {
                 \array_splice($path, 1, 0, ['views']);
                 \array_splice($path, 3, 0, ['tmpl']);
             }
-            else
-            {
+            else {
                 \array_splice($path, 1, 0, ['tmpl']);
             }
-
             return JPATH_ROOT . '/components/' . \implode('/', $path);
         }
-        /** If the extension path is for a module- */
-        elseif (\strpos($extension, 'mod_') === 0)
-        {
-            \array_splice($path, 1, 0, ['tmpl']);
 
+        elseif (\strpos($extension, 'mod_') === 0) {
+            \array_splice($path, 1, 0, ['tmpl']);
             return JPATH_ROOT . '/modules/' . \implode('/', $path);
         }
-        /** If the extension path is for a plugin- */
-        elseif (\strpos($extension, 'plg_') === 0)
-        {
-            /**
-             * Plugin folder name inside a override directory is like `plg_pluginFolder_pluginName`
-             * explode the string using the  underscore (_) and make the plugin path.
-             */
+
+        elseif (\strpos($extension, 'plg_') === 0) {
             $pluginPath = \explode('_', $extension);
             \array_splice($pluginPath, 0, 1);
             \array_push($pluginPath, 'tmpl');
@@ -88,9 +51,7 @@ class Overrides
             \array_splice($path, 0, 1, $pluginPath);
             return JPATH_ROOT . '/plugins/' . \implode('/', $path);
         }
-        /** If the path is for the layouts */
-        elseif ($extension === 'layouts')
-        {
+        elseif ($extension === 'layouts') {
             return JPATH_ROOT . '/' . \implode('/', $path);
         }
 
@@ -103,24 +64,17 @@ class Overrides
         $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
         $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
 
-        /**
-         * If the callee file is in the template's html directory.
-         */
-        if (\strpos($callPath, $htmlTemplatePath) === 0)
-        {
+        if (\strpos($callPath, $htmlTemplatePath) === 0) {
             $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
         }
 
-        /** If no relative path extracted. */
-        if (empty($relativePath))
-        {
+        if (empty($relativePath)) {
             return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
         }
 
         $astroidOverridePath = $htmlAstroidPath . $relativePath;
 
-        if (\file_exists($astroidOverridePath))
-        {
+        if (\file_exists($astroidOverridePath)) {
             return $astroidOverridePath;
         }
 
