@@ -29,18 +29,19 @@ class Template
 
     public function __construct()
     {
-        $menu = Factory::getApplication()->getMenu()->getActive();
+        $app = Factory::getApplication();
+        $menu = $app->getMenu()->getActive();
         $template_id = isset($menu->template_style_id) ? $menu->template_style_id : 0;
 
         if (!empty($template_id)) {
             $jtemplate = $this->_getById($template_id);
         } else {
-            $jtemplate = Factory::getApplication()->getTemplate(true);
+            $jtemplate = $app->getTemplate(true);
         }
         $this->template = $jtemplate->template;
 
-        $this->language = Factory::getLanguage()->getTag();
-        $this->direction = Factory::getLanguage()->isRtl() ? 'rtl' : 'ltr';
+        $this->language = $app->getLanguage()->getTag();
+        $this->direction = $app->getLanguage()->isRtl() ? 'rtl' : 'ltr';
 
         $this->params = $jtemplate->params;
         $this->title = '';
@@ -48,7 +49,6 @@ class Template
         if (Framework::isSite()) {
             $this->_set($jtemplate->id);
         } else if (Framework::isAdmin()) {
-            $app = Factory::getApplication();
             $option = $app->input->get('option', '');
             $view = $app->input->get('view', '');
             $layout = $app->input->get('layout', '');
@@ -69,7 +69,7 @@ class Template
         }
 
         if (Framework::isSite()) {
-            $preset = Factory::getApplication()->input->get('preset', '');
+            $preset = $app->input->get('preset', '');
             if (!empty($preset)) {
                 $this->setPreset($preset);
             }
