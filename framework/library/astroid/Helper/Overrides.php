@@ -16,8 +16,7 @@ class Overrides
 {
     public static $rename = [];
 
-    private static function generateExtensionPath(string $path) : string
-    {
+    private static function generateExtensionPath(string $path) : string {
         if (empty($path)) {
             return '';
         }
