@@ -372,8 +372,15 @@ class Helper
 
     public static function getModuleStyles()
     {
-        $template = Framework::getTemplate();
-        $styles = Folder::files(\JPATH_SITE . '/templates/' . $template->template . '/html/layouts/chromes', '.php');
+        $template           = Framework::getTemplate();
+        $template_name      = $template->template;
+        $isChildTemplate    = self::isChildTemplate($template_name);
+
+        if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
+            $template_name = $isChildTemplate['parent'];
+        }
+        
+        $styles = Folder::files(\JPATH_SITE . '/templates/' . $template_name . '/html/layouts/chromes', '.php');
         $options = array();
         if (count($styles)) {
             foreach ($styles as $style) {
