@@ -359,8 +359,7 @@ class Helper
 
     public static function getPositions()
     {
-        $template = Framework::getTemplate();
-        $templateXML = \JPATH_SITE . '/templates/' . $template->template . '/templateDetails.xml';
+        $templateXML = \JPATH_SITE . '/templates/' . ASTROID_TEMPLATE_NAME . '/templateDetails.xml';
         $template = simplexml_load_file($templateXML);
         $positions = [];
         foreach ($template->positions[0] as $position) {
@@ -372,24 +371,26 @@ class Helper
 
     public static function getModuleStyles()
     {
-        $template           = Framework::getTemplate();
-        $template_name      = $template->template;
+        $template_name      = ASTROID_TEMPLATE_NAME;
+        $options            = array();
         $isChildTemplate    = self::isChildTemplate($template_name);
 
         if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
             $template_name = $isChildTemplate['parent'];
         }
-        
-        $styles = Folder::files(\JPATH_SITE . '/templates/' . $template_name . '/html/layouts/chromes', '.php');
-        $options = array();
-        if (count($styles)) {
-            foreach ($styles as $style) {
-                $tmp = new \stdClass();
-                $tmp->value = basename($style,".php");
-                $tmp->text  = basename($style,".php");
-                $options[] = $tmp;
+
+        if (file_exists(\JPATH_SITE . '/templates/' . $template_name . '/html/layouts/chromes')) {
+            $styles = Folder::files(\JPATH_SITE . '/templates/' . $template_name . '/html/layouts/chromes', '.php');
+            if (count($styles)) {
+                foreach ($styles as $style) {
+                    $tmp = new \stdClass();
+                    $tmp->value = basename($style,".php");
+                    $tmp->text  = basename($style,".php");
+                    $options[] = $tmp;
+                }
             }
         }
+
         $systems = Folder::files(\JPATH_SITE . '/layouts/chromes', '.php');
         foreach ($systems as $system) {
             $tmp = new \stdClass();
