@@ -34,8 +34,9 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
+                $dispatcher = $container->get(DispatcherInterface::class);
                 $plugin     = new AstroidPlugin(
-                    $container->get(DispatcherInterface::class),
+                    $dispatcher,
                     (array) PluginHelper::getPlugin('system', 'astroid')
                 );
                 $plugin->setApplication(Factory::getApplication());

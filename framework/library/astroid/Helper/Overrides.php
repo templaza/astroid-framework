@@ -8,16 +8,77 @@
  */
 
 namespace Astroid\Helper;
-
-use Astroid\Framework;
 use Joomla\Filesystem\Folder;
-use Joomla\Filesystem\File;
 
 defined('_JEXEC') or die;
 
 class Overrides
 {
     public static $rename = [];
+
+    private static function generateExtensionPath(string $path) : string {
+        if (empty($path)) {
+            return '';
+        }
+
+        $path = explode('/', trim($path, '/'));
+
+        $version = JVERSION;
+        $extension = $path[0];
+
+        if (\strpos($extension, 'com_') === 0) {
+            if ($version < 4) {
+                \array_splice($path, 1, 0, ['views']);
+                \array_splice($path, 3, 0, ['tmpl']);
+            }
+            else {
+                \array_splice($path, 1, 0, ['tmpl']);
+            }
+            return JPATH_ROOT . '/components/' . \implode('/', $path);
+        }
+
+        elseif (\strpos($extension, 'mod_') === 0) {
+            \array_splice($path, 1, 0, ['tmpl']);
+            return JPATH_ROOT . '/modules/' . \implode('/', $path);
+        }
+
+        elseif (\strpos($extension, 'plg_') === 0) {
+            $pluginPath = \explode('_', $extension);
+            \array_splice($pluginPath, 0, 1);
+            \array_push($pluginPath, 'tmpl');
+
+            \array_splice($path, 0, 1, $pluginPath);
+            return JPATH_ROOT . '/plugins/' . \implode('/', $path);
+        }
+        elseif ($extension === 'layouts') {
+            return JPATH_ROOT . '/' . \implode('/', $path);
+        }
+
+        return \implode('/', $path);
+    }
+
+    public static function getHTMLTemplate(): string {
+        $backtrace = \debug_backtrace();
+        $callPath = $backtrace[0]['file'] ?? '';
+        $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
+        $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
+
+        if (\strpos($callPath, $htmlTemplatePath) === 0) {
+            $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
+        }
+
+        if (empty($relativePath)) {
+            return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
+        }
+
+        $astroidOverridePath = $htmlAstroidPath . $relativePath;
+
+        if (\file_exists($astroidOverridePath)) {
+            return $astroidOverridePath;
+        }
+
+        return self::generateExtensionPath($relativePath);
+    }
 
     public static function fix()
     {
