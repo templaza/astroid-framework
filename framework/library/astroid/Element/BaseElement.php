@@ -262,8 +262,11 @@ class BaseElement
         if (empty($animation)) {
             return;
         }
-        $document = Framework::getDocument();
-        $document->addStyleSheet('css/animate.min.css');
+
+        $app = Factory::getApplication();
+        $wa = $app->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
+
         $this->addAttribute('style', 'visibility: hidden;');
         $this->addAttribute('data-animation', $animation);
 
