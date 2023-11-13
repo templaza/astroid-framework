@@ -26,7 +26,7 @@ class Helper
 {
     public static function loadLanguage($extension, $client = 'site')
     {
-        $lang = Factory::getLanguage();
+        $lang = Factory::getApplication()->getLanguage();
         $lang->load($extension, ($client == 'site' ? JPATH_SITE : JPATH_ADMINISTRATOR));
     }
 
