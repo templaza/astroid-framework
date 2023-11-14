@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  com_users
- *
- * @copyright   (C) 2009 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
 defined('_JEXEC') or die;
@@ -55,7 +54,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
         <form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="com-users-login__form form-validate form-horizontal well" id="com-users-login__form">
 
             <fieldset>
-                <?php echo $this->form->renderFieldset('credentials', ['class' => 'com-users-login__input mb-3']); ?>
+                <?php echo $this->form->renderFieldset('credentials', ['class' => 'com-users-login__input as-form-group mb-3']); ?>
 
                 <?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
                     <div class="com-users-login__remember mb-3">
