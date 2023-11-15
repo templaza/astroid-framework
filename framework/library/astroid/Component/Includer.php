@@ -67,10 +67,10 @@ class Includer
     public static function _headStyles()
     {
         $document = Framework::getDocument();
-        $document->astroidCustomCSS();
+        $customCSS= $document->astroidCustomCSS();
         $content  = $document->renderLinks();
         $content .= $document->getStylesheets();
-        $content .= $document->astroidInlineCSS();
+        $content .= $customCSS;
         return $content;
     }
 

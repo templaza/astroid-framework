@@ -1,0 +1,24 @@
+.com-contact {
+  .contact-title-first {
+    font-size: 1.9rem;
+    margin-bottom: 0;
+  }
+  .contact-title-second {
+    font-size: 1.5rem;
+  }
+  @include media-breakpoint-up(lg) {
+    dl.dl-horizontal {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      dt {
+        grid-column-start: 1;
+        grid-column-end: 2;
+      }
+      dd {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        padding: 0 0 0 10px;
+      }
+    }
+  }
+}
