@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  com_contact
- *
- * @copyright   (C) 2006 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
 defined('_JEXEC') or die;
@@ -26,7 +25,6 @@ $htag    = $tparams->get('show_page_heading') ? 'h2' : 'h1';
 $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 'h3' : 'h2';
 
 ?>
-
 <div class="com-contact contact">
     <?php if ($tparams->get('show_page_heading')) : ?>
         <h1>
@@ -46,7 +44,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
     <?php endif; ?>
 
     <div class="row g-xl-5 g-4">
-        <div class="col-md-4">
+        <div class="col-md-4"><?php ob_start(); ?>
             <?php if ($this->item->image && $tparams->get('show_image')) : ?>
                 <div class="com-contact__thumbnail thumbnail mb-3">
                     <?php echo LayoutHelper::render(
@@ -73,19 +71,33 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
             <?php if ($this->item->con_position && $tparams->get('show_position')) : ?>
                 <div class="contact-position"><?php echo $this->item->con_position; ?></div>
             <?php endif; ?>
-            <hr>
             <?php if ($this->params->get('show_info', 1)) : ?>
-                <div class="com-contact__container mt-3">
+                <?php if (($this->item->name && $tparams->get('show_name')) || ($this->item->con_position && $tparams->get('show_position'))) :
+                    echo '<hr>';
+                endif; ?>
+                <div class="com-contact__container">
                     <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('COM_CONTACT_DETAILS') . '</' . $htag2 . '>'; ?>
                     <div class="com-contact__info">
                         <?php echo $this->loadTemplate('address'); ?>
-                        <hr>
                         <?php if ($tparams->get('allow_vcard')) : ?>
+                            <hr>
                             <?php echo Text::_('COM_CONTACT_DOWNLOAD_INFORMATION_AS'); ?>
                             <a href="<?php echo Route::_('index.php?option=com_contact&view=contact&catid=' . $this->item->catslug . '&id=' . $this->item->slug . '&format=vcf'); ?>">
                                 <?php echo Text::_('COM_CONTACT_VCARD'); ?></a>
                         <?php endif; ?>
                     </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($tparams->get('show_profile') && $this->item->user_id && PluginHelper::isEnabled('user', 'profile')) : ?>
+                <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('COM_CONTACT_PROFILE') . '</' . $htag2 . '>'; ?>
+                <?php echo $this->loadTemplate('profile'); ?>
+            <?php endif; ?>
+            <?php echo $this->item->event->beforeDisplayContent; ?>
+            <?php if ($tparams->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
+                <div class="com-contact__tags">
+                    <?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
+                    <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
                 </div>
             <?php endif; ?>
             <?php if ($tparams->get('show_contact_list') && count($this->contacts) > 1) : ?>
@@ -103,9 +115,11 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                     ?>
                 </form>
             <?php endif; ?>
-            <?php echo $this->item->event->beforeDisplayContent; ?>
-        </div>
-        <div class="col-md-8">
+        <?php
+        $contact_left = ob_get_clean();
+        if (is_string($contact_left)) echo trim($contact_left);
+        ?></div>
+        <div class="col">
             <?php if ($canEdit) : ?>
                 <div class="icons">
                     <div class="float-end">
@@ -125,26 +139,15 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                 <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('COM_CONTACT_LINKS') . '</' . $htag2 . '>'; ?>
                 <?php echo $this->loadTemplate('links'); ?>
             <?php endif; ?>
+
             <?php if ($tparams->get('show_email_form') && ($this->item->email_to || $this->item->user_id)) : ?>
                 <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('COM_CONTACT_EMAIL_FORM') . '</' . $htag2 . '>'; ?>
                 <?php echo $this->loadTemplate('form'); ?>
-            <?php endif; ?>
-            <?php if ($tparams->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
-                <div class="com-contact__tags">
-                    <?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
-                    <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
-                </div>
             <?php endif; ?>
             <?php if ($tparams->get('show_articles') && $this->item->user_id && $this->item->articles) : ?>
                 <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('JGLOBAL_ARTICLES') . '</' . $htag2 . '>'; ?>
                 <?php echo $this->loadTemplate('articles'); ?>
             <?php endif; ?>
-
-            <?php if ($tparams->get('show_profile') && $this->item->user_id && PluginHelper::isEnabled('user', 'profile')) : ?>
-                <?php echo '<' . $htag2 . ' class="contact-title-second">' . Text::_('COM_CONTACT_PROFILE') . '</' . $htag2 . '>'; ?>
-                <?php echo $this->loadTemplate('profile'); ?>
-            <?php endif; ?>
-
             <?php if ($tparams->get('show_user_custom_fields') && $this->contactUser) : ?>
                 <?php echo $this->loadTemplate('user_custom_fields'); ?>
             <?php endif; ?>

@@ -14,3 +14,9 @@
     width: 100%;
   }
 }
+ul.tags {
+  .btn-sm {
+    --bs-btn-padding-y: 0.3rem;
+    --bs-btn-padding-x: 1rem;
+  }
+}

@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  com_contact
- *
- * @copyright   (C) 2006 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
 defined('_JEXEC') or die;
@@ -37,21 +36,21 @@ $icon = $this->params->get('contact_icons') == 0;
         </dt>
         <dd>
         <?php if ($this->item->address && $this->params->get('show_street_address')) : ?>
-            <span class="contact-street"><?php echo nl2br($this->item->address, false); ?></span>
+            <span class="contact-street d-block"><?php echo nl2br($this->item->address, false); ?></span>
         <?php endif; ?>
         <?php if ($this->item->suburb && $this->params->get('show_suburb')) : ?>
-            <span class="contact-suburb"><?php echo $this->item->suburb; ?></span>
+            <span class="contact-suburb d-block"><?php echo $this->item->suburb; ?></span>
         <?php endif; ?>
         <?php if ($this->item->state && $this->params->get('show_state')) : ?>
-            <span class="contact-state"><?php echo $this->item->state; ?></span>
+            <span class="contact-state d-block"><?php echo $this->item->state; ?></span>
         <?php endif; ?>
         <?php if ($this->item->postcode && $this->params->get('show_postcode')) : ?>
-            <span class="contact-postcode"><?php echo $this->item->postcode; ?></span>
+            <span class="contact-postcode d-block"><?php echo $this->item->postcode; ?></span>
         <?php endif; ?>
         <?php if ($this->item->country && $this->params->get('show_country')) : ?>
-            <span class="contact-country"><?php echo $this->item->country; ?></span>
+            <span class="contact-country d-block"><?php echo $this->item->country; ?></span>
         <?php endif; ?>
-        <dd>
+        </dd>
     <?php endif; ?>
 
 <?php if ($this->item->email_to && $this->params->get('show_email')) : ?>
