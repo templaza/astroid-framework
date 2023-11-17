@@ -18,10 +18,11 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
-use Astroid\Article;
 
 // Astroid Article/Blog
-$astroidArticle = new Article($this->item);
+if (!isset($astroidArticle)) {
+    $astroidArticle = new Astroid\Article($this->item);
+}
 
 // Create shortcuts to some parameters.
 $params  = $this->item->params;
@@ -35,6 +36,7 @@ $assocParam        = (Associations::isEnabled() && $params->get('show_associatio
 $currentDate       = Factory::getDate()->format('Y-m-d H:i:s');
 $isNotPublishedYet = $this->item->publish_up > $currentDate;
 $isExpired         = !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
+$clsItemBody       = $astroidArticle->getStyle('body');
 ?>
 <div class="com-content-article item-page<?php echo $this->pageclass_sfx; ?>">
     <meta content="<?php echo ($this->item->language === '*') ? Factory::getApplication()->get('language') : $this->item->language; ?>">
@@ -103,7 +105,7 @@ $isExpired         = !is_null($this->item->publish_down) && $this->item->publish
         endif; ?>
         <?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
         <?php $astroidArticle->render('before-content'); ?>
-        <div class="com-content-article__body">
+        <div class="com-content-article__body<?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
             <?php echo $this->item->text; ?>
         </div>
         <?php $astroidArticle->render('after-content'); ?>

@@ -18,7 +18,9 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 
 // Astroid Article/Blog
-$astroidArticle = new Astroid\Article($this->item, true);
+if (!isset($astroidArticle)) {
+    $astroidArticle = new Astroid\Article($this->item, true);
+}
 
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
@@ -44,8 +46,10 @@ $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
     || ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
 
+$clsItemContainer   = $astroidArticle->getStyle('container');
+$clsItemBody        = $astroidArticle->getStyle('body');
 ?>
-<div class="item-content position-relative">
+<div class="item-content position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
     <?php endif; ?>
@@ -62,7 +66,7 @@ $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED 
         echo LayoutHelper::render('joomla.content.post_formats.post_' . $post_format, array('params' => $post_attribs, 'item' => $this->item));
     }
     ?>
-    <div class="<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?>">
+    <div class="<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?><?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
         <?php $astroidArticle->renderPostTypeIcon(); ?>
         <?php $astroidArticle->renderArticleBadge(); ?>
 

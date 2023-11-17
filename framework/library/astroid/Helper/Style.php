@@ -78,15 +78,15 @@ class Style
         return $this->_active;
     }
 
-    public function link($ref = 'child')
+    public function link($ref = 'child', $subfix = '')
     {
         if ($this->_link === null) {
             if ($ref == 'child') {
-                $this->_link = new Style($this->_selectorize(' a'));
+                $this->_link = new Style($this->_selectorize(' a'. $subfix));
             } else if ($ref == 'self') {
-                $this->_link = new Style($this->_selectorize(null, 'a'));
+                $this->_link = new Style($this->_selectorize(null, 'a'. $subfix));
             } else {
-                $this->_link = new Style($this->_selectorize(null, 'a '));
+                $this->_link = new Style($this->_selectorize(null, 'a'.$subfix.' '));
             }
         }
         return $this->_link;

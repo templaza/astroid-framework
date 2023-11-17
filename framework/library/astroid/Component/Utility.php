@@ -224,8 +224,8 @@ class Utility
         $body = new Style('body', 'dark');
         $body->addCss('background-color', $body_background_color['dark']);
         $body->addCss('color', $body_text_color['dark']);
-        $body->link()->addCss('color', $body_link_color['dark']);
-        $body->link()->hover()->addCss('color', $body_link_hover_color['dark']);
+        $body->link('child', ':not(.btn)')->addCss('color', $body_link_color['dark']);
+        $body->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['dark']);
         $body->render();  // render body colors
 
         $body = new Style(['h1','h2','h3','h4','h5','h6']);
