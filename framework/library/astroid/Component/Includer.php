@@ -51,6 +51,12 @@ class Includer
             $body = ($includer['replace']) ? str_replace($includer['replace'], $func_content, $body) : $body;
         }
 
+        $getPluginParams        =   Helper::getPluginParams();
+        $remove_generator       =   $getPluginParams->get('astroid_remove_generator', 0);
+        if ($remove_generator) {
+            $body = self::removeGenerateTag($body);
+        }
+
         if ($content === null) {
             $app->setBody($body);
         } else {
@@ -88,6 +94,16 @@ class Includer
         $content = $document->getScripts('body');
         $content .= $document->getCustomTags('body');
         return $content;
+    }
+
+    public static function removeGenerateTag(string $content) : string
+    {
+        $patterns = [
+            '/<meta name="generator".*?>\n/',
+            '/<generator.*?<\/generator>\n/',
+            '/<!-- generator=".*?" -->\n/',
+        ];
+        return preg_replace($patterns, '', $content);
     }
 
     public static function _debug()
