@@ -7,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\Filter\OutputFilter;
 defined('_JEXEC') or die;
 
 $attributes = array();
@@ -88,4 +89,4 @@ elseif ($item->browserNav == 2)
 	{
 		$attributes = ArrayHelper::toString($attributes);
 	}
-echo '<a href="'.JFilterOutput::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)).'" title="'.$item->title.'" '.$attributes.'> <span class="nav-title">'.$iconHtml.$item->title.$badgeHtml.'</span>'.$subtitle.'</a>';
+echo '<a href="'.OutputFilter::ampReplace(htmlspecialchars($item->flink, ENT_COMPAT, 'UTF-8', false)).'" title="'.$item->title.'" '.$attributes.'> <span class="nav-title">'.$iconHtml.$item->title.$badgeHtml.'</span>'.$subtitle.'</a>';

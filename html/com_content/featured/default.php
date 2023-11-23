@@ -76,10 +76,6 @@ if (ASTROID_JOOMLA_VERSION < 4) {
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
-
-
-
-
   <?php if (!empty($this->link_items)) : ?>
     <?php echo $this->loadTemplate('links'); ?>
   <?php endif; ?>
