@@ -71,7 +71,7 @@ function updateContentLayout() {
 }
 </script>
 <template>
-    <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" @keydown.prevent="" :aria-label="props.field.label" :placeholder="props.field.input.hint">
+    <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" @keydown.enter.prevent="" :aria-label="props.field.label" :placeholder="props.field.input.hint">
     <select v-else-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
