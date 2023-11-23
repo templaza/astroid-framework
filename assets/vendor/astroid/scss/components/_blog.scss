@@ -36,34 +36,6 @@ $article-posttype-spacing: 40px;
 	}
 }
 
-// Tags
-ul.tags{
-	list-style: none;
-	margin: 0 0 10px;
-	padding: 0;
-	display: flex;
-	flex-wrap: wrap;
-	li:not(:last-child) {
-		margin-right: 10px;
-		margin-bottom: 10px;
-	}
-	&:before {
-		content: "\f02c";
-		font-family: "Font Awesome 5 Free";
-		font-weight: 900;
-		margin-right: 10px;
-		color: $tag-icon-color;
-		font-size: 20px;
-	}
-	.label {
-		background-color: $tag-bg;
-		padding: $tag-padding;
-		font-size: $tag-font-size;
-		line-height: normal;
-		color: $tag-text-color;
-	}
-}
-
 .article-wraper {
 	height: 100%;
 	padding-bottom: 30px;

@@ -1,0 +1,21 @@
+.mod-menu.nav.flex-column {
+  ul.mod-menu__sub {
+    list-style: none;
+    border-left: 1px dashed var(--bs-border-color);
+    margin-left: 10px;
+    padding-left: 15px;
+    > li > a {
+      position: relative;
+      &:before {
+        content: "";
+        margin-right: 10px;
+        border-top: 1px dashed var(--bs-border-color);
+        width: 7px;
+        height: 1px;
+        position: absolute;
+        top: 50%;
+        left: -13px;
+      }
+    }
+  }
+}

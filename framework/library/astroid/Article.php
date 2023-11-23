@@ -26,6 +26,7 @@ class Article
     public $attribs;
     public $template;
     public $category_params;
+    public array $styles;
 
     function __construct($article, $categoryView = false)
     {
@@ -44,8 +45,6 @@ class Article
         $this->template = Framework::getTemplate();
 
         $mainframe = Factory::getApplication();
-        $wa = $mainframe->getDocument()->getWebAssetManager();
-        $wa->useScript('bootstrap.carousel');
         $this->params = new Registry();
         $itemId = $mainframe->input->get('Itemid', 0, 'INT');
         if ($itemId) {
@@ -431,6 +430,36 @@ class Article
 
         $astroid_level = $this->template->params->get('article_rating', 1);
         return $astroid_level ? true : false;
+    }
+
+    /**
+     * Add Classes for a position defined by User
+     * @param string $position
+     * @param array $classes
+     */
+    public function addStyle(string $position = '', array $classes = [])
+    {
+        if ($position && count($classes)) {
+            if (!isset($this->styles[$position])) {
+                $this->styles[$position] = $classes;
+            } else {
+                $this->styles[$position] = array_merge($this->styles[$position], $classes);
+            }
+        }
+    }
+
+    /**
+     * Get classes from a position defined by user
+     * @param string $position
+     * @return string
+     */
+    public function getStyle(string $position = '') : string
+    {
+        if ($position && isset($this->styles[$position]) && count($this->styles[$position])) {
+            return implode(' ', $this->styles[$position]);
+        } else {
+            return '';
+        }
     }
 
     // Utility Functions

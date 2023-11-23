@@ -1,5 +1,8 @@
 <script setup>
 import { onBeforeMount, onMounted, computed, ref } from 'vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import './assets/style.scss';
@@ -9,6 +12,7 @@ import LayoutBuilder from './components/LayoutBuilder.vue';
 import LayoutGrid from './components/LayoutGrid.vue';
 import SelectElement from './components/SelectElement.vue';
 
+library.add(faCircle);
 const config = JSON.parse(document.getElementById("astroid-menu-params").innerHTML);
 const scope  = ref({});
 const layout = ref([]);
@@ -145,13 +149,13 @@ function addElement(addon) {
 //Color configuration
 const _showBadgeColorPicker = ref(false);
 const _showBadgeBGColorPicker = ref(false);
-function changeBadgeColor (color) {
+function changeColor (color, key) {
     const { r, g, b, a } = color.rgba;
-    scope.value.badge_color = `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-function changeBadgeBGColor (color) {
-    const { r, g, b, a } = color.rgba;
-    scope.value.badge_bgcolor = `rgba(${r}, ${g}, ${b}, ${a})`;
+    if (r === 0, g === 0, b === 0, a === 0) {
+        scope.value[key] = '';
+    } else {
+        scope.value[key] = `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
 }
 </script>
 
@@ -228,14 +232,14 @@ function changeBadgeBGColor (color) {
         </div>
         <div class="col-12 col-lg-4" v-show="parseInt(scope.badge)">
             <label :for="config.id+`_badge_text`" class="form-label">{{ config.language.TPL_ASTROID_MENU_BADGE_TEXT }}</label>
-            <input type="text" class="form-control" :id="config.id+`_badge_text`" :name="config.name+`[badge_text]`" v-model="scope.megamenu_width">
+            <input type="text" class="form-control" :id="config.id+`_badge_text`" :name="config.name+`[badge_text]`" v-model="scope.badge_text">
         </div>
         <div class="col-12 col-lg-3" v-show="parseInt(scope.badge)">
             <div class="form-label">
                 {{ config.language.TPL_ASTROID_MENU_BADGE_COLOR }}
             </div>
             <div>
-                <i class="fas fa-circle border astroid-color-picker fa-3x" :id="config.id+`-badge-colorcircle`" :style="{'color' : scope.badge_color}" @click="_showBadgeColorPicker = true"></i>
+                <font-awesome-icon :id="config.id+`-badge-colorcircle`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': scope.badge_color}" @click="_showBadgeColorPicker = true" />
                 <input type="hidden" :name="config.name+`[badge_color]`" :id="config.id+`_badge_color`" :value="scope.badge_color" />
                 <ColorPicker v-if="_showBadgeColorPicker"
                     theme="light"
@@ -244,7 +248,7 @@ function changeBadgeBGColor (color) {
                     :sucker-canvas="null"
                     :sucker-area="[]"
                     :id="config.id+`_badge_color_colorpicker`"
-                    @changeColor="changeBadgeColor"
+                    @changeColor="(color) => {changeColor(color, 'badge_color')}"
                 />
             </div>
         </div>
@@ -253,7 +257,7 @@ function changeBadgeBGColor (color) {
                 {{ config.language.TPL_ASTROID_MENU_BADGE_BGCOLOR }}
             </div>
             <div>
-                <i class="fas fa-circle border astroid-color-picker fa-3x" :id="config.id+`-badge-bgcolorcircle`" :style="{'color' : scope.badge_bgcolor}" @click="_showBadgeBGColorPicker = true"></i>
+                <font-awesome-icon :id="config.id+`-badge-bgcolorcircle`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': scope.badge_bgcolor}" @click="_showBadgeBGColorPicker = true" />
                 <input type="hidden" :name="config.name+`[badge_bgcolor]`" :id="config.id+`_badge_bgcolor`" :value="scope.badge_bgcolor" />
                 <ColorPicker v-if="_showBadgeBGColorPicker"
                     theme="light"
@@ -262,7 +266,7 @@ function changeBadgeBGColor (color) {
                     :sucker-canvas="null"
                     :sucker-area="[]"
                     :id="config.id+`_badge_bgcolor_colorpicker`"
-                    @changeColor="changeBadgeBGColor"
+                    @changeColor="(color) => {changeColor(color, 'badge_bgcolor')}"
                 />
             </div>
         </div>

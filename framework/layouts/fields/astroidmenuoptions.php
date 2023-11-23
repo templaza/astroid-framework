@@ -12,19 +12,14 @@ defined('JPATH_BASE') or die;
 
 extract($displayData);
 
-$astDocument = Astroid\Framework::getDocument();
-$astDocument->loadFontAwesome();
-
-
-$document = Factory::getDocument();
-$document->addStyleSheet('../media/astroid/assets/vendor/astroidmenuoptions/dist/index.css');
-$document->addScript('../media/astroid/assets/vendor/astroidmenuoptions/dist/index.js', '', ['type' => 'module']);
-$document->addScriptDeclaration("(function ($) {
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->registerAndUseStyle('astroid.menuoptions.css', 'media/astroid/assets/vendor/astroidmenuoptions/dist/index.css');
+$wa->registerAndUseScript('astroid.menuoptions.js', 'media/astroid/assets/vendor/astroidmenuoptions/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
+$wa->addInlineScript("(function ($) {
    $(document).ready(function () {
       $('#fieldset-astroidmenu').find( '.control-label' ).remove();
    });
 })(jQuery)");
-$document->addCustomTag($astDocument->getStylesheets());
 
 // Get Menu
 $app = Factory::getApplication('site');

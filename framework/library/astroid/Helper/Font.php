@@ -268,10 +268,6 @@ class Font
 
         @list($font, $variants) = explode(":", $value);
 
-        if (preg_match('~[0-9]+~', $font)) {
-            $font = "'{$font}'";
-        }
-
         return str_replace('+', ' ', $font);
     }
 

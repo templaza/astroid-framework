@@ -1250,18 +1250,27 @@ class Document
         $getPluginParams = Helper::getPluginParams();
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
 
-        if (Framework::isSite() && !$astroid_inline_css) {
+        if (Framework::isSite()) {
             $css = $this->renderCss();
-            // page css
-            $pageCSSHash = md5($css);
-            $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
-            if (!file_exists($pageCSS)) {
-                Helper::putContents($pageCSS, $css);
-            }
-            $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
-            // custom css
-            if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
-                $this->addStyleSheet('css/custom.css');
+            if (!$astroid_inline_css) {
+                // page css
+                $pageCSSHash = md5($css);
+                $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+                if (!file_exists($pageCSS)) {
+                    Helper::putContents($pageCSS, $css);
+                }
+                $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
+                // custom css
+                if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
+                    $this->addStyleSheet('css/custom.css');
+                }
+                return '';
+            } else {
+                // custom css
+                if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
+                    $this->addStyleSheet('css/custom.css');
+                }
+                return '<style>'.$css.'</style>';
             }
         }
     }

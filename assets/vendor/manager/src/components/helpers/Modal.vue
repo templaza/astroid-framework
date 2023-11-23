@@ -39,7 +39,7 @@ function saveModal(){
 }
 </script>
 <template>
-    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" @click.self="emit('update:closeElement')">
+    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-hidden="true" @click.self="emit('update:closeElement')">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="position-absolute top-0 end-0 p-3">
