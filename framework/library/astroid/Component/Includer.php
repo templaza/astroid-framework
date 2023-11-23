@@ -51,10 +51,12 @@ class Includer
             $body = ($includer['replace']) ? str_replace($includer['replace'], $func_content, $body) : $body;
         }
 
-        $getPluginParams        =   Helper::getPluginParams();
-        $remove_generator       =   $getPluginParams->get('astroid_remove_generator', 0);
-        if ($remove_generator) {
-            $body = self::removeGenerateTag($body);
+        if (Framework::isSite()) {
+            $getPluginParams        =   Helper::getPluginParams();
+            $remove_generator       =   $getPluginParams->get('astroid_remove_generator', 0);
+            if ($remove_generator) {
+                $body = self::removeGenerateTag($body);
+            }
         }
 
         if ($content === null) {

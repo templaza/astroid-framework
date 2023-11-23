@@ -1,3 +1,6 @@
+:root {
+    --as-color-background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAACdJREFUKFNjPHP19n8GJGCspYLMZWCkg4L///+juOHstTuobqC9AgCYGinl3vgvfQAAAABJRU5ErkJggg==);
+}
 #astroid-menu-options {
     .card {
         border: 1px solid #eee;
@@ -172,4 +175,7 @@
         background: var(--as-color-background);
         color: transparent;
     }
+}
+.hu-color-picker {
+    box-sizing: initial;
 }
