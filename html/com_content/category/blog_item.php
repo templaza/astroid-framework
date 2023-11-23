@@ -64,9 +64,12 @@ $isUnpublished = $this->item->state == 0 || ($this->item->publish_up ? strtotime
 
       <?php echo LayoutHelper::render('joomla.content.post_formats.icons', $post_format); ?>
 
-      <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-         <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
-      <?php endif; ?>
+       <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
+           <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
+       <?php endif; ?>
+       <?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
+           <?php echo LayoutHelper::render('joomla.content.tags', $this->item->tags->itemTags); ?>
+       <?php endif; ?>
 
       <div class="article-title item-title">
          <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
@@ -76,13 +79,14 @@ $isUnpublished = $this->item->state == 0 || ($this->item->publish_up ? strtotime
          <?php echo $this->item->introtext; ?>
       </div>
 
-      <?php if ($info == 1 || $info == 2) : ?>
-         <?php if ($useDefList) : ?>
-            <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'below')); ?>
-         <?php endif; ?>
-      <?php endif; ?>
-
-
+       <?php if ($info == 1 || $info == 2) : ?>
+           <?php if ($useDefList) : ?>
+               <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'below')); ?>
+           <?php endif; ?>
+           <?php if ($params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
+               <?php echo LayoutHelper::render('joomla.content.tags', $this->item->tags->itemTags); ?>
+           <?php endif; ?>
+       <?php endif; ?>
 
       <?php if (!$params->get('show_intro')) : ?>
          <?php echo $this->item->event->afterDisplayTitle; ?>
