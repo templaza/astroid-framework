@@ -9,6 +9,8 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 // No direct access.
@@ -20,7 +22,9 @@ $items = $params->get('astroid_article_gallery_items', []);
 if (empty($items)) {
    return;
 }
-
+$mainframe = Factory::getApplication();
+$wa = $mainframe->getDocument()->getWebAssetManager();
+$wa->useScript('bootstrap.carousel');
 $index = 0;
 $active = true;
 $width = $params->get('astroid_article_gallery_width', '');

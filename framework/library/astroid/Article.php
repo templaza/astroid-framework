@@ -45,8 +45,6 @@ class Article
         $this->template = Framework::getTemplate();
 
         $mainframe = Factory::getApplication();
-        $wa = $mainframe->getDocument()->getWebAssetManager();
-        $wa->useScript('bootstrap.carousel');
         $this->params = new Registry();
         $itemId = $mainframe->input->get('Itemid', 0, 'INT');
         if ($itemId) {
