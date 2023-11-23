@@ -8,6 +8,7 @@
  */
 
 namespace Astroid\Helper;
+use Astroid\Helper;
 use Joomla\Filesystem\Folder;
 
 defined('_JEXEC') or die;
@@ -60,7 +61,14 @@ class Overrides
     public static function getHTMLTemplate(): string {
         $backtrace = \debug_backtrace();
         $callPath = $backtrace[0]['file'] ?? '';
-        $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
+
+        $template_name      = ASTROID_TEMPLATE_NAME;
+        $isChildTemplate    = Helper::isChildTemplate($template_name);
+
+        if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
+            $template_name = $isChildTemplate['parent'];
+        }
+        $htmlTemplatePath = JPATH_ROOT . '/templates/'.$template_name.'/html';
         $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
 
         if (\strpos($callPath, $htmlTemplatePath) === 0) {
