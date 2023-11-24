@@ -12,21 +12,21 @@
 use Joomla\CMS\Language\Text;
 // No direct access.
 defined('_JEXEC') or die;
-jimport('astroid.framework.article');
 
 extract($displayData);
 if (empty($items)) {
    return;
 }
+$document = Astroid\Framework::getDocument();
 ?>
 <div class="relatedposts-wrap">
    <h4><?php echo Text::_('ASTROID_ARTICLE_RELATED_LBL'); ?></h4>
-   <div class="relateditems row">
+   <div class="relateditems row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
       <?php foreach ($items as $item) : $images = json_decode($item->images);
-         $astroidArticle = new AstroidFrameworkArticle($item, true);
+         $astroidArticle = new Astroid\Article($item, true);
       ?>
-         <div class="col-md-6 p-2">
-            <div class="card h-100 mb-4">
+         <div>
+            <div class="card">
                <?php
                if (!empty($images->image_intro)) {
                ?>
@@ -37,10 +37,10 @@ if (empty($items)) {
                <div class="card-body">
                   <?php
                   if ($display_posttypeicon) {
-                     Astroid\Framework::getDocument()->include('blog.modules.posttype', ['article' => $astroidArticle]);
+                      $document->include('blog.modules.posttype', ['article' => $astroidArticle]);
                   }
                   if ($display_badge) {
-                     Astroid\Framework::getDocument()->include('blog.modules.badge', ['article' => $astroidArticle]);
+                      $document->include('blog.modules.badge', ['article' => $astroidArticle]);
                   }
                   ?>
                   <small class="text-muted"> <?php echo $item->category_title; ?></small>
