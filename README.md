@@ -7,7 +7,7 @@ https://sourceforge.net/projects/initranslator/
 
 
 ## Completed Languages
-* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ar-AR.zip)
+* Arabic (ar-AA) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ar-AA.zip)
 * Czech (cz-CZ) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_cs-CZ.zip)
 * Dutch (nl-NL) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_nl-NL.zip)
 * French (fr-FR) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_fr-FR.zip)
