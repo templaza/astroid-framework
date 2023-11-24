@@ -62,13 +62,7 @@ class Overrides
         $backtrace = \debug_backtrace();
         $callPath = $backtrace[0]['file'] ?? '';
 
-        $template_name      = ASTROID_TEMPLATE_NAME;
-        $isChildTemplate    = Helper::isChildTemplate($template_name);
-
-        if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
-            $template_name = $isChildTemplate['parent'];
-        }
-        $htmlTemplatePath = JPATH_ROOT . '/templates/'.$template_name.'/html';
+        $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
         $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
 
         if (\strpos($callPath, $htmlTemplatePath) === 0) {
@@ -76,7 +70,17 @@ class Overrides
         }
 
         if (empty($relativePath)) {
-            return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
+            // Check if template is child-template and file is not exist then select html from parent
+            $isChildTemplate    = Helper::isChildTemplate(ASTROID_TEMPLATE_NAME);
+            if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
+                $htmlTemplatePath = JPATH_ROOT . '/templates/'.$isChildTemplate['parent'].'/html';
+            }
+            if (\strpos($callPath, $htmlTemplatePath) === 0) {
+                $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
+            }
+            if (empty($relativePath)) {
+                return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
+            }
         }
 
         $astroidOverridePath = $htmlAstroidPath . $relativePath;
