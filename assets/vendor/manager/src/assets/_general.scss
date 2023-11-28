@@ -1,0 +1,23 @@
+.astroid-heading-line {
+    overflow: hidden;
+    >* {
+        display: inline-block;
+        position: relative;
+        color: var(--as-violet);
+    }
+    >::before, >::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - (calc(0.2px + 0.05em)/ 2));
+        width: 2000px;
+        border-bottom: 3px solid var(--bs-border-color);
+    }
+    >::before {
+        right: 100%;
+        margin-right: calc(5px + 0.3em);
+    }
+    >::after {
+        left: 100%;
+        margin-left: calc(5px + 0.3em);
+    }
+}

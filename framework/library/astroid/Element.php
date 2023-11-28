@@ -121,39 +121,40 @@ class Element
 
    public function loadForm()
    {
-      $this->form = new Form($this->type);
-      if (!empty($this->xml_file)) {
-         $xml = $this->xml->form;
-         $this->form->load($xml, false);
-      }
-      $defaultXml = simplexml_load_file($this->default_xml_file);
-      $this->form->load($defaultXml->form, false);
+       $this->form = new Form($this->type);
+       $defaultXml = simplexml_load_file($this->default_xml_file);
+       $this->form->load($defaultXml->form, false);
 
-      $formData = [];
+       if (!empty($this->xml_file)) {
+           $xml = $this->xml->form;
+           $this->form->load($xml, false);
+       }
 
-      $fieldsets = $this->form->getFieldsets();
-      foreach ($fieldsets as $key => $fieldset) {
-         $fields = $this->form->getFieldset($key);
-         foreach ($fields as $field) {
-            $formData[] = ['name' => $field->name, 'value' => $field->value];
-         }
-      }
+       $formData = [];
 
-      $this->params = $formData;
+       $fieldsets = $this->form->getFieldsets();
+       foreach ($fieldsets as $key => $fieldset) {
+           $fields = $this->form->getFieldset($key);
+           foreach ($fields as $field) {
+               $formData[] = ['name' => $field->name, 'value' => $field->value];
+           }
+       }
+
+       $this->params = $formData;
    }
 
    public function getInfo()
    {
-      return [
-         'type' => $this->type,
-         'title' => Text::_($this->title),
-         'icon' => $this->icon,
-          'category' => $this->category,
-         'description' => Text::_($this->description),
-         'color' => $this->color,
-         'multiple' => $this->multiple,
-         'params' => $this->params,
-      ];
+       return [
+           'type' => $this->type,
+           'title' => Text::_($this->title),
+           'icon' => $this->icon,
+           'category' => $this->category,
+           'description' => Text::_($this->description),
+           'color' => $this->color,
+           'multiple' => $this->multiple,
+           'params' => $this->params,
+       ];
    }
 
    public function renderForm()
@@ -200,7 +201,7 @@ class Element
             $groups = [];
             foreach ($fields as $key => $field) {
                 if ($field->type == 'astroidgroup') {
-                    $groups[$field->fieldname] = ['title' => $field->getAttribute('title', ''), 'icon' => $field->getAttribute('icon', ''), 'description' => $field->getAttribute('description', ''), 'fields' => []];
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => []];
                 }
             }
 

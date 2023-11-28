@@ -39,8 +39,8 @@ function saveModal(){
 }
 </script>
 <template>
-    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-hidden="true" @click.self="emit('update:closeElement')">
-        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="position-absolute top-0 end-0 p-3">
                     <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement')"></button>
@@ -53,27 +53,22 @@ function saveModal(){
                 <div class="tab-content modal-body" :id="`modal-tab-content-`+props.element.id">
                     <div v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="tab-pane fade" :class="{'show active' : idx === 0}" :id="fieldset.name+`-tab-pane-`+props.element.id" role="tabpanel" :aria-labelledby="fieldset.name+`-tab`" tabindex="0">
                         <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid">
-                            <div v-for="(field, fid) in group.fields" :key="field.id" :class="(fid !== 0 && field.input.type !== 'astroidhidden' && field.input.type !== 'hidden' ? 'mt-3 pt-3 border-top': '')" v-show="checkShow(field)">
-                                <div class="row">
-                                    <div v-if="(field.label || field.description) && field.input.type !== `astroidheading`" class="col-lg-5">
-                                        <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label" v-html="field.label"></div>
-                                        <label v-else :for="field.input.id" class="form-label" v-html="field.label"></label>
-                                        <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
-                                    </div>
-                                    <div :class="{
-                                        'col-lg-7' : (field.label || field.description) && field.input.type !== `astroidheading`,
-                                        'col-12': !(field.label || field.description) || field.input.type === `astroidheading`
-                                    }">
-                                        <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
-                                            <Fields 
-                                                :field="field" 
-                                                :scope="params"
-                                                :constant="props.constant" 
-                                                />
-                                        </div>
-                                        <div v-else v-html="field.input"></div>
-                                    </div>
+                            <div v-if="group.title || group.description" class="heading-group mb-4">
+                                <h5 v-if="group.title" class="astroid-heading-line"><span>{{ group.title }}</span></h5>
+                                <p v-if="group.description" class="form-text">{{ group.description }}</p>
+                            </div>
+                            <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
+                                <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label fw-bold" v-html="field.label"></div>
+                                <label v-else-if="field.input.type !== `astroidheading`" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
+                                <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
+                                    <Fields 
+                                        :field="field" 
+                                        :scope="params"
+                                        :constant="props.constant" 
+                                        />
                                 </div>
+                                <div v-else v-html="field.input"></div>
+                                <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
                             </div>
                         </div>
                     </div>

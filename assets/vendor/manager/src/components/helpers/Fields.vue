@@ -149,8 +149,8 @@ function updateContentLayout() {
         <Presets :field="props.field" :config="props.constant" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
-        <h3>{{ props.field.input.title }}</h3>
-        <div>{{ props.field.input.description }}</div>
+        <h5 v-if="props.field.input.title">{{ props.field.input.title }}</h5>
+        <p v-if="props.field.input.description" class="form-text">{{ props.field.input.description }}</p>
     </div>
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">

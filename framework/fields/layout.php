@@ -42,7 +42,6 @@ class JFormFieldLayout extends FormField
        } else {
            $options = \json_decode($value, true);
        }
-
        $json =   [
            'id'      =>  $this->id,
            'name'    =>  $this->name,

@@ -32,6 +32,20 @@ const system_fonts = {
     "Trebuchet MS, Helvetica, sans-serif" : 'Trebuchet MS, Helvetica',
     "Verdana, Geneva, sans-serif" : 'Verdana, Geneva'
 }
+const quotes = [
+    "I love you and that's the beginning and end of everything.",
+    'I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.',
+    "You know you're in love when you can't fall asleep because reality is finally better than your dreams.",
+    "Love is that condition in which the happiness of another person is essential to your own.",
+    "The best thing to hold onto in life is each other.",
+    "I need you like a heart needs a beat.",
+    "I am who I am because of you. You are every reason, every hope, and every dream I've ever had.",
+    "If I had a flower for every time I thought of you.. I could walk through my garden forever.",
+    "Take my hand, take my whole life too. For I can't help falling in love with you.",
+    "If you live to be a hundred, I want to live to be a hundred minus one day so I never have to live without you.",
+    "You are the finest, loveliest, tenderest, and most beautiful person I have ever known and even that is an understatement.",
+    "In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."
+];
 const options= reactive({
     'system': [],
     'google': [],
@@ -176,9 +190,15 @@ function changeColor(color) {
     }
     updateColor(_color[_currentColorMode.value]);
 }
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 </script>
 <template>
-    <div class="row row-cols-lg-2 row-cols-xl-3 g-4">
+    <div class="row g-4" :class="`row-cols-lg-`+(Math.ceil(props.field.input.options.columns/2))+` row-cols-xl-`+props.field.input.options.columns">
         <div>
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.fontpicker">
@@ -310,7 +330,7 @@ function changeColor(color) {
             'line-height' : props.modelValue['line_height'][currentDevice]+props.modelValue['line_height_unit'][currentDevice],
             'letter-spacing' : props.modelValue['letter_spacing'][currentDevice]+props.modelValue['letter_spacing_unit'][currentDevice],
             }">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut rutrum est, quis aliquet est. Vivamus in blandit purus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <p>{{ quotes[getRandomInt(0, quotes.length - 1)] }}</p>
             <p>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</p>
             <p class="mb-0">0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</p>
         </div>

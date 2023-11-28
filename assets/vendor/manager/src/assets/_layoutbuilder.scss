@@ -200,4 +200,7 @@
             background-color: var(--as-layout-block-bg);
         }
     }
+    [class^=group-] {
+        margin-bottom: 1rem;
+    }
 }

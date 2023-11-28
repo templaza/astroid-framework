@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_HEADING_LABEL</title>
+    <description>ASTROID_WIDGET_HEADING_DESC</description>
+    <icon>fa-solid fa-heading</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" description="ASTROID_WIDGET_HEADING_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_HEADING_USE_LINK_LABEL"/>
+                <field astroidgroup="widget_styles" name="html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h2">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="h4">h4</option>
+                    <option value="h5">h5</option>
+                    <option value="h6">h6</option>
+                    <option value="div">div</option>
+                </field>
+                <field astroidgroup="widget_styles" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-size-unit="rem" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="true" columns="1"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
