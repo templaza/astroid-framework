@@ -29,10 +29,17 @@ function checkShow(field) {
 function saveModal(){
     let tmp = [];
     Object.keys(params.value).forEach(key => {
-        tmp.push({
-            'name': key,
-            'value': params.value[key]
-        });
+        if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
+            tmp.push({
+                'name': key,
+                'value': JSON.parse(JSON.stringify(params.value[key]))
+            });
+        } else {
+            tmp.push({
+                'name': key,
+                'value': params.value[key]
+            });
+        }
     });
     emit('update:saveElement', tmp);
     emit('update:closeElement')

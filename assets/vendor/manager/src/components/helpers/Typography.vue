@@ -75,7 +75,9 @@ onMounted(()=>{
         url = "fonts_ajax.txt?ts="+Date.now();
     }
     Object.keys(props.field.input.value).forEach(key => {
-        props.modelValue[key] = props.field.input.value[key];
+        if (typeof props.modelValue[key] === 'undefined') {
+            props.modelValue[key] = props.field.input.value[key];
+        }
     })
     getFontType(props.field.input.value.font_face);
     axios.get(url)

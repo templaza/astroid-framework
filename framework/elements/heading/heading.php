@@ -16,6 +16,8 @@ defined('_JEXEC') or die;
 extract($displayData);
 $title          = $params->get('title', '');
 $html_element   = $params->get('html_element', 'h2');
+$font_style     = $params->get('font_style');
 if (!empty($title)) {
-    echo '<'.$html_element.'>'. $title . '</'.$html_element.'>';
+    echo '<'.$html_element.' class="heading">'. $title . '</'.$html_element.'>';
 }
+Astroid\Helper\Style::renderTypography('#'.$element->id.' > .heading', $font_style);

@@ -234,8 +234,8 @@ class Style
         if (!empty($font_size)) {
             if (is_object($font_size)) {
                 foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    $unit = isset($font_size_unit->{$device}) ? $font_size_unit->{$device} : 'em';
                     if ($font_size->{$device}) {
+                        $unit = isset($font_size_unit->{$device}) ? $font_size_unit->{$device} : 'em';
                         $style->addCss('font-size', $font_size->{$device} . $unit, $device);
                     }
                 }
@@ -251,8 +251,10 @@ class Style
         if (!empty($letter_spacing)) {
             if (is_object($letter_spacing)) {
                 foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    $letter_spacing_unit_value = isset($letter_spacing_unit->{$device}) ? $letter_spacing_unit->{$device} : 'em';
-                    $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
+                    if (!empty($letter_spacing->{$device})) {
+                        $letter_spacing_unit_value = isset($letter_spacing_unit->{$device}) ? $letter_spacing_unit->{$device} : 'em';
+                        $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
+                    }
                 }
             } else {
                 $style->addCss('letter-spacing', $letter_spacing . $letter_spacing_unit);
@@ -266,8 +268,8 @@ class Style
         if (!empty($line_height)) {
             if (is_object($line_height)) {
                 foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
                     if ($line_height->{$device}) {
+                        $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
                         $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
                     }
                 }
