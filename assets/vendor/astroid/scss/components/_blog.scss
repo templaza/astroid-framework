@@ -189,7 +189,7 @@ $article-posttype-spacing: 40px;
 // Author Info
 .author-wrap {
 	padding: 35px;
-	border: 1px solid #eaeaea;
+	border: 1px solid var(--bs-border-color);
 	margin-top: 30px;
 	margin-bottom: 30px;
 	@include media-breakpoint-down(sm) {
@@ -198,7 +198,7 @@ $article-posttype-spacing: 40px;
 	.author-header {
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid #eaeaea;
+		border-bottom: 1px solid var(--bs-border-color);
 		margin-bottom: 15px;
 		padding-bottom: 20px;
 	}
