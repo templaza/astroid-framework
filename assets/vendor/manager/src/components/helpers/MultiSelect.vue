@@ -30,7 +30,7 @@ function onSelectDevice(items, lastSelectItem) {
         option-text="text"
         :id="props.field.id"
         :selected-items="selectedItems"
-        placeholder="Select Bootstrap libraries"
+        :placeholder="props.field.input.hint"
         @select="onSelectDevice"
     >
     </multi-list-select>

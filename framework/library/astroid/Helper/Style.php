@@ -244,6 +244,24 @@ class Style
             }
         }
 
+        // font styles
+        $font_styles = $typography->get('font_style', []);
+        if (is_array($font_styles) && count($font_styles)) {
+            foreach ($font_styles as $font_style) {
+                switch ($font_style) {
+                    case 'bold':
+                        $style->addCss('font-weight', 'bold');
+                        break;
+                    case 'italic':
+                        $style->addCss('font-style', 'italic');
+                        break;
+                    case 'underline':
+                        $style->addCss('text-decoration', 'underline');
+                        break;
+                }
+            }
+        }
+
         // letter spacing
         $letter_spacing = $typography->get('letter_spacing', '');
         $letter_spacing_unit = $typography->get('letter_spacing_unit', '');

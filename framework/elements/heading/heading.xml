@@ -18,7 +18,7 @@
                     <option value="h6">h6</option>
                     <option value="div">div</option>
                 </field>
-                <field astroidgroup="widget_styles" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" font-style-picker="false" color-picker="true" columns="1"/>
+                <field astroidgroup="widget_styles" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
         </fields>
     </form>

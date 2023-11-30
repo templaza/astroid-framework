@@ -321,7 +321,7 @@ function getRandomInt(min, max) {
             </div>
         </div>
     </div>
-    <div class="typography-preview">
+    <div v-if="props.field.input.options.preview" class="typography-preview">
         <link v-if="font_type === `google` && (typeof options[font_type].find((font) => font.value === fontSelected.value) !== 'undefined') && fontSelected.value !== `` && fontSelected.value !== `__default` && fontSelected.value.search(/^library-font-/) === -1" :href="`https://fonts.googleapis.com/css?family=`+fontSelected.value" rel="stylesheet" />
         <div class="card card-default card-body mt-4" :style="
             {

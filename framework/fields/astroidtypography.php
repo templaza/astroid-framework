@@ -184,6 +184,12 @@ class JFormFieldAstroidTypography extends FormField
             $extraData['columns'] = 3;
         }
 
+        if (isset($this->element['preview']) && $this->element['preview'] == 'false') {
+            $extraData['preview'] = false;
+        } else {
+            $extraData['preview'] = true;
+        }
+
         $extraData['colormode'] = $color_mode;
         $system_fonts = array();
         foreach (Astroid\Helper\Font::$system_fonts as $s_font_value => $s_font_title) {

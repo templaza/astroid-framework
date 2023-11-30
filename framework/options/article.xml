@@ -29,7 +29,15 @@
 
 			<field astroidgroup="article_single_options" name="article_socialshare_type" type="astroidradio" default="none" label="ASTROID_ARTICLE_OPTIONS_SOCIALBTNS_LBL" description="ASTROID_ARTICLE_OPTIONS_SOCIALBTNS_DESC">
 				<option class="btn-danger" value="none">ASTROID_NONE</option>
+				<option value="default">ASTROID_SHARE_DEFAULT_LBL</option>
 				<option value="sharethis">ASTROID_SHARETHIS_LBL</option>
+			</field>
+
+			<field astroidgroup="article_single_options" ngShow="[article_socialshare_type]=='default'" name="astroid_article_share_buttons" type="astroidmultiselect" label="ASTROID_SHARE_BUTTONS_LBL" description="ASTROID_SHARE_BUTTONS_DESC" hint="ASTROID_SHARE_BUTTONS_PLACEHOLDER_LBL" default="[]">
+				<option value="facebook">ASTROID_SHARE_FACEBOOK_LBL</option>
+				<option value="x">ASTROID_SHARE_X_LBL</option>
+				<option value="linkedin">ASTROID_SHARE_LINKEDIN_LBL</option>
+				<option value="pinterest">ASTROID_SHARE_PINTEREST_LBL</option>
 			</field>
 
 			<field ngShow="[article_socialshare_type]=='sharethis'" astroidgroup="article_single_options" name="article_socialshare_sharethis" type="astroidtext" filter="raw" class="form-control" label="ASTROID_SHARETHIS_PID_LBL" description="ASTROID_SHARETHIS_PID_DESC" />

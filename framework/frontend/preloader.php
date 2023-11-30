@@ -141,10 +141,10 @@ if($preloder_setting == "animations"){
    $preloaderStyles .= '.preload_fontawesome{font-size:'.$preloader_size.'px; color: '.$preloader_color['light'].'; display: flex;justify-content: center;margin: 0 auto;}';
    $preloaderStyles .= '[data-bs-theme=dark] .preload_fontawesome{color: '.$preloader_color['dark'].';}';
 }
-$preloaderStyles    .=  '#astroid-preloader{background:' . $preloader_bgcolor['light'] . ';}';
+$preloaderStyles    .=  '#astroid-preloader{background:' . $preloader_bgcolor['light'] . ';z-index: 99999;}';
 $preloaderStyles    .=  '[data-bs-theme=dark] #astroid-preloader{background:' . $preloader_bgcolor['dark'] . ';}';
 $wa->addInlineStyle($preloaderStyles);
 ?>
-<div id="astroid-preloader" class="d-flex">
+<div id="astroid-preloader" class="d-flex align-items-center justify-content-center position-fixed top-0 start-0 bottom-0 end-0">
    <?php echo $preloaderHTML; ?>
 </div>
