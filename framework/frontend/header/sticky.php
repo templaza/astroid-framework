@@ -68,7 +68,7 @@ switch ($stickey_mode) {
               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
               <?php echo '</div>'; ?>
           <?php } ?>
-         <?php $document->include('logo'); ?>
+         <?php $document->include('logo', ['position' => 'sticky']); ?>
          <?php
          if ($stickey_mode == 'left') {
             // header nav starts

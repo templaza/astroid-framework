@@ -187,17 +187,21 @@
          <field astroidgroup="header_logo_options_element" description="" ngShow="[header]==true AND [logo_type]!='none' AND [logo_link_type]=='custom'" name="logo_link_custom" type="astroidtext" class="form-control" default="#" label="Logo Link Url">
          </field>
 
-         <field ngShow="[header]==true AND [logo_type]!='none' AND [logo_link_type]=='custom'" astroidgroup="header_logo_options_element" class="astroid-logo-target-switch" name="logo_link_target_blank" type="astroidradio" astroid-switch="true" default="0" label="Open in new window" description=""></field>
+         <field ngShow="[header]==true AND [logo_type]!='none' AND [logo_link_type]=='custom'" astroidgroup="header_logo_options_element" class="astroid-logo-target-switch" name="logo_link_target_blank" type="astroidradio" astroid-switch="true" default="0" label="Open in new window" description=""/>
 
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_DEFULT_LOGO_DESC" ngShow="[header]==true AND [logo_type]=='image'" ngRequired="logo_type=='image'" name="defult_logo" type="astroidmedia" label="TPL_ASTROID_BASIC_DEFULT_LOGO_LABEL">
          </field>
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_DEFAULT_LOGO_DARK_DESC" ngShow="[header]==true AND [logo_type]=='image' AND [astroid_color_mode_enable]=='1'" ngRequired="logo_type=='image'" name="default_logo_dark" type="astroidmedia" label="TPL_ASTROID_BASIC_DEFAULT_LOGO_DARK_LABEL">
          </field>
+         <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_DEFAULT_LOGO_WIDTH_DESC" ngShow="[header]==true AND [logo_type]=='image'" name="default_logo_width" type="astroidtext" label="TPL_ASTROID_BASIC_DEFAULT_LOGO_WIDTH_LABEL" hint="200px"/>
+         <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_DEFAULT_LOGO_HEIGHT_DESC" ngShow="[header]==true AND [logo_type]=='image'" name="default_logo_height" type="astroidtext" label="TPL_ASTROID_BASIC_DEFAULT_LOGO_HEIGHT_LABEL" hint="60px"/>
 
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_MOBILE_LOGO_DESC" ngShow="[header]==true AND [logo_type]=='image'" ngRequired="logo_type=='image'" name="mobile_logo" type="astroidmedia" label="TPL_ASTROID_BASIC_MOBILE_LOGO_LABEL">
          </field>
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_MOBILE_LOGO_DARK_DESC" ngShow="[header]==true AND [logo_type]=='image' AND [astroid_color_mode_enable]=='1'" ngRequired="logo_type=='image'" name="mobile_logo_dark" type="astroidmedia" label="TPL_ASTROID_BASIC_MOBILE_LOGO_DARK_LABEL">
          </field>
+         <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_MOBILE_LOGO_WIDTH_DESC" ngShow="[header]==true AND [logo_type]=='image'" name="mobile_logo_width" type="astroidtext" label="TPL_ASTROID_BASIC_MOBILE_LOGO_WIDTH_LABEL" hint="200px"/>
+         <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_BASIC_MOBILE_LOGO_HEIGHT_DESC" ngShow="[header]==true AND [logo_type]=='image'" name="mobile_logo_height" type="astroidtext" label="TPL_ASTROID_BASIC_MOBILE_LOGO_HEIGHT_LABEL" hint="60px"/>
 
          <!-- Sticky Options-->
          <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_sticky_options_element" class="sticky-header-switch" name="enable_sticky_menu" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_DESC"/>
@@ -212,6 +216,8 @@
          </field>
          <field ngShow="[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar' AND [astroid_color_mode_enable]=='1'" astroidgroup="header_sticky_options_element" description="TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_DARK_DESC" name="stickey_header_logo_dark" type="astroidmedia" label="TPL_ASTROID_BASIC_STICKY_HEADER_LOGO_DARK_LABEL">
          </field>
+         <field astroidgroup="header_sticky_options_element" description="TPL_ASTROID_BASIC_STICKY_LOGO_WIDTH_DESC" ngShow="[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar'" name="sticky_logo_width" type="astroidtext" label="TPL_ASTROID_BASIC_STICKY_LOGO_WIDTH_LABEL" hint="200px"/>
+         <field astroidgroup="header_sticky_options_element" description="TPL_ASTROID_BASIC_STICKY_LOGO_HEIGHT_DESC" ngShow="[header]==true AND [enable_sticky_menu]==true AND [logo_type]=='image' AND [header_mode]!='sidebar'" name="sticky_logo_height" type="astroidtext" label="TPL_ASTROID_BASIC_STICKY_LOGO_HEIGHT_LABEL" hint="60px"/>
 
          <field ngShow="[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'" astroidgroup="header_sticky_options_element" name="stickey_block_1_type" type="astroidlist" default="blank" class="form-select" label="TPL_ASTROID_STICKY_BLOCK_1_TYPE_LABEL" description="TPL_ASTROID_STICKY_BLOCK_1_TYPE_DESC">
             <option value="blank">TPL_ASTROID_BLANK_OPTIONS</option>
