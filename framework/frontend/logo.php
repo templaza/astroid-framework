@@ -12,7 +12,7 @@
 // No direct access.
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Astroid\Helper\Style;
 defined('_JEXEC') or die;
 
@@ -34,7 +34,7 @@ $header_mode = $params->get('header_mode', 'horizontal');
 $header_stacked_menu_mode = $params->get('header_stacked_menu_mode', 'center');
 
 if ($logo_type == 'text') {
-    $config = Factory::getConfig();
+    $config = Factory::getApplication()->getConfig();
     $logo_text = $params->get('logo_text', $config->get('sitename')); // Logo Text
     $tag_line = $params->get('tag_line', ''); // Logo Tagline
 } else {
