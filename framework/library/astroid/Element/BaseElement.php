@@ -45,11 +45,7 @@ class BaseElement
             $this->params->loadArray($params);
         }
 
-        if (!in_array($this->type, ['section', 'row', 'column', 'element', 'component', 'message', 'banner', 'module_position'])) {
-            $this->addClass('astroid-' . Helper::slugify($this->type) .'-widget');
-        } else {
-            $this->addClass('astroid-' . Helper::slugify($this->type));
-        }
+        $this->addClass('astroid-' . Helper::slugify($this->type));
 
         $this->_id();
         $this->style        =   new Style('#' . $this->getAttribute('id'));

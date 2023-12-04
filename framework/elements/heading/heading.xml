@@ -9,6 +9,7 @@
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
                 <field astroidgroup="general" description="ASTROID_WIDGET_HEADING_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_HEADING_USE_LINK_LABEL"/>
+                <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_HEADING_LINK_LABEL" description="ASTROID_WIDGET_HEADING_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
                 <field astroidgroup="widget_styles" name="html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h2">
                     <option value="h1">h1</option>
                     <option value="h2">h2</option>

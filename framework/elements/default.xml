@@ -77,8 +77,8 @@
             <field ngShow="[custom_colors]==1" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
             
             <field name="spacing_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL" />
-            <field name="margin" type="astroidspacing" label="Margin" />
-            <field name="padding" type="astroidspacing" label="Padding" />
+            <field name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+            <field name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
