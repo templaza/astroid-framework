@@ -10,9 +10,20 @@
                 <field astroidgroup="general" name="astroid_author_social" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL" multiple="true">
                     <form>
                         <fields>
-                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-                                <field description="ASTROID_WIDGET_HEADING_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_HEADING_USE_LINK_LABEL"/>
-                                <field ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_HEADING_LINK_LABEL" description="ASTROID_WIDGET_HEADING_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL">
+                                    <option value="primary">Primary</option>
+                                    <option value="secondary">Secondary</option>
+                                    <option value="success">Success</option>
+                                    <option value="danger">Danger</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="info">Info</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="link">Link</option>
+                                </field>
                             </fieldset>
                         </fields>
                     </form>

@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import draggable from "vuedraggable";
 import Fields from './Fields.vue';
 
@@ -18,6 +18,7 @@ onBeforeMount(()=>{
 function listUpdated() {
     emit('update:modelValue', JSON.stringify(items.value));
 }
+
 function checkShow(field) {
     if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
         const expression = field.ngShow.replace(/\[(.+?)\]/g, "params.value\['$1'\]");
@@ -30,13 +31,13 @@ function checkShow(field) {
     }
     return true;
 }
+
 function editItem(index) {
     params.value = {};
-    if (index === -1) {
-        props.field.input.form.info.params.forEach(param => {
-            params.value[param.name] = param.value;
-        });
-    } else {
+    props.field.input.form.info.params.forEach(param => {
+        params.value[param.name] = param.value;
+    });
+    if (index !== -1) {
         items.value[index].params.forEach(param => {
             params.value[param.name] = param.value;
         });
@@ -67,14 +68,33 @@ function saveItem(){
             id: id,
             params: tmp
         });
+    } else {
+        items.value[currentIdx.value].params = tmp;
     }
+    emit('update:modelValue', JSON.stringify(items.value));
     params.value = {};
     edit.value = false;
+}
+
+function duplicateItem(element, index) {
+    let id = Date.now() * 1000 + Math.random() * 1000;
+    id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
+    let tmp = {
+        id: id,
+        params: element.params
+    };
+    items.value.splice(index+1, 0, tmp);
+}
+
+function deleteItem(index) {
+    if (confirm('Are you sure?')) {
+        items.value.splice(index, 1);
+    }
 }
 </script>
 <template>
     <div v-if="!edit">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="add-item d-flex justify-content-between align-items-center mb-3 p-3 rounded">
             <h6 class="mb-0">Items</h6>
             <button class="btn btn-as btn-sm btn-primary btn-as-primary" @click.prevent="editItem(-1)">Add Item</button>
         </div>
@@ -83,12 +103,20 @@ function saveItem(){
             tag="div"
             @change="listUpdated"
             class="astroid-subform row row-cols-1 g-2"
-            ghost-class="ghost"
+            ghost-class="subform-ghost"
+            handle=".item-move"
             item-key="id">
             <template #item="{ element, index }">
                 <div>
                     <div class="card card-body">
-                        {{ element.params.find((param) => param.name === 'title') ? element.params.find((param) => param.name === 'title').value : 'Item ' + (index+1) }}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div><i class="item-move fa-solid fa-up-down me-3"></i>{{ element.params.find((param) => param.name === 'title') ? element.params.find((param) => param.name === 'title').value : 'Item ' + (index+1) }}</div>
+                            <div class="toolbar">
+                                <a href="#" title="Edit" class="me-2" @click.prevent="editItem(index)"><i class="fa-solid fa-gear"></i></a>
+                                <a href="#" title="Duplicate" class="me-2" @click.prevent="duplicateItem(element,index)"><i class="fa-solid fa-copy"></i></a>
+                                <a href="#" title="Delete" @click.prevent="deleteItem(index)"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>

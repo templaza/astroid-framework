@@ -1,9 +1,6 @@
 <?php
-
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormField;
 use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
 use Astroid\Element;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -95,10 +92,6 @@ class JFormFieldAstroidSubForm extends FormField
         }
 
         $this->formtype = 'file';
-
-        if ((string) $element['fieldname']) {
-            $this->__set('fieldname', $element['fieldname']);
-        }
 
         if ($this->value && \is_string($this->value)) {
             // Guess here is the JSON string from 'default' attribute

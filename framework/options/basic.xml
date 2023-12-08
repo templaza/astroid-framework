@@ -24,17 +24,6 @@
             <option value="toast">Toast</option>
          </field>
 
-         <field astroidgroup="bootstrap" name="astroid_author_social" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL" multiple="true">
-            <form>
-               <fields>
-                  <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-                     <field description="ASTROID_WIDGET_HEADING_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_HEADING_USE_LINK_LABEL"/>
-                     <field ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_HEADING_LINK_LABEL" description="ASTROID_WIDGET_HEADING_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
-                  </fieldset>
-               </fields>
-            </form>
-         </field>
-
          <field astroidgroup="preloader_options" description="TPL_ASTROID_BASIC_ENABLE_PRELOADER_DESC" name="preloader" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_PRELOADER_LABEL"/>
          <field astroidgroup="preloader_options" ngShow="[preloader]=='1'" description="TPL_ASTROID_PRELOADER_TYPE_DESC" name="preloder_setting" type="astroidradio" default="animations" label="TPL_ASTROID_PRELOADER_TYPE">
             <option value="animations">ASTROID_ANIMATION</option>
