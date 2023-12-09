@@ -126,7 +126,7 @@ onMounted(()=>{
                         circle_dark
                         && !circle_dark.contains(event.target)
                     )
-                    || props.field.input.options.colormode === '0' 
+                    || parseInt(props.field.input.options.colormode) === 0 
                 )
             ) {
                 _showColorPicker.value = false;
