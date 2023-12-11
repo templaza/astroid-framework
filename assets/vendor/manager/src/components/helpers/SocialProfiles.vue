@@ -150,7 +150,6 @@ function showColorPicker(id) {
                     </div>
                 </template>
             </draggable>
-            <pre>{{ list }}</pre>
             <div class="text-center mt-4">
                 <button @click.prevent="addSocial(customSocial)" class="btn btn-as btn-primary btn-as-primary">{{ props.field.input.lang.add_custom_social_label }}</button>
             </div>
