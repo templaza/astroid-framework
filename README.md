@@ -17,6 +17,7 @@ https://sourceforge.net/projects/initranslator/
 * Russian (ru-RU) [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_ru-RU.zip)
 * Spanish (es-ES)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_es-ES.zip)
 * Slovenian (sl-SL)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_sl-SI.zip)
+* Thai (th-TH)  [Download](https://github.com/templaza/astroid-framework/raw/language/astroid_th-TH.zip)
 
 ## How to install a language file
 * Download the language file
