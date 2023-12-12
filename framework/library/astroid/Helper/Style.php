@@ -402,6 +402,17 @@ class Style
         return implode(";", $return);
     }
 
+    public static function getSubFormParams($params)
+    {
+        $return_array = array();
+        if (is_array($params) && count($params)) {
+            foreach ($params as $param) {
+                $return_array[$param->name] = $param->value;
+            }
+        }
+        return $return_array;
+    }
+
     public static function getPropertySubset($property, $position)
     {
         switch ($property) {

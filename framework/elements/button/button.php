@@ -12,21 +12,24 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+
+use Astroid\Helper\Style;
+
 extract($displayData);
-$title          = $params->get('title', '');
-$html_element   = $params->get('html_element', 'h2');
-$font_style     = $params->get('font_style', null);
-$use_link       = $params->get('use_link', 0);
-$link           = $params->get('link', '');
-if (!empty($title)) {
-    if ($use_link) {
-        echo '<a href="'.$link.'" title="'.$title.'">';
-    }
-    echo '<'.$html_element.' class="heading">'. $title . '</'.$html_element.'>';
-    if ($use_link) {
-        echo '</a>';
-    }
+$buttons        = $params->get('buttons', '');
+if (empty($buttons)) {
+    return false;
 }
-if (!empty($font_style)) {
-    Astroid\Helper\Style::renderTypography('#'.$element->id.' .heading', $font_style);
+$buttons        = json_decode($buttons);
+if (!count($buttons)) {
+    return false;
 }
+$button_group   = intval($params->get('button_group', 0));
+$button_size    = $params->get('button_size', '');
+$button_size    = $button_size ? ' '. $button_size : '';
+echo $button_group ? '<div class="btn-group" role="group">' : '';
+foreach ($buttons as $button) {
+    $btn_params = Style::getSubFormParams($button->params);
+    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : '').$btn_params['button_style'].$button_size. '">'.$btn_params['title'].'</a>';
+}
+echo $button_group ? '</div>' : '';
