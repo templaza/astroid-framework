@@ -220,6 +220,7 @@ class Admin extends Helper\Client
                 if (!$plg_color_mode && $field_group == 'colormode') {
                     continue;
                 }
+
                 $field_tmp  =   [
                     'id'            =>  $field->id,
                     'name'          =>  $field->fieldname,

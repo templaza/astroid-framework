@@ -18,7 +18,7 @@ const props = defineProps({
               <a :href="`#`+group.name" class="as-page-link" @click.prevent="$emit('sidebarActive', group.name)">
                 <strong class="as-links-heading d-flex w-100 align-items-center fw-semibold">
                   <i :class="group.icon" class="me-2"></i>
-                  {{ group.label }}
+                  <span class="d-flex align-items-center" v-html="group.label"></span>
                 </strong>
               </a>
               <ul class="list-unstyled fw-normal pb-2 small" v-if="Object.keys(group.childs).length > 0">

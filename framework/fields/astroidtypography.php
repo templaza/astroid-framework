@@ -46,12 +46,12 @@ class JFormFieldAstroidTypography extends FormField
         $defaults = [
             'font_face' => '',
             'alt_font_face' => '',
-            'font_size' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
+            'font_size' => \json_decode('{"desktop":"","mobile":"","tablet":""}', false),
             'font_size_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
             'font_color' => '{"light":"","dark":""}',
-            'letter_spacing' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
+            'letter_spacing' => \json_decode('{"desktop":"","mobile":"","tablet":""}', false),
             'letter_spacing_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
-            'line_height' => \json_decode('{"desktop":1,"mobile":1,"tablet":1}', false),
+            'line_height' => \json_decode('{"desktop":"","mobile":"","tablet":""}', false),
             'line_height_unit' => \json_decode('{"desktop":"em","mobile":"em","tablet":"em"}', false),
             'font_style' => [],
             'font_weight' => '',
@@ -177,6 +177,19 @@ class JFormFieldAstroidTypography extends FormField
         } else {
             $extraData['transformpicker'] = true;
         }
+
+        if (isset($this->element['columns']) && $this->element['columns'] != '') {
+            $extraData['columns'] = (int) $this->element['columns'];
+        } else {
+            $extraData['columns'] = 3;
+        }
+
+        if (isset($this->element['preview']) && $this->element['preview'] == 'false') {
+            $extraData['preview'] = false;
+        } else {
+            $extraData['preview'] = true;
+        }
+
         $extraData['colormode'] = $color_mode;
         $system_fonts = array();
         foreach (Astroid\Helper\Font::$system_fonts as $s_font_value => $s_font_title) {

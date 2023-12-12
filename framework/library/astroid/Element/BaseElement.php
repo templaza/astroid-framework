@@ -44,7 +44,9 @@ class BaseElement
             }
             $this->params->loadArray($params);
         }
+
         $this->addClass('astroid-' . Helper::slugify($this->type));
+
         $this->_id();
         $this->style        =   new Style('#' . $this->getAttribute('id'));
         $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
@@ -77,16 +79,15 @@ class BaseElement
 
     protected function _id()
     {
-        $id = '';
         $customid = $this->params->get('customid', '');
         if (!empty($customid)) {
-            $id = $customid;
+            $this->id = $customid;
         } else {
             $prefix = !empty($this->params->get('title')) ? $this->params->get('title') : 'astroid-' . $this->type;
-            $id = Helper::shortify($prefix) . '-' . $this->id;
+            $this->id = Helper::shortify($prefix) . '-' . $this->id;
         }
-        if (!empty($id)) {
-            $this->addAttribute('id', $id);
+        if (!empty($this->id)) {
+            $this->addAttribute('id', $this->id);
         }
     }
 
@@ -215,9 +216,6 @@ class BaseElement
     {
         $margin = $this->params->get('margin', '');
         $padding = $this->params->get('padding', '');
-
-
-
 
         if (!empty($margin)) {
             $margin = \json_decode($margin, false);

@@ -9,7 +9,6 @@
 defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a generic list of options.
@@ -44,6 +43,7 @@ class JFormFieldAstroidMultiSelect extends FormField {
             'name'    =>  $this->name,
             'value'   =>  $this->value,
             'options' =>  $options,
+            'hint'    =>  Text::_($this->hint),
             'type'    =>  strtolower($this->type),
         ];
         return json_encode($json);
@@ -65,7 +65,7 @@ class JFormFieldAstroidMultiSelect extends FormField {
 
             $tmp = array(
                 'value' => $value,
-                'text' => $text,
+                'text' => Text::_($text),
             );
 
             // Add the option object to the result set.

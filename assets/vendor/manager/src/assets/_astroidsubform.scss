@@ -1,0 +1,13 @@
+.astroid-subform {
+    .subform-ghost > .card {
+        border-width: 2px;
+        border-style: dashed;
+        border-color: var(--bs-border-color-translucent);
+    }
+    .add-item {
+        border: 2px dashed var(--bs-border-color);
+    }
+    .item-move {
+        cursor: grab;
+    }
+}

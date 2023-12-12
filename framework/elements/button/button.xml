@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_BUTTON_LABEL</title>
+    <description>ASTROID_WIDGET_BUTTON_DESC</description>
+    <icon>fa-solid fa-toggle-on</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" name="astroid_author_social" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL" multiple="true">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL">
+                                    <option value="primary">Primary</option>
+                                    <option value="secondary">Secondary</option>
+                                    <option value="success">Success</option>
+                                    <option value="danger">Danger</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="info">Info</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="link">Link</option>
+                                </field>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+            </fieldset>
+        </fields>
+    </form>
+</element>

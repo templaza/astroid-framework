@@ -62,7 +62,12 @@ class Overrides
         $backtrace = \debug_backtrace();
         $callPath = $backtrace[0]['file'] ?? '';
 
-        $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
+        preg_match('/'. addcslashes(JPATH_ROOT, '/') . '\/templates\/.*?\/html/', $callPath, $match);
+        if ($match) {
+            $htmlTemplatePath = $match[0];
+        } else {
+            $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
+        }
         $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
 
         if (\strpos($callPath, $htmlTemplatePath) === 0) {

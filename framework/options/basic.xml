@@ -10,7 +10,7 @@
          <field type="astroidgroup" name="colormode" title="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" help="https://docs.astroidframe.work/basic-settings/color-mode"/>
          <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
 
-         <field astroidgroup="bootstrap" name="bootstrap_js" type="astroidmultiselect" label="TPL_ASTROID_BOOTSTRAP_JS_LABEL" default="[]" description="TPL_ASTROID_BOOTSTRAP_JS_DESC">
+         <field astroidgroup="bootstrap" name="bootstrap_js" type="astroidmultiselect" label="TPL_ASTROID_BOOTSTRAP_JS_LABEL" default="[]" description="TPL_ASTROID_BOOTSTRAP_JS_DESC" hint="TPL_ASTROID_BOOTSTRAP_JS_HINT_LABEL">
             <option value="alert">Alert</option>
             <option value="button">Button</option>
             <option value="carousel">Carousel</option>

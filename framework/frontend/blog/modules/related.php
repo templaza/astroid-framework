@@ -10,6 +10,7 @@
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/blog/ folder to create and override
  */
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 // No direct access.
 defined('_JEXEC') or die;
 
@@ -47,7 +48,7 @@ $document = Astroid\Framework::getDocument();
                   <h3 class="related-article-title">
                      <a href="<?php echo $item->route; ?>"><?php echo $item->title; ?></a>
                   </h3>
-                  <?php echo $item->introtext; ?>
+                  <?php echo LayoutHelper::render('joomla.content.info_block', ['item' => $item, 'params' => $item->params, 'astroidArticle' => $astroidArticle, 'position' => 'above']); ?>
                </div>
             </div>
          </div>

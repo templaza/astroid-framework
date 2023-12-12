@@ -154,11 +154,6 @@ class JFormFieldAstroidTextarea extends FormField {
        ];
 
        return json_encode($json);
-//      $renderer = new JLayoutFile($this->layout, JPATH_LIBRARIES . '/astroid/framework/layouts');
-//
-//      return rtrim($renderer->render($this->getLayoutData()), PHP_EOL);
-
-      //return rtrim($this->getRenderer($this->layout)->render($this->getLayoutData()), PHP_EOL);
    }
 
    /**

@@ -3,7 +3,7 @@ import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['edit:Element', 'select:Element', 'update:System']);
-const props = defineProps(['list', 'group', 'system', 'constant', 'device']);
+const props = defineProps(['list', 'group', 'system', 'constant', 'form', 'device']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -283,7 +283,7 @@ function getColumnClass(element) {
                         </li>
                     </ul>
                 </nav>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {addGrid(element, index, grid)}" />
                 </Transition>
@@ -298,7 +298,7 @@ function getColumnClass(element) {
                         <input class="form-check-input" type="checkbox" v-model="element.fill" :id="`fill-row-`+element.id" data-bs-toggle="tooltip" data-bs-title="Fill Up Row">
                     </div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <Transition name="fade">
                     <LayoutGrid v-if="showGrid[element.id]" :element="element" @update:close-element="(id) => {showGrid[id] = false}" @update:saveElement="(grid) => {editGrid(element, grid)}" />
                 </Transition>
@@ -315,7 +315,7 @@ function getColumnClass(element) {
                         <a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                     </div>
                 </div>
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
                 <div class="add-element d-flex justify-content-center">
                     <a href="#" @click.prevent="selectElement(element)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
@@ -323,7 +323,7 @@ function getColumnClass(element) {
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body">
                 <div class="d-flex justify-content-between">
                     <div class="element-name">
-                        <div>{{ element.params.find((param) => param.name === 'title').value }}</div>
+                        <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}</div>
                         <div class="text-body-tertiary form-text">{{ element.type }}</div>
                     </div>
                     <div class="element-toolbar">
@@ -343,7 +343,7 @@ function getColumnClass(element) {
             </div>
             <div v-else>
                 {{ element.id }}
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
+                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :constant="props.constant" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
             </div>
         </template>
     </draggable>

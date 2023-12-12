@@ -40,6 +40,14 @@
 | :---: | :---:	|:---:|:---:|
 | &nbsp;&nbsp;Chrome 64+&nbsp;&nbsp; | &nbsp;&nbsp;Firefox 58+&nbsp;&nbsp; | &nbsp;&nbsp;Edge 14+&nbsp;&nbsp; | &nbsp;&nbsp;Safari 10+ &nbsp;&nbsp; |
 
+## How to install
+1. [Download Astroid Latest](https://github.com/templaza/astroid-framework/releases/latest)
+2. Go to Joomla Administrator -> System -> Install Extensions -> Upload Package File
+3. Upload 'astroid-package-v.x.x.Framework-Template.zip'
+4. Back to System -> Templates -> Site Template Styles
+5. Find one of Astroid template make it default
+6. Go to front-end and check it.
+
 ## Links
 * [Homepage](https://astroidframe.work/) - Learn more about Astroid
 * [Documentation](https://docs.astroidframe.work/) - How to use Astroid

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUpdated, ref } from 'vue';
+import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 import draggable from "vuedraggable";
 const emit = defineEmits(['update:modelValue']);
@@ -23,14 +23,17 @@ onUpdated(()=>{
         list.value = JSON.parse(props.modelValue);
     }
 })
-const dragging = ref(false);
-function listUpdated() {
-    emit('update:modelValue', JSON.stringify(list.value));
-}
+const list_text = computed(() => {
+  return JSON.stringify(list.value);
+})
+watch(list_text, (newText) => {
+    if (newText !== props.modelValue) {
+        emit('update:modelValue', newText);
+    }
+})
 function removeAt(idx) {
     if (confirm('Are you sure?')) {
         list.value.splice(idx, 1);
-        listUpdated();
     }
 }
 const customSocial = {
@@ -54,7 +57,6 @@ function addSocial(item){
         id      : sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000)
     }
     list.value.push(newItem);
-    listUpdated();
     _showColorPicker.value[newItem.id] = false;
 }
 const _showColorPicker = ref({});
@@ -68,20 +70,18 @@ function showColorPicker(id) {
         <div class="col-lg-9">
             <draggable 
                 v-model="list" 
-                @start="dragging=true" 
-                @end="dragging=false" 
-                @change="listUpdated"
                 class="astroid-profile row row-cols-1 g-4"
+                handle=".item-move"
                 item-key="id">
                 <template #item="{element, index}">
                     <div>
                         <div class="card card-default">
                             <div class="card-header d-flex justify-content-between">
                                 <span>
-                                    <i :class="element.icon" :style="{'color': element.color}"></i>
-                                    {{ element.title }}
+                                    <i class="me-2" :class="element.icon" :style="{'color': element.color}"></i>{{ element.title }}
                                 </span>
                                 <span>
+                                    <i class="item-move fa-solid fa-up-down me-3"></i>
                                     <a href="#" class="link-danger" @click.prevent="removeAt(index)"><i class="fas fa-trash-alt"></i></a>
                                 </span>
                             </div>
@@ -94,7 +94,7 @@ function showColorPicker(id) {
                                         <label v-else class="form-label" :for="`astroid_profile_link`+index">{{ props.field.input.lang.astroid_link }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.link" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_link`+index">
+                                        <input v-model="element.link" type="text" class="form-control" :id="`astroid_profile_link`+index">
                                     </div>
                                 </div>
                                 <div v-if="element.icons.length === 0" class="row g-2">
@@ -102,13 +102,13 @@ function showColorPicker(id) {
                                         <label class="form-label" :for="`astroid_profile_icon_class`+index">{{ props.field.input.lang.astroid_icon_class }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.icon" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_icon_class`+index">
+                                        <input v-model="element.icon" type="text" class="form-control" :id="`astroid_profile_icon_class`+index">
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="form-label" :for="`astroid_profile_title`+index">{{ props.field.input.lang.astroid_title }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input v-model="element.title" @input="listUpdated()" type="text" class="form-control" :id="`astroid_profile_title`+index">
+                                        <input v-model="element.title" type="text" class="form-control" :id="`astroid_profile_title`+index">
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-label">{{ props.field.input.lang.astroid_color }}</div>
@@ -126,7 +126,7 @@ function showColorPicker(id) {
                                                         :sucker-canvas="null"
                                                         :sucker-area="[]"
                                                         :id="props.field.input.id+`-colorpicker-`+element.id"
-                                                        @changeColor="(color) => {element.color = color.rgba.r || color.rgba.g || color.rgba.b || color.rgba.a ? `rgba(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}, ${color.rgba.a})` : ''; listUpdated();}"
+                                                        @changeColor="(color) => {element.color = color.rgba.r || color.rgba.g || color.rgba.b || color.rgba.a ? `rgba(${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}, ${color.rgba.a})` : '';}"
                                                     />
                                                 </div>
                                             </div>
@@ -140,7 +140,7 @@ function showColorPicker(id) {
                                     <div class="col-sm-8">
                                         <ul class="list-inline">
                                             <li v-for="(icon, key) in element.icons" :key="key" class="list-inline-item astroid-icons">
-                                                <a href="#" @click.prevent="element.icon = icon; listUpdated();" class="link-body-emphasis link-opacity-100-hover" :class="{'link-opacity-100' : element.icon === icon, 'link-opacity-50' : element.icon !== icon}"><i :class="icon" class="fa-lg"></i></a>
+                                                <a href="#" @click.prevent="element.icon = icon;" class="link-body-emphasis link-opacity-100-hover" :class="{'link-opacity-100' : element.icon === icon, 'link-opacity-50' : element.icon !== icon}"><i :class="icon" class="fa-lg"></i></a>
                                             </li>
                                         </ul>
                                     </div>
