@@ -119,7 +119,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $default_logo);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-default"'.$default_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-default"'.$default_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -129,7 +129,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-default dark"'.$default_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-default dark"'.$default_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -139,7 +139,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-mobile"'.$mobile_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile"'.$mobile_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -148,7 +148,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-mobile dark d-none"'.$mobile_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile dark d-none"'.$mobile_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -175,7 +175,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-sticky"'.$sticky_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-sticky"'.$sticky_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -184,7 +184,7 @@ $position = $position ?? '';
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" /><?php
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/i', '<svg$1 class="astroid-logo-sticky dark d-none"'.$sticky_logo_style.'>', $logo_svg);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-sticky dark d-none"'.$sticky_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
