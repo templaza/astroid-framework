@@ -87,13 +87,13 @@ $position = $position ?? '';
             <?php if ($position != 'sticky') : // start main logo
                 // Default logo
                 $default_logo_width     =   $params->get('default_logo_width', '');
-                $default_logo_height    =   $params->get('default_logo_height', '60px');
+                $default_logo_height    =   $params->get('default_logo_height', '');
                 $default_logo_style     =   !empty($default_logo_width) ? ' width="'.$default_logo_width.'"' : '';
                 $default_logo_style     .=  !empty($default_logo_height) ? ' height="'.$default_logo_height.'"' : '';
 
                 // Mobile logo
                 $mobile_logo_width      =   $params->get('mobile_logo_width', '');
-                $mobile_logo_height     =   $params->get('mobile_logo_height', '60px');
+                $mobile_logo_height     =   $params->get('mobile_logo_height', '');
                 $mobile_logo_style      =   !empty($mobile_logo_width) ? ' width="'.$mobile_logo_width.'"' : '';
                 $mobile_logo_style      .=  !empty($mobile_logo_height) ? ' height="'.$mobile_logo_height.'"' : '';
 
