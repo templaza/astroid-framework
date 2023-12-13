@@ -92,26 +92,13 @@ $position = $position ?? '';
                 $default_logo_style     .=  !empty($default_logo_height) ? ' height="'.$default_logo_height.'"' : '';
                 $default_logo_style     =   $default_logo_style != '' ? $default_logo_style : ' width="250px" height="250px"';
 
-                // Mobile logo
-                $mobile_logo_width      =   $params->get('mobile_logo_width', '');
-                $mobile_logo_height     =   $params->get('mobile_logo_height', '');
-                $mobile_logo_style      =   !empty($mobile_logo_width) ? ' width="'.$mobile_logo_width.'"' : '';
-                $mobile_logo_style      .=  !empty($mobile_logo_height) ? ' height="'.$mobile_logo_height.'"' : '';
-                $mobile_logo_style      =   $mobile_logo_style != '' ? $mobile_logo_style : ' width="200px" height="200px"';
-
-                // Set style for image logo
+                // Set style for image logo default
                 $style = new Style('.astroid-logo');
                 if (!empty($default_logo_width)) {
                     $style->child('> .astroid-logo-default')->addCss('max-width', $default_logo_width);
                 }
                 if (!empty($default_logo_height)) {
                     $style->child('> .astroid-logo-default')->addCss('max-height', $default_logo_height);
-                }
-                if (!empty($mobile_logo_width)) {
-                    $style->child('> .astroid-logo-mobile')->addCss('max-width', $mobile_logo_width);
-                }
-                if (!empty($mobile_logo_height)) {
-                    $style->child('> .astroid-logo-mobile')->addCss('max-height', $mobile_logo_height);
                 }
                 $style->render();
                 ?>
@@ -132,25 +119,6 @@ $position = $position ?? '';
                 } else {
                     $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-default dark"'.$default_logo_style.'>', $logo_svg);
-                    echo $logo_svg;
-                }
-            } ?>
-            <?php
-            if (!empty($mobile_logo)) {
-                if (File::getExt($mobile_logo) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
-                } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile"'.$mobile_logo_style.'>', $logo_svg);
-                    echo $logo_svg;
-                }
-            } ?>
-            <?php if (!empty($mobile_logo_dark)) {
-                if (File::getExt($mobile_logo_dark) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
-                } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark);
-                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile dark d-none"'.$mobile_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
@@ -191,7 +159,43 @@ $position = $position ?? '';
                     echo $logo_svg;
                 }
             } ?>
-            <?php endif; ?>
+            <?php endif; //end of sticky ?>
+
+            <?php // Start mobile logo
+            // Mobile logo
+            $mobile_logo_width      =   $params->get('mobile_logo_width', '');
+            $mobile_logo_height     =   $params->get('mobile_logo_height', '');
+            $mobile_logo_style      =   !empty($mobile_logo_width) ? ' width="'.$mobile_logo_width.'"' : '';
+            $mobile_logo_style      .=  !empty($mobile_logo_height) ? ' height="'.$mobile_logo_height.'"' : '';
+            $mobile_logo_style      =   $mobile_logo_style != '' ? $mobile_logo_style : ' width="200px" height="200px"';
+
+            // Set style for image logo mobile
+            $style = new Style('.astroid-logo');
+            if (!empty($mobile_logo_width)) {
+                $style->child('> .astroid-logo-mobile')->addCss('max-width', $mobile_logo_width);
+            }
+            if (!empty($mobile_logo_height)) {
+                $style->child('> .astroid-logo-mobile')->addCss('max-height', $mobile_logo_height);
+            }
+            $style->render();
+            if (!empty($mobile_logo)) {
+                if (File::getExt($mobile_logo) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
+                } else {
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile"'.$mobile_logo_style.'>', $logo_svg);
+                    echo $logo_svg;
+                }
+            } ?>
+            <?php if (!empty($mobile_logo_dark)) {
+                if (File::getExt($mobile_logo_dark) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
+                } else {
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark);
+                    $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile dark d-none"'.$mobile_logo_style.'>', $logo_svg);
+                    echo $logo_svg;
+                }
+            } ?>
         <?php if ($logo_link_type != 'none') : ?>
         </a>
         <?php endif; ?>
