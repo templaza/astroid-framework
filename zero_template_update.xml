@@ -2,7 +2,7 @@
 	<update>
 		<name>Zero Template</name>
 		<element>astroid_template_zero</element>
-		<version>3.0.5</version>
+		<version>3.0.7</version>
 		<type>template</type>
 		<client>0</client>
 		<tags>
@@ -15,6 +15,6 @@
 			<downloadurl type="full" format="zip">https://github.com/templaza/astroid-framework/archive/refs/heads/zero-template.zip</downloadurl>
 		</downloads>
 		<targetplatform name="joomla" version="(4.)|(5.)"/>
-		<php_minimum>7.0.0</php_minimum>
+		<php_minimum>8.0.0</php_minimum>
 	</update>
 </updates>
