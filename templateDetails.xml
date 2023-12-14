@@ -7,7 +7,7 @@
    <authorUrl>https://astroidframe.work</authorUrl>
    <copyright>Copyright (C) 2023 AstroidFrame.work, Inc. All rights reserved.</copyright>
    <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
-   <version>3.0.5</version>
+   <version>3.0.7</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <inheritable>1</inheritable>
    <scriptfile>script.php</scriptfile>
