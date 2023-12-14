@@ -1,0 +1,19 @@
+.astroid-icons {
+    .icon-box {
+        > .card-body {
+            height: 300px;
+            overflow-y: auto;
+        }
+    }
+    .icon-item {
+        cursor: pointer;
+        i {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        font-size: 0.897rem;
+        &:hover {
+            background-color: var(--as-layout-block-bg);
+        }
+    }
+}

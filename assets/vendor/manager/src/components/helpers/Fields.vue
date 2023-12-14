@@ -15,6 +15,7 @@ import Colors from './Colors.vue';
 import Presets from './Presets.vue';
 import MultiSelect from './MultiSelect.vue';
 import SubForm from './SubForm.vue';
+import Icons from './Icons.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset']);
 const props = defineProps({
@@ -151,6 +152,9 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidsubform`" class="astroid-subform">
         <SubForm v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidicons`" class="astroid-icons">
+        <Icons v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
         <h5 v-if="props.field.input.title">{{ props.field.input.title }}</h5>
