@@ -87,7 +87,7 @@ class Admin extends Helper\Client
         $this->response(Helper\Font::getAllFonts());
     }
 
-    protected function icons()
+    protected function icons() : void
     {
         if ($this->format == 'html') {
             $this->format = 'json';

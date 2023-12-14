@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_ICONS_LABEL</title>
+    <description>ASTROID_WIDGET_ICONS_DESC</description>
+    <icon>fa-solid fa-font-awesome</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="misc_options" title="ASTROID_WIDGET_MISC_OPTIONS_LABEL"/>
+                <field astroidgroup="general" name="icons" type="astroidsubform" label="ASTROID_WIDGET_ICONS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_ICON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="_blank">New Window</option>
+                                    <option value="_parent">Parent Frame</option>
+                                    <option value="_top">Full body of the window</option>
+                                </field>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="misc_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" postfix="px" default="18" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
+                <field astroidgroup="misc_options" type="astroidlist" name="icon_gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="2">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="misc_options" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="misc_options" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
