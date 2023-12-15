@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_NAVIGATION_LABEL</title>
+    <description>ASTROID_WIDGET_NAVIGATION_DESC</description>
+    <icon>fa-solid fa-bars</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="misc_options" title="ASTROID_WIDGET_MISC_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="color_options" title="ASTROID_WIDGET_COLOR_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="bgcolor_options" title="ASTROID_WIDGET_BG_COLOR_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="spacing_options" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
+                <field astroidgroup="general" name="menu_items" type="astroidsubform" label="ASTROID_WIDGET_MENU_ITEMS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
+                                <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="_blank">New Window</option>
+                                    <option value="_parent">Parent Frame</option>
+                                    <option value="_top">Full body of the window</option>
+                                </field>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="misc_options" type="astroidlist" name="list_style" label="ASTROID_WIDGET_NAV_LIST_STYLE" default="">
+                    <option value="">ASTROID_WIDGET_NAV_NAVIGATION</option>
+                    <option value="flex-column">ASTROID_WIDGET_NAV_LIST</option>
+                </field>
+                <field astroidgroup="misc_options" name="alignment" type="astroidradio" default="" label="ASTROID_WIDGET_ALIGNMENT_LABEL">
+                    <option value="">JGLOBAL_LEFT</option>
+                    <option value="justify-content-center">JGLOBAL_CENTER</option>
+                    <option value="justify-content-end">JGLOBAL_RIGHT</option>
+                </field>
+                <field astroidgroup="misc_options" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false" color-picker="false"/>
+
+                <field astroidgroup="color_options" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="color_options" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+
+                <field astroidgroup="bgcolor_options" name="bgcolor" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="bgcolor_options" name="bgcolor_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+
+                <field astroidgroup="spacing_options" name="item_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+                <field astroidgroup="spacing_options" name="item_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+            </fieldset>
+        </fields>
+    </form>
+</element>

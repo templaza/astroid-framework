@@ -27,11 +27,13 @@ $hover_effect   = $params->get('hover_effect', '');
 $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
+$max_width      = $params->get('max_width', '');
+$max_width      = $max_width !== '' ? ' style="max-width:'.$max_width.'"' : '';
 if (!empty($image)) {
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'">';
     }
-    echo '<div class="d-inline-block position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<div class="d-inline-block position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
     echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
     echo '</div>';
     if ($use_link) {

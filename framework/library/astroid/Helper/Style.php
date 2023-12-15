@@ -393,7 +393,6 @@ class Style
             }
         }
 
-
         if (count(array_keys($values)) === 4) {
             $return = [];
             $return[] = self::getPropertySet($property) . ':' . implode(' ', $values);
