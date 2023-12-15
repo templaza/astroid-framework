@@ -1088,8 +1088,8 @@ class Document
 
         $option = $app->input->get('option', '', 'STRING');
         $view = $app->input->get('view', '', 'STRING');
-        $layout = $app->input->get('layout', 'default', 'STRING');
-        $task = $app->input->get('task', '', 'STRING');
+        $layout = $app->input->get('layout', 'default', 'ALNUM');
+        $task = $app->input->get('task', '', 'ALNUM');
         $header = $params->get('header', TRUE);
         $headerMode = $params->get('header_mode', 'horizontal', 'STRING');
         $Itemid = $app->input->get('Itemid', '', 'INT');
