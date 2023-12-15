@@ -15,5 +15,6 @@
         <maintainer>TemPlaza</maintainer>
         <maintainerurl>https://www.templaza.com</maintainerurl>
         <targetplatform name="joomla" version="(4.)|(5.)"/>
+        <php_minimum>8.0.0</php_minimum>
     </update>
 </updates>
