@@ -11,6 +11,7 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Component\Includer;
 use Joomla\CMS\Session\Session;
@@ -421,8 +422,8 @@ class Admin extends Helper\Client
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.$file.'.json';
             jimport('joomla.filesystem.file');
-            if (\JFile::exists($file_name)) {
-                \JFile::delete($file_name);
+            if (File::exists($file_name)) {
+                File::delete($file_name);
             }
             $this->response('Preset Removed!');
         } catch (\Exception $e) {

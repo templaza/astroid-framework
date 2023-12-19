@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_DIVIDER_LABEL</title>
+    <description>ASTROID_WIDGET_DIVIDER_DESC</description>
+    <icon>fa-solid fa-xmarks-lines</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" name="border_width" type="astroidrange" min="1" max="300" step="1" postfix="px" default="1" label="ASTROID_WIDGET_WIDTH_LABEL" />
+                <field astroidgroup="general" name="style" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="solid">
+                    <option value="solid">Solid</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="dotted">Dotted</option>
+                </field>
+                <field astroidgroup="general" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="general" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+            </fieldset>
+        </fields>
+    </form>
+</element>

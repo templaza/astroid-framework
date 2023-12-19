@@ -38,9 +38,10 @@ $bgcolor        = Style::getColor($params->get('bgcolor', ''));
 $bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
 echo '<nav class="nav' . $alignment . $list_style . '">';
 foreach ($menu_items as $item) {
-    $icon_params    =   Style::getSubFormParams($item->params);
-    $target         =   isset($icon_params['target']) && $icon_params['target'] ? ' target="'.$icon_params['target'].'"' : '';
-    echo '<a id="item-'.$item->id.'"  class="nav-link" href="' .$icon_params['link']. '" title="'.$icon_params['title'].'"' . $target . '><i class="me-2 '.$icon_params['icon'].'"></i>'.$icon_params['title'].'</a>';
+    $menu_params    =   Style::getSubFormParams($item->params);
+    $target         =   isset($menu_params['target']) && $menu_params['target'] ? ' target="'.$menu_params['target'].'"' : '';
+    $icon           =   $menu_params['icon'] !== '' ? '<i class="me-2 '.$menu_params['icon'].'"></i>' : '';
+    echo '<a id="item-'.$item->id.'"  class="nav-link" href="' .$menu_params['link']. '" title="'.$menu_params['title'].'"' . $target . '>'.$icon.$menu_params['title'].'</a>';
 }
 echo '</nav>';
 
