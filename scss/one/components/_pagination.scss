@@ -1,0 +1,21 @@
+ .pagination .page-item {
+   margin: 5px;
+   &.active .page-link {
+      color: $primary;
+      background-color: transparent;
+      border-color: $primary;
+   }
+   .page-link {
+      color: $dark;
+      border: 1px solid $dark;
+      &:first-child,
+      &:last-child {
+         border-radius: 4px;
+      }
+      &:hover {
+         border-color: $primary;
+         color: $primary;
+         background-color: transparent;
+      }
+   }
+}

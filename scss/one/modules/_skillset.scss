@@ -1,0 +1,15 @@
+[id*="jd_skillset"] {
+   .counter-number {
+      color: rgba($primary, 0.5);
+      font-weight: bold;
+      font-size: 70px;
+   }
+   .counter-title {
+      color: $text-muted;
+      font-weight: 500;
+   }
+}
+
+.jdpb .jdpb-bar:not(:last-child) {
+   margin-bottom: 30px;
+}

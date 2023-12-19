@@ -1,0 +1,23 @@
+.jd-profiler-wrapper .jd-team-columns .card-team {
+	border: none;
+	border-radius: 0;
+	text-align: center;
+	.card-img-top {
+		border-radius: 0;
+	}
+	.card-team-body {
+		padding-bottom: 5px;
+	}
+	.card-team-footer {
+		border-top: none;
+		padding: 0 15px;
+	}
+}
+
+.card-img-overlayteam-member-name {
+	margin: 0;
+}
+
+.team-member-designation {
+	margin: 0;
+}

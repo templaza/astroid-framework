@@ -1,0 +1,57 @@
+div.jd-register-login-wrapper {
+
+	.jd-register-login-container {
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.jd-register-login-box {
+		border: none;
+
+		.jd-list-wrapper {
+			margin-bottom: 0;
+			.jd-list-group .jd-list-block {
+				text-align: left;
+				margin: 0;
+				padding: 5px 0;
+			}
+			.jd-list-group .jd-list-block,
+			.jd-list-group .jd-list-block:hover {
+				background-color: transparent;
+				border-color: transparent;
+			}
+		}
+		.jd-inputbox-control .jd-form-input {
+			box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.06);
+			border: 1px solid #fdfdfd;
+		}
+		.jd-button-control .jd-form-button {
+			@extend .btn;
+			@extend .btn-primary;
+			@extend .btn-primary;
+			@extend .btn-lg;
+		}
+	}
+
+	.jd-form-title {
+		display: none;
+	}
+
+	.jd-register-login-tab li span.active {
+		color: #fff;
+		background-color: #2B2B2B;
+		border-color: #2B2B2B;
+	}
+
+	.jd-register-login-tab li span:hover {
+		background-color: lighten($color: #2B2B2B, $amount: 4);
+		border-color: lighten($color: #2B2B2B, $amount: 5);
+	}
+
+	.jd-register-login-tab li span {
+		color: #fff;
+		background-color: #C5C5C5;
+		border-color: #C5C5C5;
+		padding: 20px;
+	}
+}

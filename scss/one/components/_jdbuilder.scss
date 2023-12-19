@@ -1,0 +1,19 @@
+// Joomla Articles
+
+.moduletable {
+   .jdb-jarticles-grid-view {
+      .jdb-jarticle {
+         border: none;
+      }
+      .jdb-jarticle-body {
+         padding: 15px 0;
+      }
+      .jdb-jarticle-wrapper:not(:last-child) {
+         margin-bottom: 0;
+      }
+   }  
+}
+
+.no-container-padding .jdb-container{
+   padding: 0;
+}
