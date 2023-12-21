@@ -312,10 +312,21 @@ ul {
 	.astroid-nav {
 		.nav-item-parent {
 			.nav-title {
+				padding-left: 25px;
+				padding-right: 0;
 				>.nav-item-caret {
 					left: 0;
 					right: auto;
-					transform: rotate(180deg);
+				}
+			}
+			&.no-dropdown-icon .nav-title {
+				padding-left: 0;
+			}
+			.nav-submenu-container {
+				.nav-title {
+					>.nav-item-caret {
+						transform: rotate(180deg);
+					}
 				}
 			}
 		}
