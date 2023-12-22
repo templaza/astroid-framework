@@ -159,13 +159,13 @@
                   }
                   _content.css('right', _right);
                   _content.css('left', 'inherit');
+               } else {
+                  _content.css('left', offsetleft - $(this).offset().left);
                }
-
             });
          };
 
          init();
-
 
          var observering = function (_this) {
             var callback = function (mutationsList, observer) {
