@@ -901,7 +901,7 @@ class Compiler
             // if the new part is just including a previous part don't try to extend anymore
             if (\count($part) > 1) {
                 foreach ($partsPile as $previousPart) {
-                    if (! \count(array_diff($previousPart, $part))) {
+                    if (! \count(@array_diff($previousPart, $part))) {
                         continue 2;
                     }
                 }
