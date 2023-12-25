@@ -30,6 +30,8 @@
 * Refactored Codebase
 * RTL Support
 * Light & Dark Color Mode
+* SVG Logo Support
+* Many widgets integrated
 
 ## Requirements
 * Joomla: 4.x, 5.x
