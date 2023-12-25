@@ -213,3 +213,21 @@ body.astroid-mobilemenu-opened {
       transition: opacity .5s, width .1s .5s, height .1s .5s;
    }
 }
+
+.rtl {
+   .astroid-mobilemenu-container .astroid-mobilemenu-inner {
+      .dropdown-menus .menu-indicator-back {
+         text-align: right;
+         i {
+            margin-left: 10px;
+            margin-right: 0;
+            transform: rotate(180deg);
+         }
+      }
+      .menu-item .menu-indicator {
+         -webkit-transform: rotate(180deg);
+         -ms-transform: rotate(180deg);
+         transform: rotate(180deg);
+      }
+   }
+}

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 extract($displayData);
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Factory::getApplication()->getDocument();
 $wa = $document->getWebAssetManager();
@@ -125,7 +126,7 @@ if($preloder_setting == "animations"){
    $preloader_image = $params->get('preloader_image', '');
    $styles = [];
    if (!empty($preloader_image)) {
-      $styles[] = 'background-image:url(' . JURI::root() . Astroid\Helper\Media::getPath() . '/' . $preloader_image . ')';
+      $styles[] = 'background-image:url(' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $preloader_image . ')';
       $styles[] = 'background-repeat:' . $params->get('preloader_image_repeat', 'inherit');
       $styles[] = 'background-size:' . $params->get('preloader_image_size', 'inherit');
       $styles[] = 'background-position:' . $params->get('preloader_image_position', 'inherit');

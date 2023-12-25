@@ -1,0 +1,253 @@
+.jviewport-height10 {
+  height: 10vh
+}
+
+.jviewport-height20 {
+  height: 20vh
+}
+
+.jviewport-height30 {
+  height: 30vh
+}
+
+.jviewport-height40 {
+  height: 40vh
+}
+
+.jviewport-height50 {
+  height: 50vh
+}
+
+.jviewport-height60 {
+  height: 60vh
+}
+
+.jviewport-height70 {
+  height: 70vh
+}
+
+.jviewport-height80 {
+  height: 80vh
+}
+
+.jviewport-height90 {
+  height: 90vh
+}
+
+.jviewport-height100 {
+  height: 100vh
+}
+
+[class*=jviewport-height] iframe {
+  height: 100%
+}
+
+.modal-dialog.jviewport-width10 {
+  width: 10vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width20 {
+  width: 20vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width30 {
+  width: 30vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width40 {
+  width: 40vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width50 {
+  width: 50vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width60 {
+  width: 60vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width70 {
+  width: 70vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width80 {
+  width: 80vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width90 {
+  width: 90vw;
+  max-width: none
+}
+
+.modal-dialog.jviewport-width100 {
+  width: 100vw;
+  max-width: none
+}
+
+.subhead {
+  z-index: 1000;
+  color: #495057;
+  background: #fff;
+  width: auto;
+  min-height: 43px;
+  padding: .25rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: -3px -2px 22px #ddd;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  joomla-toolbar-button {
+    margin-inline-start: .75rem;
+    &:first-child {
+      margin-inline-start: 0;
+    }
+    .btn {
+      >span {
+        text-align: center;
+        width: 1.25em;
+        margin-inline-end: .5rem;
+      }
+    }
+    .dropdown-item {
+      >span {
+        text-align: center;
+        width: 1.25em;
+        margin-inline-end: .5rem;
+      }
+    }
+  }
+  .btn-group {
+    margin-inline-start: .75rem;
+    &:first-child {
+      margin-inline-start: 0;
+    }
+    &:not(:last-child) {
+      >.dropdown-toggle-split {
+        border-radius: 0 .25rem .25rem 0;
+        order: 1;
+        margin-inline-start: -.25rem;
+      }
+    }
+    joomla-toolbar-button {
+      margin-inline-start: 0;
+    }
+  }
+  .btn {
+    --subhead-btn-accent: #495057;
+    color: #495057;
+    background: #fff;
+    border-color: #adb5bd;
+    margin: 5px 0;
+    padding: 0 1rem;
+    font-size: 1rem;
+    line-height: 2.45rem;
+    >span {
+      color: var(--subhead-btn-accent);
+      display: inline-block;
+    }
+    &:not([disabled]) {
+      &:hover {
+        color: #ffffffe6;
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+        >span {
+          color: #ffffffe6;
+        }
+      }
+      &:active {
+        color: #ffffffe6;
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+        >span {
+          color: #ffffffe6;
+        }
+      }
+      &:focus {
+        color: #ffffffe6;
+        background-color: var(--subhead-btn-accent);
+        border-color: var(--subhead-btn-accent);
+        >span {
+          color: #ffffffe6;
+        }
+      }
+    }
+  }
+  .btn.btn-success {
+    --subhead-btn-accent: var(--bs-success);
+  }
+  .btn.btn-danger {
+    --subhead-btn-accent: var(--bs-danger);
+  }
+  .btn.btn-primary {
+    --subhead-btn-accent: #2a69b8;
+  }
+  .btn.btn-secondary {
+    --subhead-btn-accent: #001b4c;
+  }
+  .btn.btn-info {
+    --subhead-btn-accent: #132f53;
+  }
+  .btn.btn-action {
+    --subhead-btn-accent: #132f53;
+    align-items: center;
+    display: flex;
+    &:after {
+      content: "";
+      border: 0;
+      width: 2.375rem;
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+    }
+  }
+  .btn[disabled] {
+    --subhead-btn-accent: #132f53;
+    opacity: .5;
+    background: #dfe3e7cc;
+    &:hover {
+      cursor: not-allowed;
+    }
+    &:active {
+      cursor: not-allowed;
+    }
+    &:focus {
+      cursor: not-allowed;
+    }
+  }
+  .btn.dropdown-toggle[disabled] {
+    --subhead-btn-accent: #132f53;
+    opacity: .5;
+    background: #dfe3e7cc;
+    &:hover {
+      cursor: not-allowed;
+    }
+    &:active {
+      cursor: not-allowed;
+    }
+    &:focus {
+      cursor: not-allowed;
+    }
+  }
+  .dropdown-toggle.btn {
+    padding-inline-end: 0;
+  }
+  .dropdown-menu {
+    joomla-toolbar-button {
+      margin-inline-start: 0;
+    }
+  }
+}
+.subhead.noshadow {
+  box-shadow: none;
+}

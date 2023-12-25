@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_IMAGE_LABEL</title>
+    <description>ASTROID_WIDGET_IMAGE_DESC</description>
+    <icon>fa-regular fa-image</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                <field astroidgroup="general" description="ASTROID_WIDGET_IMAGE_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
+                <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_IMAGE_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+
+                <field astroidgroup="widget_styles" name="max_width" type="astroidtext" default="" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_IMAGE_MAX_WIDTH_DESC" hint="500px" />
+                <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
+                    <option value="rounded-circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
+                    <option value="rounded-pill">TPL_ASTROID_ICON_STYLE_PILL</option>
+                </field>
+                <field astroidgroup="widget_styles" name="box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="widget_styles" name="hover_effect" type="astroidlist" label="ASTROID_WIDGET_HOVER_EFFECT_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="light-up">ASTROID_WIDGET_EFFECT_LIGHT_UP</option>
+                    <option value="flash">ASTROID_WIDGET_EFFECT_FLASH</option>
+                </field>
+                <field astroidgroup="widget_styles" name="hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="scale-up">ASTROID_WIDGET_TRANSITION_SCALE_UP</option>
+                    <option value="scale-down">ASTROID_WIDGET_TRANSITION_SCALE_DOWN</option>
+                    <option value="bob">ASTROID_WIDGET_TRANSITION_BOB</option>
+                    <option value="pulse">ASTROID_WIDGET_TRANSITION_PULSE</option>
+                    <option value="pulse-grow">ASTROID_WIDGET_TRANSITION_PULSE_GROW</option>
+                    <option value="pulse-shrink">ASTROID_WIDGET_TRANSITION_PULSE_SHRINK</option>
+                    <option value="push">ASTROID_WIDGET_TRANSITION_PUSH</option>
+                    <option value="pop">ASTROID_WIDGET_TRANSITION_POP</option>
+                    <option value="bounce-in">ASTROID_WIDGET_TRANSITION_BOUNCE_IN</option>
+                    <option value="bounce-out">ASTROID_WIDGET_TRANSITION_BOUNCE_OUT</option>
+                    <option value="rotate">ASTROID_WIDGET_TRANSITION_ROTATE</option>
+                    <option value="grow-rotate">ASTROID_WIDGET_TRANSITION_GROW_ROTATE</option>
+                    <option value="float">ASTROID_WIDGET_TRANSITION_FLOAT</option>
+                    <option value="sink">ASTROID_WIDGET_TRANSITION_SINK</option>
+                    <option value="hang">ASTROID_WIDGET_TRANSITION_HANG</option>
+                    <option value="skew">ASTROID_WIDGET_TRANSITION_SKEW</option>
+                    <option value="skew-forward">ASTROID_WIDGET_TRANSITION_SKEW_FORWARD</option>
+                    <option value="skew-backward">ASTROID_WIDGET_TRANSITION_SKEW_BACKWARD</option>
+                    <option value="wobble-vertical">ASTROID_WIDGET_TRANSITION_WOBBLE_VERTICAL</option>
+                    <option value="wobble-horizontal">ASTROID_WIDGET_TRANSITION_WOBBLE_HORIZONTAL</option>
+                    <option value="wobble-to-bottom-right">ASTROID_WIDGET_TRANSITION_WOBBLE_TO_BOTTOM_RIGHT</option>
+                    <option value="wobble-to-top-right">ASTROID_WIDGET_TRANSITION_WOBBLE_TO_TOP_RIGHT</option>
+                    <option value="wobble-top">ASTROID_WIDGET_TRANSITION_WOBBLE_TOP</option>
+                    <option value="wobble-bottom">ASTROID_WIDGET_TRANSITION_WOBBLE_BOTTOM</option>
+                    <option value="wobble-skew">ASTROID_WIDGET_TRANSITION_WOBBLE_SKEW</option>
+                    <option value="buzz">ASTROID_WIDGET_TRANSITION_BUZZ</option>
+                    <option value="buzz-out">ASTROID_WIDGET_TRANSITION_BUZZ_OUT</option>
+                </field>
+            </fieldset>
+        </fields>
+    </form>
+</element>

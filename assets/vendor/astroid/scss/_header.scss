@@ -125,7 +125,7 @@ header .logo-wrapper {
       }
    }
 
-   img {
+   .astroid-logo-default, .astroid-logo-mobile, .astroid-logo-sticky {
       max-width: $logo-max-width;
       max-height: $logo-max-height;
    }

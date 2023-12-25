@@ -175,7 +175,7 @@ function changeColor (color, key) {
         </div>
         <div class="col-12 col-lg-3">
             <div :for="config.id+`_icon`" class="form-label">{{ config.language.TPL_ASTROID_SELECT_ICON }}</div>
-            <FontAwesome v-model="scope.icon" :config="config" fieldname="showtitle" />
+            <FontAwesome v-model="scope.icon" :config="config" fieldname="icon" />
             <input type="hidden" :name="config.name+`[icon]`" v-model="scope.icon">
         </div>
         <div class="col-12 col-lg-auto">

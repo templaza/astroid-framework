@@ -164,9 +164,7 @@
 				top: 0;
 				left: 100%;
 				width: 100%;
-				/* max-width: 300px;*/
 				display: none;
-
 				&.right {
 					left: -100%;
 				}
@@ -216,13 +214,12 @@ ul {
 
 	&:before {
 		content: '';
-		display: block;
+		display: none;
 		width: 100%;
 		height: 250%;
 		max-height: 100px;
 		position: absolute;
 		top: 100%;
-		display: none;
 		cursor: pointer;
 	}
 
@@ -307,6 +304,42 @@ ul {
 
 		&:last-child {
 			border-bottom: 0;
+		}
+	}
+}
+
+.rtl {
+	.astroid-nav {
+		.nav-item-parent {
+			.nav-title {
+				padding-left: 25px;
+				padding-right: 0;
+				>.nav-item-caret {
+					left: 0;
+					right: auto;
+				}
+			}
+			&.no-dropdown-icon .nav-title {
+				padding-left: 0;
+			}
+			.nav-submenu-container {
+				.nav-title {
+					>.nav-item-caret {
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
+		.nav-submenu {
+			>li {
+				>.nav-submenu {
+					right: 100%;
+					left: auto;
+					&.right {
+						right: -100%;
+					}
+				}
+			}
 		}
 	}
 }

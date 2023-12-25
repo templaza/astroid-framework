@@ -7,13 +7,14 @@
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-                <field astroidgroup="general" name="astroid_author_social" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL" multiple="true">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" name="buttons" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL">
                     <form>
                         <fields>
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
-                                <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL">
+                                <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                                     <option value="primary">Primary</option>
                                     <option value="secondary">Secondary</option>
                                     <option value="success">Success</option>
@@ -24,9 +25,16 @@
                                     <option value="dark">Dark</option>
                                     <option value="link">Link</option>
                                 </field>
+                                <field name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>
+                </field>
+                <field astroidgroup="widget_styles" name="button_group" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_GROUP_LABEL"/>
+                <field astroidgroup="widget_styles" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="btn-lg">Large</option>
+                    <option value="btn-sm">Small</option>
                 </field>
             </fieldset>
         </fields>
