@@ -3,18 +3,22 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 
 # Changelogs
 
+Version 3.0.8 - 26 December, 2023
+
+    [Update] Update load FileLayout in astroidxhtml.php
+
 Version 2.5.18 - 7 July, 2022
 
-[UPDATE] Update Preset system for Zero template
+    [UPDATE] Update Preset system for Zero template
 
 Version 2.5.16 - 21 April, 2022
 
-[UPDATE] Update "update-server" for Zero template
+    [UPDATE] Update "update-server" for Zero template
 
 Version 2.5.14 - 17 Feb, 2022 
 
-[FIX] Offline.php
+    [FIX] Offline.php
 
 Version 2.5.13 - 8 Feb, 2022 - Init
 
-[FIX] Deprecated Bug for PHP 8.1
+    [FIX] Deprecated Bug for PHP 8.1
