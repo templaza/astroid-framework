@@ -2,6 +2,9 @@
 Powerful framework for designers and developers to create responsive, fast &amp; robust Joomla based websites and templates.
 
 # Changelogs
+Version 3.0.8 - 26 December, 2023
+
+    [Update] Update load FileLayout in astroidxhtml.php
 
 Version 2.5.18 - 7 July, 2022
 
