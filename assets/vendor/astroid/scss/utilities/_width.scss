@@ -1,0 +1,22 @@
+[class*=as-width] {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+// Responsive max-width
+@each $width-point, $width-range in $as-width-ranges {
+  @each $breakpoint, $width in $grid-breakpoints {
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      @if ($breakpoint == 'xs') {
+        .as-width-#{$width-point} {
+          width: $width-range;
+        }
+      } @else {
+        .as-width-#{$breakpoint}-#{$width-point} {
+          width: $width-range;
+        }
+      }
+    }
+  }
+}

@@ -40,6 +40,25 @@ $backtotop-padding: 10px !default;
 $backtotop-zindex: $zindex-sticky !default;
 $backtotop-rounded-radius: 4px !default;
 
+// Astroid Width ranges
+$as-width-ranges: (
+        xxsmall: 150px,
+        xsmall: 210px,
+        small: 300px,
+        medium: 420px,
+        large: 570px,
+        xlarge: 750px,
+        xxlarge: 960px
+) !default;
+
+$as-gutters: (
+        sm: 0.3rem,
+        md: 0.5rem,
+        lg: 1rem,
+        xl: 1.5rem,
+        xxl: 2rem
+) !default;
+
 // Banner
 $banner-bg: #f8f9fa !default;
 $banner-padding-y: 80px !default;

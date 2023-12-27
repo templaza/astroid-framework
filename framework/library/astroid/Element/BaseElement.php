@@ -58,7 +58,17 @@ class BaseElement
             return '';
         }
         $this->_styles();
-        return "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>";
+        $max_width                  =   $this->params->get('max_width','');
+        $max_width_breakpoint       =   $this->params->get('max_width_breakpoint','');
+        $class_maxwidth             =   $max_width ? 'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width : '';
+        $content                    =   "<{$this->_tag}{$this->_attrbs()}>";
+        if ($class_maxwidth) {
+            $content                .=  '<div class="'.$class_maxwidth.'">'. $this->content .'</div>';
+        } else {
+            $content                .=  $this->content;
+        }
+        $content                    .=  "</{$this->_tag}>";
+        return $content;
     }
 
     protected function _attrbs()
@@ -113,6 +123,26 @@ class BaseElement
 
     protected function _getclasses()
     {
+        $max_width                  =   $this->params->get('max_width','');
+        $block_align                =   $this->params->get('block_align','');
+        $block_align_breakpoint     =   $this->params->get('block_align_breakpoint','');
+        $block_align_fallback       =   $this->params->get('block_align_fallback','');
+
+        $classes                    =   array();
+        if ($max_width && $block_align) {
+            $classes[]              =   'd-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
+        }
+
+        $text_alignment             =   $this->params->get('text_alignment','');
+        $text_alignment_breakpoint  =   $this->params->get('text_alignment_breakpoint','');
+        $text_alignment_fallback    =   $this->params->get('text_alignment_fallback','');
+
+        if ($text_alignment) {
+            $classes[]              =   'text' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' text-' . $text_alignment_fallback : '');
+        }
+
+        $class                      =   implode(' ', $classes);
+        $this->addClass($class);
         $this->addClass($this->params->get('customclass', ''));
         $this->addClass($this->params->get('hideonxs', 0) ? 'hideonxs' : '');
         $this->addClass($this->params->get('hideonsm', 0) ? 'hideonsm' : '');

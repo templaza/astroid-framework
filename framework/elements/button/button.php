@@ -27,9 +27,9 @@ if (!count($buttons)) {
 $button_group   = intval($params->get('button_group', 0));
 $button_size    = $params->get('button_size', '');
 $button_size    = $button_size ? ' '. $button_size : '';
-echo $button_group ? '<div class="btn-group" role="group">' : '';
+echo '<div class="'.($button_group ? 'btn-group' : 'as-gutter-lg').'" role="group">';
 foreach ($buttons as $button) {
     $btn_params = Style::getSubFormParams($button->params);
     echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : '').$btn_params['button_style'].$button_size. '">'.$btn_params['title'].'</a>';
 }
-echo $button_group ? '</div>' : '';
+echo '</div>';

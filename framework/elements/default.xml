@@ -13,6 +13,72 @@
             <field ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
             <field ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
 
+            <field name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="xxsmall">ASTROID_XXS</option>
+               <option value="xsmall">ASTROID_XS</option>
+               <option value="small">ASTROID_SM</option>
+               <option value="medium">ASTROID_MD</option>
+               <option value="large">ASTROID_LG</option>
+               <option value="xlarge">ASTROID_XL</option>
+               <option value="xxlarge">ASTROID_XXL</option>
+            </field>
+
+            <field name="max_width_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="sm">ASTROID_BREAKPOINT_SM</option>
+               <option value="md">ASTROID_BREAKPOINT_MD</option>
+               <option value="lg">ASTROID_BREAKPOINT_LG</option>
+               <option value="xl">ASTROID_BREAKPOINT_XL</option>
+               <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
+            </field>
+
+            <field name="block_align" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="start">JGLOBAL_LEFT</option>
+               <option value="center">JGLOBAL_CENTER</option>
+               <option value="end">JGLOBAL_RIGHT</option>
+            </field>
+
+            <field name="block_align_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="sm">ASTROID_BREAKPOINT_SM</option>
+               <option value="md">ASTROID_BREAKPOINT_MD</option>
+               <option value="lg">ASTROID_BREAKPOINT_LG</option>
+               <option value="xl">ASTROID_BREAKPOINT_XL</option>
+               <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
+            </field>
+
+            <field name="block_align_fallback" ngShow="[max_width]!='' AND [block_align_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="start">JGLOBAL_LEFT</option>
+               <option value="center">JGLOBAL_CENTER</option>
+               <option value="end">JGLOBAL_RIGHT</option>
+            </field>
+
+            <field name="text_alignment" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="start">JGLOBAL_LEFT</option>
+               <option value="center">JGLOBAL_CENTER</option>
+               <option value="end">JGLOBAL_RIGHT</option>
+            </field>
+
+            <field name="text_alignment_breakpoint" ngShow="[text_alignment]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="sm">ASTROID_BREAKPOINT_SM</option>
+               <option value="md">ASTROID_BREAKPOINT_MD</option>
+               <option value="lg">ASTROID_BREAKPOINT_LG</option>
+               <option value="xl">ASTROID_BREAKPOINT_XL</option>
+               <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
+            </field>
+
+            <field name="text_alignment_fallback" ngShow="[text_alignment]!='' AND [text_alignment_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="start">JGLOBAL_LEFT</option>
+               <option value="center">JGLOBAL_CENTER</option>
+               <option value="end">JGLOBAL_RIGHT</option>
+            </field>
+
             <field description="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_LABEL">
                <option value="0">ASTROID_NONE</option>
                <option value="color">TPL_ASTROID_COLOR</option>
@@ -33,12 +99,12 @@
                <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
                <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
             </field>
-            <field ngShow="background_setting =='image'" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <field ngShow="[background_setting] =='image'" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
                <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
             </field>
-            <field ngShow="background_setting =='image'" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+            <field ngShow="[background_setting] =='image'" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
                <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
