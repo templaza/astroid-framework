@@ -71,7 +71,7 @@ function saveItem(){
     } else {
         items.value[currentIdx.value].params = tmp;
     }
-    emit('update:modelValue', JSON.stringify(items.value));
+    listUpdated();
     params.value = {};
     edit.value = false;
 }
@@ -84,11 +84,13 @@ function duplicateItem(element, index) {
         params: element.params
     };
     items.value.splice(index+1, 0, tmp);
+    listUpdated();
 }
 
 function deleteItem(index) {
     if (confirm('Are you sure?')) {
         items.value.splice(index, 1);
+        listUpdated();
     }
 }
 </script>
