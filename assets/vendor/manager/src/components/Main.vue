@@ -161,7 +161,6 @@ function selectPreset(event, group) {
                     <Fields 
                       :field="field" 
                       :scope="$scope"
-                      :constant="props.config.astroid_lib" 
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
                       @update:getPreset="getPreset"

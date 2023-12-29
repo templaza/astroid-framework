@@ -142,7 +142,6 @@ function deleteItem(index) {
                         <Fields 
                             :field="field" 
                             :scope="params"
-                            :constant="props.constant" 
                             />
                     </div>
                     <div v-else v-html="field.input"></div>

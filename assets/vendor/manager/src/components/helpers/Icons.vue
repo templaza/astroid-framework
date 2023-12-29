@@ -49,7 +49,10 @@ function selectIcon(icon) {
 </script>
 <template>
     <div class="input-group mb-3">
-        <div class="form-control"><span v-if="modelValue!=``" v-html="iconSelected.name"></span></div>
+        <div class="form-control icon-text" @click="showIconsBox = true">
+            <span v-if="modelValue!=``" v-html="iconSelected.name"></span>
+            <span v-else>{{ btnIcon }}..</span>
+        </div>
         <button class="btn btn-outline-secondary" type="button" @click.prevent="showIconsBox = true">{{ btnIcon }}</button>
     </div>
     <div v-if="showIconsBox" class="card icon-box">

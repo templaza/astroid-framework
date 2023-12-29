@@ -6,8 +6,9 @@ import TypoResponsive from './TypoResponsive.vue';
 import { ColorPicker } from 'vue-color-kit'
 
 const emit = defineEmits(['update:modelValue']);
-const props = defineProps(['modelValue', 'field', 'constant']);
+const props = defineProps(['modelValue', 'field']);
 const theme = inject('theme', 'light');
+const constant = inject('constant', {});
 const font_styles = [
     {'value':'bold', 'text':'<strong>Bold</strong>'},
     {'value':'italic', 'text':'<em>Italic</em>'},
@@ -70,7 +71,7 @@ function getFontType(font_face) {
 }
 
 onMounted(()=>{
-    let url = props.constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&template="+props.constant.template_name+"&ts="+Date.now();
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=google-fonts&template="+constant.template_name+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "fonts_ajax.txt?ts="+Date.now();
     }

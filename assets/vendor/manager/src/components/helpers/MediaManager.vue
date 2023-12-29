@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUpdated, ref, inject } from 'vue';
 import axios from "axios";
 import DropZone from './DropZone.vue';
 
@@ -7,8 +7,8 @@ const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   field: { type: Object, default: null },
   modelValue: { type: String, default: '' },
-  constant:  { type: Object, default: null },
 });
+const constant = inject('constant', {});
 
 const _showMediaContent = ref([]);
 const _showDirLocation  = ref([]);
@@ -17,7 +17,7 @@ const _imagePreview     = ref('');
 
 onMounted(() => {
     if (props.modelValue !== '') {
-        _imagePreview.value = props.constant.site_url + `images/`+ props.modelValue;
+        _imagePreview.value = constant.site_url + `images/`+ props.modelValue;
     }
     const mediaContent = document.getElementById(props.field.input.id+'modal');
     if (mediaContent) {
@@ -31,8 +31,8 @@ onMounted(() => {
 })
 
 onUpdated(()=>{
-  if (props.modelValue !== _imagePreview.value.replace(props.constant.site_url + `images/`,'')) {
-    _imagePreview.value = props.constant.site_url + `images/`+ props.modelValue;
+  if (props.modelValue !== _imagePreview.value.replace(constant.site_url + `images/`,'')) {
+    _imagePreview.value = constant.site_url + `images/`+ props.modelValue;
   }
 })
 
@@ -63,7 +63,7 @@ function generateData(json = null) {
         id: 'image'+id,
         name: element.name,
         path_relative: element.path_relative,
-        path: props.constant.site_url + `images/` + element.path_relative,
+        path: constant.site_url + `images/` + element.path_relative,
         type: 'image'
       })
     });
@@ -74,7 +74,7 @@ function generateData(json = null) {
         id: 'video'+id,
         name: element.name,
         path_relative: element.path_relative,
-        path: props.constant.site_url + `images/` + element.path_relative,
+        path: constant.site_url + `images/` + element.path_relative,
         type: 'video'
       })
     });
@@ -101,7 +101,7 @@ function callAjax() {
 function selectMedia(item) {
   let dirLocation = _showDirLocation.value.join('/');
   if (item.type === 'image' || item.type === 'video') {
-    _imagePreview.value = props.constant.site_url + `images/` + item.path_relative;
+    _imagePreview.value = constant.site_url + `images/` + item.path_relative;
     emit('update:modelValue', item.path_relative);
     document.getElementById(props.field.input.id+'close').click();
   }
