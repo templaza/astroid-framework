@@ -195,7 +195,7 @@ class Template
 
     protected function _variableOverrides($variables)
     {
-        $sass_overrides = $this->params->get('sass_overrides');
+        $sass_overrides = $this->params->get('sass_overrides', '{}');
         $sass_overrides = \json_decode($sass_overrides, true);
         if (empty($sass_overrides)) {
             return $variables;
