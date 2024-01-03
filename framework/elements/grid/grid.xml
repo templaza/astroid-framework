@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_GRID_LABEL</title>
+    <description>ASTROID_WIDGET_GRID_DESC</description>
+    <icon>fa-solid fa-grip</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" name="grids" type="astroidsubform" label="ASTROID_WIDGET_GRIDS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidlist" label="ASTROID_WIDGET_MEDIA_TYPE" name="type" default="">
+                                    <option value="">ASTROID_NONE</option>
+                                    <option value="icon">TPL_ASTROID_BASIC_ICON_LABEL</option>
+                                    <option value="image">ASTROID_IMAGE</option>
+                                </field>
+                                <field ngShow="[type]=='icon'" type="astroidlist" label="ASTROID_WIDGET_ICON_TYPE" name="icon_type" default="fontawesome">
+                                    <option value="fontawesome">TPL_ASTROID_FONTAWESOME</option>
+                                    <option value="custom">ASTROID_WIDGET_CUSTOM</option>
+                                </field>
+                                <field ngShow="[type]=='icon' AND [icon_type]=='fontawesome'" type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="fa_icon"/>
+                                <field ngShow="[type]=='icon' AND [icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon"/>
+                                <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+
+                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta"/>
+
+                                <field type="astroideditor" label="Description" name="description"/>
+
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="widget_styles" name="button_group" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_GROUP_LABEL"/>
+                <field astroidgroup="widget_styles" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="btn-lg">Large</option>
+                    <option value="btn-sm">Small</option>
+                </field>
+                <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                    <option value="">Rounded</option>
+                    <option value="rounded-0">Square</option>
+                    <option value="rounded-pill">Circle</option>
+                </field>
+                <field ngShow="[button_group]==0" astroidgroup="widget_styles" type="astroidlist" name="gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="lg">
+                    <option value="sm">ASTROID_SM</option>
+                    <option value="md">ASTROID_MD</option>
+                    <option value="lg">ASTROID_LG</option>
+                    <option value="xl">ASTROID_XL</option>
+                    <option value="xxl">ASTROID_XXL</option>
+                </field>
+            </fieldset>
+        </fields>
+    </form>
+</element>

@@ -25,7 +25,12 @@ class Media
     public static function getPath()
     {
         $params = ComponentHelper::getParams('com_media');
-        return $params->get('image_path', 'images');
+        $mediaPath  =   $params->get('image_path', 'images');
+        if (substr($mediaPath, -1) === '/') {
+            return substr($mediaPath,0, strlen($mediaPath) - 1);
+        } else {
+            return $mediaPath;
+        }
     }
 
     public static function library()
