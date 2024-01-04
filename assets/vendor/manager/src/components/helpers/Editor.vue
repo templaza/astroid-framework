@@ -24,8 +24,24 @@ watch(content, (newText) => {
 })
 </script>
 <template>
-    <QuillEditor v-model:content="content" content-type="html" toolbar="full"
+    <QuillEditor v-model:content="content" content-type="html"
     :options="{
+        modules: {
+            toolbar: {
+                container: [
+                    [{ header: [1,2,3,4,5,6,false] }],
+                    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                    ['blockquote', 'code-block'],
+                    [{ align: [] }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }],
+                    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+                    [{ indent: '-1' }, { indent: '+1' }],
+                    ['link', 'video', 'image'],
+                    ['clean'] // remove formatting button
+                ]
+            }
+        },
         placeholder: 'Your content here ...'
     }">
     </QuillEditor>
