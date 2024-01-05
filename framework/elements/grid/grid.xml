@@ -7,7 +7,8 @@
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field type="astroidgroup" name="grid_options" title="ASTROID_WIDGET_GRID_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="card_options" title="ASTROID_WIDGET_CARD_OPTIONS_LABEL"/>
                 <field astroidgroup="general" name="grids" type="astroidsubform" label="ASTROID_WIDGET_GRIDS_LABEL">
                     <form>
                         <fields>
@@ -28,29 +29,101 @@
                                 <field type="astroidtext" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta"/>
 
-                                <field type="astroideditor" label="Description" name="description"/>
-
+                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work"/>
+                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More"/>
+                                <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="_blank">New Window</option>
+                                    <option value="_parent">Parent Frame</option>
+                                    <option value="_top">Full body of the window</option>
+                                </field>
                             </fieldset>
                         </fields>
                     </form>
                 </field>
-                <field astroidgroup="widget_styles" name="button_group" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_GROUP_LABEL"/>
-                <field astroidgroup="widget_styles" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="xxl">
+                    <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
+                    <option value="xl">ASTROID_WIDGET_XL_ICON</option>
+                    <option value="lg">ASTROID_WIDGET_LG_ICON</option>
+                    <option value="md">ASTROID_WIDGET_MD_ICON</option>
+                    <option value="sm">ASTROID_WIDGET_SM_ICON</option>
+                    <option value="xs">ASTROID_WIDGET_XS_ICON</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="xxl_column" label="ASTROID_WIDGET_XXL_COLUMN" default="3">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="xl_column" label="ASTROID_WIDGET_XL_COLUMN" default="3">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="lg_column" label="ASTROID_WIDGET_LG_COLUMN" default="3">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="md_column" label="ASTROID_WIDGET_MD_COLUMN" default="1">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="sm_column" label="ASTROID_WIDGET_SM_COLUMN" default="1">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="xs_column" label="ASTROID_WIDGET_XS_COLUMN" default="1">
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                </field>
+                <field astroidgroup="grid_options" type="astroidlist" name="row_gutter" label="ASTROID_WIDGET_ROW_GUTTER_LABEL" default="4">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="grid_options" type="astroidlist" name="column_gutter" label="ASTROID_WIDGET_COLUMN_GUTTER_LABEL" default="4">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
-                    <option value="btn-lg">Large</option>
-                    <option value="btn-sm">Small</option>
-                </field>
-                <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
-                    <option value="">Rounded</option>
-                    <option value="rounded-0">Square</option>
-                    <option value="rounded-pill">Circle</option>
-                </field>
-                <field ngShow="[button_group]==0" astroidgroup="widget_styles" type="astroidlist" name="gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="lg">
-                    <option value="sm">ASTROID_SM</option>
-                    <option value="md">ASTROID_MD</option>
-                    <option value="lg">ASTROID_LG</option>
-                    <option value="xl">ASTROID_XL</option>
-                    <option value="xxl">ASTROID_XXL</option>
+                    <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
+                    <option value="success">Success</option>
+                    <option value="danger">Danger</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
                 </field>
             </fieldset>
         </fields>

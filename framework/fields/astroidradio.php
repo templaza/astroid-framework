@@ -53,6 +53,7 @@ class JFormFieldAstroidRadio extends ListField {
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $this->value,
+           'width'   =>  (string) $this->element['width'] == 'full' ? 'full' : '',
            'type'    =>  strtolower($this->type),
        ];
        if ($this->element['astroid-switch'] == 'true') {

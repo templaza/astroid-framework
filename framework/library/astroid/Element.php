@@ -196,6 +196,7 @@ class Element
                 $model_form[$field->fieldname] = $field->value;
                 $field_group = $field->getAttribute('astroidgroup', 'none');
                 $js_input   =   json_decode($field->input);
+
                 $field_tmp  =   [
                     'id'            =>  $field->id,
                     'name'          =>  $field->fieldname,
