@@ -1,0 +1,22 @@
+.astroid-grid {
+  .card-body {
+    --bs-card-spacer-y: 2.5rem;
+    --bs-card-spacer-x: 2.5rem;
+    &.card-size-large {
+      --bs-card-spacer-y: 3.5rem;
+      --bs-card-spacer-x: 3.5rem;
+    }
+    &.card-size-small {
+      --bs-card-spacer-y: 1.5rem;
+      --bs-card-spacer-x: 1.5rem;
+    }
+    &.card-size-none {
+      --bs-card-spacer-y: 0;
+      --bs-card-spacer-x: 0;
+    }
+  }
+  .text-bg-none {
+    background: none;
+    border: none;
+  }
+}
