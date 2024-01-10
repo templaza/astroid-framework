@@ -362,8 +362,8 @@ class Style
         $return = [];
         $values = [];
         if (!empty($value) && isset($value->unit)) {
-            $unit = $value->unit;
-            if ($value->lock && is_numeric($value->top)) {
+            $unit = $value->unit == 'Custom' ? '' : $value->unit;
+            if ( $value->lock && (($value->unit == 'Custom' && isset($value->top)) || is_numeric($value->top)) ) {
                 foreach (['top', 'right', 'bottom', 'left'] as $position) {
                     $return[$position] = self::getPropertySubset($property, $position) . ":{$value->top}{$unit}";
                     $values[$position] = "{$value->top}{$unit}";
@@ -371,7 +371,7 @@ class Style
             } else {
                 foreach (['top', 'right', 'bottom', 'left'] as $position) {
                     $pvalue = $value->{$position};
-                    if (is_numeric($pvalue)) {
+                    if (($value->unit == 'Custom' && isset($pvalue)) || is_numeric($pvalue)) {
                         $return[$position] = self::getPropertySubset($property, $position) . ":{$pvalue}{$unit}";
                         $values[$position] = "{$pvalue}{$unit}";
                     }

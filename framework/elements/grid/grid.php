@@ -25,6 +25,8 @@ if (!count($grids)) {
     return false;
 }
 
+$style = new Style('#'. $element->id);
+$style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   '';
 $xxl_column         =   $params->get('xxl_column', '');
 $row_column_cls     .=  $xxl_column ? ' row-cols-xxl-' . $xxl_column : '';
@@ -52,9 +54,13 @@ $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 $border_radius      =   $params->get('card_border_radius', '');
 $bd_radius          =   $border_radius ? ' ' . $border_radius : '';
 
-$media_position     =   $params->get('media_position', 'top');
-
 $media_width_cls    =   '';
+$media_position     =   $params->get('media_position', 'top');
+if ($media_position == 'right') {
+    $media_width_cls.=  'order-2';
+} else {
+    $media_width_cls.=  'order-0';
+}
 $xxl_column_media   =   $params->get('xxl_column_media', '');
 $media_width_cls    .=  $xxl_column_media ? ' col-xxl-' . $xxl_column_media : '';
 $xl_column_media    =   $params->get('xl_column_media', '');
@@ -69,8 +75,15 @@ $xs_column_media    =   $params->get('xs_column_media', 12);
 $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 
 $icon_size          =   $params->get('icon_size', 60);
-$icon_color         =   $params->get('icon_color', '');
-$icon_color_hover   =   $params->get('icon_color_hover', '');
+
+$icon_color         =   Style::getColor($params->get('icon_color', ''));
+$style->child('.astroid-icon')->addCss('color', $icon_color['light']);
+$style_dark->child('.astroid-icon')->addCss('color', $icon_color['dark']);
+
+$icon_color_hover   =   Style::getColor($params->get('icon_color_hover', ''));
+$style->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['light']);
+$style_dark->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['dark']);
+
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 0);
 $overlay_color      =   $params->get('overlay_color', '');
@@ -78,13 +91,23 @@ $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
+if (!empty($title_font_style)) {
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+}
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
+if (!empty($meta_font_style)) {
+    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style);
+}
+
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
 $meta_position      =   $params->get('meta_position', 'before');
 
 $content_font_style =   $params->get('content_font_style');
+if (!empty($content_font_style)) {
+    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style);
+}
 
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
@@ -94,7 +117,7 @@ foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'img-fluid ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
     } elseif ($grid_params['type'] == 'icon') {
         if ($grid_params['icon_type'] == 'fontawesome') {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['fa_icon'].'"></i>';
@@ -112,7 +135,7 @@ foreach ($grids as $key => $grid) {
     }
     if ($media_position == 'left' || $media_position == 'right') {
         echo '</div>';
-        echo '<div class="col">';
+        echo '<div class="col order-1">';
     }
 
     echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
@@ -144,7 +167,6 @@ foreach ($grids as $key => $grid) {
 }
 echo '</div>';
 
-$style = new Style('#'. $element->id);
 $style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
@@ -155,4 +177,17 @@ if ($params->get('card_size', '') == 'custom') {
         }
     }
 }
+if (!empty($title_heading_margin)) {
+    $margin = \json_decode($title_heading_margin, false);
+    foreach ($margin as $device => $props) {
+        $style->child('.astroid-heading')->addStyle(Style::spacingValue($props, "margin"), $device);
+    }
+}
+if (!empty($meta_heading_margin)) {
+    $margin = \json_decode($meta_heading_margin, false);
+    foreach ($margin as $device => $props) {
+        $style->child('.astroid-meta')->addStyle(Style::spacingValue($props, "margin"), $device);
+    }
+}
 $style->render();
+$style_dark->render();
