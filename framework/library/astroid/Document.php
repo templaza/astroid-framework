@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 require_once __DIR__ . "/../scssphp/scss.inc.php";
 
+use Astroid\Helper\Constants;
 use Joomla\Filesystem\File;
 use ScssPhp\ScssPhp\Compiler;
 use MatthiasMullie\Minify;
@@ -34,6 +35,7 @@ class Document
     protected $minify_js = false;
     protected $minify_html = false;
     protected static $_fontawesome = false;
+    protected static $_fancybox = false;
     protected static $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -898,6 +900,16 @@ class Document
             return;
         }
         Helper\Font::loadFontAwesome();
+    }
+
+    public function loadFancyBox()
+    {
+        if (self::$_fancybox) {
+            return;
+        }
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
+        $wa->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
     }
 
     public function moveFile(&$array, $a, $b)
