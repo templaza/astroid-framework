@@ -14,6 +14,8 @@ use Astroid\Helper;
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -168,6 +170,41 @@ class Utility
             $bodystyle = 'body {' . $styles . '}';
             $document->addStyleDeclaration($bodystyle);
         }
+    }
+
+    public static function getCategories()
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true)
+            ->select('DISTINCT a.id, a.title, a.level, a.published, a.lft');
+        $subQuery = $db->getQuery(true)
+            ->select('id,title,level,published,parent_id,extension,lft,rgt')
+            ->from('#__categories')
+            ->where($db->quoteName('published') . ' = ' . $db->quote(1))
+            ->where($db->quoteName('extension') . ' = ' . $db->quote('com_content'));
+
+        $query->from('(' . $subQuery->__toString() . ') AS a')
+            ->join('LEFT', $db->quoteName('#__categories') . ' AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+        $query->order('a.lft ASC');
+
+        $db->setQuery($query);
+        $categories = $db->loadObjectList();
+
+        $article_cats = array( 0 => array('value' => '', 'label' => Text::_('ASTROID_WIDGET_ALL_CATEGORIES') ) );
+
+        $j = 1;
+
+        if (count((array) $categories))
+        {
+            foreach ($categories as $category)
+            {
+                $article_cats[$j]['value'] = $category->id;
+                $article_cats[$j]['label'] = str_repeat('- ', ($category->level - 1)) . $category->title;
+
+                $j = $j + 1;
+            }
+        }
+        return $article_cats;
     }
 
     public static function typography()

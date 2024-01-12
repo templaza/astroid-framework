@@ -9,13 +9,22 @@
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="grid_options" title="ASTROID_WIDGET_GRID_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="card_options" title="ASTROID_WIDGET_CARD_OPTIONS_LABEL"/>
-                <field type="astroidgroup" name="icon_options" title="ASTROID_WIDGET_ICON_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="image_options" title="ASTROID_WIDGET_IMAGE_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="meta_options" title="ASTROID_WIDGET_META_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
-
+                <field astroidgroup="general" type="astroidcategories" name="catids" label="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES" description="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES_DESC" default="[]"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_LIMIT_LABEL" description="ASTROID_WIDGET_ARTICLES_LIMIT_DESC" name="limit" default="3"/>
+                <field astroidgroup="general" type="astroidlist" name="ordering" label="JFIELD_ORDERING_LABEL" description="ASTROID_WIDGET_ARTICLES_ORDERING_DESC" default="latest">
+                    <option value="latest">ASTROID_WIDGET_ORDERING_LATEST</option>
+                    <option value="oldest">ASTROID_WIDGET_ORDERING_OLDEST</option>
+                    <option value="popular">ASTROID_WIDGET_ORDERING_POPULAR</option>
+                    <option value="featured">ASTROID_WIDGET_ORDERING_FEATURED</option>
+                    <option value="ascending">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
+                    <option value="descending">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
+                    <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
+                </field>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>
@@ -208,9 +217,6 @@
                     <option value="7">7/12</option>
                 </field>
                 <field astroidgroup="card_options" name="enable_grid_match" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_GRID_MATCH"/>
-                <field astroidgroup="icon_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" default="60" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" postfix="px" />
-                <field astroidgroup="icon_options" name="icon_color" type="astroidcolor" label="TPL_ASTROID_COLOR" />
-                <field astroidgroup="icon_options" name="icon_color_hover" type="astroidcolor" label="TPL_ASTROID_COLOR_HOVER" />
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="600" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />

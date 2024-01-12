@@ -17,6 +17,7 @@ use Astroid\Component\Includer;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
+use Astroid\Component\Utility;
 
 defined('_JEXEC') or die;
 
@@ -67,6 +68,11 @@ class Admin extends Helper\Client
             throw new \Exception("`{$func}` function not found in Astroid\\Helper\\Media");
         }
         $this->response(Helper\Media::$func());
+    }
+
+    protected function getcategories()
+    {
+        $this->response(Utility::getCategories());
     }
 
     protected function search()
