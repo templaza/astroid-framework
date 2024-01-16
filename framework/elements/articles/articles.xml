@@ -11,7 +11,7 @@
                 <field type="astroidgroup" name="card_options" title="ASTROID_WIDGET_CARD_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="image_options" title="ASTROID_WIDGET_IMAGE_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
-                <field type="astroidgroup" name="meta_options" title="ASTROID_WIDGET_META_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="info_options" title="ASTROID_WIDGET_INFO_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
                 <field astroidgroup="general" type="astroidcategories" name="catids" label="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES" description="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES_DESC" default="[]"/>
@@ -217,6 +217,10 @@
                     <option value="7">7/12</option>
                 </field>
                 <field astroidgroup="card_options" name="enable_grid_match" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_GRID_MATCH"/>
+                <field astroidgroup="image_options" name="layout" type="astroidlist" label="ASTROID_WIDGET_CHOOSE_LAYOUT_LABEL" default="classic">
+                    <option value="classic">ASTROID_WIDGET_LAYOUT_CLASSIC_LABEL</option>
+                    <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
+                </field>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="600" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
@@ -232,16 +236,43 @@
                 <field astroidgroup="title_options" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="title_options" name="title_heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 
-                <field astroidgroup="meta_options" name="meta_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
-                <field astroidgroup="meta_options" name="meta_heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
-                <field astroidgroup="meta_options" name="meta_position" type="astroidlist" label="ASTROID_WIDGET_META_POSITION_LABEL" default="before">
-                    <option value="before">ASTROID_BEFORE_TITLE</option>
-                    <option value="after">ASTROID_AFTER_TITLE</option>
+                <field astroidgroup="info_options" name="info_before_title" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_BEFORE_TITLE" default="[]" description="ASTROID_WIDGET_INFO_BEFORE_TITLE_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
+                    <option value="author">Author</option>
+                    <option value="category">Category</option>
+                    <option value="publish_date">Publish Date</option>
+                    <option value="create_date">Create Date</option>
+                    <option value="modify_date">Modify Date</option>
+                    <option value="hits">Hits</option>
+                    <option value="readtime">Read Time</option>
                 </field>
+                <field astroidgroup="info_options" name="info_after_title" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_AFTER_TITLE" default="[]" description="ASTROID_WIDGET_INFO_AFTER_TITLE_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
+                    <option value="author">Author</option>
+                    <option value="category">Category</option>
+                    <option value="publish_date">Publish Date</option>
+                    <option value="create_date">Create Date</option>
+                    <option value="modify_date">Modify Date</option>
+                    <option value="hits">Hits</option>
+                    <option value="readtime">Read Time</option>
+                </field>
+                <field astroidgroup="info_options" name="info_after_intro" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_AFTER_INTRO" default="[]" description="ASTROID_WIDGET_INFO_AFTER_INTRO_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
+                    <option value="author">Author</option>
+                    <option value="category">Category</option>
+                    <option value="publish_date">Publish Date</option>
+                    <option value="create_date">Create Date</option>
+                    <option value="modify_date">Modify Date</option>
+                    <option value="hits">Hits</option>
+                    <option value="readtime">Read Time</option>
+                </field>
+                <field astroidgroup="info_options" ngShow="([info_before_title]!='[]') OR ([info_after_title]!='[]') OR ([info_after_intro]!='[]')" name="info_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="info_options" ngShow="([info_before_title]!='[]') OR ([info_after_title]!='[]') OR ([info_after_intro]!='[]')" name="info_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" description="ASTROID_WIDGET_INFO_MARGIN_LABEL" />
 
-                <field astroidgroup="content_options" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="content_options" name="enable_intro_text" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_ARTICLES_ENABLE_INTRO_TEXT"/>
+                <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" type="astroidtext" label="ASTROID_WIDGET_ARTICLES_INTRO_LIMIT_LABEL" name="intro_limit" default="200"/>
+                <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 
-                <field astroidgroup="readmore_options" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
+                <field astroidgroup="readmore_options" name="enable_readmore" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_READMORE"/>
+                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                     <option value="primary">Primary</option>
                     <option value="secondary">Secondary</option>
                     <option value="success">Success</option>
@@ -252,13 +283,13 @@
                     <option value="dark">Dark</option>
                     <option value="link">Link</option>
                 </field>
-                <field astroidgroup="readmore_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
-                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
+                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
                     <option value="">Default</option>
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
                 </field>
-                <field astroidgroup="readmore_options" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>

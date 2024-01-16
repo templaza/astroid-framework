@@ -20,8 +20,8 @@ function listUpdated() {
 }
 
 function checkShow(field) {
-    if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
-        const expression = field.ngShow.replace(/\[(.+?)\]/g, "params.value\['$1'\]");
+    if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
+        const expression = field.ngShow.replace(/\[(\S+?)\]/g, "params.value\['$1'\]");
         try {
             return new Function('params', 'return ' + expression)(params);
         } catch (error) {

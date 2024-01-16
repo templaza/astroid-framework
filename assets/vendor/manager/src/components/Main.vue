@@ -24,8 +24,8 @@ onBeforeMount(() => {
 })
 
 function checkShow(field) {
-  if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
-    const expression = field.ngShow.replace(/\[(.+?)\]/g, "$scope.value\['$1'\]");
+  if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
+    const expression = field.ngShow.replace(/\[(\S+?)\]/g, "$scope.value\['$1'\]");
     try {
       return new Function('$scope', 'return ' + expression)($scope);
     } catch (error) {
