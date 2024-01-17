@@ -910,6 +910,7 @@ class Document
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
         $wa->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
+        self::$_fancybox = true;
     }
 
     public function moveFile(&$array, $a, $b)
