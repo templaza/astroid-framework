@@ -85,7 +85,7 @@ if ($mode == 'divided-logo-left') {
              <?php if (!empty($header_mobile_menu)) { ?>
                  <div class="w-100 d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
                      <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                      </div>
                  </div>
              <?php } ?>
@@ -161,7 +161,7 @@ if ($mode == 'divided-logo-left') {
             <?php if (!empty($header_mobile_menu)) { ?>
                <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
                   <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                   </div>
                </div>
             <?php } ?>
@@ -224,7 +224,7 @@ if ($mode == 'divided-logo-left') {
                <?php if (!empty($header_mobile_menu)) { ?>
                   <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
                      <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                        <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                        <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                      </div>
                   </div>
                <?php
@@ -271,7 +271,7 @@ if ($mode == 'divided-logo-left') {
             <?php if (!empty($header_mobile_menu)) { ?>
                <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
                   <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                   </div>
                </div>
             <?php
@@ -346,7 +346,7 @@ if ($mode == 'divided-logo-left') {
              <?php if (!empty($header_mobile_menu)) { ?>
                  <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
                      <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"></span></span></button>
+                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                      </div>
                  </div>
                  <?php

@@ -19,7 +19,7 @@ extract($displayData);
 <div class="burger-menu-button active">
     <button aria-label="Off-Canvas Toggle" type="button" class="button close-offcanvas offcanvas-close-btn">
         <span class="box">
-            <span class="inner"></span>
+            <span class="inner"><span class="visually-hidden">Off-Canvas Toggle</span></span>
         </span>
     </button>
 </div>

@@ -243,7 +243,6 @@
                     <option value="create_date">Create Date</option>
                     <option value="modify_date">Modify Date</option>
                     <option value="hits">Hits</option>
-                    <option value="readtime">Read Time</option>
                 </field>
                 <field astroidgroup="info_options" name="info_after_title" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_AFTER_TITLE" default="[]" description="ASTROID_WIDGET_INFO_AFTER_TITLE_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
                     <option value="author">Author</option>
@@ -252,7 +251,6 @@
                     <option value="create_date">Create Date</option>
                     <option value="modify_date">Modify Date</option>
                     <option value="hits">Hits</option>
-                    <option value="readtime">Read Time</option>
                 </field>
                 <field astroidgroup="info_options" name="info_after_intro" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_AFTER_INTRO" default="[]" description="ASTROID_WIDGET_INFO_AFTER_INTRO_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
                     <option value="author">Author</option>
@@ -261,7 +259,6 @@
                     <option value="create_date">Create Date</option>
                     <option value="modify_date">Modify Date</option>
                     <option value="hits">Hits</option>
-                    <option value="readtime">Read Time</option>
                 </field>
                 <field astroidgroup="info_options" ngShow="([info_before_title]!='[]') OR ([info_after_title]!='[]') OR ([info_after_intro]!='[]')" name="info_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="info_options" ngShow="([info_before_title]!='[]') OR ([info_after_title]!='[]') OR ([info_after_intro]!='[]')" name="info_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" description="ASTROID_WIDGET_INFO_MARGIN_LABEL" />
@@ -289,7 +286,7 @@
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
                 </field>
-                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" name="button_border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>

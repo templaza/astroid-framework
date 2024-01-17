@@ -44,7 +44,7 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoi
       <?php if (!empty($header_mobile_menu)) { ?>
          <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
             <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-               <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"></span></span></button>
+               <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
             </div>
          </div>
       <?php } ?>

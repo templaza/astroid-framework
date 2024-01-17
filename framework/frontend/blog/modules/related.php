@@ -36,19 +36,18 @@ $document = Astroid\Framework::getDocument();
                   </a>
                <?php } ?>
                <div class="card-body">
-                  <?php
-                  if ($display_posttypeicon) {
-                      $document->include('blog.modules.posttype', ['article' => $astroidArticle]);
-                  }
-                  if ($display_badge) {
-                      $document->include('blog.modules.badge', ['article' => $astroidArticle]);
-                  }
-                  ?>
-                  <small class="text-muted"> <?php echo $item->category_title; ?></small>
                   <h3 class="related-article-title">
                      <a href="<?php echo $item->route; ?>"><?php echo $item->title; ?></a>
                   </h3>
                   <?php echo LayoutHelper::render('joomla.content.info_block', ['item' => $item, 'params' => $item->params, 'astroidArticle' => $astroidArticle, 'position' => 'above']); ?>
+                   <?php
+                   if ($display_posttypeicon) {
+                       $document->include('blog.modules.posttype', ['article' => $astroidArticle]);
+                   }
+                   if ($display_badge) {
+                       $document->include('blog.modules.badge', ['article' => $astroidArticle]);
+                   }
+                   ?>
                </div>
             </div>
          </div>

@@ -16,7 +16,11 @@ defined('_JEXEC') or die;
 use Astroid\Helper\Style;
 use Astroid\Component\Article;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 extract($displayData);
 $catids         = json_decode($params->get('catids', '[]'), true);
@@ -109,23 +113,31 @@ if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-article-introtext', $content_font_style);
 }
 
+$readmore           =   $params->get('enable_readmore', 0);
+$button_style       =   $params->get('button_style', 'primary');
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
+$button_outline     =   $params->get('button_outline', 0);
+$button_radius      =   $params->get('button_border_radius', '');
+$button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
-$mainframe = Factory::getApplication();
-$wa = $mainframe->getDocument()->getWebAssetManager();
-$wa->useScript('bootstrap.carousel');
+$has_gallery        =   false;
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($items as $key => $item) {
+    $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $media          =   '';
     switch ($item->post_format) {
         case 'regular':
-            $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+        case 'review':
+            if (!empty($item->image_thumbnail)) {
+                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+            }
             break;
         case 'gallery':
             $gallery    =   (array) $item->params->get('astroid_article_gallery_items', array());
             if (count($gallery)) {
-                $media  .=  '<div id="astroid-articles-'.$item->id.'" class="carousel slide">';
+                $has_gallery    =   true;
+                $media  =   '<div id="astroid-articles-'.$item->id.'" class="carousel slide carousel-fade" data-bs-ride="carousel">';
                 $media  .=  '<div class="carousel-inner">';
                 $active =   true;
                 foreach ($gallery as $gallery_item) {
@@ -140,12 +152,20 @@ foreach ($items as $key => $item) {
             break;
         case 'video':
             $video_url  =   $item->params->get('astroid_article_video_url', '');
+            $video_type =   $item->params->get('astroid_article_video_type', '');
             $video_src  =   Article::getVideoSrc($video_url);
             if ($video_src) {
-                $media .= '<div class="entry-video ratio ratio-16x9">';
-                $media .= '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
-                $media .= '</div>';
+                if ($video_type == 'vimeo') {
+                    $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+                }
+                $media =    '<div class="entry-video ratio ratio-16x9">';
+                $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
+                $media .=   '</div>';
             }
+            break;
+        case 'audio':
+            $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
+            $media      =   $renderer->render(['article' => $item]);
             break;
     }
     echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card' . $card_style . ($enable_grid_match ? ' h-100' : '') . '">';
@@ -175,7 +195,7 @@ foreach ($items as $key => $item) {
         echo '</div>';
     }
     if (!empty($item->title)) {
-        echo '<'.$title_html_element.' class="astroid-article-heading">'. $item->title . '</'.$title_html_element.'>';
+        echo '<'.$title_html_element.' class="astroid-article-heading"><a href="'.Route::_($link).'" title="'. $item->title . '">'. $item->title . '</a></'.$title_html_element.'>';
     }
     if (count($info_after_title)) {
         echo '<div class="astroid-article-info after-title as-gutter-lg">';
@@ -187,12 +207,16 @@ foreach ($items as $key => $item) {
     if (!empty($item->introtext)) {
         echo '<div class="astroid-article-introtext">' . $item->introtext . '</div>';
     }
+
     if (count($info_after_intro)) {
         echo '<div class="astroid-article-info as-gutter-lg">';
         foreach ($info_after_intro as $info_item) {
             echo '<div class="d-inline-block">' . LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params)) .'</div>';
         }
         echo '</div>';
+    }
+    if ($readmore) {
+        echo '<a id="btn-'.$item->id.'" href="'.Route::_($link).'" class="mt-3 btn btn-' .(intval($button_outline) ? 'outline-' : ''). $button_style . $button_size . $button_radius . '">'.Text::_('JGLOBAL_READ_MORE').'</a>';
     }
 
     echo '</div>'; // End Card-Body
@@ -206,6 +230,11 @@ foreach ($items as $key => $item) {
 }
 echo '</div>';
 
+if ($has_gallery) {
+    $mainframe = Factory::getApplication();
+    $wa = $mainframe->getDocument()->getWebAssetManager();
+    $wa->useScript('bootstrap.carousel');
+}
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
