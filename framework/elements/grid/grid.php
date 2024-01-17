@@ -52,7 +52,7 @@ $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
 $border_radius      =   $params->get('card_border_radius', '');
-$bd_radius          =   $border_radius ? ' ' . $border_radius : '';
+$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : '';
 
 $media_width_cls    =   '';
 $media_position     =   $params->get('media_position', 'top');
@@ -125,7 +125,7 @@ foreach ($grids as $key => $grid) {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
     }
-    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style .$bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';

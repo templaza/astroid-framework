@@ -63,7 +63,7 @@ $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
 $border_radius      =   $params->get('card_border_radius', '');
-$bd_radius          =   $border_radius ? ' ' . $border_radius : '';
+$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : '';
 
 $media_width_cls    =   '';
 $media_position     =   $params->get('media_position', 'top');
@@ -130,7 +130,7 @@ foreach ($items as $key => $item) {
         case 'regular':
         case 'review':
             if (!empty($item->image_thumbnail)) {
-                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
             }
             break;
         case 'gallery':
@@ -168,7 +168,7 @@ foreach ($items as $key => $item) {
             $media      =   $renderer->render(['article' => $item]);
             break;
     }
-    echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card' . $card_style . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
