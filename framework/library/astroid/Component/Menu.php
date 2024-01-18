@@ -162,7 +162,7 @@ class Menu
         if (!empty($options->rows)) {
             echo '<div style="width:' . $options->width . '" class="megamenu-container">';
             foreach ($options->rows as $row) {
-                echo '<div class="row m-0">';
+                echo '<div class="row">';
                 foreach ($row['cols'] as $col) {
                     echo '<div class="col col-md-' . $col['size'] . '">';
                     try {

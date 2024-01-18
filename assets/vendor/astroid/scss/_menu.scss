@@ -14,6 +14,10 @@
 	border-radius: 2px;
 }
 
+.item-link-separator {
+	cursor: default;
+}
+
 // Megamenu Dropdown
 
 .megamenu-container {
@@ -25,10 +29,20 @@
 	&.nav-submenu-container {
 		padding: 0;
 	}
-	padding: calc(var(--as-menu-gutter-x) * .5) calc(var(--as-menu-gutter-x) * .25);
-	.row > * {
-		padding-left: calc(var(--as-menu-gutter-x) * .25);
-		padding-right: calc(var(--as-menu-gutter-x) * .25);
+	padding: calc(var(--as-menu-gutter-x) * .5) calc(var(--as-menu-gutter-x) * .5);
+	.row {
+		margin-left: calc(-.25 * var(--as-menu-gutter-x));
+		margin-right: calc(-.25 * var(--as-menu-gutter-x));
+		> * {
+			padding-left: calc(var(--as-menu-gutter-x) * .25);
+			padding-right: calc(var(--as-menu-gutter-x) * .25);
+			> * {
+				padding-bottom: calc(var(--as-menu-gutter-x) * .5) !important;
+				&:last-child {
+					padding-bottom: 0 !important;
+				}
+			}
+		}
 	}
 }
 
@@ -171,6 +185,10 @@
 			}
 		}
 	}
+}
+
+.megamenu-module {
+	padding: 15px;
 }
 
 #astroid-sticky-header {
