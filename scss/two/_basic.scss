@@ -7,3 +7,59 @@ h1,h2,h3,h4,h5,h6 {
 * + h1, * + h2, * + h3, * + h4, * + h5, * + h6 {
   margin-top: 1.5rem;
 }
+
+.btn-lg, .btn-group-lg > .btn {
+  --bs-btn-padding-x: 1.7rem;
+}
+
+.home-badge-cycle-color > .heading {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  -webkit-animation: badge-color-cycle 32s linear infinite;
+  animation: badge-color-cycle 32s linear infinite;
+}
+
+@-webkit-keyframes badge-color-cycle {
+  0% {
+    background-color: #ffda79
+  }
+
+  25% {
+    background-color: #ffabe7
+  }
+
+  50% {
+    background-color: #d2bcf3
+  }
+
+  75% {
+    background-color: #edf3d8
+  }
+
+  100% {
+    background-color: #ffda79
+  }
+}
+
+@keyframes badge-color-cycle {
+  0% {
+    background-color: #ffda79
+  }
+
+  25% {
+    background-color: #ffabe7
+  }
+
+  50% {
+    background-color: #d2bcf3
+  }
+
+  75% {
+    background-color: #edf3d8
+  }
+
+  100% {
+    background-color: #ffda79
+  }
+}

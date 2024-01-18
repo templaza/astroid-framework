@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
    <name>astroid_template_two</name>
-   <creationDate>December 2023</creationDate>
+   <creationDate>January 2024</creationDate>
    <author>Astroid Framework</author>
-   <authorEmail>info@templaza.com</authorEmail>
+   <authorEmail>sonlv@templaza.com</authorEmail>
    <authorUrl>https://astroidframe.work</authorUrl>
-   <copyright>Copyright (C) 2023 AstroidFrame.work, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2024 AstroidFrame.work, Inc. All rights reserved.</copyright>
    <license>GNU General Public License bn 3 or later; see LICENSE.txt</license>
-   <version>1.0.0</version>
+   <version>1.0.1</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <inheritable>1</inheritable>
    <scriptfile>script.php</scriptfile>
