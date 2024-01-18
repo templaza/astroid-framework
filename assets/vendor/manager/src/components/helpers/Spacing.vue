@@ -4,7 +4,7 @@ import { onBeforeMount, ref } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
 const devices = ['desktop', 'tablet', 'mobile'];
-const unitOptions = ['px', 'em', 'rem', 'pt', '%'];
+const unitOptions = ['px', 'em', 'rem', 'pt', '%', 'Custom'];
 const currentDevice = ref('desktop');
 const data = ref({
     'desktop' : {

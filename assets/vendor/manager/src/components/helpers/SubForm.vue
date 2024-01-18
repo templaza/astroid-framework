@@ -20,8 +20,8 @@ function listUpdated() {
 }
 
 function checkShow(field) {
-    if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
-        const expression = field.ngShow.replace(/\[(.+?)\]/g, "params.value\['$1'\]");
+    if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
+        const expression = field.ngShow.replace(/\[(\S+?)\]/g, "params.value\['$1'\]");
         try {
             return new Function('params', 'return ' + expression)(params);
         } catch (error) {
@@ -71,7 +71,7 @@ function saveItem(){
     } else {
         items.value[currentIdx.value].params = tmp;
     }
-    emit('update:modelValue', JSON.stringify(items.value));
+    listUpdated();
     params.value = {};
     edit.value = false;
 }
@@ -84,11 +84,13 @@ function duplicateItem(element, index) {
         params: element.params
     };
     items.value.splice(index+1, 0, tmp);
+    listUpdated();
 }
 
 function deleteItem(index) {
     if (confirm('Are you sure?')) {
         items.value.splice(index, 1);
+        listUpdated();
     }
 }
 </script>
@@ -140,7 +142,6 @@ function deleteItem(index) {
                         <Fields 
                             :field="field" 
                             :scope="params"
-                            :constant="props.constant" 
                             />
                     </div>
                     <div v-else v-html="field.input"></div>

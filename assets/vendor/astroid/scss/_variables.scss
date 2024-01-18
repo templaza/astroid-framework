@@ -27,7 +27,7 @@ $sidebar-header-width: 320px !default;
 $sidebar-header-mini-width: 54px !default;
 
 // Menu
-$megamenu-gutter-width: $grid-gutter-width !default;
+$megamenu-gutter-width: 30px !default;
 
 // Deprecated Variable
 $header-sidebar-width: 320px !default;
@@ -39,6 +39,25 @@ $backtotop-bottom: 20px !default;
 $backtotop-padding: 10px !default;
 $backtotop-zindex: $zindex-sticky !default;
 $backtotop-rounded-radius: 4px !default;
+
+// Astroid Width ranges
+$as-width-ranges: (
+        xxsmall: 150px,
+        xsmall: 210px,
+        small: 300px,
+        medium: 420px,
+        large: 570px,
+        xlarge: 750px,
+        xxlarge: 960px
+) !default;
+
+$as-gutters: (
+        sm: 0.3rem,
+        md: 0.5rem,
+        lg: 1rem,
+        xl: 1.5rem,
+        xxl: 2rem
+) !default;
 
 // Banner
 $banner-bg: #f8f9fa !default;

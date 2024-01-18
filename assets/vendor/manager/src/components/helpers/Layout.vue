@@ -8,8 +8,7 @@ import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
-    field: { type: Object, default: null },
-    constant: { type: Object, default: null }
+    field: { type: Object, default: null }
 });
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
@@ -246,9 +245,9 @@ function addGrid(grid = []) {
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>
     </div>
-    <LayoutBuilder :list="layout" group="root" :system="system" :constant="props.constant" :form="props.field.input.form" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
+    <LayoutBuilder :list="layout" group="root" :system="system" :form="props.field.input.form" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
     <Transition name="fade">
-        <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" :constant="props.constant" @update:saveElement="saveElement" @update:close-element="closeElement" />
+        <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
         <SelectElement v-if="_showElement" :form="props.field.input.form" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />

@@ -29,10 +29,10 @@ if (!empty($content)) {
 }
 
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$element->id.' > .astroid-content-heading', $font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-content-heading', $font_style);
 }
 if (!empty($heading_margin)) {
-    $heading_style = new Style('#'.$element->id.' > .astroid-content-heading');
+    $heading_style = new Style('#'.$element->id.' .astroid-content-heading');
     $margin = \json_decode($heading_margin, false);
     foreach ($margin as $device => $props) {
         $heading_style->addStyle(Style::spacingValue($props, "margin"), $device);
@@ -41,5 +41,5 @@ if (!empty($heading_margin)) {
 }
 
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' > .astroid-content-text', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-content-text', $content_font_style);
 }

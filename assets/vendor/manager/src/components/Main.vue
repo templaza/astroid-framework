@@ -24,8 +24,8 @@ onBeforeMount(() => {
 })
 
 function checkShow(field) {
-  if (field.ngShow !== '' && field.ngShow.match(/\[.+?\]/)) {
-    const expression = field.ngShow.replace(/\[(.+?)\]/g, "$scope.value\['$1'\]");
+  if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
+    const expression = field.ngShow.replace(/\[(\S+?)\]/g, "$scope.value\['$1'\]");
     try {
       return new Function('$scope', 'return ' + expression)($scope);
     } catch (error) {
@@ -161,7 +161,6 @@ function selectPreset(event, group) {
                     <Fields 
                       :field="field" 
                       :scope="$scope"
-                      :constant="props.config.astroid_lib" 
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
                       @update:getPreset="getPreset"

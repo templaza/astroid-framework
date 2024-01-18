@@ -40,7 +40,7 @@ $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['r
    <div class="burger-menu-button active">
       <button aria-label="Mobile Menu Toggle" type="button" class="button close-offcanvas offcanvas-close-btn">
          <span class="box">
-            <span class="inner"></span>
+            <span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span>
          </span>
       </button>
    </div>

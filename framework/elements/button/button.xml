@@ -36,6 +36,18 @@
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
                 </field>
+                <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                    <option value="">Rounded</option>
+                    <option value="rounded-0">Square</option>
+                    <option value="rounded-pill">Circle</option>
+                </field>
+                <field ngShow="[button_group]==0" astroidgroup="widget_styles" type="astroidlist" name="gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="lg">
+                    <option value="sm">ASTROID_SM</option>
+                    <option value="md">ASTROID_MD</option>
+                    <option value="lg">ASTROID_LG</option>
+                    <option value="xl">ASTROID_XL</option>
+                    <option value="xxl">ASTROID_XXL</option>
+                </field>
             </fieldset>
         </fields>
     </form>

@@ -8,6 +8,7 @@ library.add(faCircle, faArrowsLeftRight, faTrash, faDownload);
 const astroid_config = JSON.parse(document.getElementById("astroid-script-options").innerHTML);
 const theme = ref('light');
 provide('theme', theme);
+provide('constant', astroid_config.astroid_lib);
 
 onBeforeMount(()=>{
   const colorMode = getCookie('astroid_colormode');

@@ -1,12 +1,12 @@
 <script setup>
 import axios from "axios";
-import { onBeforeMount, ref, reactive, onMounted } from 'vue';
+import { onBeforeMount, ref, reactive, onMounted, inject } from 'vue';
 
 const emit = defineEmits(['update:loadPreset', 'update:getPreset']);
 const props = defineProps({
-    field: { type: Object, default: null },
-    config: { type: Object, default: null },
+    field: { type: Object, default: null }
 });
+const constant = inject('constant', {});
 const toast_msg = reactive({
     header: '',
     body:'',
@@ -36,11 +36,11 @@ function loadPreset(preset) {
             url = "preset_ajax.txt?ts="+Date.now();
         }
         const formData = new FormData(); // pass data as a form
-        formData.append(props.config.astroid_admin_token, 1);
+        formData.append(constant.astroid_admin_token, 1);
         formData.append('name', preset.name);
         formData.append('astroid', 'loadpreset');
         formData.append('option', 'com_ajax');
-        formData.append('template', props.config.tpl_template_name);
+        formData.append('template', constant.tpl_template_name);
         axios.post(url, formData, {
             headers: {
             "Content-Type": "multipart/form-data",
@@ -77,11 +77,11 @@ function deletePreset(index) {
             url = "preset_ajax.txt?ts="+Date.now();
         }
         const formData = new FormData(); // pass data as a form
-        formData.append(props.config.astroid_admin_token, 1);
+        formData.append(constant.astroid_admin_token, 1);
         formData.append('name', list.value[index].name);
         formData.append('astroid', 'removepreset');
         formData.append('option', 'com_ajax');
-        formData.append('template', props.config.tpl_template_name);
+        formData.append('template', constant.tpl_template_name);
         axios.post(url, formData, {
             headers: {
             "Content-Type": "multipart/form-data",
@@ -133,7 +133,7 @@ function savePreset() {
         presetTitle.value.focus();
         return false;
     }
-    const action_link = props.config.astroid_action.replace(/\&amp\;/g, '&');
+    const action_link = constant.astroid_action.replace(/\&amp\;/g, '&');
     const form = document.getElementById('astroid-form');
     const toastAstroidMsg = document.getElementById('loadPreset');
     const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
@@ -199,13 +199,13 @@ function uploadPreset() {
     const toastAstroidMsg = document.getElementById('loadPreset');
     const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
     const formData = new FormData(); // pass data as a form;
-    formData.append(props.config.astroid_admin_token, 1);
+    formData.append(constant.astroid_admin_token, 1);
     formData.append('title', formInfo.title);
     formData.append('desc', formInfo.description);
     formData.append('file', files.value[0]);
     formData.append('astroid', 'importpreset');
     formData.append('option', 'com_ajax');
-    formData.append('template', props.config.tpl_template_name);
+    formData.append('template', constant.tpl_template_name);
     axios.post(url, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -252,7 +252,7 @@ const download = async (url, filename) => {
 }
 
 function exportPreset(preset) {
-    download(props.config.site_url+'/media/templates/site/'+props.config.tpl_template_name+'/astroid/presets/'+preset.name+'.json', preset.name+'.json');
+    download(constant.site_url+'/media/templates/site/'+constant.tpl_template_name+'/astroid/presets/'+preset.name+'.json', preset.name+'.json');
 }
 </script>
 <template>

@@ -13,3 +13,49 @@ a.modal {
 #sbox-window {
 	box-sizing: content-box;
 }
+.button-ripple {
+	position: relative;
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		background: transparent;
+		transform: translate(-50%, -50%);
+		-webkit-animation-delay: .9s;
+		animation-delay: .9s;
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+		-webkit-animation: video-button-ripple 3s infinite;
+		animation: video-button-ripple 3s infinite;
+		transition: all .4s ease;
+	}
+	&:after {
+		-webkit-animation-delay: .6s;
+		animation-delay: .6s;
+	}
+}
+
+@-webkit-keyframes video-button-ripple {
+	70% {
+		-webkit-box-shadow: 0 0 0 1em rgba(255, 255, 255, .2);
+		box-shadow: 0 0 0 1em rgba(255, 255, 255, .2);
+	}
+	100% {
+		-webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+	}
+}
+
+@keyframes video-button-ripple {
+	70% {
+		-webkit-box-shadow: 0 0 0 1em rgba(255, 255, 255, .2);
+		box-shadow: 0 0 0 1em rgba(255, 255, 255, .2)
+	}
+	100% {
+		-webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0)
+	}
+}

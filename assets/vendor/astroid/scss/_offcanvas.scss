@@ -230,13 +230,6 @@ $offcanvas-btn: 50px !default;
 		display: block;
 		padding: 0 30px;
 		height: calc(100% - #{$offcanvas-btn});
-		.moduletable {
-			margin: 0 -15px;
-		}
-		.moduletable .module-title {
-			padding: 10px 15px;
-			margin: 0;
-		}
 	}
 	li.menu-item.menu-go-back{
 		margin-top: $offcanvas-btn;

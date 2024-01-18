@@ -285,7 +285,7 @@
          }
       });
    };
-   $(function () {
+   $(window).on('load', function() {
       $('[data-megamenu]').JDMegaMenu();
    });
 })(jQuery);

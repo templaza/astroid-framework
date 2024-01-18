@@ -61,14 +61,15 @@ class Overrides
     public static function getHTMLTemplate(): string {
         $backtrace = \debug_backtrace();
         $callPath = $backtrace[0]['file'] ?? '';
+        preg_match('/'. addcslashes(JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '.*?' . DIRECTORY_SEPARATOR . 'html', DIRECTORY_SEPARATOR) . '/' , $callPath, $match);
 
-        preg_match('/'. addcslashes(JPATH_ROOT, '/') . '\/templates\/.*?\/html/', $callPath, $match);
         if ($match) {
             $htmlTemplatePath = $match[0];
         } else {
-            $htmlTemplatePath = JPATH_ROOT . '/templates/'.ASTROID_TEMPLATE_NAME.'/html';
+            $htmlTemplatePath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . ASTROID_TEMPLATE_NAME . DIRECTORY_SEPARATOR .'html';
         }
-        $htmlAstroidPath = JPATH_LIBRARIES . '/astroid/framework/html';
+
+        $htmlAstroidPath = JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'astroid' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'html';
 
         if (\strpos($callPath, $htmlTemplatePath) === 0) {
             $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
@@ -78,18 +79,17 @@ class Overrides
             // Check if template is child-template and file is not exist then select html from parent
             $isChildTemplate    = Helper::isChildTemplate(ASTROID_TEMPLATE_NAME);
             if ($isChildTemplate && isset($isChildTemplate['isChild']) && $isChildTemplate['isChild']) {
-                $htmlTemplatePath = JPATH_ROOT . '/templates/'.$isChildTemplate['parent'].'/html';
+                $htmlTemplatePath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $isChildTemplate['parent'] . DIRECTORY_SEPARATOR .'html';
             }
             if (\strpos($callPath, $htmlTemplatePath) === 0) {
                 $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
             }
             if (empty($relativePath)) {
-                return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
+                return self::generateExtensionPath(\substr($callPath, stripos($callPath, DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR) + 5));
             }
         }
 
         $astroidOverridePath = $htmlAstroidPath . $relativePath;
-
         if (\file_exists($astroidOverridePath)) {
             return $astroidOverridePath;
         }

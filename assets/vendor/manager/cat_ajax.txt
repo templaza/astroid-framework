@@ -1,0 +1,1 @@
+{"status":"success","code":200,"data":[{"value":"","label":"All Categories"},{"value":2,"label":"Uncategorised"},{"value":8,"label":"Blog"},{"value":9,"label":"News"}]}

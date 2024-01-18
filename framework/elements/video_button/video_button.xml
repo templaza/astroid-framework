@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_VIDEO_BUTTON_LABEL</title>
+    <description>ASTROID_WIDGET_VIDEO_BUTTON_DESC</description>
+    <icon>fa-solid fa-video</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/@astroidframework2932"/>
+                <field astroidgroup="widget_styles" name="button_size" type="astroidrange" min="1" max="300" step="1" postfix="px" default="24" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" />
+                <field astroidgroup="widget_styles" name="ripple_color" type="astroidcolor" label="ASTROID_WIDGET_RIPPLE_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" name="width" type="astroidrange" min="10" max="500" step="1" postfix="px" default="150" label="ASTROID_WIDGET_WIDTH_LABEL" />
+                <field astroidgroup="widget_styles" name="height" type="astroidrange" min="10" max="500" step="1" postfix="px" default="150" label="ASTROID_WIDGET_HEIGHT_LABEL" />
+
+                <field astroidgroup="widget_styles" name="color_hover_toggle" type="astroidradio" width="full" default="color">
+                    <option value="color">ASTROID_WIDGET_COLOR_LABEL</option>
+                    <option value="hover">ASTROID_WIDGET_COLOR_HOVER_LABEL</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[color_hover_toggle]=='color'" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_hover_toggle]=='hover'" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_hover_toggle]=='color'" name="background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_hover_toggle]=='hover'" name="background_color_hover" type="astroidcolor" label="TPL_ASTROID_HOVER_BACKGROUND_COLOR_LABEL"/>
+
+                <field astroidgroup="widget_styles" name="use_border" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_BORDER"/>
+                <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_width" type="astroidrange" min="1" max="50" step="1" postfix="px" default="1" label="ASTROID_WIDGET_BORDER_WIDTH" />
+                <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_color" type="astroidcolor" label="ASTROID_WIDGET_BORDER_COLOR"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

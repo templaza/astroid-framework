@@ -3,10 +3,10 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
-   <creationDate>December 2023</creationDate>
-   <version>3.0.8</version>
+   <creationDate>January 2024</creationDate>
+   <version>3.0.9</version>
    <url>https://astroidframe.work/</url>
-   <copyright>Copyright (C) 2023 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2024 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>

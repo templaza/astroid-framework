@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, ref, watch, inject } from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -16,13 +16,15 @@ import Presets from './Presets.vue';
 import MultiSelect from './MultiSelect.vue';
 import SubForm from './SubForm.vue';
 import Icons from './Icons.vue';
+import Editor from './Editor.vue';
+import Categories from './Categories.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset']);
 const props = defineProps({
   field: { type: Object, default: null },
-  scope: { type: Object, default: null },
-  constant: { type: Object, default: null }
+  scope: { type: Object, default: null }
 });
+const constant = inject('constant', {});
 
 onBeforeMount(()=>{
     if (props.field.input.type === `astroidtypography`) {
@@ -87,10 +89,10 @@ function updateContentLayout() {
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
     <div v-else-if="props.field.input.type === `astroidradio`" class="astroid-radio">
-        <div v-if="props.field.input.role === `default`" class="astroid-btn-group" role="group" :aria-label="props.field.label">
+        <div v-if="props.field.input.role === `default`" class="astroid-btn-group" :class="{'full' : props.field.input.width === 'full'}" role="group" :aria-label="props.field.label">
             <span v-for="(option, idx) in props.field.input.options" :key="idx">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
-                <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx">{{ option.text }}</label>
+                <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx" v-html="option.text"></label>
             </span>
         </div>
         <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
@@ -100,7 +102,7 @@ function updateContentLayout() {
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
             <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
-                <label class="btn btn-outline-light btn-outline-image" :for="props.field.input.id+idx"><img :src="props.constant.site_url+option.text" width="150" /></label>
+                <label class="btn btn-outline-light btn-outline-image" :for="props.field.input.id+idx"><img :src="constant.site_url+option.text" width="150" /></label>
             </div>
         </div>
     </div>
@@ -115,13 +117,16 @@ function updateContentLayout() {
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidmedia`" class="astroid-media">
-        <MediaManager v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
+        <MediaManager v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidpreloaders`" class="astroid-preloader">
         <Preloader v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtypography`" class="astroid-typography">
-        <Typography v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
+        <Typography v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroideditor`" class="astroid-editor">
+        <Editor v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtextarea`" class="astroid-textarea">
         <TextArea v-model="props.scope[props.field.name]" :field="props.field" />
@@ -130,7 +135,7 @@ function updateContentLayout() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" :constant="props.constant" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
@@ -148,13 +153,16 @@ function updateContentLayout() {
         <MultiSelect v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidpreset`" class="astroid-preset">
-        <Presets :field="props.field" :config="props.constant" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
+        <Presets :field="props.field" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidsubform`" class="astroid-subform">
         <SubForm v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicons`" class="astroid-icons">
         <Icons v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidcategories`" class="astroid-categories">
+        <Categories v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidheading`" class="astroid-heading">
         <h5 v-if="props.field.input.title">{{ props.field.input.title }}</h5>

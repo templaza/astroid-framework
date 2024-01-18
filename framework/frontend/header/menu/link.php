@@ -28,7 +28,7 @@ $is_mobile_menu = $mobilemenu;
 $slidemenu = @$slidemenu;
 $slidemenu = ($slidemenu == 1 ? true : false);
 
-if ($item->type == "heading") {
+if ($item->type == "heading" || $item->type == 'separator') {
    $item->flink = 'javascript:void(0);';
 }
 

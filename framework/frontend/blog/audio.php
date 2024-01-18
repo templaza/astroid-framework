@@ -18,13 +18,13 @@ $soundcloud = $params->get('astroid_article_audio_soundcloud', '');
 $spotify = $params->get('astroid_article_audio_spotify', '');
 ?>
 <?php if ($source == 'soundcloud' && !empty($soundcloud)) { ?>
-   <div class="mb-3">
+   <div class="soundcloud">
       <?php echo $soundcloud; ?>
    </div>
 <?php }
 ?>
 <?php if ($source == 'spotify' && !empty($spotify)) { ?>
-   <div class="mb-3">
+   <div class="spotify">
       <iframe src="https://embed.spotify.com/?uri=<?php echo $spotify; ?>" width="100%" height="80" style="border:0" allowtransparency="true"></iframe>
    </div>
    <?php

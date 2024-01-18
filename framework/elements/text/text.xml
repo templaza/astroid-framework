@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_TEXT_LABEL</title>
     <description>ASTROID_WIDGET_TEXT_DESC</description>
-    <icon>fa-solid fa-align-left</icon>
+    <icon>fa-solid fa-feather</icon>
     <category>Widgets</category>
     <form>
         <fields>
@@ -21,7 +21,7 @@
                 <field astroidgroup="general" ngShow="[heading]!==''" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="general" ngShow="[heading]!==''" name="heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 
-                <field astroidgroup="content_options" code="html" name="content" type="astroidtextarea" label="ASTROID_WIDGET_CONTENT_LABEL"/>
+                <field astroidgroup="content_options" name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL"/>
                 <field astroidgroup="content_options" ngShow="[content]!==''" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
         </fields>
