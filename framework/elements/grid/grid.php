@@ -89,6 +89,12 @@ $min_height         =   $params->get('min_height', 0);
 $overlay_color      =   $params->get('overlay_color', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
+$box_shadow         =   $params->get('card_box_shadow', '');
+$box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
+$box_shadow_hover   =   $params->get('card_box_shadow_hover', '');
+$box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
+
+
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
@@ -125,7 +131,7 @@ foreach ($grids as $key => $grid) {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
     }
-    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style .$bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';

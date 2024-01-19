@@ -1,0 +1,13 @@
+@each $shadow-point, $shadow-value in $shadow-hover {
+  @if $shadow-point != null {
+    .shadow-hover-#{$shadow-point}:hover {
+      box-shadow: #{$shadow-value} !important;
+      transition: box-shadow 0.1s ease-in-out;
+    }
+  } @else {
+    .shadow-hover:hover {
+      box-shadow: #{$shadow-value} !important;
+      transition: box-shadow 0.1s ease-in-out;
+    }
+  }
+}

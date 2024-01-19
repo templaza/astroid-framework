@@ -59,6 +59,13 @@ $as-gutters: (
         xxl: 2rem
 ) !default;
 
+$shadow-hover: (
+        null: var(--bs-box-shadow),
+        sm: var(--bs-box-shadow-sm),
+        lg: var(--bs-box-shadow-lg),
+        none: none,
+) !default;
+
 // Banner
 $banner-bg: #f8f9fa !default;
 $banner-padding-y: 80px !default;
