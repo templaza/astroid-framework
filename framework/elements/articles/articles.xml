@@ -129,6 +129,13 @@
                     <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
                     <option value="pill">TPL_ASTROID_ICON_STYLE_PILL</option>
                 </field>
+                <field astroidgroup="card_options" ngShow="[card_border_radius]==''" type="astroidlist" name="card_rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
                 <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="top">
                     <option value="top">ASTROID_TOP</option>
                     <option value="left">ASTROID_LEFT</option>
@@ -222,7 +229,7 @@
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
                 </field>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
-                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="600" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="1000" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
                 <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
                     <option value="h1">h1</option>

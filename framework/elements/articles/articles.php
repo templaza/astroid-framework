@@ -62,8 +62,9 @@ $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
 $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
+$card_rounded_size  =   $params->get('card_rounded_size', '3');
 $border_radius      =   $params->get('card_border_radius', '');
-$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : '';
+$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : ' rounded-' . $card_rounded_size;
 
 $media_width_cls    =   '';
 $media_position     =   $params->get('media_position', 'top');
@@ -85,6 +86,7 @@ $media_width_cls    .=  $sm_column_media ? ' col-sm-' . $sm_column_media : '';
 $xs_column_media    =   $params->get('xs_column_media', 12);
 $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 
+$layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 0);
 $overlay_color      =   $params->get('overlay_color', '');
@@ -108,6 +110,7 @@ if (!empty($info_font_style)) {
 
 $info_margin        =   $params->get('info_margin', '');
 
+$enable_intro_text =   $params->get('enable_intro_text', 1);
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-article-introtext', $content_font_style);
@@ -168,20 +171,24 @@ foreach ($items as $key => $item) {
             $media      =   $renderer->render(['article' => $item]);
             break;
     }
-    echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
-    if ($media_position == 'left' || $media_position == 'right') {
+    $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
+    if ($item_image_cover) {
+        $media  =   '<div class="d-block'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').'"><a href="'.Route::_($link).'" title="'. $item->title . '"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></a></div>';
+    }
+    echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
     }
     if ($media_position != 'inside') {
         echo $media;
     }
-    if ($media_position == 'left' || $media_position == 'right') {
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
         echo '</div>';
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' && $item_image_cover ? 'card-img-overlay' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -204,7 +211,7 @@ foreach ($items as $key => $item) {
         }
         echo '</div>';
     }
-    if (!empty($item->introtext)) {
+    if (!empty($item->introtext) && $enable_intro_text) {
         echo '<div class="astroid-article-introtext">' . $item->introtext . '</div>';
     }
 
@@ -221,7 +228,7 @@ foreach ($items as $key => $item) {
 
     echo '</div>'; // End Card-Body
 
-    if ($media_position == 'left' || $media_position == 'right') {
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
         echo '</div>';
         echo '</div>';
     }
@@ -255,6 +262,9 @@ if (!empty($info_margin)) {
     foreach ($margin as $device => $props) {
         $style->child('.astroid-article-info.after-title')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
+}
+if ($enable_image_cover) {
+    $style->child('.astroid-image-overlay-cover')->addCss('height', $min_height . 'px');
 }
 $style->render();
 $style_dark->render();
