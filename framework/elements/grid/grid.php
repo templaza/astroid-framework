@@ -51,8 +51,9 @@ $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
 $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
+$card_rounded_size  =   $params->get('card_rounded_size', '3');
 $border_radius      =   $params->get('card_border_radius', '');
-$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : '';
+$bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : ' rounded-' . $card_rounded_size;
 
 $media_width_cls    =   '';
 $media_position     =   $params->get('media_position', 'top');

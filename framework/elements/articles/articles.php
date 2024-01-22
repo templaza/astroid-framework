@@ -86,10 +86,11 @@ $media_width_cls    .=  $sm_column_media ? ' col-sm-' . $sm_column_media : '';
 $xs_column_media    =   $params->get('xs_column_media', 12);
 $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 
+// Image Options
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 0);
-$overlay_color      =   $params->get('overlay_color', '');
+$overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
 $title_html_element =   $params->get('title_html_element', 'h3');
@@ -265,6 +266,19 @@ if (!empty($info_margin)) {
 }
 if ($enable_image_cover) {
     $style->child('.astroid-image-overlay-cover')->addCss('height', $min_height . 'px');
+}
+switch ($overlay_type) {
+    case 'color':
+        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
+        $style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
+        $style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+        break;
+    case 'background-color':
+        $overlay_gradient   =   $params->get('overlay_gradient', '');
+        if (!empty($overlay_gradient)) {
+            $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+        }
+        break;
 }
 $style->render();
 $style_dark->render();

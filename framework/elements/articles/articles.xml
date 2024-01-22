@@ -230,7 +230,13 @@
                 </field>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="1000" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
-                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_type" type="astroidradio" width="full" default="color">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="color">TPL_ASTROID_COLOR</option>
+                    <option value="background-color">TPL_ASTROID_BACKGROUND_COLOR_LABEL</option>
+                </field>
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1 AND [overlay_type]=='color'" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1 AND [overlay_type]=='background-color'" name="overlay_gradient" type="astroidgradient" label="ASTROID_WIDGET_OVERLAY_GRADIENT"/>
                 <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
                     <option value="h1">h1</option>
                     <option value="h2">h2</option>
