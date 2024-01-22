@@ -28,9 +28,9 @@ $is_mobile_menu = $mobilemenu;
 $slidemenu = @$slidemenu;
 $slidemenu = ($slidemenu == 1 ? true : false);
 
-if ($item->type == "heading" || $item->type == 'separator') {
-   $item->flink = 'javascript:void(0);';
-}
+//if ($item->type == "heading" || $item->type == 'separator') {
+//   $item->flink = 'javascript:void(0);';
+//}
 
 $attributes = [];
 if (isset($props)) {
@@ -88,6 +88,10 @@ if (($options->megamenu || ($item->parent && $item->deeper == 1)) && !$is_mobile
 $attributes['class'] .= " item-link-" . $item->type;
 $attributes['class'] .= " item-level-" . $item->level;
 
+if (empty($item->flink)) {
+    $attributes['class'] .= ' cursor-pointer';
+}
+
 $attr = [];
 foreach ($attributes as $key => $attribute) {
    $attr[] = $key . '="' . $attribute . '"';
@@ -109,7 +113,7 @@ if ($item->type == 'url') {
    }
 }
 ?>
-<a href="<?php echo $item->flink; ?>" <?php echo implode(' ', $attr); ?>>
+<a <?php echo !empty($item->flink) ? 'href="'.$item->flink.'"' : ''; ?> <?php echo implode(' ', $attr); ?>>
    <span class="nav-title">
       <?php if (!empty($options->icon)) { ?>
          <i class="<?php echo $options->icon; ?>"></i>
