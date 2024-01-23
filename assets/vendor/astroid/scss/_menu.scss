@@ -71,7 +71,7 @@
 		padding: 0;
 		position: relative;
 
-		>a {
+		>.as-menu-item {
 			text-decoration: none;
 			display: block;
 			padding: 3px 15px;
@@ -167,7 +167,7 @@
 			padding: 0;
 			position: relative;
 
-			>a {
+			>.as-menu-item {
 				text-decoration: none;
 				display: block;
 				padding: 5px 15px;
@@ -272,7 +272,7 @@ ul {
 		display: block;
 		border-bottom: 1px solid $border-color;
 
-		a {
+		.as-menu-item {
 			padding: 10px;
 			width: calc(100% - 50px);
 			display: inline-block;

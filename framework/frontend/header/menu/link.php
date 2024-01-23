@@ -44,10 +44,9 @@ if ($item->anchor_title) {
    $attributes['title'] = $item->title;
 }
 
+$attributes['class'] = 'as-menu-item';
 if ($item->anchor_css) {
-   $attributes['class'] = $item->anchor_css;
-} else {
-   $attributes['class'] = '';
+   $attributes['class'] .= ' ' . $item->anchor_css;
 }
 
 if (isset($item->id)) {
@@ -113,7 +112,7 @@ if ($item->type == 'url') {
    }
 }
 ?>
-<a <?php echo !empty($item->flink) ? 'href="'.$item->flink.'"' : ''; ?> <?php echo implode(' ', $attr); ?>>
+<<?php echo !empty($item->flink) ? 'a href="'.$item->flink.'"' : 'div'; ?> <?php echo implode(' ', $attr); ?>>
    <span class="nav-title">
       <?php if (!empty($options->icon)) { ?>
          <i class="<?php echo $options->icon; ?>"></i>
@@ -154,7 +153,7 @@ if ($item->type == 'url') {
    <?php if (!$is_mobile_menu && !empty($options->subtitle)) { ?>
       <small class="nav-subtitle"><?php echo $options->subtitle ?></small>
    <?php } ?>
-</a>
+</<?php echo !empty($item->flink) ? 'a' : 'div'; ?>>
 <?php if ($slidemenu && ($item->parent && $item->deeper == 1)) { ?>
    <i class="fas fa-plus nav-item-caret<?php echo $active ? ' open' : ''; ?>"></i>
 <?php } ?>
