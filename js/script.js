@@ -52,7 +52,8 @@
             $('#astroid-backtotop').fadeOut(200); // Else fade out the arrow
          }
       });
-      $('#astroid-backtotop').click(function () { // When arrow is clicked
+      $('#astroid-backtotop').on('click', function (e) { // When arrow is clicked
+         e.preventDefault();
          $('body,html').animate({
             scrollTop: 0 // Scroll to top of body
          }, 500);

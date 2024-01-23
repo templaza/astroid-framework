@@ -217,11 +217,12 @@ foreach ($items as $key => $item) {
     }
 
     if (count($info_after_intro)) {
-        echo '<div class="astroid-article-info as-gutter-lg">';
+        echo '<dl class="astroid-article-info as-gutter-lg">';
+        echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_after_intro as $info_item) {
-            echo '<div class="d-inline-block">' . LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params)) .'</div>';
+            echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
         }
-        echo '</div>';
+        echo '</dl>';
     }
     if ($readmore) {
         echo '<a id="btn-'.$item->id.'" href="'.Route::_($link).'" class="mt-3 btn btn-' .(intval($button_outline) ? 'outline-' : ''). $button_style . $button_size . $button_radius . '">'.Text::_('JGLOBAL_READ_MORE').'</a>';
