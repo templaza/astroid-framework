@@ -22,6 +22,63 @@
                 <field astroidgroup="general" ngShow="[heading]!==''" name="heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 
                 <field astroidgroup="content_options" name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL"/>
+                <field astroidgroup="content_options" ngShow="[content]!==''" name="text_column_responsive" type="astroidradio" width="full" default="lg">
+                    <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
+                    <option value="xl">ASTROID_WIDGET_XL_ICON</option>
+                    <option value="lg">ASTROID_WIDGET_LG_ICON</option>
+                    <option value="md">ASTROID_WIDGET_MD_ICON</option>
+                    <option value="sm">ASTROID_WIDGET_SM_ICON</option>
+                    <option value="xs">ASTROID_WIDGET_XS_ICON</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='xxl'" name="text_column_xxl" type="astroidlist" label="ASTROID_WIDGET_XXL_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='xl'" name="text_column_xl" type="astroidlist" label="ASTROID_WIDGET_XL_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='lg'" name="text_column_lg" type="astroidlist" label="ASTROID_WIDGET_LG_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='md'" name="text_column_md" type="astroidlist" label="ASTROID_WIDGET_MD_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='sm'" name="text_column_sm" type="astroidlist" label="ASTROID_WIDGET_SM_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" ngShow="[content]!=='' AND [text_column_responsive]=='xs'" name="text_column_xs" type="astroidlist" label="ASTROID_WIDGET_XS_COLUMN" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1-2">1/2</option>
+                    <option value="1-3">1/3</option>
+                    <option value="1-4">1/4</option>
+                    <option value="1-5">1/5</option>
+                    <option value="1-6">1/6</option>
+                </field>
+                <field astroidgroup="content_options" type="astroiddivider" name="content_divider" />
                 <field astroidgroup="content_options" ngShow="[content]!==''" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
         </fields>

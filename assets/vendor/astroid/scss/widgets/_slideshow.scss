@@ -1,0 +1,12 @@
+.astroid-slideshow {
+  &.text-end {
+    .carousel-caption {
+      text-align: right;
+    }
+  }
+  &.text-start {
+    .carousel-caption {
+      text-align: left;
+    }
+  }
+}

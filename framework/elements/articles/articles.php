@@ -89,7 +89,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 // Image Options
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
-$min_height         =   $params->get('min_height', 0);
+$min_height         =   $params->get('min_height', 500);
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
@@ -174,7 +174,7 @@ foreach ($items as $key => $item) {
     }
     $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
     if ($item_image_cover) {
-        $media  =   '<div class="d-block'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').'"><a href="'.Route::_($link).'" title="'. $item->title . '"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></a></div>';
+        $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="d-block'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
     echo '<div id="article-'. $item -> id .'" class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
@@ -189,7 +189,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' && $item_image_cover ? 'card-img-overlay' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' && $item_image_cover ? 'card-img-overlay as-light' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;

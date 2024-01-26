@@ -171,4 +171,7 @@ function updateContentLayout() {
     <div v-else-if="props.field.input.type === `astroidhidden`" class="astroid-hidden">
         <input type="hidden" :id="props.field.input.id" :name="props.field.input.name" v-model="props.scope[props.field.name]">
     </div>
+    <div v-else-if="props.field.input.type === `astroiddivider`" class="astroid-divider">
+        <hr/>
+    </div>
 </template>

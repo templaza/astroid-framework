@@ -66,7 +66,7 @@ function saveModal(){
                             </div>
                             <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
                                 <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label fw-bold" v-html="field.label"></div>
-                                <label v-else-if="field.input.type !== `astroidheading`" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
+                                <label v-else-if="field.input.type !== `astroidheading` && field.label" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
                                 <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
                                     <Fields 
                                         :field="field" 
