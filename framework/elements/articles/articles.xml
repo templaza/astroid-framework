@@ -13,6 +13,7 @@
                 <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="info_options" title="ASTROID_WIDGET_INFO_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="slider_options" title="ASTROID_WIDGET_SLIDER_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
                 <field astroidgroup="general" type="astroidcategories" name="catids" label="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES" description="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES_DESC" default="[]"/>
                 <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_LIMIT_LABEL" description="ASTROID_WIDGET_ARTICLES_LIMIT_DESC" name="limit" default="3"/>
@@ -280,6 +281,12 @@
                 <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" type="astroidtext" label="ASTROID_WIDGET_ARTICLES_INTRO_LIMIT_LABEL" name="intro_limit" default="200"/>
                 <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+
+                <field astroidgroup="slider_options" name="enable_slider" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_SLIDER"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_nav" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_NAVIGATION"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
 
                 <field astroidgroup="readmore_options" name="enable_readmore" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_READMORE"/>
                 <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">

@@ -400,7 +400,7 @@ if ($mode == 'divided-logo-left') {
                  echo '</div>';
              }
              // header nav starts -->
-             echo '<div class="d-flex w-100 h-100">';
+             echo '<div class="megamenu-block d-flex w-100 h-100">';
              if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
                  <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
