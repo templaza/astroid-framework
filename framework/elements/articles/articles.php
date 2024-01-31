@@ -39,9 +39,9 @@ $items = Article::getArticles($limit, $ordering, $categories);
 $enable_slider      =   $params->get('enable_slider', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
-$slider_dotnav      =   $params->get('slider_dotnav', 1);
+$slider_dotnav      =   $params->get('slider_dotnav', 0);
 $interval           =   $params->get('interval', 3);
-$slide_settings     =   '';
+$slide_settings     =   array();
 $slide_responsive   =   array();
 
 $style = new Style('#'. $element->id);
@@ -50,15 +50,15 @@ $row_column_cls     =   'row';
 
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
-    $slide_settings .=  'slidesToShow: ' . $xxl_column;
+    $slide_settings[]=  'slidesToShow: ' . $xxl_column;
     $row_column_cls .=  ' row-cols-xxl-' . $xxl_column;
 }
 
 $xl_column          =   $params->get('xl_column', '');
 if ($xl_column) {
     $row_column_cls .=  ' row-cols-xl-' . $xl_column;
-    if ($slide_settings == '') {
-        $slide_settings         .=  'slidesToShow: ' . $xl_column;
+    if (!count($slide_settings)) {
+        $slide_settings[]       =  'slidesToShow: ' . $xl_column;
     } else {
         $slide_responsive[]     =   '{breakpoint: 1400,settings: {slidesToShow: ' . $xl_column.'}}';
     }
@@ -67,8 +67,8 @@ if ($xl_column) {
 $lg_column          =   $params->get('lg_column', 3);
 if ($lg_column) {
     $row_column_cls .=  ' row-cols-lg-' . $lg_column;
-    if ($slide_settings == '') {
-        $slide_settings         .=  'slidesToShow: ' . $lg_column;
+    if (!count($slide_settings)) {
+        $slide_settings[]       =  'slidesToShow: ' . $lg_column;
     } else {
         $slide_responsive[]     =   '{breakpoint: 1200,settings: {slidesToShow: ' . $lg_column.'}}';
     }
@@ -77,8 +77,8 @@ if ($lg_column) {
 $md_column          =   $params->get('md_column', 1);
 if ($md_column) {
     $row_column_cls .=  ' row-cols-md-' . $md_column;
-    if ($slide_settings == '') {
-        $slide_settings         .=  'slidesToShow: ' . $md_column;
+    if (!count($slide_settings)) {
+        $slide_settings[]       =  'slidesToShow: ' . $md_column;
     } else {
         $slide_responsive[]     =   '{breakpoint: 992,settings: {slidesToShow: ' . $md_column.'}}';
     }
@@ -87,8 +87,8 @@ if ($md_column) {
 $sm_column          =   $params->get('sm_column', 1);
 if ($sm_column) {
     $row_column_cls .=  ' row-cols-sm-' . $sm_column;
-    if ($slide_settings == '') {
-        $slide_settings         .=  'slidesToShow: ' . $sm_column;
+    if (!count($slide_settings)) {
+        $slide_settings[]       =  'slidesToShow: ' . $sm_column;
     } else {
         $slide_responsive[]     =   '{breakpoint: 768,settings: {slidesToShow: ' . $sm_column.'}}';
     }
@@ -97,21 +97,34 @@ if ($sm_column) {
 $xs_column          =   $params->get('xs_column', 1);
 if ($xs_column) {
     $row_column_cls .=  ' row-cols-' . $xs_column;
-    if ($slide_settings == '') {
-        $slide_settings         .=  'slidesToShow: ' . $xs_column;
+    if (!count($slide_settings)) {
+        $slide_settings[]       =  'slidesToShow: ' . $xs_column;
     } else {
         $slide_responsive[]     =   '{breakpoint: 576,settings: {slidesToShow: ' . $xs_column.'}}';
     }
 }
 
+if ($slider_autoplay) {
+    $slide_settings[]       =   'autoplay: true';
+    $slide_settings[]       =   'autoplaySpeed: '. ($interval * 1000);
+}
+
+if ($slider_dotnav) {
+    $slide_settings[]       =   'dots: true';
+}
+
+if (!$slider_nav) {
+    $slide_settings[]       =   'arrows: false';
+}
+
 if (count($slide_responsive)) {
-    $slide_settings .=  ',responsive: ['.implode(',', $slide_responsive).']';
+    $slide_settings[]       =  'responsive: ['.implode(',', $slide_responsive).']';
 }
 
 $row_gutter         =   $params->get('row_gutter', 4);
-$row_column_cls     .=  ' gx-' . $row_gutter;
+$gutter_cls         =  ' gx-' . $row_gutter;
 $column_gutter      =   $params->get('column_gutter', 4);
-$row_column_cls     .=  ' gy-' . $column_gutter;
+$gutter_cls         .=  ' gy-' . $column_gutter;
 
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
@@ -183,7 +196,7 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 $has_gallery        =   false;
-echo '<div class="'.($enable_slider ? 'astroid-slick' : $row_column_cls).'">';
+echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $media          =   '';
@@ -303,7 +316,7 @@ if ($has_gallery) {
 if ($enable_slider) {
     $wa->registerAndUseStyle('astroid.slick', 'astroid/slick.css');
     $wa->registerAndUseScript('astroid.slick', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'.astroid-slick\').slick({'.$slide_settings.'})});</script>';
+    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
