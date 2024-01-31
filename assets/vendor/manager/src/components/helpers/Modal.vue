@@ -74,7 +74,7 @@ function saveModal(){
                                         />
                                 </div>
                                 <div v-else v-html="field.input"></div>
-                                <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
+                                <p v-if="field.description !== '' && field.input.type !== `astroidheading`" v-html="field.description" class="form-text"></p>
                             </div>
                         </div>
                     </div>

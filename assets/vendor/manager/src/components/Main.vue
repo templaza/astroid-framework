@@ -175,17 +175,15 @@ function selectPreset(event, group) {
       </div>
     </form>
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
-                <strong class="me-auto">{{ toast_msg.header }}</strong>
-                <small>1 second ago</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                {{ toast_msg.body }}
-            </div>
+      <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <i class="me-2" :class="toast_msg.icon" :style="{ color: toast_msg.color }"></i>
+          <strong class="me-auto">{{ toast_msg.header }}</strong>
+          <small>1 second ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+        <div class="toast-body">{{ toast_msg.body }}</div>
+      </div>
     </div>
   </main>
 </template>
