@@ -314,7 +314,7 @@ if ($has_gallery) {
     $wa->useScript('bootstrap.carousel');
 }
 if ($enable_slider) {
-    $wa->registerAndUseStyle('astroid.slick', 'astroid/slick.css');
+    $wa->registerAndUseStyle('astroid.slick', 'astroid/slick.min.css');
     $wa->registerAndUseScript('astroid.slick', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 }

@@ -15,7 +15,12 @@
          padding: $header-padding-y $header-padding-x;
          z-index: 1;
       }
-
+      &.astroid-stacked-divided-header:not(.astroid-header-sticky) {
+         padding: 0;
+         .as-megamenu-section {
+            border-top: 1px solid var(--bs-border-color);
+         }
+      }
       /* Stacked Header */
       &.header-stacked {
          position: fixed;
