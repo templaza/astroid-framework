@@ -315,32 +315,31 @@ if ($mode == 'divided-logo-left') {
             }
             echo '</div>';
             // header nav starts -->
-            echo '<div class="as-megamenu-section w-100 d-none d-'.$header_breakpoint.'-flex">';
             ?>
-            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start py-2 flex-<?php echo $header_breakpoint; ?>-grow-1">
-               <?php
-               Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', $navWrapperClass);
-               ?>
+            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu as-megamenu-section d-none d-<?php echo $header_breakpoint; ?>-block py-2">
+                <div class="row">
+                    <?php
+                    Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', ['astroid-nav-wraper', 'col']);
+                    // header block starts
+                    if ($block_2_type == 'position') {
+                        echo '<div class="d-flex col-auto">';
+                        echo '<div class="d-flex align-items-center header-block-item">';
+                        echo $document->position($block_2_position, 'xhtml');
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    if ($block_2_type == 'custom') {
+                        echo '<div class="d-flex col-auto">';
+                        echo '<div class="d-flex align-items-center header-block-item">';
+                        echo $block_2_custom;
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
             </div>
          <?php
             // header nav ends
-            // header block starts
-            if ($block_2_type == 'position') {
-               echo '<div class="d-flex justify-content-end py-2 ms-4">';
-               echo '<div class="d-flex align-items-center header-block-item">';
-               echo $document->position($block_2_position, 'xhtml');
-               echo '</div>';
-               echo '</div>';
-            }
-            if ($block_2_type == 'custom') {
-               echo '<div class="d-flex justify-content-end py-2 ms-4">';
-               echo '<div class="d-flex align-items-center header-block-item">';
-               echo $block_2_custom;
-               echo '</div>';
-               echo '</div>';
-            }
-            echo '</div>';
-            // header block ends
          }
          if ($mode == 'divided-logo-left') {
              echo '<div class="row g-0 divided-logo-left">';

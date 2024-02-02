@@ -19,6 +19,9 @@
          padding: 0;
          .as-megamenu-section {
             border-top: 1px solid var(--bs-border-color);
+            .megamenu-container {
+               margin-top: -1px;
+            }
          }
       }
       /* Stacked Header */
