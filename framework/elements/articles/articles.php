@@ -132,6 +132,9 @@ $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
 $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
+$text_color_mode    =   $params->get('text_color_mode', '');
+$text_color_mode    =   $text_color_mode !== '' ? ' ' . $text_color_mode : '';
+
 $card_rounded_size  =   $params->get('card_rounded_size', '3');
 $border_radius      =   $params->get('card_border_radius', '');
 $bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : ' rounded-' . $card_rounded_size;
@@ -196,7 +199,7 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 $has_gallery        =   false;
-echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.'">';
+echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $media          =   '';

@@ -38,9 +38,9 @@
     border: none;
     outline: none;
     background: transparent;
+    color: #777777;
     z-index: 1;
     &:before {
-      color: white;
       opacity: 0.7;
       font-size: 30px;
       line-height: 1;
@@ -151,6 +151,23 @@
           }
         }
       }
+    }
+  }
+}
+.as-light {
+  &.astroid-slick {
+    .slick-prev,
+    .slick-next {
+      color: white;
+    }
+  }
+}
+
+.as-dark {
+  &.astroid-slick {
+    .slick-prev,
+    .slick-next {
+      color: #1a1a1a;
     }
   }
 }

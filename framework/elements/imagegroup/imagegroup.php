@@ -122,7 +122,10 @@ $hover_effect   = $params->get('hover_effect', '');
 $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
-echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.'">';
+
+$text_color_mode    =   $params->get('text_color_mode', '');
+$text_color_mode    =   $text_color_mode !== '' ? ' ' . $text_color_mode : '';
+echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {

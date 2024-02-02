@@ -20,6 +20,7 @@ defined('_JEXEC') or die;
 class Font
 {
     public static $system_fonts = [
+        "" => 'Default',
         "Arial, Helvetica, sans-serif" => 'Arial, Helvetica',
         "Arial Black, Gadget, sans-serif" => 'Arial Black, Gadget',
         "Bookman Old Style, serif" => 'Bookman Old Style',

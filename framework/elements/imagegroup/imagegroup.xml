@@ -107,6 +107,11 @@
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_nav" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_NAVIGATION"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="text_color_mode" type="astroidlist" label="ASTROID_WIDGET_TEXT_COLOR_MODE" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
+                    <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
+                </field>
 
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">ASTROID_NONE</option>
