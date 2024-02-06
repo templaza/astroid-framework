@@ -43,7 +43,7 @@ $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-bloc
 $navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
 $navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
 $navClassDivided = ['nav', 'astroid-nav'];
-if ($mode == 'divided-logo-left' || $mode == 'divided') {
+if ($mode == 'divided-logo-left') {
     $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
 } else {
     $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
