@@ -26,12 +26,7 @@ $document = Astroid\Framework::getDocument(); // Astroid Document
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <jdoc:include type="head" />
-    <?php
-    echo $document->renderMeta();
-    echo Astroid\Helper\Head::styles();
-    echo $document->renderLinks();
-    echo $document->getStylesheets();
-    ?>
+    <astroid:include type="head-styles" /> <!-- head styles -->
 </head>
 <body class="astroid-grid">
 <div class="d-flex justify-content-center">
