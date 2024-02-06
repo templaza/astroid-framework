@@ -17,7 +17,8 @@ use Joomla\CMS\Uri\Uri;
 /** @var Joomla\CMS\Document\HtmlDocument $this */
 $app = Factory::getApplication();
 $document = Astroid\Framework::getDocument(); // Astroid Document
-
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->useScript('bootstrap.alert');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
