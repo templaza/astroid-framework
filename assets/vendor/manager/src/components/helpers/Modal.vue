@@ -4,6 +4,7 @@ import Fields from './Fields.vue';
 const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
 const params = ref(new Object());
+const subFormOpen = ref({name: '', value: false});
 onBeforeMount(()=>{
     props.form.info.params.forEach(param => {
         params.value[param.name] = param.value;
@@ -27,22 +28,33 @@ function checkShow(field) {
     return true;
 }
 function saveModal(){
-    let tmp = [];
-    Object.keys(params.value).forEach(key => {
-        if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
-            tmp.push({
-                'name': key,
-                'value': JSON.parse(JSON.stringify(params.value[key]))
-            });
-        } else {
-            tmp.push({
-                'name': key,
-                'value': params.value[key]
-            });
+    let allowSave = true;
+    if (subFormOpen.value.value) {
+        if (!confirm(subFormOpen.value.name + ' has not been saved. Please click the "Apply" button to save the Subform or Click "OK" to skip. Are you sure?')) {
+            allowSave = false;
         }
-    });
-    emit('update:saveElement', tmp);
-    emit('update:closeElement')
+    }
+    if (allowSave) {
+        let tmp = [];
+        Object.keys(params.value).forEach(key => {
+            if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
+                tmp.push({
+                    'name': key,
+                    'value': JSON.parse(JSON.stringify(params.value[key]))
+                });
+            } else {
+                tmp.push({
+                    'name': key,
+                    'value': params.value[key]
+                });
+            }
+        });
+        emit('update:saveElement', tmp);
+        emit('update:closeElement')
+    }
+}
+function updateSubForm(value) {
+    subFormOpen.value = value;
 }
 </script>
 <template>
@@ -71,6 +83,7 @@ function saveModal(){
                                     <Fields 
                                         :field="field" 
                                         :scope="params"
+                                        @update:subFormState="updateSubForm"
                                         />
                                 </div>
                                 <div v-else v-html="field.input"></div>
