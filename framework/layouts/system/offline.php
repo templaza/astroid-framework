@@ -28,7 +28,7 @@ $document = Astroid\Framework::getDocument(); // Astroid Document
 </head>
 <body class="astroid-grid">
     <div class="d-flex justify-content-center">
-        <div class="as-width-large py-5">
+        <div class="as-width-large my-5 px-3">
             <jdoc:include type="message" />
             <div id="frame" class="card card-body">
                 <?php if ($app->get('offline_image') && file_exists($app->get('offline_image'))) : ?>
