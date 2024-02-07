@@ -53,6 +53,9 @@ function initLayout() {
                 element.fill = true;
             }
         }
+        if (typeof element.state === 'undefined') {
+            element.state = 1;
+        }
         showGrid.value[element.id] = false;
     });
 }
@@ -201,6 +204,14 @@ function _editElement(element) {
     emit('edit:Element', element);
 }
 
+function elementState(element) {
+    if (typeof element.state === 'undefined') {
+        element.state = 0;
+    } else {
+        element.state = Math.abs(element.state - 1);
+    }
+}
+
 function findSystemAddon(element) {
     switch (element.type) {
         case 'section':
@@ -320,7 +331,7 @@ function getColumnClass(element) {
                     <a href="#" @click.prevent="selectElement(element)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
             </div>
-            <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body">
+            <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body" :class="{'element-disabled' : !element.state}">
                 <div class="d-flex justify-content-between">
                     <div class="element-name">
                         <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}</div>
@@ -329,7 +340,10 @@ function getColumnClass(element) {
                     <div class="element-toolbar">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Enable/Disable Element" @click.prevent="elementState(element)"><i :class="{'fas fa-eye' : element.state, 'fas fa-eye-slash' : !element.state}"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
