@@ -30,7 +30,7 @@ function checkShow(field) {
 function saveModal(){
     let allowSave = true;
     if (subFormOpen.value.value) {
-        if (!confirm(subFormOpen.value.name + ' has not been saved. Please click the "Apply" button to save the Subform or Click "OK" to skip. Are you sure?')) {
+        if (!confirm(subFormOpen.value.name + ' has not been saved. Are you sure to skip the subform?')) {
             allowSave = false;
         }
     }
