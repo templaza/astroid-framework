@@ -13,7 +13,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-use Joomla\CMS\Uri\Uri;
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
 $use_link       = $params->get('use_link', 0);

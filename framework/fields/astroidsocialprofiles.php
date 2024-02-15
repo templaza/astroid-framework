@@ -28,9 +28,11 @@ class JFormFieldAstroidsocialprofiles extends FormField {
            $profile_icons[$profile['title']] = $profile['icons'];
        }
 
-       foreach($value as &$item){
-           if(isset($profile_icons[$item['title']])){
-               $item['icons'] = $profile_icons[$item['title']];
+       if (!empty($value)) {
+           foreach($value as &$item){
+               if(isset($profile_icons[$item['title']])){
+                   $item['icons'] = $profile_icons[$item['title']];
+               }
            }
        }
 

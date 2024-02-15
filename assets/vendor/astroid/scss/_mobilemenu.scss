@@ -58,7 +58,7 @@ $menu-indicator-width: 60px !default;
       overflow: auto;
 
       >li.menu-item:first-child {
-         border-top: 1px solid #ddd;
+         border-top: 1px solid var(--bs-border-color);
       }
 
       li.menu-item.menu-go-back {
@@ -68,7 +68,7 @@ $menu-indicator-width: 60px !default;
    }
 
    .menu-item {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--bs-border-color);
       display: table;
       width: 100%;
    }
@@ -125,7 +125,7 @@ $menu-indicator-width: 60px !default;
       text-align: center;
       display: table-cell;
       vertical-align: middle;
-      border-left: 1px solid #ddd;
+      border-left: 1px solid var(--bs-border-color);
       cursor: pointer;
    }
 

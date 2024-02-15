@@ -819,11 +819,6 @@ class Document
 
     protected function _systemUrl($url, $version = true)
     {
-        if (Framework::isAdmin()) {
-            $root = Uri::root();
-        } else {
-            $root = Uri::root(true). '/';
-        }
         $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();
         if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
@@ -831,6 +826,14 @@ class Document
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
         }
+
+        if (Framework::isAdmin()) {
+            $root = Uri::root();
+        } else {
+            $root = Uri::root(true). '/';
+            $postfix = '';
+        }
+
         if (file_exists(ASTROID_MEDIA . '/' . $url)) {
             $url = $root . 'media/astroid/assets/' . $url;
         } elseif (Framework::isSite() && file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/' . $url)) {
@@ -842,7 +845,7 @@ class Document
         } else {
             $postfix = '';
         }
-        return $url ;
+        return $url.$postfix ;
     }
 
     public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript')

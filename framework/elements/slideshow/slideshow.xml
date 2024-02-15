@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_SLIDESHOW_LABEL</title>
+    <description>ASTROID_WIDGET_SLIDESHOW_DESC</description>
+    <icon>fa-solid fa-panorama</icon>
+    <category>Widgets</category>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="slideshow_options" title="ASTROID_WIDGET_SLIDESHOW_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="overlay_options" title="ASTROID_WIDGET_OVERLAY_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="meta_options" title="ASTROID_WIDGET_META_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
+                <field astroidgroup="general" name="slides" type="astroidsubform" label="ASTROID_WIDGET_SLIDES_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+
+                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta"/>
+
+                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work"/>
+                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More"/>
+                                <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="_blank">New Window</option>
+                                    <option value="_parent">Parent Frame</option>
+                                    <option value="_top">Full body of the window</option>
+                                </field>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="slideshow_options" name="min_height" type="astroidrange" min="1" max="1200" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
+                <field astroidgroup="slideshow_options" type="astroidlist" name="effect_type" label="ASTROID_WIDGET_EFFECT_TYPE" default="">
+                    <option value="">ASTROID_WIDGET_EFFECT_TYPE_CAROUSEL</option>
+                    <option value="carousel-fade">ASTROID_WIDGET_EFFECT_TYPE_FADE</option>
+                </field>
+                <field astroidgroup="slideshow_options" name="autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
+                <field astroidgroup="slideshow_options" ngShow="[autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
+                <field astroidgroup="slideshow_options" type="astroidlist" name="slide_border_radius" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
+                    <option value="">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
+                    <option value="0">TPL_ASTROID_ICON_STYLE_SQUARE</option>
+                    <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
+                    <option value="pill">TPL_ASTROID_ICON_STYLE_PILL</option>
+                </field>
+                <field astroidgroup="slideshow_options" ngShow="[slide_border_radius]==''" type="astroidlist" name="slide_rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+
+                <field astroidgroup="slideshow_options" name="box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="slideshow_options" name="box_shadow_hover" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_HOVER_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-hover-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-hover-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow-hover">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-hover-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="overlay_options" name="overlay_max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="xxsmall">ASTROID_XXS</option>
+                    <option value="xsmall">ASTROID_XS</option>
+                    <option value="small">ASTROID_SM</option>
+                    <option value="medium">ASTROID_MD</option>
+                    <option value="large">ASTROID_LG</option>
+                    <option value="xlarge">ASTROID_XL</option>
+                    <option value="xxlarge">ASTROID_XXL</option>
+                </field>
+                <field astroidgroup="overlay_options" name="overlay_position" type="astroidlist" label="ASTROID_WIDGET_OVERLAY_POSITION_LABEL" default="justify-content-center align-items-center">
+                    <option value="justify-content-start align-items-start">ASTROID_WIDGET_TOP_LEFT</option>
+                    <option value="justify-content-center align-items-start">ASTROID_WIDGET_TOP_CENTER</option>
+                    <option value="justify-content-end align-items-start">ASTROID_WIDGET_TOP_RIGHT</option>
+                    <option value="justify-content-start align-items-center">ASTROID_WIDGET_CENTER_LEFT</option>
+                    <option value="justify-content-center align-items-center">ASTROID_WIDGET_CENTER_CENTER</option>
+                    <option value="justify-content-end align-items-center">ASTROID_WIDGET_CENTER_RIGHT</option>
+                    <option value="justify-content-start align-items-end">ASTROID_WIDGET_BOTTOM_LEFT</option>
+                    <option value="justify-content-center align-items-end">ASTROID_WIDGET_BOTTOM_CENTER</option>
+                    <option value="justify-content-end align-items-end">ASTROID_WIDGET_BOTTOM_RIGHT</option>
+                </field>
+                <field astroidgroup="overlay_options" name="overlay_text_color" type="astroidlist" label="ASTROID_WIDGET_OVERLAY_TEXT_COLOR" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
+                    <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
+                </field>
+                <field astroidgroup="overlay_options" name="overlay_type" type="astroidradio" width="full" default="color">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="color">TPL_ASTROID_COLOR</option>
+                    <option value="background-color">TPL_ASTROID_BACKGROUND_COLOR_LABEL</option>
+                </field>
+                <field astroidgroup="overlay_options" ngShow="[overlay_type]=='color'" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
+                <field astroidgroup="overlay_options" ngShow="[overlay_type]=='background-color'" name="overlay_gradient" type="astroidgradient" label="ASTROID_WIDGET_OVERLAY_GRADIENT"/>
+                <field astroidgroup="overlay_options" type="astroidlist" name="overlay_padding" label="ASTROID_WIDGET_OVERLAY_PADDING_LABEL" default="">
+                    <option value="none">ASTROID_NONE</option>
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="small">ASTROID_SMALL</option>
+                    <option value="large">ASTROID_LARGE</option>
+                    <option value="custom">ASTROID_WIDGET_CUSTOM</option>
+                </field>
+                <field astroidgroup="overlay_options" ngShow="[overlay_padding]=='custom'" name="overlay_custom_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+
+                <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="h4">h4</option>
+                    <option value="h5">h5</option>
+                    <option value="h6">h6</option>
+                    <option value="div">div</option>
+                </field>
+                <field astroidgroup="title_options" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="title_options" name="title_heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+
+                <field astroidgroup="meta_options" name="meta_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="meta_options" name="meta_heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+                <field astroidgroup="meta_options" name="meta_position" type="astroidlist" label="ASTROID_WIDGET_META_POSITION_LABEL" default="before">
+                    <option value="before">ASTROID_BEFORE_TITLE</option>
+                    <option value="after">ASTROID_AFTER_TITLE</option>
+                </field>
+
+                <field astroidgroup="content_options" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+
+                <field astroidgroup="readmore_options" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
+                    <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
+                    <option value="success">Success</option>
+                    <option value="danger">Danger</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="link">Link</option>
+                </field>
+                <field astroidgroup="readmore_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
+                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="btn-lg">Large</option>
+                    <option value="btn-sm">Small</option>
+                </field>
+                <field astroidgroup="readmore_options" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                    <option value="">Rounded</option>
+                    <option value="rounded-0">Square</option>
+                    <option value="rounded-pill">Circle</option>
+                </field>
+            </fieldset>
+        </fields>
+    </form>
+</element>

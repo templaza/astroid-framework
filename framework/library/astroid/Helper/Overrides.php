@@ -58,7 +58,8 @@ class Overrides
         return \implode('/', $path);
     }
 
-    public static function getHTMLTemplate(): string {
+    public static function getHTMLTemplate(): string
+    {
         $backtrace = \debug_backtrace();
         $callPath = $backtrace[0]['file'] ?? '';
         preg_match('/'. addcslashes(JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '.*?' . DIRECTORY_SEPARATOR . 'html', DIRECTORY_SEPARATOR) . '/' , $callPath, $match);
@@ -95,6 +96,34 @@ class Overrides
         }
 
         return self::generateExtensionPath($relativePath);
+    }
+
+    public static function getHTMLSystem($filename = ''): string
+    {
+        $layoutAstroidSystem =   JPATH_LIBRARIES.DIRECTORY_SEPARATOR
+            .'astroid'.DIRECTORY_SEPARATOR
+            .'framework'.DIRECTORY_SEPARATOR
+            .'layouts'.DIRECTORY_SEPARATOR
+            .'system'.DIRECTORY_SEPARATOR;
+        $layoutSystemFolder =   JPATH_THEMES.DIRECTORY_SEPARATOR
+            .'system'.DIRECTORY_SEPARATOR;
+
+        if (empty($filename)) {
+            $backtrace = \debug_backtrace();
+            $callPath = $backtrace[0]['file'] ?? '';
+            $basename = basename($callPath);
+            if (\file_exists($layoutAstroidSystem . $basename)) {
+                return $layoutAstroidSystem . $basename;
+            } else {
+                return $layoutSystemFolder . $basename;
+            }
+        } else {
+            if (\file_exists($layoutAstroidSystem . $filename)) {
+                return $layoutAstroidSystem . $filename;
+            } else {
+                return $layoutSystemFolder . $filename;
+            }
+        }
     }
 
     public static function fix()

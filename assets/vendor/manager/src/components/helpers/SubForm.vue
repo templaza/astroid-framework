@@ -3,7 +3,7 @@ import { onBeforeMount, ref } from "vue";
 import draggable from "vuedraggable";
 import Fields from './Fields.vue';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'update:subFormState']);
 const props = defineProps(['modelValue', 'field']);
 const items = ref([]);
 const edit  = ref(false);
@@ -16,6 +16,7 @@ onBeforeMount(()=>{
 })
 
 function listUpdated() {
+    emit('update:subFormState', {name: props.field.label, value: false});
     emit('update:modelValue', JSON.stringify(items.value));
 }
 
@@ -44,6 +45,7 @@ function editItem(index) {
     }
     currentIdx.value = index;
     edit.value = true;
+    emit('update:subFormState', {name: props.field.label, value: true});
 }
 
 function saveItem(){

@@ -29,6 +29,7 @@ class BaseElement
 {
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
     public $id, $params, $type, $style, $style_dark, $content = '';
+    public int $state = 1;
     public array $devices = [];
     public function __construct($data, $devices)
     {
@@ -36,6 +37,7 @@ class BaseElement
         $this->devices = $devices;
         $this->id = $data['id'];
         $this->type = isset($data['type']) ? $data['type'] : 'element';
+        $this->state = isset($data['state']) ? intval($data['state']) : 1;
         $this->params = new Registry();
         if (isset($data['params']) && !empty($data['params'])) {
             $params = [];
@@ -54,7 +56,7 @@ class BaseElement
 
     protected function wrap()
     {
-        if (empty($this->content)) {
+        if (empty($this->content) || !$this->state) {
             return '';
         }
         $this->_styles();

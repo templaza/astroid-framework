@@ -92,7 +92,7 @@ class Menu
             if ($item->level == 1) {
                 // Code for adding Centered Logo
                 if (($logo_position_count == $logo_position) && $logo !== null) {
-                    echo '<li class="nav-item nav-stacked-logo text-center">';
+                    echo '<li class="nav-item nav-stacked-logo text-center px-4">';
                     $document->include('logo');
                     echo '</li>';
                 }

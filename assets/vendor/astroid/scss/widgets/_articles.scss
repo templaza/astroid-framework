@@ -2,8 +2,36 @@
   .astroid-article-info {
     font-size: 0.895rem;
     opacity: 0.7;
-    dd {
+    margin-bottom: 0;
+    > dd {
+      display: inline-block;
       margin-bottom: 0;
     }
+  }
+  .card-img-overlay {
+    top: auto;
+  }
+}
+
+.card-img-overlay {
+  --bs-card-img-overlay-padding: 2.5rem;
+  &.card-size-large {
+    --bs-card-img-overlay-padding: 3.5rem;
+  }
+  &.card-size-small {
+    --bs-card-img-overlay-padding: 1.5rem;
+  }
+  &.card-size-none {
+    --bs-card-img-overlay-padding: 0;
+  }
+}
+.astroid-image-overlay-cover {
+  &:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }

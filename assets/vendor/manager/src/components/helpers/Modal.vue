@@ -4,6 +4,7 @@ import Fields from './Fields.vue';
 const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
 const params = ref(new Object());
+const subFormOpen = ref({name: '', value: false});
 onBeforeMount(()=>{
     props.form.info.params.forEach(param => {
         params.value[param.name] = param.value;
@@ -27,22 +28,33 @@ function checkShow(field) {
     return true;
 }
 function saveModal(){
-    let tmp = [];
-    Object.keys(params.value).forEach(key => {
-        if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
-            tmp.push({
-                'name': key,
-                'value': JSON.parse(JSON.stringify(params.value[key]))
-            });
-        } else {
-            tmp.push({
-                'name': key,
-                'value': params.value[key]
-            });
+    let allowSave = true;
+    if (subFormOpen.value.value) {
+        if (!confirm(subFormOpen.value.name + ' has not been saved. Are you sure to skip the subform?')) {
+            allowSave = false;
         }
-    });
-    emit('update:saveElement', tmp);
-    emit('update:closeElement')
+    }
+    if (allowSave) {
+        let tmp = [];
+        Object.keys(params.value).forEach(key => {
+            if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
+                tmp.push({
+                    'name': key,
+                    'value': JSON.parse(JSON.stringify(params.value[key]))
+                });
+            } else {
+                tmp.push({
+                    'name': key,
+                    'value': params.value[key]
+                });
+            }
+        });
+        emit('update:saveElement', tmp);
+        emit('update:closeElement')
+    }
+}
+function updateSubForm(value) {
+    subFormOpen.value = value;
 }
 </script>
 <template>
@@ -66,15 +78,16 @@ function saveModal(){
                             </div>
                             <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
                                 <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label fw-bold" v-html="field.label"></div>
-                                <label v-else-if="field.input.type !== `astroidheading`" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
+                                <label v-else-if="field.input.type !== `astroidheading` && field.label" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
                                 <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
                                     <Fields 
                                         :field="field" 
                                         :scope="params"
+                                        @update:subFormState="updateSubForm"
                                         />
                                 </div>
                                 <div v-else v-html="field.input"></div>
-                                <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
+                                <p v-if="field.description !== '' && field.input.type !== `astroidheading`" v-html="field.description" class="form-text"></p>
                             </div>
                         </div>
                     </div>

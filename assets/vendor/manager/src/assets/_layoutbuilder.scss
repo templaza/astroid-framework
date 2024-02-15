@@ -203,4 +203,8 @@
     [class^=group-] {
         margin-bottom: 1rem;
     }
+    .element-disabled {
+        background-image: linear-gradient(45deg, rgba(100, 100, 100, 0.15) 25%, transparent 25%, transparent 50%, rgba(100, 100, 100, 0.15) 50%, rgba(100, 100, 100, 0.15) 75%, transparent 75%, transparent);
+        background-size: 1rem 1rem;
+    }
 }

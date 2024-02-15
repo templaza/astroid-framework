@@ -10,5 +10,6 @@
  * See https://docs.joomdev.com/article/override-core-layouts/ for documentation
  */
 // No direct access.
+
 defined('_JEXEC') or die; ?>
 <jdoc:include type="message" />

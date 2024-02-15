@@ -28,10 +28,6 @@ $is_mobile_menu = $mobilemenu;
 $slidemenu = @$slidemenu;
 $slidemenu = ($slidemenu == 1 ? true : false);
 
-if ($item->type == "heading" || $item->type == 'separator') {
-   $item->flink = 'javascript:void(0);';
-}
-
 $attributes = [];
 if (isset($props)) {
    foreach ($props as $prop => $val) {
@@ -44,10 +40,9 @@ if ($item->anchor_title) {
    $attributes['title'] = $item->title;
 }
 
+$attributes['class'] = 'as-menu-item';
 if ($item->anchor_css) {
-   $attributes['class'] = $item->anchor_css;
-} else {
-   $attributes['class'] = '';
+   $attributes['class'] .= ' ' . $item->anchor_css;
 }
 
 if (isset($item->id)) {
@@ -87,6 +82,10 @@ if (($options->megamenu || ($item->parent && $item->deeper == 1)) && !$is_mobile
 
 $attributes['class'] .= " item-link-" . $item->type;
 $attributes['class'] .= " item-level-" . $item->level;
+
+if ($item->type == "heading" || $item->type == 'separator') {
+    $item->flink = '#';
+}
 
 $attr = [];
 foreach ($attributes as $key => $attribute) {
@@ -143,7 +142,7 @@ if ($item->type == 'url') {
          <?php if ($params->get('dropdown_arrow', 0)) {  ?>
             <i class="fas fa-chevron-down nav-item-caret"></i>
          <?php } ?>
-      <?php } elseif ((!$is_mobile_menu && $item->parent && !($item->type == "heading")) && $item->level != $header_endLevel && !$slidemenu) { ?>
+      <?php } elseif ((!$is_mobile_menu && $item->parent && !($item->type == "heading") && !($item->type == "separator")) && $item->level != $header_endLevel && !$slidemenu) { ?>
          <i class="fas fa-chevron-right nav-item-caret"></i>
       <?php } ?>
    </span>

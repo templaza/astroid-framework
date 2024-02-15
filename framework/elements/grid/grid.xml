@@ -152,6 +152,13 @@
                     <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
                     <option value="pill">TPL_ASTROID_ICON_STYLE_PILL</option>
                 </field>
+                <field astroidgroup="card_options" ngShow="[card_border_radius]==''" type="astroidlist" name="card_rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
                 <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="top">
                     <option value="top">ASTROID_TOP</option>
                     <option value="left">ASTROID_LEFT</option>
@@ -240,6 +247,20 @@
                     <option value="7">7/12</option>
                 </field>
                 <field astroidgroup="card_options" name="enable_grid_match" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_GRID_MATCH"/>
+                <field astroidgroup="card_options" name="card_box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="card_options" name="card_box_shadow_hover" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_HOVER_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-hover-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-hover-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow-hover">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-hover-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
                 <field astroidgroup="icon_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" default="60" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" postfix="px" />
                 <field astroidgroup="icon_options" name="icon_color" type="astroidcolor" label="TPL_ASTROID_COLOR" />
                 <field astroidgroup="icon_options" name="icon_color_hover" type="astroidcolor" label="TPL_ASTROID_COLOR_HOVER" />

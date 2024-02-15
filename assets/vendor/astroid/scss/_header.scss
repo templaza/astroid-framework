@@ -15,7 +15,15 @@
          padding: $header-padding-y $header-padding-x;
          z-index: 1;
       }
-
+      &.astroid-stacked-divided-header:not(.astroid-header-sticky) {
+         padding: 0;
+         .as-megamenu-section {
+            border-top: 1px solid var(--bs-border-color);
+            .megamenu-container {
+               margin-top: -1px;
+            }
+         }
+      }
       /* Stacked Header */
       &.header-stacked {
          position: fixed;
@@ -42,8 +50,8 @@
          }
          .header-block-items {
             > div > div {
-               padding-top: 1rem;
-               padding-bottom: 1rem;
+               padding-top: 0.7rem;
+               padding-bottom: 0.7rem;
             }
          }
       }
