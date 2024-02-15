@@ -140,6 +140,7 @@ function addElement(addon) {
     const new_element = {
         id: id,
         type: addon.type,
+        state: 1,
         params: [
             {name: 'title', value: addon.title}
         ]
