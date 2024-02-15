@@ -31,7 +31,23 @@
 * RTL Support
 * Light & Dark Color Mode
 * SVG Logo Support
+* Customize Breakpoint
 * Many widgets integrated
+
+## Widgets
+* Articles Widget
+* Banner Widget
+* Button Widget
+* Divider Widget
+* Grid Widget
+* Heading Widget
+* Icons Widget
+* Image Widget
+* Image Group Widget
+* Navigation Widget
+* Slideshow Widget
+* Text Widget
+* Video Button Widget
 
 ## Requirements
 * Joomla: 4.x, 5.x
