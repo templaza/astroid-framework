@@ -104,6 +104,17 @@
             // }
 
             _megamenu.each(function () {
+               $(this).find('a.item-link-heading').each(function (){
+                  $(this).on('click', function (e){
+                     e.preventDefault();
+                  });
+               });
+               $(this).find('a.item-link-separator').each(function (){
+                  $(this).on('click', function (e){
+                     e.preventDefault();
+                  });
+               });
+
                var _content = $(this).find(settings.contentClass);
                if ($(this).data('position') == 'edge') {
                   var _leftoverflow = 0;

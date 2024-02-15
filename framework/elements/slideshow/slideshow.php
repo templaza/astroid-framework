@@ -95,7 +95,7 @@ echo '<div class="carousel-inner">';
 for ($key = 0 ; $key < count($slides); $key ++) {
     echo '<div id="' . $slides[$key]->id . '" class="carousel-item'.($key == 0 ? ' active' : '').'" data-bs-interval="'.$interval.'">';
     echo '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover"><img src="'. Astroid\Helper\Media::getPath() . '/' . $slides[$key]->params['image'].'" class="object-fit-cover w-100 h-100" alt="'.$slides[$key]->params['title'].'"></div>';
-    echo '<div class="carousel-caption d-none d-md-flex card-img-overlay'.$overlay_position.'"><div class="overlay-inner'.$overlay_max_width.'">';
+    echo '<div class="carousel-caption d-flex card-img-overlay'.$overlay_position.'"><div class="overlay-inner'.$overlay_max_width.'">';
     if (!empty($slides[$key]->params['meta']) && $meta_position == 'before') {
         echo '<div class="astroid-meta">' . $slides[$key]->params['meta'] . '</div>';
     }
