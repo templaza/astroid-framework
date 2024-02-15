@@ -199,7 +199,8 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 $has_gallery        =   false;
-echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
+echo '<div class="overflow-hidden">';
+echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $media          =   '';
@@ -310,6 +311,7 @@ foreach ($items as $key => $item) {
 
     echo '</div></div>';
 }
+echo '</div>';
 echo '</div>';
 $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();
