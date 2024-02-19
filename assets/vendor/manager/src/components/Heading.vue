@@ -38,10 +38,9 @@ const social_menu = [
 
 function submitForm() {
   const action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&');
-  const form = document.getElementById('astroid-form');
   const toastAstroidMsg = document.getElementById('astroidMessage');
   const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
-  const formData = new FormData(form); // pass data as a form;
+  const formData = new FormData(document.getElementById('astroid-form')); // pass data as a form;
   save_icon.value = 'fa-sync fa-spin'
   save_disabled.value = true;
   axios.post(action_link, formData, {
