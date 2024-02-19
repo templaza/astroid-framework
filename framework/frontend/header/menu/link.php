@@ -142,7 +142,7 @@ if ($item->type == 'url') {
          <?php if ($params->get('dropdown_arrow', 0)) {  ?>
             <i class="fas fa-chevron-down nav-item-caret"></i>
          <?php } ?>
-      <?php } elseif ((!$is_mobile_menu && $item->parent && !($item->type == "heading") && !($item->type == "separator")) && $item->level != $header_endLevel && !$slidemenu) { ?>
+      <?php } elseif ((!$is_mobile_menu && $item->parent && !($item->type == "heading")) && $item->level != $header_endLevel && !$slidemenu) { ?>
          <i class="fas fa-chevron-right nav-item-caret"></i>
       <?php } ?>
    </span>
