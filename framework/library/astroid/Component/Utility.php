@@ -248,22 +248,28 @@ class Utility
         $body_link_color        =   Style::getColor($params->get('body_link_color', ''));
         $body_link_hover_color  =   Style::getColor($params->get('body_link_hover_color', ''));
         $body_heading_color     =   Style::getColor($params->get('body_heading_color', ''));
+        $template_layout        =   $params->get('template_layout', 'wide');
         Style::addCssBySelector('html', 'background-color', $body_background_color['light']);
         Style::addCssBySelector('[data-bs-theme=dark]', 'background-color', $body_background_color['dark']);
 
-        $body = new Style('body');
+        if ($template_layout == 'boxed') {
+            $body = new Style('.astroid-layout-boxed .astroid-wrapper');
+            $body_dark = new Style('.astroid-layout-boxed .astroid-wrapper', 'dark');
+        } else {
+            $body = new Style('body');
+            $body_dark = new Style('body', 'dark');
+        }
         $body->addCss('background-color', $body_background_color['light']);
         $body->addCss('color', $body_text_color['light']);
-        $body->link()->addCss('color', $body_link_color['light']);
-        $body->link()->hover()->addCss('color', $body_link_hover_color['light']);
+        $body->link('child', ':not(.btn)')->addCss('color', $body_link_color['light']);
+        $body->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['light']);
         $body->render();  // render body colors
 
-        $body = new Style('body', 'dark');
-        $body->addCss('background-color', $body_background_color['dark']);
-        $body->addCss('color', $body_text_color['dark']);
-        $body->link('child', ':not(.btn)')->addCss('color', $body_link_color['dark']);
-        $body->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['dark']);
-        $body->render();  // render body colors
+        $body_dark->addCss('background-color', $body_background_color['dark']);
+        $body_dark->addCss('color', $body_text_color['dark']);
+        $body_dark->link('child', ':not(.btn)')->addCss('color', $body_link_color['dark']);
+        $body_dark->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['dark']);
+        $body_dark->render();  // render body colors
 
         $body = new Style(['h1','h2','h3','h4','h5','h6']);
         $body->addCss('color', $body_heading_color['light']);
