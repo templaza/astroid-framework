@@ -259,23 +259,25 @@ class Utility
             $body = new Style('body');
             $body_dark = new Style('body', 'dark');
         }
-        $body->addCss('background-color', $body_background_color['light']);
-        $body->addCss('color', $body_text_color['light']);
-        $body->link('child', ':not(.btn)')->addCss('color', $body_link_color['light']);
-        $body->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['light']);
+        $body->addCss('--bs-body-bg', $body_background_color['light']);
+        $body->addCss('--bs-body-color', $body_text_color['light']);
+        $body->link()->addCss('color', 'var(--as-link-color)');
+        $body->link()->addCss('--as-link-color', $body_link_color['light']);
+        $body->link()->hover()->addCss('color', 'var(--as-link-hover-color)');
+        $body->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['light']);
         $body->render();  // render body colors
 
-        $body_dark->addCss('background-color', $body_background_color['dark']);
-        $body_dark->addCss('color', $body_text_color['dark']);
-        $body_dark->link('child', ':not(.btn)')->addCss('color', $body_link_color['dark']);
-        $body_dark->link('child', ':not(.btn)')->hover()->addCss('color', $body_link_hover_color['dark']);
+        $body_dark->addCss('--bs-body-bg', $body_background_color['dark']);
+        $body_dark->addCss('--bs-body-color', $body_text_color['dark']);
+        $body_dark->link()->addCss('--as-link-color', $body_link_color['dark']);
+        $body_dark->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['dark']);
         $body_dark->render();  // render body colors
 
         $body = new Style(['h1','h2','h3','h4','h5','h6']);
-        $body->addCss('color', $body_heading_color['light']);
+        $body->addCss('--bs-heading-color', $body_heading_color['light']);
         $body->render();
         $body = new Style(['h1','h2','h3','h4','h5','h6'], 'dark');
-        $body->addCss('color', $body_heading_color['dark']);
+        $body->addCss('--bs-heading-color', $body_heading_color['dark']);
         $body->render();
 
         // Header
