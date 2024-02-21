@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.0.10';
+    public static $astroid_version = '3.0.11';
     public static $fontawesome_version = '6.5.1';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -24,9 +24,7 @@ class Constants
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
-    public static $joomdev_products_link = 'https://astroidframe.work/partners';
-    public static $joomdev_templates_link = 'https://astroidframe.work/partners';
-    public static $jd_builder_link = 'https://astroidframe.work/';
+    public static $templates_link = 'https://astroidframe.work/partners';
 
     public static $bootstrap_colors = [
         '' => 'TPL_COLOR_DEFAULT',
