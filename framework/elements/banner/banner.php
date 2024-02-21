@@ -21,7 +21,7 @@ $menuId = $jinput->get('Itemid', 0, 'INT');
 $menu = $app->getMenu();
 $item = $menu->getItem($menuId);
 if (empty($item)) {
-    return;
+    return '';
 }
 
 $params = $item->getParams();
@@ -29,7 +29,7 @@ $params = $item->getParams();
 $astroid_banner_visibility = $params->get('astroid_banner_visibility', "currentPage");
 if ($astroid_banner_visibility == "currentPage") {
     if ((isset($item->query['option']) && $item->query['option'] != $jinput->get('option', '')) || (isset($item->query['view']) && $item->query['view'] != $jinput->get('view', '')) || (isset($item->query['layout']) && $item->query['layout'] != $jinput->get('layout', ''))) {
-        return;
+        return '';
     }
 }
 $style = ['display:flex', 'align-items:center'];

@@ -9,11 +9,18 @@
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
          </fieldset>
          <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
-            <field ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
-            <field ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
+            <field type="astroidgroup" name="general"/>
+            <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
+            <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
+               <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
+               <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
+            </field>
 
-            <field name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
+            <field astroidgroup="general" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
+            <field astroidgroup="general" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
+            <field astroidgroup="general" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
+
+            <field astroidgroup="general" name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="xxsmall">ASTROID_XXS</option>
                <option value="xsmall">ASTROID_XS</option>
@@ -24,7 +31,7 @@
                <option value="xxlarge">ASTROID_XXL</option>
             </field>
 
-            <field name="max_width_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_DESC" default="">
+            <field astroidgroup="general" name="max_width_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_BREAKPOINT_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="sm">ASTROID_BREAKPOINT_SM</option>
                <option value="md">ASTROID_BREAKPOINT_MD</option>
@@ -33,14 +40,14 @@
                <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
             </field>
 
-            <field name="block_align" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_DESC" default="">
+            <field astroidgroup="general" name="block_align" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="start">JGLOBAL_LEFT</option>
                <option value="center">JGLOBAL_CENTER</option>
                <option value="end">JGLOBAL_RIGHT</option>
             </field>
 
-            <field name="block_align_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_DESC" default="">
+            <field astroidgroup="general" name="block_align_breakpoint" ngShow="[max_width]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_BREAKPOINT_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="sm">ASTROID_BREAKPOINT_SM</option>
                <option value="md">ASTROID_BREAKPOINT_MD</option>
@@ -49,21 +56,21 @@
                <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
             </field>
 
-            <field name="block_align_fallback" ngShow="[max_width]!='' AND [block_align_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_DESC" default="">
+            <field astroidgroup="general" name="block_align_fallback" ngShow="[max_width]!='' AND [block_align_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_LABEL" description="ASTROID_WIDGET_BLOCK_ALIGN_FALLBACK_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="start">JGLOBAL_LEFT</option>
                <option value="center">JGLOBAL_CENTER</option>
                <option value="end">JGLOBAL_RIGHT</option>
             </field>
 
-            <field name="text_alignment" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_DESC" default="">
+            <field astroidgroup="general" name="text_alignment" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="start">JGLOBAL_LEFT</option>
                <option value="center">JGLOBAL_CENTER</option>
                <option value="end">JGLOBAL_RIGHT</option>
             </field>
 
-            <field name="text_alignment_breakpoint" ngShow="[text_alignment]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_DESC" default="">
+            <field astroidgroup="general" name="text_alignment_breakpoint" ngShow="[text_alignment]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_BREAKPOINT_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="sm">ASTROID_BREAKPOINT_SM</option>
                <option value="md">ASTROID_BREAKPOINT_MD</option>
@@ -72,14 +79,14 @@
                <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
             </field>
 
-            <field name="text_alignment_fallback" ngShow="[text_alignment]!='' AND [text_alignment_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_DESC" default="">
+            <field astroidgroup="general" name="text_alignment_fallback" ngShow="[text_alignment]!='' AND [text_alignment_breakpoint]!=''" type="astroidlist" label="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_LABEL" description="ASTROID_WIDGET_TEXT_ALIGNMENT_FALLBACK_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="start">JGLOBAL_LEFT</option>
                <option value="center">JGLOBAL_CENTER</option>
                <option value="end">JGLOBAL_RIGHT</option>
             </field>
 
-            <field description="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_LABEL">
+            <field astroidgroup="general" description="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_DESC" name="background_setting" type="astroidradio" default="0" label="TPL_ASTROID_ADVANCED_POPUUP_LAYOUT_SELECT_LABEL">
                <option value="0">ASTROID_NONE</option>
                <option value="color">TPL_ASTROID_COLOR</option>
                <option value="image">TPL_ASTROID_IMAGE</option>
@@ -87,29 +94,29 @@
                <option value="gradient">TPL_ASTROID_GRADIENT</option>
             </field>
 
-            <field ngShow="[background_setting] =='color'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+            <field astroidgroup="general" ngShow="[background_setting] =='color'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
 
-            <field ngShow="[background_setting] =='image'" name="img_background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="img_background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
 
-            <field ngShow="[background_setting] =='image'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
 
-            <field ngShow="[background_setting] =='image'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
                <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
                <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
             </field>
-            <field ngShow="[background_setting] =='image'" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
                <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
             </field>
-            <field ngShow="[background_setting] =='image'" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
                <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
             </field>
-            <field ngShow="[background_setting] =='image'" name="background_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
                <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
@@ -122,29 +129,28 @@
                <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
             </field>
 
-            <field ngShow="[background_setting] =='image'" description="TPL_ASTROID_OVERLAY_COLOR_DESC" name="background_image_overlay" type="astroidradio" default="0" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" description="TPL_ASTROID_OVERLAY_COLOR_DESC" name="background_image_overlay" type="astroidradio" default="0" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
                <option value="">ASTROID_NONE</option>
                <option value="color">TPL_ASTROID_COLOR</option>
                <option value="gradient">TPL_ASTROID_GRADIENT</option>
                <option value="pattern">TPL_ASTROID_PATTERN</option>
             </field>
-            <field ngShow="[background_setting]=='image' AND ([background_image_overlay]=='color' OR [background_image_overlay]=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
-            <field ngShow="[background_setting]=='image' AND [background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
-            <field ngShow="[background_setting]=='image' AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting]=='image' AND ([background_image_overlay]=='color' OR [background_image_overlay]=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+            <field astroidgroup="general" ngShow="[background_setting]=='image' AND [background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
+            <field astroidgroup="general" ngShow="[background_setting]=='image' AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
-            <field ngShow="[background_setting] =='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+            <field astroidgroup="general" ngShow="[background_setting] =='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
 
-            <field ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
 
-            <field name="custom_colors" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
+            <field astroidgroup="general" name="custom_colors" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
 
-            <field ngShow="[custom_colors]==1" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
-            <field ngShow="[custom_colors]==1" name="link_color" type="astroidcolor" label="TPL_ASTROID_LINK_COLOR_LABEL" />
-            <field ngShow="[custom_colors]==1" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
-            
-            <field name="spacing_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL" />
-            <field name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
-            <field name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+            <field astroidgroup="general" ngShow="[custom_colors]==1" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
+            <field astroidgroup="general" ngShow="[custom_colors]==1" name="link_color" type="astroidcolor" label="TPL_ASTROID_LINK_COLOR_LABEL" />
+            <field astroidgroup="general" ngShow="[custom_colors]==1" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
+
+            <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+            <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
