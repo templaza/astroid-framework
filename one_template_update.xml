@@ -2,7 +2,7 @@
 	<update>
 		<name>One Template</name>
 		<element>astroid_template_one</element>
-		<version>3.0.10</version>
+		<version>3.0.11</version>
 		<type>template</type>
 		<client>0</client>
 		<tags>
