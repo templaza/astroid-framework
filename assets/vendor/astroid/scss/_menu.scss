@@ -47,7 +47,6 @@
 }
 
 .nav-item-megamenu .nav-submenu {
-
 	.item-link-heading.item-level-2,
 	.item-link-separator.item-level-2 {
 		text-transform: uppercase;
@@ -55,6 +54,9 @@
 		&:hover {
 			color: inherit !important;
 			background-color: inherit !important;
+		}
+		.nav-item-caret {
+			display: none;
 		}
 	}
 }

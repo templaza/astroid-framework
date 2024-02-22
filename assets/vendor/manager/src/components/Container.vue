@@ -2,9 +2,8 @@
 import Sidebar from './Sidebar.vue'
 import Main from './Main.vue'
 import { onMounted, ref } from 'vue';
-
 const props = defineProps({
-  config: { type: Object, default: null }
+  config: { type: Object, default: null },
 });
 
 const pageIndex     = ref(new Object());

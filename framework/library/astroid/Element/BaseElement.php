@@ -15,7 +15,6 @@
 
 namespace Astroid\Element;
 
-use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Media;
 use Astroid\Helper\Style;
@@ -58,6 +57,21 @@ class BaseElement
     {
         if (empty($this->content) || !$this->state) {
             return '';
+        }
+        $astroid_element_visibility =   $this->params->get('astroid_element_visibility', "allPage");
+        if ($astroid_element_visibility == "currentPage") {
+            $app = Factory::getApplication();
+            $jinput = $app->input;
+            $menuId = $jinput->get('Itemid', 0, 'INT');
+
+            $menu = $app->getMenu();
+            $item = $menu->getItem($menuId);
+            if (empty($item)) {
+                return '';
+            }
+            if ((isset($item->query['option']) && $item->query['option'] != $jinput->get('option', '')) || (isset($item->query['view']) && $item->query['view'] != $jinput->get('view', '')) || (isset($item->query['layout']) && $item->query['layout'] != $jinput->get('layout', ''))) {
+                return '';
+            }
         }
         $this->_styles();
         $max_width                  =   $this->params->get('max_width','');

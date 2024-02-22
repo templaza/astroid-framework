@@ -221,6 +221,8 @@ body.astroid-mobilemenu-opened {
          i {
             margin-left: 10px;
             margin-right: 0;
+         }
+         > i {
             transform: rotate(180deg);
          }
       }
