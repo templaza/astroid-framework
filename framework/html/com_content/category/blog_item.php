@@ -108,7 +108,6 @@ $clsItemBody        = $astroidArticle->getStyle('body');
             <?php endif; ?>
         <?php endif; ?>
 
-        <?php echo $this->item->event->beforeDisplayContent; ?>
         <?php if ($params->get('show_readmore') && $this->item->readmore) :
             if ($params->get('access-view')) :
                 $link = Route::_(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
