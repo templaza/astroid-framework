@@ -20,8 +20,10 @@
          <fieldset name="basic">
             <field name="astroid_load_fontawesome" type="radio" default="cdn" label="ASTROID_LOAD_FONTAWESOME" description="ASTROID_LOAD_FONTAWESOME_DESC" class="btn-group btn-group-yesno">
                <option value="0">OFF</option>
-               <option value="cdn">CDN</option>
-               <option value="local">Local</option>
+               <option value="cdn">ASTROID_LOAD_FONTAWESOME_CDN_CSS</option>
+               <option value="cdn_js">ASTROID_LOAD_FONTAWESOME_CDN_JS</option>
+               <option value="local">ASTROID_LOAD_FONTAWESOME_LOCAL_CSS</option>
+               <option value="local_js">ASTROID_LOAD_FONTAWESOME_LOCAL_JS</option>               
             </field>
             <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
