@@ -300,7 +300,7 @@
                     <option value="link">Link</option>
                 </field>
                 <field astroidgroup="readmore_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
-                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>

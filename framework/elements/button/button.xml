@@ -31,7 +31,7 @@
                     </form>
                 </field>
                 <field astroidgroup="widget_styles" name="button_group" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_GROUP_LABEL"/>
-                <field astroidgroup="widget_styles" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                <field astroidgroup="widget_styles" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>

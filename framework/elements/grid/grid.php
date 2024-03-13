@@ -116,8 +116,14 @@ if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style);
 }
 
+$button_style       =   $params->get('button_style', 'primary');
+$button_outline     =   $params->get('button_outline', 0);
+
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
+
+$button_radius      =   $params->get('border_radius', '');
+$button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
@@ -161,6 +167,9 @@ foreach ($grids as $key => $grid) {
     }
     if (!empty($grid_params['description'])) {
         echo '<div class="astroid-text">' . $grid_params['description'] . '</div>';
+    }
+    if (!empty($grid_params['link']) && !empty($grid_params['link_title'])) {
+        echo '<a class="btn btn-'. (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius.'" href="'.$grid_params['link'].'" role="button">' . $grid_params['link_title'] . '</a>';
     }
 
     echo '</div>'; // End Card-Body
