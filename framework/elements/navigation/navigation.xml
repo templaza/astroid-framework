@@ -17,6 +17,7 @@
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field description="ASTROID_WIDGET_SHOW_TITLE_DESC" name="show_title" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_SHOW_TITLE_LABEL"/>
                                 <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
                                 <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
