@@ -25,6 +25,7 @@
                                     <option value="_parent">Parent Frame</option>
                                     <option value="_top">Full body of the window</option>
                                 </field>
+                                <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_REL_ATTRIBUTE_LABEL" name="rel"/>
                             </fieldset>
                         </fields>
                     </form>
