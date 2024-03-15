@@ -11,6 +11,12 @@
                 <field astroidgroup="general" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
                 <field astroidgroup="general" description="ASTROID_WIDGET_IMAGE_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
                 <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_IMAGE_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                <field astroidgroup="general" ngShow="[use_link]==1" type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="_blank">New Window</option>
+                    <option value="_parent">Parent Frame</option>
+                    <option value="_top">Full body of the window</option>
+                </field>
 
                 <field astroidgroup="widget_styles" name="max_width" type="astroidtext" default="" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_IMAGE_MAX_WIDTH_DESC" hint="500px" />
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">

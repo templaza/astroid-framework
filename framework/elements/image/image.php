@@ -17,6 +17,8 @@ $title          = $params->get('title', '');
 $image          = $params->get('image', '');
 $use_link       = $params->get('use_link', 0);
 $link           = $params->get('link', '');
+$target         = $params->get('target', '');
+$target         = $target !== '' ? ' target="'.$target.'"' : '';
 
 $border_radius  = $params->get('border_radius', '');
 $border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
@@ -30,7 +32,7 @@ $max_width      = $params->get('max_width', '');
 $max_width      = $max_width !== '' ? ' style="max-width:'.$max_width.'"' : '';
 if (!empty($image)) {
     if ($use_link) {
-        echo '<a href="'.$link.'" title="'.$title.'">';
+        echo '<a href="'.$link.'" title="'.$title.'"'.$target.'>';
     }
     echo '<div class="d-inline-block position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
     echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
