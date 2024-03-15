@@ -297,6 +297,8 @@
       });
    };
    $(window).on('load', function() {
-      $('[data-megamenu]').JDMegaMenu();
+      $('[data-megamenu]').each(function() {
+         $(this).JDMegaMenu();
+      });
    });
 })(jQuery);
