@@ -3,7 +3,7 @@
     <title>ASTROID_WIDGET_IMAGE_LABEL</title>
     <description>ASTROID_WIDGET_IMAGE_DESC</description>
     <icon>fa-regular fa-image</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
