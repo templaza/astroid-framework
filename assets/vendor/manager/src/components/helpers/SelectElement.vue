@@ -5,8 +5,9 @@ const emit = defineEmits(['update:closeElement', 'update:selectElement']);
 const props = defineProps(['form', 'system']);
 const currentFilter = ref('');
 const addons = ref([]);
-let filters = [];
-let counter = {};
+let filters = ['System'];
+let orders = {'System':0}
+let counter = {'System':0};
 onMounted(()=> {
     let addon = {};
     Object.keys(props.form).every(key => {
@@ -15,15 +16,19 @@ onMounted(()=> {
             if (['component', 'banner', 'message'].includes(addon.type) && !props.system[addon.type]) {
                 return true;
             }
-            addons.value.push(addon);
             addon.category.forEach(cat => {
                 if (filters.includes(cat)) {
                     counter[cat]++;
                 } else {
                     filters.push(cat);
+                    orders[cat] = Object.keys(orders).length;
                     counter[cat] = 1;
                 }
+                if (typeof addon.order === 'undefined') {
+                    addon.order = orders[cat];
+                }
             });
+            addons.value.push(addon);
             return true;
         }
     });
@@ -56,7 +61,10 @@ function selectElement(addon) {
                         </div>
                         <div class="col">
                             <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 g-3">
-                                <div v-for="addon in addons" v-show="currentFilter === '' || addon.category.includes(currentFilter)">
+                                <div v-for="order_key in Object.keys(orders)" v-show="currentFilter === '' || currentFilter === order_key" :class="`order-` + orders[order_key]" class="col-xl-12 col-lg-12 col-12">
+                                    <h5 class="mt-1 mb-0">{{ order_key }}</h5>
+                                </div>
+                                <div v-for="addon in addons" v-show="currentFilter === '' || addon.category.includes(currentFilter)" :class="`order-` + addon.order">
                                     <div class="addon-block card card-default card-body align-items-center justify-content-center" @click="selectElement(addon)">
                                         <i class="fa-2x mb-2 text-body-tertiary" :class="addon.icon"></i>
                                         <div class="form-text">{{ addon.title }}</div>
