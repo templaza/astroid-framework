@@ -18,6 +18,7 @@ import SubForm from './SubForm.vue';
 import Icons from './Icons.vue';
 import Editor from './Editor.vue';
 import Categories from './Categories.vue';
+import Assignment from './Assignment.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
@@ -173,5 +174,8 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroiddivider`" class="astroid-divider">
         <hr/>
+    </div>
+    <div v-else-if="props.field.input.type === `astroidassignment`" class="astroid-assignment">
+        <Assignment v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>

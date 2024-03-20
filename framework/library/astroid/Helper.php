@@ -17,6 +17,7 @@ use Joomla\CMS\Version;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
 
 defined('_JEXEC') or die;
 
@@ -399,6 +400,66 @@ class Helper
             $options[] = $tmp;
         }
         return $options;
+    }
+
+    public static function getMenuLinks() {
+        $menuTypes = MenusHelper::getMenuLinks();
+        $menus  =   array();
+        if (!empty($menuTypes)) {
+            foreach ($menuTypes as $type) {
+                $menutype = new \stdClass();
+                $menutype->id = $type->id;
+                $menutype->menutype = $type->menutype;
+                $menutype->title = $type->title;
+                $menutype->description = $type->description;
+                $menutype->links = array();
+                $i = 0;
+                $prevlevel = 0;
+                $parentstack = array();
+                while ($i < count($type->links)) {
+                    $link = $type->links[$i];
+                    $tmp_link = new \stdClass();
+                    $tmp_link->id = $link->value;
+                    $tmp_link->text = $link->text;
+                    $tmp_link->level = $link->level;
+                    $tmp_link->type = $link->type;
+                    $tmp_link->language = $link->language;
+                    $tmp_link->links = array();
+                    if ($tmp_link->level === 1) {
+                        if (!empty($parentstack)) {
+                            array_pop($parentstack);
+                        }
+                        $menutype->links[] = $tmp_link;
+                        $parentstack[] = end($menutype->links);
+                    } elseif ($prevlevel < $tmp_link->level) {
+                        $parent = end($parentstack);
+                        $parent->links[] = $tmp_link;
+                        $parentstack[] = end($parent->links);
+                    } elseif ($prevlevel == $tmp_link->level) {
+                        if (!empty($parentstack)) {
+                            array_pop($parentstack);
+                        }
+                        $parent = end($parentstack);
+                        $parent->links[] = $tmp_link;
+                        $parentstack[] = end($parent->links);
+                    } else {
+                        if (!empty($parentstack)) {
+                            array_pop($parentstack);
+                        }
+                        if (!empty($parentstack)) {
+                            array_pop($parentstack);
+                        }
+                        $parent = end($parentstack);
+                        $parent->links[] = $tmp_link;
+                        $parentstack[] = end($parent->links);
+                    }
+                    $prevlevel = $tmp_link->level;
+                    $i++;
+                }
+                $menus[]    =   $menutype;
+            }
+        }
+        return $menus;
     }
 
     public static function frameworkVersion()

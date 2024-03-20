@@ -56,6 +56,12 @@
   --bs-btn-focus-shadow-rgb: var(--as-violet-rgb)
 }
 
+.as-btn-xs {
+  --bs-btn-padding-y: 0.15rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.7rem;
+}
+
 .as-btn-lg {
   --bs-btn-border-radius: .5rem;
   padding: .8125rem 2rem

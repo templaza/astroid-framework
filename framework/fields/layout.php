@@ -35,7 +35,6 @@ class JFormFieldLayout extends FormField
        $form_template['row'] = $rowElement->renderJson();
        $columnElement = new Element('column');
        $form_template['column'] = $columnElement->renderJson();
-
        $value = $this->value;
        if (empty($value)) {
            $options = \json_decode(\file_get_contents(JPATH_SITE . '/' . 'media' . '/' . 'astroid' . '/' . 'assets' . '/' . 'json' . '/' . 'layouts' . '/' . 'default.json'), TRUE);

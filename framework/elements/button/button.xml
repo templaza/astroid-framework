@@ -49,6 +49,9 @@
                     <option value="xxl">ASTROID_XXL</option>
                 </field>
             </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
         </fields>
     </form>
 </element>
