@@ -3,13 +3,28 @@ import { onBeforeMount, ref, computed, watch } from 'vue';
 import MenuListItem from './MenuListItem.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
-  field: { type: Object, default: null },
-  modelValue: { type: String, default: '{}' }
+    field: { type: Object, default: null },
+    modelValue: { type: String, default: '{}' }
 });
 const list = ref({});
 onBeforeMount(() => {
-    list.value = props.field.input.value;
+    try {
+        list.value = JSON.parse(props.modelValue);
+    } catch (e) {
+        props.field.input.menu.forEach(menu => {
+            setDefault(menu);
+        });
+    }
 });
+
+function setDefault(menu) {
+    menu.links.forEach(item => {
+        list.value[item.id] = true;
+        if (item.links.length > 0) {
+            setDefault(item);
+        }
+    });
+}
 
 const list_text = computed(() => {
     return JSON.stringify(list.value);

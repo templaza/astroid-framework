@@ -37,6 +37,9 @@
                 <field astroidgroup="misc_options" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
                 <field astroidgroup="misc_options" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
             </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
         </fields>
     </form>
 </element>

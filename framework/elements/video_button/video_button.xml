@@ -27,6 +27,9 @@
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_width" type="astroidrange" min="1" max="50" step="1" postfix="px" default="1" label="ASTROID_WIDGET_BORDER_WIDTH" />
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_color" type="astroidcolor" label="ASTROID_WIDGET_BORDER_COLOR"/>
             </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
         </fields>
     </form>
 </element>

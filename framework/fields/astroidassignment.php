@@ -8,7 +8,6 @@
 defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Multilanguage;
-use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
 
 /**
  * Form Field class for the Joomla Platform.
@@ -36,26 +35,10 @@ class JFormFieldAstroidAssignment extends FormField {
      * @since   3.7.0
      */
     protected function getInput() {
-        $menuTypes = MenusHelper::getMenuLinks();
-        $menus  =   array();
-        $value  =   \json_decode($this->value, true);
-        if (!empty($menuTypes)) {
-            foreach ($menuTypes as $type) {
-                if (count($type->links)) {
-                    foreach ($type->links as $link) {
-                        if (isset($value[$link->value])) {
-                            $menus[$link->value] = $value[$link->value];
-                        } else {
-                            $menus[$link->value] = true;
-                        }
-                    }
-                }
-            }
-        }
         $json =   [
             'id'      =>  $this->id,
             'name'    =>  $this->name,
-            'value'   =>  $menus,
+            'value'   =>  \json_decode($this->value, true),
             'menu'    =>  Astroid\Helper::getMenuLinks(),
             'multilanguage' => Multilanguage::isEnabled(),
             'type'    =>  strtolower($this->type),
