@@ -5,6 +5,7 @@
    <icon>fas fa-cube</icon>
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#00B8D8</color>
+   <element_type>system</element_type>
    <form>
       <fields>
          <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">

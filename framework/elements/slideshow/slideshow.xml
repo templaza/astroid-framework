@@ -4,6 +4,7 @@
     <description>ASTROID_WIDGET_SLIDESHOW_DESC</description>
     <icon>fa-solid fa-panorama</icon>
     <category>ASTROID_ELEMENT_CATEGORY_MEDIA,ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">

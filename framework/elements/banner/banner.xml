@@ -6,4 +6,5 @@
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#00B8D8</color>
    <multiple>false</multiple>
+   <element_type>system</element_type>
 </element>

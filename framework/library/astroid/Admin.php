@@ -135,6 +135,7 @@ class Admin extends Helper\Client
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+        $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
 
         $config = [
             'site_url'              =>  Uri::root(),
@@ -143,6 +144,7 @@ class Admin extends Helper\Client
             'template_name'         => $template->template.'-'.$template->id,
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
+            'enable_widget'         => $enable_widget,
             'astroid_version'       => Helper\Constants::$astroid_version,
             'astroid_link'          => Helper\Constants::$astroid_link,
             'document_link'         => Helper\Constants::$documentation_link,

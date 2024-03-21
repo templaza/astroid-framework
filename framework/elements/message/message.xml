@@ -7,5 +7,5 @@
    <color>#17C671</color>
    <info>TPL_ASTROID_SYSTEM_MESSAGES_LABEL</info>
    <multiple>false</multiple>
-   <info label="Animation" property="animation"></info>
+   <element_type>system</element_type>
 </element>

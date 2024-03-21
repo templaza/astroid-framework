@@ -8,4 +8,5 @@
    <info>ASTROID_ELEMENTS_COMPONENT_INFO</info>
    <info label="Animation" property="animation"></info>
    <multiple>false</multiple>
+   <element_type>system</element_type>
 </element>

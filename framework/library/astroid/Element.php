@@ -24,6 +24,7 @@ class Element
     public bool $multiple = true;
     public string $classname = '';
     public string $description = '';
+    public string $element_type = 'system';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
     protected string $layout = '';
@@ -119,6 +120,7 @@ class Element
         $category = (string) @$xml->category;
 
         $this->title = $title;
+        $this->element_type = (string) @$xml->element_type;
         $this->icon = $icon;
         $this->category = explode(',', $category);
         for ($i = 0 ; $i < count($this->category); $i++) {
@@ -169,6 +171,7 @@ class Element
             'title' => Text::_($this->title),
             'icon' => $this->icon,
             'category' => $this->category,
+            'element_type' => $this->element_type,
             'description' => Text::_($this->description),
             'color' => $this->color,
             'multiple' => $this->multiple,
