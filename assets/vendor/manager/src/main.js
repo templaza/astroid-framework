@@ -3,7 +3,6 @@ import App from './App.vue'
 import 'bootstrap/scss/bootstrap.scss'
 import "vue-search-select/dist/VueSearchSelect.css"
 import 'vue-color-kit/dist/vue-color-kit.css'
-import CKEditor from '@ckeditor/ckeditor5-vue'
 import { Tooltip, Toast, Modal } from 'bootstrap/js/index.esm'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
@@ -18,7 +17,6 @@ app.use(VueMonacoEditorPlugin, {
         vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
     },
 });
-app.use( CKEditor );
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.component('font-awesome-layers', FontAwesomeLayers);
 app.component('font-awesome-layers-text', FontAwesomeLayersText);
