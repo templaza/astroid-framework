@@ -45,6 +45,7 @@ class Head
             $wa->registerAndUseStyle('astroid.apple-touch-icon', Media::getPath() . '/' . $apple_touch_icon, ['version' => 'auto'], ['rel' => 'apple-touch-icon', 'type' => $image_type['mime'], 'sizes' => 'any']);
         }
 
+        $site_webmanifest = $params->get('site_webmanifest', '');
         if (!empty($site_webmanifest)) {
             if ( (strpos( $site_webmanifest, 'http://' ) !== false) || (strpos( $site_webmanifest, 'https://' ) !== false) ) {
                 $site_webmanifest = $params->get('site_webmanifest', '');
