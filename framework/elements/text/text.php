@@ -18,15 +18,8 @@ $title          = $params->get('heading', '');
 $html_element   = $params->get('html_element', 'h2');
 $font_style     = $params->get('font_style');
 $heading_margin = $params->get('heading_margin', '');
-$content        = $params->get('content', '');
-$content        = preg_replace_callback('/<a href="(https:\/\/www\.youtube\.com\/watch\?v=.+?)">.+?<\/a>/i', function ($matches) {
-    $html = Astroid\Helper\Video::getVideoByTypeUrl('youtube', $matches[1], true);
-    return '<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">'.$html.'</div>';
-}, $content);
-$content        = preg_replace_callback('/<a href="(https:\/\/vimeo\.com\/.+?)">.+?<\/a>/i', function ($matches) {
-    $html = Astroid\Helper\Video::getVideoByTypeUrl('vimeo', $matches[1], true);
-    return '<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">'.$html.'</div>';
-}, $content);
+$content        = Astroid\Helper\Video::getVideoFromContent($params->get('content', ''));
+
 $content_font_style= $params->get('content_font_style');
 
 $text_column_cls        =   '';

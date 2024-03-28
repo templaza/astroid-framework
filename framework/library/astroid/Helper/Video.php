@@ -82,4 +82,18 @@ class Video
 
         return $thumbnail;
     }
+
+    public static function getVideoFromContent($content = '') {
+        return preg_replace_callback('/<a href="(\S*?youtube\.com\/.+?|\S*?vimeo\.com\/.+?)">.+?<\/a>/i', function ($matches) {
+            $html = '';
+            if (strpos($matches[1], 'youtube')) {
+                $html = self::getVideoByTypeUrl('youtube', $matches[1], true);
+            } elseif (strpos($matches[1], 'vimeo')) {
+                $html = self::getVideoByTypeUrl('vimeo', $matches[1], true);
+            }
+            if ($html) {
+                return '<div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">'.$html.'</div>';
+            }
+        }, $content);
+    }
 }
