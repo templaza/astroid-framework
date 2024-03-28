@@ -117,7 +117,7 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoi
                </div>
             <?php endif; ?>
              <?php if ($enable_offcanvas) { ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-'.$header_breakpoint.'-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>

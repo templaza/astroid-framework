@@ -18,7 +18,8 @@ $title          = $params->get('heading', '');
 $html_element   = $params->get('html_element', 'h2');
 $font_style     = $params->get('font_style');
 $heading_margin = $params->get('heading_margin', '');
-$content        = $params->get('content', '');
+$content        = Astroid\Helper\Video::getVideoFromContent($params->get('content', ''));
+
 $content_font_style= $params->get('content_font_style');
 
 $text_column_cls        =   '';

@@ -3,7 +3,8 @@
     <title>ASTROID_WIDGET_GRID_LABEL</title>
     <description>ASTROID_WIDGET_GRID_DESC</description>
     <icon>fa-solid fa-grip</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
@@ -300,7 +301,7 @@
                     <option value="link">Link</option>
                 </field>
                 <field astroidgroup="readmore_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
-                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
@@ -310,6 +311,9 @@
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>
                 </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>

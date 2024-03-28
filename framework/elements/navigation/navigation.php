@@ -40,8 +40,10 @@ echo '<nav class="nav' . $alignment . $list_style . '">';
 foreach ($menu_items as $item) {
     $menu_params    =   Style::getSubFormParams($item->params);
     $target         =   isset($menu_params['target']) && $menu_params['target'] ? ' target="'.$menu_params['target'].'"' : '';
+    $show_title     =   isset($menu_params['show_title']) && intval($menu_params['show_title']) ? ' title="'.$menu_params['title'].'"' : '';
+    $rel            =   isset($menu_params['rel']) && $menu_params['rel'] ? ' rel="'.$menu_params['rel'].'"' : '';
     $icon           =   $menu_params['icon'] !== '' ? '<i class="me-2 '.$menu_params['icon'].'"></i>' : '';
-    echo '<a id="item-'.$item->id.'"  class="nav-link" href="' .$menu_params['link']. '" title="'.$menu_params['title'].'"' . $target . '>'.$icon.$menu_params['title'].'</a>';
+    echo '<a id="item-'.$item->id.'"  class="nav-link" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a>';
 }
 echo '</nav>';
 

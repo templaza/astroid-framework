@@ -39,8 +39,6 @@ if ($background_setting_404 == 'video' && !empty($background_video_404)) {
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-    <meta charset="utf-8" />
-    <title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
     <jdoc:include type="head" />
     <?php
     echo $document->renderMeta();

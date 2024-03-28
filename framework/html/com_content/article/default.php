@@ -56,23 +56,24 @@ $clsItemBody       = $astroidArticle->getStyle('body');
 
     <div<?php echo $clsItemContainer ? ' class="'.$clsItemContainer.'"' : ''; ?>>
         <?php $astroidArticle->render('above-title'); ?>
-        <?php if ($params->get('show_title')) : ?>
-            <div class="page-header item-title">
-                <<?php echo $htag; ?>>
-                    <?php echo $this->escape($this->item->title); ?>
-                </<?php echo $htag; ?>>
-                <?php if ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
-                    <span class="badge bg-warning text-light"><?php echo Text::_('JUNPUBLISHED'); ?></span>
-                <?php endif; ?>
-                <?php if ($isNotPublishedYet) : ?>
-                    <span class="badge bg-warning text-light"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
-                <?php endif; ?>
-                <?php if ($isExpired) : ?>
-                    <span class="badge bg-warning text-light"><?php echo Text::_('JEXPIRED'); ?></span>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
 
+    <div<?php echo (!empty($clsItemBody) ? ' class="'.$clsItemBody.'"' : ''); ?>>
+        <?php if ($params->get('show_title')) : ?>
+        <div class="page-header item-title">
+            <<?php echo $htag; ?>>
+            <?php echo $this->escape($this->item->title); ?>
+            </<?php echo $htag; ?>>
+        <?php if ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
+            <span class="badge bg-warning text-light"><?php echo Text::_('JUNPUBLISHED'); ?></span>
+        <?php endif; ?>
+        <?php if ($isNotPublishedYet) : ?>
+            <span class="badge bg-warning text-light"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
+        <?php endif; ?>
+        <?php if ($isExpired) : ?>
+            <span class="badge bg-warning text-light"><?php echo Text::_('JEXPIRED'); ?></span>
+        <?php endif; ?>
+        </div>
+        <?php endif; ?>
         <?php if ($canEdit) : ?>
             <?php echo LayoutHelper::render('joomla.content.icons', ['params' => $params, 'item' => $this->item]); ?>
         <?php endif; ?>
@@ -107,7 +108,7 @@ $clsItemBody       = $astroidArticle->getStyle('body');
             endif; ?>
             <?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
             <?php $astroidArticle->render('before-content'); ?>
-            <div class="com-content-article__body<?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
+            <div class="com-content-article__body">
                 <?php echo $this->item->text; ?>
             </div>
             <?php $astroidArticle->render('after-content'); ?>
@@ -147,6 +148,7 @@ $clsItemBody       = $astroidArticle->getStyle('body');
                 <?php echo LayoutHelper::render('joomla.content.readmore', ['item' => $this->item, 'params' => $params, 'link' => $link]); ?>
             <?php endif; ?>
         <?php endif; ?>
+    </div>
     </div>
     <?php
     if (!empty($this->item->pagination) && $this->item->paginationposition && $this->item->paginationrelative) :

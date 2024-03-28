@@ -3,7 +3,8 @@
     <title>ASTROID_WIDGET_IMAGE_LABEL</title>
     <description>ASTROID_WIDGET_IMAGE_DESC</description>
     <icon>fa-regular fa-image</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
@@ -11,6 +12,12 @@
                 <field astroidgroup="general" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
                 <field astroidgroup="general" description="ASTROID_WIDGET_IMAGE_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
                 <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_IMAGE_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                <field astroidgroup="general" ngShow="[use_link]==1" type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="_blank">New Window</option>
+                    <option value="_parent">Parent Frame</option>
+                    <option value="_top">Full body of the window</option>
+                </field>
 
                 <field astroidgroup="widget_styles" name="max_width" type="astroidtext" default="" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_IMAGE_MAX_WIDTH_DESC" hint="500px" />
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
@@ -61,6 +68,9 @@
                     <option value="buzz">ASTROID_WIDGET_TRANSITION_BUZZ</option>
                     <option value="buzz-out">ASTROID_WIDGET_TRANSITION_BUZZ_OUT</option>
                 </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>

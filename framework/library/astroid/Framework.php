@@ -85,6 +85,9 @@ abstract class Framework
 
     public static function getDocument(): Document
     {
+        if (self::$document === null) {
+            self::$document = new Document();
+        }
         return self::$document;
     }
 
@@ -92,6 +95,8 @@ abstract class Framework
     {
         if ($id !== null) {
             self::$template = new Template($id);
+        } elseif (self::$template === null) {
+            self::$template = new Template();
         }
         return self::$template;
     }

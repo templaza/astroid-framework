@@ -3,7 +3,8 @@
     <title>ASTROID_WIDGET_VIDEO_BUTTON_LABEL</title>
     <description>ASTROID_WIDGET_VIDEO_BUTTON_DESC</description>
     <icon>fa-solid fa-video</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
@@ -26,6 +27,9 @@
                 <field astroidgroup="widget_styles" name="use_border" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_BORDER"/>
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_width" type="astroidrange" min="1" max="50" step="1" postfix="px" default="1" label="ASTROID_WIDGET_BORDER_WIDTH" />
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_color" type="astroidcolor" label="ASTROID_WIDGET_BORDER_COLOR"/>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>

@@ -10,7 +10,6 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
 defined('_JEXEC') or die;
 
 class Element
@@ -25,6 +24,7 @@ class Element
     public bool $multiple = true;
     public string $classname = '';
     public string $description = '';
+    public string $element_type = 'system';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
     protected string $layout = '';
@@ -120,8 +120,12 @@ class Element
         $category = (string) @$xml->category;
 
         $this->title = $title;
+        $this->element_type = (string) @$xml->element_type;
         $this->icon = $icon;
         $this->category = explode(',', $category);
+        for ($i = 0 ; $i < count($this->category); $i++) {
+            $this->category[$i] = Text::_($this->category[$i]);
+        }
         $this->description = $description;
         $this->color = $color;
         $this->multiple = $multiple == "false" ? false : true;
@@ -167,6 +171,7 @@ class Element
             'title' => Text::_($this->title),
             'icon' => $this->icon,
             'category' => $this->category,
+            'element_type' => $this->element_type,
             'description' => Text::_($this->description),
             'color' => $this->color,
             'multiple' => $this->multiple,

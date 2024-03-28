@@ -253,12 +253,11 @@ class Utility
         Style::addCssBySelector('[data-bs-theme=dark]', 'background-color', $body_background_color['dark']);
 
         if ($template_layout == 'boxed') {
-            $body = new Style('.astroid-layout-boxed .astroid-wrapper');
-            $body_dark = new Style('.astroid-layout-boxed .astroid-wrapper', 'dark');
-        } else {
-            $body = new Style('body');
-            $body_dark = new Style('body', 'dark');
+            Style::addCssBySelector('.astroid-layout.astroid-layout-boxed .astroid-wrapper', 'background-color', $body_background_color['light']);
+            Style::addCssBySelector('[data-bs-theme=dark] .astroid-layout.astroid-layout-boxed .astroid-wrapper', 'background-color', $body_background_color['dark']);
         }
+        $body = new Style('body');
+        $body_dark = new Style('body', 'dark');
         $body->addCss('--bs-body-bg', $body_background_color['light']);
         $body->addCss('--bs-body-color', $body_text_color['light']);
         $body->link()->addCss('color', 'var(--as-link-color)');

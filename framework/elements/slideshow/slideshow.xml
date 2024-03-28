@@ -3,7 +3,8 @@
     <title>ASTROID_WIDGET_SLIDESHOW_LABEL</title>
     <description>ASTROID_WIDGET_SLIDESHOW_DESC</description>
     <icon>fa-solid fa-panorama</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA,ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
@@ -155,6 +156,9 @@
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>
                 </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>

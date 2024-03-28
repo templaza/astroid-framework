@@ -3,7 +3,8 @@
     <title>ASTROID_WIDGET_NAVIGATION_LABEL</title>
     <description>ASTROID_WIDGET_NAVIGATION_DESC</description>
     <icon>fa-solid fa-bars</icon>
-    <category>Widgets</category>
+    <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
@@ -17,6 +18,7 @@
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field description="ASTROID_WIDGET_SHOW_TITLE_DESC" name="show_title" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_SHOW_TITLE_LABEL"/>
                                 <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
                                 <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
@@ -24,6 +26,7 @@
                                     <option value="_parent">Parent Frame</option>
                                     <option value="_top">Full body of the window</option>
                                 </field>
+                                <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_REL_ATTRIBUTE_LABEL" name="rel"/>
                             </fieldset>
                         </fields>
                     </form>
@@ -47,6 +50,9 @@
 
                 <field astroidgroup="spacing_options" name="item_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
                 <field astroidgroup="spacing_options" name="item_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>

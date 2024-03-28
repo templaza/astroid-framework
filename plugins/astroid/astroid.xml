@@ -35,6 +35,10 @@
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
+            <field name="astroid_enable_widgets" type="radio" default="1" label="TPL_ASTROID_BASIC_ENABLE_WIDGETS_LABEL" description="TPL_ASTROID_BASIC_ENABLE_WIDGETS_DESC" class="btn-group btn-group-yesno">
+               <option value="1">JYES</option>
+               <option value="0">JNO</option>
+            </field>
             <field name="astroid_remove_generator" type="radio" default="0" label="TPL_ASTROID_BASIC_REMOVE_GENERATOR_LABEL" description="TPL_ASTROID_BASIC_REMOVE_GENERATOR_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
