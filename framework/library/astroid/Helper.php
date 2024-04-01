@@ -418,42 +418,44 @@ class Helper
                 $parentstack = array();
                 while ($i < count($type->links)) {
                     $link = $type->links[$i];
-                    $tmp_link = new \stdClass();
-                    $tmp_link->id = $link->value;
-                    $tmp_link->text = $link->text;
-                    $tmp_link->level = $link->level;
-                    $tmp_link->type = $link->type;
-                    $tmp_link->language = $link->language;
-                    $tmp_link->links = array();
-                    if ($tmp_link->level === 1) {
-                        if (!empty($parentstack)) {
-                            array_pop($parentstack);
+                    if ($link->level !== 0) {
+                        $tmp_link = new \stdClass();
+                        $tmp_link->id = $link->value;
+                        $tmp_link->text = $link->text;
+                        $tmp_link->level = $link->level;
+                        $tmp_link->type = $link->type;
+                        $tmp_link->language = $link->language;
+                        $tmp_link->links = array();
+                        if ($tmp_link->level === 1) {
+                            if (!empty($parentstack)) {
+                                array_pop($parentstack);
+                            }
+                            $menutype->links[] = $tmp_link;
+                            $parentstack[] = end($menutype->links);
+                        } elseif ($prevlevel < $tmp_link->level) {
+                            $parent = end($parentstack);
+                            $parent->links[] = $tmp_link;
+                            $parentstack[] = end($parent->links);
+                        } elseif ($prevlevel == $tmp_link->level) {
+                            if (!empty($parentstack)) {
+                                array_pop($parentstack);
+                            }
+                            $parent = end($parentstack);
+                            $parent->links[] = $tmp_link;
+                            $parentstack[] = end($parent->links);
+                        } else {
+                            if (!empty($parentstack)) {
+                                array_pop($parentstack);
+                            }
+                            if (!empty($parentstack)) {
+                                array_pop($parentstack);
+                            }
+                            $parent = end($parentstack);
+                            $parent->links[] = $tmp_link;
+                            $parentstack[] = end($parent->links);
                         }
-                        $menutype->links[] = $tmp_link;
-                        $parentstack[] = end($menutype->links);
-                    } elseif ($prevlevel < $tmp_link->level) {
-                        $parent = end($parentstack);
-                        $parent->links[] = $tmp_link;
-                        $parentstack[] = end($parent->links);
-                    } elseif ($prevlevel == $tmp_link->level) {
-                        if (!empty($parentstack)) {
-                            array_pop($parentstack);
-                        }
-                        $parent = end($parentstack);
-                        $parent->links[] = $tmp_link;
-                        $parentstack[] = end($parent->links);
-                    } else {
-                        if (!empty($parentstack)) {
-                            array_pop($parentstack);
-                        }
-                        if (!empty($parentstack)) {
-                            array_pop($parentstack);
-                        }
-                        $parent = end($parentstack);
-                        $parent->links[] = $tmp_link;
-                        $parentstack[] = end($parent->links);
+                        $prevlevel = $tmp_link->level;
                     }
-                    $prevlevel = $tmp_link->level;
                     $i++;
                 }
                 $menus[]    =   $menutype;
