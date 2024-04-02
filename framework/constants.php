@@ -8,6 +8,4 @@
  */
 defined('_JEXEC') or die;
 
-class AstroidFrameworkConstants extends Astroid\Helper\Constants
-{
-}
+class AstroidFrameworkConstants extends Astroid\Helper\Constants {}
