@@ -432,7 +432,7 @@ class Helper
                             }
                             $menutype->links[] = $tmp_link;
                             $parentstack[] = end($menutype->links);
-                        } elseif ($prevlevel < $tmp_link->level) {
+                        } elseif ($prevlevel < $tmp_link->level && !empty($parentstack)) {
                             $parent = end($parentstack);
                             $parent->links[] = $tmp_link;
                             $parentstack[] = end($parent->links);
@@ -440,9 +440,11 @@ class Helper
                             if (!empty($parentstack)) {
                                 array_pop($parentstack);
                             }
-                            $parent = end($parentstack);
-                            $parent->links[] = $tmp_link;
-                            $parentstack[] = end($parent->links);
+                            if (!empty($parentstack)) {
+                                $parent = end($parentstack);
+                                $parent->links[] = $tmp_link;
+                                $parentstack[] = end($parent->links);
+                            }
                         } else {
                             if (!empty($parentstack)) {
                                 array_pop($parentstack);
@@ -450,9 +452,11 @@ class Helper
                             if (!empty($parentstack)) {
                                 array_pop($parentstack);
                             }
-                            $parent = end($parentstack);
-                            $parent->links[] = $tmp_link;
-                            $parentstack[] = end($parent->links);
+                            if (!empty($parentstack)) {
+                                $parent = end($parentstack);
+                                $parent->links[] = $tmp_link;
+                                $parentstack[] = end($parent->links);
+                            }
                         }
                         $prevlevel = $tmp_link->level;
                     }
