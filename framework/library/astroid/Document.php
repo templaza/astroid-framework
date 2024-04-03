@@ -11,8 +11,6 @@ namespace Astroid;
 
 defined('_JEXEC') or die;
 
-require_once __DIR__ . "/../scssphp/scss.inc.php";
-
 use Astroid\Helper\Constants;
 use Joomla\Filesystem\File;
 use ScssPhp\ScssPhp\Compiler;

@@ -10,11 +10,12 @@ use Joomla\CMS\Factory;
 
 defined('JPATH_BASE') or die;
 extract($displayData);
+$app      = Factory::getApplication();
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $plugin_params = Astroid\Helper::getPluginParams();
 $color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
-$color_mode_theme   =   (isset($_COOKIE['astroid_colormode']) && $_COOKIE['astroid_colormode'] ? $_COOKIE['astroid_colormode'] : 'light');
+$color_mode_theme  =   $app->input->cookie->get('astroid_colormode', 'light');
 ?>
 <!DOCTYPE html>
 <html id="astroid-html" data-bs-theme="<?php echo $color_mode_theme; ?>">

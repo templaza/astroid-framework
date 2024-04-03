@@ -7,14 +7,26 @@ namespace Composer\Autoload;
 class ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'ScssPhp\\ScssPhp\\' => 16,
+        ),
         'M' => 
         array (
             'MatthiasMullie\\PathConverter\\' => 29,
             'MatthiasMullie\\Minify\\' => 22,
         ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'ScssPhp\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
+        ),
         'MatthiasMullie\\PathConverter\\' => 
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/path-converter/src',
@@ -23,6 +35,14 @@ class ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70
         array (
             0 => __DIR__ . '/..' . '/matthiasmullie/minify/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -30,6 +50,7 @@ class ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70::$classMap;
 
         }, null, ClassLoader::class);
     }

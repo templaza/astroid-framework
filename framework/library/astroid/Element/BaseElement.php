@@ -58,11 +58,16 @@ class BaseElement
         if (empty($this->content) || !$this->state) {
             return '';
         }
+        $assignment_type =   $this->params->get('assignment_type', 1);
+        if ($assignment_type == 0) {
+            return '';
+        }
         $app = Factory::getApplication();
         $jinput = $app->input;
         $menuId = $jinput->get('Itemid', 0, 'INT');
+
         $assignment =   $this->params->get('assignment', "");
-        if ($assignment) {
+        if ($assignment_type == 2 && $assignment) {
             $assignment =   \json_decode($assignment, true);
             if (isset($assignment[$menuId]) && !$assignment[$menuId]) {
                 return '';

@@ -52,7 +52,12 @@
                 <field astroidgroup="spacing_options" name="item_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-                <field type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>
