@@ -3,12 +3,16 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 
 # Changelogs
 
-Version 1.0.3 - 21 February, 2023
+Version 1.0.4 - 3 April, 2024
+
+    Update default configuration
+
+Version 1.0.3 - 21 February, 2024
 
     Update - Menu style submenu
     Improved - Optimized code
 
-Version 1.0.2 - 15 February, 2023
+Version 1.0.2 - 15 February, 2024
 
     Update - Menu style for Logo Left divider
     Update - error.php and offline.php
