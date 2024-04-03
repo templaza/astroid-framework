@@ -7,6 +7,8 @@
  */
 defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a one line text field.
@@ -133,7 +135,7 @@ class JFormFieldAstroidtext extends FormField {
          $inputmode = explode(' ', $inputmode);
 
          if (!empty($inputmode)) {
-            $defaultInputmode = in_array('default', $inputmode) ? JText::_('JLIB_FORM_INPUTMODE') . ' ' : '';
+            $defaultInputmode = in_array('default', $inputmode) ? Text::_('JLIB_FORM_INPUTMODE') . ' ' : '';
 
             foreach (array_keys($inputmode, 'default') as $key) {
                unset($inputmode[$key]);
@@ -188,8 +190,8 @@ class JFormFieldAstroidtext extends FormField {
          }
 
          // Create a new option object based on the <option /> element.
-         $options[] = JHtml::_(
-                         'select.option', (string) $option['value'], JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text'
+         $options[] = HTMLHelper::_(
+                         'select.option', (string) $option['value'], Text::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text'
          );
       }
 

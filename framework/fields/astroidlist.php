@@ -10,6 +10,12 @@ defined('JPATH_PLATFORM') or die;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Component\ComponentHelper;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a generic list of options.
@@ -114,22 +120,22 @@ class JFormFieldAstroidList extends FormField {
          // Filter requirements
          if ($requires = explode(',', (string) $option['requires'])) {
             // Requires multilanguage
-            if (in_array('multilanguage', $requires) && !JLanguageMultilang::isEnabled()) {
+            if (in_array('multilanguage', $requires) && !Multilanguage::isEnabled()) {
                continue;
             }
 
             // Requires associations
-            if (in_array('associations', $requires) && !JLanguageAssociations::isEnabled()) {
+            if (in_array('associations', $requires) && !Associations::isEnabled()) {
                continue;
             }
 
             // Requires adminlanguage
-            if (in_array('adminlanguage', $requires) && !JModuleHelper::isAdminMultilang()) {
+            if (in_array('adminlanguage', $requires) && !ModuleHelper::isAdminMultilang()) {
                continue;
             }
 
             // Requires vote plugin
-            if (in_array('vote', $requires) && !JPluginHelper::isEnabled('content', 'vote')) {
+            if (in_array('vote', $requires) && !PluginHelper::isEnabled('content', 'vote')) {
                continue;
             }
          }
@@ -176,11 +182,11 @@ class JFormFieldAstroidList extends FormField {
          // Get correct component for menu items
          if ($component == 'com_menus') {
             $link = $this->form->getData()->get('link');
-            $uri = new JUri($link);
+            $uri = new Uri($link);
             $component = $uri->getVar('option', 'com_menus');
          }
 
-         $params = JComponentHelper::getParams($component);
+         $params = ComponentHelper::getParams($component);
          $value = $params->get($this->fieldname);
 
          // Try with global configuration
@@ -190,7 +196,7 @@ class JFormFieldAstroidList extends FormField {
 
          // Try with menu configuration
          if (is_null($value) && Factory::getApplication()->input->getCmd('option') == 'com_menus') {
-            $value = JComponentHelper::getParams('com_menus')->get($this->fieldname);
+            $value = ComponentHelper::getParams('com_menus')->get($this->fieldname);
          }
 
          if (!is_null($value)) {
