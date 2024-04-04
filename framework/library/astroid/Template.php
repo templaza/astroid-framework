@@ -10,6 +10,8 @@
 namespace Astroid;
 use \Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -240,10 +242,10 @@ class Template
             $data = \json_decode($json, true);
             $preset = ['title' => pathinfo($file)['filename'], 'colors' => [], 'preset' => [], 'thumbnail' => '', 'name' => pathinfo($file)['filename']];
             if (isset($data['title']) && !empty($data['title'])) {
-                $preset['title'] = \JText::_($data['title']);
+                $preset['title'] = Text::_($data['title']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $preset['thumbnail'] = \JURI::root() . 'templates/' . $this->template . '/' . $data['thumbnail'];
+                $preset['thumbnail'] = Uri::root() . 'templates/' . $this->template . '/' . $data['thumbnail'];
             }
             if (isset($data['preset'])) {
                 $properties =   [];

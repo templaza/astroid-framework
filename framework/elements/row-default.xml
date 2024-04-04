@@ -85,8 +85,10 @@
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="Padding" />
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="device_gutter_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_LABEL" description="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_DESC" />
-            <field name="gutter_xs" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XS_LABEL" description="ASTROID_ROW_GUTTER_XS_DESC">
+            <field type="astroidgroup" name="general_responsive"/>
+            <field type="astroidgroup" name="device_responsive_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL"/>
+            <field astroidgroup="general_responsive" name="device_gutter_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_LABEL" description="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_DESC" />
+            <field astroidgroup="general_responsive" name="gutter_xs" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XS_LABEL" description="ASTROID_ROW_GUTTER_XS_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-0</option>
                <option value="1">gx-1</option>
@@ -95,7 +97,7 @@
                <option value="4">gx-4</option>
                <option value="5">gx-5</option>
             </field>
-            <field name="gutter_sm" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_SM_LABEL" description="ASTROID_ROW_GUTTER_SM_DESC">
+            <field astroidgroup="general_responsive" name="gutter_sm" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_SM_LABEL" description="ASTROID_ROW_GUTTER_SM_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-sm-0</option>
                <option value="1">gx-sm-1</option>
@@ -104,7 +106,7 @@
                <option value="4">gx-sm-4</option>
                <option value="5">gx-sm-5</option>
             </field>
-            <field name="gutter_md" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_MD_LABEL" description="ASTROID_ROW_GUTTER_MD_DESC">
+            <field astroidgroup="general_responsive" name="gutter_md" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_MD_LABEL" description="ASTROID_ROW_GUTTER_MD_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-md-0</option>
                <option value="1">gx-md-1</option>
@@ -113,7 +115,7 @@
                <option value="4">gx-md-4</option>
                <option value="5">gx-md-5</option>
             </field>
-            <field name="gutter_lg" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_LG_LABEL" description="ASTROID_ROW_GUTTER_LG_DESC">
+            <field astroidgroup="general_responsive" name="gutter_lg" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_LG_LABEL" description="ASTROID_ROW_GUTTER_LG_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-lg-0</option>
                <option value="1">gx-lg-1</option>
@@ -122,7 +124,7 @@
                <option value="4">gx-lg-4</option>
                <option value="5">gx-lg-5</option>
             </field>
-            <field name="gutter_xl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XL_LABEL" description="ASTROID_ROW_GUTTER_XL_DESC">
+            <field astroidgroup="general_responsive" name="gutter_xl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XL_LABEL" description="ASTROID_ROW_GUTTER_XL_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-xl-0</option>
                <option value="1">gx-xl-1</option>
@@ -131,7 +133,7 @@
                <option value="4">gx-xl-4</option>
                <option value="5">gx-xl-5</option>
             </field>
-            <field name="gutter_xxl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XXL_LABEL" description="ASTROID_ROW_GUTTER_XXL_DESC">
+            <field astroidgroup="general_responsive" name="gutter_xxl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XXL_LABEL" description="ASTROID_ROW_GUTTER_XXL_DESC">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="0">gx-xxl-0</option>
                <option value="1">gx-xxl-1</option>
@@ -140,13 +142,12 @@
                <option value="4">gx-xxl-4</option>
                <option value="5">gx-xxl-5</option>
             </field>
-            <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
-            <field description="TPL_ASTROID_ROW_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ROW_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ROW_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ROW_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ROW_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ROW_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
+            <field astroidgroup="device_responsive_settings" description="TPL_ASTROID_ROW_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
          </fieldset>
       </fields>
    </form>
