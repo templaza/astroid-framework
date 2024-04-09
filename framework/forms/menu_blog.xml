@@ -16,6 +16,146 @@
             <option value="1">ASTROID_SHOW</option>
             <option value="0">ASTROID_HIDE</option>
          </field>
+         <field type="spacer" name="image_lead_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_OPTIONS" />
+         <field name="image_lead_position" type="list" default="" label="Lead Item Image Position">
+            <option value="">Default</option>
+            <option value="top">Top</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="zigzag">Zigzag</option>
+            <option value="bottom">Bottom</option>
+         </field>
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" type="spacer" name="image_lead_width_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_IMAGE_WIDTH" />
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" name="image_lead_width_xl" type="list" default="1-3" label="Large Desktop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" name="image_lead_width_l" type="list" default="1-3" label="Desktop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" name="image_lead_width_m" type="list" default="1-2" label="Laptop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" name="image_lead_width_s" type="list" default="1-1" label="Tablet">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_lead_position:left[OR]image_lead_position:right[OR]image_lead_position:zigzag" name="image_lead_width" type="list" default="1-1" label="Mobile">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field type="spacer" name="image_intro_spacer" label="ASTROID_ARTICLE_IMAGE_INTRO_OPTIONS" />
+         <field name="image_intro_position" type="list" default="" label="Intro Item Image Position">
+            <option value="">Default</option>
+            <option value="top">Top</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="zigzag">Zigzag</option>
+            <option value="bottom">Bottom</option>
+         </field>
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" type="spacer" name="image_intro_width_spacer" label="ASTROID_ARTICLE_IMAGE_INTRO_IMAGE_WIDTH" />
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" name="image_intro_width_xl" type="list" default="1-3" label="Large Desktop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" name="image_intro_width_l" type="list" default="1-3" label="Desktop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" name="image_intro_width_m" type="list" default="1-2" label="Laptop">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" name="image_intro_width_s" type="list" default="1-1" label="Tablet">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
+         <field showon="image_intro_position:left[OR]image_intro_position:right[OR]image_intro_position:zigzag" name="image_intro_width" type="list" default="1-1" label="Mobile">
+            <option value="12">1-1</option>
+            <option value="6">1-2</option>
+            <option value="4">1-3</option>
+            <option value="8">2-3</option>
+            <option value="3">1-4</option>
+            <option value="9">3-4</option>
+            <option value="5">5-12</option>
+            <option value="7">7-12</option>
+            <option value="2">1-6</option>
+            <option value="10">5-6</option>
+         </field>
       </fieldset>
    </fields>
 </form>

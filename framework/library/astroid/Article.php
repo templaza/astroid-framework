@@ -621,6 +621,52 @@ class Article
         }
     }
 
+    public static function getImageWidth ($params = null, $type = 'lead', $idx = 0) {
+        $image                  =   array();
+        $image['position']      =   $params->get('image_'.$type.'_position','top');
+        if ($image['position'] == 'zigzag') {
+            if ($idx % 2 == 0) {
+                $image['position'] = 'left';
+            } else {
+                $image['position'] = 'right';
+            }
+        }
+        if ($image['position'] == 'left' || $image['position'] == 'right') {
+            $image['default']   =   ' col-'. $params->get('image_'.$type.'_width','12');
+            $image['xl']        =   ' col-xl-'. $params->get('image_'.$type.'_width_xl','4');
+            $image['lg']        =   ' col-lg-'. $params->get('image_'.$type.'_width_l','4');
+            $image['md']        =   ' col-md-'. $params->get('image_'.$type.'_width_m','6');
+            $image['sm']        =   ' col-sm-'. $params->get('image_'.$type.'_width_s','12');
+            $image['expand']    =   '';
+            if ($image['xl'] == ' col-xl-12') {
+                $image['expand']    =   ' margin-xl-0';
+            } elseif ($image['position'] == 'right') {
+                $image['xl']    .=  ' order-xl-1';
+            }
+            if ($image['lg'] == ' col-lg-12') {
+                $image['expand']    .=  ' margin-lg-0';
+            } elseif ($image['position'] == 'right') {
+                $image['lg']    .=  ' order-lg-1';
+            }
+            if ($image['md'] == ' col-md-12') {
+                $image['expand']    .=  ' margin-md-0';
+            } elseif ($image['position'] == 'right') {
+                $image['md']    .=  ' order-md-1';
+            }
+            if ($image['sm'] == ' col-sm-12') {
+                $image['expand']    .=  ' margin-sm-0';
+            } elseif ($image['position'] == 'right') {
+                $image['sm']    .=  ' order-sm-1';
+            }
+            if ($image['default'] == ' col-12') {
+                $image['expand']    .=  ' margin-0';
+            } elseif ($image['position'] == 'right') {
+                $image['default']    .=  ' order-1';
+            }
+        }
+        return $image;
+    }
+
     public function getCategoryParams()
     {
         $params = new Registry();
