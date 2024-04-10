@@ -3,14 +3,13 @@
     margin-top: 3rem;
   }
   .item-content.border-top {
-    padding-top: var(--bs-gutter-x);
+    > div {
+      margin-top: -1px;
+    }
   }
   .items-leading {
     .blog-item + .blog-item {
       margin-top: var(--bs-gutter-x);
-    }
-    & + .items-row {
-      border-top: 1px solid var(--bs-border-color);
     }
   }
   .items-more {
