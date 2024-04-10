@@ -77,7 +77,6 @@ $clsItemBody        = $astroidArticle->getStyle('body');
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
     <?php endif; ?>
-
     <?php
     $image = $astroidArticle->getImage();
     if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
@@ -86,7 +85,7 @@ $clsItemBody        = $astroidArticle->getStyle('body');
                 echo '<div class="row g-0 position-relative">';
                 echo '<div class="astroid-media-'.$image_position. ' astroid-img-cover position-relative' .$image_width_cls.'">';
             } else {
-                echo '<div class="astroid-media-'.$image_position.' mt-0 order-1">';
+                echo '<div class="astroid-media-'.$image_position.' mt-4 order-1">';
             }
         }
     }
