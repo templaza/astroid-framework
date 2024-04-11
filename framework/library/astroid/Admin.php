@@ -117,8 +117,8 @@ class Admin extends Helper\Client
         Helper::triggerEvent('onBeforeAstroidFormLoad', [&$template, &$form]);
         $form->loadOptions(JPATH_LIBRARIES . '/astroid/framework/options');
         Helper::triggerEvent('onBeforeAstroidTemplateFormLoad', [&$template, &$form]);
-        $form->loadOptions(ASTROID_TEMPLATE_PATH . '/astroid/options');
-        $form->loadOptions(ASTROID_MEDIA_TEMPLATE_PATH . '/astroid/options');
+        $form->loadOptions(JPATH_SITE . '/templates/' . $template->template . '/astroid/options');
+        $form->loadOptions(JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/options');
         Helper::triggerEvent('onAfterAstroidTemplateFormLoad', [&$template, &$form]);
         Framework::getDebugger()->log('Loading Forms');
 

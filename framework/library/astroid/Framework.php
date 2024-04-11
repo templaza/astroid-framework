@@ -59,10 +59,6 @@ abstract class Framework
         $version = $version->getShortVersion();
         $version = substr($version, 0, 1);
         define('ASTROID_JOOMLA_VERSION', $version);
-
-        $template = Framework::getTemplate();
-        define('ASTROID_TEMPLATE_PATH', JPATH_SITE . '/templates/' . $template->template);
-        define('ASTROID_MEDIA_TEMPLATE_PATH', JPATH_SITE . '/media/templates/site/' . $template->template);
     }
 
     public static function addReporter(Reporter $reporter)
