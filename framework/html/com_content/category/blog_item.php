@@ -107,7 +107,7 @@ $clsItemBody        = $astroidArticle->getStyle('body');
         }
     }
     ?>
-    <div class="<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?><?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
+    <div class="d-flex flex-column<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?><?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
         <?php $astroidArticle->renderPostTypeIcon(); ?>
         <?php $astroidArticle->renderArticleBadge(); ?>
 
