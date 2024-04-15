@@ -39,7 +39,7 @@ $isExpired         = !is_null($this->item->publish_down) && $this->item->publish
 $clsItemContainer  = $astroidArticle->getStyle('container');
 $clsItemBody       = $astroidArticle->getStyle('body');
 ?>
-<div class="com-content-article item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+<div class="com-content-article item-page d-flex flex-column<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
     <meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getApplication()->get('language') : $this->item->language; ?>">
     <?php if ($this->params->get('show_page_heading')) : ?>
         <div class="page-header">
@@ -53,11 +53,9 @@ $clsItemBody       = $astroidArticle->getStyle('body');
 
     <?php $useDefList = $params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
         || $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category') || $params->get('show_author') || $assocParam; ?>
-
-    <div<?php echo $clsItemContainer ? ' class="'.$clsItemContainer.'"' : ''; ?>>
+    <?php echo !empty($clsItemContainer) ? '<div class="d-flex flex-column '.$clsItemContainer.'">' : ''; ?>
         <?php $astroidArticle->render('above-title'); ?>
-
-    <div<?php echo (!empty($clsItemBody) ? ' class="'.$clsItemBody.'"' : ''); ?>>
+    <?php echo (!empty($clsItemBody) ? '<div class="d-flex flex-column '.$clsItemBody.'">' : ''); ?>
         <?php if ($params->get('show_title')) : ?>
         <div class="page-header item-title">
             <<?php echo $htag; ?>>
@@ -148,8 +146,8 @@ $clsItemBody       = $astroidArticle->getStyle('body');
                 <?php echo LayoutHelper::render('joomla.content.readmore', ['item' => $this->item, 'params' => $params, 'link' => $link]); ?>
             <?php endif; ?>
         <?php endif; ?>
-    </div>
-    </div>
+    <?php echo !empty($clsItemBody) ? '</div>' : ''; ?>
+    <?php echo !empty($clsItemContainer) ? '</div>' : ''; ?>
     <?php
     if (!empty($this->item->pagination) && $this->item->paginationposition && $this->item->paginationrelative) :
         echo $this->item->pagination;
