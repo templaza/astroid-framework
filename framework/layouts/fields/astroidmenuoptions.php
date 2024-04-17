@@ -13,6 +13,7 @@ defined('JPATH_BASE') or die;
 extract($displayData);
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('bootstrap.modal');
 $wa->registerAndUseStyle('astroid.menuoptions.css', 'media/astroid/assets/vendor/astroidmenuoptions/dist/index.css');
 $wa->registerAndUseScript('astroid.menuoptions.js', 'media/astroid/assets/vendor/astroidmenuoptions/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
 $wa->addInlineScript("(function ($) {
