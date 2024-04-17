@@ -46,7 +46,7 @@ function selectElement(addon) {
                         <div class="col">
                             <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 g-3">
                                 <div v-for="addon in addons" v-show="currentFilter === '' || addon.astroidmenucategory === currentFilter">
-                                    <div class="addon-block card card-default card-body align-items-center justify-content-center py-5" @click="selectElement(addon)">
+                                    <div class="addon-block card card-default card-body align-items-center justify-content-center text-center py-5" @click="selectElement(addon)">
                                         <div>{{ addon.title }}</div>
                                         <div class="text-capitalize form-text"><i :class="addon.icon" class="me-2"></i>{{ addon.astroidmenucategory }}</div>
                                     </div>
