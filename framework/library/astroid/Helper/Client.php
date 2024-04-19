@@ -239,6 +239,8 @@ class Client
             })();
             ');
         }
+
+        Helper::triggerEvent('onAfterAstroidContentPrepareForm', [&$form, &$data]);
     }
 
     public function onContentBeforeSave($context, $table, $isNew, $data)
