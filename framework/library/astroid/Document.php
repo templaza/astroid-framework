@@ -42,7 +42,8 @@ class Document
 
     public function __construct()
     {
-        $params = Framework::getTemplate()->getParams();
+        $template = Framework::getTemplate();
+        $params = $template->getParams();
         $this->minify_css = $params->get('minify_css', false);
         $this->minify_js = $params->get('minify_js', false);
         $this->minify_html = $params->get('minify_html', false);
@@ -819,6 +820,7 @@ class Document
     {
         $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();
+        $template = Framework::getTemplate();
         if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
         } else {
@@ -832,11 +834,11 @@ class Document
             $postfix = '';
         }
 
-        if (file_exists(ASTROID_MEDIA . '/' . $url)) {
+        if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
             $url = $root . 'media/astroid/assets/' . $url;
-        } elseif (Framework::isSite() && file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/' . $url)) {
-            $url = $root . 'media/templates/site/' . Framework::getTemplate()->template . '/' . $url;
-        } elseif (Framework::isSite() && file_exists(ASTROID_TEMPLATE_PATH . '/' . $url)) {
+        } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/' . $url)) {
+            $url = $root . 'media/templates/site/' . $template->template . '/' . $url;
+        } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/templates/' . $template->template . '/' . $url)) {
             $url = $root . 'templates/' . Framework::getTemplate()->template . '/' . $url;
         } else if (file_exists(JPATH_SITE . '/' . $url)) {
             $url = $root . $url;
@@ -1230,7 +1232,7 @@ class Document
             $scssVersion = md5(serialize($template->getThemeVariables())  . self::scssHash());
 
             // css file to be generated in template folder
-            $cssFile = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' .  $scssVersion . '.css';
+            $cssFile = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' .  $scssVersion . '.css';
 
             // $scssFile = ASTROID_CACHE . '/compiled/' . $template->id . '-' . $scssVersion . '.css';
 
@@ -1243,7 +1245,7 @@ class Document
                 $this->renderScss($cssFile);
                 if ($template->isDefault()) {
                     Helper::clearCache($template->template, ['template']);
-                    File::copy($cssFile, ASTROID_MEDIA_TEMPLATE_PATH . '/css/template.css');
+                    File::copy($cssFile, JPATH_SITE . '/media/templates/site/' . $template->template . '/css/template.css');
                 }
             } else {
                 // logging compiled scss
@@ -1261,6 +1263,7 @@ class Document
     }
     public function astroidCustomCSS() {
         // css on page
+        $template = Framework::getTemplate();
         $getPluginParams = Helper::getPluginParams();
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
 
@@ -1269,19 +1272,19 @@ class Document
             if (!$astroid_inline_css) {
                 // page css
                 $pageCSSHash = md5($css);
-                $pageCSS = ASTROID_MEDIA_TEMPLATE_PATH . '/css/compiled-' . $pageCSSHash . '.css';
+                $pageCSS = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' . $pageCSSHash . '.css';
                 if (!file_exists($pageCSS)) {
                     Helper::putContents($pageCSS, $css);
                 }
                 $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
                 // custom css
-                if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
+                if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
                     $this->addStyleSheet('css/custom.css');
                 }
                 return '';
             } else {
                 // custom css
-                if (file_exists(ASTROID_MEDIA_TEMPLATE_PATH . '/css/custom.css') || file_exists(ASTROID_TEMPLATE_PATH . '/css/custom.css')) {
+                if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
                     $this->addStyleSheet('css/custom.css');
                 }
                 return '<style>'.$css.'</style>';

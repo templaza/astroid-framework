@@ -16,14 +16,19 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
+use Astroid\Framework;
+use Astroid\Article;
 
 // Astroid Article/Blog
 if (!isset($astroidArticle)) {
-    $astroidArticle = new Astroid\Article($this->item, true);
+    $astroidArticle = new Article($this->item, true);
 }
 
-$template = Astroid\Framework::getTemplate();
-$document = Astroid\Framework::getDocument();
+$template = Framework::getTemplate();
+$document = Framework::getDocument();
+
+$is_lead    = $this->item->is_leaditem ?? false;
+$is_intro   = $this->item->is_introitem ?? false;
 
 // Create shortcuts to some parameters.
 $params = $this->item->params;
@@ -40,7 +45,26 @@ $tpl_params = $template->getParams();
 $post_attribs = new Registry(json_decode($this->item->attribs));
 $post_format = $post_attribs->get('post_format', 'standard');
 
-$info_block_layout = ASTROID_JOOMLA_VERSION > 3 ? 'joomla.content.info_block' : 'joomla.content.info_block.block';
+// Image position
+$image_width = array();
+if ($is_lead) {
+    $image_width            =   Article::getImageWidth($params, 'lead', $this->item->key_idx);
+    $image_position         =   $image_width['position'];
+} elseif ($is_intro) {
+    $image_width            =   Article::getImageWidth($params, 'intro', $this->item->key_idx);
+    $image_position         =   $image_width['position'];
+} else {
+    $image_position         =   'top';
+}
+
+if (empty($image_position)) {
+    $image_position    =   'top';
+}
+
+$image_width_cls    =   '';
+if ($image_position == 'left' || $image_position == 'right') {
+    $image_width_cls    =   $image_width['xl'] . $image_width['lg'] . $image_width['md'] . $image_width['sm'] . $image_width['default'];
+}
 
 $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
@@ -49,24 +73,41 @@ $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED 
 $clsItemContainer   = $astroidArticle->getStyle('container');
 $clsItemBody        = $astroidArticle->getStyle('body');
 ?>
-<div class="item-content position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); ?>">
+<div class="item-content position-relative d-flex flex-column<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); echo ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : ''; ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
     <?php endif; ?>
-
     <?php
     $image = $astroidArticle->getImage();
+    if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
+        if ($image_position == 'left' || $image_position == 'right' || $image_position == 'bottom') {
+            if ($image_position == 'left' || $image_position == 'right') {
+                echo '<div class="row g-0 position-relative">';
+                echo '<div class="astroid-media-'.$image_position. ' astroid-img-cover position-relative' .$image_width_cls.'">';
+            } else {
+                echo '<div class="astroid-media-'.$image_position.' mt-4 order-1">';
+            }
+        }
+    }
+    // Generate media
     if ((!empty($images->image_intro)) && $post_format == 'standard') {
         echo LayoutHelper::render('joomla.content.intro_image', $this->item);
     } else if (is_string($image) && !empty($image)) {
-        echo '<div class="mb-4">';
+        echo '<div class="item-image">';
         $document->include('blog.modules.image', ['image' => $image, 'title' => $this->item->title, 'item' => $this->item]);
         echo '</div>';
     } else {
         echo LayoutHelper::render('joomla.content.post_formats.post_' . $post_format, array('params' => $post_attribs, 'item' => $this->item));
     }
+
+    if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
+        if ($image_position == 'left' || $image_position == 'right' || $image_position == 'bottom') {
+            echo '</div>';
+            echo ($image_position == 'left' || $image_position == 'right') ? '<div class="astroid-content-media-'.$image_position.' col'.$image_width['expand'].'">' : '';
+        }
+    }
     ?>
-    <div class="<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?><?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
+    <div class="d-flex flex-column<?php echo $tpl_params->get('show_post_format') ? ' has-post-format' : ''; ?><?php echo (!empty($image) ? ' has-image' : ''); ?><?php echo (!empty($clsItemBody) ? ' '.$clsItemBody : ''); ?>">
         <?php $astroidArticle->renderPostTypeIcon(); ?>
         <?php $astroidArticle->renderArticleBadge(); ?>
 
@@ -82,7 +123,7 @@ $clsItemBody        = $astroidArticle->getStyle('body');
             <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
         </div>
         <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-            <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
+            <?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
         <?php endif; ?>
         <?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
             <?php echo LayoutHelper::render('joomla.content.tags', $this->item->tags->itemTags); ?>
@@ -95,13 +136,15 @@ $clsItemBody        = $astroidArticle->getStyle('body');
 
         <?php // Content is generated by content plugin event "onContentBeforeDisplay" ?>
         <?php echo $this->item->event->beforeDisplayContent; ?>
+        <?php if ($params->get('show_intro')) : ?>
         <div class="article-intro-text">
             <?php echo $this->item->introtext; ?>
         </div>
+        <?php endif; ?>
 
         <?php if ($info == 1 || $info == 2) : ?>
             <?php if ($useDefList) : ?>
-                <?php echo LayoutHelper::render($info_block_layout, array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'below')); ?>
+                <?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'below')); ?>
             <?php endif; ?>
             <?php if ($params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
                 <?php echo LayoutHelper::render('joomla.content.tags', $this->item->tags->itemTags); ?>
@@ -122,6 +165,12 @@ $clsItemBody        = $astroidArticle->getStyle('body');
             <?php echo LayoutHelper::render('joomla.content.readmore', ['item' => $this->item, 'params' => $params, 'link' => $link]); ?>
         <?php endif; ?>
     </div>
+    <?php
+    if (($image_position == 'left' || $image_position == 'right')) {
+        echo '</div>';
+        echo '</div>';
+    }
+    ?>
     <?php if ($isUnpublished) : ?>
     </div>
     <?php endif; ?>

@@ -144,7 +144,7 @@ echo '</div>';
 if ($enable_slider) {
     $mainframe = Factory::getApplication();
     $wa = $mainframe->getDocument()->getWebAssetManager();
-    $wa->registerAndUseStyle('astroid.slick', 'astroid/slick.min.css');
-    $wa->registerAndUseScript('astroid.slick', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+    $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
+    $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 }

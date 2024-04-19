@@ -42,7 +42,7 @@ function selectAll(value) {
 }
 </script>
 <template>
-    <div v-for="menu in props.field.input.menu" :key="menu.id" class="card card-body">
+    <div v-for="(menu, idx) in props.field.input.menu" :key="menu.id" class="card card-body" :class="{'mt-3' : idx > 0}">
         <h5 class="mb-1">{{ menu.title }}</h5>
         <p><small class="text-body-secondary">{{ menu.description }}</small></p>
         <div class="btn-group d-block mb-2" role="group" aria-label="Basic example">

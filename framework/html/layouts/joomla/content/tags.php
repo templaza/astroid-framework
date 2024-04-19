@@ -25,7 +25,7 @@ $authorised = Factory::getUser()->getAuthorisedViewLevels();
                 <?php $link_class = $tagParams->get('tag_link_class', 'btn-outline-primary'); ?>
                 <li class="list-inline-item tag-<?php echo $tag->tag_id; ?> tag-list<?php echo $i; ?>">
                     <a href="<?php echo Route::_(RouteHelper::getComponentTagRoute($tag->tag_id . ':' . $tag->alias, $tag->language)); ?>" class="btn rounded-pill btn-sm <?php echo $link_class; ?>">
-                        <?php echo $this->escape($tag->title); ?>
+                        <?php echo '# ' . $this->escape($tag->title); ?>
                     </a>
                 </li>
             <?php endif; ?>

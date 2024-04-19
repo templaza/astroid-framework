@@ -103,7 +103,7 @@ $position = $position ?? '';
                 $style->render();
                 ?>
             <?php
-            if (!empty($default_logo)) {
+            if (!empty($default_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $default_logo)) {
                 if (File::getExt($default_logo) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" /><?php
                 } else {
@@ -113,7 +113,7 @@ $position = $position ?? '';
                 }
             } ?>
             <?php
-            if (!empty($default_logo_dark)) {
+            if (!empty($default_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $default_logo_dark)) {
                 if (File::getExt($default_logo_dark) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" /><?php
                 } else {
@@ -141,7 +141,7 @@ $position = $position ?? '';
                 }
                 $style->render();
                 ?>
-            <?php if (!empty($stickey_header_logo)) {
+            <?php if (!empty($stickey_header_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo)) {
                 if (File::getExt($stickey_header_logo) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" /><?php
                 } else {
@@ -150,7 +150,7 @@ $position = $position ?? '';
                     echo $logo_svg;
                 }
             } ?>
-            <?php if (!empty($stickey_header_logo_dark)) {
+            <?php if (!empty($stickey_header_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo_dark)) {
                 if (File::getExt($stickey_header_logo_dark) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" /><?php
                 } else {
@@ -178,7 +178,7 @@ $position = $position ?? '';
                 $style->child('> .astroid-logo-mobile')->addCss('max-height', $mobile_logo_height);
             }
             $style->render();
-            if (!empty($mobile_logo)) {
+            if (!empty($mobile_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo)) {
                 if (File::getExt($mobile_logo) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
                 } else {
@@ -187,7 +187,7 @@ $position = $position ?? '';
                     echo $logo_svg;
                 }
             } ?>
-            <?php if (!empty($mobile_logo_dark)) {
+            <?php if (!empty($mobile_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo_dark)) {
                 if (File::getExt($mobile_logo_dark) !== 'svg') {
                     ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
                 } else {

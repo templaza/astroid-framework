@@ -16,7 +16,7 @@ if (!isset($displayData['astroidArticle'])) {
    $displayData['astroidArticle'] = new Article($displayData['item']);
 }
 ?>
-<dl class="article-info muted">
+<dl class="article-info muted <?php echo $displayData['position']; ?>">
    <?php
    if (
        $displayData['position'] === 'above' && ($blockPosition == 0 || $blockPosition == 2)

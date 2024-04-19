@@ -1,13 +1,13 @@
 <updates>
     <update>
         <name>Astroid Framework</name>
-        <version>3.0.13</version>
+        <version>3.0.14</version>
         <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
         <element>astroid</element>
         <type>library</type>
         <client>0</client>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/templaza/astroid-framework/releases/download/v3.0.13/astroid-framework-3.0.13.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/templaza/astroid-framework/releases/download/v3.0.14/astroid-framework-3.0.14.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>

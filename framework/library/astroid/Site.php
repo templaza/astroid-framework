@@ -9,6 +9,7 @@
 
 namespace Astroid;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -52,10 +53,10 @@ class Site extends Helper\Client
         $vote = $app->input->post->get('vote', 0, 'INT');
 
         if (empty($id)) {
-            throw new \Exception(\JText::_('ASTROID_ARTICLE_NOT_FOUND'), 404);
+            throw new \Exception(Text::_('ASTROID_ARTICLE_NOT_FOUND'), 404);
         }
         if ($vote < 0 || $vote > 5) {
-            throw new \Exception(\JText::_('ASTROID_INVALID_RATING'), 0);
+            throw new \Exception(Text::_('ASTROID_INVALID_RATING'), 0);
         }
 
         $article = new Component\Article($id);
@@ -66,12 +67,12 @@ class Site extends Helper\Client
     {
         $template = Framework::getTemplate()->template;
         Helper::clearCacheByTemplate($template);
-        $this->response(['message' => \JText::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
+        $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
     }
 
     protected function clearJoomlaCache()
     {
         Helper::clearJoomlaCache();
-        $this->response(['message' => \JText::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
+        $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
     }
 }

@@ -18,7 +18,7 @@ $soundcloud = $params->get('astroid_article_audio_soundcloud', '');
 $spotify = $params->get('astroid_article_audio_spotify', '');
 ?>
 <?php if ($source == 'soundcloud' && !empty($soundcloud)) { ?>
-   <div class="soundcloud">
+   <div class="soundcloud mb-4">
       <?php echo $soundcloud; ?>
    </div>
 <?php }
