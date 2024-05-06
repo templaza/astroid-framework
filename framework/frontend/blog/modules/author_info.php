@@ -19,7 +19,9 @@ extract($displayData);
 
 // Get User Details
 $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($article->created_by);
-
+if (empty($user)) {
+    return false;
+}
 $params = new Registry();
 $params->loadString($user->params, 'JSON');
 // Get social profiles
