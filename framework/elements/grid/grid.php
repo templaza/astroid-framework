@@ -125,12 +125,23 @@ $button_size        =   $button_size ? ' '. $button_size : '';
 $button_radius      =   $params->get('border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
+$image_rounded_size     =   $params->get('image_rounded_size', '3');
+$image_border_radius    =   $params->get('image_border_radius', '0');
+$image_border_radius    =   $image_border_radius != 'rounded' ? ' rounded-' . $image_border_radius : ' rounded-' . $image_rounded_size;
+
+$hover_effect   = $params->get('hover_effect', '');
+$hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
+$transition     = $params->get('hover_transition', '');
+$transition     = $transition !== '' ? ' as-transition-' . $transition : '';
+
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      =   '<div class="position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
+        $media      .=  '<img class="' . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      .=  '</div>';
     } elseif ($grid_params['type'] == 'icon') {
         if ($grid_params['icon_type'] == 'fontawesome') {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['fa_icon'].'"></i>';
