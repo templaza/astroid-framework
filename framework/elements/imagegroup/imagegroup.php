@@ -110,12 +110,17 @@ if (count($slide_responsive)) {
 }
 
 $row_gutter         =   $params->get('row_gutter', 4);
-$gutter_cls         =  ' gx-' . $row_gutter;
+$gutter_cls         =   ' gy-' . $row_gutter;
 $column_gutter      =   $params->get('column_gutter', 4);
-$gutter_cls         .=  ' gy-' . $column_gutter;
+$gutter_cls         .=  ' gx-' . $column_gutter;
 
-$border_radius  = $params->get('border_radius', '');
-$border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
+$rounded_size       =   $params->get('rounded_size', '3');
+$border_radius      =   $params->get('border_radius', '');
+if ($border_radius == 'rounded') {
+    $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
+} else {
+    $border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
+}
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');
@@ -129,6 +134,7 @@ echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' 
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {
+        echo '<div>';
         if ($image_params['use_link']) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
         }
@@ -138,6 +144,7 @@ foreach ($images as $image) {
         if ($image_params['use_link']) {
             echo '</a>';
         }
+        echo '</div>';
     }
 }
 echo '</div>';
