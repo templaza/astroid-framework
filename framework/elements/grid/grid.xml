@@ -348,6 +348,7 @@
                     <option value="light">Light</option>
                     <option value="dark">Dark</option>
                     <option value="link">Link</option>
+                    <option value="text">Text</option>
                 </field>
                 <field astroidgroup="readmore_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
                 <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
@@ -359,6 +360,14 @@
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>
+                </field>
+                <field astroidgroup="readmore_options" type="astroidlist" name="button_margin_top" label="ASTROID_WIDGET_BUTTON_MARGIN_TOP" default="">
+                    <option value="">JNONE</option>
+                    <option value="1">J1</option>
+                    <option value="2">J2</option>
+                    <option value="3">J3</option>
+                    <option value="4">J4</option>
+                    <option value="5">J5</option>
                 </field>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">

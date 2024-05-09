@@ -134,6 +134,8 @@ $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
+$button_margin_top  =   $params->get('button_margin_top', '');
+
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
@@ -180,7 +182,8 @@ foreach ($grids as $key => $grid) {
         echo '<div class="astroid-text">' . $grid_params['description'] . '</div>';
     }
     if (!empty($grid_params['link']) && !empty($grid_params['link_title'])) {
-        echo '<a class="btn btn-'. (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius.'" href="'.$grid_params['link'].'" role="button">' . $grid_params['link_title'] . '</a>';
+        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
+        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid_params['link'].'" role="button"><small>' . $grid_params['link_title'] . '</small></a>';
     }
 
     echo '</div>'; // End Card-Body
