@@ -134,6 +134,9 @@ $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
+$card_hover_transition     = $params->get('card_hover_transition', '');
+$card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
+
 $button_margin_top  =   $params->get('button_margin_top', '');
 
 echo '<div class="row'.$row_column_cls.'">';
@@ -151,7 +154,7 @@ foreach ($grids as $key => $grid) {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
     }
-    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
