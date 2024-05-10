@@ -40,10 +40,25 @@ $sm_column          =   $params->get('sm_column', 1);
 $row_column_cls     .=  $sm_column ? ' row-cols-sm-' . $sm_column : '';
 $xs_column          =   $params->get('xs_column', 1);
 $row_column_cls     .=  $xs_column ? ' row-cols-' . $xs_column : '';
-$row_gutter         =   $params->get('row_gutter', 4);
-$row_column_cls     .=  ' gx-' . $row_gutter;
-$column_gutter      =   $params->get('column_gutter', 4);
-$row_column_cls     .=  ' gy-' . $column_gutter;
+
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    if ($key !== 'xs') {
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+        if ($row_gutter) {
+            $row_column_cls .=  ' gy-' . $key . '-' . $row_gutter;
+        }
+        if ($column_gutter) {
+            $row_column_cls .=  ' gx-' . $key . '-' . $column_gutter;
+        }
+    } else {
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $row_column_cls     .=  ' gy-' . $row_gutter;
+        $row_column_cls     .=  ' gx-' . $column_gutter;
+    }
+}
 
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
