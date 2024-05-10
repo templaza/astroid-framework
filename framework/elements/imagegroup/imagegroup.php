@@ -108,11 +108,25 @@ if (!$slider_nav) {
 if (count($slide_responsive)) {
     $slide_settings[]       =   'responsive: ['.implode(',', $slide_responsive).']';
 }
-
-$row_gutter         =   $params->get('row_gutter', 4);
-$gutter_cls         =   ' gy-' . $row_gutter;
-$column_gutter      =   $params->get('column_gutter', 4);
-$gutter_cls         .=  ' gx-' . $column_gutter;
+$gutter_cls         =   '';
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    if ($key !== 'xs') {
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+        if ($row_gutter) {
+            $gutter_cls     .=  ' gy-' . $key . '-' . $row_gutter;
+        }
+        if ($column_gutter) {
+            $gutter_cls     .=  ' gx-' . $key . '-' . $column_gutter;
+        }
+    } else {
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $gutter_cls         .=  ' gy-' . $row_gutter;
+        $gutter_cls         .=  ' gx-' . $column_gutter;
+    }
+}
 
 $rounded_size       =   $params->get('rounded_size', '3');
 $border_radius      =   $params->get('border_radius', '');

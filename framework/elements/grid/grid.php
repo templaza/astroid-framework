@@ -138,7 +138,6 @@ $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $button_margin_top  =   $params->get('button_margin_top', '');
-
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
