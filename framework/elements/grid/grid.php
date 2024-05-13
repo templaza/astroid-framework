@@ -156,18 +156,26 @@ $button_margin_top  =   $params->get('button_margin_top', '');
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
+    $link_target    =   !empty($grid_params['link_target']) ? ' target="'.$grid_params['link_target'].'"' : '';
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
         $media      =   '<div class="position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
         $media      .=  '<img class="' . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
         $media      .=  '</div>';
+        if ( !empty($grid_params['link']) ) {
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+        }
     } elseif ($grid_params['type'] == 'icon') {
         if ($grid_params['icon_type'] == 'fontawesome') {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['fa_icon'].'"></i>';
         } else {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
+        if ( !empty($grid_params['link']) && !empty($params->get('enable_icon_link', 0)) ) {
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+        }
     }
+
     echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
@@ -200,7 +208,8 @@ foreach ($grids as $key => $grid) {
     }
     if (!empty($grid_params['link']) && !empty($grid_params['link_title'])) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid_params['link'].'" role="button"><small>' . $grid_params['link_title'] . '</small></a>';
+        $btn_title      =   $button_style == 'text' ? '<small>'. $grid_params['link_title'] . '</small>' : $grid_params['link_title'];
+        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid_params['link'].'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body

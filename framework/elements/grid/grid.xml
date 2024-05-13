@@ -385,6 +385,7 @@
                 <field astroidgroup="icon_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" default="60" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" postfix="px" />
                 <field astroidgroup="icon_options" name="icon_color" type="astroidcolor" label="TPL_ASTROID_COLOR" />
                 <field astroidgroup="icon_options" name="icon_color_hover" type="astroidcolor" label="TPL_ASTROID_COLOR_HOVER" />
+                <field astroidgroup="icon_options" name="enable_icon_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_ICON_LINK"/>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="600" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
