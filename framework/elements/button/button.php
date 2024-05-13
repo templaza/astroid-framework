@@ -42,6 +42,7 @@ foreach ($buttons as $key => $button) {
             $bd_radius = '';
         }
     }
-    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $button_size . $bd_radius . '">'.$btn_params['title'].'</a>';
+    $link_target    =   !empty($btn_params['link_target']) ? ' target="'.$btn_params['link_target'].'"' : '';
+    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $button_size . $bd_radius . '"'.$link_target.'>'.$btn_params['title'].'</a>';
 }
 echo '</div>';
