@@ -114,14 +114,6 @@ switch ($stickey_mode) {
                   ?>
                </div>
             <?php endif; ?>
-             <?php
-             //Color Mode
-             if ($color_mode) {
-                 echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
-                 $document->include('colormode');
-                 echo '</div>';
-             }
-             ?>
              <?php if ($enable_offcanvas) { ?>
                  <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
