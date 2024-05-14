@@ -561,6 +561,7 @@
 }
 
 .as-effect-light-up {
+	transition: filter 0.3s ease-in-out;
 	&:hover {
 		filter: brightness( 100% ) contrast( 113% ) saturate( 159% ) blur( 0.2px ) hue-rotate( 0deg );
 	}
