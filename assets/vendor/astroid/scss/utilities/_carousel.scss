@@ -160,6 +160,22 @@
     .slick-next {
       color: white;
     }
+    .slick-dots {
+      li {
+        button {
+          &:before {
+            border-color: white;
+          }
+        }
+        &.slick-active {
+          button {
+            &:before {
+              background-color: white;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -168,6 +184,22 @@
     .slick-prev,
     .slick-next {
       color: #1a1a1a;
+    }
+    .slick-dots {
+      li {
+        button {
+          &:before {
+            border-color: #1a1a1a;
+          }
+        }
+        &.slick-active {
+          button {
+            &:before {
+              background-color: #1a1a1a;
+            }
+          }
+        }
+      }
     }
   }
 }
