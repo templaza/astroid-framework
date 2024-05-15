@@ -194,6 +194,8 @@ $image_rounded_size     =   $params->get('image_rounded_size', '3');
 $image_border_radius    =   $params->get('image_border_radius', '0');
 $image_border_radius    =   $image_border_radius != 'rounded' ? ' rounded-' . $image_border_radius : ' rounded-' . $image_rounded_size;
 
+$image_border           =   json_decode($params->get('image_border', ''), true);
+
 $hover_effect   = $params->get('hover_effect', '');
 $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
@@ -202,8 +204,9 @@ $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
-$button_margin_top  =   $params->get('button_margin_top', '');
-echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.'">';
+$overlay_text_color =   $params->get('overlay_text_color', '');
+$overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
+echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
     $testimonial_params    =   Style::getSubFormParams($testimonial->params);
     $media      =   '<div class="as-author-avatar d-inline-block position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . '">';
@@ -296,6 +299,9 @@ if (!empty($content_margin)) {
     foreach ($margin as $device => $props) {
         $style->child('.as-author-message')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
+}
+if (!empty($image_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .as-author-avatar', $image_border);
 }
 $style->render();
 $style_dark->render();

@@ -29,6 +29,11 @@
                         </fields>
                     </form>
                 </field>
+                <field astroidgroup="general" name="overlay_text_color" type="astroidlist" label="ASTROID_WIDGET_OVERLAY_TEXT_COLOR" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
+                    <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
+                </field>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>
