@@ -121,10 +121,25 @@ if (count($slide_responsive)) {
     $slide_settings[]       =  'responsive: ['.implode(',', $slide_responsive).']';
 }
 
-$row_gutter         =   $params->get('row_gutter', 4);
-$gutter_cls         =  ' gx-' . $row_gutter;
-$column_gutter      =   $params->get('column_gutter', 4);
-$gutter_cls         .=  ' gy-' . $column_gutter;
+$gutter_cls         =   '';
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    if ($key !== 'xs') {
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+        if ($row_gutter) {
+            $gutter_cls     .=  ' gy-' . $key . '-' . $row_gutter;
+        }
+        if ($column_gutter) {
+            $gutter_cls     .=  ' gx-' . $key . '-' . $column_gutter;
+        }
+    } else {
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $gutter_cls         .=  ' gy-' . $row_gutter;
+        $gutter_cls         .=  ' gx-' . $column_gutter;
+    }
+}
 
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
@@ -165,6 +180,13 @@ $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
+$img_rounded_size   =   $params->get('img_rounded_size', '3');
+$img_border_radius  =   $params->get('img_border_radius', '');
+if ($img_border_radius == 'rounded') {
+    $img_border_radius  = ' ' . $img_border_radius . '-' . $img_rounded_size;
+} else {
+    $img_border_radius  = $img_border_radius !== '' ? ' ' . $img_border_radius : '';
+}
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
@@ -182,7 +204,9 @@ if (!empty($info_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-article-info', $info_font_style);
 }
 
-$info_margin        =   $params->get('info_margin', '');
+$info_margin                =   $params->get('info_margin', '');
+$info_margin_before_title   =   $params->get('info_margin_before_title', '');
+$info_margin_after_intro    =   $params->get('info_margin_after_intro', '');
 
 $enable_intro_text =   $params->get('enable_intro_text', 1);
 $content_font_style =   $params->get('content_font_style');
@@ -215,11 +239,19 @@ foreach ($items as $key => $item) {
             $gallery    =   (array) $item->params->get('astroid_article_gallery_items', array());
             if (count($gallery)) {
                 $has_gallery    =   true;
-                $media  =   '<div id="astroid-articles-'.$item->id.'" class="carousel slide carousel-fade" data-bs-ride="carousel">';
+                $media  =   '<div id="astroid-articles-'.$item->id.'" class="as-slideshow-media carousel slide carousel-fade overflow-hidden'.$img_border_radius.'" data-bs-ride="carousel">';
                 $media  .=  '<div class="carousel-inner">';
                 $active =   true;
                 foreach ($gallery as $gallery_item) {
-                    $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'"><img src="'.$gallery_item->image.'" class="d-block w-100" alt="'.$gallery_item->title.'"></div>';
+                    $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'">';
+                    if ($enable_image_cover) {
+                        $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
+                    }
+                    $media  .=  '<img src="'.$gallery_item->image.'" class="d-block w-100'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'" alt="'.$gallery_item->title.'">';
+                    if ($enable_image_cover) {
+                        $media  .=  '</div>';
+                    }
+                    $media  .=  '</div>';
                     $active =   false;
                 }
                 $media  .=  '</div>';
@@ -236,7 +268,7 @@ foreach ($items as $key => $item) {
                 if ($video_type == 'vimeo') {
                     $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
                 }
-                $media =    '<div class="entry-video ratio ratio-16x9">';
+                $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
                 $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
                 $media .=   '</div>';
             }
@@ -248,7 +280,7 @@ foreach ($items as $key => $item) {
     }
     $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
     if ($item_image_cover) {
-        $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="d-block'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
+        $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
     echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
@@ -270,28 +302,30 @@ foreach ($items as $key => $item) {
     }
 
     if (count($info_before_title)) {
-        echo '<div class="astroid-article-info as-gutter-lg">';
+        echo '<dl class="astroid-article-info before-title as-gutter-lg">';
+        echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_before_title as $info_item) {
-            echo '<div class="d-inline-block">' . LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params)) .'</div>';
+            echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
         }
-        echo '</div>';
+        echo '</dl>';
     }
     if (!empty($item->title)) {
         echo '<'.$title_html_element.' class="astroid-article-heading"><a href="'.Route::_($link).'" title="'. $item->title . '">'. $item->title . '</a></'.$title_html_element.'>';
     }
     if (count($info_after_title)) {
-        echo '<div class="astroid-article-info after-title as-gutter-lg">';
+        echo '<dl class="astroid-article-info after-title as-gutter-lg">';
+        echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_after_title as $info_item) {
-            echo '<div class="d-inline-block">' . LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params)) .'</div>';
+            echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
         }
-        echo '</div>';
+        echo '</dl>';
     }
     if (!empty($item->introtext) && $enable_intro_text) {
         echo '<div class="astroid-article-introtext">' . $item->introtext . '</div>';
     }
 
     if (count($info_after_intro)) {
-        echo '<dl class="astroid-article-info as-gutter-lg">';
+        echo '<dl class="astroid-article-info after-intro as-gutter-lg">';
         echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_after_intro as $info_item) {
             echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
@@ -299,7 +333,9 @@ foreach ($items as $key => $item) {
         echo '</dl>';
     }
     if ($readmore) {
-        echo '<a id="btn-'.$item->id.'" href="'.Route::_($link).'" class="mt-3 btn btn-' .(intval($button_outline) ? 'outline-' : ''). $button_style . $button_size . $button_radius . '">'.Text::_('JGLOBAL_READ_MORE').'</a>';
+        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size . $button_radius : 'as-btn-text text-uppercase text-reset';
+        $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JGLOBAL_READ_MORE') . '</small>' : Text::_('JGLOBAL_READ_MORE');
+        echo '<a id="btn-'.$item->id.'" href="'.Route::_($link).'" class="mt-3 ' . $button_class . '">' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body
@@ -344,8 +380,21 @@ if (!empty($info_margin)) {
         $style->child('.astroid-article-info.after-title')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
 }
+if (!empty($info_margin_before_title)) {
+    $margin = \json_decode($info_margin_before_title, false);
+    foreach ($margin as $device => $props) {
+        $style->child('.astroid-article-info.before-title')->addStyle(Style::spacingValue($props, "margin"), $device);
+    }
+}
+if (!empty($info_margin_after_intro)) {
+    $margin = \json_decode($info_margin_after_intro, false);
+    foreach ($margin as $device => $props) {
+        $style->child('.astroid-article-info.after-intro')->addStyle(Style::spacingValue($props, "margin"), $device);
+    }
+}
 if ($enable_image_cover) {
-    $style->child('.astroid-image-overlay-cover')->addCss('height', $min_height . 'px');
+    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+    $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
 }
 switch ($overlay_type) {
     case 'color':
