@@ -212,47 +212,7 @@ class BaseElement
                     $this->style->addCss('background-size', $this->params->get('background_size', ''));
                     $this->style->addCss('background-attachment', $this->params->get('background_attchment', ''));
                     $this->style->addCss('background-position', $this->params->get('background_position', ''));
-                    $overlay_type   =   $this->params->get('background_image_overlay', '');
-                    if (!empty($overlay_type)) {
-                        $this->addClass('position-relative astroid-element-overlay');
-                        switch ($overlay_type) {
-                            case 'color':
-                                $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
-                                if (!empty($background_image_overlay_color)) {
-                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
-                                    $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
-                                    $overlay_style->render();
-
-                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before', 'dark');
-                                    $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
-                                    $overlay_style->render();
-                                }
-                                break;
-                            case 'gradient':
-                                $background_image_overlay_gradient  =   $this->params->get('background_image_overlay_gradient', '');
-                                if (!empty($background_image_overlay_gradient)) {
-                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
-                                    $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
-                                    $overlay_style->render();
-                                }
-                                break;
-                            case 'pattern':
-                                $background_image_overlay_pattern   =   $this->params->get('background_image_overlay_pattern', '');
-                                $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
-                                if (!empty($background_image_overlay_pattern)) {
-                                    $overlay_style   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before');
-                                    if ($background_image_overlay_color) {
-                                        $overlay_style_dark   =   new Style('#' . $this->getAttribute('id'). '.astroid-element-overlay:before', 'dark');
-                                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
-                                        $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
-                                        $overlay_style_dark->render();
-                                    }
-                                    $overlay_style->addCss('background-image', 'url(' . Uri::root() . Media::getPath() . '/' . $background_image_overlay_pattern . ')');
-                                    $overlay_style->render();
-                                }
-                                break;
-                        }
-                    }
+                    $this->addOverlayColor();
                 }
                 break;
             case 'video': // if video background
@@ -261,11 +221,64 @@ class BaseElement
                     $this->addAttribute('data-jd-video-bg', Uri::root() . Media::getPath() . '/' . $video);
                     $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
                     $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                    $this->addOverlayColor();
                 }
                 break;
             case 'gradient': // if gradient background
                 $this->style->addCss('background-image', Style::getGradientValue($this->params->get('background_gradient', '')));
                 break;
+        }
+    }
+
+    protected function addOverlayColor() {
+        $overlay_type   =   $this->params->get('background_image_overlay', '');
+        if (!empty($overlay_type)) {
+            $background = $this->params->get('background_setting', '');
+            $overlay_style_cls      =   '.astroid-element-overlay';
+            if ($background == 'video') {
+                $this->addClass('position-relative');
+                $overlay_style_cls  =   ' > ' . $overlay_style_cls;
+            } else {
+                $this->addClass('position-relative astroid-element-overlay');
+            }
+
+            switch ($overlay_type) {
+                case 'color':
+                    $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_color)) {
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                        $overlay_style->render();
+
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark');
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'gradient':
+                    $background_image_overlay_gradient  =   $this->params->get('background_image_overlay_gradient', '');
+                    if (!empty($background_image_overlay_gradient)) {
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'pattern':
+                    $background_image_overlay_pattern   =   $this->params->get('background_image_overlay_pattern', '');
+                    $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_pattern)) {
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        if ($background_image_overlay_color) {
+                            $overlay_style_dark   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark');
+                            $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                            $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
+                            $overlay_style_dark->render();
+                        }
+                        $overlay_style->addCss('background-image', 'url(' . Uri::root() . Media::getPath() . '/' . $background_image_overlay_pattern . ')');
+                        $overlay_style->render();
+                    }
+                    break;
+            }
         }
     }
 

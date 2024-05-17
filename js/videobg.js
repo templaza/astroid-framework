@@ -7,6 +7,7 @@
          $(this).children().css('z-index', '1');
 
          var _container = $('<div/>');
+         _container.addClass('astroid-element-overlay')
          _container.css('position', 'absolute');
          _container.css('top', '0');
          _container.css('left', '0');
