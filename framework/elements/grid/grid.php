@@ -100,9 +100,10 @@ $icon_color_hover   =   Style::getColor($params->get('icon_color_hover', ''));
 $style->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['light']);
 $style_dark->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['dark']);
 
+$layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 0);
-$overlay_color      =   $params->get('overlay_color', '');
+$overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
 $box_shadow         =   $params->get('card_box_shadow', '');
@@ -159,8 +160,8 @@ foreach ($grids as $key => $grid) {
     $link_target    =   !empty($grid_params['link_target']) ? ' target="'.$grid_params['link_target'].'"' : '';
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<div class="position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
-        $media      .=  '<img class="w-100' . ($media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $box_shadow . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
+        $media      .=  '<img class="w-100' . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
         $media      .=  '</div>';
         if ( !empty($grid_params['link']) ) {
             $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
@@ -176,7 +177,7 @@ foreach ($grids as $key => $grid) {
         }
     }
 
-    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="grid-'. $grid -> id .'" class="as-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
@@ -189,7 +190,7 @@ foreach ($grids as $key => $grid) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
+    echo '<div class="' . ($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light' : 'order-1 card-body' ) . $card_size . '">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -244,6 +245,22 @@ if (!empty($meta_heading_margin)) {
     foreach ($margin as $device => $props) {
         $style->child('.astroid-meta')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
+}
+if ($enable_image_cover) {
+    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+}
+switch ($overlay_type) {
+    case 'color':
+        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
+        $style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
+        $style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+        break;
+    case 'background-color':
+        $overlay_gradient   =   $params->get('overlay_gradient', '');
+        if (!empty($overlay_gradient)) {
+            $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+        }
+        break;
 }
 $style->render();
 $style_dark->render();
