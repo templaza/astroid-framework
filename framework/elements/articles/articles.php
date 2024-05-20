@@ -243,7 +243,7 @@ foreach ($items as $key => $item) {
                 $media  .=  '<div class="carousel-inner">';
                 $active =   true;
                 foreach ($gallery as $gallery_item) {
-                    $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'">';
+                    $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'" data-bs-interval="3000">';
                     if ($enable_image_cover) {
                         $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
                     }
@@ -255,8 +255,6 @@ foreach ($items as $key => $item) {
                     $active =   false;
                 }
                 $media  .=  '</div>';
-                $media  .=  '<button class="carousel-control-prev" type="button" data-bs-target="#astroid-articles-'.$item->id.'" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>';
-                $media  .=  '<button class="carousel-control-next" type="button" data-bs-target="#astroid-articles-'.$item->id.'" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
                 $media  .=  '</div>';
             }
             break;
@@ -295,7 +293,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' && $item_image_cover ? 'card-img-overlay as-light' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
