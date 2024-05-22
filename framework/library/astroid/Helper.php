@@ -69,7 +69,7 @@ class Helper
         // replace non letter or digits by -
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
         // transliterate
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT//IGNORE', $text);
         // remove unwanted characters
         $text = preg_replace('~[^-\w]+~', '', $text);
         // trim
