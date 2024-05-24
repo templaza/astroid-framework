@@ -31,10 +31,10 @@ function checkShowGroup(fields) {
     let hasField = false;
     if (fields.length) {
         fields.forEach(field => {
-        if (typeof field.ngShow === 'string' && checkShow(field)) {
-            hasField = true;
-            return hasField;
-        }
+            if (typeof field.ngShow === 'string' && checkShow(field)) {
+                hasField = true;
+                return hasField;
+            }
         });
     }
     return hasField;
