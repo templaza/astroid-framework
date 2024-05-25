@@ -29,11 +29,16 @@ class Template
     protected static $presets = null;
     protected static $fonts = null;
 
-    public function __construct()
+    public function __construct($id = 0)
     {
         $app = Factory::getApplication();
         $menu = $app->getMenu()->getActive();
-        $template_id = isset($menu->template_style_id) ? $menu->template_style_id : 0;
+
+        if (!empty($id)) {
+            $template_id = $id;
+        } else {
+            $template_id = isset($menu->template_style_id) ? $menu->template_style_id : $id;
+        }
 
         if (!empty($template_id)) {
             $jtemplate = $this->_getById($template_id);

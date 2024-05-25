@@ -27,17 +27,18 @@ defined('_JEXEC') or die;
 class BaseElement
 {
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
-    public $id, $params, $type, $style, $style_dark, $content = '';
+    public $id, $unqid, $params, $type, $style, $style_dark, $content = '';
     public int $state = 1;
     public array $devices = [];
     public function __construct($data, $devices)
     {
-        $this->_data = $data;
-        $this->devices = $devices;
-        $this->id = $data['id'];
-        $this->type = isset($data['type']) ? $data['type'] : 'element';
-        $this->state = isset($data['state']) ? intval($data['state']) : 1;
-        $this->params = new Registry();
+        $this->_data    = $data;
+        $this->devices  = $devices;
+        $this->id       = $data['id'];
+        $this->unqid    = $data['id'];
+        $this->type     = isset($data['type']) ? $data['type'] : 'element';
+        $this->state    = isset($data['state']) ? intval($data['state']) : 1;
+        $this->params   = new Registry();
         if (isset($data['params']) && !empty($data['params'])) {
             $params = [];
             foreach ($data['params'] as $param) {

@@ -358,6 +358,53 @@ class Helper
         return $return;
     }
 
+    public static function getElement($unqid, $template = null) {
+        if (empty($template)) {
+            $template   =   Framework::getTemplate();
+        }
+        $layout =   $template->getLayout();
+        foreach ($layout['sections'] as $section) {
+            if ($section['id'] == $unqid) {
+                $section['params'] = self::loadParams($section['params']);
+                return $section;
+            } else {
+                foreach ($section['rows'] as $row) {
+                    if ($row['id'] == $unqid) {
+                        $row['params'] = self::loadParams($row['params']);
+                        return $row;
+                    } else {
+                        foreach ($row['cols'] as $col) {
+                            if ($col['id'] == $unqid) {
+                                $col['params'] = self::loadParams($col['params']);
+                                return $col;
+                            } else {
+                                foreach ($col['elements'] as $element) {
+                                    if ($element['id'] == $unqid) {
+                                        $element['params'] = self::loadParams($element['params']);
+                                        return $element;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function loadParams($data) {
+        $params_data   = new Registry();
+        if (isset($data) && !empty($data)) {
+            $params = [];
+            foreach ($data as $param) {
+                $params[$param['name']] = $param['value'];
+            }
+            $params_data->loadArray($params);
+        }
+        return $params_data;
+    }
+
     public static function getPositions()
     {
         $templateXML = \JPATH_SITE . '/templates/' . ASTROID_TEMPLATE_NAME . '/templateDetails.xml';
