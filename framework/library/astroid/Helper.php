@@ -398,11 +398,35 @@ class Helper
         if (isset($data) && !empty($data)) {
             $params = [];
             foreach ($data as $param) {
-                $params[$param['name']] = $param['value'];
+                if (is_array($param)) {
+                    $params[$param['name']] = $param['value'];
+                } elseif (is_object($param)) {
+                    $params[$param->name] = $param->value;
+                }
             }
             $params_data->loadArray($params);
         }
         return $params_data;
+    }
+
+    public static function loadCaptcha($context = '') {
+        if (empty($context)) {
+            return '';
+        }
+        $app    =   Factory::getApplication();
+        $value1 =   rand(1,100);
+        $value2 =   rand(1,100);
+        $app->setUserState( $context.'.value1', $value1 );
+        $app->setUserState( $context.'.value2', $value2 );
+        return $app->getUserState( $context.'.value1' ).'<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
+    }
+
+    public static function getCaptcha($context = '') {
+        $app    =   Factory::getApplication();
+        $value1 =   intval($app->getUserState( $context.'.value1' ));
+        $value2 =   intval($app->getUserState( $context.'.value2' ));
+        $value_result = intval($app->input->get($context, 0, 'ALNUM'));
+        return ( $value1 + $value2 == $value_result );
     }
 
     public static function getPositions()

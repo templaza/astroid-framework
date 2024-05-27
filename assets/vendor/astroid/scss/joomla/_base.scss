@@ -24,6 +24,8 @@ ul.tags {
   padding: 5px 15px;
 }
 .as-btn-text {
+  --bs-btn-padding-x: 0;
+  --bs-btn-padding-y: 0;
   position: relative;
   text-decoration: none;
   &:after {

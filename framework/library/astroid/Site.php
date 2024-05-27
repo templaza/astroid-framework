@@ -68,8 +68,8 @@ class Site extends Helper\Client
         if (!\Joomla\CMS\Session\Session::checkToken()) {
             throw new \Exception(Text::_('ASTROID_AJAX_ERROR'));
         }
-        $widget         = $app->input->post->get('widget', '', 'ALNUM');
-        $template_id    = $app->input->post->get('template', '', 'ALNUM');
+        $widget         = $app->input->get('widget', '', 'ALNUM');
+        $template_id    = $app->input->get('template', '', 'ALNUM');
 
         $template       =   Framework::getTemplate(intval($template_id));
         if (file_exists(\JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template->template.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php')) {
