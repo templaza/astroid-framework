@@ -418,7 +418,7 @@ class Helper
         $value2 =   rand(1,100);
         $app->setUserState( $context.'.value1', $value1 );
         $app->setUserState( $context.'.value2', $value2 );
-        return $app->getUserState( $context.'.value1' ).'<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
+        return '<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
     }
 
     public static function getCaptcha($context = '') {
