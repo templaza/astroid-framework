@@ -228,7 +228,13 @@
                     <option value="light">Light</option>
                     <option value="dark">Dark</option>
                     <option value="none">None</option>
+                    <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                 </field>
+
+                <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
+                <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="bg_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+                <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="card_border" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_size" label="ASTROID_WIDGET_CARD_SIZE_LABEL" default="">
                     <option value="none">ASTROID_NONE</option>
                     <option value="">TPL_ASTROID_DEFAULT</option>
@@ -390,6 +396,7 @@
                     <option value="classic">ASTROID_WIDGET_LAYOUT_CLASSIC_LABEL</option>
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
                 </field>
+                <field astroidgroup="image_options" name="image_fullwidth" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_IMAGE_FULLWIDTH"/>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="600" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_type" type="astroidradio" width="full" default="color" label="ASTROID_WIDGET_OVERLAY_COLOR">

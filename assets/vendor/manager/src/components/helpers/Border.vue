@@ -88,6 +88,7 @@ watch(border_text, (newText) => {
                 <option value="dotted">Dotted</option>
                 <option value="dashed">Dashed</option>
                 <option value="double">Double</option>
+                <option value="none">None</option>
             </select>
         </div>
         <div class="col-6">

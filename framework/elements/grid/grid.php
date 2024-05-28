@@ -102,6 +102,7 @@ $style_dark->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover[
 
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
+$image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth', 1);
 $min_height         =   $params->get('min_height', 0);
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
@@ -160,8 +161,8 @@ foreach ($grids as $key => $grid) {
     $link_target    =   !empty($grid_params['link_target']) ? ' target="'.$grid_params['link_target'].'"' : '';
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $box_shadow . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
-        $media      .=  '<img class="w-100' . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
+        $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
         $media      .=  '</div>';
         if ( !empty($grid_params['link']) ) {
             $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
@@ -248,6 +249,20 @@ if (!empty($meta_heading_margin)) {
 }
 if ($enable_image_cover) {
     $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+}
+if ($params->get('card_style', '') == 'custom') {
+    $text_color     =   Style::getColor($params->get('text_color', ''));
+    $style->child('.as-grid > .card')->addCss('color', $text_color['light']);
+    $style_dark->child('.as-grid > .card')->addCss('color', $text_color['dark']);
+
+    $bg_color       =   Style::getColor($params->get('bg_color', ''));
+    $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
+    $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
+
+    $card_border    =   json_decode($params->get('card_border', ''), true);
+    if (!empty($card_border)) {
+        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border);
+    }
 }
 switch ($overlay_type) {
     case 'color':
