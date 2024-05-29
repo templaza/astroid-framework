@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="template" client="site" method="upgrade">
    <name>astroid_template_zero</name>
-   <creationDate>March 2024</creationDate>
+   <creationDate>May 2024</creationDate>
    <author>Astroid Framework</author>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://astroidframe.work</authorUrl>
    <copyright>Copyright (C) 2024 AstroidFrame.work, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
-   <version>3.0.12</version>
+   <version>3.0.15</version>
    <description>TPL_ASTROID_XML_DESCRIPTION</description>
    <inheritable>1</inheritable>
    <updateservers>
@@ -35,6 +35,8 @@
       <position>topbar-1</position>
       <position>topbar-2</position>
       <position>astroid-header</position>
+      <position>astroid-header-menu</position>
+      <position>astroid-header-mobilemenu</position>
       <position>astroid-top-social</position>
       <position>astroid-top-contact</position>
       <position>content-top</position>
