@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>mod_astroid_menu</name>
 	<author>Astroid Framework</author>
-	<creationDate>June 2nd, 2023</creationDate>
-	<copyright>(C) 2023 Astroid Framework</copyright>
+	<creationDate>May 29, 2024</creationDate>
+	<copyright>(C) 2024 Astroid Framework</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>sonlv@templaza.com</authorEmail>
 	<authorUrl>astroidframe.work</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>MOD_ASTROID_MENU_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_astroid_menu">mod_astroid_menu.php</filename>
@@ -93,8 +93,82 @@
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 				</field>
+				<field name="menu_mode" type="list" label="TPL_ASTROID_MENU_MODE_LABEL" default="site">
+					<option value="site">TPL_ASTROID_MENU_SITE_MODE_LABEL</option>
+					<option value="sidebar">TPL_ASTROID_MENU_SIDEBAR_MODE_LABEL</option>
+					<option value="mobile">TPL_ASTROID_MENU_MOBILE_MODE_LABEL</option>
+				</field>
+				<field
+						name="logo_between"
+						type="radio"
+						layout="joomla.form.field.radio.switcher"
+						label="TPL_ASTROID_MENU_LOGO_BETWEEN_LABEL"
+						description="TPL_ASTROID_MENU_LOGO_BETWEEN_DESC"
+						default="0"
+						filter="integer"
+						showon="menu_mode:site"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field
+						name="dropdown_arrow"
+						type="radio"
+						layout="joomla.form.field.radio.switcher"
+						label="TPL_ASTROID_MENU_OPTIONS_SELECT_ARROW_LABEL"
+						default="1"
+						filter="integer"
+						showon="menu_mode:site"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
 
-				<field name="menu_breakpoint" type="list" label="MOD_ASTROID_HEADER_BREAKPOINT_LABEL" description="MOD_ASTROID_HEADER_BREAKPOINT_DESC" default="lg">
+				<field name="dropdown_animation_speed" type="range" default="300" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" min="100" max="4000" step="1" showon="menu_mode:site" />
+				<field name="dropdown_animation_type" type="list" label="TPL_ASTROID_HEADER_MENU_ANIMATION" default="slide" showon="menu_mode:site">
+					<option value="none">ASTROID_NONE</option>
+					<option value="fade">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FADE</option>
+					<option value="slide">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SILDE</option>
+				</field>
+				<field name="dropdown_animation_ease" type="list" label="TPL_ASTROID_HEADER_ANIMATION_EASE_LABEL" default="linear" showon="menu_mode:site">
+					<option value="linear">linear</option>
+					<option value="swing">swing</option>
+					<option value="easeInQuad">easeInQuad</option>
+					<option value="easeOutQuad">easeOutQuad</option>
+					<option value="easeInOutQuad">easeInOutQuad</option>
+					<option value="easeInCubic">easeInCubic</option>
+					<option value="easeOutCubic">easeOutCubic</option>
+					<option value="easeInOutCubic">easeInOutCubic</option>
+					<option value="easeInQuart">easeInQuart</option>
+					<option value="easeOutQuart">easeOutQuart</option>
+					<option value="easeInOutQuart">easeInOutQuart</option>
+					<option value="easeInQuint">easeInQuint</option>
+					<option value="easeOutQuint">easeOutQuint</option>
+					<option value="easeInOutQuint">easeInOutQuint</option>
+					<option value="easeInSine">easeInSine</option>
+					<option value="easeOutSine">easeOutSine</option>
+					<option value="easeInOutSine">easeInOutSine</option>
+					<option value="easeInExpo">easeInExpo</option>
+					<option value="easeOutExpo">easeOutExpo</option>
+					<option value="easeInOutExpo">easeInOutExpo</option>
+					<option value="easeInCirc">easeInCirc</option>
+					<option value="easeOutCirc">easeOutCirc</option>
+					<option value="easeInOutCirc">easeInOutCirc</option>
+					<option value="easeInElastic">easeInElastic</option>
+					<option value="easeOutElastic">easeOutElastic</option>
+					<option value="easeInOutElastic">easeInOutElastic</option>
+					<option value="easeInBack">easeInBack</option>
+					<option value="easeOutBack">easeOutBack</option>
+					<option value="easeInOutBack">easeInOutBack</option>
+					<option value="easeInBounce">easeInBounce</option>
+					<option value="easeOutBounce">easeOutBounce</option>
+					<option value="easeInOutBounce">easeInOutBounce</option>
+				</field>
+				<field name="dropdown_trigger" type="list" label="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_LABEL" description="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_DESC" default="hover" showon="menu_mode:site">
+					<option value="hover">JGLOBAL_HOVER</option>
+					<option value="click">JGLOBAL_CLICK</option>
+				</field>
+				<field name="menu_breakpoint" type="list" label="MOD_ASTROID_HEADER_BREAKPOINT_LABEL" description="MOD_ASTROID_HEADER_BREAKPOINT_DESC" default="lg" showon="menu_mode:site">
 					<option value="sm">MOD_ASTROID_SMALL</option>
 					<option value="md">MOD_ASTROID_MEDIUM</option>
 					<option value="lg">MOD_ASTROID_LARGE</option>

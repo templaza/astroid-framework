@@ -27,14 +27,20 @@ if (empty($header_mobile_menu)) {
    return;
 }
 
-$dir = 'left';
-$header = $params->get('header', TRUE);
-$header_mode = $params->get('header_mode', 'horizontal');
-$mode = $params->get('header_sidebar_menu_mode', 'left');
-$dir = $header ? ($header_mode == 'sidebar' ? $mode : $dir) : $dir;
+$mobile_menu_method = $params->get('mobile_menu_method', 'default');
 
-$wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-$wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+if ($mobile_menu_method == 'module_position') :
+    $mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
+    echo $document->position($mobile_menu_module_position);
+else :
+    $dir = 'left';
+    $header = $params->get('header', TRUE);
+    $header_mode = $params->get('header_mode', 'horizontal');
+    $mode = $params->get('header_sidebar_menu_mode', 'left');
+    $dir = $header ? ($header_mode == 'sidebar' ? $mode : $dir) : $dir;
+
+    $wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 ?>
 <div class="astroid-mobilemenu d-none d-init dir-<?php echo $dir; ?>" data-class-prefix="astroid-mobilemenu" id="astroid-mobilemenu">
    <div class="burger-menu-button active">
@@ -48,6 +54,7 @@ $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['r
    ?>
 </div>
 <?php
-$style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
-$document->addStyledeclaration($style);
+    $style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
+    $document->addStyledeclaration($style);
+endif;
 ?>
