@@ -90,7 +90,11 @@ class Helper
         $return = [];
         $text = explode('-', $text);
         foreach ($text as $t) {
-            $return[] = substr($t, 0, 1);
+            $key        =   substr($t, 0, 1);
+            if (count($return) == 0 && preg_match('/[^a-z]/', $key)) {
+                $key    =   'as';
+            }
+            $return[]   =   $key;
         }
         return implode('', $return);
     }
