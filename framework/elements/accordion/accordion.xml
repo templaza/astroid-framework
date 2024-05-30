@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_ACCORDION_LABEL</title>
+    <description>ASTROID_WIDGET_ACCORDION_DESC</description>
+    <icon>fa-solid fa-diagram-next</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" name="accordions" type="astroidsubform" label="ASTROID_WIDGET_ACCORDION_ITEMS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL"/>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="widget_styles" type="astroidlist" name="style" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="accordion-flush">Flush</option>
+                </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
