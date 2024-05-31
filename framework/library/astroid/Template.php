@@ -361,7 +361,9 @@ class Template
 
         $color_mode_theme = '';
         if ($plg_color_mode && $color_mode) {
-            $color_mode_theme  =   Factory::getApplication()->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
+            $app               =   Factory::getApplication();
+            $client_color      =   $app->input->get('color_mode', '', 'ALNUM');
+            $color_mode_theme  =   !empty($client_color) ? $client_color : $app->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
         }
         return $color_mode_theme;
     }
