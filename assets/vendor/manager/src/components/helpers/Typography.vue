@@ -127,7 +127,7 @@ onMounted(()=>{
                         circle_dark
                         && !circle_dark.contains(event.target)
                     )
-                    || parseInt(props.field.input.options.colormode) === 0 
+                    || parseInt(constant.color_mode) === 0 
                 )
             ) {
                 _showColorPicker.value = false;
@@ -278,16 +278,16 @@ function getRandomInt(min, max) {
                     <div class="astroid-color">
                         <div class="row">
                             <div :class="{
-                                'col-4 text-center' : (props.field.input.options.colormode === '1'),
-                                'col-12': (props.field.input.options.colormode !== '1')
+                                'col-4 text-center' : (constant.color_mode === '1'),
+                                'col-12': (constant.color_mode !== '1')
                             }">
                                 <font-awesome-icon :id="props.field.input.id+`-colorcircle-light`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.light}" @click="showColorPicker('light')" />
-                                <div v-if="props.field.input.options.colormode === '1'">Light</div>
+                                <div v-if="constant.color_mode === '1'">Light</div>
                             </div>
-                            <div v-if="props.field.input.options.colormode === '1'" class="col text-center py-3">
+                            <div v-if="constant.color_mode === '1'" class="col text-center py-3">
                                 <font-awesome-icon :icon="['fas', 'arrows-left-right']" />
                             </div>
-                            <div v-if="props.field.input.options.colormode === '1'" class="col-4 text-center">
+                            <div v-if="constant.color_mode === '1'" class="col-4 text-center">
                                 <font-awesome-icon :id="props.field.input.id+`-colorcircle-dark`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.dark}" @click="showColorPicker('dark')" />
                                 <div>Dark</div>
                             </div>

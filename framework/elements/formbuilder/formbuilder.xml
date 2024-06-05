@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_FORMBUILDER_LABEL</title>
+    <description>ASTROID_WIDGET_FORMBUILDER_DESC</description>
+    <icon>fa-brands fa-wpforms</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="message_options" title="ASTROID_WIDGET_FORMBUILDER_MESSAGE_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="policy_options" title="ASTROID_WIDGET_FORMBUILDER_POLICY_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="button_options" title="ASTROID_WIDGET_BUTTON_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="form_options" title="ASTROID_WIDGET_FORM_OPTIONS_LABEL"/>
+
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_RECIPIENT_EMAIL_LABEL" description="ASTROID_WIDGET_RECIPIENT_EMAIL_DESC" name="recipient"/>
+                <field astroidgroup="general" type="astroidtextarea" label="ASTROID_WIDGET_EMAIL_HEADERS_LABEL" description="ASTROID_WIDGET_EMAIL_HEADERS_DESC" name="email_headers" default="Reply-To: {{email}}&#13;&#10;Reply-name: {{first-name}} {{last-name}}&#13;&#10;Cc: {{email}}!"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_FROM_EMAIL_LABEL" description="ASTROID_WIDGET_FROM_EMAIL_DESC" name="from_email"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_EMAIL_SUBJECT_LABEL" description="ASTROID_WIDGET_EMAIL_SUBJECT_DESC" name="email_subject" default="{{subject}} | {{site-name}}"/>
+                <field astroidgroup="general" type="astroidtextarea" label="ASTROID_WIDGET_EMAIL_BODY_LABEL" description="ASTROID_WIDGET_EMAIL_BODY_DESC" name="email_body" default="&lt;p&gt;&lt;strong&gt;From:&lt;/strong&gt;{{first-name}} {{last-name}}&lt;/p&gt;&#13;&#10;&lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt;{{email}}&lt;/p&gt;&#13;&#10;&lt;p&gt;&lt;strong&gt;Subject:&lt;/strong&gt;{{subject}}&lt;/p&gt;&#13;&#10;&lt;p&gt;&lt;strong&gt;Message:&lt;/strong&gt;{{message}}&lt;/p&gt;"/>
+
+                <field astroidgroup="message_options" type="astroidtext" label="ASTROID_WIDGET_FORM_SUBMIT_SUCCESS_LABEL" description="ASTROID_WIDGET_FORM_SUBMIT_SUCCESS_DESC" name="form_submit_success" default="Email successfully sent!"/>
+                <field astroidgroup="message_options" type="astroidtext" label="ASTROID_WIDGET_FORM_SUBMIT_FAILED_LABEL" description="ASTROID_WIDGET_FORM_SUBMIT_FAILED_DESC" name="form_submit_failed" default="Email sent failed, fill required field and try again!"/>
+
+                <field astroidgroup="policy_options" name="enable_redirect" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_FORM_ENABLE_REDIRECT_LABEL"/>
+                <field astroidgroup="policy_options" ngShow="[enable_redirect]==1" label="ASTROID_WIDGET_FORM_REDIRECT_URL_LABEL" description="ASTROID_WIDGET_FORM_REDIRECT_URL_DESC" name="redirect_url"/>
+                <field astroidgroup="policy_options" name="enable_captcha" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_FORM_ENABLE_CAPTCHA_LABEL"/>
+                <field astroidgroup="policy_options" ngShow="[enable_captcha]==1" type="astroidlist" name="captcha_type" label="ASTROID_WIDGET_FORM_CAPTCHA_TYPE_LABEL" default="default">
+                    <option value="default">TPL_ASTROID_DEFAULT</option>
+                    <option value="recaptcha">reCaptcha</option>
+                    <option value="invisible-recaptcha">Invisible reCaptcha</option>
+                </field>
+
+                <field astroidgroup="button_options" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
+                    <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
+                    <option value="success">Success</option>
+                    <option value="danger">Danger</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="link">Link</option>
+                    <option value="text">Text</option>
+                </field>
+                <field astroidgroup="button_options" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
+                <field astroidgroup="button_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="btn-lg">Large</option>
+                    <option value="btn-sm">Small</option>
+                </field>
+                <field astroidgroup="button_options" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                    <option value="">Rounded</option>
+                    <option value="rounded-0">Square</option>
+                    <option value="rounded-pill">Circle</option>
+                </field>
+                <field astroidgroup="button_options" type="astroidlist" name="button_margin_top" label="ASTROID_WIDGET_BUTTON_MARGIN_TOP" default="">
+                    <option value="">JNONE</option>
+                    <option value="1">J1</option>
+                    <option value="2">J2</option>
+                    <option value="3">J3</option>
+                    <option value="4">J4</option>
+                    <option value="5">J5</option>
+                </field>
+
+                <field astroidgroup="form_options" name="column_responsive" type="astroidradio" width="full" default="lg">
+                    <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
+                    <option value="xl">ASTROID_WIDGET_XL_ICON</option>
+                    <option value="lg">ASTROID_WIDGET_LG_ICON</option>
+                    <option value="md">ASTROID_WIDGET_MD_ICON</option>
+                    <option value="sm">ASTROID_WIDGET_SM_ICON</option>
+                    <option value="xs">ASTROID_WIDGET_XS_ICON</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="row_gutter_xxl" label="ASTROID_WIDGET_ROW_GUTTER_XXL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="row_gutter_xl" label="ASTROID_WIDGET_ROW_GUTTER_XL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="row_gutter_lg" label="ASTROID_WIDGET_ROW_GUTTER_LG_LABEL" default="4">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="row_gutter_md" label="ASTROID_WIDGET_ROW_GUTTER_MD_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="row_gutter_sm" label="ASTROID_WIDGET_ROW_GUTTER_SM_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="row_gutter" label="ASTROID_WIDGET_ROW_GUTTER_LABEL" default="3">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="column_gutter_xxl" label="ASTROID_WIDGET_COLUMN_GUTTER_XXL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="column_gutter_xl" label="ASTROID_WIDGET_COLUMN_GUTTER_XL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="column_gutter_lg" label="ASTROID_WIDGET_COLUMN_GUTTER_LG_LABEL" default="4">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="column_gutter_md" label="ASTROID_WIDGET_COLUMN_GUTTER_MD_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="column_gutter_sm" label="ASTROID_WIDGET_COLUMN_GUTTER_SM_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="column_gutter" label="ASTROID_WIDGET_COLUMN_GUTTER_LABEL" default="3">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="form_options" name="show_label" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_FORM_SHOW_LABEL_LABEL"/>
+                <field astroidgroup="form_options" name="form_elements" type="astroidsubform" label="ASTROID_WIDGET_FORM_ELEMENTS_LABEL" as-index="field_label">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidlist" label="ASTROID_WIDGET_FIELD_TYPE" name="type" default="text">
+                                    <option value="text">Text</option>
+                                    <option value="email">Email</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="textarea">Textarea</option>
+                                    <option value="radio">Radio</option>
+                                    <option value="checkbox">Checkbox</option>
+                                    <option value="select">Select</option>
+                                    <option value="date">Date</option>
+                                    <option value="range">Range</option>
+                                    <option value="number">Number</option>
+                                </field>
+                                <field type="astroidtext" name="field_label" label="ASTROID_WIDGET_FORM_FIELDLABEL_LABEL"/>
+                                <field type="astroidtext" name="field_name" label="ASTROID_WIDGET_FORM_FIELDNAME_LABEL" description="COM_TZ_PORTFOLIO_PLUS_FORMBUILDER_FIELDNAME_DESC" />
+                                <field type="astroidtext" ngShow="[type]=='text' OR [type]=='email' OR [type]=='phone' OR [type]=='textarea'" name="field_placeholder" label="ASTROID_WIDGET_FORM_FIELDPLACEHOLDER_LABEL" />
+                                <field type="astroidtext" name="field_min" label="ASTROID_WIDGET_FORM_FIELDMIN_LABEL" ngShow="[type]=='range' OR [type]=='number'" />
+                                <field type="astroidtext" name="field_max" label="ASTROID_WIDGET_FORM_FIELDMAX_LABEL" ngShow="[type]=='range' OR [type]=='number'" />
+                                <field type="astroidtext" name="field_step" label="ASTROID_WIDGET_FORM_FIELDSTEP_LABEL" ngShow="[type]=='range' OR [type]=='number'" />
+                                <field type="astroidradio" astroid-switch="true" name="field_required" default="0" label="ASTROID_WIDGET_FORM_FIELDREQUIRED_LABEL"/>
+                                <field ngShow="[type]=='radio' OR [type]=='checkbox' OR [type]=='select'" name="field_options" type="astroidsubform" label="ASTROID_WIDGET_FORM_FIELDOPTIONS_LABEL">
+                                    <form>
+                                        <fields>
+                                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                                <field name="opt_value" label="ASTROID_WIDGET_FORM_FIELDOPTION_VALUE_LABEL" description="ASTROID_WIDGET_FORM_FIELDOPTION_VALUE_DESC" type="astroidtext" />
+                                                <field name="opt_text" label="ASTROID_WIDGET_FORM_FIELDOPTION_TEXT_LABEL" type="astroidtext" />
+                                                <field type="astroidradio" astroid-switch="true" name="opt_selected" default="0" label="ASTROID_WIDGET_FORM_FIELDOPTION_SELECTED_LABEL"/>
+                                            </fieldset>
+                                        </fields>
+                                    </form>
+                                </field>
+                                <field type="astroidlist" name="column_lg" default="2"
+                                       label="ASTROID_WIDGET_LG_COLUMN">
+                                    <option value="1">1/1</option>
+                                    <option value="2">1/2</option>
+                                    <option value="3">1/3</option>
+                                    <option value="4">1/4</option>
+                                    <option value="6">1/6</option>
+                                </field>
+                                <field type="astroidlist" name="column_md" default="2"
+                                       label="ASTROID_WIDGET_MD_COLUMN">
+                                    <option value="1">1/1</option>
+                                    <option value="2">1/2</option>
+                                    <option value="3">1/3</option>
+                                    <option value="4">1/4</option>
+                                    <option value="6">1/6</option>
+                                </field>
+                                <field type="astroidlist" name="column_sm" default="1"
+                                       label="ASTROID_WIDGET_SM_COLUMN">
+                                    <option value="1">1/1</option>
+                                    <option value="2">1/2</option>
+                                    <option value="3">1/3</option>
+                                    <option value="4">1/4</option>
+                                    <option value="6">1/6</option>
+                                </field>
+                                <field type="astroidlist" name="column" default="1"
+                                       label="ASTROID_WIDGET_XS_COLUMN">
+                                    <option value="1">1/1</option>
+                                    <option value="2">1/2</option>
+                                    <option value="3">1/3</option>
+                                    <option value="4">1/4</option>
+                                    <option value="6">1/6</option>
+                                </field>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

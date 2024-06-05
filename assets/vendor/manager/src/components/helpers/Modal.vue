@@ -27,6 +27,18 @@ function checkShow(field) {
     }
     return true;
 }
+function checkShowGroup(fields) {
+    let hasField = false;
+    if (fields.length) {
+        fields.forEach(field => {
+            if (typeof field.ngShow === 'string' && checkShow(field)) {
+                hasField = true;
+                return hasField;
+            }
+        });
+    }
+    return hasField;
+}
 function saveModal(){
     let allowSave = true;
     if (subFormOpen.value.value) {
@@ -56,6 +68,9 @@ function saveModal(){
 function updateSubForm(value) {
     subFormOpen.value = value;
 }
+function sidebarClick(id) {
+    document.getElementById(id).scrollIntoView();
+}
 </script>
 <template>
     <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-hidden="true">
@@ -71,7 +86,10 @@ function updateSubForm(value) {
                 </ul>
                 <div class="tab-content modal-body" :id="`modal-tab-content-`+props.element.id">
                     <div v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="tab-pane fade" :class="{'show active' : idx === 0}" :id="fieldset.name+`-tab-pane-`+props.element.id" role="tabpanel" :aria-labelledby="fieldset.name+`-tab`" tabindex="0">
-                        <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid">
+                        <nav v-if="Object.keys(fieldset.childs).length > 3" class="nav nav-pills d-none d-xl-block flex-column position-fixed overflow-hidden top-50 start-0 translate-middle-y rounded-end-4">
+                            <a v-for="(group, gid) in fieldset.childs" :key="gid" class="nav-link bg-body-tertiary rounded-0" v-show="checkShowGroup(group.fields)" @click.prevent="sidebarClick(`group-`+gid+`-`+props.element.id)" href="#" :class="{'d-none' : gid === 'none' || group.title === ''}">{{ group.title }}</a>
+                        </nav>
+                        <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid" :id="`group-`+gid+`-`+props.element.id" v-show="checkShowGroup(group.fields)">
                             <div v-if="group.title || group.description" class="heading-group mb-4">
                                 <h5 v-if="group.title" class="astroid-heading-line"><span>{{ group.title }}</span></h5>
                                 <p v-if="group.description" class="form-text">{{ group.description }}</p>

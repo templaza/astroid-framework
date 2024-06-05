@@ -100,7 +100,7 @@
                 <field astroidgroup="overlay_options" name="overlay_type" type="astroidradio" width="full" default="color">
                     <option value="">ASTROID_NONE</option>
                     <option value="color">TPL_ASTROID_COLOR</option>
-                    <option value="background-color">TPL_ASTROID_BACKGROUND_COLOR_LABEL</option>
+                    <option value="background-color">TPL_ASTROID_GRADIENT</option>
                 </field>
                 <field astroidgroup="overlay_options" ngShow="[overlay_type]=='color'" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
                 <field astroidgroup="overlay_options" ngShow="[overlay_type]=='background-color'" name="overlay_gradient" type="astroidgradient" label="ASTROID_WIDGET_OVERLAY_GRADIENT"/>

@@ -108,14 +108,33 @@ if (!$slider_nav) {
 if (count($slide_responsive)) {
     $slide_settings[]       =   'responsive: ['.implode(',', $slide_responsive).']';
 }
+$gutter_cls         =   '';
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    if ($key !== 'xs') {
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+        if ($row_gutter) {
+            $gutter_cls     .=  ' gy-' . $key . '-' . $row_gutter;
+        }
+        if ($column_gutter) {
+            $gutter_cls     .=  ' gx-' . $key . '-' . $column_gutter;
+        }
+    } else {
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $gutter_cls         .=  ' gy-' . $row_gutter;
+        $gutter_cls         .=  ' gx-' . $column_gutter;
+    }
+}
 
-$row_gutter         =   $params->get('row_gutter', 4);
-$gutter_cls         =  ' gx-' . $row_gutter;
-$column_gutter      =   $params->get('column_gutter', 4);
-$gutter_cls         .=  ' gy-' . $column_gutter;
-
-$border_radius  = $params->get('border_radius', '');
-$border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
+$rounded_size       =   $params->get('rounded_size', '3');
+$border_radius      =   $params->get('border_radius', '');
+if ($border_radius == 'rounded') {
+    $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
+} else {
+    $border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
+}
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');
@@ -129,6 +148,7 @@ echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' 
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {
+        echo '<div>';
         if ($image_params['use_link']) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
         }
@@ -138,6 +158,7 @@ foreach ($images as $image) {
         if ($image_params['use_link']) {
             echo '</a>';
         }
+        echo '</div>';
     }
 }
 echo '</div>';

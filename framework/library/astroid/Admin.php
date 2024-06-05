@@ -145,6 +145,7 @@ class Admin extends Helper\Client
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
+            'color_mode'            => $plg_color_mode,
             'astroid_version'       => Helper\Constants::$astroid_version,
             'astroid_link'          => Helper\Constants::$astroid_link,
             'document_link'         => Helper\Constants::$documentation_link,

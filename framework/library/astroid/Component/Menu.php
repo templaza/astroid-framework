@@ -24,7 +24,7 @@ class Menu
 
     public static $parentlist = [];
 
-    public static function getMenu($menutype = '', $nav_class = [], $logo = null, $logoOdd = 'left', $headerType = 'horizontal', $nav_wrapper_class = [], $endLevel = null)
+    public static function getMenu($menutype = '', $nav_class = [], $logo = null, $logoOdd = 'left', $headerType = 'horizontal', $nav_wrapper_class = [], $startLevel = null, $endLevel = null, $base=null)
     {
         if (empty($menutype)) {
             return '';
@@ -41,7 +41,10 @@ class Menu
             $header_endLevel = $endLevel;
         }
         $header_startLevel = $params->get('header_startLevel', 1);
-        $header_menu_params = '{"menutype":"' . $menutype . '","base":"","startLevel":"' . $header_startLevel . '","endLevel":"' . $header_endLevel . '","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}';
+        if ($startLevel !== null) {
+            $header_startLevel = $startLevel;
+        }
+        $header_menu_params = '{"menutype":"' . $menutype . '","base":"'.$base.'","startLevel":"' . $header_startLevel . '","endLevel":"' . $header_endLevel . '","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}';
 
         $menu_params = new Registry();
         $menu_params->loadString($header_menu_params);
@@ -91,15 +94,13 @@ class Menu
 
             if ($item->level == 1) {
                 // Code for adding Centered Logo
-                if (($logo_position_count == $logo_position) && $logo !== null) {
+                if (($logo_position_count == $logo_position) && !empty($logo)) {
                     echo '<li class="nav-item nav-stacked-logo text-center px-4">';
                     $document->include('logo');
                     echo '</li>';
                 }
                 $logo_position_count++;
             }
-
-
 
             if ($options->megamenu && $item->level == 1) {
                 echo '<li data-position="' . $options->alignment . '" class="' . \implode(' ', $class) . '">';

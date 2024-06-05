@@ -40,10 +40,25 @@ $sm_column          =   $params->get('sm_column', 1);
 $row_column_cls     .=  $sm_column ? ' row-cols-sm-' . $sm_column : '';
 $xs_column          =   $params->get('xs_column', 1);
 $row_column_cls     .=  $xs_column ? ' row-cols-' . $xs_column : '';
-$row_gutter         =   $params->get('row_gutter', 4);
-$row_column_cls     .=  ' gx-' . $row_gutter;
-$column_gutter      =   $params->get('column_gutter', 4);
-$row_column_cls     .=  ' gy-' . $column_gutter;
+
+$responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+foreach ($responsive_key as $key) {
+    if ($key !== 'xs') {
+        $row_gutter         =   $params->get('row_gutter_'.$key, '');
+        $column_gutter      =   $params->get('column_gutter_'. $key, '');
+        if ($row_gutter) {
+            $row_column_cls .=  ' gy-' . $key . '-' . $row_gutter;
+        }
+        if ($column_gutter) {
+            $row_column_cls .=  ' gx-' . $key . '-' . $column_gutter;
+        }
+    } else {
+        $row_gutter         =   $params->get('row_gutter', 3);
+        $column_gutter      =   $params->get('column_gutter', 3);
+        $row_column_cls     .=  ' gy-' . $row_gutter;
+        $row_column_cls     .=  ' gx-' . $column_gutter;
+    }
+}
 
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
@@ -85,9 +100,11 @@ $icon_color_hover   =   Style::getColor($params->get('icon_color_hover', ''));
 $style->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['light']);
 $style_dark->child('.astroid-icon')->hover()->addCss('color', $icon_color_hover['dark']);
 
+$layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
+$image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth', 1);
 $min_height         =   $params->get('min_height', 0);
-$overlay_color      =   $params->get('overlay_color', '');
+$overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 
 $box_shadow         =   $params->get('card_box_shadow', '');
@@ -125,20 +142,43 @@ $button_size        =   $button_size ? ' '. $button_size : '';
 $button_radius      =   $params->get('border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
+$image_rounded_size     =   $params->get('image_rounded_size', '3');
+$image_border_radius    =   $params->get('image_border_radius', '0');
+$image_border_radius    =   $image_border_radius != 'rounded' ? ' rounded-' . $image_border_radius : ' rounded-' . $image_rounded_size;
+
+$hover_effect   = $params->get('hover_effect', '');
+$hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
+$transition     = $params->get('hover_transition', '');
+$transition     = $transition !== '' ? ' as-transition-' . $transition : '';
+
+$card_hover_transition     = $params->get('card_hover_transition', '');
+$card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
+
+$button_margin_top  =   $params->get('button_margin_top', '');
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Style::getSubFormParams($grid->params);
+    $link_target    =   !empty($grid_params['link_target']) ? ' target="'.$grid_params['link_target'].'"' : '';
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' ? '' : 'card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
+        $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
+        $media      .=  '</div>';
+        if ( !empty($grid_params['link']) ) {
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+        }
     } elseif ($grid_params['type'] == 'icon') {
         if ($grid_params['icon_type'] == 'fontawesome') {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['fa_icon'].'"></i>';
         } else {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
+        if ( !empty($grid_params['link']) && !empty($params->get('enable_icon_link', 0)) ) {
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+        }
     }
-    echo '<div id="grid-'. $grid -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+
+    echo '<div id="grid-'. $grid -> id .'" class="as-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
@@ -151,7 +191,7 @@ foreach ($grids as $key => $grid) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="order-1 card-body'.$card_size.'">'; // Start Card-Body
+    echo '<div class="' . ($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light' : 'order-1 card-body' ) . $card_size . '">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -169,7 +209,9 @@ foreach ($grids as $key => $grid) {
         echo '<div class="astroid-text">' . $grid_params['description'] . '</div>';
     }
     if (!empty($grid_params['link']) && !empty($grid_params['link_title'])) {
-        echo '<a class="btn btn-'. (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius.'" href="'.$grid_params['link'].'" role="button">' . $grid_params['link_title'] . '</a>';
+        $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
+        $btn_title      =   $button_style == 'text' ? '<small>'. $grid_params['link_title'] . '</small>' : $grid_params['link_title'];
+        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid_params['link'].'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body
@@ -204,6 +246,36 @@ if (!empty($meta_heading_margin)) {
     foreach ($margin as $device => $props) {
         $style->child('.astroid-meta')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
+}
+if ($enable_image_cover) {
+    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+}
+if ($params->get('card_style', '') == 'custom') {
+    $text_color     =   Style::getColor($params->get('text_color', ''));
+    $style->child('.as-grid > .card')->addCss('color', $text_color['light']);
+    $style_dark->child('.as-grid > .card')->addCss('color', $text_color['dark']);
+
+    $bg_color       =   Style::getColor($params->get('bg_color', ''));
+    $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
+    $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
+
+    $card_border    =   json_decode($params->get('card_border', ''), true);
+    if (!empty($card_border)) {
+        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border);
+    }
+}
+switch ($overlay_type) {
+    case 'color':
+        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
+        $style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
+        $style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+        break;
+    case 'background-color':
+        $overlay_gradient   =   $params->get('overlay_gradient', '');
+        if (!empty($overlay_gradient)) {
+            $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+        }
+        break;
 }
 $style->render();
 $style_dark->render();

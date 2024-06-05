@@ -15,6 +15,12 @@
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="_blank">New Window</option>
+                                    <option value="_parent">Parent Frame</option>
+                                    <option value="_top">Full body of the window</option>
+                                </field>
                                 <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                                     <option value="primary">Primary</option>
                                     <option value="secondary">Secondary</option>

@@ -8,11 +8,13 @@ const props = defineProps(['modelValue', 'field']);
 const items = ref([]);
 const edit  = ref(false);
 const params = ref(new Object());
+const itemLabel = ref('');
 const currentIdx = ref(-1);
 onBeforeMount(()=>{
     if (props.modelValue) {
         items.value = JSON.parse(props.modelValue);
     }
+    itemLabel.value = props.field.input.form.index !== '' ? props.field.input.form.index : 'title';
 })
 
 function listUpdated() {
@@ -114,7 +116,7 @@ function deleteItem(index) {
                 <div>
                     <div class="card card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div><i class="item-move fa-solid fa-up-down me-3"></i>{{ element.params.find((param) => param.name === 'title') ? element.params.find((param) => param.name === 'title').value : 'Item ' + (index+1) }}</div>
+                            <div><i class="item-move fa-solid fa-up-down me-3"></i>{{ element.params.find((param) => param.name === itemLabel) ? element.params.find((param) => param.name === itemLabel).value : 'Item ' + (index+1) }}</div>
                             <div class="toolbar">
                                 <a href="#" title="Edit" class="me-2" @click.prevent="editItem(index)"><i class="fa-solid fa-gear"></i></a>
                                 <a href="#" title="Duplicate" class="me-2" @click.prevent="duplicateItem(element,index)"><i class="fa-solid fa-copy"></i></a>

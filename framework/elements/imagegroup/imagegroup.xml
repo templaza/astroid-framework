@@ -86,7 +86,8 @@
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
                 </field>
-                <field astroidgroup="column_options" type="astroidlist" name="row_gutter" label="ASTROID_WIDGET_ROW_GUTTER_LABEL" default="4">
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="row_gutter_xxl" label="ASTROID_WIDGET_ROW_GUTTER_XXL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
                     <option value="0">Collapse</option>
                     <option value="1">X-Small</option>
                     <option value="2">Small</option>
@@ -94,7 +95,96 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
-                <field astroidgroup="column_options" type="astroidlist" name="column_gutter" label="ASTROID_WIDGET_COLUMN_GUTTER_LABEL" default="4">
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="row_gutter_xl" label="ASTROID_WIDGET_ROW_GUTTER_XL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="row_gutter_lg" label="ASTROID_WIDGET_ROW_GUTTER_LG_LABEL" default="4">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="row_gutter_md" label="ASTROID_WIDGET_ROW_GUTTER_MD_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="row_gutter_sm" label="ASTROID_WIDGET_ROW_GUTTER_SM_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="row_gutter" label="ASTROID_WIDGET_ROW_GUTTER_LABEL" default="3">
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="column_gutter_xxl" label="ASTROID_WIDGET_COLUMN_GUTTER_XXL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="column_gutter_xl" label="ASTROID_WIDGET_COLUMN_GUTTER_XL_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="column_gutter_lg" label="ASTROID_WIDGET_COLUMN_GUTTER_LG_LABEL" default="4">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="column_gutter_md" label="ASTROID_WIDGET_COLUMN_GUTTER_MD_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="column_gutter_sm" label="ASTROID_WIDGET_COLUMN_GUTTER_SM_LABEL" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="0">Collapse</option>
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="column_gutter" label="ASTROID_WIDGET_COLUMN_GUTTER_LABEL" default="3">
                     <option value="0">Collapse</option>
                     <option value="1">X-Small</option>
                     <option value="2">Small</option>
@@ -119,6 +209,13 @@
                     <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
                     <option value="rounded-circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
                     <option value="rounded-pill">TPL_ASTROID_ICON_STYLE_PILL</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[border_radius]=='rounded'" type="astroidlist" name="rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
                 </field>
                 <field astroidgroup="widget_styles" name="box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>

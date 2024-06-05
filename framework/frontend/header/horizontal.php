@@ -26,7 +26,9 @@ $block_1_custom = $params->get('header_block_1_custom', '');
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
 $block_2_custom = $params->get('header_block_2_custom', '');
+$header_menu_method = $params->get('header_menu_method', 'default');
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
@@ -37,9 +39,10 @@ $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-bloc
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
 $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block'];
+$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"' : '';
 ?>
 <!-- header starts -->
-<header data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static" id="astroid-header" class="<?php echo implode(' ', $class); ?>">
+<header id="astroid-header" class="<?php echo implode(' ', $class); ?>"<?php echo $headAttrs; ?>>
    <div class="d-flex flex-row justify-content-between">
       <?php if (!empty($header_mobile_menu)) { ?>
          <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
@@ -74,7 +77,11 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoi
          <?php
          if ($mode == 'left') {
             // header nav starts
-            Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+             if ($header_menu_method == 'module_position') {
+                 echo $document->position($header_menu_module_position);
+             } else {
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+             }
             // header nav ends
          }
          ?>
@@ -86,7 +93,11 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoi
       if ($mode == 'center') {
          echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
          // header nav starts
-         Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+          if ($header_menu_method == 'module_position') {
+              echo $document->position($header_menu_module_position);
+          } else {
+              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+          }
          // header nav ends
          echo '</div>';
       }
@@ -96,7 +107,11 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoi
             <?php
             if ($mode == 'right') {
                // header nav starts
-               Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                if ($header_menu_method == 'module_position') {
+                    echo $document->position($header_menu_module_position);
+                } else {
+                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                }
                // header nav ends
             }
             ?>

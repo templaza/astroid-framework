@@ -164,6 +164,27 @@ class Style
         return $selector;
     }
 
+    public static function addBorderStyle($selector, $border, $device = 'desktop') {
+        $style      = new Style($selector);
+        $style_dark = new Style($selector, 'dark');
+        if (isset($border['border_width'])) {
+            $style->addCss('border-width', $border['border_width']. 'px', $device);
+        }
+        if (isset($border['border_style'])) {
+            $style->addCss('border-style', $border['border_style'], $device);
+        }
+        if (isset($border['border_color'])) {
+            if (isset($border['border_color']['light'])) {
+                $style->addCss('border-color', $border['border_color']['light'], $device);
+            }
+            if (isset($border['border_color']['dark'])) {
+                $style_dark->addCss('border-color', $border['border_color']['dark'], $device);
+            }
+        }
+        $style->render();
+        $style_dark->render();
+    }
+
     public function render()
     {
         $css = ['desktop' => '', 'tablet' => '', 'mobile' => ''];

@@ -69,7 +69,7 @@ class Helper
         // replace non letter or digits by -
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
         // transliterate
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT//IGNORE', $text);
         // remove unwanted characters
         $text = preg_replace('~[^-\w]+~', '', $text);
         // trim
@@ -90,7 +90,11 @@ class Helper
         $return = [];
         $text = explode('-', $text);
         foreach ($text as $t) {
-            $return[] = substr($t, 0, 1);
+            $key        =   substr($t, 0, 1);
+            if (count($return) == 0 && preg_match('/[^a-z]/', $key)) {
+                $key    =   'as';
+            }
+            $return[]   =   $key;
         }
         return implode('', $return);
     }
@@ -356,6 +360,77 @@ class Helper
         }
         //exit;
         return $return;
+    }
+
+    public static function getElement($unqid, $template = null) {
+        if (empty($template)) {
+            $template   =   Framework::getTemplate();
+        }
+        $layout =   $template->getLayout();
+        foreach ($layout['sections'] as $section) {
+            if ($section['id'] == $unqid) {
+                $section['params'] = self::loadParams($section['params']);
+                return $section;
+            } else {
+                foreach ($section['rows'] as $row) {
+                    if ($row['id'] == $unqid) {
+                        $row['params'] = self::loadParams($row['params']);
+                        return $row;
+                    } else {
+                        foreach ($row['cols'] as $col) {
+                            if ($col['id'] == $unqid) {
+                                $col['params'] = self::loadParams($col['params']);
+                                return $col;
+                            } else {
+                                foreach ($col['elements'] as $element) {
+                                    if ($element['id'] == $unqid) {
+                                        $element['params'] = self::loadParams($element['params']);
+                                        return $element;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function loadParams($data) {
+        $params_data   = new Registry();
+        if (isset($data) && !empty($data)) {
+            $params = [];
+            foreach ($data as $param) {
+                if (is_array($param)) {
+                    $params[$param['name']] = $param['value'];
+                } elseif (is_object($param)) {
+                    $params[$param->name] = $param->value;
+                }
+            }
+            $params_data->loadArray($params);
+        }
+        return $params_data;
+    }
+
+    public static function loadCaptcha($context = '') {
+        if (empty($context)) {
+            return '';
+        }
+        $app    =   Factory::getApplication();
+        $value1 =   rand(1,100);
+        $value2 =   rand(1,100);
+        $app->setUserState( $context.'.value1', $value1 );
+        $app->setUserState( $context.'.value2', $value2 );
+        return '<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
+    }
+
+    public static function getCaptcha($context = '') {
+        $app    =   Factory::getApplication();
+        $value1 =   intval($app->getUserState( $context.'.value1' ));
+        $value2 =   intval($app->getUserState( $context.'.value2' ));
+        $value_result = intval($app->input->get($context, 0, 'ALNUM'));
+        return ( $value1 + $value2 == $value_result );
     }
 
     public static function getPositions()

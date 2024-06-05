@@ -20,8 +20,13 @@ $link           = $params->get('link', '');
 $target         = $params->get('target', '');
 $target         = $target !== '' ? ' target="'.$target.'"' : '';
 
-$border_radius  = $params->get('border_radius', '');
-$border_radius  = $border_radius !== '' ? ' ' . $border_radius : '';
+$border_radius      =   $params->get('border_radius', '');
+$rounded_size       =   $params->get('image_rounded_size', '3');
+if ($border_radius == 'rounded') {
+    $border_radius  =   ' ' . $border_radius . '-' . $rounded_size;
+} else {
+    $border_radius  =   $border_radius !== '' ? ' ' . $border_radius : '';
+}
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');

@@ -85,6 +85,9 @@ if (!empty($content_font_style)) {
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
 
+$btn_radius         =   $params->get('border_radius', '');
+$btn_radius         =   $btn_radius ? ' '. $btn_radius : '';
+
 echo '<div id="slide-'.$element->id.'" class="carousel slide overflow-hidden'. $overlay_text_color . $effect_type . $box_shadow . $box_shadow_hover .$bd_radius .'"'. (intval($autoplay) ? ' data-bs-ride="carousel"' : '') .'>';
 echo '<div class="carousel-indicators">';
 for ($key = 0 ; $key < count($slides); $key ++) {
@@ -107,6 +110,10 @@ for ($key = 0 ; $key < count($slides); $key ++) {
     }
     if (!empty($slides[$key]->params['description'])) {
         echo '<div class="astroid-text">' . $slides[$key]->params['description'] . '</div>';
+    }
+    $target = !empty($slides[$key]->params['link_target']) ? ' target="'.$slides[$key]->params['link_target'].'"' : '';
+    if (!empty($slides[$key]->params['link'])) {
+        echo '<div class="astroid-button mt-5"><a class="btn btn-' .(intval($params->get('button_outline', 0)) ? 'outline-' : ''). $params->get('button_style', '') . $button_size . $btn_radius . '" href="' . $slides[$key]->params['link'] . '"'.$target.'>' . $slides[$key]->params['link_title'] . '</a></div>';
     }
     echo '</div></div>';
     echo '</div>';

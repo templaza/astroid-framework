@@ -3,7 +3,7 @@
    <form>
       <fields>
          <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field type="astroidgroup" name="general"/>
+            <field type="astroidgroup" name="general" title="ASTROID_WIDGET_GENERAL_LABEL"/>
             <field astroidgroup="general" type="astroidtext" class="form-control" label="ASTROID_ELEMENT_TITLE_LABEL" name="title"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
@@ -129,17 +129,17 @@
                <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
             </field>
 
-            <field astroidgroup="general" ngShow="[background_setting] =='image'" description="TPL_ASTROID_OVERLAY_COLOR_DESC" name="background_image_overlay" type="astroidradio" default="0" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
+            <field astroidgroup="general" ngShow="[background_setting]=='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+
+            <field astroidgroup="general" ngShow="[background_setting]=='image' OR [background_setting]=='video'" description="TPL_ASTROID_OVERLAY_COLOR_DESC" name="background_image_overlay" type="astroidradio" default="0" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
                <option value="">ASTROID_NONE</option>
                <option value="color">TPL_ASTROID_COLOR</option>
                <option value="gradient">TPL_ASTROID_GRADIENT</option>
                <option value="pattern">TPL_ASTROID_PATTERN</option>
             </field>
-            <field astroidgroup="general" ngShow="[background_setting]=='image' AND ([background_image_overlay]=='color' OR [background_image_overlay]=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
-            <field astroidgroup="general" ngShow="[background_setting]=='image' AND [background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
-            <field astroidgroup="general" ngShow="[background_setting]=='image' AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
-
-            <field astroidgroup="general" ngShow="[background_setting] =='video'" name="background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND ([background_image_overlay]=='color' OR [background_image_overlay]=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
             <field astroidgroup="general" ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
 

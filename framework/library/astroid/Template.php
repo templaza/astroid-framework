@@ -29,11 +29,16 @@ class Template
     protected static $presets = null;
     protected static $fonts = null;
 
-    public function __construct()
+    public function __construct($id = 0)
     {
         $app = Factory::getApplication();
         $menu = $app->getMenu()->getActive();
-        $template_id = isset($menu->template_style_id) ? $menu->template_style_id : 0;
+
+        if (!empty($id)) {
+            $template_id = $id;
+        } else {
+            $template_id = isset($menu->template_style_id) ? $menu->template_style_id : $id;
+        }
 
         if (!empty($template_id)) {
             $jtemplate = $this->_getById($template_id);
@@ -356,7 +361,9 @@ class Template
 
         $color_mode_theme = '';
         if ($plg_color_mode && $color_mode) {
-            $color_mode_theme  =   Factory::getApplication()->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
+            $app               =   Factory::getApplication();
+            $client_color      =   $app->input->get('color_mode', '', 'ALNUM');
+            $color_mode_theme  =   !empty($client_color) ? $client_color : $app->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
         }
         return $color_mode_theme;
     }

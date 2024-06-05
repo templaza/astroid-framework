@@ -36,6 +36,8 @@ $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
 $block_1_custom = $params->get('header_block_1_custom', '');
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_menu_method = $params->get('header_menu_method', 'default');
+$header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
@@ -79,7 +81,13 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
             </div>
         <?php endif; ?>
         <div class="astroid-sidebar-menu">
-            <?php Astroid\Component\Menu::getSidebarMenu($header_menu); ?>
+            <?php
+            if ($header_menu_method == 'module_position') {
+                echo $document->position($header_menu_module_position);
+            } else {
+                Astroid\Component\Menu::getSidebarMenu($header_menu);
+            }
+            ?>
         </div>
         <?php if ($block_2_type != 'blank') : ?>
             <div class="astroid-sidebar-block astroid-sidebar-block-2">

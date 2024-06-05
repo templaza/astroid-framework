@@ -19,6 +19,7 @@ import Icons from './Icons.vue';
 import Editor from './Editor.vue';
 import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
+import Border from './Border.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
@@ -111,7 +112,10 @@ function updateContentLayout() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <label :for="props.field.input.id" class="form-label">{{ props.scope[props.field.name] }}{{ props.field.input.postfix }}</label>
+        <div class="row">
+            <div class="col"><input type="number" class="form-control form-control-sm" aria-label="Range Number" v-model="props.scope[props.field.name]"></div>
+            <div class="col-auto"><label :for="props.field.input.id" class="form-label">{{ props.field.input.postfix }}</label></div>
+        </div>
         <input type="range" class="form-range" :name="props.field.input.name" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
@@ -177,5 +181,8 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidassignment`" class="astroid-assignment">
         <Assignment v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidborder`" class="astroid-border">
+        <Border v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>

@@ -19,6 +19,8 @@ $params = $template->getParams();
 $color_mode = $template->getColorMode();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_menu_method = $params->get('header_menu_method', 'default');
+$header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
@@ -51,9 +53,10 @@ switch ($stickey_mode) {
       $navWrapperClass[] = 'mx-auto';
       break;
 }
+$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu"' : '';
 ?>
 <!-- header starts -->
-<header id="astroid-sticky-header" data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="<?php echo implode(' ', $class); ?> d-none">
+<header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none"<?php echo $headAttrs; ?>>
    <div class="container d-flex flex-row justify-content-between">
       <?php if (!empty($header_mobile_menu)) { ?>
          <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
@@ -72,7 +75,11 @@ switch ($stickey_mode) {
          <?php
          if ($stickey_mode == 'left') {
             // header nav starts
-            Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+             if ($header_menu_method == 'module_position') {
+                 echo $document->position($header_menu_module_position);
+             } else {
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+             }
             // header nav ends
          }
          ?>
@@ -84,7 +91,11 @@ switch ($stickey_mode) {
       if ($stickey_mode == 'center') {
          echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
          // header nav starts
-         Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+          if ($header_menu_method == 'module_position') {
+              echo $document->position($header_menu_module_position);
+          } else {
+              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+          }
          // header nav ends
          echo '</div>';
       }
@@ -94,7 +105,11 @@ switch ($stickey_mode) {
             <?php
             if ($stickey_mode == 'right') {
                // header nav starts
-               Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+                if ($header_menu_method == 'module_position') {
+                    echo $document->position($header_menu_module_position);
+                } else {
+                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+                }
                // header nav ends
             }
             ?>
@@ -114,14 +129,6 @@ switch ($stickey_mode) {
                   ?>
                </div>
             <?php endif; ?>
-             <?php
-             //Color Mode
-             if ($color_mode) {
-                 echo '<div class="d-flex justify-content-end align-items-center ms-4 astroid-color-mode">';
-                 $document->include('colormode');
-                 echo '</div>';
-             }
-             ?>
              <?php if ($enable_offcanvas) { ?>
                  <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>

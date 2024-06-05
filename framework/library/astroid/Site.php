@@ -63,6 +63,24 @@ class Site extends Helper\Client
         $this->response($article->vote($vote));
     }
 
+    protected function AjaxWidget() {
+        $app = Factory::getApplication();
+        if (!\Joomla\CMS\Session\Session::checkToken()) {
+            throw new \Exception(Text::_('ASTROID_AJAX_ERROR'));
+        }
+        $widget         = $app->input->get('widget', '', 'ALNUM');
+        $template_id    = $app->input->get('template', '', 'ALNUM');
+
+        $template       =   Framework::getTemplate(intval($template_id));
+        if (file_exists(\JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template->template.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php')) {
+            require_once \JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template->template.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php';
+        }
+        elseif (file_exists(\JPATH_LIBRARIES.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php')) {
+            require_once \JPATH_LIBRARIES.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php';
+        }
+        die();
+    }
+
     protected function clearCache()
     {
         $template = Framework::getTemplate()->template;
