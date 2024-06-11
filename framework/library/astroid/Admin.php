@@ -8,6 +8,7 @@
  */
 
 namespace Astroid;
+use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
@@ -68,6 +69,12 @@ class Admin extends Helper\Client
             throw new \Exception("`{$func}` function not found in Astroid\\Helper\\Media");
         }
         $this->response(Helper\Media::$func());
+    }
+
+    protected function getLayouts()
+    {
+//        $this->checkAuth();
+        $this->response(Layout::getSublayouts());
     }
 
     protected function getcategories()
@@ -153,7 +160,8 @@ class Admin extends Helper\Client
             'github_link'           => Helper\Constants::$github_link,
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
-            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
+            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
+            'form_template'         => Helper::getFormTemplate()
         ];
         $document->addScriptOptions('astroid_lib', $config);
 
@@ -180,12 +188,10 @@ class Admin extends Helper\Client
                 // Ordering
                 $ordering = $field->getAttribute('after', '');
                 if (empty($ordering)) {
-//                    $field->ordering = $order++;
                     $fieldsArr[] = $field;
                     $orders[$field->name] = $order++;
                 } else {
                     if (isset($orders[$ordering])) {
-//                        $field->ordering = $orders[$ordering];
                         $fieldsArr[] = $field;
                         $orders[$field->name] = $orders[$ordering];
 
@@ -202,15 +208,13 @@ class Admin extends Helper\Client
                 $fieldsArr[] = $reorder;
             }
 
-//            usort($fieldsArr, 'Astroid\Helper::orderingFields');
-
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {
                     if (!$plg_color_mode && $field->fieldname == 'colormode') {
                         continue;
                     }
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', ''), 'option-type' => $field->getAttribute('option-type', '')];
                 }
             }
 

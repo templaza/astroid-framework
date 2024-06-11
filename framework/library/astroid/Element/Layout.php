@@ -10,6 +10,9 @@
 namespace Astroid\Element;
 
 use Astroid\Framework;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -34,5 +37,36 @@ class Layout
         }
         Framework::getDebugger()->log('Render Layout');
         return $content;
+    }
+
+    public static function getSublayouts()
+    {
+        $template   =   Framework::getTemplate();
+        $layouts_path = JPATH_SITE . "/media/templates/site/{$template->template}/astroid/layouts/";
+
+        if (!file_exists($layouts_path)) {
+            return [];
+        }
+        $files = array_filter(glob($layouts_path . '*.json'), 'is_file');
+        $layouts    =   [];
+        foreach ($files as $file) {
+            $json = file_get_contents($file);
+            $data = \json_decode($json, true);
+            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'data' => ['content' => 'demo'], 'name' => pathinfo($file)['filename']];
+            if (isset($data['title']) && !empty($data['title'])) {
+                $layout['title'] = Text::_($data['title']);
+            }
+            if (isset($data['desc'])) {
+                $layout['desc'] = Text::_($data['desc']);
+            }
+            if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
+                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
+            }
+            if (isset($data['data'])) {
+                $layout['data'] = $data['data'];
+            }
+            $layouts[] = $layout;
+        }
+        return $layouts;
     }
 }

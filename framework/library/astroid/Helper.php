@@ -605,6 +605,21 @@ class Helper
         return $subject;
     }
 
+    public static function getFormTemplate() {
+        $form_template = array();
+        $astroidElements = Helper::getAllAstroidElements();
+        foreach ($astroidElements as $astroidElement) {
+            $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
+        }
+        $sectionElement = new Element('section');
+        $form_template['section'] = $sectionElement->renderJson();
+        $rowElement = new Element('row');
+        $form_template['row'] = $rowElement->renderJson();
+        $columnElement = new Element('column');
+        $form_template['column'] = $columnElement->renderJson();
+        return $form_template;
+    }
+
     public static function matchFilename($haystack, $needles)
     {
         $status = false;

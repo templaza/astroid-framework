@@ -24,17 +24,6 @@ class JFormFieldLayout extends FormField
 
    public function getInput()
    {
-       $form_template = array();
-       $astroidElements = Astroid\Helper::getAllAstroidElements();
-       foreach ($astroidElements as $astroidElement) {
-           $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
-       }
-       $sectionElement = new Element('section');
-       $form_template['section'] = $sectionElement->renderJson();
-       $rowElement = new Element('row');
-       $form_template['row'] = $rowElement->renderJson();
-       $columnElement = new Element('column');
-       $form_template['column'] = $columnElement->renderJson();
        $value = $this->value;
        if (empty($value)) {
            $options = \json_decode(\file_get_contents(JPATH_SITE . '/' . 'media' . '/' . 'astroid' . '/' . 'assets' . '/' . 'json' . '/' . 'layouts' . '/' . 'default.json'), TRUE);
@@ -45,8 +34,7 @@ class JFormFieldLayout extends FormField
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $options,
-           'type'    =>  strtolower($this->type),
-           'form'    =>  $form_template
+           'type'    =>  strtolower($this->type)
        ];
        return json_encode($json);
    }

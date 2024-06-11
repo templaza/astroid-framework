@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, onUpdated, reactive, ref, watch } from 'vue';
+import { computed, onBeforeMount, onUpdated, reactive, ref, watch, inject } from 'vue';
 import { MultiListSelect } from "vue-search-select"
 import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
@@ -10,6 +10,7 @@ const props = defineProps({
     modelValue: { type: String, default: '' },
     field: { type: Object, default: null }
 });
+const constant  =   inject('constant', {});
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
     if (typeof layout.value.devices === 'undefined') {
@@ -241,17 +242,17 @@ function addGrid(grid = []) {
         </div>
     </div>
     <div v-if="(typeof layout.sections === 'undefined' || layout.sections.length === 0)" class="text-center">
-        <button class="btn btn-lg btn-as btn-as-primary" @click="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
+        <button class="btn btn-lg btn-as btn-as-primary mt-4" @click.prevent="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
         <Transition name="fade">
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>
     </div>
-    <LayoutBuilder :list="layout" group="root" :system="system" :form="props.field.input.form" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
+    <LayoutBuilder :list="layout" group="root" :system="system" :form="constant.form_template" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
     <Transition name="fade">
-        <Modal v-if="_showModal" :element="element" :form="props.field.input.form[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
+        <Modal v-if="_showModal" :element="element" :form="constant.form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
-        <SelectElement v-if="_showElement" :form="props.field.input.form" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />
+        <SelectElement v-if="_showElement" :form="constant.form_template" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />
     </Transition>
     <input
         :id="props.field.input.id"

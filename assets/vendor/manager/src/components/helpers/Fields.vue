@@ -20,6 +20,7 @@ import Editor from './Editor.vue';
 import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
 import Border from './Border.vue';
+import SubLayouts from './SubLayouts.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
@@ -184,5 +185,8 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidborder`" class="astroid-border">
         <Border v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `sublayouts`" class="astroid-sub-layouts">
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
 </template>
