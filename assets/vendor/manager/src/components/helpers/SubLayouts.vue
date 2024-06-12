@@ -1,14 +1,28 @@
 <script setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted, inject } from "vue";
 import Layout from "./Layout.vue";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps({
     field: { type: Object, default: null }
 });
+const constant  =   inject('constant', {});
 const items     =   ref([]);
-const editItem  =   ref('');
+const editItem  =   ref(false);
 const layout    =   ref('{"sections":[]}')
+const formInfo = reactive({
+    title: '',
+    desc: ''
+});
+const toast_msg = reactive({
+    header: '',
+    body:'',
+    icon: '',
+    color:'darkviolet'
+});
+const save_disabled = ref(false);
+const files = ref(null);
 
 onMounted(() => {
     callAjax();
@@ -18,12 +32,67 @@ function editLayout(filename = '') {
     if (filename !== '') {
 
     } else {
-        editItem.value = 'new';
+        editItem.value = true;
+    }
+}
+
+function onFileChange(e) {
+    files.value = e.target.files || e.dataTransfer.files;
+}
+
+function saveLayout() {
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=savelayout&ts="+Date.now();
+    const formData = new FormData(); // pass data as a form
+    const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
+    const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
+    formData.append(constant.astroid_admin_token, 1);
+    formData.append('title', formInfo.title);
+    formData.append('desc', formInfo.desc);
+    formData.append('data', layout.value);
+    if (files.value !== null && files.value.length) {
+        formData.append('thumbnail', files.value[0]);
+    }
+    formData.append('template', constant.tpl_template_name);
+    save_disabled.value = true;
+            
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
+    .then((response) => {
+        if (response.data.status === 'success') {
+            toast_msg.icon = 'fa-solid fa-rocket';
+            toast_msg.header = 'Sub-Layout '+formInfo.title+' is saved.';
+            toast_msg.body = 'You can use it to contribute to your layout builder.';
+            toast_msg.color = 'green';
+            layout.value = '{"sections":[]}';
+            save_disabled.value = false;
+            editItem.value = false;
+            callAjax();
+            document.getElementById(props.field.input.id+`_saveLayout_close`).click();
+        } else {
+            toast_msg.icon = 'fa-regular fa-face-sad-tear';
+            toast_msg.header = 'Sub-layout '+formInfo.title+' is not saved.';
+            toast_msg.body = response.data.message;
+            toast_msg.color = 'red';
+        }
+        toastBootstrap.show();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
+function cancelLayout() {
+    if (confirm('Are you sure?')) {
+        editItem.value = false;
+        layout.value = '{"sections":[]}';
     }
 }
 
 function callAjax() {
-    let url = props.field.input.ajax+"&ts="+Date.now();
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayouts&template="+constant.tpl_template_name+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "layout_ajax.txt?ts="+Date.now();
     }
@@ -40,33 +109,82 @@ function callAjax() {
 }
 </script>
 <template>
-    <div class="row gy-3" v-if="editItem === ``">
-        <div class="col-md-9 order-1 order-md-0">
-            <div v-if="items.length === 0">
-                <div class="alert alert-info" role="alert">
-                    There are no layouts in this template.
+    <div>
+        <div class="row gy-3" v-if="editItem === false">
+            <div class="col-md-9 order-1 order-md-0">
+                <div v-if="items.length === 0">
+                    <div class="alert alert-info" role="alert">
+                        There are no layouts in this template.
+                    </div>
+                </div>
+                <div v-for="(item, index) in items">
+                    <pre>{{ item.title }}</pre>
                 </div>
             </div>
-            <div v-for="(item, index) in items">
-                <pre>{{ item }}</pre>
+            <div class="col-md-3 order-0 order-md-1">
+                <div class="sticky-md-top d-grid gap-2">
+                    <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary">New Layout</a>
+                    <a href="#" class="btn btn-sm btn-as btn-as-light">Edit Layout</a>
+                    <a href="#" class="btn btn-sm btn-as btn-outline-danger">Delete Layout</a>
+                </div>
             </div>
         </div>
-        <div class="col-md-3 order-0 order-md-1">
-            <div class="sticky-md-top d-grid gap-2">
-                <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary">New Layout</a>
-                <a href="#" class="btn btn-sm btn-as btn-as-light">Edit Layout</a>
-                <a href="#" class="btn btn-sm btn-as btn-outline-danger">Delete Layout</a>
+        <div v-else class="astroid-layout px-2">
+            <Layout v-model="layout" :field="{
+                id: props.field.id,
+                input: {
+                    id: props.field.input.id,
+                    name: props.field.input.name,
+                    value: JSON.parse(layout)
+                }
+            }" />
+            <div class="modal fade" :id="props.field.input.id+`_saveLayout`" tabindex="-1" aria-labelledby="saveLayoutLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title fs-5" id="saveLayoutLabel">Layout Information</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" :id="props.field.input.id+`_saveLayout_close`"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="mb-3">
+                                    <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">Email address</label>
+                                    <input type="text" v-model="formInfo.title" class="form-control" :id="props.field.input.id+`_saveLayout_title`" placeholder="Title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">Example textarea</label>
+                                    <textarea class="form-control" v-model="formInfo.desc" :id="props.field.input.id+`_saveLayout_desc`" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">Select your thumbnail</label>
+                                    <input class="form-control" type="file" @change="onFileChange" :id="props.field.input.id+`_saveLayout_thumbnail`">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">Back</button>
+                            <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout()" :disabled="save_disabled">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5 text-right">
+                <a href="#" @click.prevent="" class="btn btn-sm btn-as btn-as-primary me-2" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Save</a>
+                <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light">Cancel</a>
             </div>
         </div>
-    </div>
-    <div v-else class="astroid-layout px-2">
-        <Layout v-model="layout" :field="{
-            id: props.field.id,
-            input: {
-                id: props.field.input.id,
-                name: props.field.input.name,
-                value: JSON.parse(layout)
-            }
-        }" />
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div :id="props.field.input.id+`_saveLayoutToast`" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
+                    <strong class="me-auto">{{ toast_msg.header }}</strong>
+                    <small>1 second ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ toast_msg.body }}
+                </div>
+            </div>
+        </div>
     </div>
 </template>

@@ -208,3 +208,10 @@
         background-size: 1rem 1rem;
     }
 }
+
+.as-sublayout-bottom-toolbox {
+    @media (min-width: 768px) {
+        margin-bottom: -1.5rem;
+    }
+    margin-bottom: -1rem;
+}

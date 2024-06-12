@@ -209,14 +209,14 @@ function addGrid(grid = []) {
 <template>
     <div class="astroid-btn-group responsive-devices text-center" role="group" aria-label="Responsive Devices">
         <span v-for="(option, idx) in layout.devices" :key="idx">
-            <input type="radio" class="btn-check" v-model="activeDevice" :id="`responsive-device-`+option.code" :value="option.code" autocomplete="off">
-            <label class="btn btn-sm btn-as btn-outline-secondary" data-bs-toggle="tooltip" :data-bs-title="option.title" :for="`responsive-device-`+option.code"><i class="fa-xl" :class="option.icon"></i></label>
+            <input type="radio" class="btn-check" v-model="activeDevice" :id="props.field.input.id+`responsive-device-`+option.code" :value="option.code" autocomplete="off">
+            <label class="btn btn-sm btn-as btn-outline-secondary" data-bs-toggle="tooltip" :data-bs-title="option.title" :for="props.field.input.id+`responsive-device-`+option.code"><i class="fa-xl" :class="option.icon"></i></label>
         </span>
         <span>
-            <button class="layout-config btn btn-sm btn-as btn-outline-secondary" @click.prevent="" data-bs-toggle="modal" data-bs-target="#selectDevices"><i class="fas fa-cog"></i></button>
+            <button class="layout-config btn btn-sm btn-as btn-outline-secondary" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_selectDevices`"><i class="fas fa-cog"></i></button>
         </span>
     </div>
-    <div class="modal fade" id="selectDevices" tabindex="-1" aria-labelledby="selectDevicesLabel" aria-hidden="true">
+    <div class="modal fade" :id="props.field.input.id+`_selectDevices`" tabindex="-1" aria-labelledby="selectDevicesLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

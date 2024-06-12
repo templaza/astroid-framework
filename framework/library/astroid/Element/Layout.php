@@ -39,11 +39,13 @@ class Layout
         return $content;
     }
 
-    public static function getSublayouts()
+    public static function getSublayouts($template = '')
     {
-        $template   =   Framework::getTemplate();
-        $layouts_path = JPATH_SITE . "/media/templates/site/{$template->template}/astroid/layouts/";
+        if (!$template) {
+            $template   =   Framework::getTemplate()->template;
+        }
 
+        $layouts_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/";
         if (!file_exists($layouts_path)) {
             return [];
         }
@@ -52,7 +54,7 @@ class Layout
         foreach ($files as $file) {
             $json = file_get_contents($file);
             $data = \json_decode($json, true);
-            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'data' => ['content' => 'demo'], 'name' => pathinfo($file)['filename']];
+            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'data' => [], 'name' => pathinfo($file)['filename']];
             if (isset($data['title']) && !empty($data['title'])) {
                 $layout['title'] = Text::_($data['title']);
             }
@@ -60,7 +62,7 @@ class Layout
                 $layout['desc'] = Text::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template->template . '/' . $data['thumbnail'];
+                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/' . $data['thumbnail'];
             }
             if (isset($data['data'])) {
                 $layout['data'] = $data['data'];

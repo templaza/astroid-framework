@@ -73,8 +73,52 @@ class Admin extends Helper\Client
 
     protected function getLayouts()
     {
-//        $this->checkAuth();
-        $this->response(Layout::getSublayouts());
+        $app = Factory::getApplication();
+        $template_name  = $app->input->get('template', NULL, 'RAW');
+        $this->response(Layout::getSublayouts($template_name));
+    }
+
+    protected function saveLayout() {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $layout_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/layouts/";
+            $layout = [
+                'title' => $app->input->post->get('title', '', 'RAW'),
+                'desc' => $app->input->post->get('desc', '', 'RAW'),
+                'thumbnail' => '',
+                'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
+            ];
+            $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
+            $fieldName = 'thumbnail';
+
+            $fileError = $_FILES[$fieldName]['error'];
+
+            if ($fileError !== null) {
+                $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+                $uploadedFileExtension = $pathinfo['extension'];
+                $uploadedFileExtension = strtolower($uploadedFileExtension);
+                $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
+                if (!in_array($uploadedFileExtension, $validExts)) {
+                    throw new \Exception(Text::_('INVALID EXTENSION'));
+                }
+
+                $fileTemp       = $_FILES[$fieldName]['tmp_name'];
+                $thumbnail      = file_get_contents($fileTemp);
+
+                $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
+
+                Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail'], $thumbnail);
+                unlink($fileTemp);
+            }
+            Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
+            $this->response($layout_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
     }
 
     protected function getcategories()
@@ -331,9 +375,7 @@ class Admin extends Helper\Client
     public function importpreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JINVALID_TOKEN'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -401,9 +443,7 @@ class Admin extends Helper\Client
     public function loadpreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JINVALID_TOKEN'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -426,9 +466,7 @@ class Admin extends Helper\Client
     public function removepreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JOLLYANY_AJAX_ERROR'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
