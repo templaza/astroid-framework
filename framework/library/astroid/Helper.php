@@ -18,6 +18,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
@@ -180,7 +181,9 @@ class Helper
     public static function triggerEvent($name, $data = [])
     {
         PluginHelper::importPlugin('astroid');
-        Factory::getApplication()->triggerEvent($name, $data);
+//        Factory::getApplication()->triggerEvent($name, $data);
+        $event     = new Helper\Events($name, $data);
+        Factory::getApplication()->getDispatcher()->dispatch($name, $event);
     }
 
     public static function clearCacheByTemplate($template)
@@ -320,7 +323,7 @@ class Helper
 
     public static function getModules()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = "SELECT #__modules.*, #__usergroups.title as access_title FROM #__modules JOIN #__usergroups ON #__usergroups.id=#__modules.access WHERE #__modules.client_id=0";
 
         $db->setQuery($query);

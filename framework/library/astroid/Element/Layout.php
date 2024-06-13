@@ -54,7 +54,7 @@ class Layout
         foreach ($files as $file) {
             $json = file_get_contents($file);
             $data = \json_decode($json, true);
-            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'data' => [], 'name' => pathinfo($file)['filename']];
+            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'name' => pathinfo($file)['filename']];
             if (isset($data['title']) && !empty($data['title'])) {
                 $layout['title'] = Text::_($data['title']);
             }
@@ -62,10 +62,7 @@ class Layout
                 $layout['desc'] = Text::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/' . $data['thumbnail'];
-            }
-            if (isset($data['data'])) {
-                $layout['data'] = $data['data'];
+                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/images/layouts/' . $data['thumbnail'];
             }
             $layouts[] = $layout;
         }
