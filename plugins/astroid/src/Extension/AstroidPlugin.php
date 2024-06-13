@@ -100,6 +100,7 @@ final class AstroidPlugin extends CMSPlugin
 
     public function onContentPrepareData($context, $user)
     {
+        // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
         if ($context == 'com_users.profile') {
             $params = new \Joomla\Registry\Registry();
             $params->loadArray($user->params);
@@ -116,6 +117,7 @@ final class AstroidPlugin extends CMSPlugin
 
     public function onUserAfterSave($user, $isnew, $success, $msg): void
     {
+        // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
         $params = new \Joomla\Registry\Registry($user['params']);
         if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
             $params->remove('astroid_author_social');
