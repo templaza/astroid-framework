@@ -180,8 +180,6 @@ class Helper
 
     public static function triggerEvent($name, $data = [])
     {
-        PluginHelper::importPlugin('astroid');
-//        Factory::getApplication()->triggerEvent($name, $data);
         $event     = new Helper\Events($name, $data);
         Factory::getApplication()->getDispatcher()->dispatch($name, $event);
     }
