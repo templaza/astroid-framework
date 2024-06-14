@@ -2,18 +2,20 @@
 import axios from "axios";
 import { ref, reactive, onMounted, inject } from "vue";
 import Layout from "./Layout.vue";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps({
     field: { type: Object, default: null }
 });
 const constant  =   inject('constant', {});
+const language  =   inject('language', []);
 const items     =   ref([]);
 const editItem  =   ref(false);
 const layout    =   ref('{"sections":[]}')
 const formInfo = reactive({
     title: '',
-    desc: ''
+    desc: '',
+    thumbnail: '',
+    name: ''
 });
 const toast_msg = reactive({
     header: '',
@@ -23,6 +25,7 @@ const toast_msg = reactive({
 });
 const save_disabled = ref(false);
 const files = ref(null);
+const checklist = ref([]);
 
 onMounted(() => {
     callAjax();
@@ -30,10 +33,33 @@ onMounted(() => {
 
 function editLayout(filename = '') {
     if (filename !== '') {
-
-    } else {
-        editItem.value = true;
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayout&ts="+Date.now();
+        if (process.env.NODE_ENV === 'development') {
+            url = "editlayout_ajax.txt?ts="+Date.now();
+        }
+        const formData = new FormData(); // pass data as a form
+        formData.append(constant.astroid_admin_token, 1);
+        formData.append('name', filename);
+        formData.append('template', constant.tpl_template_name);
+        axios.post(url, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((response) => {
+            if (response.data.status === 'success') {
+                layout.value = response.data.data.data;
+                formInfo.title = response.data.data.title;
+                formInfo.desc = response.data.data.desc;
+                formInfo.thumbnail = response.data.data.thumbnail;
+                formInfo.name = filename;
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+        });
     }
+    editItem.value = true;
 }
 
 function onFileChange(e) {
@@ -49,8 +75,12 @@ function saveLayout() {
     formData.append('title', formInfo.title);
     formData.append('desc', formInfo.desc);
     formData.append('data', layout.value);
+    formData.append('thumbnail_old', formInfo.thumbnail);
     if (files.value !== null && files.value.length) {
         formData.append('thumbnail', files.value[0]);
+    }
+    if (formInfo.name !== ``) {
+        formData.append('name', formInfo.name);
     }
     formData.append('template', constant.tpl_template_name);
     save_disabled.value = true;
@@ -66,9 +96,9 @@ function saveLayout() {
             toast_msg.header = 'Sub-Layout '+formInfo.title+' is saved.';
             toast_msg.body = 'You can use it to contribute to your layout builder.';
             toast_msg.color = 'green';
-            layout.value = '{"sections":[]}';
             save_disabled.value = false;
             editItem.value = false;
+            resetValues();
             callAjax();
             document.getElementById(props.field.input.id+`_saveLayout_close`).click();
         } else {
@@ -84,10 +114,58 @@ function saveLayout() {
     });
 }
 
+function resetValues() {
+    layout.value = '{"sections":[]}';
+    formInfo.title = '';
+    formInfo.desc = '';
+    formInfo.name = '';
+    formInfo.thumbnail = '';
+    files.value = null;
+}
+
 function cancelLayout() {
     if (confirm('Are you sure?')) {
         editItem.value = false;
-        layout.value = '{"sections":[]}';
+        resetValues();
+    }
+}
+
+function deleteLayout() {
+    if (confirm(language.JGLOBAL_CONFIRM_DELETE) && checklist.value.length) {
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=deletelayouts&ts="+Date.now();
+        const formData = new FormData(); // pass data as a form
+        const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
+        const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
+        formData.append(constant.astroid_admin_token, 1);
+        checklist.value.forEach(element => {
+            formData.append('layouts[]', element);
+        });
+        formData.append('template', constant.tpl_template_name);
+        axios.post(url, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((response) => {
+            if (response.data.status === 'success') {
+                if (response.data.data) {
+                    toast_msg.icon = 'fa-solid fa-rocket';
+                    toast_msg.header = 'Sub-Layouts deleted.';
+                    toast_msg.body = 'You cannot undo this process.';
+                    toast_msg.color = 'green';
+                } else {
+                    toast_msg.icon = 'fa-regular fa-face-sad-tear';
+                    toast_msg.header = 'Error!';
+                    toast_msg.body = response.data.message;
+                    toast_msg.color = 'red';
+                }
+                callAjax();
+                toastBootstrap.show();
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+        });
     }
 }
 
@@ -107,26 +185,46 @@ function callAjax() {
         console.log(error);
     });
 }
+
+const checkAll = ref(false);
+function checkAllList() {
+    checklist.value = [];
+    if (!checkAll.value) {
+        items.value.forEach(element => {
+            checklist.value.push(element.name);
+        });
+    } 
+}
 </script>
 <template>
     <div>
-        <div class="row gy-3" v-if="editItem === false">
-            <div class="col-md-9 order-1 order-md-0">
-                <div v-if="items.length === 0">
-                    <div class="alert alert-info" role="alert">
-                        There are no layouts in this template.
-                    </div>
-                </div>
-                <div v-for="(item, index) in items">
-                    <pre>{{ item.title }}</pre>
+        <div class="as-sublayouts" v-if="editItem === false">
+            <div v-if="items.length === 0">
+                <div class="alert alert-info" role="alert">
+                    There are no layouts in this template.
                 </div>
             </div>
-            <div class="col-md-3 order-0 order-md-1">
-                <div class="sticky-md-top d-grid gap-2">
-                    <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary">New Layout</a>
-                    <a href="#" class="btn btn-sm btn-as btn-as-light">Edit Layout</a>
-                    <a href="#" class="btn btn-sm btn-as btn-outline-danger">Delete Layout</a>
-                </div>
+            <table v-else class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" width="1%"><input class="form-check-input" type="checkbox" value="" v-model="checkAll" @click="checkAllList"></th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" width="180">Thumbnail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in items">
+                        <td scope="row"><input class="form-check-input" type="checkbox" :value="item.name" v-model="checklist"></td>
+                        <td><a href="#" :title="`Edit: ` + item.title" class="link-body-emphasis link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover" @click.prevent="editLayout(item.name)">{{ item.title }}</a></td>
+                        <td>{{ item.desc }}</td>
+                        <td><img v-if="item.thumbnail !== ``" class="img-fluid" :src="item.thumbnail" :alt="item.title"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
+                <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary me-2">New Layout</a>
+                <a href="#" @click.prevent="deleteLayout()" class="btn btn-sm btn-as btn-outline-danger">Delete Layout</a>
             </div>
         </div>
         <div v-else class="astroid-layout px-2">
@@ -148,12 +246,15 @@ function callAjax() {
                         <div class="modal-body">
                             <div>
                                 <div class="mb-3">
-                                    <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">Email address</label>
+                                    <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">Title</label>
                                     <input type="text" v-model="formInfo.title" class="form-control" :id="props.field.input.id+`_saveLayout_title`" placeholder="Title" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">Example textarea</label>
+                                    <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">Description</label>
                                     <textarea class="form-control" v-model="formInfo.desc" :id="props.field.input.id+`_saveLayout_desc`" rows="3"></textarea>
+                                </div>
+                                <div v-if="formInfo.thumbnail !== ``" class="mb-3">
+                                    <img class="img-thumbnail" :src="constant.site_url + `/media/templates/site/` + constant.tpl_template_name + `/images/layouts/` + formInfo.thumbnail" :alt="formInfo.title">
                                 </div>
                                 <div class="mb-3">
                                     <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">Select your thumbnail</label>
@@ -168,7 +269,7 @@ function callAjax() {
                     </div>
                 </div>
             </div>
-            <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5 text-right">
+            <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
                 <a href="#" @click.prevent="" class="btn btn-sm btn-as btn-as-primary me-2" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Save</a>
                 <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light">Cancel</a>
             </div>

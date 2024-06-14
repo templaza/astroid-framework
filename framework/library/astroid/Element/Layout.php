@@ -68,4 +68,47 @@ class Layout
         }
         return $layouts;
     }
+
+    public static function getSubLayout($filename = '', $template = '')
+    {
+        if (!$filename) {
+            return [];
+        }
+        if (!$template) {
+            $template   =   Framework::getTemplate()->template;
+        }
+
+        $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/" . $filename . '.json';
+        if (!file_exists($layout_path)) {
+            return [];
+        }
+        $json = file_get_contents($layout_path);
+        $data = \json_decode($json, true);
+
+        return $data;
+    }
+
+    public static function deleteSublayouts($layouts = [], $template = '')
+    {
+        if (!count($layouts)) {
+            return false;
+        }
+        if (!$template) {
+            $template   =   Framework::getTemplate()->template;
+        }
+
+        $layouts_path   = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/";
+        $images_path    = JPATH_SITE . "/media/templates/site/{$template}/images/layouts/";
+        foreach ($layouts as $layout) {
+            if (file_exists($layouts_path . $layout . '.json')) {
+                $json = file_get_contents($layouts_path . $layout . '.json');
+                $data = \json_decode($json, true);
+                unlink($layouts_path . $layout . '.json');
+                if (file_exists($images_path . $data['thumbnail'])) {
+                    unlink($images_path . $data['thumbnail']);
+                }
+            }
+        }
+        return true;
+    }
 }

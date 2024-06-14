@@ -22,8 +22,7 @@ class JFormFieldSubLayouts extends FormField
         $json =   [
             'id'      =>  $this->id,
             'name'    =>  $this->name,
-            'type'    =>  strtolower($this->type),
-            'ajax'    =>  Uri::root().'administrator/index.php?option=com_ajax&astroid=getlayouts'
+            'type'    =>  strtolower($this->type)
         ];
         return json_encode($json);
     }

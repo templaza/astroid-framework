@@ -26,6 +26,8 @@ onUpdated(()=>{
     if (layout_text.value !== props.modelValue) {
         const tmp = JSON.parse(props.modelValue);
         layout.value.sections = tmp.sections;
+        layout.value.devices = tmp.devices;
+        activeDevice.value = tmp.devices[0].code;
     }
 })
 const layout = ref([]);

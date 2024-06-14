@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Joomla! Content Management System
- *
- * @copyright  (C) 2020 Open Source Matters, Inc. <https://www.joomla.org>
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2024 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
 namespace Astroid\Helper;
@@ -16,9 +16,9 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Event for getting information on an API Relationship
+ * Event for getting information on an Astroid Trigger
  *
- * @since  4.0.0
+ * @since  3.1.0
  */
 final class Events extends AbstractImmutableEvent
 {

@@ -78,20 +78,42 @@ class Admin extends Helper\Client
         $this->response(Layout::getSublayouts($template_name));
     }
 
+    protected function getLayout()
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $filename       = $app->input->get('name', NULL, 'RAW');
+
+            $this->response(Layout::getSubLayout($filename, $template_name));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
     protected function saveLayout() {
         try {
             // Check for request forgeries.
             $this->checkAuth();
-            $app = Factory::getApplication();
+            $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $layout_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/layouts/";
+            $filename       = $app->input->get('name', NULL, 'RAW');
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/layouts/";
             $layout = [
                 'title' => $app->input->post->get('title', '', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
-                'thumbnail' => '',
+                'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
                 'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
             ];
-            $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
+            if (!$filename) {
+                $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
+            } else {
+                $layout_name = $filename;
+            }
+
             $fieldName = 'thumbnail';
 
             $fileError = $_FILES[$fieldName]['error'];
@@ -107,7 +129,9 @@ class Admin extends Helper\Client
 
                 $fileTemp       = $_FILES[$fieldName]['tmp_name'];
                 $thumbnail      = file_get_contents($fileTemp);
-
+                if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail'])) {
+                    unlink(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail']);
+                }
                 $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
 
                 Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail'], $thumbnail);
@@ -115,6 +139,22 @@ class Admin extends Helper\Client
             }
             Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
             $this->response($layout_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    protected function deleteLayouts()
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $layouts        = $app->input->get('layouts', array(), 'RAW');
+
+            $this->response(Layout::deleteSublayouts($layouts, $template_name));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }

@@ -53,6 +53,7 @@ class Constants
         'ASTROID_TEMPLATE_PREVIEW',
         'TPL_ASTROID_BACK_TO_JOOMLA',
         'ASTROID_TEMPLATE_CLOSE',
+        'JGLOBAL_CONFIRM_DELETE'
     ];
 
     public static $animations = [
