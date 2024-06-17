@@ -2,7 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/templaza/astroid-framework.svg)](https://github.com/templaza/astroid-framework/releases)
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/2MwtsAX4Py)
-[![Donate](https://img.shields.io/badge/donate-Buy%20me%20a%20coffee-blueviolet)](https://www.paypal.com/paypalme/sonvnn)
+[![Donate](https://img.shields.io/badge/donate-Buy%20me%20a%20coffee-blueviolet)](https://ko-fi.com/isonny)
 
 # Astroid Framework - Powerful Joomla Template Framework
 
@@ -78,4 +78,4 @@
 * [JoomlaPlate - Joomla Template](https://www.joomlaplates.com/)
 
 ## You love this project
-* [Buy me a coffee](https://www.paypal.com/paypalme/sonvnn)
+* [Buy me a coffee](https://ko-fi.com/isonny)
