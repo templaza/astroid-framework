@@ -618,6 +618,8 @@ class Helper
         $form_template['row'] = $rowElement->renderJson();
         $columnElement = new Element('column');
         $form_template['column'] = $columnElement->renderJson();
+        $sublayout = new Element('sublayout');
+        $form_template['sublayout'] = $sublayout->renderJson('sublayout');
         return $form_template;
     }
 

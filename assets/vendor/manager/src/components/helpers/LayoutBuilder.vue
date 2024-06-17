@@ -342,7 +342,7 @@ function getColumnClass(element) {
                             <li class="nav-item">
                                 <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Enable/Disable Element" @click.prevent="elementState(element)"><i :class="{'fas fa-eye' : element.state, 'fas fa-eye-slash' : !element.state}"></i></a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" v-if="element.type !== `sublayout`">
                                 <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
                             </li>
                             <li class="nav-item">

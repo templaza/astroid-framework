@@ -72,6 +72,8 @@ class Element
                 case 'row':
                     $this->default_xml_file = $library_elements_directory . 'row-default.xml';
                     break;
+                case 'sublayout':
+                    break;
                 default:
                     if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
                         $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
@@ -90,7 +92,7 @@ class Element
             }
         }
 
-        if (!defined('ASTROID_FRONTEND')) {
+        if (!defined('ASTROID_FRONTEND') && $this->type !='sublayout') {
             if ($this->xml_file) {
                 $this->loadXML();
             }
@@ -181,49 +183,60 @@ class Element
 
     public function renderJson($type = 'system'): array
     {
-        $form = $this->getForm();
-        $fieldsets = $form->getFieldsets();
-        $form_content = array();
-        $model_form = [];
-        foreach ($fieldsets as $key => $fieldset) {
-            $fields = $form->getFieldset($key);
-            $groups = [];
-            foreach ($fields as $key => $field) {
-                if ($field->type == 'astroidgroup') {
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => []];
-                }
-            }
+        switch ($type) {
+            case 'sublayout':
+                return array('info' => [
+                    'type' => 'sublayout',
+                    'title' => 'Sublayouts',
+                    'icon' => 'fas fa-cubes',
+                ], 'type' => $type);
+                break;
+            default:
+                $form = $this->getForm();
+                $fieldsets = $form->getFieldsets();
+                $form_content = array();
+                $model_form = [];
+                foreach ($fieldsets as $key => $fieldset) {
+                    $fields = $form->getFieldset($key);
+                    $groups = [];
+                    foreach ($fields as $key => $field) {
+                        if ($field->type == 'astroidgroup') {
+                            $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => []];
+                        }
+                    }
 
-            foreach ($fields as $key => $field) {
-                if ($field->type == 'astroidgroup') {
-                    continue;
-                }
-                $model_form[$field->fieldname] = $field->value;
-                $field_group = $field->getAttribute('astroidgroup', 'none');
-                $js_input   =   json_decode($field->input);
+                    foreach ($fields as $key => $field) {
+                        if ($field->type == 'astroidgroup') {
+                            continue;
+                        }
+                        $model_form[$field->fieldname] = $field->value;
+                        $field_group = $field->getAttribute('astroidgroup', 'none');
+                        $js_input   =   json_decode($field->input);
 
-                $field_tmp  =   [
-                    'id'            =>  $field->id,
-                    'name'          =>  $field->fieldname,
-                    'value'         =>  $field->value,
-                    'label'         =>  Text::_($field->getAttribute('label')),
-                    'description'   =>  Text::_($field->getAttribute('description')),
-                    'input'         =>  $field->input,
-                    'type'          =>  'string',
-                    'group'         =>  $fieldset->name,
-                    'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
-                ];
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $field_tmp['input']     =   $js_input;
-                    $field_tmp['type']      =   'json';
+                        $field_tmp  =   [
+                            'id'            =>  $field->id,
+                            'name'          =>  $field->fieldname,
+                            'value'         =>  $field->value,
+                            'label'         =>  Text::_($field->getAttribute('label')),
+                            'description'   =>  Text::_($field->getAttribute('description')),
+                            'input'         =>  $field->input,
+                            'type'          =>  'string',
+                            'group'         =>  $fieldset->name,
+                            'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
+                        ];
+                        if (json_last_error() === JSON_ERROR_NONE) {
+                            $field_tmp['input']     =   $js_input;
+                            $field_tmp['type']      =   'json';
+                        }
+                        $groups[$field_group]['fields'][] = $field_tmp;
+                    }
+                    $fieldset->label    = Text::_($fieldset->label);
+                    $fieldset->childs   = $groups;
+                    $form_content[] = $fieldset;
                 }
-                $groups[$field_group]['fields'][] = $field_tmp;
-            }
-            $fieldset->label    = Text::_($fieldset->label);
-            $fieldset->childs   = $groups;
-            $form_content[] = $fieldset;
+                return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
+                break;
         }
-        return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
     }
 
     public function getForm()

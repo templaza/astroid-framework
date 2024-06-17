@@ -140,13 +140,17 @@ function selectElement(el) {
 function addElement(addon) {
     let id = Date.now() * 1000 + Math.random() * 1000;
     id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
+    let params = [
+        {name: 'title', value: addon.title}
+    ];
+    if (addon.type === `sublayout`) {
+        params.push({name: 'source', value: addon.name});
+    }
     const new_element = {
         id: id,
         type: addon.type,
         state: 1,
-        params: [
-            {name: 'title', value: addon.title}
-        ]
+        params: params
     }
     layout.value.sections.every(section => {
         section.rows.every(row => {
@@ -165,7 +169,9 @@ function addElement(addon) {
         });
         return true;
     });
-    editElement(new_element);
+    if (addon.type !== `sublayout`) {
+        editElement(new_element);
+    }
 }
 function closeElement() {
     _showModal.value = false;
