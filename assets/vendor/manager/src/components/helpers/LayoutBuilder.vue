@@ -345,7 +345,7 @@ function saveLayout(element) {
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body" :class="{'element-disabled' : !element.state}">
                 <div class="d-flex justify-content-between">
                     <div class="element-name">
-                        <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}</div>
+                        <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}<i v-if="element.type === `sublayout`" class="fa-regular fa-circle-question text-body-tertiary ms-1" data-bs-toggle="tooltip" :data-bs-title="element.params.find((param) => param.name === 'desc').value"></i></div>
                         <div class="text-body-tertiary form-text">{{ element.type }}</div>
                     </div>
                     <div class="element-toolbar">

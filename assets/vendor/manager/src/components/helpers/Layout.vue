@@ -150,6 +150,7 @@ function addElement(addon) {
     if (addon.type === `sublayout`) {
         params.push({name: 'source', value: addon.name});
         params.push({name: 'desc', value: addon.desc});
+        params.push({name: 'thumbnail', value: addon.thumbnail});
     }
     const new_element = {
         id: id,
