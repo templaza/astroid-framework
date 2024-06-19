@@ -50,12 +50,14 @@ function getSublayouts() {
     .then(function (response) {
         if (response.data.status === 'success') {
             sublayouts.value = response.data.data;
-            filters.value.push('Sublayouts');
-            orders['Sublayouts'] = Object.keys(orders).length;
-            counter['Sublayouts'] = sublayouts.value.length;
-            sublayouts.value.forEach(sublayout => {
-                sublayout.type = 'sublayout';
-            });
+            if (sublayouts.value.length) {
+                filters.value.push('Sublayouts');
+                orders['Sublayouts'] = Object.keys(orders).length;
+                counter['Sublayouts'] = sublayouts.value.length;
+                sublayouts.value.forEach(sublayout => {
+                    sublayout.type = 'sublayout';
+                });
+            }
         }
     })
     .catch(function (error) {

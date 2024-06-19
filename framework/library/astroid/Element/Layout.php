@@ -39,6 +39,30 @@ class Layout
         return $content;
     }
 
+    public static function renderSublayout($source, $template = '')
+    {
+        Framework::getDebugger()->log('Render '.$source.' Layout');
+        $sublayout  = self::getSubLayout($source, $template);
+        if (!isset($sublayout['data']) || !$sublayout['data']) {
+            return '';
+        }
+        $layout     = \json_decode($sublayout['data'], true);
+        $devices    = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] : [
+            [
+                'code'=> 'lg',
+                'icon'=> 'fa-solid fa-computer',
+                'title'=> 'title'
+            ]
+        ];
+        $content = '';
+        foreach ($layout['sections'] as $section) {
+            $section = new Section($section, $devices);
+            $content .= $section->render();
+        }
+        Framework::getDebugger()->log('Render '.$source.' Layout');
+        return $content;
+    }
+
     public static function getSublayouts($template = '')
     {
         if (!$template) {

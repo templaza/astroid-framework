@@ -76,6 +76,11 @@ function updateContentLayout() {
         }
     }
 }
+
+// Update subLayout
+function updateSubLayouts() {
+    props.scope['sublayout'] = 'update';
+}
 </script>
 <template>
     <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" @keydown.enter.prevent="" :aria-label="props.field.label" :placeholder="props.field.input.hint">
@@ -141,7 +146,7 @@ function updateContentLayout() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />

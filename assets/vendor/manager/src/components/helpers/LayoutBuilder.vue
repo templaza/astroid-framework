@@ -2,8 +2,8 @@
 import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
-const emit = defineEmits(['edit:Element', 'select:Element', 'update:System']);
-const props = defineProps(['list', 'group', 'system', 'form', 'device']);
+const emit = defineEmits(['edit:Element', 'select:Element', 'update:System', 'save:Sublayout']);
+const props = defineProps(['list', 'group', 'system', 'form', 'device', 'source']);
 const layout = ref([]);
 const map = {
     'root': 'sections',
@@ -261,6 +261,14 @@ function getColumnClass(element) {
     }
     return column_class;
 }
+
+// Save sublayout
+function saveLayout(element) {
+    emit('save:Sublayout', {
+        sections : [element],
+        devices : layout.value.devices
+    });
+}
 </script>
 <template>
     <draggable
@@ -284,7 +292,10 @@ function getColumnClass(element) {
                             <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Section" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Section"><i class="fas fa-trash-alt"></i></a>
+                            <a class="nav-link px-1" href="#" @click.prevent="deleteElement(element, index)" title="Remove Section"><i class="fas fa-trash-alt"></i></a>
+                        </li>
+                        <li class="nav-item" v-if="props.source === `root`">
+                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Save Section as Sublayout" @click.prevent="saveLayout(element)"><i class="fa-solid fa-floppy-disk"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#" @click.prevent="showGridModal(element.id, 'row')"><i class="fas fa-plus"></i> New Row</a>
@@ -304,7 +315,7 @@ function getColumnClass(element) {
                     <div class="row-handle handle text-dark-emphasis"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>
                     <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis" @click.prevent="showGridModal(element.id, 'row')"><i class="fa-solid fa-table-columns"></i></a></div>
                     <div><a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
-                    <div><a href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
+                    <div><a href="#" @click.prevent="deleteElement(element, index)" title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                     <div>
                         <input class="form-check-input" type="checkbox" v-model="element.fill" :id="`fill-row-`+element.id" data-bs-toggle="tooltip" data-bs-title="Fill Up Row">
                     </div>
@@ -349,7 +360,7 @@ function getColumnClass(element) {
                                 <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-0 pe-0 ps-1" href="#" @click.prevent="deleteElement(element, index)" data-bs-toggle="tooltip" data-bs-title="Remove Element"><i class="fas fa-trash-alt"></i></a>
+                                <a class="nav-link py-0 pe-0 ps-1" href="#" @click.prevent="deleteElement(element, index)" title="Remove Element"><i class="fas fa-trash-alt"></i></a>
                             </li>
                         </ul>
                     </div>

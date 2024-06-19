@@ -1,9 +1,10 @@
 <script setup>
 import axios from "axios";
-import { ref, reactive, onMounted, inject } from "vue";
+import { ref, reactive, onMounted, inject, onUpdated } from "vue";
 import Layout from "./Layout.vue";
-
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
+    modelValue: { type: String, default: '' },
     field: { type: Object, default: null }
 });
 const constant  =   inject('constant', {});
@@ -29,6 +30,12 @@ const checklist = ref([]);
 
 onMounted(() => {
     callAjax();
+})
+
+onUpdated(()=>{
+    if (props.modelValue === 'update') {
+        callAjax();
+    }
 })
 
 function editLayout(filename = '') {
@@ -66,7 +73,7 @@ function onFileChange(e) {
     files.value = e.target.files || e.dataTransfer.files;
 }
 
-function saveLayout() {
+function saveLayout(action = 'save') {
     let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=savelayout&ts="+Date.now();
     const formData = new FormData(); // pass data as a form
     const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
@@ -97,10 +104,12 @@ function saveLayout() {
             toast_msg.body = 'You can use it to contribute to your layout builder.';
             toast_msg.color = 'green';
             save_disabled.value = false;
-            editItem.value = false;
-            resetValues();
-            callAjax();
-            document.getElementById(props.field.input.id+`_saveLayout_close`).click();
+            if (action === 'save') {
+                editItem.value = false;
+                resetValues();
+                callAjax();
+                document.getElementById(props.field.input.id+`_saveLayout_close`).click();
+            }
         } else {
             toast_msg.icon = 'fa-regular fa-face-sad-tear';
             toast_msg.header = 'Sub-layout '+formInfo.title+' is not saved.';
@@ -127,6 +136,7 @@ function cancelLayout() {
     if (confirm('Are you sure?')) {
         editItem.value = false;
         resetValues();
+        callAjax();
     }
 }
 
@@ -178,6 +188,7 @@ function callAjax() {
     .then(function (response) {
         if (response.data.status === 'success') {
             items.value = response.data.data;
+            emit('update:modelValue', '');
         }
     })
     .catch(function (error) {
@@ -228,7 +239,7 @@ function checkAllList() {
             </div>
         </div>
         <div v-else class="astroid-layout px-2">
-            <Layout v-model="layout" :field="{
+            <Layout v-model="layout" source="sublayout" :field="{
                 id: props.field.id,
                 input: {
                     id: props.field.input.id,
@@ -236,11 +247,11 @@ function checkAllList() {
                     value: JSON.parse(layout)
                 }
             }" />
-            <div class="modal fade" :id="props.field.input.id+`_saveLayout`" tabindex="-1" aria-labelledby="saveLayoutLabel" aria-hidden="true">
+            <div class="modal fade" :id="props.field.input.id+`_saveLayout`" tabindex="-1" :aria-labelledby="props.field.input.id+`saveLayoutLabel`" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title fs-5" id="saveLayoutLabel">Layout Information</h3>
+                            <h3 class="modal-title fs-5" :id="props.field.input.id+`_saveLayoutLabel`">Layout Information</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" :id="props.field.input.id+`_saveLayout_close`"></button>
                         </div>
                         <div class="modal-body">
@@ -263,15 +274,16 @@ function checkAllList() {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">Back</button>
-                            <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout()" :disabled="save_disabled">Save Settings</button>
+                            <button type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">{{ language.ASTROID_BACK }}</button>
+                            <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout()" :disabled="save_disabled" v-html="language.JSAVE"></button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
-                <a href="#" @click.prevent="" class="btn btn-sm btn-as btn-as-primary me-2" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Save</a>
-                <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light">Cancel</a>
+                <a href="#" @click.prevent="saveLayout('apply')" class="btn btn-sm btn-as btn-as-primary me-2" :disabled="save_disabled">{{ language.JAPPLY }}</a>
+                <a href="#" @click.prevent="" class="btn btn-sm btn-as btn-primary me-2" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`" :disabled="save_disabled" v-html="language.JSAVE"></a>
+                <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light" :disabled="save_disabled">{{ language.JCANCEL }}</a>
             </div>
         </div>
         <div class="toast-container position-fixed bottom-0 end-0 p-3">

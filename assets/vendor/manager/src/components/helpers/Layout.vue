@@ -1,16 +1,19 @@
 <script setup>
 import { computed, onBeforeMount, onUpdated, reactive, ref, watch, inject } from 'vue';
 import { MultiListSelect } from "vue-search-select"
+import axios from "axios";
 import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
 import SelectElement from "./SelectElement.vue";
 import LayoutGrid from "./LayoutGrid.vue";
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'update:subLayouts']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
-    field: { type: Object, default: null }
+    field: { type: Object, default: null },
+    source: { type: String, default: 'root' },
 });
 const constant  =   inject('constant', {});
+const language  =   inject('language', []);
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
     if (typeof layout.value.devices === 'undefined') {
@@ -21,6 +24,7 @@ onBeforeMount(()=>{
             { "code": "xs", "icon": "fa-solid fa-mobile-screen", "title": "On Mobile" } 
         ];
     }
+    activeDevice.value = layout.value.devices[0].code;
 })
 onUpdated(()=>{
     if (layout_text.value !== props.modelValue) {
@@ -145,6 +149,7 @@ function addElement(addon) {
     ];
     if (addon.type === `sublayout`) {
         params.push({name: 'source', value: addon.name});
+        params.push({name: 'desc', value: addon.desc});
     }
     const new_element = {
         id: id,
@@ -213,6 +218,89 @@ function addGrid(grid = []) {
     });
     _showGrid.value = false;
 }
+
+// Sublayout
+const formInfo = reactive({
+    title: '',
+    desc: '',
+    thumbnail: '',
+    name: ''
+});
+const toast_msg = reactive({
+    header: '',
+    body:'',
+    icon: '',
+    color:'darkviolet'
+});
+const files = ref(null);
+const save_disabled = ref(false);
+const sublayout =   ref('{"sections":[]}');
+const _showSublayoutModal = ref(false);
+const _subFormTitle = ref(null);
+function openSaveLayout(data) {
+    _showSublayoutModal.value = true;
+    sublayout.value = JSON.stringify(data);
+}
+function onFileChange(e) {
+    files.value = e.target.files || e.dataTransfer.files;
+}
+function saveSublayout() {
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=savelayout&ts="+Date.now();
+    if (!formInfo.title) {
+        alert('You have to input the Title')
+        _subFormTitle.value.focus();
+        return false;
+    } 
+    const formData = new FormData(); // pass data as a form
+    const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
+    const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
+    formData.append(constant.astroid_admin_token, 1);
+    formData.append('title', formInfo.title);
+    formData.append('desc', formInfo.desc);
+    formData.append('data', sublayout.value);
+    formData.append('thumbnail_old', formInfo.thumbnail);
+    if (files.value !== null && files.value.length) {
+        formData.append('thumbnail', files.value[0]);
+    }
+    if (formInfo.name !== ``) {
+        formData.append('name', formInfo.name);
+    }
+    formData.append('template', constant.tpl_template_name);
+    save_disabled.value = true;
+            
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
+    .then((response) => {
+        if (response.data.status === 'success') {
+            toast_msg.icon = 'fa-solid fa-rocket';
+            toast_msg.header = 'Sub-Layout '+formInfo.title+' is saved.';
+            toast_msg.body = 'You can use it to contribute to your layout builder.';
+            toast_msg.color = 'green';
+            save_disabled.value = false;
+            formInfo.title = '';
+            formInfo.desc = '';
+            formInfo.name = '';
+            formInfo.thumbnail = '';
+            files.value = null;
+            document.getElementById(props.field.input.id+`_saveLayout_form`).reset();
+            sublayout.value = '{"sections":[]}';
+            emit('update:subLayouts');
+            _showSublayoutModal.value = false;
+        } else {
+            toast_msg.icon = 'fa-regular fa-face-sad-tear';
+            toast_msg.header = 'Sub-layout '+formInfo.title+' is not saved.';
+            toast_msg.body = response.data.message;
+            toast_msg.color = 'red';
+        }
+        toastBootstrap.show();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
 </script>
 <template>
     <div class="astroid-btn-group responsive-devices text-center" role="group" aria-label="Responsive Devices">
@@ -255,13 +343,73 @@ function addGrid(grid = []) {
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>
     </div>
-    <LayoutBuilder :list="layout" group="root" :system="system" :form="constant.form_template" :device="activeDevice" @edit:Element="editElement" @select:Element="selectElement" @update:System="updateSystem" />
+    <LayoutBuilder :list="layout" 
+        group="root" :system="system" 
+        :form="constant.form_template" 
+        :device="activeDevice" 
+        :source="props.source"
+        @edit:Element="editElement" 
+        @select:Element="selectElement" 
+        @update:System="updateSystem" 
+        @save:Sublayout="openSaveLayout"
+        />
     <Transition name="fade">
         <Modal v-if="_showModal" :element="element" :form="constant.form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
         <SelectElement v-if="_showElement" :form="constant.form_template" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />
     </Transition>
+    <Transition name="fade">
+    <form :id="props.field.input.id+`_saveLayout_form`" v-if="props.source === `root` && _showSublayoutModal">
+        <div class="astroid-modal modal d-block" :id="props.field.input.id+`_saveLayout`" tabindex="-1" :aria-labelledby="props.field.input.id+`saveLayoutLabel`" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5" :id="props.field.input.id+`_saveLayoutLabel`">Layout Information</h3>
+                        <button type="button" class="btn-close" aria-label="Close" @click="_showSublayoutModal = false"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="mb-3">
+                                <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">Title</label>
+                                <input type="text" v-model="formInfo.title" class="form-control" :id="props.field.input.id+`_saveLayout_title`" placeholder="Title" ref="_subFormTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">Description</label>
+                                <textarea class="form-control" v-model="formInfo.desc" :id="props.field.input.id+`_saveLayout_desc`" rows="3"></textarea>
+                            </div>
+                            <div v-if="formInfo.thumbnail !== ``" class="mb-3">
+                                <img class="img-thumbnail" :src="constant.site_url + `/media/templates/site/` + constant.tpl_template_name + `/images/layouts/` + formInfo.thumbnail" :alt="formInfo.title">
+                            </div>
+                            <div class="mb-3">
+                                <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">Select your thumbnail</label>
+                                <input class="form-control" type="file" @change="onFileChange" :id="props.field.input.id+`_saveLayout_thumbnail`">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-as btn-as-light" aria-label="Close" :disabled="save_disabled" @click="_showSublayoutModal = false">{{ language.ASTROID_BACK }}</button>
+                        <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveSublayout()" :disabled="save_disabled" v-html="language.JSAVE"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div :id="props.field.input.id+`_saveLayoutToast`" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
+                    <strong class="me-auto">{{ toast_msg.header }}</strong>
+                    <small>1 second ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ toast_msg.body }}
+                </div>
+            </div>
+        </div>
+        <button type="button" class="d-none" :id="props.field.input.id+`_saveLayout_open`" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Launch modal</button>
+    </form> 
+    </Transition>  
     <input
         :id="props.field.input.id"
         :name="props.field.input.name"
