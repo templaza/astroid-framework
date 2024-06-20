@@ -14,6 +14,7 @@ const props = defineProps({
 });
 const constant  =   inject('constant', {});
 const language  =   inject('language', []);
+
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
     if (typeof layout.value.devices === 'undefined') {
@@ -25,7 +26,25 @@ onBeforeMount(()=>{
         ];
     }
     activeDevice.value = layout.value.devices[0].code;
-    form_template.value = constant.form_template;
+
+    if (props.source === 'article_layouts') {
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getArticleFormTemplate&template="+constant.tpl_template_name+"&ts="+Date.now();
+        if (process.env.NODE_ENV === 'development') {
+            url = "articleformtemplate_ajax.txt?ts="+Date.now();
+        }
+        axios.get(url)
+        .then(function (response) {
+            if (response.data.status === 'success') {
+                form_template.value = response.data.data;
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+    } else {
+        form_template.value = constant.form_template;
+    }
 })
 onUpdated(()=>{
     if (layout_text.value !== props.modelValue) {
@@ -102,28 +121,8 @@ watch(layout_text, (newText) => {
 const element = ref({});
 const form_template = ref({});
 function editElement(el) {
-    if (props.source === 'article_layouts') {
-        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getArticleFormTemplate&template="+constant.tpl_template_name+"&ts="+Date.now();
-        if (process.env.NODE_ENV === 'development') {
-            url = "articleformtemplate_ajax.txt?ts="+Date.now();
-        }
-        axios.get(url)
-        .then(function (response) {
-            if (response.data.status === 'success') {
-                form_template.value = response.data.data;
-                element.value = el;
-                _showModal.value = true;
-            }
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        });
-    } else {
-        form_template.value = constant.form_template;
-        element.value = el;
-        _showModal.value = true;
-    }
+    element.value = el;
+    _showModal.value = true;
 }
 function saveElement(param) {
     layout.value.sections.every(section => {
