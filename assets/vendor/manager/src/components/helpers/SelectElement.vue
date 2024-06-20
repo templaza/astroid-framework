@@ -3,7 +3,7 @@ import { onMounted, ref, inject } from 'vue';
 import axios from "axios";
 
 const emit = defineEmits(['update:closeElement', 'update:selectElement']);
-const props = defineProps(['form', 'system']);
+const props = defineProps(['form', 'system', 'source']);
 const constant = inject('constant', {});
 const currentFilter = ref('');
 const addons = ref([]);
@@ -16,7 +16,10 @@ onMounted(()=> {
     Object.keys(props.form).every(key => {
         if (props.form[key].type === 'addon') {
             addon = props.form[key].info;
-            if (['component', 'banner', 'message'].includes(addon.type) && !props.system[addon.type]) {
+            if (['component', 'banner', 'message'].includes(addon.type) && (!props.system[addon.type] || props.source === `article_layouts`)) {
+                return true;
+            }
+            if (props.source !== `article_layouts` && addon.element_type === 'article') {
                 return true;
             }
             if (addon.element_type === 'widget' && parseInt(constant.enable_widget) === 0) {

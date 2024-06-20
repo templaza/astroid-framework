@@ -25,6 +25,7 @@ onBeforeMount(()=>{
         ];
     }
     activeDevice.value = layout.value.devices[0].code;
+    form_template.value = constant.form_template;
 })
 onUpdated(()=>{
     if (layout_text.value !== props.modelValue) {
@@ -99,9 +100,30 @@ watch(layout_text, (newText) => {
     }
 })
 const element = ref({});
+const form_template = ref({});
 function editElement(el) {
-    element.value = el;
-    _showModal.value = true;
+    if (props.source === 'article_layouts') {
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getArticleFormTemplate&template="+constant.tpl_template_name+"&ts="+Date.now();
+        if (process.env.NODE_ENV === 'development') {
+            url = "articleformtemplate_ajax.txt?ts="+Date.now();
+        }
+        axios.get(url)
+        .then(function (response) {
+            if (response.data.status === 'success') {
+                form_template.value = response.data.data;
+                element.value = el;
+                _showModal.value = true;
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+    } else {
+        form_template.value = constant.form_template;
+        element.value = el;
+        _showModal.value = true;
+    }
 }
 function saveElement(param) {
     layout.value.sections.every(section => {
@@ -253,7 +275,7 @@ function saveSublayout() {
         return false;
     } 
     const formData = new FormData(); // pass data as a form
-    const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
+    const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveSectionToast`);
     const toastBootstrap = Toast.getOrCreateInstance(toastAstroidMsg);
     formData.append(constant.astroid_admin_token, 1);
     formData.append('title', formInfo.title);
@@ -346,7 +368,7 @@ function saveSublayout() {
     </div>
     <LayoutBuilder :list="layout" 
         group="root" :system="system" 
-        :form="constant.form_template" 
+        :form="form_template" 
         :device="activeDevice" 
         :source="props.source"
         @edit:Element="editElement" 
@@ -355,12 +377,11 @@ function saveSublayout() {
         @save:Sublayout="openSaveLayout"
         />
     <Transition name="fade">
-        <Modal v-if="_showModal" :element="element" :form="constant.form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
+        <Modal v-if="_showModal" :element="element" :form="form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
-        <SelectElement v-if="_showElement" :form="constant.form_template" :system="system" @update:close-element="_showElement = false" @update:selectElement="addElement" />
+        <SelectElement v-if="_showElement" :form="form_template" :system="system" :source="props.source" @update:close-element="_showElement = false" @update:selectElement="addElement" />
     </Transition>
-    <Transition name="fade">
     <form :id="props.field.input.id+`_saveLayout_form`" v-if="props.source === `root` && _showSublayoutModal">
         <div class="astroid-modal modal d-block" :id="props.field.input.id+`_saveLayout`" tabindex="-1" :aria-labelledby="props.field.input.id+`saveLayoutLabel`" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -395,22 +416,20 @@ function saveSublayout() {
                 </div>
             </div>
         </div>
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div :id="props.field.input.id+`_saveLayoutToast`" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
-                    <strong class="me-auto">{{ toast_msg.header }}</strong>
-                    <small>1 second ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    {{ toast_msg.body }}
-                </div>
+    </form>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div :id="props.field.input.id+`_saveSectionToast`" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="me-2" :class="toast_msg.icon" :style="{color: toast_msg.color}"></i>
+                <strong class="me-auto">{{ toast_msg.header }}</strong>
+                <small>1 second ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ toast_msg.body }}
             </div>
         </div>
-        <button type="button" class="d-none" :id="props.field.input.id+`_saveLayout_open`" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Launch modal</button>
-    </form> 
-    </Transition>  
+    </div>
     <input
         :id="props.field.input.id"
         :name="props.field.input.name"

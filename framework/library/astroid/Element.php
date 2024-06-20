@@ -35,10 +35,12 @@ class Element
     protected mixed $form = null;
     protected mixed $raw_data = null;
     protected array $subform = [];
+    protected string $mode = '';
 
-    public function __construct($type = '', $data = [], $template = null)
+    public function __construct($type = '', $data = [], $template = null, $mode = '')
     {
         $this->type = $type;
+        $this->mode = $mode;
         if (!empty($data)) {
             if ($type == 'subform') {
                 $this->subform = $data;
@@ -149,7 +151,7 @@ class Element
             }
         }
 
-        if (!empty($this->xml_file)) {
+        if (!empty($this->xml_file) && $this->mode != 'article') {
             $xml = $this->xml->form;
             $this->form->load($xml, false);
         }

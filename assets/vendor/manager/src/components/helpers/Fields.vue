@@ -194,4 +194,7 @@ function updateSubLayouts() {
     <div v-else-if="props.field.input.type === `sublayouts`" class="astroid-sub-layouts">
         <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
+    <div v-else-if="props.field.input.type === `articlelayouts`" class="astroid-article-layouts">
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" type="article_layouts" />
+    </div>
 </template>

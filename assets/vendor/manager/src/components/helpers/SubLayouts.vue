@@ -5,7 +5,8 @@ import Layout from "./Layout.vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
-    field: { type: Object, default: null }
+    field: { type: Object, default: null },
+    type: { type: String, default: 'layouts' },
 });
 const constant  =   inject('constant', {});
 const language  =   inject('language', []);
@@ -48,6 +49,7 @@ function editLayout(filename = '') {
         formData.append(constant.astroid_admin_token, 1);
         formData.append('name', filename);
         formData.append('template', constant.tpl_template_name);
+        formData.append('type', props.type);
         axios.post(url, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -90,6 +92,7 @@ function saveLayout(action = 'save') {
         formData.append('name', formInfo.name);
     }
     formData.append('template', constant.tpl_template_name);
+    formData.append('type', props.type);
     save_disabled.value = true;
             
     axios.post(url, formData, {
@@ -151,6 +154,7 @@ function deleteLayout() {
             formData.append('layouts[]', element);
         });
         formData.append('template', constant.tpl_template_name);
+        formData.append('type', props.type);
         axios.post(url, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -180,7 +184,7 @@ function deleteLayout() {
 }
 
 function callAjax() {
-    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayouts&template="+constant.tpl_template_name+"&ts="+Date.now();
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayouts&type="+props.type+"&template="+constant.tpl_template_name+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "layout_ajax.txt?ts="+Date.now();
     }
@@ -239,7 +243,7 @@ function checkAllList() {
             </div>
         </div>
         <div v-else class="astroid-layout px-2">
-            <Layout v-model="layout" source="sublayout" :field="{
+            <Layout v-model="layout" :source="props.type" :field="{
                 id: props.field.id,
                 input: {
                     id: props.field.input.id,

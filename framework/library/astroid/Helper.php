@@ -335,7 +335,7 @@ class Helper
         return $return;
     }
 
-    public static function getAllAstroidElements()
+    public static function getAllAstroidElements($mode = '')
     {
         $template = Framework::getTemplate();
         // Template Directories
@@ -355,7 +355,7 @@ class Helper
             $xmlfile = $element_dir . '/' . (str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir))) . '.xml';
             if (file_exists($xmlfile)) {
                 $type = str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir));
-                $element = new Element($type, [], $template);
+                $element = new Element($type, [], $template, $mode);
                 $return[] = $element;
             }
         }
@@ -606,9 +606,9 @@ class Helper
         return $subject;
     }
 
-    public static function getFormTemplate() {
+    public static function getFormTemplate($mode = '') {
         $form_template = array();
-        $astroidElements = Helper::getAllAstroidElements();
+        $astroidElements = Helper::getAllAstroidElements($mode);
         foreach ($astroidElements as $astroidElement) {
             $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
         }

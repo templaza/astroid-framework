@@ -75,7 +75,8 @@ class Admin extends Helper\Client
     {
         $app = Factory::getApplication();
         $template_name  = $app->input->get('template', NULL, 'RAW');
-        $this->response(Layout::getDatalayouts($template_name, 'layouts'));
+        $type           = $app->input->get('type', 'layouts', 'RAW');
+        $this->response(Layout::getDatalayouts($template_name, $type));
     }
 
     protected function getLayout()
@@ -86,8 +87,9 @@ class Admin extends Helper\Client
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
+            $type           = $app->input->get('type', 'layouts', 'RAW');
 
-            $this->response(Layout::getDataLayout($filename, $template_name, 'layouts'));
+            $this->response(Layout::getDataLayout($filename, $template_name, $type));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -101,7 +103,9 @@ class Admin extends Helper\Client
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
-            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/layouts/";
+            $type           = $app->input->get('type', 'layouts', 'RAW');
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/$type/";
+
             $layout = [
                 'title' => $app->input->post->get('title', '', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
@@ -129,12 +133,12 @@ class Admin extends Helper\Client
 
                 $fileTemp       = $_FILES[$fieldName]['tmp_name'];
                 $thumbnail      = file_get_contents($fileTemp);
-                if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail'])) {
-                    unlink(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail']);
+                if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'])) {
+                    unlink(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
                 }
                 $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
 
-                Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/layouts/".$layout['thumbnail'], $thumbnail);
+                Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'], $thumbnail);
                 unlink($fileTemp);
             }
             Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
@@ -153,18 +157,13 @@ class Admin extends Helper\Client
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $layouts        = $app->input->get('layouts', array(), 'RAW');
+            $type           = $app->input->get('type', 'layouts', 'RAW');
 
-            $this->response(Layout::deleteDatalayouts($layouts, $template_name, 'layouts'));
+            $this->response(Layout::deleteDatalayouts($layouts, $template_name, $type));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
         return true;
-    }
-
-    protected function getArticleLayouts() {
-        $app = Factory::getApplication();
-        $template_name  = $app->input->get('template', NULL, 'RAW');
-        $this->response(Layout::getDatalayouts($template_name, 'article_layouts'));
     }
 
     protected function getcategories()
@@ -364,6 +363,18 @@ class Admin extends Helper\Client
         $html = Includer::run($html);
         Framework::getDebugger()->log('Getting Manager');
         $this->response($html);
+    }
+
+    protected function getArticleFormTemplate()
+    {
+        try {
+            $app            = Factory::getApplication();
+            define('ASTROID_TEMPLATE_NAME', $app->input->get('template', NULL, 'RAW'));
+            $this->response(Helper::getFormTemplate('article'));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
     }
 
     protected function clearCache()
