@@ -75,7 +75,7 @@ class Admin extends Helper\Client
     {
         $app = Factory::getApplication();
         $template_name  = $app->input->get('template', NULL, 'RAW');
-        $this->response(Layout::getSublayouts($template_name));
+        $this->response(Layout::getDatalayouts($template_name, 'layouts'));
     }
 
     protected function getLayout()
@@ -87,7 +87,7 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
 
-            $this->response(Layout::getSubLayout($filename, $template_name));
+            $this->response(Layout::getDataLayout($filename, $template_name, 'layouts'));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -154,11 +154,17 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $layouts        = $app->input->get('layouts', array(), 'RAW');
 
-            $this->response(Layout::deleteSublayouts($layouts, $template_name));
+            $this->response(Layout::deleteDatalayouts($layouts, $template_name, 'layouts'));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
         return true;
+    }
+
+    protected function getArticleLayouts() {
+        $app = Factory::getApplication();
+        $template_name  = $app->input->get('template', NULL, 'RAW');
+        $this->response(Layout::getDatalayouts($template_name, 'article_layouts'));
     }
 
     protected function getcategories()

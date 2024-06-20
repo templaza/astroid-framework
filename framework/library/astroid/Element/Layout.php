@@ -42,7 +42,7 @@ class Layout
     public static function renderSublayout($source, $template = '')
     {
         Framework::getDebugger()->log('Render '.$source.' Layout');
-        $sublayout  = self::getSubLayout($source, $template);
+        $sublayout  = self::getDataLayout($source, $template, 'layouts');
         if (!isset($sublayout['data']) || !$sublayout['data']) {
             return '';
         }
@@ -63,13 +63,13 @@ class Layout
         return $content;
     }
 
-    public static function getSublayouts($template = '')
+    public static function getDatalayouts($template = '', $type = '')
     {
         if (!$template) {
             $template   =   Framework::getTemplate()->template;
         }
 
-        $layouts_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/";
+        $layouts_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/";
         if (!file_exists($layouts_path)) {
             return [];
         }
@@ -86,14 +86,14 @@ class Layout
                 $layout['desc'] = Text::_($data['desc']);
             }
             if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/images/layouts/' . $data['thumbnail'];
+                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/images/' . $type . '/' . $data['thumbnail'];
             }
             $layouts[] = $layout;
         }
         return $layouts;
     }
 
-    public static function getSubLayout($filename = '', $template = '')
+    public static function getDataLayout($filename = '', $template = '', $type = '')
     {
         if (!$filename) {
             return [];
@@ -102,7 +102,7 @@ class Layout
             $template   =   Framework::getTemplate()->template;
         }
 
-        $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/" . $filename . '.json';
+        $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json';
         if (!file_exists($layout_path)) {
             return [];
         }
@@ -112,7 +112,7 @@ class Layout
         return $data;
     }
 
-    public static function deleteSublayouts($layouts = [], $template = '')
+    public static function deleteDatalayouts($layouts = [], $template = '', $type = '')
     {
         if (!count($layouts)) {
             return false;
@@ -121,8 +121,8 @@ class Layout
             $template   =   Framework::getTemplate()->template;
         }
 
-        $layouts_path   = JPATH_SITE . "/media/templates/site/{$template}/astroid/layouts/";
-        $images_path    = JPATH_SITE . "/media/templates/site/{$template}/images/layouts/";
+        $layouts_path   = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/";
+        $images_path    = JPATH_SITE . "/media/templates/site/{$template}/images/{$type}/";
         foreach ($layouts as $layout) {
             if (file_exists($layouts_path . $layout . '.json')) {
                 $json = file_get_contents($layouts_path . $layout . '.json');

@@ -60,7 +60,7 @@ class Element
         $this->template->setLog("Initiated Element : " . $type, "success");
         if ($type !== 'subform') {
             $library_elements_directory = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'elements' . '/';
-            $template_elements_directory = JPATH_SITE . '/' . 'templates' . '/' . $this->template->template . '/' . 'astroid' . '/' . 'elements' . '/';
+            $template_elements_directory = JPATH_SITE . '/media/templates/site/' . $this->template->template . '/' . 'astroid' . '/' . 'elements' . '/';
 
             switch ($this->type) {
                 case 'section':
