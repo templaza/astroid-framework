@@ -39,10 +39,10 @@ class Layout
         return $content;
     }
 
-    public static function renderSublayout($source, $template = '')
+    public static function renderSublayout($source, $template = '', $type = 'layouts')
     {
         Framework::getDebugger()->log('Render '.$source.' Layout');
-        $sublayout  = self::getDataLayout($source, $template, 'layouts');
+        $sublayout  = self::getDataLayout($source, $template, $type);
         if (!isset($sublayout['data']) || !$sublayout['data']) {
             return '';
         }
@@ -103,6 +103,7 @@ class Layout
         }
 
         $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json';
+
         if (!file_exists($layout_path)) {
             return [];
         }

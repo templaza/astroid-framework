@@ -246,6 +246,8 @@ class Admin extends Helper\Client
             'astroid_link'          => Helper\Constants::$astroid_link,
             'document_link'         => Helper\Constants::$documentation_link,
             'video_tutorial'        => Helper\Constants::$video_tutorial_link,
+            'donate_link'           => Helper\Constants::$donate_link,
+
             'github_link'           => Helper\Constants::$github_link,
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
