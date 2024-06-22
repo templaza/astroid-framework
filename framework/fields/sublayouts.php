@@ -10,7 +10,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Uri\Uri;
 
 class JFormFieldSubLayouts extends FormField
 {
