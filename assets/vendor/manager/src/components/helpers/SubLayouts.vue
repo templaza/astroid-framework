@@ -62,13 +62,15 @@ function editLayout(filename = '') {
                 formInfo.desc = response.data.data.desc;
                 formInfo.thumbnail = response.data.data.thumbnail;
                 formInfo.name = filename;
+                editItem.value = true;
             }
         })
         .catch((err) => {
             console.error(err);
         });
+    } else {
+        editItem.value = true;
     }
-    editItem.value = true;
 }
 
 function onFileChange(e) {

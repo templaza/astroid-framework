@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref, reactive } from 'vue';
+import { onBeforeMount, ref, reactive, inject } from 'vue';
 import axios from "axios";
 import Fields from './helpers/Fields.vue'
 
@@ -11,6 +11,7 @@ const props = defineProps({
 
 const $scope = ref(new Object());
 const astroidcontentlayouts = ref(new Object());
+const constant  =   inject('constant', {});
 let action_link = '';
 
 onBeforeMount(() => {
@@ -180,6 +181,11 @@ function selectPreset(event, group) {
         </div>
       </div>
     </form>
+    <nav class="nav justify-content-center mb-3 astroid-footer-links">
+      <a class="nav-link d-inline-flex align-items-center" href="https://ko-fi.com/astroidframework" data-bs-toggle="tooltip" data-bs-title="Buy Me a Coffee" target="_blank"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee" class="me-2">Support Astroid with $10</a>
+      <a class="nav-link" :href="constant.astroid_link" data-bs-toggle="tooltip" data-bs-title="Go to Astroid Framework" target="_blank">Astroid Framework</a>
+      <a class="nav-link" :href="constant.document_link" data-bs-toggle="tooltip" data-bs-title="Go to Documentation" target="_blank">Documentation</a>
+    </nav>
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">

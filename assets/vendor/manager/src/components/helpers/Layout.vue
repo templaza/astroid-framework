@@ -17,6 +17,7 @@ const language  =   inject('language', []);
 
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
+    form_template.value = constant.form_template;
     if (typeof layout.value.devices === 'undefined') {
         layout.value.devices = [ 
             { "code": "lg", "icon": "fa-solid fa-computer", "title": "Large Device" }, 
@@ -42,8 +43,6 @@ onBeforeMount(()=>{
             // handle error
             console.log(error);
         });
-    } else {
-        form_template.value = constant.form_template;
     }
 })
 onUpdated(()=>{
