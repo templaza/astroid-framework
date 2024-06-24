@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_ELEMENTS_ARTICLE_INFOBLOCK</title>
+    <description>ASTROID_ELEMENTS_ARTICLE_INFOBLOCK</description>
+    <icon>fa-solid fa-circle-info</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
+    <element_type>article</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" type="astroidlist" name="infoblock_position" label="ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_POSITION" default="above">
+                    <option value="above">ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_POSITION_ABOVE</option>
+                    <option value="below">ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_POSITION_BELOW</option>
+                </field>
+            </fieldset>
+        </fields>
+    </form>
+</element>

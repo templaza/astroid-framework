@@ -19,8 +19,11 @@ class Row extends BaseElement
     public function __construct($data, $section)
     {
         $this->section = $section;
+        if (empty($this->options)) {
+            $this->options = $section->options;
+        }
         $data['fill'] = $data['fill'] ?? true;
-        parent::__construct($data, $section->devices);
+        parent::__construct($data, $section->devices, $section->options);
     }
 
     public function render()

@@ -20,6 +20,9 @@ class Column extends BaseElement
     {
         $this->section = $section;
         $this->row = $row;
+        if (empty($this->options)) {
+            $this->options = $section->options;
+        }
         if (is_int($data['size']) || is_string($data['size'])) {
             $tmp = intval($data['size']);
             $this->size = [
@@ -33,7 +36,7 @@ class Column extends BaseElement
         } else {
             $this->size = $data['size'];
         }
-        parent::__construct($data, $section->devices);
+        parent::__construct($data, $section->devices, $section->options);
     }
 
     public function render()

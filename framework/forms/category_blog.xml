@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset label="ASTROID_ARTICLE_CATEGORY_BLOG_OPTIONS_TITLE_LABEL" name="articleblogoptions">
+      <fieldset label="ASTROID_ARTICLE_CATEGORY_BLOG_OPTIONS_TITLE_LABEL" name="articleblogoptions" addfieldpath="/libraries/astroid/framework/fields">
+         <field name="astroid_article_layout" type="astroidlayoutlist" default="{'template':'','layout':''}" label="ASTROID_ARTICLE_SELECT_A_LAYOUT" description="" directory="article_layouts" />
          <field type="radio" name="astroid_authorinfo" label="ASTROID_AUTHOR_INFO" class="form-check-inline" default="">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="1">ASTROID_SHOW</option>

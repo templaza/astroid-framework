@@ -39,7 +39,7 @@ class Layout
         return $content;
     }
 
-    public static function renderSublayout($source, $template = '', $type = 'layouts')
+    public static function renderSublayout($source, $template = '', $type = 'layouts', $options = array())
     {
         Framework::getDebugger()->log('Render '.$source.' Layout');
         $sublayout  = self::getDataLayout($source, $template, $type);
@@ -54,9 +54,8 @@ class Layout
                 'title'=> 'title'
             ]
         ];
-        $content = '';
         foreach ($layout['sections'] as $section) {
-            $section = new Section($section, $devices);
+            $section = new Section($section, $devices, $options);
             $content .= $section->render();
         }
         Framework::getDebugger()->log('Render '.$source.' Layout');

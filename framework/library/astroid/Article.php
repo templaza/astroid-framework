@@ -14,6 +14,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Astroid\Element\Layout;
 
 defined('_JEXEC') or die;
 
@@ -154,6 +155,11 @@ class Article
         }
 
         Framework::getDocument()->include('blog.' . $this->type, ['article' => $this->article]);
+    }
+
+    public function renderLayout() {
+        $astroid_article_layout = json_decode($this->category_params->get('astroid_article_layout', "{'template':'','layout':''}"));
+        echo Layout::renderSublayout($astroid_article_layout->layout, $astroid_article_layout->template, 'article_layouts', ['article' => $this]);
     }
 
     // Read Time
