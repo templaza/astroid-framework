@@ -14,6 +14,6 @@
 defined('_JEXEC') or die;
 extract($displayData);
 $item = $options['article'];
-if ($item->article->params->get('access-view')) {
-    echo $item->article->fulltext;
+if (isset($item->article->toc) && $item->article->params->get('access-view')) {
+    echo $item->article->toc;
 }

@@ -27,16 +27,8 @@ $useDefList =   $article_params->get('show_modify_date') || $article_params->get
 if ($useDefList) {
     if ($position == 'above' && ($info == 0 || $info == 2)) {
         echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $astroidArticle, 'position' => 'above']);
-        if ($info == 0 && $article_params->get('show_tags', 1) && !empty($item->article->tags->itemTags)) {
-            $item->article->tagLayout = new FileLayout('joomla.content.tags');
-            echo $item->article->tagLayout->render($item->article->tags->itemTags);
-        }
     }
     if ($position == 'below' && ($info == 1 || $info == 2)) {
         echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $astroidArticle, 'position' => 'below']);
-        if ($article_params->get('show_tags', 1) && !empty($item->article->tags->itemTags)) {
-            $item->article->tagLayout = new FileLayout('joomla.content.tags');
-            echo $item->article->tagLayout->render($item->article->tags->itemTags);
-        }
     }
 }

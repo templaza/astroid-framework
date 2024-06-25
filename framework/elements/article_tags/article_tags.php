@@ -12,8 +12,14 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Layout\FileLayout;
+
 extract($displayData);
-$item = $options['article'];
-if ($item->article->params->get('access-view')) {
-    echo $item->article->fulltext;
+$item       =   $options['article'];
+$article_params = $item->article->params;
+
+if ($article_params->get('show_tags', 1) && !empty($item->article->tags->itemTags)) {
+    $item->article->tagLayout = new FileLayout('joomla.content.tags');
+    echo $item->article->tagLayout->render($item->article->tags->itemTags);
 }

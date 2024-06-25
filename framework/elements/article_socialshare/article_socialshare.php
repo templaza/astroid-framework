@@ -15,5 +15,5 @@ defined('_JEXEC') or die;
 extract($displayData);
 $item = $options['article'];
 if ($item->article->params->get('access-view')) {
-    echo $item->article->fulltext;
+    $item->renderSocialShare();
 }

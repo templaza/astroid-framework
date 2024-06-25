@@ -17,10 +17,10 @@ extract($displayData);
 $item = $options['article'];
 $event = $params->get('article_event', '');
 
-if ($event == 'beforeDisplayContent') {
+if ($event == 'beforeDisplayContent' && $item->article->params->get('access-view')) {
     echo $item->article->event->beforeDisplayContent;
 }
 
-if ($event == 'afterDisplayContent') {
+if ($event == 'afterDisplayContent' && $item->article->params->get('access-view')) {
     echo $item->article->event->afterDisplayContent;
 }

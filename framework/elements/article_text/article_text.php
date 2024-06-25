@@ -11,9 +11,15 @@
  */
 
 // No direct access.
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die;
 extract($displayData);
 $item = $options['article'];
+$user = Factory::getApplication()->getIdentity();
 if ($item->article->params->get('access-view')) {
-    echo $item->article->fulltext;
+    echo $item->article->text;
+} elseif ($item->article->params->get('show_noauth') && $user->get('guest')) {
+    echo HTMLHelper::_('content.prepare', $item->article->introtext);
 }

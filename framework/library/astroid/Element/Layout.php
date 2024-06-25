@@ -94,14 +94,22 @@ class Layout
 
     public static function getDataLayout($filename = '', $template = '', $type = '')
     {
-        if (!$filename) {
-            return [];
-        }
         if (!$template) {
             $template   =   Framework::getTemplate()->template;
         }
-
-        $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json';
+        if (!$filename) {
+            if ($type == 'article_layouts') {
+                if (file_exists(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json")) {
+                    $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json";
+                } else {
+                    $layout_path = JPATH_SITE . '/media/astroid/assets/json/article_layouts/default.json';
+                }
+            } else {
+                return [];
+            }
+        } else {
+            $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json';
+        }
 
         if (!file_exists($layout_path)) {
             return [];

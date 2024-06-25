@@ -13,11 +13,15 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
 $item = $options['article'];
 $article_params = $item->article->params;
+$user = Factory::getApplication()->getIdentity();
 if ($article_params->get('access-view')) {
     echo LayoutHelper::render('joomla.content.full_image', $item->article);
+} elseif ($item->article->params->get('show_noauth') && $user->get('guest')) {
+    echo LayoutHelper::render('joomla.content.intro_image', $item->article);
 }
