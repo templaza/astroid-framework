@@ -73,6 +73,30 @@ function editLayout(filename = '') {
     }
 }
 
+function loadDefault() {
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayout&ts="+Date.now();
+    if (process.env.NODE_ENV === 'development') {
+        url = "editlayout_ajax.txt?ts="+Date.now();
+    }
+    const formData = new FormData(); // pass data as a form
+    formData.append(constant.astroid_admin_token, 1);
+    formData.append('template', constant.tpl_template_name);
+    formData.append('type', props.type);
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    })
+    .then((response) => {
+        if (response.data.status === 'success') {
+            layout.value = response.data.data.data;
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
 function onFileChange(e) {
     files.value = e.target.files || e.dataTransfer.files;
 }
@@ -287,8 +311,9 @@ function checkAllList() {
                 </div>
             </div>
             <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
-                <a href="#" @click.prevent="saveLayout('apply')" class="btn btn-sm btn-as btn-as-primary me-2" :disabled="save_disabled">{{ language.JAPPLY }}</a>
+                <a v-if="formInfo.name !== ``" href="#" @click.prevent="saveLayout('apply')" class="btn btn-sm btn-as btn-as-primary me-2" :disabled="save_disabled">{{ language.JAPPLY }}</a>
                 <a href="#" @click.prevent="" class="btn btn-sm btn-as btn-primary me-2" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`" :disabled="save_disabled" v-html="language.JSAVE"></a>
+                <a v-if="props.type === `article_layouts`" href="#" @click.prevent="loadDefault()" class="btn btn-sm btn-as btn-as-light me-2" :disabled="save_disabled">Default Settings</a>
                 <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light" :disabled="save_disabled">{{ language.JCANCEL }}</a>
             </div>
         </div>
