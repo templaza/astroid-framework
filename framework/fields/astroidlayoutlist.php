@@ -42,6 +42,7 @@ class JFormFieldAstroidLayoutList extends FormField {
      */
     protected function getInput() {
         $path = (string) $this->element['directory'];
+        $inherit = (bool) $this->element['inherit'];
         $folders = Folder::folders(Path::clean(JPATH_ROOT . '/templates'));
         $data = array();
         $templates = array();
@@ -62,12 +63,16 @@ class JFormFieldAstroidLayoutList extends FormField {
             }
         }
         $data['templates'] = $templates;
-        $data['value'] = json_decode($this->value);
+        $value = !empty($this->value) ? $this->value : '{"template":"","layout":""}';
+        $data['value'] = json_decode($value);
         $data['name'] = $this->name;
         $data['language'] = [
             'default' => Text::_('JDEFAULT'),
-            'select_template' => Text::_('ASTROID_SELECT_TEMPLATE')
+            'select_template' => Text::_('ASTROID_SELECT_TEMPLATE'),
+            'inherit' => Text::_('JGLOBAL_INHERIT'),
+            'system' => Text::_('ASTROID_ELEMENT_CATEGORY_SYSTEM')
         ];
+        $data['inherit'] = $inherit;
         if ($path == 'layouts') {
             $data['language']['select_layout'] = Text::_('ASTROID_SELECT_SUB_LAYOUT');
         } else {

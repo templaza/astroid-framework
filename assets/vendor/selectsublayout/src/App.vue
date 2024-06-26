@@ -44,14 +44,15 @@ const value = computed(() => {
   <div class="mb-3">
     <label :for="props.sublayout_id+ `_select_template`" class="form-label">{{ data.language.select_template }}</label>
     <select :id="props.sublayout_id+ `_select_template`" class="form-select" v-model="tpl_selected">
-      <option value="">{{ data.language.default }} - System</option>
+      <option v-if="data.inherit === true" value="inherit">{{ data.language.inherit }}</option>
+      <option value="">{{ data.language.default }} - {{ data.language.system }}</option>
       <option v-for="(template, idx) in data['templates']" :value="idx">{{ idx }}</option>
     </select>
   </div>
-  <div>
+  <div v-if="tpl_selected !== `inherit`">
     <label :for="props.sublayout_id+ `_select_layout`" class="form-label">{{ data.language.select_layout }}</label>
     <select :id="props.sublayout_id+ `_select_layout`" class="form-select" v-model="layout_selected">
-      <option value="">{{ data.language.default }} - System</option>
+      <option value="">{{ data.language.default }} - {{ data.language.system }}</option>
       <option v-for="layout in layouts" :value="layout.name">{{ layout.title }}</option>
     </select>
   </div>

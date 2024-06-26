@@ -160,9 +160,11 @@ class Article
     }
 
     public function renderLayout() {
-        $astroid_article_layout = json_decode($this->category_params->get('astroid_article_layout', "{'template':'','layout':''}"));
-
-        echo Layout::renderSublayout($astroid_article_layout->layout, $astroid_article_layout->template, 'article_layouts', ['article' => $this]);
+        $article_layout =   json_decode($this->params->get('astroid_article_layout', '{"template":"inherit","layout":""}'));
+        if ($article_layout->template == 'inherit') {
+            $article_layout = json_decode($this->category_params->get('astroid_article_layout', '{"template":"","layout":""}'));
+        }
+        echo Layout::renderSublayout($article_layout->layout, $article_layout->template, 'article_layouts', ['article' => $this]);
     }
 
     // Read Time
