@@ -1,15 +1,17 @@
 <script setup>
-import { onBeforeMount, ref, reactive } from 'vue';
+import { onBeforeMount, ref, reactive, inject } from 'vue';
 import axios from "axios";
 import Fields from './helpers/Fields.vue'
 
 const props = defineProps({
   config: { type: Object, default: null },
-  pageIndex: { type: Object, default: null }
+  pageIndex: { type: Object, default: null },
+  fieldSet_tabs: { type: Object, default: null}
 });
 
 const $scope = ref(new Object());
 const astroidcontentlayouts = ref(new Object());
+const constant  =   inject('constant', {});
 let action_link = '';
 
 onBeforeMount(() => {
@@ -36,10 +38,15 @@ function checkShow(field) {
   return true;
 }
 
-function checkShowGroup(fields) {
+function checkShowGroup(group, fieldsetName, index) {
   let hasField = false;
-  if (fields.length) {
-    fields.forEach(field => {
+  if (group['option-type'] === 'tab') {
+    if (props.fieldSet_tabs[fieldsetName] !== index) {
+      return false;
+    }
+  }
+  if (group.fields.length) {
+    group.fields.forEach(field => {
       if (typeof field.ngShow === 'string' && checkShow(field)) {
         hasField = true;
         return hasField;
@@ -135,10 +142,10 @@ function selectPreset(event, group) {
     <form method="POST" :action="action_link" id="astroid-form">
       <input type="hidden" id="astroid-admin-token" :name="props.config.astroid_lib.astroid_admin_token" value="1" />
       <div class="as-page ps-lg-2" :class="props.pageIndex[fieldSet.name]" v-for="fieldSet in props.config.astroid_content" :key="fieldSet.name">
-        <div :id="`astroid-page-`+index" class="as-content" v-if="Object.keys(fieldSet.childs).length > 0" v-for="(group, index) in fieldSet.childs" :key="index" v-show="checkShowGroup(group.fields)">
+        <div :id="`astroid-page-`+index" class="as-content" v-if="Object.keys(fieldSet.childs).length > 0" v-for="(group, index) in fieldSet.childs" :key="index" v-show="checkShowGroup(group, fieldSet.name, index)">
           <h3 v-if="group.title !== ''">{{ group.title }}</h3>
           <p v-if="group.description !== ''">{{ group.description }}</p>
-          <div class="input-group mb-3">
+          <div class="input-group mb-3" v-if="group.preset !== `none`">
             <label :for="`preset_`+fieldSet.name+`_`+index" class="input-group-text">Load default configure</label>
             <select class="form-select" :id="`preset_`+fieldSet.name+`_`+index" @change="selectPreset($event, group)">
               <option value="">Select a preset</option>
@@ -174,6 +181,11 @@ function selectPreset(event, group) {
         </div>
       </div>
     </form>
+    <nav class="nav justify-content-center mb-3 astroid-footer-links">
+      <a class="nav-link d-inline-flex align-items-center" href="https://ko-fi.com/astroidframework" data-bs-toggle="tooltip" data-bs-title="Buy Me a Coffee" target="_blank"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee" class="me-2">Support Astroid with $10</a>
+      <a class="nav-link" :href="constant.astroid_link" data-bs-toggle="tooltip" data-bs-title="Go to Astroid Framework" target="_blank">Astroid Framework</a>
+      <a class="nav-link" :href="constant.document_link" data-bs-toggle="tooltip" data-bs-title="Go to Documentation" target="_blank">Documentation</a>
+    </nav>
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">

@@ -19,8 +19,11 @@ class Row extends BaseElement
     public function __construct($data, $section)
     {
         $this->section = $section;
+        if (empty($this->options)) {
+            $this->options = $section->options;
+        }
         $data['fill'] = $data['fill'] ?? true;
-        parent::__construct($data, $section->devices);
+        parent::__construct($data, $section->devices, $section->options);
     }
 
     public function render()
@@ -126,16 +129,16 @@ class Row extends BaseElement
 
         if (in_array($layout_type, ['no-container', 'custom-container', 'container-with-no-gutters', 'container-fluid-with-no-gutters'])) {
             $this->addClass('no-gutters gx-0');
-        } else {
-            $sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
-            foreach ($sizes as $size) {
-                $gutter = $this->params->get('gutter_'.$size, '');
-                if ($gutter !== '') {
-                    if ($size == 'xs') {
-                        $this->addClass('gx-' . $gutter);
-                    } else {
-                        $this->addClass('gx-' . $size . '-' . $gutter);
-                    }
+        }
+
+        $sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+        foreach ($sizes as $size) {
+            $gutter = $this->params->get('gutter_'.$size, '');
+            if ($gutter !== '') {
+                if ($size == 'xs') {
+                    $this->addClass('gx-' . $gutter);
+                } else {
+                    $this->addClass('gx-' . $size . '-' . $gutter);
                 }
             }
         }

@@ -18,6 +18,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
@@ -179,8 +180,8 @@ class Helper
 
     public static function triggerEvent($name, $data = [])
     {
-        PluginHelper::importPlugin('astroid');
-        Factory::getApplication()->triggerEvent($name, $data);
+        $event     = new Helper\Events($name, $data);
+        Factory::getApplication()->getDispatcher()->dispatch($name, $event);
     }
 
     public static function clearCacheByTemplate($template)
@@ -320,7 +321,7 @@ class Helper
 
     public static function getModules()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = "SELECT #__modules.*, #__usergroups.title as access_title FROM #__modules JOIN #__usergroups ON #__usergroups.id=#__modules.access WHERE #__modules.client_id=0";
 
         $db->setQuery($query);
@@ -334,7 +335,7 @@ class Helper
         return $return;
     }
 
-    public static function getAllAstroidElements()
+    public static function getAllAstroidElements($mode = '')
     {
         $template = Framework::getTemplate();
         // Template Directories
@@ -354,7 +355,7 @@ class Helper
             $xmlfile = $element_dir . '/' . (str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir))) . '.xml';
             if (file_exists($xmlfile)) {
                 $type = str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir));
-                $element = new Element($type, [], $template);
+                $element = new Element($type, [], $template, $mode);
                 $return[] = $element;
             }
         }
@@ -603,6 +604,23 @@ class Helper
         }
 
         return $subject;
+    }
+
+    public static function getFormTemplate($mode = '') {
+        $form_template = array();
+        $astroidElements = Helper::getAllAstroidElements($mode);
+        foreach ($astroidElements as $astroidElement) {
+            $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
+        }
+        $sectionElement = new Element('section');
+        $form_template['section'] = $sectionElement->renderJson();
+        $rowElement = new Element('row');
+        $form_template['row'] = $rowElement->renderJson();
+        $columnElement = new Element('column');
+        $form_template['column'] = $columnElement->renderJson();
+        $sublayout = new Element('sublayout');
+        $form_template['sublayout'] = $sublayout->renderJson('sublayout');
+        return $form_template;
     }
 
     public static function matchFilename($haystack, $needles)

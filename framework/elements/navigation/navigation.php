@@ -34,16 +34,19 @@ $alignment      = $params->get('alignment', '');
 $alignment      = $alignment !== '' ? ' '. $alignment : '';
 $color          = Style::getColor($params->get('color', ''));
 $color_hover    = Style::getColor($params->get('color_hover', ''));
+$color_active   = Style::getColor($params->get('color_active', ''));
 $bgcolor        = Style::getColor($params->get('bgcolor', ''));
 $bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
+$bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
 echo '<nav class="nav' . $alignment . $list_style . '">';
 foreach ($menu_items as $item) {
     $menu_params    =   Style::getSubFormParams($item->params);
     $target         =   isset($menu_params['target']) && $menu_params['target'] ? ' target="'.$menu_params['target'].'"' : '';
     $show_title     =   isset($menu_params['show_title']) && intval($menu_params['show_title']) ? ' title="'.$menu_params['title'].'"' : '';
+    $active         =   isset($menu_params['active']) && intval($menu_params['active']) ? ' active' : '';
     $rel            =   isset($menu_params['rel']) && $menu_params['rel'] ? ' rel="'.$menu_params['rel'].'"' : '';
     $icon           =   $menu_params['icon'] !== '' ? '<i class="me-2 '.$menu_params['icon'].'"></i>' : '';
-    echo '<a id="item-'.$item->id.'"  class="nav-link" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a>';
+    echo '<a id="item-'.$item->id.'"  class="nav-link'.$active.'" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a>';
 }
 echo '</nav>';
 
@@ -60,11 +63,17 @@ $style->child('.nav-link')->addCss('color', $color['light']);
 $style_dark->child('.nav-link')->addCss('color', $color['dark']);
 $style->child('.nav-link')->hover()->addCss('color', $color_hover['light']);
 $style_dark->child('.nav-link')->hover()->addCss('color', $color_hover['dark']);
+$style->child('.nav-link')->active('.active')->addCss('color', $color_active['light']);
+$style_dark->child('.nav-link')->active('.active')->addCss('color', $color_active['dark']);
+
 // Background color style
 $style->child('.nav-link')->addCss('background-color', $bgcolor['light']);
 $style_dark->child('.nav-link')->addCss('background-color', $bgcolor['dark']);
 $style->child('.nav-link')->hover()->addCss('background-color', $bgcolor_hover['light']);
 $style_dark->child('.nav-link')->hover()->addCss('background-color', $bgcolor_hover['dark']);
+$style->child('.nav-link')->active('.active')->addCss('background-color', $bgcolor_active['light']);
+$style_dark->child('.nav-link')->active('.active')->addCss('background-color', $bgcolor_active['dark']);
+
 // Item Margin
 if (!empty($item_margin)) {
     $margin = \json_decode($item_margin, false);

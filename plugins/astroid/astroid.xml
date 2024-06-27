@@ -2,8 +2,8 @@
 <extension type="plugin" method="upgrade" group="system">
    <name>Astroid Plugin</name>
    <author>Astroid Framework Team</author>
-   <creationDate>November 2023</creationDate>
-   <version>3.0.5</version>
+   <creationDate>June 2024</creationDate>
+   <version>3.1.0</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2023 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>

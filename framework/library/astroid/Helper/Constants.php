@@ -20,6 +20,7 @@ class Constants
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
+    public static $donate_link = 'https://ko-fi.com/astroidframework';
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
@@ -53,6 +54,11 @@ class Constants
         'ASTROID_TEMPLATE_PREVIEW',
         'TPL_ASTROID_BACK_TO_JOOMLA',
         'ASTROID_TEMPLATE_CLOSE',
+        'JGLOBAL_CONFIRM_DELETE',
+        'JAPPLY',
+        'JSAVE',
+        'JCANCEL',
+        'ASTROID_BACK'
     ];
 
     public static $animations = [

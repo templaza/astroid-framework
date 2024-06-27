@@ -20,6 +20,7 @@ import Editor from './Editor.vue';
 import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
 import Border from './Border.vue';
+import SubLayouts from './SubLayouts.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
@@ -74,6 +75,11 @@ function updateContentLayout() {
             emit('update:contentlayout', props.field.input.astroid_content_layout_load, {'position' : props.scope[props.field.name]});
         }
     }
+}
+
+// Update subLayout
+function updateSubLayouts() {
+    props.scope['sublayout'] = 'update';
 }
 </script>
 <template>
@@ -140,7 +146,7 @@ function updateContentLayout() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
@@ -184,5 +190,11 @@ function updateContentLayout() {
     </div>
     <div v-else-if="props.field.input.type === `astroidborder`" class="astroid-border">
         <Border v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `sublayouts`" class="astroid-sub-layouts">
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `articlelayouts`" class="astroid-article-layouts">
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" type="article_layouts" />
     </div>
 </template>

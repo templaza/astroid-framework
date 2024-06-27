@@ -9,6 +9,7 @@ const astroid_config = JSON.parse(document.getElementById("astroid-script-option
 const theme = ref('light');
 provide('theme', theme);
 provide('constant', astroid_config.astroid_lib);
+provide('language', astroid_config.astroid_lang);
 
 onBeforeMount(()=>{
   const colorMode = getCookie('astroid_colormode');

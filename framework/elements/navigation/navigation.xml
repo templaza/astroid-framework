@@ -19,6 +19,7 @@
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
                                 <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
                                 <field description="ASTROID_WIDGET_SHOW_TITLE_DESC" name="show_title" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_SHOW_TITLE_LABEL"/>
+                                <field name="active" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ACTIVE"/>
                                 <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
                                 <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
@@ -42,11 +43,18 @@
                 </field>
                 <field astroidgroup="misc_options" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false" color-picker="false"/>
 
-                <field astroidgroup="color_options" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
-                <field astroidgroup="color_options" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+                <field astroidgroup="color_options" name="color_settings" type="astroidradio" width="full" default="color">
+                    <option value="color">TPL_ASTROID_COLOR</option>
+                    <option value="hover">TPL_ASTROID_COLOR_HOVER</option>
+                    <option value="active">TPL_ASTROID_COLOR_ACTIVE</option>
+                </field>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='color'" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='hover'" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='active'" name="color_active" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
 
-                <field astroidgroup="bgcolor_options" name="bgcolor" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
-                <field astroidgroup="bgcolor_options" name="bgcolor_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_HOVER_LABEL"/>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='color'" name="bgcolor" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='hover'" name="bgcolor_hover" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="color_options" ngShow="[color_settings]=='active'" name="bgcolor_active" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
 
                 <field astroidgroup="spacing_options" name="item_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
                 <field astroidgroup="spacing_options" name="item_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />

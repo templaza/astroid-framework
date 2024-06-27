@@ -30,10 +30,12 @@ class BaseElement
     public $id, $unqid, $params, $type, $style, $style_dark, $content = '';
     public int $state = 1;
     public array $devices = [];
-    public function __construct($data, $devices)
+    public array $options = [];
+    public function __construct($data, $devices, $options = array())
     {
         $this->_data    = $data;
         $this->devices  = $devices;
+        $this->options  = $options;
         $this->id       = $data['id'];
         $this->unqid    = $data['id'];
         $this->type     = isset($data['type']) ? $data['type'] : 'element';

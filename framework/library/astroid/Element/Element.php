@@ -22,13 +22,17 @@ class Element extends BaseElement
         $this->section = $section;
         $this->row = $row;
         $this->column = $column;
-        parent::__construct($data, $section->devices);
+        parent::__construct($data, $section->devices, $section->options);
     }
 
     public function render()
     {
         $this->_decorateSection();
-        $this->content = $this->_content();
+        if ($this->type == 'sublayout') {
+            $this->content = Layout::renderSublayout($this->params->get('source', ''));
+        } else {
+            $this->content = $this->_content();
+        }
         return $this->wrap();
     }
 
@@ -37,7 +41,7 @@ class Element extends BaseElement
         $layout = Framework::getTemplate()->getElementLayout($this->type);
         $pathinfo = pathinfo($layout);
         $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
-        return $layout->render(['params' => $this->params, 'element' => $this]);
+        return $layout->render(['params' => $this->params, 'element' => $this, 'options' => $this->options]);
     }
 
     public function _decorateSection()

@@ -28,7 +28,17 @@ $icon_size      = $params->get('icon_size', '18');
 $icon_gutter    = $params->get('icon_gutter', '3');
 $color          = Style::getColor($params->get('color', ''));
 $color_hover    = Style::getColor($params->get('color_hover', ''));
-echo '<div class="row row-cols-auto g-'.$icon_gutter.'">';
+
+// Alignment
+$text_alignment             =   $params->get('text_alignment','');
+$text_alignment_breakpoint  =   $params->get('text_alignment_breakpoint','');
+$text_alignment_fallback    =   $params->get('text_alignment_fallback','');
+if ($text_alignment) {
+    $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
+} else {
+    $alignment              =   '';
+}
+echo '<div class="row row-cols-auto g-'.$icon_gutter.$alignment.'">';
 foreach ($icons as $icon) {
     $icon_params    =   Style::getSubFormParams($icon->params);
     $target         =   isset($icon_params['target']) && $icon_params['target'] ? ' target="'.$icon_params['target'].'"' : '';

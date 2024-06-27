@@ -30,12 +30,11 @@ watch(switcher, (newValue) => {
 })
 
 const social_menu = [
+  {title: 'Astroid Website', href: props.config.astroid_lib.astroid_link, icon: 'fas fa-meteor'},
   {title: 'Docs', href: props.config.astroid_lib.document_link, icon: 'fas fa-book'},
   {title: 'GitHub', href: props.config.astroid_lib.github_link, icon: 'fab fa-github'},
-  {title: 'Videos Tutorial', href: props.config.astroid_lib.video_tutorial, icon: 'fab fa-youtube'},
-  {title: 'Astroid Website', href: props.config.astroid_lib.astroid_link, icon: 'fas fa-meteor'},
+  {title: 'Buy Me a Coffee', href: props.config.astroid_lib.donate_link, icon: 'fa-solid fa-mug-saucer'}
 ]
-
 function submitForm() {
   const action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&');
   const toastAstroidMsg = document.getElementById('astroidMessage');
