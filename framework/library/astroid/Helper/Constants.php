@@ -9,6 +9,11 @@
 
 namespace Astroid\Helper;
 
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Astroid\Framework;
+use Astroid\Helper;
+
 defined('_JEXEC') or die;
 
 class Constants 
@@ -26,6 +31,38 @@ class Constants
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
     public static $templates_link = 'https://astroidframe.work/partners';
+
+    /**
+     * Return configurations of Manager
+     * @return array
+     */
+    public static function manager_configs() : array
+    {
+        $template = Framework::getTemplate();
+        $pluginParams   =   Helper::getPluginParams();
+        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+        $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
+        return [
+            'site_url'              =>  Uri::root(),
+            'base_url'              =>  Uri::base(true),
+            'astroid_media_url'     => ASTROID_MEDIA_URL,
+            'template_name'         => $template->template.'-'.$template->id,
+            'tpl_template_name'     => $template->template,
+            'template_title'        => $template->title,
+            'enable_widget'         => $enable_widget,
+            'color_mode'            => $plg_color_mode,
+            'astroid_version'       => self::$astroid_version,
+            'astroid_link'          => self::$astroid_link,
+            'document_link'         => self::$documentation_link,
+            'video_tutorial'        => self::$video_tutorial_link,
+            'donate_link'           => self::$donate_link,
+            'github_link'           => self::$github_link,
+            'jtemplate_link'        => Helper::getJoomlaUrl(),
+            'astroid_admin_token'   => Session::getFormToken(),
+            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
+            'form_template'         => Helper::getFormTemplate()
+        ];
+    }
 
     public static $bootstrap_colors = [
         '' => 'TPL_COLOR_DEFAULT',

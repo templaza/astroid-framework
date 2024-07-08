@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset label="ASTROID_ARTICLE_LAYOUT_OPTIONS_TITLE_LABEL" name="articlelayoutoptions" addfieldpath="/libraries/astroid/framework/fields">
+            <field name="astroid_article_layout_data" type="astroidlayoutdata" default='' label="ASTROID_ARTICLE_LAYOUT_WIDGETS" />
+        </fieldset>
+    </fields>
+</form>

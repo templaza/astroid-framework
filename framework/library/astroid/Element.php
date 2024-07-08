@@ -138,16 +138,18 @@ class Element
     public function loadForm(): void
     {
         $this->form = new Form($this->type);
-        if ($this->type !== 'subform') {
-            $defaultXml = simplexml_load_file($this->default_xml_file);
-            $this->form->load($defaultXml->form, false);
-        } else {
-            if ($this->subform['formtype'] == 'string') {
-                $defaultXml = simplexml_load_string($this->subform['formsource']);
-                $this->form->load($defaultXml, false);
-            } else {
-                $defaultXml = simplexml_load_file($this->subform['formsource']);
+        if ($this->mode != 'article_data') {
+            if ($this->type !== 'subform') {
+                $defaultXml = simplexml_load_file($this->default_xml_file);
                 $this->form->load($defaultXml->form, false);
+            } else {
+                if ($this->subform['formtype'] == 'string') {
+                    $defaultXml = simplexml_load_string($this->subform['formsource']);
+                    $this->form->load($defaultXml, false);
+                } else {
+                    $defaultXml = simplexml_load_file($this->subform['formsource']);
+                    $this->form->load($defaultXml->form, false);
+                }
             }
         }
 

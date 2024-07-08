@@ -612,14 +612,16 @@ class Helper
         foreach ($astroidElements as $astroidElement) {
             $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
         }
-        $sectionElement = new Element('section');
-        $form_template['section'] = $sectionElement->renderJson();
-        $rowElement = new Element('row');
-        $form_template['row'] = $rowElement->renderJson();
-        $columnElement = new Element('column');
-        $form_template['column'] = $columnElement->renderJson();
-        $sublayout = new Element('sublayout');
-        $form_template['sublayout'] = $sublayout->renderJson('sublayout');
+        if ($mode !== 'article_data') {
+            $sectionElement = new Element('section');
+            $form_template['section'] = $sectionElement->renderJson();
+            $rowElement = new Element('row');
+            $form_template['row'] = $rowElement->renderJson();
+            $columnElement = new Element('column');
+            $form_template['column'] = $columnElement->renderJson();
+            $sublayout = new Element('sublayout');
+            $form_template['sublayout'] = $sublayout->renderJson('sublayout');
+        }
         return $form_template;
     }
 

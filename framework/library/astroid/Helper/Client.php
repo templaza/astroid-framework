@@ -188,6 +188,7 @@ class Client
             }
             $form->loadFile('article', false);
             $form->loadFile('blog', false);
+            $form->loadFile('article_layout', false);
             $form->loadFile('opengraph', false);
             $loaded = true;
         }
@@ -275,6 +276,32 @@ class Client
                 Helper\Template::prepareChildTemplateDefaults($template_parent, $template_name);
                 Helper\Template::uploadTemplateDefaults($template_name);
             }
+        }
+        return true;
+    }
+
+    public function saveArticleElement() {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $data           = $app->input->post->get('data', '', 'RAW');
+            $article_id     = $app->input->post->get('article_id', 0, 'RAW');
+            $template_name  = $app->input->post->get('template', NULL, 'RAW');
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/";
+            if ($data && $article_id) {
+                $json_data      = json_decode($data, true);
+                if ($json_data['id']) {
+                    Helper::putContents($layout_path . $article_id . '_' . $json_data['id'] . '.json', $data);
+                } else {
+                    throw new \Exception('Widget is empty');
+                }
+            } else {
+                throw new \Exception('Data or Article is empty');
+            }
+            $this->response('Widget ' . $json_data['id'] . ' saved');
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
         }
         return true;
     }

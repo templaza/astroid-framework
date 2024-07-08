@@ -10,6 +10,8 @@
 namespace Astroid\Element;
 
 use Astroid\Framework;
+use Astroid\Helper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 
 defined('_JEXEC') or die;
@@ -38,6 +40,20 @@ class Element extends BaseElement
 
     public function _content()
     {
+        $app            = Factory::getApplication();
+        $option         = $app->input->get('option', '', 'RAW');
+        $view           = $app->input->get('view', '', 'RAW');
+        $id             = $app->input->get('id', null, 'RAW');
+        if ($option === 'com_content' && $view === 'article' && !empty($id)) {
+            $template_name = Framework::getTemplate()->template;
+            $layout_path = JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/";
+            if (file_exists($layout_path . $id . '_' . $this->unqid . '.json')) {
+                $article_json = file_get_contents($layout_path . $id . '_' . $this->unqid . '.json');
+                $article_data = json_decode($article_json, true);
+                $article_params = Helper::loadParams($article_data['params']);
+                $this->params->merge($article_params);
+            }
+        }
         $layout = Framework::getTemplate()->getElementLayout($this->type);
         $pathinfo = pathinfo($layout);
         $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);

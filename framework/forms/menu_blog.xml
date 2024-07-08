@@ -1,7 +1,6 @@
 <form>
    <fields name="params">
       <fieldset label="ASTROID_ARTICLE_BLOG_OPTIONS_TITLE_LABEL" name="menublogoptions">
-         <field name="astroid_article_layout" type="astroidlayoutlist" default='{"template":"inherit","layout":""}' inherit="true" label="ASTROID_ARTICLE_SELECT_A_LAYOUT" description="" directory="article_layouts" />
          <field type="radio" name="astroid_posttype" label="ASTROID_POST_TYPE_ICONS" class="btn-group" default="">
             <option value="">JGLOBAL_INHERIT</option>
             <option value="1">ASTROID_SHOW</option>

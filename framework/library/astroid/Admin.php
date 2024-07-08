@@ -15,7 +15,6 @@ use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Component\Includer;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
@@ -231,29 +230,8 @@ class Admin extends Helper\Client
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
-        $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
 
-        $config = [
-            'site_url'              =>  Uri::root(),
-            'base_url'              =>  Uri::base(true),
-            'astroid_media_url'     => ASTROID_MEDIA_URL,
-            'template_name'         => $template->template.'-'.$template->id,
-            'tpl_template_name'     => $template->template,
-            'template_title'        => $template->title,
-            'enable_widget'         => $enable_widget,
-            'color_mode'            => $plg_color_mode,
-            'astroid_version'       => Helper\Constants::$astroid_version,
-            'astroid_link'          => Helper\Constants::$astroid_link,
-            'document_link'         => Helper\Constants::$documentation_link,
-            'video_tutorial'        => Helper\Constants::$video_tutorial_link,
-            'donate_link'           => Helper\Constants::$donate_link,
-
-            'github_link'           => Helper\Constants::$github_link,
-            'jtemplate_link'        => Helper::getJoomlaUrl(),
-            'astroid_admin_token'   => Session::getFormToken(),
-            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
-            'form_template'         => Helper::getFormTemplate()
-        ];
+        $config = Helper\Constants::manager_configs();
         $document->addScriptOptions('astroid_lib', $config);
 
         // Get Language
