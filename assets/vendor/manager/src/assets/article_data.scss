@@ -20,3 +20,12 @@
         }
     }
 }
+
+.as-article-widget-data {
+    .astroid-heading-line {
+        font-size: 1.2rem;
+        >::before, >::after {
+            border-bottom: 3px solid var(--border-color);
+        }
+    }
+}

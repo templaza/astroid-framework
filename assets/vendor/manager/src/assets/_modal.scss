@@ -5,6 +5,7 @@
     }
     .nav-tabs {
         --bs-nav-link-padding-y: 1rem;
+        --nav-link-padding-y: 1rem;
         background-color: var(--as-violet-bg);
         font-size: 1rem;
         .nav-link:not(.active) {

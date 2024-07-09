@@ -79,6 +79,8 @@ class Element
                 default:
                     if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
                         $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
+                    } elseif ($this->mode === 'article_data') {
+                        $this->default_xml_file = $library_elements_directory . 'default_article.xml';
                     } else {
                         $this->default_xml_file = $library_elements_directory . 'default.xml';
                     }
@@ -138,18 +140,16 @@ class Element
     public function loadForm(): void
     {
         $this->form = new Form($this->type);
-        if ($this->mode != 'article_data') {
-            if ($this->type !== 'subform') {
-                $defaultXml = simplexml_load_file($this->default_xml_file);
-                $this->form->load($defaultXml->form, false);
+        if ($this->type !== 'subform') {
+            $defaultXml = simplexml_load_file($this->default_xml_file);
+            $this->form->load($defaultXml->form, false);
+        } else {
+            if ($this->subform['formtype'] == 'string') {
+                $defaultXml = simplexml_load_string($this->subform['formsource']);
+                $this->form->load($defaultXml, false);
             } else {
-                if ($this->subform['formtype'] == 'string') {
-                    $defaultXml = simplexml_load_string($this->subform['formsource']);
-                    $this->form->load($defaultXml, false);
-                } else {
-                    $defaultXml = simplexml_load_file($this->subform['formsource']);
-                    $this->form->load($defaultXml->form, false);
-                }
+                $defaultXml = simplexml_load_file($this->subform['formsource']);
+                $this->form->load($defaultXml->form, false);
             }
         }
 
@@ -201,6 +201,9 @@ class Element
                 $form_content = array();
                 $model_form = [];
                 foreach ($fieldsets as $key => $fieldset) {
+                    if (isset($fieldset->articleData) && $fieldset->articleData === 'false') {
+                        continue;
+                    }
                     $fields = $form->getFieldset($key);
                     $groups = [];
                     foreach ($fields as $key => $field) {
@@ -213,6 +216,10 @@ class Element
                         if ($field->type == 'astroidgroup') {
                             continue;
                         }
+                        if ($this->mode === 'article_data' && $field->getAttribute('articleData', 'true') === 'false') {
+                            continue;
+                        }
+
                         $model_form[$field->fieldname] = $field->value;
                         $field_group = $field->getAttribute('astroidgroup', 'none');
                         $js_input   =   json_decode($field->input);
