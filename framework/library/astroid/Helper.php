@@ -12,6 +12,7 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Version;
 use Joomla\CMS\Router\Route;
@@ -262,12 +263,7 @@ class Helper
     public static function putContents($file, $content, $append = false)
     {
         Framework::getReporter('Logs')->add('Saved Cached to <code>' . str_replace(JPATH_SITE . '/', '', $file) . '</code>');
-        self::createDir($file);
-        if ($append) {
-            file_put_contents($file, $content, FILE_APPEND);
-        } else {
-            file_put_contents($file, $content);
-        }
+        File::write($file, $content, false, $append);
     }
 
     public static function minifyCSS($css)
