@@ -54,6 +54,7 @@ class Layout
                 'title'=> 'title'
             ]
         ];
+        $content = '';
         foreach ($layout['sections'] as $section) {
             $section = new Section($section, $devices, $options);
             $content .= $section->render();
