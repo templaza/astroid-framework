@@ -1,7 +1,10 @@
 <script setup>
 import { onBeforeMount, ref, provide } from 'vue';
 import axios from "axios";
+import { faCircle, faArrowsLeftRight, faTrash, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { library } from '@fortawesome/fontawesome-svg-core'
 import Modal from "./components/helpers/Modal.vue";
+library.add(faCircle, faArrowsLeftRight, faTrash, faDownload);
 const props = defineProps(['widget_json_id']);
 const data = JSON.parse(document.getElementById(props.widget_json_id+'_json').innerHTML);
 provide('constant', data.constant);
@@ -54,8 +57,8 @@ function saveElement(params) {
 </script>
 <template>
     <div class="article-layout-data row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-2">
-        <div>
-            <div v-for="widget in widgets" class="article-widget card card-body border">
+        <div v-for="widget in widgets">
+            <div class="article-widget card card-body border">
                 <div class="d-flex justify-content-between">
                     <div class="widget-name">
                         <div><i class="text-body-tertiary me-2" :class="data.form_template[widget.type].info.icon"></i>{{ widget.params.find((param) => param.name === 'title').value }}</div>

@@ -22,6 +22,9 @@
 }
 
 .as-article-widget-data {
+    .row {
+        --gutter-y: 1rem;
+    }
     .astroid-heading-line {
         font-size: 1.2rem;
         >::before, >::after {
