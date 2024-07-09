@@ -26,9 +26,9 @@ $useDefList =   $article_params->get('show_modify_date') || $article_params->get
 
 if ($useDefList) {
     if ($position == 'above' && ($info == 0 || $info == 2)) {
-        echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $astroidArticle, 'position' => 'above']);
+        echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $item, 'position' => 'above']);
     }
     if ($position == 'below' && ($info == 1 || $info == 2)) {
-        echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $astroidArticle, 'position' => 'below']);
+        echo LayoutHelper::render('joomla.content.info_block', ['item' => $item->article, 'params' => $article_params, 'astroidArticle' => $item, 'position' => 'below']);
     }
 }
