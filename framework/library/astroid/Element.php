@@ -24,7 +24,7 @@ class Element
     public bool $multiple = true;
     public string $classname = '';
     public string $description = '';
-    public string $element_type = 'system';
+    public string $element_type = 'layout';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
     protected string $layout = '';

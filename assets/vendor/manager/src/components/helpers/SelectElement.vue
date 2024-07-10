@@ -16,10 +16,10 @@ onMounted(()=> {
     Object.keys(props.form).every(key => {
         if (props.form[key].type === 'addon') {
             addon = props.form[key].info;
-            if (['component', 'banner', 'message'].includes(addon.type) && (!props.system[addon.type] || props.source === `article_layouts`)) {
+            if (typeof props.system[addon.type] !== 'undefined' && !props.system[addon.type]) {
                 return true;
             }
-            if (props.source !== `article_layouts` && addon.element_type === 'article') {
+            if ((props.source !== `article_layouts` && addon.element_type === 'article') || (props.source === 'article_layouts' && addon.element_type === 'system')) {
                 return true;
             }
             if (addon.element_type === 'widget' && parseInt(constant.enable_widget) === 0) {

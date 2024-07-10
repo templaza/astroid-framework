@@ -18,6 +18,14 @@ const language  =   inject('language', []);
 onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
     form_template.value = constant.form_template;
+    Object.keys(constant.form_template).forEach(key => {
+        if (constant.form_template[key].info.element_type === 'system' && !constant.form_template[key].info.multiple && props.source !== 'article_layouts') {
+            system.value[constant.form_template[key].info.type] = true;
+        }
+        if (constant.form_template[key].info.element_type === 'article' && !constant.form_template[key].info.multiple && props.source === 'article_layouts') {
+            system.value[constant.form_template[key].info.type] = true;
+        }
+    })
     if (typeof layout.value.devices === 'undefined') {
         layout.value.devices = [ 
             { "code": "lg", "icon": "fa-solid fa-computer", "title": "Large Device" }, 
@@ -54,11 +62,7 @@ onUpdated(()=>{
     }
 })
 const layout = ref([]);
-const system = reactive({
-    component: true,
-    banner: true,
-    message: true
-});
+const system = ref({});
 const activeDevice = ref('lg');
 const responsive = [
     {
@@ -103,7 +107,9 @@ function onSelectDevice(items, lastSelectItem) {
 }
 
 function updateSystem(addonType, value = false) {
-    system[addonType] = value;
+    if (typeof system.value[addonType] !== 'undefined') {
+        system.value[addonType] = value;
+    }
 }
 
 const _showModal = ref(false);
@@ -183,8 +189,8 @@ function addElement(addon) {
             row.cols.every(column => {
                 if (element.value.id === column.id) {
                     column.elements.push(new_element);
-                    if (['component', 'banner', 'message'].includes(addon.type)) {
-                        system[addon.type] = false;
+                    if (typeof system.value[addon.type] !== 'undefined') {
+                        system.value[addon.type] = false;
                     }
                     element.value = {};
                     return false;

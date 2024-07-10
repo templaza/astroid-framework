@@ -32,7 +32,7 @@ function initLayout() {
         elClass = 'astroid-elements';
     }
     layout.value[map[props.group]].forEach(element => {
-        if (['component', 'banner', 'message'].includes(element.type)) {
+        if (typeof props.system[element.type] !== 'undefined') {
             updateSystem(element.type);
         }
         if (element.type === 'column') {
