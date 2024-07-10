@@ -119,7 +119,7 @@ class Admin extends Helper\Client
 
             $fieldName = 'thumbnail';
 
-            $fileError = $_FILES[$fieldName]['error'];
+            $fileError = isset($_FILES[$fieldName]) ? $_FILES[$fieldName]['error'] : null;
 
             if ($fileError !== null) {
                 $pathinfo = pathinfo($_FILES[$fieldName]['name']);
