@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element']);
 const grids = [
@@ -15,6 +16,13 @@ const grids = [
     [2, 2, 2, 2, 2, 2]
 ]
 
+const id = ref(null)
+onMounted(() => {
+    if (typeof props.element !== 'undefined') {
+        id.value = props.element.id;
+    }
+})
+
 function chooseGrid(grid) {
     if (grid[0] === 0) {
         let resp = window.prompt("Please enter custom grid size (eg. 2+3+6+1)");
@@ -25,12 +33,12 @@ function chooseGrid(grid) {
 }
 </script>
 <template>
-    <div class="astroid-modal modal d-block" tabindex="-1" @click.self="emit('update:closeElement', props.element.id)">
+    <div class="astroid-modal modal d-block" tabindex="-1" @click.self="emit('update:closeElement', id)">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Select a Grid Layout</h5>
-                    <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement', props.element.id)"></button>
+                    <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement', id)"></button>
                 </div>
 
                 <div class="modal-body">

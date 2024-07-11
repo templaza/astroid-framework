@@ -92,10 +92,20 @@ class Constants
         'TPL_ASTROID_BACK_TO_JOOMLA',
         'ASTROID_TEMPLATE_CLOSE',
         'JGLOBAL_CONFIRM_DELETE',
+        'JGLOBAL_TITLE',
+        'JGLOBAL_DESCRIPTION',
         'JAPPLY',
         'JSAVE',
         'JCANCEL',
-        'ASTROID_BACK'
+        'ASTROID_BACK',
+        'TPL_ASTROID_LAYOUT_INFO',
+        'TPL_ASTROID_EDIT_INFO',
+        'TPL_ASTROID_NO_LAYOUT_INFO',
+        'TPL_ASTROID_LOAD_DEFAULT_SETTINGS',
+        'TPL_ASTROID_SELECT_YOUR_THUMBNAIL',
+        'TPL_ASTROID_THUMBNAIL',
+        'TPL_ASTROID_NEW_LAYOUT',
+        'TPL_ASTROID_DELETE_LAYOUT'
     ];
 
     public static $animations = [

@@ -103,7 +103,12 @@ function onFileChange(e) {
 
 function saveLayout(action = 'save') {
     if (formInfo.title === '') {
-        document.getElementById(props.field.input.id+`_saveLayout_opendialog`).click();
+        if (action === 'save_dialog') {
+            alert('You have to input the Title')
+            _formTitle.value.focus();
+        } else {
+            document.getElementById(props.field.input.id+`_saveLayout_opendialog`).click();
+        }
         return true;
     }
     let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=savelayout&ts="+Date.now();
@@ -137,7 +142,7 @@ function saveLayout(action = 'save') {
             toast_msg.body = 'You can use it to contribute to your layout builder.';
             toast_msg.color = 'green';
             save_disabled.value = false;
-            if (action === 'save') {
+            if (action !== 'apply') {
                 editItem.value = false;
                 resetValues();
                 callAjax();
@@ -230,7 +235,7 @@ function callAjax() {
         console.log(error);
     });
 }
-
+const _formTitle = ref(null);
 const checkAll = ref(false);
 function checkAllList() {
     checklist.value = [];
@@ -245,17 +250,15 @@ function checkAllList() {
     <div>
         <div class="as-sublayouts" v-if="editItem === false">
             <div v-if="items.length === 0">
-                <div class="alert alert-info" role="alert">
-                    There are no layouts in this template.
-                </div>
+                <div class="alert alert-info" role="alert">{{ language.TPL_ASTROID_NO_LAYOUT_INFO }}</div>
             </div>
             <table v-else class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col" width="1%"><input class="form-check-input" type="checkbox" value="" v-model="checkAll" @click="checkAllList"></th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col" width="180">Thumbnail</th>
+                        <th scope="col">{{ language.JGLOBAL_TITLE }}</th>
+                        <th scope="col">{{ language.JGLOBAL_DESCRIPTION }}</th>
+                        <th scope="col" width="180">{{ language.TPL_ASTROID_THUMBNAIL }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -268,8 +271,8 @@ function checkAllList() {
                 </tbody>
             </table>
             <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
-                <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary me-2">New Layout</a>
-                <a href="#" @click.prevent="deleteLayout()" class="btn btn-sm btn-as btn-outline-danger">Delete Layout</a>
+                <a href="#" @click.prevent="editLayout()" class="btn btn-sm btn-as btn-as-primary me-2">{{ language.TPL_ASTROID_NEW_LAYOUT }}</a>
+                <a href="#" @click.prevent="deleteLayout()" class="btn btn-sm btn-as btn-outline-danger">{{ language.TPL_ASTROID_DELETE_LAYOUT }}</a>
             </div>
         </div>
         <div v-else class="astroid-layout px-2">
@@ -285,24 +288,24 @@ function checkAllList() {
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title fs-5" :id="props.field.input.id+`_saveLayoutLabel`">Layout Information</h3>
+                            <h3 class="modal-title fs-5" :id="props.field.input.id+`_saveLayoutLabel`">{{ language.TPL_ASTROID_LAYOUT_INFO }}</h3>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" :id="props.field.input.id+`_saveLayout_close`"></button>
                         </div>
                         <div class="modal-body">
                             <div>
                                 <div class="mb-3">
-                                    <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">Title</label>
-                                    <input type="text" v-model="formInfo.title" class="form-control" :id="props.field.input.id+`_saveLayout_title`" placeholder="Title" required>
+                                    <label :for="props.field.input.id+`_saveLayout_title`" class="form-label">{{ language.JGLOBAL_TITLE }}</label>
+                                    <input type="text" v-model="formInfo.title" class="form-control" :id="props.field.input.id+`_saveLayout_title`" ref="_formTitle" placeholder="Title" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">Description</label>
+                                    <label :for="props.field.input.id+`_saveLayout_desc`" class="form-label">{{ language.JGLOBAL_DESCRIPTION }}</label>
                                     <textarea class="form-control" v-model="formInfo.desc" :id="props.field.input.id+`_saveLayout_desc`" rows="3"></textarea>
                                 </div>
                                 <div v-if="formInfo.thumbnail !== ``" class="mb-3">
                                     <img class="img-thumbnail" :src="constant.site_url + `/media/templates/site/` + constant.tpl_template_name + `/images/layouts/` + formInfo.thumbnail" :alt="formInfo.title">
                                 </div>
                                 <div class="mb-3">
-                                    <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">Select your thumbnail</label>
+                                    <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">{{ language.TPL_ASTROID_SELECT_YOUR_THUMBNAIL }}</label>
                                     <input class="form-control" type="file" @change="onFileChange" :id="props.field.input.id+`_saveLayout_thumbnail`">
                                 </div>
                             </div>
@@ -310,7 +313,7 @@ function checkAllList() {
                         <div class="modal-footer">
                             <button v-if="formInfo.name !== ``" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled" v-html="language.JAPPLY"></button>
                             <button v-if="formInfo.name === ``" type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">{{ language.ASTROID_BACK }}</button>
-                            <button v-if="formInfo.name === ``" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout()" :disabled="save_disabled" v-html="language.JSAVE"></button>
+                            <button v-if="formInfo.name === ``" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout('save_dialog')" :disabled="save_disabled" v-html="language.JSAVE"></button>
                         </div>
                     </div>
                 </div>
@@ -318,9 +321,9 @@ function checkAllList() {
             <div class="as-sublayout-bottom-toolbox sticky-bottom bg-body-tertiary px-4 py-3 border border-bottom-0 rounded-top-3 mt-5">
                 <button :id="props.field.input.id+`_saveLayout_opendialog`" class="d-none" type="button" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`">Open Dialog</button>
                 <a v-if="formInfo.name !== ``" href="#" @click.prevent="saveLayout('apply')" class="btn btn-sm btn-as btn-as-primary me-2" :disabled="save_disabled">{{ language.JAPPLY }}</a>
-                <a href="#" @click.prevent="saveLayout()" class="btn btn-sm btn-as btn-primary me-2" :disabled="save_disabled" v-html="language.JSAVE"></a>
-                <a v-if="formInfo.name !== ``" href="#" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`" class="btn btn-sm btn-as btn-as-light me-2" :disabled="save_disabled">Edit Information</a>
-                <a v-if="props.type === `article_layouts` && formInfo.name !== `default`" href="#" @click.prevent="loadDefault()" class="btn btn-sm btn-as btn-as-light me-2" :disabled="save_disabled">Load Default Settings</a>
+                <a href="#" @click.prevent="saveLayout('save')" class="btn btn-sm btn-as btn-primary me-2" :disabled="save_disabled" v-html="language.JSAVE"></a>
+                <a v-if="formInfo.name !== ``" href="#" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`_saveLayout`" class="btn btn-sm btn-as btn-as-light me-2" :disabled="save_disabled">{{ language.TPL_ASTROID_EDIT_INFO }}</a>
+                <a v-if="props.type === `article_layouts` && formInfo.name !== `default`" href="#" @click.prevent="loadDefault()" class="btn btn-sm btn-as btn-as-light me-2" :disabled="save_disabled">{{ language.TPL_ASTROID_LOAD_DEFAULT_SETTINGS }}</a>
                 <a href="#" @click.prevent="cancelLayout()" class="btn btn-sm btn-as btn-as-light" :disabled="save_disabled">{{ language.JCANCEL }}</a>
             </div>
         </div>
