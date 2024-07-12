@@ -53,10 +53,13 @@ class JFormFieldAstroidLayoutList extends FormField {
                 if (count($layouts)) {
                     $tmp_layouts = array();
                     foreach ($layouts as $layout) {
-                        $tmp = Layout::getDataLayout(basename($layout, ".json"), $folders[$i], $path);
-                        $tmp['name'] = basename($layout, ".json");
-                        unset($tmp['data']);
-                        $tmp_layouts[] = $tmp;
+                        $layout_name = basename($layout, ".json");
+                        if ($layout_name !== 'default') {
+                            $tmp = Layout::getDataLayout($layout_name, $folders[$i], $path);
+                            $tmp['name'] = $layout_name;
+                            unset($tmp['data']);
+                            $tmp_layouts[] = $tmp;
+                        }
                     }
                     $templates[$folders[$i]] = $tmp_layouts;
                 }
