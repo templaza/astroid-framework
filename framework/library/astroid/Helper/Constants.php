@@ -105,7 +105,9 @@ class Constants
         'TPL_ASTROID_SELECT_YOUR_THUMBNAIL',
         'TPL_ASTROID_THUMBNAIL',
         'TPL_ASTROID_NEW_LAYOUT',
-        'TPL_ASTROID_DELETE_LAYOUT'
+        'TPL_ASTROID_DELETE_LAYOUT',
+        'TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING',
+        'TPL_ASTROID_SAVE_AS_DEFAULT'
     ];
 
     public static $animations = [

@@ -17,7 +17,8 @@ const formInfo = reactive({
     title: '',
     desc: '',
     thumbnail: '',
-    name: ''
+    name: '',
+    default: false
 });
 const toast_msg = reactive({
     header: '',
@@ -111,6 +112,11 @@ function saveLayout(action = 'save') {
         }
         return true;
     }
+    if (formInfo.default) {
+        if (!confirm(language.TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING)) {
+            return true;
+        }
+    }
     let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=savelayout&ts="+Date.now();
     const formData = new FormData(); // pass data as a form
     const toastAstroidMsg = document.getElementById(props.field.input.id+`_saveLayoutToast`);
@@ -120,6 +126,7 @@ function saveLayout(action = 'save') {
     formData.append('desc', formInfo.desc);
     formData.append('data', layout.value);
     formData.append('thumbnail_old', formInfo.thumbnail);
+    formData.append('default', formInfo.default);
     if (files.value !== null && files.value.length) {
         formData.append('thumbnail', files.value[0]);
     }
@@ -167,6 +174,7 @@ function resetValues() {
     formInfo.desc = '';
     formInfo.name = '';
     formInfo.thumbnail = '';
+    formInfo.default = false;
     files.value = null;
 }
 
@@ -308,12 +316,16 @@ function checkAllList() {
                                     <label :for="props.field.input.id+`_saveLayout_thumbnail`" class="form-label">{{ language.TPL_ASTROID_SELECT_YOUR_THUMBNAIL }}</label>
                                     <input class="form-control" type="file" @change="onFileChange" :id="props.field.input.id+`_saveLayout_thumbnail`">
                                 </div>
+                                <div class="form-check" v-if="props.type === `article_layouts` && formInfo.name !== `default`">
+                                    <input class="form-check-input" type="checkbox" v-model="formInfo.default" value="" :id="props.field.input.id+`_saveLayout_default`">
+                                    <label class="form-check-label" :for="props.field.input.id+`_saveLayout_default`">{{ language.TPL_ASTROID_SAVE_AS_DEFAULT }}</label>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button v-if="formInfo.name !== ``" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled" v-html="language.JAPPLY"></button>
-                            <button v-if="formInfo.name === ``" type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">{{ language.ASTROID_BACK }}</button>
-                            <button v-if="formInfo.name === ``" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout('save_dialog')" :disabled="save_disabled" v-html="language.JSAVE"></button>
+                            <button v-if="formInfo.name !== `` && !formInfo.default" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled" v-html="language.JAPPLY"></button>
+                            <button v-if="formInfo.name === `` || formInfo.default" type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal" aria-label="Close" :disabled="save_disabled">{{ language.ASTROID_BACK }}</button>
+                            <button v-if="formInfo.name === `` || formInfo.default" type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="saveLayout('save_dialog')" :disabled="save_disabled" v-html="language.JSAVE"></button>
                         </div>
                     </div>
                 </div>

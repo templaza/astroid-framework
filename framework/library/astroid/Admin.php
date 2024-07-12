@@ -111,7 +111,11 @@ class Admin extends Helper\Client
                 'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
                 'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
             ];
-            if (!$filename) {
+            $default = $app->input->post->get('default', '', 'RAW');
+
+            if ($default === 'true') {
+                $layout_name = 'default';
+            } elseif (!$filename) {
                 $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
             } else {
                 $layout_name = $filename;
