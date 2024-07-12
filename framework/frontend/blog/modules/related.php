@@ -39,7 +39,6 @@ $document = Astroid\Framework::getDocument();
                   <h3 class="related-article-title">
                      <a href="<?php echo $item->route; ?>"><?php echo $item->title; ?></a>
                   </h3>
-                  <?php echo LayoutHelper::render('joomla.content.info_block', ['item' => $item, 'params' => $item->params, 'astroidArticle' => $astroidArticle, 'position' => 'above']); ?>
                    <?php
                    if ($display_posttypeicon) {
                        $document->include('blog.modules.posttype', ['article' => $astroidArticle]);
@@ -48,6 +47,7 @@ $document = Astroid\Framework::getDocument();
                        $document->include('blog.modules.badge', ['article' => $astroidArticle]);
                    }
                    ?>
+                  <?php echo LayoutHelper::render('joomla.content.info_block', ['item' => $item, 'params' => $item->params, 'astroidArticle' => $astroidArticle, 'position' => 'above']); ?>
                </div>
             </div>
          </div>

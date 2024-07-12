@@ -41,7 +41,7 @@ switch ($type) {
 }
 ?>
 <?php if (!empty($icon)) { ?>
-   <dd class="article-post-type">
+   <div class="article-post-type">
       <span class="article-icon article-icon-<?php echo $type; ?>"><?php echo !empty($icon) ? '<i class="' . $icon . '"></i>' : ''; ?></span>
-   </dd>
+   </div>
 <?php } ?>
