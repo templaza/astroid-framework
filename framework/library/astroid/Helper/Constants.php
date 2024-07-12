@@ -36,7 +36,7 @@ class Constants
      * Return configurations of Manager
      * @return array
      */
-    public static function manager_configs() : array
+    public static function manager_configs($mode = '') : array
     {
         $template = Framework::getTemplate();
         $pluginParams   =   Helper::getPluginParams();
@@ -60,7 +60,7 @@ class Constants
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
-            'form_template'         => Helper::getFormTemplate()
+            'form_template'         => Helper::getFormTemplate($mode)
         ];
     }
 

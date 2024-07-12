@@ -73,7 +73,8 @@ class JFormFieldAstroidLayoutData extends FormField {
                 }
                 define('ASTROID_TEMPLATE_NAME', $article_layout->template);
                 $widgets    =   array();
-                $form_template  =   Helper::getFormTemplate('article_data');
+                $constant   =   Helper\Constants::manager_configs('article_data');
+                $form_template  =   $constant['form_template'];
                 $layout     =   json_decode($sublayout['data'], true);
                 foreach ($layout['sections'] as $section) {
                     foreach ($section['rows'] as $row) {
@@ -95,8 +96,7 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $json = [
                     'article_id' => $id,
                     'widgets' => $widgets,
-                    'constant'   => Helper\Constants::manager_configs(),
-                    'form_template' => $form_template,
+                    'constant'   => $constant,
                     'template' => $article_layout->template
                 ];
                 $html   =   '<script type="application/json" id="'.$this->id.'_json">'.json_encode($json).'</script>';

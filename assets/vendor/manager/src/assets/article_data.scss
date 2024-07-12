@@ -31,4 +31,11 @@
             border-bottom: 3px solid var(--border-color);
         }
     }
+    .card {
+        --card-border-width: 1px;
+        --card-border-color: var(--border-color);
+    }
+    .astroid-subform .add-item {
+        border: 2px dashed var(--border-color);
+    }
 }

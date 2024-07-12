@@ -201,7 +201,7 @@ class Element
                 $form_content = array();
                 $model_form = [];
                 foreach ($fieldsets as $key => $fieldset) {
-                    if (isset($fieldset->articleData) && $fieldset->articleData === 'false') {
+                    if ($this->mode === 'article_data' && isset($fieldset->articleData) && $fieldset->articleData === 'false') {
                         continue;
                     }
                     $fields = $form->getFieldset($key);

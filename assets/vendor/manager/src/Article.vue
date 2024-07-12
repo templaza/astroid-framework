@@ -61,7 +61,7 @@ function saveElement(params) {
             <div class="article-widget card card-body border">
                 <div class="d-flex justify-content-between">
                     <div class="widget-name">
-                        <div><i class="text-body-tertiary me-2" :class="data.form_template[widget.type].info.icon"></i>{{ widget.params.find((param) => param.name === 'title').value }}</div>
+                        <div><i class="text-body-tertiary me-2" :class="data.constant.form_template[widget.type].info.icon"></i>{{ widget.params.find((param) => param.name === 'title').value }}</div>
                         <div class="text-body-tertiary form-text">{{ widget.type }}</div>
                     </div>
                     <div class="widget-toolbar">
@@ -77,6 +77,6 @@ function saveElement(params) {
         </div>
     </div>
     <Transition name="fade">
-        <Modal v-if="_showModal" :element="element" :form="data.form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
+        <Modal v-if="_showModal" :element="element" :form="data.constant.form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
 </template>
