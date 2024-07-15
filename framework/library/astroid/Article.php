@@ -26,11 +26,15 @@ class Article
     public $params;
     public $attribs;
     public $template;
+    public $other_params = null;
     public $category_params;
     public array $styles;
 
-    function __construct($article, $categoryView = false)
+    function __construct($article, $categoryView = false, $other_params = null)
     {
+        if (!$categoryView) {
+            $this->other_params = $other_params;
+        }
         $this->article = $article;
         $attribs = new Registry();
         $attribs->loadString($this->article->attribs, 'JSON');

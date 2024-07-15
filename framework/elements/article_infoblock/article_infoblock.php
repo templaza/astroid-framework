@@ -14,12 +14,13 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Language\Associations;
 
 extract($displayData);
 $position   =   $params->get('infoblock_position','above');
 $item       =   $options['article'];
 $article_params = $item->article->params;
+$assocParam =   (Associations::isEnabled() && $article_params->get('show_associations'));
 $info       =   $article_params->get('info_block_position', 0);
 $useDefList =   $article_params->get('show_modify_date') || $article_params->get('show_publish_date') || $article_params->get('show_create_date')
     || $article_params->get('show_hits') || $article_params->get('show_category') || $article_params->get('show_parent_category') || $article_params->get('show_author') || $assocParam;

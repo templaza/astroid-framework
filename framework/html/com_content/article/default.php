@@ -12,7 +12,7 @@ use Joomla\CMS\Factory;
 
 // Astroid Article/Blog
 if (!isset($astroidArticle)) {
-    $astroidArticle = new Astroid\Article($this->item, false);
+    $astroidArticle = new Astroid\Article($this->item, false, $this->params);
 }
 echo '<meta itemprop="inLanguage" content="'.(($this->item->language === '*') ? Factory::getApplication()->get('language') : $this->item->language).'">';
 $astroidArticle->renderLayout();
