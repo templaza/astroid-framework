@@ -22,6 +22,8 @@
 }
 
 .as-article-widget-data {
+    --bs-body-bg: var(--body-bg);
+    --bs-border-color: var(--border-color);
     .row {
         --gutter-y: 1rem;
     }
@@ -37,5 +39,10 @@
     }
     .astroid-subform .add-item {
         border: 2px dashed var(--border-color);
+    }
+    .astroid-btn-group {
+        label {
+            width: auto;
+        }
     }
 }
