@@ -230,7 +230,7 @@ function findSystemAddon(element) {
             })
             break;
         default:
-            if (['component', 'banner', 'message'].includes(element.type)) {
+            if (typeof props.system[element.type] !== 'undefined') {
                 updateSystem(element.type, true);
             }
             break;
