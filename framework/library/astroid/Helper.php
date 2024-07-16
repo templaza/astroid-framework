@@ -335,10 +335,17 @@ class Helper
     public static function getAllAstroidElements($mode = '', $template_id = null)
     {
         $template = Framework::getTemplate($template_id);
+        $template_name = '';
+        if ($template->isAstroid) {
+            $template_name = $template->template;
+        } elseif (defined('ASTROID_TEMPLATE_NAME')) {
+            $template_name = ASTROID_TEMPLATE_NAME;
+        }
+
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
         $plugin_elements_dir = JPATH_SITE . "/plugins/astroid";
-        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/elements/';
+        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template_name . '/astroid/elements/';
 
         // Getting Elements from Template Directories
         $elements = Folder::folders($elements_dir, '.', false, true);
@@ -355,10 +362,11 @@ class Helper
             }
         }
 
-        $template_elements = Folder::folders($template_elements_dir, '.', false, true);
-
-        // Merging Elements
-        $elements = array_merge($elements, $template_elements);
+        if ($template_name && file_exists(Path::clean($template_elements_dir))) {
+            $template_elements = Folder::folders($template_elements_dir, '.', false, true);
+            // Merging Elements
+            $elements = array_merge($elements, $template_elements);
+        }
 
         $return = array();
 
@@ -372,7 +380,6 @@ class Helper
 
             $type = substr($element_dir, $slash + 1);
             $xmlfile = $element_dir . '/' . $type . '.xml';
-            
             if (file_exists($xmlfile)) {
                 $element = new Element($type, [], $template, $mode);
                 $return[] = $element;

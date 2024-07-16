@@ -56,6 +56,10 @@ class Template
         $this->params = $jtemplate->params;
         $this->title = '';
 
+        if (!empty($this->params->get('astroid', 0))) {
+            $this->isAstroid = true;
+        }
+
         if (Framework::isSite()) {
             $this->_set($jtemplate->id);
         } else if (Framework::isAdmin()) {

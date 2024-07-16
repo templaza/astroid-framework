@@ -10,6 +10,9 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
+
 defined('_JEXEC') or die;
 
 class Element
@@ -58,11 +61,17 @@ class Element
             $this->template = $template;
         }
 
+        $template_name = $this->template->isAstroid ? $this->template->template : '';
+        if (empty($template_name) && defined('ASTROID_TEMPLATE_NAME')) {
+            $template_name = ASTROID_TEMPLATE_NAME;
+        }
+
         $this->setClassName();
         $this->template->setLog("Initiated Element : " . $type, "success");
-        if ($type !== 'subform') {
-            $library_elements_directory = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'elements' . '/';
-            $template_elements_directory = JPATH_SITE . '/media/templates/site/' . $this->template->template . '/' . 'astroid' . '/' . 'elements' . '/';
+        if ($type !== 'subform' && $type !=='sublayout') {
+            $library_elements_directory = Path::clean(JPATH_LIBRARIES . '/astroid/framework/elements/');
+            $plugin_elements_directory = Path::clean(JPATH_SITE . '/plugins/astroid/');
+            $template_elements_directory = Path::clean(JPATH_SITE . '/media/templates/site/' . $template_name . '/astroid/elements/');
 
             switch ($this->type) {
                 case 'section':
@@ -73,8 +82,6 @@ class Element
                     break;
                 case 'row':
                     $this->default_xml_file = $library_elements_directory . 'row-default.xml';
-                    break;
-                case 'sublayout':
                     break;
                 default:
                     if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
@@ -87,12 +94,26 @@ class Element
                     break;
             }
 
-            if (file_exists($template_elements_directory . $this->type . '/' . $this->type . '.xml')) {
-                $this->xml_file = $template_elements_directory . $this->type . '/' . $this->type . '.xml';
-                $this->layout = $template_elements_directory . $this->type . '/' . $this->type . '.php';
-            } else if (file_exists($library_elements_directory . $this->type . '/' . $this->type . '.xml')) {
-                $this->xml_file = $library_elements_directory . $this->type . '/' . $this->type . '.xml';
-                $this->layout = $library_elements_directory . $this->type . '/' . $this->type . '.php';
+            if (file_exists(Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
+                $this->xml_file = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml');
+                $this->layout = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.php');
+            }
+
+            if (file_exists($plugin_elements_directory)) {
+                $plugin_folders = Folder::folders($plugin_elements_directory);
+                if (count($plugin_folders)) {
+                    foreach ($plugin_folders as $plugin_folder) {
+                        if (file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
+                            $this->xml_file = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml');
+                            $this->layout = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.php');
+                        }
+                    }
+                }
+            }
+
+            if (file_exists(Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
+                $this->xml_file = Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.xml');
+                $this->layout = Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.php');
             }
         }
 
