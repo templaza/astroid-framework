@@ -9,9 +9,12 @@
 
 namespace Astroid;
 use \Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Folder;
 
 defined('_JEXEC') or die;
 
@@ -189,8 +192,12 @@ class Template
         if (!$id) {
             $id = $this->id;
         }
-        $db = Factory::getDbo();
-        $query = "SELECT `home` FROM `#__template_styles` WHERE `id`='$id'";
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db
+            ->getQuery(true)
+            ->select('`home`')
+            ->from('#__template_styles')
+            ->where('`id`=' . $id);
         $db->setQuery($query);
         $result = $db->loadResult();
         if ($result == 1)  {
@@ -222,8 +229,12 @@ class Template
 
     private function _getById($id)
     {
-        $db = Factory::getDbo();
-        $query = "SELECT `template`,`id`,`title`,`params`,`home` FROM `#__template_styles` WHERE `id`='$id'";
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db
+            ->getQuery(true)
+            ->select('`template`,`id`,`title`,`params`,`home`')
+            ->from('#__template_styles')
+            ->where('`id`=' . $id);
         $db->setQuery($query);
         $result = $db->loadObject();
 
@@ -342,12 +353,24 @@ class Template
     public function getElementLayout($type)
     {
         $template_path = JPATH_SITE . "/media/templates/site/{$this->template}/astroid/elements";
-        if (file_exists($template_path . '/' . $type . '/' . $type . '.php')) {
-            return $template_path . '/' . $type . '/' . $type . '.php';
+        if (file_exists(Path::clean($template_path . '/' . $type . '/' . $type . '.php'))) {
+            return Path::clean($template_path . '/' . $type . '/' . $type . '.php');
         }
 
-        if (file_exists(ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php')) {
-            return ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php';
+        $plugin_path = JPATH_SITE . "/plugins/astroid";
+        if (file_exists($plugin_path)) {
+            $plugin_folders = Folder::folders($plugin_path);
+            if (count($plugin_folders)) {
+                foreach ($plugin_folders as $plugin_folder) {
+                    if (file_exists(Path::clean($plugin_path . '/' . $plugin_folder . '/elements/' . $type . '/' . $type . '.php'))) {
+                        return Path::clean($plugin_path . '/' . $plugin_folder . '/elements/' . $type . '/' . $type . '.php');
+                    }
+                }
+            }
+        }
+
+        if (file_exists(Path::clean(ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php'))) {
+            return Path::clean(ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php');
         }
 
         throw new \Exception("Astroid can not found layout for `" . $type . "` element.");

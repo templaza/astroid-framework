@@ -37,7 +37,7 @@ onBeforeMount(()=>{
     activeDevice.value = layout.value.devices[0].code;
 
     if (props.source === 'article_layouts') {
-        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getArticleFormTemplate&template="+constant.tpl_template_name+"&ts="+Date.now();
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getArticleFormTemplate&id="+constant.template_id+"&ts="+Date.now();
         if (process.env.NODE_ENV === 'development') {
             url = "articleformtemplate_ajax.txt?ts="+Date.now();
         }

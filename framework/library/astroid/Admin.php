@@ -353,8 +353,7 @@ class Admin extends Helper\Client
     {
         try {
             $app            = Factory::getApplication();
-            define('ASTROID_TEMPLATE_NAME', $app->input->get('template', NULL, 'RAW'));
-            $this->response(Helper::getFormTemplate('article'));
+            $this->response(Helper::getFormTemplate('article', $app->input->get('id', NULL, 'RAW')));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }

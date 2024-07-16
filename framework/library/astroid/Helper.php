@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Version;
 use Joomla\CMS\Router\Route;
@@ -331,16 +332,30 @@ class Helper
         return $return;
     }
 
-    public static function getAllAstroidElements($mode = '')
+    public static function getAllAstroidElements($mode = '', $template_id = null)
     {
-        $template = Framework::getTemplate();
+        $template = Framework::getTemplate($template_id);
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
+        $plugin_elements_dir = JPATH_SITE . "/plugins/astroid";
         $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/elements/';
 
         // Getting Elements from Template Directories
-        $elements = array_filter(glob($elements_dir . '*'), 'is_dir');
-        $template_elements = array_filter(glob($template_elements_dir . '*'), 'is_dir');
+        $elements = Folder::folders($elements_dir, '.', false, true);
+
+        if (file_exists(Path::clean($plugin_elements_dir))) {
+            $plugin_folders = Folder::folders($plugin_elements_dir);
+            if (count($plugin_folders)) {
+                foreach ($plugin_folders as $plugin_folder) {
+                    if (file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
+                        // Merging Plugin Elements
+                        $elements = array_merge($elements, Folder::folders($plugin_elements_dir . '/' . $plugin_folder . '/elements/', '.', false, true));
+                    }
+                }
+            }
+        }
+
+        $template_elements = Folder::folders($template_elements_dir, '.', false, true);
 
         // Merging Elements
         $elements = array_merge($elements, $template_elements);
@@ -348,9 +363,17 @@ class Helper
         $return = array();
 
         foreach ($elements as $element_dir) {
-            $xmlfile = $element_dir . '/' . (str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir))) . '.xml';
+            // String manipulation should be faster than pathinfo() on newer PHP versions.
+            $slash = strrpos($element_dir, DIRECTORY_SEPARATOR);
+
+            if ($slash === false) {
+                continue;
+            }
+
+            $type = substr($element_dir, $slash + 1);
+            $xmlfile = $element_dir . '/' . $type . '.xml';
+            
             if (file_exists($xmlfile)) {
-                $type = str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir));
                 $element = new Element($type, [], $template, $mode);
                 $return[] = $element;
             }
@@ -602,21 +625,18 @@ class Helper
         return $subject;
     }
 
-    public static function getFormTemplate($mode = '') {
+    public static function getFormTemplate($mode = '', $template_id = null) {
         $form_template = array();
-        $astroidElements = Helper::getAllAstroidElements($mode);
+        $astroidElements = Helper::getAllAstroidElements($mode, $template_id);
         foreach ($astroidElements as $astroidElement) {
             $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
         }
         if ($mode !== 'article_data') {
-            $sectionElement = new Element('section');
-            $form_template['section'] = $sectionElement->renderJson();
-            $rowElement = new Element('row');
-            $form_template['row'] = $rowElement->renderJson();
-            $columnElement = new Element('column');
-            $form_template['column'] = $columnElement->renderJson();
-            $sublayout = new Element('sublayout');
-            $form_template['sublayout'] = $sublayout->renderJson('sublayout');
+            $template = $template_id !== null ? Framework::getTemplate($template_id) : Framework::getTemplate();
+            foreach (['section', 'row', 'column', 'sublayout'] as $form_type) {
+                $form = new Element($form_type, [], $template, $mode);
+                $form_template[$form_type] = $form_type == 'sublayout' ? $form->renderJson('sublayout') : $form->renderJson();
+            }
         }
         return $form_template;
     }

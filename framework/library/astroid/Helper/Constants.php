@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.1.0-rc4';
+    public static $astroid_version = '3.1.0-rc5';
     public static $fontawesome_version = '6.5.2';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -46,6 +46,7 @@ class Constants
             'site_url'              =>  Uri::root(),
             'base_url'              =>  Uri::base(true),
             'astroid_media_url'     => ASTROID_MEDIA_URL,
+            'template_id'           => $template->id,
             'template_name'         => $template->template.'-'.$template->id,
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
