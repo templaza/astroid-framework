@@ -174,7 +174,7 @@ class Element
             }
         }
 
-        if (!empty($this->xml_file) && ($this->mode != 'article' || $this->element_type == 'article')) {
+        if (!empty($this->xml_file)) {
             $xml = $this->xml->form;
             $this->form->load($xml, false);
         }
