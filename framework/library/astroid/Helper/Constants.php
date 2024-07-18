@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class Constants 
 {
     public static $astroid_version = '3.1.0-rc5';
-    public static $fontawesome_version = '6.5.2';
+    public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
