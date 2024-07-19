@@ -38,9 +38,11 @@ if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style);
 }
 
-$item_margin    = $params->get('item_margin', '');
-$item_padding   = $params->get('item_padding', '');
-$list_style     = $params->get('list_style', 'ul');
+$item_margin    =   $params->get('item_margin', '');
+$item_padding   =   $params->get('item_padding', '');
+$list_style     =   $params->get('list_style', 'ul');
+$title_width    =   intval($params->get('title_width', 3));
+
 $tag = match ($list_style) {
     'ol', 'list-group-numbered' => 'ol',
     'list-description' => 'dl',
@@ -55,9 +57,14 @@ $class = match ($list_style) {
 };
 
 $class_item = match ($list_style) {
-    'list-group', 'list-group-flush', 'list-group-numbered' => 'list-item list-group-item',
+    'list-group', 'list-group-flush', 'list-group-numbered' => 'list-item list-group-item d-flex align-items-start',
     'list-inline' => 'list-item list-inline-item',
     default => 'list-item'
+};
+
+$class_item_inner = match ($list_style) {
+    'list-group-numbered' => ' ms-2',
+    default => ''
 };
 
 echo '<'.$tag.' class="' . $class . '">';
@@ -72,12 +79,14 @@ foreach ($list_items as $item) {
     $title          =   ($icon ? '<i class="'.$icon.' me-2"></i>' : '').$list_params->get('title', '');
     $description    =   $list_params->get('description', '');
     if ($list_style === 'list-description') {
-        echo '<dt class="as-list-title col-3">'.$title.'</dt>';
-        echo '<dd class="as-list-desc col-9">'.$description.'</dd>';
+        echo '<dt class="as-list-title col-'.$title_width.'">'.$title.'</dt>';
+        echo '<dd class="as-list-desc col-'.($title_width < 12 ? 12-$title_width : 12).'">'.$description.'</dd>';
     } else {
         echo '<li class="'.$class_item.'">';
+        echo '<div class="list-item-inner'.$class_item_inner.'">';
         echo $title ? '<'.$title_html_element.' class="as-list-title">'. $title . '</'.$title_html_element.'>' : '';
         echo $description ? '<div class="as-list-desc">'. $description . '</div>' : '';
+        echo '</div>';
         echo '</li>';
     }
 }

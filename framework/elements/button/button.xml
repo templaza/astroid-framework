@@ -42,7 +42,9 @@
                     <option value="">Default</option>
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
+                    <option value="custom">Custom</option>
                 </field>
+                <field astroidgroup="widget_styles" ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                 <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>

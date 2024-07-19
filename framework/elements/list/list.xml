@@ -38,6 +38,7 @@
                     <option value="list-group-flush">List Group Flush</option>
                     <option value="list-group-numbered">List Group Numbered</option>
                 </field>
+                <field astroidgroup="misc_options" ngShow="[list_style]=='list-description'" name="title_width" type="astroidrange" min="1" max="12" step="1" default="3" label="ASTROID_WIDGET_HEIGHT_LABEL" postfix="cols" />
 
                 <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h6">
                     <option value="h1">h1</option>
