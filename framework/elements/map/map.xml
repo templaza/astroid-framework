@@ -40,7 +40,7 @@
                     </form>
                 </field>
             </fieldset>
-            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
                     <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
                     <option value="0">ASTROID_WIDGET_NO_PAGES</option>

@@ -8,13 +8,13 @@
  */
 
 namespace Astroid;
+use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Component\Includer;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
@@ -68,6 +68,105 @@ class Admin extends Helper\Client
             throw new \Exception("`{$func}` function not found in Astroid\\Helper\\Media");
         }
         $this->response(Helper\Media::$func());
+    }
+
+    protected function getLayouts()
+    {
+        $app = Factory::getApplication();
+        $template_name  = $app->input->get('template', NULL, 'RAW');
+        $type           = $app->input->get('type', 'layouts', 'RAW');
+        $this->response(Layout::getDatalayouts($template_name, $type));
+    }
+
+    protected function getLayout()
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $filename       = $app->input->get('name', NULL, 'RAW');
+            $type           = $app->input->get('type', 'layouts', 'RAW');
+
+            $this->response(Layout::getDataLayout($filename, $template_name, $type));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    protected function saveLayout() {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $filename       = $app->input->get('name', NULL, 'RAW');
+            $type           = $app->input->get('type', 'layouts', 'RAW');
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/$type/";
+
+            $layout = [
+                'title' => $app->input->post->get('title', '', 'RAW'),
+                'desc' => $app->input->post->get('desc', '', 'RAW'),
+                'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
+                'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
+            ];
+            $default = $app->input->post->get('default', '', 'RAW');
+
+            if ($default === 'true') {
+                $layout_name = 'default';
+            } elseif (!$filename) {
+                $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
+            } else {
+                $layout_name = $filename;
+            }
+
+            $fieldName = 'thumbnail';
+
+            $fileError = isset($_FILES[$fieldName]) ? $_FILES[$fieldName]['error'] : null;
+
+            if ($fileError !== null) {
+                $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+                $uploadedFileExtension = $pathinfo['extension'];
+                $uploadedFileExtension = strtolower($uploadedFileExtension);
+                $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
+                if (!in_array($uploadedFileExtension, $validExts)) {
+                    throw new \Exception(Text::_('INVALID EXTENSION'));
+                }
+
+                $fileTemp       = $_FILES[$fieldName]['tmp_name'];
+                $thumbnail      = file_get_contents($fileTemp);
+                if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'])) {
+                    unlink(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
+                }
+                $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
+
+                Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'], $thumbnail);
+                unlink($fileTemp);
+            }
+            Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
+            $this->response($layout_name);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    protected function deleteLayouts()
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app            = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $layouts        = $app->input->get('layouts', array(), 'RAW');
+            $type           = $app->input->get('type', 'layouts', 'RAW');
+
+            $this->response(Layout::deleteDatalayouts($layouts, $template_name, $type));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
     }
 
     protected function getcategories()
@@ -135,26 +234,8 @@ class Admin extends Helper\Client
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
-        $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
 
-        $config = [
-            'site_url'              =>  Uri::root(),
-            'base_url'              =>  Uri::base(true),
-            'astroid_media_url'     => ASTROID_MEDIA_URL,
-            'template_name'         => $template->template.'-'.$template->id,
-            'tpl_template_name'     => $template->template,
-            'template_title'        => $template->title,
-            'enable_widget'         => $enable_widget,
-            'color_mode'            => $plg_color_mode,
-            'astroid_version'       => Helper\Constants::$astroid_version,
-            'astroid_link'          => Helper\Constants::$astroid_link,
-            'document_link'         => Helper\Constants::$documentation_link,
-            'video_tutorial'        => Helper\Constants::$video_tutorial_link,
-            'github_link'           => Helper\Constants::$github_link,
-            'jtemplate_link'        => Helper::getJoomlaUrl(),
-            'astroid_admin_token'   => Session::getFormToken(),
-            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id])
-        ];
+        $config = Helper\Constants::manager_configs();
         $document->addScriptOptions('astroid_lib', $config);
 
         // Get Language
@@ -180,12 +261,10 @@ class Admin extends Helper\Client
                 // Ordering
                 $ordering = $field->getAttribute('after', '');
                 if (empty($ordering)) {
-//                    $field->ordering = $order++;
                     $fieldsArr[] = $field;
                     $orders[$field->name] = $order++;
                 } else {
                     if (isset($orders[$ordering])) {
-//                        $field->ordering = $orders[$ordering];
                         $fieldsArr[] = $field;
                         $orders[$field->name] = $orders[$ordering];
 
@@ -202,15 +281,13 @@ class Admin extends Helper\Client
                 $fieldsArr[] = $reorder;
             }
 
-//            usort($fieldsArr, 'Astroid\Helper::orderingFields');
-
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {
                     if (!$plg_color_mode && $field->fieldname == 'colormode') {
                         continue;
                     }
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', '')];
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', ''), 'option-type' => $field->getAttribute('option-type', '')];
                 }
             }
 
@@ -272,6 +349,17 @@ class Admin extends Helper\Client
         $this->response($html);
     }
 
+    protected function getArticleFormTemplate()
+    {
+        try {
+            $app            = Factory::getApplication();
+            $this->response(Helper::getFormTemplate('article', $app->input->get('id', NULL, 'RAW')));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
     protected function clearCache()
     {
 	    $app = Factory::getApplication();
@@ -327,9 +415,7 @@ class Admin extends Helper\Client
     public function importpreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JINVALID_TOKEN'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -397,9 +483,7 @@ class Admin extends Helper\Client
     public function loadpreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JINVALID_TOKEN'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -422,9 +506,7 @@ class Admin extends Helper\Client
     public function removepreset() {
         try {
             // Check for request forgeries.
-            if (!Session::checkToken()) {
-                throw new \Exception(Text::_('JOLLYANY_AJAX_ERROR'));
-            }
+            $this->checkAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";

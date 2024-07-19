@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_ELEMENTS_ARTICLE_TITLE</title>
+    <description>ASTROID_ELEMENTS_ARTICLE_TITLE</description>
+    <icon>fa-solid fa-heading</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
+    <element_type>article</element_type>
+    <multiple>false</multiple>
+</element>

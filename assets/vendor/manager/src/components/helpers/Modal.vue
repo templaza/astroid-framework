@@ -84,7 +84,7 @@ function sidebarClick(id) {
                         <button class="nav-link" :class="{'active' : idx === 0}" :id="fieldset.name+`-tab-`+props.element.id" data-bs-toggle="tab" :data-bs-target="`#`+fieldset.name+`-tab-pane-`+props.element.id" type="button" role="tab" aria-selected="true">{{ fieldset.label }}</button>
                     </li>
                 </ul>
-                <div class="tab-content modal-body" :id="`modal-tab-content-`+props.element.id">
+                <div class="tab-content modal-body p-4" :id="`modal-tab-content-`+props.element.id">
                     <div v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="tab-pane fade" :class="{'show active' : idx === 0}" :id="fieldset.name+`-tab-pane-`+props.element.id" role="tabpanel" :aria-labelledby="fieldset.name+`-tab`" tabindex="0">
                         <nav v-if="Object.keys(fieldset.childs).length > 3" class="nav nav-pills d-none d-xl-block flex-column position-fixed overflow-hidden top-50 start-0 translate-middle-y rounded-end-4">
                             <a v-for="(group, gid) in fieldset.childs" :key="gid" class="nav-link bg-body-tertiary rounded-0" v-show="checkShowGroup(group.fields)" @click.prevent="sidebarClick(`group-`+gid+`-`+props.element.id)" href="#" :class="{'d-none' : gid === 'none' || group.title === ''}">{{ group.title }}</a>

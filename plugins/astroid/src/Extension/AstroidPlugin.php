@@ -8,6 +8,7 @@
  */
 
 namespace Joomla\Plugin\System\Astroid\Extension;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 
@@ -95,6 +96,37 @@ final class AstroidPlugin extends CMSPlugin
             ob_end_clean();
         }
         echo Helper::str_lreplace('</body>', Helper::debug() . '</body>', $contents);
+    }
+
+    public function onContentPrepareData($context, $user)
+    {
+        // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
+        if ($context == 'com_users.profile') {
+            $params = new \Joomla\Registry\Registry();
+            $params->loadArray($user->params);
+            if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
+                $params->remove('astroid_author_social');
+                $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
+                $object = new \stdClass();
+                $object->id = $user->id;
+                $object->params = $params->toString();
+                $db->updateObject('#__users', $object, 'id');
+            }
+        }
+    }
+
+    public function onUserAfterSave($user, $isnew, $success, $msg): void
+    {
+        // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
+        $params = new \Joomla\Registry\Registry($user['params']);
+        if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
+            $params->remove('astroid_author_social');
+            $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
+            $object = new \stdClass();
+            $object->id = $user['id'];
+            $object->params = $params->toString();
+            $db->updateObject('#__users', $object, 'id');
+        }
     }
 
     public function onInstallerAfterInstaller($installmodel, $package, $installer, $result)

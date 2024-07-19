@@ -14,6 +14,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Astroid\Element\Layout;
 
 defined('_JEXEC') or die;
 
@@ -25,11 +26,15 @@ class Article
     public $params;
     public $attribs;
     public $template;
+    public $other_params = null;
     public $category_params;
     public array $styles;
 
-    function __construct($article, $categoryView = false)
+    function __construct($article, $categoryView = false, $other_params = null)
     {
+        if (!$categoryView) {
+            $this->other_params = $other_params;
+        }
         $this->article = $article;
         $attribs = new Registry();
         $attribs->loadString($this->article->attribs, 'JSON');
@@ -143,17 +148,24 @@ class Article
 
     public function render($position = 'above-title')
     {
-        if ($this->type == 'regular') {
-            return false;
-        }
+        if ($position) {
+            if ($this->type == 'regular') {
+                return false;
+            }
 
-        $contenPosition = $this->attribs->get('astroid_article_content_position', 'above-title');
+            $contenPosition = $this->attribs->get('astroid_article_content_position', 'above-title');
 
-        if ($contenPosition != $position) {
-            return false;
+            if ($contenPosition != $position) {
+                return false;
+            }
         }
 
         Framework::getDocument()->include('blog.' . $this->type, ['article' => $this->article]);
+    }
+
+    public function renderLayout() {
+        $article_layout = json_decode($this->category_params->get('astroid_article_layout', '{"template":"","layout":""}'));
+        echo Layout::renderSublayout($article_layout->layout, $article_layout->template, 'article_layouts', ['article' => $this]);
     }
 
     // Read Time

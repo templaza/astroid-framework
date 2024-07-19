@@ -1,30 +1,35 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue';
+import axios from "axios";
 
 const emit = defineEmits(['update:closeElement', 'update:selectElement']);
-const props = defineProps(['form', 'system']);
+const props = defineProps(['form', 'system', 'source']);
 const constant = inject('constant', {});
 const currentFilter = ref('');
 const addons = ref([]);
-let filters = ['System'];
+const filters = ref(['System']);
 let orders = {'System':0}
 let counter = {'System':0};
+const sublayouts  = ref([]);
 onMounted(()=> {
     let addon = {};
     Object.keys(props.form).every(key => {
         if (props.form[key].type === 'addon') {
             addon = props.form[key].info;
-            if (['component', 'banner', 'message'].includes(addon.type) && !props.system[addon.type]) {
+            if (typeof props.system[addon.type] !== 'undefined' && !props.system[addon.type]) {
+                return true;
+            }
+            if ((props.source !== `article_layouts` && addon.element_type === 'article') || (props.source === 'article_layouts' && addon.element_type === 'system')) {
                 return true;
             }
             if (addon.element_type === 'widget' && parseInt(constant.enable_widget) === 0) {
                 return true;
             }
             addon.category.forEach(cat => {
-                if (filters.includes(cat)) {
+                if (filters.value.includes(cat)) {
                     counter[cat]++;
                 } else {
-                    filters.push(cat);
+                    filters.value.push(cat);
                     orders[cat] = Object.keys(orders).length;
                     counter[cat] = 1;
                 }
@@ -36,7 +41,34 @@ onMounted(()=> {
             return true;
         }
     });
+    getSublayouts();
 })
+
+function getSublayouts() {
+    let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayouts&template="+constant.tpl_template_name+"&ts="+Date.now();
+    if (process.env.NODE_ENV === 'development') {
+        url = "layout_ajax.txt?ts="+Date.now();
+    }
+    axios.get(url)
+    .then(function (response) {
+        if (response.data.status === 'success') {
+            sublayouts.value = response.data.data;
+            if (sublayouts.value.length) {
+                filters.value.push('Sublayouts');
+                orders['Sublayouts'] = Object.keys(orders).length;
+                counter['Sublayouts'] = sublayouts.value.length;
+                sublayouts.value.forEach(sublayout => {
+                    sublayout.type = 'sublayout';
+                });
+            }
+        }
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
+}
+
 function selectElement(addon) {
     emit('update:selectElement', addon);
     emit('update:closeElement');
@@ -72,6 +104,13 @@ function selectElement(addon) {
                                     <div class="addon-block card card-default card-body align-items-center justify-content-center" @click="selectElement(addon)">
                                         <i class="fa-2x mb-2 text-body-tertiary" :class="addon.icon"></i>
                                         <div class="form-text">{{ addon.title }}</div>
+                                    </div>
+                                </div>
+                                <div v-for="sublayout in sublayouts" v-show="currentFilter === '' || currentFilter === 'Sublayouts'" :class="`order-` + orders['Sublayouts']">
+                                    <div class="addon-block card card-default card-body align-items-center justify-content-center" @click="selectElement(sublayout)">
+                                        <img v-if="sublayout.thumbnail !== ``" class="img-fluid" :src="sublayout.thumbnail" :alt="sublayout.title">
+                                        <i v-else class="fa-2x mb-2 text-body-tertiary fas fa-cubes"></i>
+                                        <div class="form-text">{{ sublayout.title }}</div>
                                     </div>
                                 </div>
                             </div>

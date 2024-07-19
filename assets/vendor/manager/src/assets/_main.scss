@@ -93,13 +93,20 @@
 .as-content {
   grid-area: content;
   min-width: 1px;
+  margin-bottom: 2rem;
   >h2 {
     --bs-heading-color: var(--bs-emphasis-color);
     margin-top: 3rem;
+    &:first-child {
+      margin-top: 0;
+    }
   }
   >h3 {
     --bs-heading-color: var(--bs-emphasis-color);
     margin-top: 2rem;
+    &:first-child {
+      margin-top: 0;
+    }
   }
   >h4 {
     --bs-heading-color: var(--bs-emphasis-color);

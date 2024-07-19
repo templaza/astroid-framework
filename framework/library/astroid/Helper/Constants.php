@@ -9,22 +9,61 @@
 
 namespace Astroid\Helper;
 
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Astroid\Framework;
+use Astroid\Helper;
+
 defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.0.15';
-    public static $fontawesome_version = '6.5.2';
+    public static $astroid_version = '3.1.0';
+    public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
+    public static $donate_link = 'https://ko-fi.com/astroidframework';
     public static $github_link = 'https://github.com/templaza/astroid-framework';
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
     public static $templates_link = 'https://astroidframe.work/partners';
+
+    /**
+     * Return configurations of Manager
+     * @return array
+     */
+    public static function manager_configs($mode = '') : array
+    {
+        $template = Framework::getTemplate();
+        $pluginParams   =   Helper::getPluginParams();
+        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
+        $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
+        return [
+            'site_url'              =>  Uri::root(),
+            'base_url'              =>  Uri::base(true),
+            'astroid_media_url'     => ASTROID_MEDIA_URL,
+            'template_id'           => $template->id,
+            'template_name'         => $template->template.'-'.$template->id,
+            'tpl_template_name'     => $template->template,
+            'template_title'        => $template->title,
+            'enable_widget'         => $enable_widget,
+            'color_mode'            => $plg_color_mode,
+            'astroid_version'       => self::$astroid_version,
+            'astroid_link'          => self::$astroid_link,
+            'document_link'         => self::$documentation_link,
+            'video_tutorial'        => self::$video_tutorial_link,
+            'donate_link'           => self::$donate_link,
+            'github_link'           => self::$github_link,
+            'jtemplate_link'        => Helper::getJoomlaUrl(),
+            'astroid_admin_token'   => Session::getFormToken(),
+            'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
+            'form_template'         => Helper::getFormTemplate($mode)
+        ];
+    }
 
     public static $bootstrap_colors = [
         '' => 'TPL_COLOR_DEFAULT',
@@ -53,6 +92,23 @@ class Constants
         'ASTROID_TEMPLATE_PREVIEW',
         'TPL_ASTROID_BACK_TO_JOOMLA',
         'ASTROID_TEMPLATE_CLOSE',
+        'JGLOBAL_CONFIRM_DELETE',
+        'JGLOBAL_TITLE',
+        'JGLOBAL_DESCRIPTION',
+        'JAPPLY',
+        'JSAVE',
+        'JCANCEL',
+        'ASTROID_BACK',
+        'TPL_ASTROID_LAYOUT_INFO',
+        'TPL_ASTROID_EDIT_INFO',
+        'TPL_ASTROID_NO_LAYOUT_INFO',
+        'TPL_ASTROID_LOAD_DEFAULT_SETTINGS',
+        'TPL_ASTROID_SELECT_YOUR_THUMBNAIL',
+        'TPL_ASTROID_THUMBNAIL',
+        'TPL_ASTROID_NEW_LAYOUT',
+        'TPL_ASTROID_DELETE_LAYOUT',
+        'TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING',
+        'TPL_ASTROID_SAVE_AS_DEFAULT'
     ];
 
     public static $animations = [

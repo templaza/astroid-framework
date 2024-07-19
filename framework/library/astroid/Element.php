@@ -10,6 +10,9 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
+
 defined('_JEXEC') or die;
 
 class Element
@@ -24,7 +27,7 @@ class Element
     public bool $multiple = true;
     public string $classname = '';
     public string $description = '';
-    public string $element_type = 'system';
+    public string $element_type = 'layout';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
     protected string $layout = '';
@@ -35,10 +38,12 @@ class Element
     protected mixed $form = null;
     protected mixed $raw_data = null;
     protected array $subform = [];
+    protected string $mode = '';
 
-    public function __construct($type = '', $data = [], $template = null)
+    public function __construct($type = '', $data = [], $template = null, $mode = '')
     {
         $this->type = $type;
+        $this->mode = $mode;
         if (!empty($data)) {
             if ($type == 'subform') {
                 $this->subform = $data;
@@ -56,11 +61,17 @@ class Element
             $this->template = $template;
         }
 
+        $template_name = $this->template->isAstroid ? $this->template->template : '';
+        if (empty($template_name) && defined('ASTROID_TEMPLATE_NAME')) {
+            $template_name = ASTROID_TEMPLATE_NAME;
+        }
+
         $this->setClassName();
         $this->template->setLog("Initiated Element : " . $type, "success");
-        if ($type !== 'subform') {
-            $library_elements_directory = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'framework' . '/' . 'elements' . '/';
-            $template_elements_directory = JPATH_SITE . '/' . 'templates' . '/' . $this->template->template . '/' . 'astroid' . '/' . 'elements' . '/';
+        if ($type !== 'subform' && $type !=='sublayout') {
+            $library_elements_directory = Path::clean(JPATH_LIBRARIES . '/astroid/framework/elements/');
+            $plugin_elements_directory = Path::clean(JPATH_SITE . '/plugins/astroid/');
+            $template_elements_directory = Path::clean(JPATH_SITE . '/media/templates/site/' . $template_name . '/astroid/elements/');
 
             switch ($this->type) {
                 case 'section':
@@ -75,22 +86,38 @@ class Element
                 default:
                     if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
                         $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
+                    } elseif ($this->mode === 'article_data') {
+                        $this->default_xml_file = $library_elements_directory . 'default_article.xml';
                     } else {
                         $this->default_xml_file = $library_elements_directory . 'default.xml';
                     }
                     break;
             }
 
-            if (file_exists($template_elements_directory . $this->type . '/' . $this->type . '.xml')) {
-                $this->xml_file = $template_elements_directory . $this->type . '/' . $this->type . '.xml';
-                $this->layout = $template_elements_directory . $this->type . '/' . $this->type . '.php';
-            } else if (file_exists($library_elements_directory . $this->type . '/' . $this->type . '.xml')) {
-                $this->xml_file = $library_elements_directory . $this->type . '/' . $this->type . '.xml';
-                $this->layout = $library_elements_directory . $this->type . '/' . $this->type . '.php';
+            if (file_exists(Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
+                $this->xml_file = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml');
+                $this->layout = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.php');
+            }
+
+            if (file_exists($plugin_elements_directory)) {
+                $plugin_folders = Folder::folders($plugin_elements_directory);
+                if (count($plugin_folders)) {
+                    foreach ($plugin_folders as $plugin_folder) {
+                        if (file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
+                            $this->xml_file = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml');
+                            $this->layout = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.php');
+                        }
+                    }
+                }
+            }
+
+            if (file_exists(Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
+                $this->xml_file = Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.xml');
+                $this->layout = Path::clean($template_elements_directory . $this->type . '/' . $this->type . '.php');
             }
         }
 
-        if (!defined('ASTROID_FRONTEND')) {
+        if (!defined('ASTROID_FRONTEND') && $this->type !='sublayout') {
             if ($this->xml_file) {
                 $this->loadXML();
             }
@@ -181,49 +208,67 @@ class Element
 
     public function renderJson($type = 'system'): array
     {
-        $form = $this->getForm();
-        $fieldsets = $form->getFieldsets();
-        $form_content = array();
-        $model_form = [];
-        foreach ($fieldsets as $key => $fieldset) {
-            $fields = $form->getFieldset($key);
-            $groups = [];
-            foreach ($fields as $key => $field) {
-                if ($field->type == 'astroidgroup') {
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => []];
-                }
-            }
+        switch ($type) {
+            case 'sublayout':
+                return array('info' => [
+                    'type' => 'sublayout',
+                    'title' => 'Sublayouts',
+                    'icon' => 'fas fa-cubes',
+                ], 'type' => $type);
+                break;
+            default:
+                $form = $this->getForm();
+                $fieldsets = $form->getFieldsets();
+                $form_content = array();
+                $model_form = [];
+                foreach ($fieldsets as $key => $fieldset) {
+                    if ($this->mode === 'article_data' && isset($fieldset->articleData) && $fieldset->articleData === 'false') {
+                        continue;
+                    }
+                    $fields = $form->getFieldset($key);
+                    $groups = [];
+                    foreach ($fields as $key => $field) {
+                        if ($field->type == 'astroidgroup') {
+                            $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => []];
+                        }
+                    }
 
-            foreach ($fields as $key => $field) {
-                if ($field->type == 'astroidgroup') {
-                    continue;
-                }
-                $model_form[$field->fieldname] = $field->value;
-                $field_group = $field->getAttribute('astroidgroup', 'none');
-                $js_input   =   json_decode($field->input);
+                    foreach ($fields as $key => $field) {
+                        if ($field->type == 'astroidgroup') {
+                            continue;
+                        }
+                        if ($this->mode === 'article_data' && $field->getAttribute('articleData', 'true') === 'false') {
+                            continue;
+                        }
 
-                $field_tmp  =   [
-                    'id'            =>  $field->id,
-                    'name'          =>  $field->fieldname,
-                    'value'         =>  $field->value,
-                    'label'         =>  Text::_($field->getAttribute('label')),
-                    'description'   =>  Text::_($field->getAttribute('description')),
-                    'input'         =>  $field->input,
-                    'type'          =>  'string',
-                    'group'         =>  $fieldset->name,
-                    'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
-                ];
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $field_tmp['input']     =   $js_input;
-                    $field_tmp['type']      =   'json';
+                        $model_form[$field->fieldname] = $field->value;
+                        $field_group = $field->getAttribute('astroidgroup', 'none');
+                        $js_input   =   json_decode($field->input);
+
+                        $field_tmp  =   [
+                            'id'            =>  $field->id,
+                            'name'          =>  $field->fieldname,
+                            'value'         =>  $field->value,
+                            'label'         =>  Text::_($field->getAttribute('label')),
+                            'description'   =>  Text::_($field->getAttribute('description')),
+                            'input'         =>  $field->input,
+                            'type'          =>  'string',
+                            'group'         =>  $fieldset->name,
+                            'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow'))
+                        ];
+                        if (json_last_error() === JSON_ERROR_NONE) {
+                            $field_tmp['input']     =   $js_input;
+                            $field_tmp['type']      =   'json';
+                        }
+                        $groups[$field_group]['fields'][] = $field_tmp;
+                    }
+                    $fieldset->label    = Text::_($fieldset->label);
+                    $fieldset->childs   = $groups;
+                    $form_content[] = $fieldset;
                 }
-                $groups[$field_group]['fields'][] = $field_tmp;
-            }
-            $fieldset->label    = Text::_($fieldset->label);
-            $fieldset->childs   = $groups;
-            $form_content[] = $fieldset;
+                return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
+                break;
         }
-        return array('content' => $form_content, 'info' => $this->getInfo(), 'type' => $type);
     }
 
     public function getForm()

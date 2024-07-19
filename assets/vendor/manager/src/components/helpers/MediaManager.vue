@@ -164,12 +164,12 @@ function uploadReset() {
                     <h5 class="modal-title"><i class="fas fa-folder"></i> / {{ _showDirLocation.join(' / ') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" :id="props.field.input.id+'close'"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <div v-if="!_uploadForm" class="row row-cols-2 row-cols-lg-4 row-cols-xl-5 g-3">
-                      <div v-for="item in _showMediaContent" :key="item.id" class="col">
-                        <div class="card card-default media-icon justify-content-center align-items-center" :class="item.type+`-type`" @click="selectMedia(item)">
+                      <div v-for="item in _showMediaContent" :key="item.id" class="col p-4 text-center">
+                        <div class="card card-default media-icon justify-content-center align-items-center border" :class="item.type+`-type`" @click="selectMedia(item)">
                           <i v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :class="item.icon" class="icon-folder fa-3x"></i>
-                          <img v-else-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" :alt="item.name" />
+                          <img v-else-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" class="img-fluid" :alt="item.name" />
                           <i v-else-if="item.type === 'video'" class="fa-solid fa-video fa-3x"></i>
                         </div>
                         <div v-if="item.name !== undefined && item.name" class="form-text">{{ item.name }}</div>

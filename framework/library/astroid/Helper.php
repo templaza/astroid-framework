@@ -12,12 +12,15 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Version;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
@@ -179,8 +182,8 @@ class Helper
 
     public static function triggerEvent($name, $data = [])
     {
-        PluginHelper::importPlugin('astroid');
-        Factory::getApplication()->triggerEvent($name, $data);
+        $event     = new Helper\Events($name, $data);
+        Factory::getApplication()->getDispatcher()->dispatch($name, $event);
     }
 
     public static function clearCacheByTemplate($template)
@@ -261,12 +264,7 @@ class Helper
     public static function putContents($file, $content, $append = false)
     {
         Framework::getReporter('Logs')->add('Saved Cached to <code>' . str_replace(JPATH_SITE . '/', '', $file) . '</code>');
-        self::createDir($file);
-        if ($append) {
-            file_put_contents($file, $content, FILE_APPEND);
-        } else {
-            file_put_contents($file, $content);
-        }
+        File::write($file, $content, false, $append);
     }
 
     public static function minifyCSS($css)
@@ -320,7 +318,7 @@ class Helper
 
     public static function getModules()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = "SELECT #__modules.*, #__usergroups.title as access_title FROM #__modules JOIN #__usergroups ON #__usergroups.id=#__modules.access WHERE #__modules.client_id=0";
 
         $db->setQuery($query);
@@ -334,27 +332,56 @@ class Helper
         return $return;
     }
 
-    public static function getAllAstroidElements()
+    public static function getAllAstroidElements($mode = '', $template_id = null)
     {
-        $template = Framework::getTemplate();
+        $template = Framework::getTemplate($template_id);
+        $template_name = '';
+        if ($template->isAstroid) {
+            $template_name = $template->template;
+        } elseif (defined('ASTROID_TEMPLATE_NAME')) {
+            $template_name = ASTROID_TEMPLATE_NAME;
+        }
+
         // Template Directories
         $elements_dir = JPATH_LIBRARIES . '/astroid/framework/elements/';
-        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template->template . '/astroid/elements/';
+        $plugin_elements_dir = JPATH_SITE . "/plugins/astroid";
+        $template_elements_dir = JPATH_SITE . '/media/templates/site/' . $template_name . '/astroid/elements/';
 
         // Getting Elements from Template Directories
-        $elements = array_filter(glob($elements_dir . '*'), 'is_dir');
-        $template_elements = array_filter(glob($template_elements_dir . '*'), 'is_dir');
+        $elements = Folder::folders($elements_dir, '.', false, true);
 
-        // Merging Elements
-        $elements = array_merge($elements, $template_elements);
+        if (file_exists(Path::clean($plugin_elements_dir))) {
+            $plugin_folders = Folder::folders($plugin_elements_dir);
+            if (count($plugin_folders)) {
+                foreach ($plugin_folders as $plugin_folder) {
+                    if (file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
+                        // Merging Plugin Elements
+                        $elements = array_merge($elements, Folder::folders($plugin_elements_dir . '/' . $plugin_folder . '/elements/', '.', false, true));
+                    }
+                }
+            }
+        }
+
+        if ($template_name && file_exists(Path::clean($template_elements_dir))) {
+            $template_elements = Folder::folders($template_elements_dir, '.', false, true);
+            // Merging Elements
+            $elements = array_merge($elements, $template_elements);
+        }
 
         $return = array();
 
         foreach ($elements as $element_dir) {
-            $xmlfile = $element_dir . '/' . (str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir))) . '.xml';
+            // String manipulation should be faster than pathinfo() on newer PHP versions.
+            $slash = strrpos($element_dir, DIRECTORY_SEPARATOR);
+
+            if ($slash === false) {
+                continue;
+            }
+
+            $type = substr($element_dir, $slash + 1);
+            $xmlfile = $element_dir . '/' . $type . '.xml';
             if (file_exists($xmlfile)) {
-                $type = str_replace($template_elements_dir, '', str_replace($elements_dir, '', $element_dir));
-                $element = new Element($type, [], $template);
+                $element = new Element($type, [], $template, $mode);
                 $return[] = $element;
             }
         }
@@ -603,6 +630,22 @@ class Helper
         }
 
         return $subject;
+    }
+
+    public static function getFormTemplate($mode = '', $template_id = null) {
+        $form_template = array();
+        $astroidElements = Helper::getAllAstroidElements($mode, $template_id);
+        foreach ($astroidElements as $astroidElement) {
+            $form_template[$astroidElement->type] = $astroidElement->renderJson('addon');
+        }
+        if ($mode !== 'article_data') {
+            $template = $template_id !== null ? Framework::getTemplate($template_id) : Framework::getTemplate();
+            foreach (['section', 'row', 'column', 'sublayout'] as $form_type) {
+                $form = new Element($form_type, [], $template, $mode);
+                $form_template[$form_type] = $form_type == 'sublayout' ? $form->renderJson('sublayout') : $form->renderJson();
+            }
+        }
+        return $form_template;
     }
 
     public static function matchFilename($haystack, $needles)

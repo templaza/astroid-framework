@@ -29,6 +29,7 @@ $gutter         =   $params->get('gutter', 'lg');
 $border_radius  =   $params->get('border_radius', '');
 $bd_radius      =   $border_radius ? ' ' . $border_radius : '';
 $button_size    =   $params->get('button_size', '');
+
 $button_size    =   $button_size ? ' '. $button_size : '';
 echo '<div class="'.($button_group ? 'btn-group' : 'as-gutter-' . $gutter).'" role="group">';
 foreach ($buttons as $key => $button) {
@@ -46,3 +47,14 @@ foreach ($buttons as $key => $button) {
     echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $button_size . $bd_radius . '"'.$link_target.'>'.$btn_params['title'].'</a>';
 }
 echo '</div>';
+
+// Item Padding
+if (trim($button_size) == 'custom') {
+    $item_padding   =   $params->get('btn_padding', '');
+    if (!empty($item_padding)) {
+        $padding = \json_decode($item_padding, false);
+        foreach ($padding as $device => $props) {
+            $element->style->child('.btn')->addStyle(Style::spacingValue($props, "padding"), $device);
+        }
+    }
+}

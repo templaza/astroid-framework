@@ -10,7 +10,10 @@
 namespace Astroid\Element;
 
 use Astroid\Framework;
+use Astroid\Helper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -22,22 +25,40 @@ class Element extends BaseElement
         $this->section = $section;
         $this->row = $row;
         $this->column = $column;
-        parent::__construct($data, $section->devices);
+        parent::__construct($data, $section->devices, $section->options);
     }
 
     public function render()
     {
         $this->_decorateSection();
-        $this->content = $this->_content();
+        if ($this->type == 'sublayout') {
+            $this->content = Layout::renderSublayout($this->params->get('source', ''));
+        } else {
+            $this->content = $this->_content();
+        }
         return $this->wrap();
     }
 
     public function _content()
     {
+        $app            = Factory::getApplication();
+        $option         = $app->input->get('option', '', 'RAW');
+        $view           = $app->input->get('view', '', 'RAW');
+        $id             = $app->input->get('id', null, 'RAW');
+        if ($option === 'com_content' && $view === 'article' && !empty($id)) {
+            $template_name = Framework::getTemplate()->template;
+            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $id . '_' . $this->unqid . '.json');
+            if (file_exists($layout_path)) {
+                $article_json = file_get_contents($layout_path);
+                $article_data = json_decode($article_json, true);
+                $article_params = Helper::loadParams($article_data['params']);
+                $this->params->merge($article_params);
+            }
+        }
         $layout = Framework::getTemplate()->getElementLayout($this->type);
         $pathinfo = pathinfo($layout);
         $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
-        return $layout->render(['params' => $this->params, 'element' => $this]);
+        return $layout->render(['params' => $this->params, 'element' => $this, 'options' => $this->options]);
     }
 
     public function _decorateSection()
