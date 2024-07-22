@@ -269,7 +269,6 @@ if ($enable_slider) {
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 }
 
-$style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
