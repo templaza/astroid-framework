@@ -1,0 +1,32 @@
+.fields-container {
+  list-style: none;
+  padding: 0;
+  .field-label {
+    display: inline-block;
+    min-width: 30%;
+    font-weight: bolder;
+  }
+}
+.blog-item {
+  .fields-container {
+    .field-entry:not(:last-child) {
+      border-bottom: 2px dashed var(--bs-border-color);
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+    }
+  }
+}
+.item-page {
+  .fields-container {
+    @media (min-width: 768px) {
+      column-count: 2;
+    }
+    @media (min-width: 1200px) {
+      column-count: 3;
+    }
+    column-count: 1;
+    column-gap: 30px;
+    border-bottom: 2px dashed var(--bs-border-color);
+    padding-bottom: 20px;
+  }
+}

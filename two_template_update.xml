@@ -2,13 +2,13 @@
 	<update>
 		<name>Two Template</name>
 		<element>astroid_template_two</element>
-		<version>1.0.4</version>
+		<version>1.0.6</version>
 		<type>template</type>
 		<client>0</client>
 		<tags>
 			<tag>stable</tag>
 		</tags>
-		<infourl title="One Template">https://astroidframe.work/</infourl>
+		<infourl title="Two Template">https://astroidframe.work/</infourl>
 		<maintainer>Astroid Framework</maintainer>
 		<maintainerurl>https://astroidframe.work/</maintainerurl>
 		<downloads>
