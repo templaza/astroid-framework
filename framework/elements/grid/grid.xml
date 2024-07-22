@@ -343,6 +343,7 @@
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
                 </field>
+                <field astroidgroup="card_options" ngShow="[media_position]=='left' OR [media_position]=='right'" name="vertical_middle" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_VERTICAL_MIDDLE"/>
                 <field astroidgroup="card_options" name="enable_grid_match" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_GRID_MATCH"/>
                 <field astroidgroup="card_options" name="card_hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>
