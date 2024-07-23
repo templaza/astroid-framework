@@ -365,7 +365,17 @@
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_nav" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_NAVIGATION"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" type="astroidlist" name="nav_position" label="ASTROID_WIDGET_NAV_POSITION" default="">
+                    <option value="">ASTROID_WIDGET_NAV_POSITION_INSIDE</option>
+                    <option value="nav-outside">ASTROID_WIDGET_NAV_POSITION_OUTSIDE</option>
+                </field>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_dotnav]==1" type="astroidlist" name="dot_alignment" label="ASTROID_WIDGET_DOT_ALIGNMENT" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="left">JGLOBAL_LEFT</option>
+                    <option value="center">JGLOBAL_CENTER</option>
+                    <option value="right">JGLOBAL_RIGHT</option>
+                </field>
 
                 <field astroidgroup="avatar_options" type="astroidlist" name="avatar_position" label="ASTROID_WIDGET_TESTIMONIALS_AVATAR_POSITION_LABEL" default="top">
                     <option value="top">ASTROID_TOP</option>
