@@ -687,7 +687,7 @@ class Article
             $query = "SELECT `params` FROM `#__categories` WHERE `id`=" . $this->article->catid;
             $db->setQuery($query);
             $result = $db->loadObject();
-            if (!empty($result)) {
+            if (!empty($result) && !empty($result->params)) {
                 $params->loadString($result->params, 'JSON');
             }
         }
