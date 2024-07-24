@@ -21,7 +21,7 @@
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="show_rel_video" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SHOW_RELATED_VIDEOS"/>
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="no_cookie" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_NO_COOKIE"/>
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="youtube_shorts" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ADD_YOUTUBE_SHORTS"/>
-                <field astroidgroup="widget_styles" ngShow="[video_type]=='url' AND [youtube_shorts]==1" type="astroidlist" name="aspect_ratio" label="ASTROID_WIDGET_YOUTUBE_ASPECT_RATIO" default="16x9">
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" type="astroidlist" name="aspect_ratio" label="ASTROID_WIDGET_YOUTUBE_ASPECT_RATIO" default="16x9">
                     <option value="1x1">1x1</option>
                     <option value="4x3">4x3</option>
                     <option value="16x9">16x9</option>
