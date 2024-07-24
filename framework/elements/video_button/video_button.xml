@@ -2,14 +2,14 @@
 <element>
     <title>ASTROID_WIDGET_VIDEO_BUTTON_LABEL</title>
     <description>ASTROID_WIDGET_VIDEO_BUTTON_DESC</description>
-    <icon>fa-solid fa-video</icon>
+    <icon>fa-solid fa-play</icon>
     <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
     <element_type>widget</element_type>
     <form>
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
-                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/@astroidframework2932"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/watch?v=xxxxx"/>
                 <field astroidgroup="widget_styles" name="button_size" type="astroidrange" min="1" max="300" step="1" postfix="px" default="24" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" />
                 <field astroidgroup="widget_styles" name="ripple_color" type="astroidcolor" label="ASTROID_WIDGET_RIPPLE_COLOR_LABEL"/>
                 <field astroidgroup="widget_styles" name="width" type="astroidrange" min="10" max="500" step="1" postfix="px" default="150" label="ASTROID_WIDGET_WIDTH_LABEL" />
