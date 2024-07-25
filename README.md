@@ -3,6 +3,11 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 
 # Changelogs
 
+Version 1.0.6 - 25 July, 2024
+
+    Update Com Content SCSS
+    Add Tour Article Layout & Photography Article Layout
+
 Version 1.0.4 - 3 April, 2024
 
     Update default configuration
