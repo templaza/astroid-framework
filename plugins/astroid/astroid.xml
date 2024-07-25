@@ -56,5 +56,7 @@
          </fieldset>
       </fields>
    </config>
-   <updateservers/>
+   <updateservers>
+      <server type="extension" priority="1" name="Astroid Framework">https://raw.githubusercontent.com/templaza/astroid-framework/master/astroid_framework.xml</server>
+   </updateservers>
 </extension>
