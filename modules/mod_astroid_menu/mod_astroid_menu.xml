@@ -245,4 +245,5 @@
 			</fieldset>
 		</fields>
 	</config>
+	<updateservers/>
 </extension>
