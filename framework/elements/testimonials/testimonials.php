@@ -14,6 +14,7 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Astroid\Helper\Style;
+use Astroid\Helper;
 
 extract($displayData);
 $testimonials   = $params->get('testimonials', '');
@@ -28,13 +29,13 @@ if (!count($testimonials)) {
 $enable_slider      =   $params->get('enable_slider', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
+$nav_position       =   $params->get('nav_position', '');
+$nav_position       =   $nav_position !== '' ? ' ' . $nav_position : $nav_position;
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
+$dot_alignment      =   $params->get('dot_alignment', '');
 $interval           =   $params->get('interval', 3);
 $slide_settings     =   array();
 $slide_responsive   =   array();
-
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
 
 $row_column_cls     =   'row';
 
@@ -206,12 +207,17 @@ $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' .
 
 $overlay_text_color =   $params->get('overlay_text_color', '');
 $overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
-echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
+echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
-    $testimonial_params    =   Style::getSubFormParams($testimonial->params);
-    $media      =   '<div class="as-author-avatar d-inline-block position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . '">';
-    $media      .=  '<img class="' . ($avatar_position == 'left' || $avatar_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') .'" src="'. Astroid\Helper\Media::getPath() . '/' . $testimonial_params['avatar'].'" alt="'.$testimonial_params['title'].'">';
-    $media      .=  '</div>';
+    $testimonial_params    =   Helper::loadParams($testimonial->params);
+    $avatar =   $testimonial_params->get('avatar', '');
+    $media  =   '';
+    if ($avatar) {
+        $media      =   '<div class="as-author-avatar d-inline-block position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . '">';
+        $media      .=  '<img class="' . ($avatar_position == 'left' || $avatar_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') .'" src="'. Astroid\Helper\Media::getPath() . '/' . $avatar .'" alt="'.$testimonial_params->get('title', '').'">';
+        $media      .=  '</div>';
+    }
+
 
     echo '<div id="testimonial-'. $testimonial -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($avatar_position == 'left' || $avatar_position == 'right') {
@@ -231,23 +237,23 @@ foreach ($testimonials as $key => $testimonial) {
     if ($avatar_position == 'top') {
         echo $media;
     }
-    if (!empty($testimonial_params['message'])) {
-        echo '<div class="as-author-message">' . $testimonial_params['message'] . '</div>';
+    if (!empty($testimonial_params->get('message', ''))) {
+        echo '<div class="as-author-message">' . $testimonial_params->get('message', '') . '</div>';
     }
     if ($avatar_position == 'bottom') {
         echo $media;
     }
-    if (!empty($testimonial_params['designation']) && $designation_position == 'before') {
-        echo '<div class="as-author-designation">' . $testimonial_params['designation'] . '</div>';
+    if (!empty($testimonial_params->get('designation', '')) && $designation_position == 'before') {
+        echo '<div class="as-author-designation">' . $testimonial_params->get('designation', '') . '</div>';
     }
-    if (!empty($testimonial_params['title'])) {
-        echo '<'.$title_html_element.' class="as-author-name">'. $testimonial_params['title'] . '</'.$title_html_element.'>';
+    if (!empty($testimonial_params->get('title', ''))) {
+        echo '<'.$title_html_element.' class="as-author-name">'. $testimonial_params->get('title', '') . '</'.$title_html_element.'>';
     }
-    if (!empty($testimonial_params['designation']) && $designation_position == 'after') {
-        echo '<div class="as-author-designation">' . $testimonial_params['designation'] . '</div>';
+    if (!empty($testimonial_params->get('designation', '')) && $designation_position == 'after') {
+        echo '<div class="as-author-designation">' . $testimonial_params->get('designation', '') . '</div>';
     }
-    if (!empty($testimonial_params['link']) && !empty($testimonial_params['link_title'])) {
-        echo '<a class="as-author-url" href="'.$testimonial_params['link'].'" target="_blank">' . $testimonial_params['link_title'] . '</a>';
+    if (!empty($testimonial_params->get('link', '')) && !empty($testimonial_params->get('link_title', ''))) {
+        echo '<a class="as-author-url" href="'.$testimonial_params->get('link', '').'" target="_blank">' . $testimonial_params->get('link_title', '') . '</a>';
     }
 
     echo '</div>'; // End Card-Body
@@ -269,39 +275,39 @@ if ($enable_slider) {
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 }
 
-$style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
         $padding = \json_decode($card_padding, false);
         foreach ($padding as $device => $props) {
-            $style->child('.card-size-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
+            $element->style->child('.card-size-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
         }
     }
 }
 if (!empty($image_max_width)) {
-    $style->child('.as-author-avatar > img')->addCss('max-width', $image_max_width . 'px');
+    $element->style->child('.as-author-avatar > img')->addCss('max-width', $image_max_width . 'px');
 }
 if (!empty($title_heading_margin)) {
     $margin = \json_decode($title_heading_margin, false);
     foreach ($margin as $device => $props) {
-        $style->child('.as-author-name')->addStyle(Style::spacingValue($props, "margin"), $device);
+        $element->style->child('.as-author-name')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
 }
 if (!empty($designation_heading_margin)) {
     $margin = \json_decode($designation_heading_margin, false);
     foreach ($margin as $device => $props) {
-        $style->child('.as-author-designation')->addStyle(Style::spacingValue($props, "margin"), $device);
+        $element->style->child('.as-author-designation')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
 }
 if (!empty($content_margin)) {
     $margin = \json_decode($content_margin, false);
     foreach ($margin as $device => $props) {
-        $style->child('.as-author-message')->addStyle(Style::spacingValue($props, "margin"), $device);
+        $element->style->child('.as-author-message')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
 }
 if (!empty($image_border)) {
     Style::addBorderStyle('#'. $element->id . ' .as-author-avatar', $image_border);
 }
-$style->render();
-$style_dark->render();
+if (!empty($dot_alignment)) {
+    $element->style->child('.astroid-slick .slick-dots')->addCss('text-align', $dot_alignment);
+}

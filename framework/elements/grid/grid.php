@@ -106,6 +106,7 @@ $image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth'
 $min_height         =   $params->get('min_height', 0);
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
+$vertical_middle    =   $params->get('vertical_middle', 0);
 
 $box_shadow         =   $params->get('card_box_shadow', '');
 $box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
@@ -180,7 +181,7 @@ foreach ($grids as $key => $grid) {
 
     echo '<div id="grid-'. $grid -> id .'" class="as-grid"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($media_position == 'left' || $media_position == 'right') {
-        echo '<div class="row g-0">';
+        echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
     }
     if ($media_position != 'inside') {

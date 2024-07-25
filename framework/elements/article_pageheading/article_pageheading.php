@@ -14,6 +14,6 @@
 defined('_JEXEC') or die;
 extract($displayData);
 $item = $options['article'];
-if ($item->other_params->get('show_page_heading')) {
+if (isset($item->other_params) && $item->other_params->get('show_page_heading')) {
     echo '<h1>'.$item->other_params->get('page_heading').'</h1>';
 }

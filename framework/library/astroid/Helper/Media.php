@@ -235,8 +235,8 @@ class Media
             }
         }
 
-        $fieldName = 'file';
-        $fileError = $_FILES[$fieldName]['error'];
+        $file =   $input->files->get('file', NULL, 'raw');
+        $fileError = $file['error'];
         if ($fileError > 0) {
             switch ($fileError) {
                 case 1:
@@ -250,7 +250,7 @@ class Media
             }
         }
 
-        $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+        $pathinfo = pathinfo($file['name']);
         $uploadedFileExtension = $pathinfo['extension'];
         $uploadedFileExtension = strtolower($uploadedFileExtension);
         if ($media == 'images') {
@@ -263,7 +263,7 @@ class Media
             throw new \Exception(Text::_('INVALID EXTENSION'));
         }
 
-        $fileTemp = $_FILES[$fieldName]['tmp_name'];
+        $fileTemp = $file['tmp_name'];
 
         if ($media == 'images' && $uploadedFileExtension != 'svg') {
             $imageinfo = getimagesize($fileTemp);

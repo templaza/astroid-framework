@@ -15,5 +15,6 @@ defined('_JEXEC') or die;
 extract($displayData);
 $item = $options['article'];
 if ($item->article->params->get('access-view')) {
-    $item->render('');
+    $position = $params->get('position', 'above-title');
+    $item->render($position);
 }

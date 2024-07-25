@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_VIDEO_LABEL</title>
+    <description>ASTROID_WIDGET_VIDEO_LABEL</description>
+    <icon>fa-solid fa-video</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+
+                <field astroidgroup="general" type="astroidlist" name="video_type" label="ASTROID_WIDGET_VIDEO_TYPE" default="url">
+                    <option value="url">ASTROID_WIDGET_VIDEO_URL</option>
+                    <option value="local">ASTROID_WIDGET_VIDEO_LOCAL</option>
+                </field>
+                <field astroidgroup="general" ngShow="[video_type]=='url'" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/watch?v=xxxxx"/>
+                <field astroidgroup="general" ngShow="[video_type]=='local'" name="mp4_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_MP4"/>
+                <field astroidgroup="general" ngShow="[video_type]=='local'" name="ogv_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_OGV"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" type="astroidtext" label="ASTROID_WIDGET_VIDEO_TITLE" name="video_title"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="show_rel_video" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SHOW_RELATED_VIDEOS"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="no_cookie" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_NO_COOKIE"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="youtube_shorts" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ADD_YOUTUBE_SHORTS"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" type="astroidlist" name="aspect_ratio" label="ASTROID_WIDGET_YOUTUBE_ASPECT_RATIO" default="16x9">
+                    <option value="1x1">1x1</option>
+                    <option value="4x3">4x3</option>
+                    <option value="16x9">16x9</option>
+                    <option value="21x9">21x9</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="vimeo_show_author" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_VIMEO_SHOW_AUTHOR"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="vimeo_mute_video" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIMEO_MUTE_VIDEO"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="vimeo_show_author_profile" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_VIMEO_SHOW_AUTHOR_PROFILE"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="vimeo_show_video_title" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_VIMEO_SHOW_TITLE"/>
+
+                <field astroidgroup="widget_styles" name="show_control" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIDEO_SHOW_CONTROL"/>
+                <field astroidgroup="widget_styles" name="video_loop" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIDEO_VIDEO_LOOP"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='local'" name="video_mute" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIDEO_VIDEO_MUTE"/>
+                <field astroidgroup="widget_styles" name="autoplay_video" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_AUTOPLAY"/>
+                <field astroidgroup="widget_styles" ngShow="[video_type]=='local'" name="video_poster" type="astroidmedia" label="ASTROID_WIDGET_VIDEO_POSTER"/>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

@@ -195,7 +195,7 @@
                                     <option value="number">Number</option>
                                 </field>
                                 <field type="astroidtext" name="field_label" label="ASTROID_WIDGET_FORM_FIELDLABEL_LABEL"/>
-                                <field type="astroidtext" name="field_name" label="ASTROID_WIDGET_FORM_FIELDNAME_LABEL" description="COM_TZ_PORTFOLIO_PLUS_FORMBUILDER_FIELDNAME_DESC" />
+                                <field type="astroidtext" name="field_name" label="ASTROID_WIDGET_FORM_FIELDNAME_LABEL" description="ASTROID_WIDGET_FORM_FIELDNAME_DESC" />
                                 <field type="astroidtext" ngShow="[type]=='text' OR [type]=='email' OR [type]=='phone' OR [type]=='textarea'" name="field_placeholder" label="ASTROID_WIDGET_FORM_FIELDPLACEHOLDER_LABEL" />
                                 <field type="astroidtext" name="field_min" label="ASTROID_WIDGET_FORM_FIELDMIN_LABEL" ngShow="[type]=='range' OR [type]=='number'" />
                                 <field type="astroidtext" name="field_max" label="ASTROID_WIDGET_FORM_FIELDMAX_LABEL" ngShow="[type]=='range' OR [type]=='number'" />

@@ -67,12 +67,22 @@
       content: "\f053";
     }
   }
+  &.nav-outside {
+    .slick-next {
+      right: auto;
+      left: 100%;
+    }
+    .slick-prev {
+      left: auto;
+      right: 100%;
+    }
+  }
 
   .slick-dots {
     display: block;
     width: 100%;
     padding: 0;
-    margin: 10px 0 0;
+    margin: 10px -6px 0;
     list-style: none;
     text-align: center;
     li {

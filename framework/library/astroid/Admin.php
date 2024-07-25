@@ -121,12 +121,18 @@ class Admin extends Helper\Client
                 $layout_name = $filename;
             }
 
-            $fieldName = 'thumbnail';
+            $thumbnail_file =   $app->input->files->get('thumbnail', NULL, 'raw');
 
-            $fileError = isset($_FILES[$fieldName]) ? $_FILES[$fieldName]['error'] : null;
-
-            if ($fileError !== null) {
-                $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+            if (\is_array($thumbnail_file)) {
+                // Make sure that file uploads are enabled in php.
+                if (!(bool) \ini_get('file_uploads')) {
+                    throw new \Exception('File upload is not enabled in PHP', 400);
+                }
+                // Is the PHP tmp directory missing?
+                if ($thumbnail_file['error'] && ($thumbnail_file['error'] == UPLOAD_ERR_NO_TMP_DIR)) {
+                    throw new \Exception('There was an error uploading this thumbnail to the server.', 400);
+                }
+                $pathinfo = pathinfo($thumbnail_file['name']);
                 $uploadedFileExtension = $pathinfo['extension'];
                 $uploadedFileExtension = strtolower($uploadedFileExtension);
                 $validExts  =   ['jpg', 'jpeg', 'png', 'bmp'];
@@ -134,7 +140,7 @@ class Admin extends Helper\Client
                     throw new \Exception(Text::_('INVALID EXTENSION'));
                 }
 
-                $fileTemp       = $_FILES[$fieldName]['tmp_name'];
+                $fileTemp       = $thumbnail_file['tmp_name'];
                 $thumbnail      = file_get_contents($fileTemp);
                 if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'])) {
                     unlink(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
@@ -353,7 +359,8 @@ class Admin extends Helper\Client
     {
         try {
             $app            = Factory::getApplication();
-            $this->response(Helper::getFormTemplate('article', $app->input->get('id', NULL, 'RAW')));
+            $template_id    = $app->input->get('id', NULL, 'RAW');
+            $this->response(Helper::getFormTemplate('article', $template_id));
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -426,9 +433,10 @@ class Admin extends Helper\Client
                 'preset' => ''
             ];
             $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
-            $fieldName = 'file';
 
-            $fileError = $_FILES[$fieldName]['error'];
+            $file =   $app->input->files->get('file', NULL, 'raw');
+
+            $fileError = $file['error'];
             if ($fileError > 0) {
                 switch ($fileError) {
                     case 1:
@@ -449,14 +457,14 @@ class Admin extends Helper\Client
                 }
             }
 
-            $pathinfo = pathinfo($_FILES[$fieldName]['name']);
+            $pathinfo = pathinfo($file['name']);
             $uploadedFileExtension = $pathinfo['extension'];
             $uploadedFileExtension = strtolower($uploadedFileExtension);
             if ($uploadedFileExtension != 'json') {
                 throw new \Exception(Text::_('INVALID EXTENSION'));
             }
 
-            $fileTemp = $_FILES[$fieldName]['tmp_name'];
+            $fileTemp = $file['tmp_name'];
             $json           = file_get_contents($fileTemp);
             $config         = json_decode($json, true);
             if (json_last_error() === JSON_ERROR_NONE) {

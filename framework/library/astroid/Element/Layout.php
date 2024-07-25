@@ -54,6 +54,7 @@ class Layout
                 'title'=> 'title'
             ]
         ];
+        $options['layout_type'] = 'sublayout';
         $content = '';
         foreach ($layout['sections'] as $section) {
             $section = new Section($section, $devices, $options);

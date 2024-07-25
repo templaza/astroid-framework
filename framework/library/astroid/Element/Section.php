@@ -20,6 +20,14 @@ class Section extends BaseElement
     public $hasHeader = false;
     public $hasFooter = false;
 
+    public function __construct($data, $devices, $options = array())
+    {
+        if (isset($options['layout_type']) && $options['layout_type'] == 'sublayout') {
+            $this->_tag = 'div';
+        }
+        parent::__construct($data, $devices, $options);
+    }
+
     public function render()
     {
         $content = '';
