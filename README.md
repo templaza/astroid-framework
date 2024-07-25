@@ -12,6 +12,8 @@
 * Bootstrap 5 Compatible
 * Built for Joomla 4 and Joomla 5
 * Drag and Drop Layout Builder
+* Article Layout Builder
+* Sub-layouts Builder
 * Advanced Responsive Control
 * Advanced Mega Menu
 * Off-Canvas Menu
@@ -48,6 +50,11 @@
 * Slideshow Widget
 * Text Widget
 * Video Button Widget
+* Video Widget
+* FormBuilder Wiget
+* List Widget
+* Testimonials Widget
+* Map Widget
 
 ## Requirements
 * Joomla: 4.x, 5.x
