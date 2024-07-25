@@ -338,6 +338,9 @@ class Helper
         $template_name = '';
         if ($template->isAstroid) {
             $template_name = $template->template;
+            if (!defined('ASTROID_TEMPLATE_NAME')) {
+                define('ASTROID_TEMPLATE_NAME', $template_name);
+            }
         } elseif (defined('ASTROID_TEMPLATE_NAME')) {
             $template_name = ASTROID_TEMPLATE_NAME;
         }
