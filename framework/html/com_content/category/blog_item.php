@@ -73,7 +73,7 @@ $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED 
 $clsItemContainer   = $astroidArticle->getStyle('container');
 $clsItemBody        = $astroidArticle->getStyle('body');
 ?>
-<div class="item-content position-relative d-flex flex-column<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); echo ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : ''; ?>">
+<div class="item-content position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); echo ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : ''; ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
     <?php endif; ?>
