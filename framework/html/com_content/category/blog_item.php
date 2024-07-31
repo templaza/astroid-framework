@@ -164,9 +164,11 @@ $clsItemBody        = $astroidArticle->getStyle('body');
         <?php endif; ?>
     </div>
     <?php
-    if (($image_position == 'left' || $image_position == 'right')) {
-        echo '</div>';
-        echo '</div>';
+    if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
+        if (($image_position == 'left' || $image_position == 'right')) {
+            echo '</div>';
+            echo '</div>';
+        }
     }
     ?>
     <?php if ($isUnpublished) : ?>
