@@ -13,7 +13,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
+use Astroid\Framework;
 use Astroid\Helper\Style;
 
 extract($displayData);
@@ -27,6 +27,7 @@ if (!count($images)) {
 }
 
 $enable_slider      =   $params->get('enable_slider', 0);
+$use_masonry        =   $params->get('use_masonry', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
@@ -144,7 +145,7 @@ $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
 $text_color_mode    =   $params->get('text_color_mode', '');
 $text_color_mode    =   $text_color_mode !== '' ? ' ' . $text_color_mode : '';
-echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
+echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'"'.(!$enable_slider && $use_masonry ? ' data-masonry=\'{"percentPosition": true }\'' : '').'>';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {
@@ -162,10 +163,9 @@ foreach ($images as $image) {
     }
 }
 echo '</div>';
+$document = Framework::getDocument();
 if ($enable_slider) {
-    $mainframe = Factory::getApplication();
-    $wa = $mainframe->getDocument()->getWebAssetManager();
-    $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-    $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
+    $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+} elseif ($use_masonry) {
+    $document->loadMasonry();
 }
