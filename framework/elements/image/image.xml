@@ -9,7 +9,12 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
-                <field astroidgroup="general" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                <field astroidgroup="general" name="image_color_mode" type="astroidradio" width="full" default="light">
+                    <option value="light">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHT</option>
+                    <option value="dark">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_DARK</option>
+                </field>
+                <field astroidgroup="general" ngShow="[image_color_mode]=='light'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                <field astroidgroup="general" ngShow="[image_color_mode]=='dark'" name="image_dark" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE_DARK"/>
                 <field astroidgroup="general" description="ASTROID_WIDGET_IMAGE_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
                 <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_IMAGE_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
                 <field astroidgroup="general" ngShow="[use_link]==1" type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
