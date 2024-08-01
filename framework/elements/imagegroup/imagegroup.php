@@ -37,6 +37,10 @@ $slide_responsive   =   array();
 
 $row_column_cls     =   'row';
 
+if ($use_masonry && !$enable_slider) {
+    $row_column_cls .=  ' as-masonry';
+}
+
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
     $slide_settings[]=  'slidesToShow: ' . $xxl_column;
@@ -145,7 +149,7 @@ $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
 $text_color_mode    =   $params->get('text_color_mode', '');
 $text_color_mode    =   $text_color_mode !== '' ? ' ' . $text_color_mode : '';
-echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'"'.(!$enable_slider && $use_masonry ? ' data-masonry=\'{"percentPosition": true }\'' : '').'>';
+echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {
@@ -164,6 +168,7 @@ foreach ($images as $image) {
 }
 echo '</div>';
 $document = Framework::getDocument();
+
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
 } elseif ($use_masonry) {

@@ -114,10 +114,13 @@ if ($use_masonry) {
     <?php if (!empty($this->intro_items)) : ?>
     <?php $blogClass = $this->params->get('blog_class', ''); ?>
     <?php if ((int) $this->params->get('num_columns') > 1) : ?>
-        <?php $blogClass .= ' row-cols-lg-'.$this->params->get('num_columns'); ?>
+        <?php
+            $blogClass .= ' row-cols-lg-'.$this->params->get('num_columns');
+            $blogClass .= $use_masonry ? ' as-masonry' : '';
+        ?>
     <?php endif; ?>
     <div class="com-content-category-blog__items blog-items items-row">
-        <div class="row gx-xl-5 gy-5 <?php echo $blogClass; ?>"<?php echo $use_masonry ? ' data-masonry=\'{"percentPosition": true }\'' : ''; ?>>
+        <div class="row gx-xl-5 gy-5 <?php echo $blogClass; ?>">
             <?php foreach ($this->intro_items as $key => &$item) : ?>
                 <div class="com-content-category-blog__item blog-item">
                     <?php

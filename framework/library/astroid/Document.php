@@ -921,9 +921,9 @@ class Document
     public function loadMasonry(): void
     {
         if (!self::$_masonry) {
-//            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-//            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-            $this->addScript('media/astroid/js/masonry.pkgd.min.js');
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->addInlineScript('jQuery(document).ready(function(){$(\'.as-masonry\').masonry({itemSelector: \'.as-masonry > div\',percentPosition: true});});');
             self::$_masonry = true;
         }
     }
