@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Astroid\Component\Article;
+use Astroid\Framework;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Factory;
@@ -37,6 +38,7 @@ $ordering           =   $params->get('ordering', 'latest');
 $items = Article::getArticles($limit, $ordering, $categories);
 
 $enable_slider      =   $params->get('enable_slider', 0);
+$use_masonry        =   $params->get('use_masonry', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
@@ -47,6 +49,10 @@ $slide_responsive   =   array();
 $style = new Style('#'. $element->id);
 $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   'row';
+
+if ($use_masonry && !$enable_slider) {
+    $row_column_cls .=  ' as-masonry';
+}
 
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
@@ -276,7 +282,7 @@ foreach ($items as $key => $item) {
             $media      =   $renderer->render(['article' => $item]);
             break;
     }
-    $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
+    $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
     if ($item_image_cover) {
         $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
@@ -293,7 +299,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' || $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -352,10 +358,11 @@ $wa = $mainframe->getDocument()->getWebAssetManager();
 if ($has_gallery) {
     $wa->useScript('bootstrap.carousel');
 }
+$document = Framework::getDocument();
 if ($enable_slider) {
-    $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-    $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
+    $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+} elseif ($use_masonry) {
+    $document->loadMasonry();
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
