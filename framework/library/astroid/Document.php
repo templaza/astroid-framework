@@ -36,6 +36,7 @@ class Document
     protected static $_fancybox = false;
     protected static $_masonry = false;
     protected static $_slick = false;
+    protected static $_videojs = false;
     protected static $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -923,7 +924,7 @@ class Document
         if (!self::$_masonry) {
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-            $wa->addInlineScript('jQuery(document).ready(function(){$(\'.as-masonry\').masonry({itemSelector: \'.as-masonry > div\',percentPosition: true});});');
+            $wa->addInlineScript('jQuery(window).on("load", function(){$(\'.as-masonry\').masonry({itemSelector: \'.as-masonry > div\',percentPosition: true});});');
             self::$_masonry = true;
         }
     }
@@ -938,6 +939,15 @@ class Document
         }
         if (!empty($obj) && !empty($config)) {
             $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+        }
+    }
+
+    public function loadVideoBG(): void
+    {
+        if (!self::$_videojs) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            self::$_videojs = true;
         }
     }
 

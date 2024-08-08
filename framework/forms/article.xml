@@ -15,8 +15,10 @@
             <field showon="astroid_article_type:video" name="astroid_article_video_type" type="radio" default="youtube" label="ASTROID_VIDEO_TYPE" description="ASTROID_VIDEO_TYPE_DESC" class="form-check-inline">
                 <option value="youtube">ASTROID_YOUTUBE</option>
                 <option value="vimeo">ASTROID_VIMEO</option>
+                <option value="local">ASTROID_LOCAL</option>
             </field>
-            <field type="text" name="astroid_article_video_url" label="ASTROID_VIDEO_ID" description="ASTROID_VIDEO_ID_DESC" showon="astroid_article_type:video" />
+            <field type="text" name="astroid_article_video_url" label="ASTROID_VIDEO_ID" description="ASTROID_VIDEO_ID_DESC" showon="astroid_article_type:video[AND]astroid_article_video_type!:local" />
+            <field name="astroid_article_video_local" type="filelist" default="" label="ASTROID_VIDEO_LOCAL_URL" directory="images" fileFilter="\.mov$|\.mpg$|\.mp4$|\.ogv$|\.webm$|\.mts$|\.avi$|\.wmv$" hide_default="true" showon="astroid_article_type:video[AND]astroid_article_video_type:local" />
             <!-- Gallery Options -->
             <field type="spacer" showon="astroid_article_type:gallery" name="astroidarticlegallery" label="ASTROID_ARTICLE_OPTIONS_GALLERY_LABEL" />
             <field showon="astroid_article_type:gallery" name="astroid_article_gallery_width" type="text" hint="ASTROID_GALLERY_WIDTH_PLACEHOLDER" label="ASTROID_GALLERY_WIDTH_LBL" description="ASTROID_GALLERY_WIDTH_DESC" />

@@ -17,11 +17,20 @@ $params = $article->params;
 
 $type = $params->get('astroid_article_video_type', 'youtube');
 $url = $params->get('astroid_article_video_url', '');
-$content = Astroid\Helper\Video::getVideoByTypeUrl($type, $url, true);
-$thumbnail = Astroid\Helper\Video::getVideoThumbnailByTypeUrl($type, $url);
-if (empty($content)) {
-   return;
+$local_url = $params->get('astroid_article_video_local', '');
+
+if ($type !== 'local') {
+    $content = Astroid\Helper\Video::getVideoByTypeUrl($type, $url, true);
+    $thumbnail = Astroid\Helper\Video::getVideoThumbnailByTypeUrl($type, $url);
+    if (empty($content)) {
+        return;
+    }
+} elseif (!empty($local_url)) {
+    $content = '<video controls src="images/'.$local_url.'"></video>';
+} else {
+    return;
 }
+
 ?>
 <div itemprop="VideoObject" itemscope itemtype="https://schema.org/VideoObject" class="ratio ratio-16x9 article-video">
    <?php echo $content; ?>
