@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 extract($displayData);
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
+$image_dark     = $params->get('image_dark', '');
 $use_link       = $params->get('use_link', 0);
 $link           = $params->get('link', '');
 $target         = $params->get('target', '');
@@ -39,9 +40,16 @@ if (!empty($image)) {
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'"'.$target.'>';
     }
-    echo '<div class="d-inline-block position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
+    echo '<div class="as-image position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
     echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
     echo '</div>';
+    if (!empty($image_dark)) {
+        echo '<div class="as-image-dark d-none position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
+        echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image_dark.'" alt="'.$title.'">';
+        echo '</div>';
+        $element->style_dark->child('.as-image')->addCss('display', 'none !important');
+        $element->style_dark->child('.as-image-dark')->addCss('display', 'inline-block !important');
+    }
     if ($use_link) {
         echo '</a>';
     }

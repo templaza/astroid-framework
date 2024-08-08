@@ -130,6 +130,19 @@ $article-posttype-spacing: 40px;
 		}
 	}
 
+	&.article-icon-local {
+		background-color: $post-type-video-local-bg;
+		color: $post-type-video-local-color;
+
+		&:before {
+			@include triangle(6px, darken($post-type-video-local-bg, 15%), down-left);
+		}
+
+		&:after {
+			@include triangle($article-posttype-icon-width $article-posttype-icon-width/2, transparent $post-type-video-local-bg, up);
+		}
+	}
+
 	&.article-icon-vimeo {
 		background-color: $post-type-vimeo-bg;
 		color: $post-type-vimeo-color;

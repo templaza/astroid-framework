@@ -13,6 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
+use Astroid\Framework;
 
 $app = Factory::getApplication();
 
@@ -30,6 +31,13 @@ $results = $app->triggerEvent('onContentAfterDisplay', [$this->category->extensi
 $afterDisplayContent = trim(implode("\n", $results));
 
 $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
+
+$use_masonry = $this->params->get('use_masonry', 0);
+
+if ($use_masonry) {
+    $document = Framework::getDocument();
+    $document->loadMasonry();
+}
 
 ?>
 <div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
@@ -106,7 +114,10 @@ $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
     <?php if (!empty($this->intro_items)) : ?>
     <?php $blogClass = $this->params->get('blog_class', ''); ?>
     <?php if ((int) $this->params->get('num_columns') > 1) : ?>
-        <?php $blogClass .= ' row-cols-lg-'.$this->params->get('num_columns'); ?>
+        <?php
+            $blogClass .= ' row-cols-lg-'.$this->params->get('num_columns');
+            $blogClass .= $use_masonry ? ' as-masonry' : '';
+        ?>
     <?php endif; ?>
     <div class="com-content-category-blog__items blog-items items-row">
         <div class="row gx-xl-5 gy-5 <?php echo $blogClass; ?>">

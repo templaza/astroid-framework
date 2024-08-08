@@ -61,7 +61,7 @@ class Menu
 
         $return = [];
         // Menu Wrapper
-        echo '<div class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '">'
+        echo '<nav class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '">'
             . '<ul class="' . implode(' ', $nav_class) . '">';
 
 
@@ -152,7 +152,7 @@ class Menu
         }
 
         echo '</ul>'
-            . '</div>';
+            . '</nav>';
     }
 
     // Joomla Functions

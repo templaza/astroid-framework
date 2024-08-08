@@ -30,7 +30,7 @@
 
             <field astroidgroup="general" ngShow="[background_setting] =='image'" name="img_background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
 
-            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting] =='image' OR [background_setting] =='video'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
 
             <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
                <option value="">JGLOBAL_INHERIT</option>

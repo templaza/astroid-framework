@@ -79,7 +79,7 @@ if ($background_setting) {
       $attributes = [];
       $background_video = $params->get('background_video', '');
       if (!empty($background_video)) {
-         $attributes['data-jd-video-bg'] = Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video;
+         $attributes['data-as-video-bg'] = Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video;
           $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
       }
 

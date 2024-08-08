@@ -23,7 +23,10 @@ $icon = '';
 switch ($type) {
    case 'video':
       $type = $params->get('astroid_article_video_type', 'youtube');
-      $icon = 'fab fa-' . $type;
+       $icon = match ($type) {
+           'local' => 'fa-solid fa-video',
+           default => 'fab fa-' . $type,
+       };
       break;
    case 'gallery':
       $icon = 'far fa-images';

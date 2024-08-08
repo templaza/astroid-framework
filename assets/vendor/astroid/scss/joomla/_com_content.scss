@@ -30,7 +30,7 @@
     bottom: 0;
   }
   @each $breakpoint, $width in $grid-breakpoints {
-    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+    @include media-breakpoint-between($breakpoint, breakpoint-next($breakpoint), $grid-breakpoints) {
       @if ($breakpoint == 'xs') {
         &:not(.col-12) {
           > * {

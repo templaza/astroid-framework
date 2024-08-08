@@ -16,6 +16,10 @@
             <option value="1">ASTROID_SHOW</option>
             <option value="0">ASTROID_HIDE</option>
          </field>
+         <field name="use_masonry" type="radio" default="0" label="ASTROID_USE_MASONRY" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
          <field type="spacer" name="image_lead_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_OPTIONS" />
          <field name="image_lead_position" type="list" default="" label="Lead Item Image Position">
             <option value="">Default</option>

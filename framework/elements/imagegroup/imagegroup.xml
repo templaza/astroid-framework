@@ -204,6 +204,7 @@
                     <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
                 </field>
 
+                <field astroidgroup="widget_styles" ngShow="[enable_slider]==0" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">ASTROID_NONE</option>
                     <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>

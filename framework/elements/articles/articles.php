@@ -15,12 +15,14 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Astroid\Component\Article;
+use Astroid\Framework;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 $catids         = json_decode($params->get('catids', '[]'), true);
@@ -32,11 +34,13 @@ $categories = [];
 foreach ($catids as $catid) {
     $categories[]   =   $catid['value'];
 }
+$document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
 $items = Article::getArticles($limit, $ordering, $categories);
 
 $enable_slider      =   $params->get('enable_slider', 0);
+$use_masonry        =   $params->get('use_masonry', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
@@ -47,6 +51,10 @@ $slide_responsive   =   array();
 $style = new Style('#'. $element->id);
 $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   'row';
+
+if ($use_masonry && !$enable_slider) {
+    $row_column_cls .=  ' as-masonry';
+}
 
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
@@ -260,24 +268,31 @@ foreach ($items as $key => $item) {
             break;
         case 'video':
             $video_url  =   $item->params->get('astroid_article_video_url', '');
+            $video_local_url  =   $item->params->get('astroid_article_video_local', '');
             $video_type =   $item->params->get('astroid_article_video_type', '');
             $video_src  =   Article::getVideoSrc($video_url);
-            if ($video_src) {
-                if ($video_type == 'vimeo') {
-                    $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+            if ($video_type !== 'local') {
+                if ($video_src) {
+                    if ($video_type == 'vimeo') {
+                        $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+                    }
+                    $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
+                    $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
+                    $media .=   '</div>';
                 }
-                $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
-                $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
-                $media .=   '</div>';
+            } elseif (!empty($video_local_url)) {
+                $document->loadVideoBG();
+                $media = '<div class="as-article-video-local as-image-cover astroid-image-overlay-cover" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div>';
             }
+
             break;
         case 'audio':
             $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
             $media      =   $renderer->render(['article' => $item]);
             break;
     }
-    $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
-    if ($item_image_cover) {
+    $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
+    if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
         $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
     echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
@@ -293,7 +308,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' || $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -352,10 +367,11 @@ $wa = $mainframe->getDocument()->getWebAssetManager();
 if ($has_gallery) {
     $wa->useScript('bootstrap.carousel');
 }
+
 if ($enable_slider) {
-    $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-    $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
+    $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+} elseif ($use_masonry) {
+    $document->loadMasonry();
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
@@ -399,11 +415,15 @@ switch ($overlay_type) {
         $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
         $style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
         $style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+
+        $style->child('.astroid-element-overlay:before')->addCss('background-color', $overlay_color['light']);
+        $style_dark->child('.astroid-element-overlay:before')->addCss('background-color', $overlay_color['dark']);
         break;
     case 'background-color':
         $overlay_gradient   =   $params->get('overlay_gradient', '');
         if (!empty($overlay_gradient)) {
             $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+            $style->child('.astroid-element-overlay:before')->addCss('background-image', Style::getGradientValue($overlay_gradient));
         }
         break;
 }

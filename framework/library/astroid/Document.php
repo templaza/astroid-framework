@@ -34,6 +34,9 @@ class Document
     protected $minify_html = false;
     protected static $_fontawesome = false;
     protected static $_fancybox = false;
+    protected static $_masonry = false;
+    protected static $_slick = false;
+    protected static $_videojs = false;
     protected static $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -60,7 +63,7 @@ class Document
         return $this->type;
     }
 
-    public function addLayoutPath($path)
+    public function addLayoutPath($path): void
     {
         self::$_layout_paths[] = $path;
     }
@@ -116,7 +119,7 @@ class Document
         echo trim($content);
     }
 
-    public function compress()
+    public function compress(): void
     {
         $app = Factory::getApplication();
         $body = $app->getBody();
@@ -133,7 +136,7 @@ class Document
         $app->setBody($body);
     }
 
-    public function isFrontendEditing()
+    public function isFrontendEditing(): bool
     {
         if (!Framework::isSite()) {
             return false;
@@ -219,7 +222,7 @@ class Document
     }
 
 
-    public function minifyCSS($html)
+    public function minifyCSS($html): array|string
     {
         Framework::getDebugger()->log('Minifying CSS');
         $stylesheets = [];
@@ -381,7 +384,7 @@ class Document
         return $html;
     }
 
-    public function minifyHTML($html)
+    public function minifyHTML($html): array|string|null
     {
         Framework::getDebugger()->log('Minifying HTML');
         $level = Framework::getTemplate()->getParams()->get('minify_html_level', 'basic');
@@ -476,7 +479,7 @@ class Document
         return trim($html);
     }
 
-    public function _replace($rx, $replacement, $code, $callback = null)
+    public function _replace($rx, $replacement, $code, $callback = null): array|string|null
     {
         if ($callback === null) {
             return preg_replace($rx, $replacement, $code);
@@ -515,7 +518,7 @@ class Document
         return $m[0];
     }
 
-    private function _assetsHash()
+    private function _assetsHash(): string
     {
         $assets = [];
         $assets[] = \json_encode($this->_styles);
@@ -529,7 +532,7 @@ class Document
         return md5(serialize($assets));
     }
 
-    public function position($position, $style = 'none')
+    public function position($position, $style = 'none'): string
     {
         if (empty($position)) {
             return '';
@@ -547,7 +550,7 @@ class Document
         return $return;
     }
 
-    public function hasModule($position, $module)
+    public function hasModule($position, $module): bool
     {
         return in_array($module, array_column(ModuleHelper::getModules($position), 'module'));
     }
@@ -582,7 +585,7 @@ class Document
         return $content;
     }
 
-    private function _modulePosition($position)
+    private function _modulePosition($position): false|string
     {
         $this->modules[$position] = '';
         $document = Factory::getDocument();
@@ -599,7 +602,7 @@ class Document
         return $this->modules[$position];
     }
 
-    private function _moduleId($id)
+    private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
         $document = Factory::getDocument();
@@ -664,7 +667,7 @@ class Document
         return $return;
     }
 
-    protected function checkDev()
+    protected function checkDev(): void
     {
         $params = Framework::getTemplate()->getParams();
         if ($params->exists('developemnt_mode')) {
@@ -675,7 +678,7 @@ class Document
         $this->_dev = ($dev ? true : false);
     }
 
-    public function isDev()
+    public function isDev(): bool
     {
         if ($this->_dev === null) {
             $this->checkDev();
@@ -683,7 +686,7 @@ class Document
         return $this->_dev;
     }
 
-    public function addMeta($name, $content, $attribs = [])
+    public function addMeta($name, $content, $attribs = []): void
     {
         $this->_metas[$name] = [
             'name' => $name,
@@ -692,7 +695,7 @@ class Document
         ];
     }
 
-    public function addLink($href = '', $rel = 'stylesheet', $attribs = ['type' => 'text/css'])
+    public function addLink($href = '', $rel = 'stylesheet', $attribs = ['type' => 'text/css']): void
     {
         $this->_links[md5($href)] = [
             'href' => $href,
@@ -701,7 +704,7 @@ class Document
         ];
     }
 
-    public function renderMeta()
+    public function renderMeta(): string
     {
         $html = '';
         foreach ($this->_metas as $meta) {
@@ -720,7 +723,7 @@ class Document
         return $html;
     }
 
-    public function renderLinks()
+    public function renderLinks(): string
     {
         $html = '';
         foreach ($this->_links as $link) {
@@ -739,7 +742,7 @@ class Document
         return $html;
     }
 
-    public function beutifyURL($url)
+    public function beutifyURL($url): array|string
     {
         $url = str_replace('?' . Helper::joomlaMediaVersion(), '', $url);
         $url = str_replace(Uri::root(), '', $url);
@@ -754,7 +757,7 @@ class Document
         return $url;
     }
 
-    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '')
+    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = ''): void
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -771,7 +774,7 @@ class Document
         }
     }
 
-    public function getScripts($position = 'head')
+    public function getScripts($position = 'head'): string
     {
         $html = '';
         foreach ($this->_javascripts[$position] as $javascript) {
@@ -783,7 +786,7 @@ class Document
         return $html;
     }
 
-    public function getCustomTags($position = 'head')
+    public function getCustomTags($position = 'head'): string
     {
         $content = '';
         foreach ($this->_customtags[$position] as $tag) {
@@ -792,7 +795,7 @@ class Document
         return $content;
     }
 
-    public function addScriptOptions($key, $options, $merge = true)
+    public function addScriptOptions($key, $options, $merge = true): static
     {
         if (empty($this->scriptOptions[$key])) {
             $this->scriptOptions[$key] = [];
@@ -816,7 +819,7 @@ class Document
         return $this->scriptOptions;
     }
 
-    protected function _systemUrl($url, $version = true)
+    protected function _systemUrl($url, $version = true): string
     {
         $config = Factory::getApplication()->getConfig();
         $params = Helper::getPluginParams();
@@ -848,7 +851,7 @@ class Document
         return $url.$postfix ;
     }
 
-    public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript')
+    public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript'): void
     {
         if (empty($content)) {
             return;
@@ -859,7 +862,7 @@ class Document
         $this->_scripts[$position][] = $script;
     }
 
-    public function addStyleDeclaration($content, $device = 'desktop')
+    public function addStyleDeclaration($content, $device = 'desktop'): void
     {
         if (empty($content)) {
             return;
@@ -867,7 +870,7 @@ class Document
         $this->_styles[$device][] = trim($content);
     }
 
-    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0)
+    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0): void
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -886,7 +889,7 @@ class Document
         }
     }
 
-    public function addCustomTag($content, $position = 'head')
+    public function addCustomTag($content, $position = 'head'): void
     {
         if (empty($content)) {
             return;
@@ -897,7 +900,7 @@ class Document
         }
     }
 
-    public function loadFontAwesome()
+    public function loadFontAwesome(): void
     {
         if (self::$_fontawesome) {
             return;
@@ -905,7 +908,7 @@ class Document
         Helper\Font::loadFontAwesome();
     }
 
-    public function loadFancyBox()
+    public function loadFancyBox(): void
     {
         if (self::$_fancybox) {
             return;
@@ -916,13 +919,45 @@ class Document
         self::$_fancybox = true;
     }
 
-    public function moveFile(&$array, $a, $b)
+    public function loadMasonry(): void
+    {
+        if (!self::$_masonry) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->addInlineScript('jQuery(window).on("load", function(){$(\'.as-masonry\').masonry({itemSelector: \'.as-masonry > div\',percentPosition: true});});');
+            self::$_masonry = true;
+        }
+    }
+
+    public function loadSlick($obj = '', $config = ''): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        if (!self::$_slick) {
+            $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
+            $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            self::$_slick = true;
+        }
+        if (!empty($obj) && !empty($config)) {
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+        }
+    }
+
+    public function loadVideoBG(): void
+    {
+        if (!self::$_videojs) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            self::$_videojs = true;
+        }
+    }
+
+    public function moveFile(&$array, $a, $b): void
     {
         $out = array_splice($array, $a, 1);
         array_splice($array, $b, 0, $out);
     }
 
-    public function getStylesheets()
+    public function getStylesheets(): string
     {
         $keys = array_keys($this->_stylesheets);
         foreach ($keys as $index => $key) {
@@ -943,7 +978,7 @@ class Document
         return $content;
     }
 
-    public function renderScss($path)
+    public function renderScss($path): void
     {
         ini_set('memory_limit', '1024M');
         Framework::getDebugger()->log('Rendering Scss');
@@ -1071,7 +1106,7 @@ class Document
         Helper::putContents($path, $css->getCss());
     }
 
-    public function renderCss()
+    public function renderCss(): string
     {
         /* if (Framework::isSite()) {
             $template = Framework::getTemplate();
@@ -1090,7 +1125,7 @@ class Document
         return $cssScript;
     }
 
-    public function getBodyClass($extra_class = '')
+    public function getBodyClass($extra_class = ''): string
     {
         $template = Framework::getTemplate();
 
@@ -1160,7 +1195,7 @@ class Document
         return implode(' ', $class);
     }
 
-    public function isBuilder()
+    public function isBuilder(): bool
     {
         $jinput = Factory::getApplication()->input;
         $option = $jinput->get('option', '');
@@ -1193,7 +1228,7 @@ class Document
         return $results;
     }
 
-    public static function scssHash()
+    public static function scssHash(): string
     {
         $params = Helper::getPluginParams();
         $debug = $params->get('astroid_debug', 0);
@@ -1220,7 +1255,7 @@ class Document
         return md5($name);
     }
 
-    public function astroidCSS()
+    public function astroidCSS(): void
     {
         $getPluginParams = Helper::getPluginParams();
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -1292,7 +1327,8 @@ class Document
         }
     }
 
-    public function astroidInlineCSS() {
+    public function astroidInlineCSS(): string
+    {
         // css on page
         $getPluginParams = Helper::getPluginParams();
         $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
