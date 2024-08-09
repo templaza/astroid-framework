@@ -186,6 +186,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
+$height             =   $params->get('height', '');
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 $img_rounded_size   =   $params->get('img_rounded_size', '3');
@@ -407,8 +408,15 @@ if (!empty($info_margin_after_intro)) {
     }
 }
 if ($enable_image_cover) {
-    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
-    $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
+    if (!empty($height)) {
+        $style->child('.as-image-cover')->addCss('min-height', $min_height . 'px');
+        $style->child('.as-slideshow-media .carousel-item')->addCss('min-height', $min_height . 'px');
+        $style->child('.as-image-cover')->addCss('height', $height);
+        $style->child('.as-slideshow-media .carousel-item')->addCss('height', $height);
+    } else {
+        $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+        $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
+    }
 }
 switch ($overlay_type) {
     case 'color':

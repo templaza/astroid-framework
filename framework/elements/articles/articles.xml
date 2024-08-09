@@ -343,6 +343,7 @@
                 </field>
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="1000" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" type="astroidtext" class="form-control" label="JFIELD_MEDIA_HEIGHT_LABEL" name="height"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_type" type="astroidradio" width="full" default="color" label="ASTROID_WIDGET_OVERLAY_COLOR">
                     <option value="">ASTROID_NONE</option>
                     <option value="color">TPL_ASTROID_COLOR</option>
