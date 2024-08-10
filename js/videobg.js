@@ -19,7 +19,6 @@
 
          var _video = $('<video />', {
             playsinline: true,
-            autoplay: true,
             loop: true,
             src: _url,
          });
@@ -40,13 +39,15 @@
          _video.css('transform', 'translate(-50%, -50%)');
          _video.css('max-width', 'inherit');
          _video.prop('muted', true);
-         $(window).on('load', function () {
-            _container.append(_video);
-         });
+
+         _container.append(_video);
          $(this).prepend(_container);
+
+         _video.prop('muted', true);
+         _video.trigger('play');
       });
    };
-   $(function () {
+   $(document).ready(function () {
       $('[data-as-video-bg]').ASVideoBG();
    });
 }(jQuery));

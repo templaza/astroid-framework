@@ -272,7 +272,6 @@ header .logo-wrapper {
 
       .astroid-logo {
          margin: 0 auto !important;
-         justify-content: center;
       }
 
       .astroid-sidebar-mobile-menu {
@@ -327,6 +326,13 @@ header .logo-wrapper {
 
    .astroid-sidebar-content {
       overflow-y: auto;
+      @media(min-width: 1200px) {
+         padding: 15px 25px;
+      }
+
+      @media(min-width: 1400px) {
+         padding: 15px 35px;
+      }
    }
 
    .astroid-sidebar-collapsable {
