@@ -277,10 +277,6 @@ header .logo-wrapper {
       .astroid-sidebar-mobile-menu {
          display: none;
       }
-
-      .astroid-sidebar-block {
-         padding: 10px 15px;
-      }
    }
 
    @media (min-width: 1200px) {
@@ -327,11 +323,11 @@ header .logo-wrapper {
    .astroid-sidebar-content {
       overflow-y: auto;
       @media(min-width: 1200px) {
-         padding: 15px 25px;
+         padding: 15px 25px 20px;
       }
 
       @media(min-width: 1400px) {
-         padding: 15px 35px;
+         padding: 15px 35px 30px;
       }
    }
 

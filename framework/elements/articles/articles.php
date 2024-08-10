@@ -371,6 +371,14 @@ if ($has_gallery) {
 
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+    if ($slider_nav) {
+        $nav_color  =   Style::getColor($params->get('nav_color', ''));
+        $style->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['light']);
+        $style->child('.astroid-slick .slick-next')->addCss('color', $nav_color['light']);
+        $style_dark->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['dark']);
+        $style_dark->child('.astroid-slick .slick-next')->addCss('color', $nav_color['dark']);
+    }
+
 } elseif ($use_masonry) {
     $document->loadMasonry();
 }

@@ -82,7 +82,7 @@ $clsItemBody        = $astroidArticle->getStyle('body');
     <?php
     if ($astroid_article_type == 'video' && $astroid_article_video_type == 'local') {
         $astroid_article_video_local = $post_attribs->get('astroid_article_video_local', '');
-        $image = '<div class="as-article-video-local h-100 ratio ratio-16x9" data-as-video-bg="'.Uri::base('true').'/images/'.$astroid_article_video_local.'"'.(!empty($images->image_intro) ? ' data-as-video-poster="'.$images->image_intro.'"' : '').'></div>';
+        $image = '<div class="as-article-video-local h-100 ratio ratio-16x9" data-as-video-bg="'.Uri::base('true').'/images/'.$astroid_article_video_local.'"'.(!empty($images->image_intro) ? ' data-as-video-poster="'.Uri::base('true').'/'.$images->image_intro.'"' : '').'></div>';
     } else {
         $image = $astroidArticle->getImage();
     }
