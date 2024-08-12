@@ -324,6 +324,21 @@
                     <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
                     <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
                 </field>
+                <field astroidgroup="card_options" name="card_box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="card_options" name="card_box_shadow_hover" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_HOVER_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-hover-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-hover-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow-hover">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-hover-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                    <option value="shadow-hover-popout">ASTROID_WIDGET_SHADOW_POPUP</option>
+                </field>
                 <field astroidgroup="image_options" name="layout" type="astroidlist" label="ASTROID_WIDGET_CHOOSE_LAYOUT_LABEL" default="classic">
                     <option value="classic">ASTROID_WIDGET_LAYOUT_CLASSIC_LABEL</option>
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>

@@ -152,6 +152,11 @@ foreach ($responsive_key as $key) {
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
 
+$box_shadow         =   $params->get('card_box_shadow', '');
+$box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
+$box_shadow_hover   =   $params->get('card_box_shadow_hover', '');
+$box_shadow         .=  $box_shadow_hover ? ' ' . $box_shadow_hover : '';
+
 $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
@@ -232,7 +237,6 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 $has_gallery        =   false;
-echo '<div class="overflow-hidden">';
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
@@ -296,7 +300,7 @@ foreach ($items as $key => $item) {
     if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
         $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
-    echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
@@ -361,7 +365,6 @@ foreach ($items as $key => $item) {
 
     echo '</div></div>';
 }
-echo '</div>';
 echo '</div>';
 $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();

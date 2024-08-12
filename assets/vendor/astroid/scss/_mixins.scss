@@ -131,3 +131,21 @@
       left: 50%;
    }
 }
+
+@mixin box-hover-shadow-content($color: null) {
+   transform: translate(-0.5em, -0.5em);
+   box-shadow: 0.5em 0.5em 0 $color;
+}
+
+@mixin box-hover-shadow($color: $primary, $object: null) {
+   @if $object {
+      #{$object} {
+         transition: all 400ms;
+         &:hover {
+            @include box-hover-shadow-content($color);
+         }
+      }
+   } @else {
+      @include box-hover-shadow-content($color);
+   }
+}
