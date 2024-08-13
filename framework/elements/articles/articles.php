@@ -202,6 +202,20 @@ if ($img_border_radius == 'rounded') {
     $img_border_radius  = $img_border_radius !== '' ? ' ' . $img_border_radius : '';
 }
 
+// Image Effect
+$enable_image_effect=   $params->get('enable_image_effect', 0);
+$brightness         =   $params->get('brightness', '100');
+$contrast           =   $params->get('contrast', '100');
+$saturate           =   $params->get('saturate', '100');
+$blur               =   $params->get('blur', '0');
+$hue_rotate         =   $params->get('hue_rotate', '0');
+
+$brightness_hover   =   $params->get('brightness_hover', '100');
+$contrast_hover     =   $params->get('contrast_hover', '100');
+$saturate_hover     =   $params->get('saturate_hover', '100');
+$blur_hover         =   $params->get('blur_hover', '0');
+$hue_rotate_hover   =   $params->get('hue_rotate_hover', '0');
+
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
@@ -299,6 +313,9 @@ foreach ($items as $key => $item) {
     $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
     if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
         $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
+    }
+    if ($enable_image_effect) {
+        $media  =   '<div class="as-image-effect">' . $media . '</div>';
     }
     echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
@@ -428,6 +445,10 @@ if ($enable_image_cover) {
         $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
         $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
     }
+}
+if ($enable_image_effect) {
+    $style->child('.as-image-effect')->addCss('filter', 'brightness('.$brightness.'%) contrast('.$contrast.'%) saturate('.$saturate.'%) blur('.$blur.'px) hue-rotate('.$hue_rotate.'deg)');
+    $style->child('.as-image-effect')->hover()->addCss('filter', 'brightness('.$brightness_hover.'%) contrast('.$contrast_hover.'%) saturate('.$saturate_hover.'%) blur('.$blur_hover.'px) hue-rotate('.$hue_rotate_hover.'deg)');
 }
 switch ($overlay_type) {
     case 'color':
