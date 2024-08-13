@@ -269,6 +269,10 @@ function saveLayout(element) {
         devices : layout.value.devices
     });
 }
+
+function selectLayout(element) {
+    emit('select:Element', element, 'loadSublayout');
+}
 </script>
 <template>
     <draggable
@@ -293,6 +297,9 @@ function saveLayout(element) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#" @click.prevent="deleteElement(element, index)" title="Remove Section"><i class="fas fa-trash-alt"></i></a>
+                        </li>
+                        <li class="nav-item" v-if="props.source === `root`">
+                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Load Section from Sublayout" @click.prevent="selectLayout(element)"><i class="fa-solid fa-cubes"></i></a>
                         </li>
                         <li class="nav-item" v-if="props.source === `root`">
                             <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Save Section as Sublayout" @click.prevent="saveLayout(element)"><i class="fa-solid fa-floppy-disk"></i></a>
