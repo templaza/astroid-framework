@@ -448,7 +448,7 @@ if ($enable_image_cover) {
 }
 if ($enable_image_effect) {
     $style->child('.as-image-effect')->addCss('filter', 'brightness('.$brightness.'%) contrast('.$contrast.'%) saturate('.$saturate.'%) blur('.$blur.'px) hue-rotate('.$hue_rotate.'deg)');
-    $style->child('.as-image-effect')->hover()->addCss('filter', 'brightness('.$brightness_hover.'%) contrast('.$contrast_hover.'%) saturate('.$saturate_hover.'%) blur('.$blur_hover.'px) hue-rotate('.$hue_rotate_hover.'deg)');
+    $style->child('.card')->hover()->child('.as-image-effect')->addCss('filter', 'brightness('.$brightness_hover.'%) contrast('.$contrast_hover.'%) saturate('.$saturate_hover.'%) blur('.$blur_hover.'px) hue-rotate('.$hue_rotate_hover.'deg)');
 }
 switch ($overlay_type) {
     case 'color':
