@@ -172,7 +172,6 @@ class Template
 
         $danger = $this->params->get('theme_danger', '');
         if (!empty($danger)) {
-            $variables['danger'] = $variables[$danger];
             $variables['danger'] = ($danger == 'custom' ? $this->params->get('theme_danger_custom', $variables['red']) : $variables[$danger]);
         }
 
