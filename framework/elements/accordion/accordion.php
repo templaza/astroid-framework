@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper;
 use Joomla\CMS\Factory;
+use Astroid\Helper\Style;
 
 extract($displayData);
 $accordions     = $params->get('accordions', '');
@@ -45,3 +46,36 @@ foreach ($accordions as $key => $accordions) {
     echo '</div>';
 }
 echo '</div>';
+
+$title_font_style   =   $params->get('title_font_style');
+if (!empty($title_font_style)) {
+    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style);
+}
+
+$content_font_style =   $params->get('content_font_style');
+if (!empty($content_font_style)) {
+    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style);
+}
+
+$color          = Style::getColor($params->get('color', ''));
+$color_hover    = Style::getColor($params->get('color_hover', ''));
+$color_active   = Style::getColor($params->get('color_active', ''));
+$bgcolor        = Style::getColor($params->get('bgcolor', ''));
+$bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
+$bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
+
+// Color style
+$element->style->child('.accordion-button')->addCss('color', $color['light']);
+$element->style_dark->child('.accordion-button')->addCss('color', $color['dark']);
+$element->style->child('.accordion-button')->hover()->addCss('color', $color_hover['light']);
+$element->style_dark->child('.accordion-button')->hover()->addCss('color', $color_hover['dark']);
+$element->style->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['light']);
+$element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('color', $color_active['dark']);
+
+// Background color style
+$element->style->child('.accordion-button')->addCss('background-color', $bgcolor['light']);
+$element->style_dark->child('.accordion-button')->addCss('background-color', $bgcolor['dark']);
+$element->style->child('.accordion-button')->hover()->addCss('background-color', $bgcolor_hover['light']);
+$element->style_dark->child('.accordion-button')->hover()->addCss('background-color', $bgcolor_hover['dark']);
+$element->style->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
+$element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);

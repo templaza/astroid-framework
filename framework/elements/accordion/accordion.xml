@@ -9,6 +9,8 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
                 <field astroidgroup="general" name="accordions" type="astroidsubform" label="ASTROID_WIDGET_ACCORDION_ITEMS_LABEL">
                     <form>
                         <fields>
@@ -23,6 +25,21 @@
                     <option value="">Default</option>
                     <option value="accordion-flush">Flush</option>
                 </field>
+                <field astroidgroup="widget_styles" name="color_settings" type="astroidradio" width="full" default="color">
+                    <option value="color">TPL_ASTROID_COLOR</option>
+                    <option value="hover">TPL_ASTROID_COLOR_HOVER</option>
+                    <option value="active">TPL_ASTROID_COLOR_ACTIVE</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='color'" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='hover'" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='active'" name="color_active" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='color'" name="bgcolor" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='hover'" name="bgcolor_hover" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="widget_styles" ngShow="[color_settings]=='active'" name="bgcolor_active" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+
+                <field astroidgroup="title_options" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="content_options" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
