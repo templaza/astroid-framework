@@ -338,29 +338,3 @@
    $(window).on('scroll', winScroll);
    window.addEventListener("orientationchange", winResize);
 })(jQuery);
-
-/* 
- * Add missing Mootools when Bootstrap is loaded
- * This fix creates dummy implementations for the missing Mootools functions.
- * It requires that you have jQuery loaded and if you are dealing with Mootools + jQuery is a good idea to add the call just before this javascript code.
- * This issue shouldn't affect Bootstrap 3 templates but the fix explained here should be compatible with both.
- */
-(function ($) {
-   $(document).ready(function () {
-      var bootstrapLoaded = (typeof $().tooltip == 'function');
-      var mootoolsLoaded = (typeof MooTools != 'undefined');
-      if (bootstrapLoaded && mootoolsLoaded) {
-         Element.implement({
-            hide: function () {
-               return this;
-            },
-            show: function (v) {
-               return this;
-            },
-            slide: function (v) {
-               return this;
-            }
-         });
-      }
-   });
-})(jQuery);
