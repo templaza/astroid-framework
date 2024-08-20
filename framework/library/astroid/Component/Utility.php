@@ -13,6 +13,7 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Language\Text;
@@ -21,7 +22,7 @@ defined('_JEXEC') or die;
 
 class Utility
 {
-    public static function meta()
+    public static function meta(): void
     {
         $app = Factory::getApplication();
         $document = Framework::getDocument();
@@ -125,7 +126,7 @@ class Utility
         }
     }
 
-    public static function smoothScroll()
+    public static function smoothScroll(): void
     {
         $params = Framework::getTemplate()->getParams();
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -146,7 +147,7 @@ class Utility
         }
     }
 
-    public static function background()
+    public static function background(): void
     {
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
@@ -172,7 +173,7 @@ class Utility
         }
     }
 
-    public static function getCategories()
+    public static function getCategories(): array
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
@@ -207,7 +208,7 @@ class Utility
         return $article_cats;
     }
 
-    public static function typography()
+    public static function typography(): void
     {
         $params = Framework::getTemplate()->getParams();
         $customselector = $params->get('custom_typography_selectors', '');
@@ -244,7 +245,7 @@ class Utility
         }
     }
 
-    public static function colors()
+    public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
         // Body
@@ -531,7 +532,8 @@ class Utility
         Style::addCssBySelector('[data-bs-theme=dark] .astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['dark']);
     }
 
-    public static function article() {
+    public static function article(): void
+    {
         $params = Framework::getTemplate()->getParams();
         // Article listing
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
@@ -610,7 +612,7 @@ class Utility
         $document->addCustomTag($params->get('astroid_beforebody', ''), 'body');
     }
 
-    public static function error()
+    public static function error(): void
     {
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
@@ -643,5 +645,33 @@ class Utility
         }
         $bodyStyle->render();
         $bodyStyle_dark->render();
+    }
+
+    public static function showFreeTemplate(): void
+    {
+        $app    =   Factory::getApplication();
+        $option =   $app->input->get('option', '', 'alum');
+        $view   =   $app->input->get('view', '', 'alum');
+        if ($option == 'com_templates' && $view == 'styles') {
+            $astroid_templates = Helper\Template::getAstroidTemplates();
+            if (!count($astroid_templates)) {
+                $wa = $app->getDocument()->getWebAssetManager();
+                $wa->useScript('bootstrap.modal');
+                $wa->registerAndUseScript('astroid.as-freetemplates', 'media/astroid/assets/vendor/freetemplates/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
+                $json = [
+                    'token'     =>  Session::getFormToken(),
+                    'congrats'  =>  '../media/astroid/assets/images/astroid_congrats.png',
+                    'language'  =>  [
+                        'title'     =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_TITLE'),
+                        'desc'      =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_DESC'),
+                        'install'   =>  Text::_('ASTROID_INSTALL'),
+                        'preview'   =>  Text::_('ASTROID_TEMPLATE_PREVIEW'),
+                        'congrats'  =>  Text::_('ASTROID_FREE_TEMPLATE_CONGRATS'),
+                        'close'     =>  Text::_('ASTROID_TEMPLATE_CLOSE')
+                    ]
+                ];
+                $wa->addInlineScript(\json_encode($json), [], ['type' => 'application/json', 'id' => 'as-free-template-js']);
+            }
+        }
     }
 }

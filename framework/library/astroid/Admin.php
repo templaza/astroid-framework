@@ -28,6 +28,11 @@ class Admin extends Helper\Client
         $this->addTemplateLabels();
     }
 
+    public function onBeforeRender()
+    {
+        Utility::showFreeTemplate();
+    }
+
     protected function save()
     {
         $this->checkAuth();
@@ -525,6 +530,45 @@ class Admin extends Helper\Client
                 File::delete($file_name);
             }
             $this->response('Preset Removed!');
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    public function getFreeTemplates()
+    {
+        try {
+            // Check for request forgeries.
+            $json_file   = JPATH_SITE . "/media/astroid/assets/json/templates.json";
+            if (file_exists($json_file)) {
+                $json = file_get_contents($json_file);
+                $this->response(\json_decode($json, true));
+            } else {
+                throw new \Exception(Text::_('Template file is not available'));
+            }
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
+        return true;
+    }
+
+    public function installTemplate() {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $app = Factory::getApplication();
+            $template_url  = $app->input->get('url', '', 'RAW');
+            $result = Helper\Install::InstallUrl($template_url);
+            if (!is_array($result)) {
+                throw new \Exception(Text::_('ASTROID_UNABLE_TO_FIND_INSTALL_PACKAGE'));
+            }
+
+            if ($result['type'] == 'error') {
+                throw new \Exception($result['msg']);
+            }
+            $app->enqueueMessage($result['msg'], 'error');
+            $this->response($result['msg']);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
