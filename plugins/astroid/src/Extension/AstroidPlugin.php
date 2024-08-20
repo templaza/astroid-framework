@@ -62,9 +62,7 @@ final class AstroidPlugin extends CMSPlugin
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
-        if (Framework::isSite()) {
-            Framework::getClient()->onBeforeRender();
-        }
+        Framework::getClient()->onBeforeRender();
     }
 
     public function onAfterRender()
