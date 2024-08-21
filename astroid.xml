@@ -10,7 +10,7 @@
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <description>Astroid Template Framework by TemPlaza</description>
+   <description>ASTROID_FRAMEWORK_DESC</description>
    <scriptfile>script.php</scriptfile>
    <files>
       <file>script.php</file>
