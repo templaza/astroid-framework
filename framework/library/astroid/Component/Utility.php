@@ -662,12 +662,12 @@ class Utility
                     'token'     =>  Session::getFormToken(),
                     'congrats'  =>  '../media/astroid/assets/images/astroid_congrats.png',
                     'language'  =>  [
-                        'title'     =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_TITLE'),
-                        'desc'      =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_DESC'),
-                        'install'   =>  Text::_('ASTROID_INSTALL'),
-                        'preview'   =>  Text::_('ASTROID_TEMPLATE_PREVIEW'),
-                        'congrats'  =>  Text::_('ASTROID_FREE_TEMPLATE_CONGRATS'),
-                        'close'     =>  Text::_('ASTROID_TEMPLATE_CLOSE')
+                        'title'         =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_TITLE'),
+                        'desc'          =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_DESC'),
+                        'install'       =>  Text::_('ASTROID_INSTALL'),
+                        'preview'       =>  Text::_('ASTROID_TEMPLATE_PREVIEW'),
+                        'congrats'      =>  Text::_('ASTROID_FREE_TEMPLATE_CONGRATS'),
+                        'get_started'   =>  Text::_('ASTROID_GET_STARTED')
                     ]
                 ];
                 $wa->addInlineScript(\json_encode($json), [], ['type' => 'application/json', 'id' => 'as-free-template-js']);
