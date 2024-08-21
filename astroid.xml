@@ -10,7 +10,7 @@
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <description><![CDATA[Astroid Template Framework by TemPlaza<a href="index.php?option=com_templates&view=styles&client_id=0" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Get Started -></a>]]></description>
+   <description><![CDATA[Astroid Template Framework by TemPlaza<a href="index.php?option=com_templates&view=styles&client_id=0" class="btn btn-primary ms-3"><i class="fa-solid fa-bell fa-shake me-2"></i>Get Started</a>]]></description>
    <scriptfile>script.php</scriptfile>
    <files>
       <file>script.php</file>
