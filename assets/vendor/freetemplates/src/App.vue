@@ -70,7 +70,7 @@ function installTemplate(item) {
                 <div v-if="installed !== ``" class="modal-body p-5 text-center">
                     <h2>{{ configs.language.congrats + ' ' + installed }}</h2>
                     <div class="my-5"><img :src="configs.congrats" alt="Congratulation"></div>
-                    <a href="index.php?option=com_templates&view=styles&client_id=0" class="btn btn-success px-5 py-1">{{ configs.language.get_started }}</a>
+                    <a href="index.php?option=com_templates&view=styles&client_id=0" class="btn btn-success px-5 py-1">{{ configs.language.view_templates }}</a>
                 </div>
                 <div v-else class="modal-body p-4">
                     <p>{{ configs.language.desc }}</p>
