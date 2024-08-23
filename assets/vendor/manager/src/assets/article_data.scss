@@ -20,13 +20,9 @@
         }
     }
 }
-
-.as-article-widget-data {
+.admin .as-article-widget-data {
     --bs-body-bg: var(--body-bg);
     --bs-border-color: var(--border-color);
-    .row {
-        --gutter-y: 1rem;
-    }
     .astroid-heading-line {
         font-size: 1.2rem;
         >::before, >::after {

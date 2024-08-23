@@ -44,7 +44,7 @@ class Element extends BaseElement
         $app            = Factory::getApplication();
         $option         = $app->input->get('option', '', 'RAW');
         $view           = $app->input->get('view', '', 'RAW');
-        $id             = $app->input->get('id', null, 'RAW');
+        $id             = (int) $app->input->get('id', null, 'RAW');
         if ($option === 'com_content' && $view === 'article' && !empty($id)) {
             $template_name = Framework::getTemplate()->template;
             $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $id . '_' . $this->unqid . '.json');

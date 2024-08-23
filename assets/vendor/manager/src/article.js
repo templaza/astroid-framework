@@ -5,7 +5,6 @@ import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import "vue-search-select/dist/VueSearchSelect.css"
 import 'vue-color-kit/dist/vue-color-kit.css'
 import 'quill/dist/quill.snow.css'
-import './assets/article_data.scss'
 let as_widgets = document.querySelectorAll('.as-article-widget-data');
 as_widgets.forEach(as_widget => {
     let app = createApp(Article, {

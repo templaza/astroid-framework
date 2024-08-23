@@ -3,6 +3,7 @@ import { onBeforeMount, ref, provide } from 'vue';
 import axios from "axios";
 import { faCircle, faArrowsLeftRight, faTrash, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
+import './assets/article_data.scss'
 import Modal from "./components/helpers/Modal.vue";
 library.add(faCircle, faArrowsLeftRight, faTrash, faDownload);
 const props = defineProps(['widget_json_id']);
@@ -56,7 +57,7 @@ function saveElement(params) {
 }
 </script>
 <template>
-    <div class="article-layout-data row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-2">
+    <div class="article-layout-data row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-2 g-4">
         <div v-for="widget in widgets">
             <div class="article-widget card card-body border">
                 <div class="d-flex justify-content-between">
