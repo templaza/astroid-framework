@@ -48,3 +48,29 @@ ul.tags {
     }
   }
 }
+.choices__button_joomla {
+  color: inherit;
+  text-indent: -9999px;
+  cursor: pointer;
+  opacity: .5;
+  appearance: none;
+  background: 0 0;
+  border: 0;
+  padding: 0 10px;
+  position: relative;
+  &:before {
+    text-align: center;
+    text-indent: 0;
+    content: "×";
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+  &:hover {
+    opacity: 1;
+  }
+  &:focus {
+    opacity: 1;
+    outline: none;
+  }
+}
