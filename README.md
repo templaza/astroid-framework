@@ -4,7 +4,7 @@ Powerful framework for designers and developers to create responsive, fast &amp;
 # Changelogs
 Version 3.1.0 - 26 August, 2024
 
-    [Update] Update error.php and offline.php
+    [Update] Update One for Astroid 3.1.2
 
 Version 3.0.10 - 15 February, 2024
 
