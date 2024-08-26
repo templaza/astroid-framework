@@ -163,46 +163,91 @@ function saveElement(param) {
         return true;
     });
 }
-function selectElement(el) {
+
+const select_element_type = ref('');
+function selectElement(el, type = '') {
+    select_element_type.value = type;
     element.value = el;
     _showElement.value = true;
 }
 function addElement(addon) {
-    let id = Date.now() * 1000 + Math.random() * 1000;
-    id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
-    let params = [
-        {name: 'title', value: addon.title}
-    ];
-    if (addon.type === `sublayout`) {
-        params.push({name: 'source', value: addon.name});
-        params.push({name: 'desc', value: addon.desc});
-        params.push({name: 'thumbnail', value: addon.thumbnail});
-    }
-    const new_element = {
-        id: id,
-        type: addon.type,
-        state: 1,
-        params: params
-    }
-    layout.value.sections.every(section => {
-        section.rows.every(row => {
-            row.cols.every(column => {
-                if (element.value.id === column.id) {
-                    column.elements.push(new_element);
-                    if (typeof system.value[addon.type] !== 'undefined') {
-                        system.value[addon.type] = false;
+    if (select_element_type.value === 'loadSublayout') {
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=getlayout&ts="+Date.now();
+        let sublayout_data = {};
+        const sec = Date.now() * 1000 + Math.random() * 1000;
+        if (process.env.NODE_ENV === 'development') {
+            url = "editlayout_ajax.txt?ts="+Date.now();
+        }
+        const formData = new FormData(); // pass data as a form
+        formData.append(constant.astroid_admin_token, 1);
+        formData.append('name', addon.name);
+        formData.append('template', constant.tpl_template_name);
+        formData.append('type', 'layouts');
+        axios.post(url, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then((response) => {
+            if (response.data.status === 'success') {
+                sublayout_data = JSON.parse(response.data.data.data);
+                layout.value.sections.every((section, index) => {
+                    if (element.value.id === section.id) {
+                        sublayout_data.sections.forEach((section, sub_idx) => {
+                            layout.value.sections.splice(index+sub_idx+1, 0, {
+                                id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000),
+                                type: section.type,
+                                rows: section.rows,
+                                params: section.params,
+                                state: 1
+                            });
+                        });
+                        // continue
+                        element.value = {};
+                        return false;
                     }
-                    element.value = {};
-                    return false;
-                }
+                    return true;
+                });
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    } else {
+        let id = Date.now() * 1000 + Math.random() * 1000;
+        id = id.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
+        let params = [
+            {name: 'title', value: addon.title}
+        ];
+        if (addon.type === `sublayout`) {
+            params.push({name: 'source', value: addon.name});
+            params.push({name: 'desc', value: addon.desc});
+            params.push({name: 'thumbnail', value: addon.thumbnail});
+        }
+        const new_element = {
+            id: id,
+            type: addon.type,
+            state: 1,
+            params: params
+        }
+        layout.value.sections.every(section => {
+            section.rows.every(row => {
+                row.cols.every(column => {
+                    if (element.value.id === column.id) {
+                        column.elements.push(new_element);
+                        if (typeof system.value[addon.type] !== 'undefined') {
+                            system.value[addon.type] = false;
+                        }
+                        element.value = {};
+                        return false;
+                    }
+                    return true;
+                });
                 return true;
             });
             return true;
         });
-        return true;
-    });
-    if (addon.type !== `sublayout`) {
-        editElement(new_element);
+        if (addon.type !== `sublayout`) {
+            editElement(new_element);
+        }
     }
 }
 function closeElement() {
@@ -384,7 +429,7 @@ function saveSublayout() {
         <Modal v-if="_showModal" :element="element" :form="form_template[element.type]" @update:saveElement="saveElement" @update:close-element="closeElement" />
     </Transition>
     <Transition name="fade">
-        <SelectElement v-if="_showElement" :form="form_template" :system="system" :source="props.source" @update:close-element="_showElement = false" @update:selectElement="addElement" />
+        <SelectElement v-if="_showElement" :form="form_template" :type="select_element_type" :system="system" :source="props.source" @update:close-element="_showElement = false" @update:selectElement="addElement" />
     </Transition>
     <form :id="props.field.input.id+`_saveLayout_form`" v-if="props.source === `root` && _showSublayoutModal">
         <div class="astroid-modal modal d-block" :id="props.field.input.id+`_saveLayout`" tabindex="-1" :aria-labelledby="props.field.input.id+`saveLayoutLabel`" aria-hidden="true">

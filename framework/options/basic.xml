@@ -144,16 +144,23 @@
          </field>
 
          <field astroidgroup="colormode" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" />
-         <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1'" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
+         <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1'" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_DESC" name="enable_color_mode_transform" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_LABEL" />
+         <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==0" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
             <option value="auto">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_AUTO</option>
             <option value="light">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHT</option>
             <option value="dark">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_DARK</option>
          </field>
-         <field astroidgroup="colormode" name="colormode_module_position" type="astroidmodulesposition" default="position-1" astroid-content-layout="colormode" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-select" ngShow="[astroid_color_mode_enable]=='1'"/>
-         <field astroidgroup="colormode" name="colormode_module_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="colormode_module_position" default="after" ngShow="[astroid_color_mode_enable]=='1'">
+         <field astroidgroup="colormode" name="colormode_module_position" type="astroidmodulesposition" default="position-1" astroid-content-layout="colormode" label="TPL_ASTROID_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" class="form-select" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==0"/>
+         <field astroidgroup="colormode" name="colormode_module_load_position" type="astroidlist" label="TPL_ASTROID_FEATURE_LOAD_POSITION_LABEL" description="TPL_ASTROID_FEATURE_LOAD_POSITION_DESC" class="form-control" astroid-content-layout-load="colormode_module_position" default="after" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==0">
             <option value="after">TPL_ASTROID_AFTER_MODULE</option>
             <option value="before">TPL_ASTROID_BEFORE_MODULE</option>
          </field>
+
+         <field astroidgroup="colormode" name="colormode_transform_type" type="astroidlist" label="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_TYPE_LABEL" description="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_TYPE_DESC" default="light_dark" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==1">
+            <option value="light_dark">TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_TYPE_LIGHT_DARK_LABEL</option>
+            <option value="dark_light">TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_TYPE_DARK_LIGHT_LABEL</option>
+         </field>
+         <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]==1 AND [enable_color_mode_transform]==1" name="astroid_colormode_transform_offset" type="astroidrange" min="1" max="100" step="1" default="50" label="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_LABEL" description="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_DESC" postfix="%" />
 
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
          <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />

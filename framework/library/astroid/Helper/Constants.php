@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.1.1';
+    public static $astroid_version = '3.1.2';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -31,6 +31,7 @@ class Constants
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
     public static $templates_link = 'https://astroidframe.work/partners';
+    public static $jed_link = 'https://extensions.joomla.org/extension/astroid-framework/';
 
     /**
      * Return configurations of Manager
@@ -58,6 +59,7 @@ class Constants
             'video_tutorial'        => self::$video_tutorial_link,
             'donate_link'           => self::$donate_link,
             'github_link'           => self::$github_link,
+            'jed_link'              => self::$jed_link,
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),

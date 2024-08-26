@@ -196,6 +196,8 @@
                     <option value="5">X-Large</option>
                 </field>
 
+                <field astroidgroup="grid_options" ngShow="[enable_slider]==0" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="primary">Primary</option>
@@ -322,6 +324,21 @@
                     <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
                     <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
                 </field>
+                <field astroidgroup="card_options" name="card_box_shadow" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                </field>
+                <field astroidgroup="card_options" name="card_box_shadow_hover" type="astroidlist" label="ASTROID_WIDGET_BOX_SHADOW_HOVER_LABEL" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="shadow-hover-none">ASTROID_WIDGET_SHADOW_NONE</option>
+                    <option value="shadow-hover-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
+                    <option value="shadow-hover">ASTROID_WIDGET_SHADOW_REGULAR</option>
+                    <option value="shadow-hover-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                    <option value="shadow-hover-popout">ASTROID_WIDGET_SHADOW_POPUP</option>
+                </field>
                 <field astroidgroup="image_options" name="layout" type="astroidlist" label="ASTROID_WIDGET_CHOOSE_LAYOUT_LABEL" default="classic">
                     <option value="classic">ASTROID_WIDGET_LAYOUT_CLASSIC_LABEL</option>
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
@@ -339,8 +356,27 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+
+                <field astroidgroup="image_options" name="enable_image_effect" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_EFFECT"/>
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1" name="image_hover_type" type="astroidradio" width="full" default="normal" label="ASTROID_WIDGET_IMAGE_HOVER_EFFECT">
+                    <option value="normal">ASTROID_WIDGET_NORMAL_EFFECT</option>
+                    <option value="hover">ASTROID_WIDGET_HOVER_EFFECT</option>
+                </field>
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='normal'" name="brightness" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_BRIGHTNESS" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='normal'" name="contrast" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_CONTRACT" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='normal'" name="saturate" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_SATURATE" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='normal'" name="blur" type="astroidrange" min="0" max="10" step="0.1" default="0" label="ASTROID_WIDGET_BLUR" postfix="px" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='normal'" name="hue_rotate" type="astroidrange" min="0" max="360" step="1" default="0" label="ASTROID_WIDGET_HUE" postfix="deg" />
+
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='hover'" name="brightness_hover" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_BRIGHTNESS" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='hover'" name="contrast_hover" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_CONTRACT" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='hover'" name="saturate_hover" type="astroidrange" min="0" max="1000" step="1" default="100" label="ASTROID_WIDGET_SATURATE" postfix="%" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='hover'" name="blur_hover" type="astroidrange" min="0" max="10" step="0.1" default="0" label="ASTROID_WIDGET_BLUR" postfix="px" />
+                <field astroidgroup="image_options" ngShow="[enable_image_effect]==1 AND [image_hover_type]=='hover'" name="hue_rotate_hover" type="astroidrange" min="0" max="360" step="1" default="0" label="ASTROID_WIDGET_HUE" postfix="deg" />
+
                 <field astroidgroup="image_options" name="enable_image_cover" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_IMAGE_COVER"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="min_height" type="astroidrange" min="1" max="1000" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
+                <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" type="astroidtext" class="form-control" label="JFIELD_MEDIA_HEIGHT_LABEL" name="height"/>
                 <field astroidgroup="image_options" ngShow="[enable_image_cover]==1" name="overlay_type" type="astroidradio" width="full" default="color" label="ASTROID_WIDGET_OVERLAY_COLOR">
                     <option value="">ASTROID_NONE</option>
                     <option value="color">TPL_ASTROID_COLOR</option>
@@ -398,6 +434,7 @@
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_nav" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_NAVIGATION"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="nav_color" type="astroidcolor" label="ASTROID_WIDGET_NAV_COLOR" />
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
 
                 <field astroidgroup="readmore_options" name="enable_readmore" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_READMORE"/>

@@ -77,7 +77,22 @@ class Head
         }
         $color_mode = $template->getColorMode();
         if ($color_mode) {
-            $wa->addInlineScript('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
+            $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);
+            if ($enable_color_mode_transform) {
+                $colormode_transform_type               =   $params->get('colormode_transform_type', 'light_dark');
+                $astroid_colormode_transform_offset     =   $params->get('astroid_colormode_transform_offset', 50);
+                if ($colormode_transform_type === 'light_dark') {
+                    $from   =   'light';
+                    $to     =   'dark';
+                } else {
+                    $from   =   'dark';
+                    $to     =   'light';
+                }
+                $wa->registerAndUseScript('astroid.colortransform', 'astroid/colortransform.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                $wa->addInlineScript('var ASTROID_COLOR_TRANSFORM = {from:"'.$from.'", to:"'.$to.'", offset:'.$astroid_colormode_transform_offset.'};');
+            } else {
+                $wa->addInlineScript('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
+            }
         }
     }
 

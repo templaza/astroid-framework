@@ -1,0 +1,25 @@
+{
+  "templates": [
+    {
+      "name": "Two",
+      "description": "The Two is a stylish and easy-to-use Joomla Template best suited for a contemporary web design studio and creative agency, web designer's portfolio, graphic design, website building.",
+      "thumbnail": "../media/astroid/assets/images/two_thumbnail.jpg",
+      "preview": "https://demo.astroidframe.work/",
+      "download": "https://github.com/templaza/astroid-framework/archive/refs/heads/two-template.zip"
+    },
+    {
+      "name": "One",
+      "description": "A simple and beautiful template that can suit your many purposes. Available in a variety of colors such as Orange, Purple, Green and Yellow.",
+      "thumbnail": "../media/astroid/assets/images/one_thumbnail.jpg",
+      "preview": "",
+      "download": "https://github.com/templaza/astroid-framework/archive/refs/heads/one-template.zip"
+    },
+    {
+      "name": "Zero",
+      "description": "The first template of Astroid. Very beautiful and simple to suit your many business purposes. The template has built-in colors such as Red, Purple, Yellow and Pink.",
+      "thumbnail": "../media/astroid/assets/images/zero_thumbnail.jpg",
+      "preview": "",
+      "download": "https://github.com/templaza/astroid-framework/archive/refs/heads/zero-template.zip"
+    }
+  ]
+}

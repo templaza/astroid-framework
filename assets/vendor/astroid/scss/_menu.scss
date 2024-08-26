@@ -254,7 +254,7 @@ ul {
 			height: 0;
 			border-left: 8px solid transparent;
 			border-right: 8px solid transparent;
-			border-bottom: 8px solid #eee;
+			border-bottom: 8px solid var(--bs-border-color);
 			z-index: 0;
 			left: 50%;
 			margin-left: -8px;
@@ -268,29 +268,40 @@ ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-
-	li {
-		width: 100%;
+	.nav-title {
 		display: block;
-		border-bottom: 1px solid $border-color;
-
-		.as-menu-item {
-			padding: 10px;
-			width: calc(100% - 50px);
-			display: inline-block;
+	}
+	li {
+		display: block;
+		width: 100%;
+		margin: 5px 0;
+		.nav-item-inner {
+			border-radius: var(--bs-border-radius);
 		}
 
-		>ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			padding-left: 20px;
-			display: none;
-			border-top: 1px solid #eee;
+		.as-menu-item {
+			display: block;
+			padding: $sidebar-menu-item-padding;
+			flex: auto;
+		}
 
-			li {
-				&:last-child {
-					border-bottom: 0;
+		ul.nav-child {
+			display: none;
+			list-style: none;
+			border-left: 1px dashed var(--bs-border-color);
+			margin-left: 20px;
+			padding-left: 15px;
+			> li > div.nav-item-inner > a {
+				position: relative;
+				&:before {
+					content: "";
+					margin-right: 10px;
+					border-top: 1px dashed var(--bs-border-color);
+					width: 7px;
+					height: 1px;
+					position: absolute;
+					top: 50%;
+					left: -13px;
 				}
 			}
 		}
@@ -301,14 +312,10 @@ ul {
 			}
 		}
 
-		>.nav-item-caret {
-			width: 50px;
-			display: inline-block;
+		.nav-item-caret {
 			font-size: 13px;
-			text-align: right;
-			padding: 10px;
+			padding: $sidebar-menu-item-padding;
 			cursor: pointer;
-			float: right;
 			line-height: inherit;
 
 			&:before {

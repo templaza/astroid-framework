@@ -32,6 +32,7 @@
 * Refactored Codebase
 * RTL Support
 * Light & Dark Color Mode
+* Transform Color Mode (Light to Dark or Dark to Light)
 * SVG Logo Support
 * Customize Breakpoint
 * Many widgets integrated
@@ -51,10 +52,30 @@
 * Text Widget
 * Video Button Widget
 * Video Widget
-* FormBuilder Wiget
+* FormBuilder Widget
 * List Widget
 * Testimonials Widget
 * Map Widget
+* Accordion Widget
+
+## Article Widgets
+* Author Info
+* Comments
+* Content
+* Events
+* Full Image
+* Full Text
+* Infoblock
+* Intro Text
+* Links
+* Page Heading
+* Pagination
+* Related Posts
+* Social Share
+* Tags
+* Text
+* Title
+* Toc
 
 ## Requirements
 * Joomla: 4.x, 5.x

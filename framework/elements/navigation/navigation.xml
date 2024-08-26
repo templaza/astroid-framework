@@ -36,11 +36,6 @@
                     <option value="">ASTROID_WIDGET_NAV_NAVIGATION</option>
                     <option value="flex-column">ASTROID_WIDGET_NAV_LIST</option>
                 </field>
-                <field astroidgroup="misc_options" name="alignment" type="astroidradio" default="" label="ASTROID_WIDGET_ALIGNMENT_LABEL">
-                    <option value="">JGLOBAL_LEFT</option>
-                    <option value="justify-content-center">JGLOBAL_CENTER</option>
-                    <option value="justify-content-end">JGLOBAL_RIGHT</option>
-                </field>
                 <field astroidgroup="misc_options" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false" color-picker="false"/>
 
                 <field astroidgroup="color_options" name="color_settings" type="astroidradio" width="full" default="color">

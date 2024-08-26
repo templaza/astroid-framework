@@ -15,12 +15,14 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Astroid\Component\Article;
+use Astroid\Framework;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 $catids         = json_decode($params->get('catids', '[]'), true);
@@ -32,11 +34,13 @@ $categories = [];
 foreach ($catids as $catid) {
     $categories[]   =   $catid['value'];
 }
+$document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
 $items = Article::getArticles($limit, $ordering, $categories);
 
 $enable_slider      =   $params->get('enable_slider', 0);
+$use_masonry        =   $params->get('use_masonry', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
@@ -47,6 +51,10 @@ $slide_responsive   =   array();
 $style = new Style('#'. $element->id);
 $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   'row';
+
+if ($use_masonry && !$enable_slider) {
+    $row_column_cls .=  ' as-masonry';
+}
 
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
@@ -144,6 +152,11 @@ foreach ($responsive_key as $key) {
 $card_style         =   $params->get('card_style', '');
 $card_style         =   $card_style ? ' text-bg-' . $card_style : '';
 
+$box_shadow         =   $params->get('card_box_shadow', '');
+$box_shadow         =   $box_shadow ? ' ' . $box_shadow : '';
+$box_shadow_hover   =   $params->get('card_box_shadow_hover', '');
+$box_shadow         .=  $box_shadow_hover ? ' ' . $box_shadow_hover : '';
+
 $card_size          =   $params->get('card_size', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
 
@@ -178,6 +191,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 $layout             =   $params->get('layout', 'classic');
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
+$height             =   $params->get('height', '');
 $overlay_type       =   $params->get('overlay_type', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 $img_rounded_size   =   $params->get('img_rounded_size', '3');
@@ -187,6 +201,20 @@ if ($img_border_radius == 'rounded') {
 } else {
     $img_border_radius  = $img_border_radius !== '' ? ' ' . $img_border_radius : '';
 }
+
+// Image Effect
+$enable_image_effect=   $params->get('enable_image_effect', 0);
+$brightness         =   $params->get('brightness', '100');
+$contrast           =   $params->get('contrast', '100');
+$saturate           =   $params->get('saturate', '100');
+$blur               =   $params->get('blur', '0');
+$hue_rotate         =   $params->get('hue_rotate', '0');
+
+$brightness_hover   =   $params->get('brightness_hover', '100');
+$contrast_hover     =   $params->get('contrast_hover', '100');
+$saturate_hover     =   $params->get('saturate_hover', '100');
+$blur_hover         =   $params->get('blur_hover', '0');
+$hue_rotate_hover   =   $params->get('hue_rotate_hover', '0');
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
@@ -223,7 +251,6 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 $has_gallery        =   false;
-echo '<div class="overflow-hidden">';
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
@@ -260,27 +287,37 @@ foreach ($items as $key => $item) {
             break;
         case 'video':
             $video_url  =   $item->params->get('astroid_article_video_url', '');
+            $video_local_url  =   $item->params->get('astroid_article_video_local', '');
             $video_type =   $item->params->get('astroid_article_video_type', '');
             $video_src  =   Article::getVideoSrc($video_url);
-            if ($video_src) {
-                if ($video_type == 'vimeo') {
-                    $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+            if ($video_type !== 'local') {
+                if ($video_src) {
+                    if ($video_type == 'vimeo') {
+                        $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+                    }
+                    $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
+                    $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
+                    $media .=   '</div>';
                 }
-                $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
-                $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
-                $media .=   '</div>';
+            } elseif (!empty($video_local_url)) {
+                $document->loadVideoBG();
+                $media = '<div class="as-article-video-local as-image-cover astroid-image-overlay-cover" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div>';
             }
+
             break;
         case 'audio':
             $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
             $media      =   $renderer->render(['article' => $item]);
             break;
     }
-    $item_image_cover = !empty($item->image_thumbnail) ? $enable_image_cover : 0;
-    if ($item_image_cover) {
+    $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
+    if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
         $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
     }
-    echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    if ($enable_image_effect) {
+        $media  =   '<div class="as-image-effect">' . $media . '</div>';
+    }
+    echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
@@ -293,7 +330,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' && $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' || $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
@@ -346,16 +383,24 @@ foreach ($items as $key => $item) {
     echo '</div></div>';
 }
 echo '</div>';
-echo '</div>';
 $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();
 if ($has_gallery) {
     $wa->useScript('bootstrap.carousel');
 }
+
 if ($enable_slider) {
-    $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-    $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
+    $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+    if ($slider_nav) {
+        $nav_color  =   Style::getColor($params->get('nav_color', ''));
+        $style->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['light']);
+        $style->child('.astroid-slick .slick-next')->addCss('color', $nav_color['light']);
+        $style_dark->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['dark']);
+        $style_dark->child('.astroid-slick .slick-next')->addCss('color', $nav_color['dark']);
+    }
+
+} elseif ($use_masonry) {
+    $document->loadMasonry();
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
@@ -391,19 +436,34 @@ if (!empty($info_margin_after_intro)) {
     }
 }
 if ($enable_image_cover) {
-    $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
-    $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
+    if (!empty($height)) {
+        $style->child('.as-image-cover')->addCss('min-height', $min_height . 'px');
+        $style->child('.as-slideshow-media .carousel-item')->addCss('min-height', $min_height . 'px');
+        $style->child('.as-image-cover')->addCss('height', $height);
+        $style->child('.as-slideshow-media .carousel-item')->addCss('height', $height);
+    } else {
+        $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+        $style->child('.as-slideshow-media .carousel-item')->addCss('height', $min_height . 'px');
+    }
+}
+if ($enable_image_effect) {
+    $style->child('.as-image-effect')->addCss('filter', 'brightness('.$brightness.'%) contrast('.$contrast.'%) saturate('.$saturate.'%) blur('.$blur.'px) hue-rotate('.$hue_rotate.'deg)');
+    $style->child('.card')->hover()->child('.as-image-effect')->addCss('filter', 'brightness('.$brightness_hover.'%) contrast('.$contrast_hover.'%) saturate('.$saturate_hover.'%) blur('.$blur_hover.'px) hue-rotate('.$hue_rotate_hover.'deg)');
 }
 switch ($overlay_type) {
     case 'color':
         $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
         $style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
         $style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+
+        $style->child('.astroid-element-overlay:before')->addCss('background-color', $overlay_color['light']);
+        $style_dark->child('.astroid-element-overlay:before')->addCss('background-color', $overlay_color['dark']);
         break;
     case 'background-color':
         $overlay_gradient   =   $params->get('overlay_gradient', '');
         if (!empty($overlay_gradient)) {
             $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+            $style->child('.astroid-element-overlay:before')->addCss('background-image', Style::getGradientValue($overlay_gradient));
         }
         break;
 }

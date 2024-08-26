@@ -151,6 +151,6 @@ if ($item->type == 'url') {
    <?php } ?>
 </a>
 <?php if ($slidemenu && ($item->parent && $item->deeper == 1)) { ?>
-   <i class="fas fa-plus nav-item-caret<?php echo $active ? ' open' : ''; ?>"></i>
+    <i class="fas fa-plus nav-item-caret<?php echo $active ? ' open' : ''; ?>"></i>
 <?php } ?>
 <!--menu link ends-->

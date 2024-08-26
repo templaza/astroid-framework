@@ -44,6 +44,8 @@ $tpl_params = $template->getParams();
 // Post Format
 $post_attribs = new Registry(json_decode($this->item->attribs));
 $post_format = $post_attribs->get('post_format', 'standard');
+$astroid_article_type = $post_attribs->get('astroid_article_type', '');
+$astroid_article_video_type = $post_attribs->get('astroid_article_video_type', '');
 
 // Image position
 $image_width = array();
@@ -73,12 +75,17 @@ $isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED 
 $clsItemContainer   = $astroidArticle->getStyle('container');
 $clsItemBody        = $astroidArticle->getStyle('body');
 ?>
-<div class="item-content position-relative d-flex flex-column<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); echo ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : ''; ?>">
+<div class="item-content position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); echo ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : ''; ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
     <?php endif; ?>
     <?php
-    $image = $astroidArticle->getImage();
+    if ($astroid_article_type == 'video' && $astroid_article_video_type == 'local') {
+        $astroid_article_video_local = $post_attribs->get('astroid_article_video_local', '');
+        $image = '<div class="as-article-video-local h-100 ratio ratio-16x9" data-as-video-bg="'.Uri::base('true').'/images/'.$astroid_article_video_local.'"'.(!empty($images->image_intro) ? ' data-as-video-poster="'.Uri::base('true').'/'.$images->image_intro.'"' : '').'></div>';
+    } else {
+        $image = $astroidArticle->getImage();
+    }
     if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
         if ($image_position == 'left' || $image_position == 'right' || $image_position == 'bottom') {
             if ($image_position == 'left' || $image_position == 'right') {
@@ -90,11 +97,16 @@ $clsItemBody        = $astroidArticle->getStyle('body');
         }
     }
     // Generate media
-    if ((!empty($images->image_intro)) && $post_format == 'standard') {
+    if ((!empty($images->image_intro)) && $post_format == 'standard' && ($astroid_article_type !== 'video' || $astroid_article_video_type !== 'local')) {
         echo LayoutHelper::render('joomla.content.intro_image', $this->item);
     } else if (is_string($image) && !empty($image)) {
         echo '<div class="item-image">';
-        $document->include('blog.modules.image', ['image' => $image, 'title' => $this->item->title, 'item' => $this->item]);
+        if ($astroid_article_type == 'video' && $astroid_article_video_type == 'local') {
+            $document->loadVideoBG();
+            echo $image;
+        } else {
+            $document->include('blog.modules.image', ['image' => $image, 'title' => $this->item->title, 'item' => $this->item]);
+        }
         echo '</div>';
     } else {
         echo LayoutHelper::render('joomla.content.post_formats.post_' . $post_format, array('params' => $post_attribs, 'item' => $this->item));
@@ -164,9 +176,11 @@ $clsItemBody        = $astroidArticle->getStyle('body');
         <?php endif; ?>
     </div>
     <?php
-    if (($image_position == 'left' || $image_position == 'right')) {
-        echo '</div>';
-        echo '</div>';
+    if (((!empty($images->image_intro)) && $post_format == 'standard') || (is_string($image) && !empty($image))) {
+        if (($image_position == 'left' || $image_position == 'right')) {
+            echo '</div>';
+            echo '</div>';
+        }
     }
     ?>
     <?php if ($isUnpublished) : ?>

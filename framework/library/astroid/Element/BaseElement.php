@@ -18,6 +18,7 @@ namespace Astroid\Element;
 use Astroid\Helper;
 use Astroid\Helper\Media;
 use Astroid\Helper\Style;
+use Astroid\Framework;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
@@ -210,7 +211,7 @@ class BaseElement
                 $this->style_dark->addCss('background-color', $background_color['dark']);
                 $image = $this->params->get('background_image', '');
                 if (!empty($image)) {
-                    $this->style->addCss('background-image', 'url(' . Uri::root() . Media::getPath() . '/' . $image . ')');
+                    $this->style->addCss('background-image', 'url(' . Uri::base(true) . '/' . Media::getPath() . '/' . $image . ')');
                     $this->style->addCss('background-repeat', $this->params->get('background_repeat', ''));
                     $this->style->addCss('background-size', $this->params->get('background_size', ''));
                     $this->style->addCss('background-attachment', $this->params->get('background_attchment', ''));
@@ -220,10 +221,11 @@ class BaseElement
                 break;
             case 'video': // if video background
                 $video = $this->params->get('background_video', '');
+                $poster = $this->params->get('background_image', '');
                 if (!empty($video)) {
-                    $this->addAttribute('data-jd-video-bg', Uri::root() . Media::getPath() . '/' . $video);
-                    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-                    $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                    $this->addAttribute('data-as-video-bg', Uri::base(true) . '/' . Media::getPath() . '/' . $video);
+                    $this->addAttribute('data-as-video-poster', Uri::base(true) . '/' . Media::getPath() . '/' . $poster);
+                    Framework::getDocument()->loadVideoBG();
                     $this->addOverlayColor();
                 }
                 break;

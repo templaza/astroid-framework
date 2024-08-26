@@ -62,9 +62,7 @@ final class AstroidPlugin extends CMSPlugin
         if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
             return false;
         }
-        if (Framework::isSite()) {
-            Framework::getClient()->onBeforeRender();
-        }
+        Framework::getClient()->onBeforeRender();
     }
 
     public function onAfterRender()
@@ -101,7 +99,7 @@ final class AstroidPlugin extends CMSPlugin
     public function onContentPrepareData($context, $user)
     {
         // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
-        if ($context == 'com_users.profile') {
+        if ($context == 'com_users.profile' && isset($user->params) && !empty($user->params)) {
             $params = new \Joomla\Registry\Registry();
             $params->loadArray($user->params);
             if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
@@ -118,14 +116,16 @@ final class AstroidPlugin extends CMSPlugin
     public function onUserAfterSave($user, $isnew, $success, $msg): void
     {
         // Fix issue Attempt to assign property "astroid_author_social0" on array of User Component
-        $params = new \Joomla\Registry\Registry($user['params']);
-        if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
-            $params->remove('astroid_author_social');
-            $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
-            $object = new \stdClass();
-            $object->id = $user['id'];
-            $object->params = $params->toString();
-            $db->updateObject('#__users', $object, 'id');
+        if (isset($user['params']) && !empty($user['params'])) {
+            $params = new \Joomla\Registry\Registry($user['params']);
+            if (is_array($params->get('astroid_author_social')) && !count($params->get('astroid_author_social'))) {
+                $params->remove('astroid_author_social');
+                $db = Factory::getContainer()->get(\Joomla\Database\DatabaseInterface::class);
+                $object = new \stdClass();
+                $object->id = $user['id'];
+                $object->params = $params->toString();
+                $db->updateObject('#__users', $object, 'id');
+            }
         }
     }
 

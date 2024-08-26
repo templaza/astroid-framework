@@ -28,6 +28,7 @@ $sidebar-header-mini-width: 54px !default;
 
 // Menu
 $megamenu-gutter-width: 30px !default;
+$sidebar-menu-item-padding: 5px 12px !default;
 
 // Deprecated Variable
 $header-sidebar-width: 320px !default;
@@ -98,6 +99,7 @@ $selection-text-color: $white !default;
 $post-type-quote-bg: #bfe6ff !default;
 $post-type-gallery-bg: #e5f9f1 !default;
 $post-type-review-bg: #f5db8b !default;
+$post-type-video-local-bg: #fee8eb !default;
 $post-type-youtube-bg: #fee8eb !default;
 $post-type-vimeo-bg: #76d3f2 !default;
 $post-type-soundcloud-bg: #fff1ea !default;
@@ -106,6 +108,7 @@ $post-type-regular-color: #fff !default;
 $post-type-quote-color: #45a9ea !default;
 $post-type-gallery-color: #0dc772 !default;
 $post-type-review-color: #bb900b !default;
+$post-type-video-local-color: #f23453 !default;
 $post-type-youtube-color: #f23453 !default;
 $post-type-vimeo-color: #1dabda !default;
 $post-type-soundcloud-color: #ff7930 !default;

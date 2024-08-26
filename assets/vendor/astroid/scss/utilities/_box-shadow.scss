@@ -11,3 +11,10 @@
     }
   }
 }
+
+.shadow-hover-popout {
+  transition: all 400ms;
+  &:hover {
+    @include box-hover-shadow();
+  }
+}

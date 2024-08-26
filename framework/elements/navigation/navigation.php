@@ -30,8 +30,14 @@ $item_margin    = $params->get('item_margin', '');
 $item_padding   = $params->get('item_padding', '');
 $list_style     = $params->get('list_style', '');
 $list_style     = $list_style !== '' ? ' ' . $list_style : '';
-$alignment      = $params->get('alignment', '');
-$alignment      = $alignment !== '' ? ' '. $alignment : '';
+$text_alignment             =   $params->get('text_alignment','');
+$text_alignment_breakpoint  =   $params->get('text_alignment_breakpoint','');
+$text_alignment_fallback    =   $params->get('text_alignment_fallback','');
+
+$alignment                  =   '';
+if ($text_alignment) {
+    $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
+}
 $color          = Style::getColor($params->get('color', ''));
 $color_hover    = Style::getColor($params->get('color_hover', ''));
 $color_active   = Style::getColor($params->get('color_active', ''));

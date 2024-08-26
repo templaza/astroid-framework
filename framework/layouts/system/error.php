@@ -32,7 +32,7 @@ $bodyAttrs = [];
 if ($background_setting_404 == 'video' && !empty($background_video_404)) {
     $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
     $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    $bodyAttrs[] = 'data-jd-video-bg="' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video_404 . '"';
+    $bodyAttrs[] = 'data-as-video-bg="' . Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video_404 . '"';
 }
 
 ?>

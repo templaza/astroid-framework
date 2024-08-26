@@ -61,7 +61,7 @@ class Menu
 
         $return = [];
         // Menu Wrapper
-        echo '<div class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '">'
+        echo '<nav class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '" aria-label="'.$headerType.' menu">'
             . '<ul class="' . implode(' ', $nav_class) . '">';
 
 
@@ -152,7 +152,7 @@ class Menu
         }
 
         echo '</ul>'
-            . '</div>';
+            . '</nav>';
     }
 
     // Joomla Functions
@@ -653,9 +653,11 @@ class Menu
             $options = self::getAstroidMenuOptions($item, $list);
             $class = self::getLiClass($item, $options, $default_id, $active_id, $path);
             echo '<li class="' . \implode(' ', $class) . '">';
+            echo '<div class="nav-item-inner d-flex align-items-center'.(in_array('nav-item-active', $class) ? ' active' : '').'">';
             $document->include('header.menu.link', ['item' => $item, 'options' => $options, 'mobilemenu' => false, 'slidemenu' => 1, 'active' => in_array('nav-item-active', $class)]);
+            echo '</div>';
             if ($item->deeper) {
-                echo '<ul class="nav-child list-group navbar-subnav level-' . $item->level . '">';
+                echo '<ul class="nav-child navbar-subnav level-' . $item->level . '">';
             } elseif ($item->shallower) {
                 echo '</li>';
                 echo str_repeat('</ul></li>', $item->level_diff);

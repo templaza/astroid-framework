@@ -11,6 +11,7 @@
  */
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\Registry\Registry;
 // No direct access.
 defined('_JEXEC') or die;
 
@@ -25,16 +26,25 @@ $document = Astroid\Framework::getDocument();
    <div class="relateditems row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
       <?php foreach ($items as $item) : $images = json_decode($item->images);
          $astroidArticle = new Astroid\Article($item, true);
+          // Post Format
+          $post_attribs = new Registry(json_decode($item->attribs));
+          $post_format = $post_attribs->get('post_format', 'standard');
+          $image = $astroidArticle->getImage();
       ?>
          <div>
             <div class="card">
                <?php
+               // Generate media
                if (!empty($images->image_intro)) {
+                   echo '<img class="card-img-top" src="'.$images->image_intro.'" data-holder-rendered="true">';
+               } else if (is_string($image) && !empty($image)) {
+                   echo '<div class="item-image">';
+                   $document->include('blog.modules.image', ['image' => $image, 'title' => $item->title, 'item' => $item]);
+                   echo '</div>';
+               } else {
+                   echo LayoutHelper::render('joomla.content.post_formats.post_' . $post_format, array('params' => $post_attribs, 'item' => $item));
+               }
                ?>
-                  <a href="<?php echo $item->route; ?>">
-                     <img class="card-img-top" src="<?php echo $images->image_intro; ?>" data-holder-rendered="true">
-                  </a>
-               <?php } ?>
                <div class="card-body">
                   <h3 class="related-article-title">
                      <a href="<?php echo $item->route; ?>"><?php echo $item->title; ?></a>

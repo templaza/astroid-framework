@@ -172,7 +172,6 @@ class Template
 
         $danger = $this->params->get('theme_danger', '');
         if (!empty($danger)) {
-            $variables['danger'] = $variables[$danger];
             $variables['danger'] = ($danger == 'custom' ? $this->params->get('theme_danger_custom', $variables['red']) : $variables[$danger]);
         }
 
@@ -388,9 +387,15 @@ class Template
 
         $color_mode_theme = '';
         if ($plg_color_mode && $color_mode) {
-            $app               =   Factory::getApplication();
-            $client_color      =   $app->input->get('color_mode', '', 'ALNUM');
-            $color_mode_theme  =   !empty($client_color) ? $client_color : $app->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
+            $enable_color_mode_transform    =   $this->params->get('enable_color_mode_transform', 0);
+            if ($enable_color_mode_transform) {
+                $colormode_transform_type   =   $this->params->get('colormode_transform_type', 'light_dark');
+                $color_mode_theme           =   $colormode_transform_type === 'light_dark' ? 'light' : 'dark';
+            } else {
+                $app               =   Factory::getApplication();
+                $client_color      =   $app->input->get('color_mode', '', 'ALNUM');
+                $color_mode_theme  =   !empty($client_color) ? $client_color : $app->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
+            }
         }
         return $color_mode_theme;
     }

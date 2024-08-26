@@ -282,6 +282,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_column_responsive]=='xl' AND ([media_position]=='left' OR [media_position]=='right')" type="astroidlist" name="xl_column_media" label="ASTROID_WIDGET_XL_COLUMN_IMAGE_WIDTH" default="">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -294,6 +296,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_column_responsive]=='lg' AND ([media_position]=='left' OR [media_position]=='right')" type="astroidlist" name="lg_column_media" label="ASTROID_WIDGET_LG_COLUMN_IMAGE_WIDTH" default="4">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -306,6 +310,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_column_responsive]=='md' AND ([media_position]=='left' OR [media_position]=='right')" type="astroidlist" name="md_column_media" label="ASTROID_WIDGET_MD_COLUMN_IMAGE_WIDTH" default="12">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -318,6 +324,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_column_responsive]=='sm' AND ([media_position]=='left' OR [media_position]=='right')" type="astroidlist" name="sm_column_media" label="ASTROID_WIDGET_SM_COLUMN_IMAGE_WIDTH" default="12">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -330,6 +338,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_column_responsive]=='xs' AND ([media_position]=='left' OR [media_position]=='right')" type="astroidlist" name="xs_column_media" label="ASTROID_WIDGET_XS_COLUMN_IMAGE_WIDTH" default="12">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -342,6 +352,8 @@
                     <option value="2">1/6</option>
                     <option value="5">5/12</option>
                     <option value="7">7/12</option>
+                    <option value="1">1/12</option>
+                    <option value="auto">auto</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_position]=='left' OR [media_position]=='right'" name="vertical_middle" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_VERTICAL_MIDDLE"/>
                 <field astroidgroup="card_options" name="enable_grid_match" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_GRID_MATCH"/>
@@ -388,6 +400,7 @@
                     <option value="shadow-hover-sm">ASTROID_WIDGET_SHADOW_SMALL</option>
                     <option value="shadow-hover">ASTROID_WIDGET_SHADOW_REGULAR</option>
                     <option value="shadow-hover-lg">ASTROID_WIDGET_SHADOW_LARGE</option>
+                    <option value="shadow-hover-popout">ASTROID_WIDGET_SHADOW_POPUP</option>
                 </field>
                 <field astroidgroup="icon_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" default="60" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" postfix="px" />
                 <field astroidgroup="icon_options" name="icon_color" type="astroidcolor" label="TPL_ASTROID_COLOR" />

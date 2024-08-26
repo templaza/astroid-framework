@@ -13,6 +13,7 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Language\Text;
@@ -21,7 +22,7 @@ defined('_JEXEC') or die;
 
 class Utility
 {
-    public static function meta()
+    public static function meta(): void
     {
         $app = Factory::getApplication();
         $document = Framework::getDocument();
@@ -125,7 +126,7 @@ class Utility
         }
     }
 
-    public static function smoothScroll()
+    public static function smoothScroll(): void
     {
         $params = Framework::getTemplate()->getParams();
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
@@ -146,7 +147,7 @@ class Utility
         }
     }
 
-    public static function background()
+    public static function background(): void
     {
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
@@ -172,7 +173,7 @@ class Utility
         }
     }
 
-    public static function getCategories()
+    public static function getCategories(): array
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
@@ -207,13 +208,13 @@ class Utility
         return $article_cats;
     }
 
-    public static function typography()
+    public static function typography(): void
     {
         $params = Framework::getTemplate()->getParams();
         $customselector = $params->get('custom_typography_selectors', '');
         $logo_type = $params->get('logo_type', 'none');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > .as-menu-item, .astroid-sidebar-menu > li > .as-menu-item, .astroid-mobile-menu > .nav-item > .as-menu-item', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item', 'custom' => $customselector);
+        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > .as-menu-item, .astroid-sidebar-menu > li > .nav-item-inner > .as-menu-item, .astroid-mobile-menu > .nav-item > .as-menu-item', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item, .nav-item-submenu .as-menu-item', 'custom' => $customselector);
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {
@@ -244,7 +245,7 @@ class Utility
         }
     }
 
-    public static function colors()
+    public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
         // Body
@@ -335,7 +336,7 @@ class Utility
         $main_menu_link_active_color    =   Style::getColor($params->get('main_menu_link_active_color', ''));
         $main_menu_active_background    =   Style::getColor($params->get('main_menu_active_background', ''));
         $main_menu_hover_background     =   Style::getColor($params->get('main_menu_hover_background', ''));
-        $navLink = new Style(['.astroid-nav .nav-link', '.astroid-sidebar-menu .nav-link']);
+        $navLink = new Style(['.astroid-nav .nav-link']);
         $navLink->addCss('color', $main_menu_link_color['light']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['light']);
         $navLink->hover()->addCss('background-color', $main_menu_hover_background['light']);
@@ -344,7 +345,7 @@ class Utility
         $navLink->active('.active')->addCss('background-color', $main_menu_active_background['light']);
         $navLink->render(); // render navlink
 
-        $navLink = new Style(['.astroid-nav .nav-link', '.astroid-sidebar-menu .nav-link'], 'dark');
+        $navLink = new Style(['.astroid-nav .nav-link'], 'dark');
         $navLink->addCss('color', $main_menu_link_color['dark']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['dark']);
         $navLink->hover()->addCss('background-color', $main_menu_hover_background['dark']);
@@ -382,6 +383,37 @@ class Utility
         $link->hover()->addCss('color', $dropdown_menu_link_hover_color['dark'])->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
         $link->active('.active')->addCss('color', $dropdown_menu_active_link_color['dark'])->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
         $dropdown->render(); // render dropdown
+
+        // Sidebar Submenu
+        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu');
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['light']);
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['light']);
+        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
+        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['light']);
+        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['light']);
+        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['light']);
+        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['light']);
+        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['light']);
+        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['light']);
+        $sidebar_menu_style->render();
+
+        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu', 'dark');
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['dark']);
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['dark']);
+        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['dark']);
+        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
+        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['dark']);
+        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
+        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['dark']);
+        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['dark']);
+        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
+        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['dark']);
+        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
+        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['dark']);
+        $sidebar_menu_style->render();
 
         // Sticky Menu
         $stick_header_mobile_menu_icon_color = Style::getColor($params->get('stick_header_mobile_menu_icon_color', ''));
@@ -500,7 +532,8 @@ class Utility
         Style::addCssBySelector('[data-bs-theme=dark] .astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['dark']);
     }
 
-    public static function article() {
+    public static function article(): void
+    {
         $params = Framework::getTemplate()->getParams();
         // Article listing
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
@@ -579,7 +612,7 @@ class Utility
         $document->addCustomTag($params->get('astroid_beforebody', ''), 'body');
     }
 
-    public static function error()
+    public static function error(): void
     {
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
@@ -612,5 +645,33 @@ class Utility
         }
         $bodyStyle->render();
         $bodyStyle_dark->render();
+    }
+
+    public static function showFreeTemplate(): void
+    {
+        $app    =   Factory::getApplication();
+        $option =   $app->input->get('option', '', 'alum');
+        $view   =   $app->input->get('view', '', 'alum');
+        if ($option == 'com_templates' && $view == 'styles') {
+            $astroid_templates = Helper\Template::getAstroidTemplates();
+            if (!count($astroid_templates)) {
+                $wa = $app->getDocument()->getWebAssetManager();
+                $wa->useScript('bootstrap.modal');
+                $wa->registerAndUseScript('astroid.as-freetemplates', 'media/astroid/assets/vendor/freetemplates/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
+                $json = [
+                    'token'     =>  Session::getFormToken(),
+                    'congrats'  =>  '../media/astroid/assets/images/astroid_congrats.png',
+                    'language'  =>  [
+                        'title'         =>  Text::_('ASTROID_GET_STARTED'),
+                        'desc'          =>  Text::_('ASTROID_FREE_TEMPLATE_MODAL_DESC'),
+                        'install'       =>  Text::_('ASTROID_INSTALL'),
+                        'preview'       =>  Text::_('ASTROID_TEMPLATE_PREVIEW'),
+                        'congrats'      =>  Text::_('ASTROID_FREE_TEMPLATE_CONGRATS'),
+                        'view_templates'=>  Text::_('ASTROID_VIEW_TEMPLATES')
+                    ]
+                ];
+                $wa->addInlineScript(\json_encode($json), [], ['type' => 'application/json', 'id' => 'as-free-template-js']);
+            }
+        }
     }
 }

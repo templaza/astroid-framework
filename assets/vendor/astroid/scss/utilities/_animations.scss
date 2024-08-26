@@ -1,3 +1,7 @@
+.as-transition-body {
+	transition: all 300ms;
+}
+
 @-webkit-keyframes slideInUp {
 	from {
 		-webkit-transform: translate3d(0, 100%, 0);

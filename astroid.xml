@@ -3,14 +3,14 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
-   <creationDate>July 2024</creationDate>
-   <version>3.1.1</version>
+   <creationDate>August 2024</creationDate>
+   <version>3.1.2</version>
    <url>https://astroidframe.work/</url>
    <copyright>Copyright (C) 2024 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
-   <description>Astroid Template Framework by TemPlaza</description>
+   <description><![CDATA[Congratulations! You have successfully installed Astroid<a href="index.php?option=com_templates&view=styles&client_id=0" class="btn btn-success ms-3"><i class="fa-solid fa-bell fa-shake me-2"></i>Get Started</a>]]></description>
    <scriptfile>script.php</scriptfile>
    <files>
       <file>script.php</file>

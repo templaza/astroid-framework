@@ -34,10 +34,17 @@ class JFormFieldAstroidLayoutData extends FormField {
     protected $ordering;
 
     protected function getInput() {
-        $params = new Registry();
-        $app = Factory::getApplication();
-        if ($app->input->get('view', '') == 'article') {
-            $id = $app->input->get('id');
+        $params =   new Registry();
+        $app    =   Factory::getApplication();
+        $view   =   $app->input->get('view', '');
+        if ($app->input->get('option', '') == 'com_content'
+            && in_array($view, ['article', 'form'])
+            && $app->input->get('layout', '') == 'edit') {
+            $id     =   match ($view) {
+                'article' => $app->input->get('id'),
+                'form' => $app->input->get('a_id'),
+                default => ''
+            };
             if (empty($id)) {
                 return Text::_('ASTROID_ARTICLE_NOTICE_EMPTY_ID');
             }
@@ -71,7 +78,9 @@ class JFormFieldAstroidLayoutData extends FormField {
                 if (!isset($sublayout['data']) || !$sublayout['data']) {
                     return Text::_('ASTROID_ARTICLE_WARNING_LAYOUT_EMPTY');
                 }
-                define('ASTROID_TEMPLATE_NAME', $article_layout->template);
+                if (!defined('ASTROID_TEMPLATE_NAME')) {
+                    define('ASTROID_TEMPLATE_NAME', $article_layout->template);
+                }
                 $widgets    =   array();
                 $constant   =   Helper\Constants::manager_configs('article_data');
                 $form_template  =   $constant['form_template'];
@@ -80,7 +89,7 @@ class JFormFieldAstroidLayoutData extends FormField {
                     foreach ($section['rows'] as $row) {
                         foreach ($row['cols'] as $col) {
                             foreach ($col['elements'] as $element) {
-                                if ($form_template[$element['type']]['info']['element_type'] == 'widget') {
+                                if (isset($form_template[$element['type']]) && $form_template[$element['type']]['info']['element_type'] == 'widget') {
                                     $article_data = Path::clean(JPATH_SITE . '/media/templates/site/' . $article_layout->template . '/astroid/article_widget_data/'. $id . '_' . $element['id'] . '.json');
                                     if (file_exists($article_data)) {
                                         $widget_data = file_get_contents($article_data);
@@ -102,9 +111,9 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $html   =   '<script type="application/json" id="'.$this->id.'_json">'.json_encode($json).'</script>';
                 $html   .=  '<div class="as-article-widget-data" id="'.$this->id.'"></div>';
                 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-                $wa->registerAndUseStyle('astroid.article.widget.data', "media/astroid/assets/vendor/articlelayout/dist/index.css");
+                $wa->registerAndUseStyle('astroid.article.widget.data', "media/astroid/assets/vendor/manager/dist/index.css");
                 $wa->useScript('bootstrap.tab');
-                $wa->registerAndUseScript('astroid.article.widget.data', 'media/astroid/assets/vendor/articlelayout/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
+                $wa->registerAndUseScript('astroid.article.widget.data', 'media/astroid/assets/vendor/manager/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
                 return $html;
             }
         }

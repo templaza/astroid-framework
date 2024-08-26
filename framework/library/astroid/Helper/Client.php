@@ -262,6 +262,7 @@ class Client
         return true;
     }
 
+
     public function onInstallerAfterInstaller($package)
     {
         if (!file_exists($package['dir'])) return false;
