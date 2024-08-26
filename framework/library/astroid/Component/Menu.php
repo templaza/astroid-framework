@@ -61,7 +61,7 @@ class Menu
 
         $return = [];
         // Menu Wrapper
-        echo '<nav class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '">'
+        echo '<nav class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '" aria-label="'.$headerType.' menu">'
             . '<ul class="' . implode(' ', $nav_class) . '">';
 
 
