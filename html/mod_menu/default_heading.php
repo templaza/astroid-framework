@@ -1,17 +1,59 @@
 <?php
 
 /**
- * @package   Astroid Framework
- * @author    Astroid Framework https://astroidframe.work
- * @copyright Copyright (C) 2023 AstroidFrame.work.
- * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ * @package     Joomla.Site
+ * @subpackage  mod_menu
+ *
+ * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 defined('_JEXEC') or die;
 
-/**
- * TO OVERRIDE THIS LAYOUT
- * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
- * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
- * 3. Paste source code to below and start to edit.
- */
-require Astroid\Helper\Overrides::getHTMLTemplate();
+$title      = $item->anchor_title ? ' title="' . $item->anchor_title . '"' : '';
+$anchor_css = $item->anchor_css ?: '';
+
+$astroid_menu_options = $item->getParams()->get('astroid_menu_options', []);
+$astroid_menu_options = (array) $astroid_menu_options;
+
+$linktype   = $item->title;
+
+if ($item->menu_image) {
+	if ($item->menu_image_css) {
+		$image_attributes['class'] = $item->menu_image_css;
+		$linktype = JHtml::_('image', $item->menu_image, $item->title, $image_attributes);
+	} else {
+		$linktype = JHtml::_('image', $item->menu_image, $item->title);
+	}
+
+	if ($item->getParams()->get('menu_text', 1)) {
+		$linktype .= '<span class="image-title">' . $item->title . '</span>';
+	}
+}
+// Show icon html start here
+if (isset($astroid_menu_options['icon']) && !empty($astroid_menu_options['icon'])) {
+	$iconHtml = '<i class="' . $astroid_menu_options['icon'] . '"></i> ';
+} else {
+	$iconHtml = "";
+}
+// Show icon html End here
+
+
+// Show icon badge here
+if (isset($astroid_menu_options['badge']) && !empty($astroid_menu_options['badge'])) {
+	$badgeHtml = '<sup><span class="menu-item-badge" style="background:' . $astroid_menu_options['badge_bgcolor'] . ';color:' . $astroid_menu_options['badge_color'] . '">' . $astroid_menu_options['badge_text'] . '</span></sup>';
+} else {
+	$badgeHtml = "";
+}
+// Show icon badge End here
+
+// Show icon subtitle here
+if (isset($astroid_menu_options['subtitle']) && !empty($astroid_menu_options['subtitle'])) {
+	$subtitle = '<small class="nav-subtitle">' . $astroid_menu_options['subtitle'] . '</small>';
+} else {
+	$subtitle = "";
+}
+// Show icon subtitle End here
+
+?>
+<span class="nav-header <?php echo $anchor_css; ?>" <?php echo $title; ?>><?php echo '<span class="nav-title">' . $iconHtml . $linktype . $badgeHtml . '</span>' . $subtitle; ?></span>

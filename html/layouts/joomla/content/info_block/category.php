@@ -6,27 +6,12 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+defined('_JEXEC') or die;
 
-defined('JPATH_BASE') or die;
-
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-
-if (ASTROID_JOOMLA_VERSION > 3) {
-	\JLoader::registerAlias('ContentHelperRoute', 'Joomla\Component\Content\Site\Helper\RouteHelper');
-} else {
-	include_once(JPATH_COMPONENT . '/helpers/route.php');
-}
-
-?>
-<dd class="category-name">
-	<?php $title = $this->escape($displayData['item']->category_title); ?>
-	<?php if ($displayData['params']->get('link_category') && !empty($displayData['item']->catid)) : ?>
-		<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($displayData['item']->catid, @$displayData['item']->category_language)) . '" itemprop="genre">' . $title . '</a>'; ?>
-		<i class="far fa-folder"></i>
-		<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
-	<?php else : ?>
-		<i class="far fa-folder"></i>
-		<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
-	<?php endif; ?>
-</dd>
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();
