@@ -6,11 +6,12 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-
 defined('_JEXEC') or die;
-$cookieLogin = $this->user->get('cookieLogin');
-if (!empty($cookieLogin) || $this->user->get('guest')) {
-   echo $this->loadTemplate('login'); // The user is not logged in or needs to provide a password.
-} else {
-   echo $this->loadTemplate('logout');  // The user is already logged in.
-}
+
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();

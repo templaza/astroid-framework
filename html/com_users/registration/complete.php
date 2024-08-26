@@ -8,11 +8,10 @@
  */
 defined('_JEXEC') or die;
 
-?>
-<div class="registration-complete<?php echo $this->pageclass_sfx; ?>">
-	<?php if ($this->params->get('show_page_heading')) : ?>
-		<h1>
-			<?php echo $this->escape($this->params->get('page_heading')); ?>
-		</h1>
-	<?php endif; ?>
-</div>
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();

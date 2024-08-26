@@ -6,26 +6,12 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-
-if (ASTROID_JOOMLA_VERSION > 3) {
-    \JLoader::registerAlias('ContentHelperRoute', 'Joomla\Component\Content\Site\Helper\RouteHelper');
-} else {
-    include_once(JPATH_COMPONENT . '/helpers/route.php');
-}
-
-?>
-<div class="items-more">
-    <h3><?php echo Text::_('COM_CONTENT_MORE_ARTICLES'); ?></h3>
-    <ul class="list-group">
-        <?php foreach ($this->link_items as &$item) : ?>
-            <li class="list-group-item">
-                <a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>"><?php echo $item->title; ?></a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();

@@ -1,24 +1,17 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+defined('_JEXEC') or die;
 
-defined('JPATH_BASE') or die;
-
-use Joomla\CMS\Language\Text;
-
-$buttons = $displayData;
-
-?>
-<div id="editor-xtd-buttons" class="btn-toolbar pull-left" role="toolbar" aria-label="<?php echo Text::_('JTOOLBAR'); ?>">
-	<?php if ($buttons) : ?>
-		<?php foreach ($buttons as $button) : ?>
-			<?php echo $this->sublayout('button', $button); ?>
-		<?php endforeach; ?>
-	<?php endif; ?>
-</div>
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();

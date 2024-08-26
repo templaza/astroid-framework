@@ -1,35 +1,17 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package   Astroid Framework
+ * @author    Astroid Framework https://astroidframe.work
+ * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
+defined('_JEXEC') or die;
 
-defined('JPATH_BASE') or die;
-
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
-
-$button = $displayData;
-
-?>
-<?php if ($button->get('name')) : ?>
-	<?php
-	$class    = $button->get('class') ?: null;
-	$class	 .= $button->get('modal') ? ' modal-button' : null;
-	$href     = $button->get('link') ? ' href="' . Uri::base() . $button->get('link') . '"' : null;
-	$onclick  = $button->get('onclick') ? ' onclick="' . $button->get('onclick') . '"' : '';
-	$title    = $button->get('title') ?: $button->get('text');
-
-	// Load modal popup behavior
-	if ($button->get('modal') && ASTROID_JOOMLA_VERSION < 4) {
-		HTMLHelper::_('behavior.modal', 'a.modal-button');
-	}
-	?>
-	<a class="<?php echo $class; ?>" title="<?php echo $title; ?>" <?php echo $href, $onclick; ?> rel="<?php echo $button->get('options'); ?>">
-		<span class="icon-<?php echo $button->get('name'); ?>" aria-hidden="true"></span> <?php echo $button->get('text'); ?>
-	</a>
-<?php endif;
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();

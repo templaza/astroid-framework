@@ -6,20 +6,12 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
-
-use Joomla\CMS\HTML\HTMLHelper;
-
-?>
-<dd class="createdby" itemprop="author" itemscope itemtype="https://schema.org/Person">
-	<?php $author = ($displayData['item']->created_by_alias ?: $displayData['item']->author); ?>
-	<?php $author = '<span itemprop="name">' . $author . '</span>'; ?>
-	<?php if (!empty($displayData['item']->contact_link) && $displayData['params']->get('link_author') == true) : ?>
-		<i class="far fa-user"></i>
-		<?php echo HTMLHelper::_('link', $displayData['item']->contact_link, $author, array('itemprop' => 'url')); ?>
-	<?php else : ?>
-		<i class="far fa-user"></i>
-		<?php echo $author; ?>
-	<?php endif; ?>
-</dd>
+/**
+ * TO OVERRIDE THIS LAYOUT
+ * 1. Remove line "require Astroid\Helper\Overrides::getHTMLTemplate()";
+ * 2. Copy source code from libraries/astroid/framework/html/{find a file that you will override here}
+ * 3. Paste source code to below and start to edit.
+ */
+require Astroid\Helper\Overrides::getHTMLTemplate();
