@@ -346,7 +346,7 @@ class Admin extends Helper\Client
         $document->addScriptOptions('astroid_content', $form_content);
 
         // styles
-        $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css'];
+        $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css', 'media/astroid/assets/vendor/linearicons/font.min.css'];
         $document->addStyleSheet($stylesheets);
         $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
 
