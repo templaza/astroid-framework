@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
 	<fields name="params">
-		<fieldset icon="fa-solid fa-code" label="ASTROID_OPTIONS_CUSTOM" name="astroid_custom" addfieldpath="/libraries/astroid/framework/fields" order="8">
+		<fieldset icon="as-icon as-icon-cli" label="ASTROID_OPTIONS_CUSTOM" name="astroid_custom" addfieldpath="/libraries/astroid/framework/fields" order="8">
 
 			<field type="astroidgroup" name="custom" title="TPL_ASTROID_CUSTOM_MAIN_TITLE_LABEL" help="https://docs.joomdev.com/category/astroid-user-manual/custom-code"/>
 

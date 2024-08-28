@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="fas fa-font" label="ASTROID_OPTIONS_TYPOGRAPHY" name="astroid_typography" addfieldpath="/libraries/astroid/framework/fields" order="5">
+      <fieldset icon="as-icon as-icon-text-size" label="ASTROID_OPTIONS_TYPOGRAPHY" name="astroid_typography" addfieldpath="/libraries/astroid/framework/fields" order="5">
          <field type="astroidgroup" name="body_typography_group" title="TPL_ASTROID_TYPOGRAPHY_BODY" description="TPL_ASTROID_TYPOGRAPHY_BODY_DESC" help="https://docs.joomdev.com/article/astroid-body-typography" preset="body_typography,body_typography_options:astroidtypography" />
          <field type="astroidgroup" name="menu_typography" title="TPL_ASTROID_TYPOGRAPHY_MENU" description="TPL_ASTROID_TYPOGRAPHY_MENU_DESC" help="https://docs.joomdev.com/article/astroid-menu-typography" preset="menus_typography,menu_typography_options:astroidtypography" />
          <field type="astroidgroup" name="submenu_typography" title="TPL_ASTROID_TYPOGRAPHY_SUBMENU" description="TPL_ASTROID_TYPOGRAPHY_SUBMENU_DESC" help="https://docs.joomdev.com/article/astroid-submenu-typography" preset="submenus_typography,submenu_typography_options:astroidtypography" />

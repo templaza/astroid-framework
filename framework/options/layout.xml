@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="fas fa-columns" label="ASTROID_OPTIONS_LAYOUT" name="astroid_layout" addfieldpath="/libraries/astroid/framework/fields" astroidtype="layout" order="4">
+      <fieldset icon="as-icon as-icon-layers" label="ASTROID_OPTIONS_LAYOUT" name="astroid_layout" addfieldpath="/libraries/astroid/framework/fields" astroidtype="layout" order="4">
          <field type="astroidgroup" name="layout_group" title="TPL_ASTROID_LAYOUT_LABEL" description="TPL_ASTROID_LAYOUT_DESC" preset="layout:layout" option-type="tab" />
          <field type="astroidgroup" name="sub_layout_group" title="TPL_ASTROID_SUB_LAYOUTS_LABEL" description="TPL_ASTROID_SUB_LAYOUTS_DESC" preset="none" option-type="tab" />
          <field astroidgroup="layout_group" type="layout" name="layout" data-fieldset="astroid_layout" filter="safehtml" />

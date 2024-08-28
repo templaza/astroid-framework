@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
+      <fieldset label="ASTROID_OPTIONS_BASIC" icon="as-icon as-icon-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
          <field type="astroidgroup" name="bootstrap" title="TPL_BOOTSTRAP_TITLE"/>
          <field type="astroidgroup" name="page_setting" title="TPL_ASTROID_PAGE_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
          <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#preloader"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="fas fa-cogs" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
+      <fieldset icon="as-icon as-icon-cog" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
          <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#contact-information" />
          <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_COMMING_NOON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#coming-soon" />
          <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#error-page" />

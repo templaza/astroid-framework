@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="fas fa-paint-brush" label="AF_THEMING" name="astroid_theming" addfieldpath="/libraries/astroid/framework/fields" order="11">
+      <fieldset icon="as-icon as-icon-pencil-ruler2" label="AF_THEMING" name="astroid_theming" addfieldpath="/libraries/astroid/framework/fields" order="11">
          <field type="astroidgroup" name="colors" title="ASTROID_OPTIONS_COLOURS" help="https://docs.joomdev.com/article/astroid-theming-options"
                 preset="theme_colors_heading,theme_blue,theme_indigo,theme_purple,theme_pink,theme_red,theme_orange,theme_yellow,theme_green,theme_teal,theme_cyan,theme_white,theme_gray100,theme_gray600,theme_gray800,theme_primary,theme_primary_custom,theme_secondary,theme_secondary_custom,theme_success,theme_success_custom,theme_info,theme_info_custom,theme_warning,theme_warning_custom,theme_danger,theme_danger_custom,theme_light,theme_light_custom,theme_dark,theme_dark_custom" />
          <field type="astroidgroup" name="sassoverrides" title="ASTROID_OPTIONS_OVERRIDES" preset="sass_overrides:astroidsassoverrides" />
