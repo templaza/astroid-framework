@@ -2,7 +2,7 @@
 <element>
    <title>ASTROID_BANNER_LABEL</title>
    <description>ASTROID_BANNER_DESC</description>
-   <icon>far fa-image</icon>
+   <icon>as-icon as-icon-picture3</icon>
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#00B8D8</color>
    <multiple>false</multiple>

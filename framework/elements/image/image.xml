@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_IMAGE_LABEL</title>
     <description>ASTROID_WIDGET_IMAGE_DESC</description>
-    <icon>fa-regular fa-image</icon>
+    <icon>as-icon as-icon-picture</icon>
     <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
     <element_type>widget</element_type>
     <form>
@@ -24,7 +24,13 @@
                     <option value="_top">Full body of the window</option>
                 </field>
 
-                <field astroidgroup="widget_styles" name="max_width" type="astroidtext" default="" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_IMAGE_MAX_WIDTH_DESC" hint="500px" />
+                <field astroidgroup="widget_styles" name="display" type="astroidlist" label="ASTROID_WIDGET_DISPLAY" default="">
+                    <option value="">Block</option>
+                    <option value="d-inline-block">Inline Block</option>
+                    <option value="d-inline">Inline</option>
+                    <option value="d-flex">Flex</option>
+                    <option value="d-inline-flex">Inline Flex</option>
+                </field>
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">ASTROID_NONE</option>
                     <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>

@@ -2,7 +2,7 @@
 <element>
    <title>ASTROID_ELEMENTS_COMPONENT_TITLE</title>
    <description>ASTROID_ELEMENTS_COMPONENT_DESCRIPTION</description>
-   <icon>fas fa-puzzle-piece</icon>
+   <icon>as-icon as-icon-cube</icon>
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#FFB400</color>
    <multiple>false</multiple>

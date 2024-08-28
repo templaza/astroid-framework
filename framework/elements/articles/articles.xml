@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_ARTICLES_LABEL</title>
     <description>ASTROID_WIDGET_ARTICLES_DESC</description>
-    <icon>fa-regular fa-newspaper</icon>
+    <icon>as-icon as-icon-news</icon>
     <category>ASTROID_ELEMENT_CATEGORY_JOOMLA</category>
     <element_type>widget</element_type>
     <form>

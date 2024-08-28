@@ -2,7 +2,7 @@
 <element>
    <title>TPL_ASTROID_MESSAGES_LABEL</title>
    <description>TPL_ASTROID_MESSAGES_DESC</description>
-   <icon>fas fa-exclamation-triangle</icon>
+   <icon>as-icon as-icon-warning</icon>
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#17C671</color>
    <multiple>false</multiple>

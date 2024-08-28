@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_TESTIMONIALS_LABEL</title>
     <description>ASTROID_WIDGET_TESTIMONIALS_DESC</description>
-    <icon>fa-solid fa-quote-right</icon>
+    <icon>as-icon as-icon-quote-close</icon>
     <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
     <element_type>widget</element_type>
     <form>

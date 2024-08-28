@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_ELEMENTS_ARTICLE_INFOBLOCK</title>
     <description>ASTROID_ELEMENTS_ARTICLE_INFOBLOCK</description>
-    <icon>fa-solid fa-circle-info</icon>
+    <icon>as-icon as-icon-notification-circle</icon>
     <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
     <element_type>article</element_type>
     <form>
