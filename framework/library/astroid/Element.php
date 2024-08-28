@@ -213,7 +213,7 @@ class Element
                 return array('info' => [
                     'type' => 'sublayout',
                     'title' => 'Sublayouts',
-                    'icon' => 'fas fa-cubes',
+                    'icon' => 'as-icon as-icon-layers',
                 ], 'type' => $type);
                 break;
             default:
