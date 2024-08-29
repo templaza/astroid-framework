@@ -162,11 +162,11 @@ foreach ($grids as $key => $grid) {
     $link_target    =   !empty($grid_params['link_target']) ? ' target="'.$grid_params['link_target'].'"' : '';
     $media          =   '';
     if ($grid_params['type'] == 'image' && $grid_params['image']) {
-        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? 'order-2 ' : '') . '">';
+        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
         $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params['image'].'" alt="'.$grid_params['title'].'">';
         $media      .=  '</div>';
         if ( !empty($grid_params['link']) ) {
-            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
         }
     } elseif ($grid_params['type'] == 'icon') {
         if ($grid_params['icon_type'] == 'fontawesome') {
@@ -175,7 +175,7 @@ foreach ($grids as $key => $grid) {
             $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params['custom_icon'].'"></i>';
         }
         if ( !empty($grid_params['link']) && !empty($params->get('enable_icon_link', 0)) ) {
-            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.'>'. $media .'</a>';
+            $media      =   '<a href="'. $grid_params['link'] . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
         }
     }
 

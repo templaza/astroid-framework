@@ -15,22 +15,25 @@ defined('_JEXEC') or die;
 use Astroid\Helper\Style;
 extract($displayData);
 $border_width   = $params->get('border_width', 1);
+$type           = $params->get('type', '');
 $border_style   = $params->get('style', 'solid');
 $color          = Style::getColor($params->get('color', ''));
 $margin         = $params->get('margin', '');
+$height         = $params->get('height_divider', '60');
 
-echo '<div class="divider-content"></div>';
-$style      = new Style('#'.$element->id.' .divider-content');
-$style_dark = new Style('#'.$element->id.' .divider-content', 'dark');
-$style->addCss('border-top', $border_width. 'px ' . $border_style . ' ' . $color['light']);
-$style_dark->addCss('border-color', $color['dark']);
+echo '<div class="divider-content'. ($type == 'vertical' ? ' d-flex justify-content-center' : '') .'"></div>';
+if ($type == 'vertical') {
+    $element->style->child('.divider-content:after')->addCss('content', '""');
+    $element->style->child('.divider-content:after')->addCss('height', $height . 'px');
+    $element->style->child('.divider-content:after')->addCss('border-left', $border_width. 'px ' . $border_style . ' ' . $color['light']);
+} else {
+    $element->style->child('.divider-content')->addCss('border-top', $border_width. 'px ' . $border_style . ' ' . $color['light']);
+    $element->style_dark->child('.divider-content')->addCss('border-color', $color['dark']);
+}
 
 if (!empty($margin)) {
     $margin = \json_decode($margin, false);
     foreach ($margin as $device => $props) {
-        $style->addStyle(Style::spacingValue($props, "margin"), $device);
+        $element->style->child('.divider-content')->addStyle(Style::spacingValue($props, "margin"), $device);
     }
 }
-
-$style->render();
-$style_dark->render();
