@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_ELEMENTS_ARTICLE_FULLIMAGE</title>
     <description>ASTROID_ELEMENTS_ARTICLE_FULLIMAGE</description>
-    <icon>fa-regular fa-image</icon>
+    <icon>as-icon as-icon-picture</icon>
     <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
     <element_type>article</element_type>
     <multiple>false</multiple>

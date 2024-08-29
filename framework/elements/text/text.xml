@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_TEXT_LABEL</title>
     <description>ASTROID_WIDGET_TEXT_DESC</description>
-    <icon>fa-solid fa-feather</icon>
+    <icon>as-icon as-icon-text-size</icon>
     <category>ASTROID_ELEMENT_CATEGORY_TYPOGRAPHY</category>
     <element_type>widget</element_type>
     <form>

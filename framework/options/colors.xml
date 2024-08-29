@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
 	<fields name="params">
-		<fieldset icon="fas fa-paint-brush" label="ASTROID_OPTIONS_COLOURS" name="astroid_colours" addfieldpath="/libraries/astroid/framework/fields" order="3">
+		<fieldset icon="as-icon as-icon-palette" label="ASTROID_OPTIONS_COLOURS" name="astroid_colours" addfieldpath="/libraries/astroid/framework/fields" order="3">
 			<field type="astroidgroup" name="body" title="TPL_ASTROID_COLOURS_BODY_TITLE_LABEL" description="TPL_ASTROID_COLOURS_BODY_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-body-colors" preset="body_background_color:astroidcolor,body_heading_color:astroidcolor,body_text_color:astroidcolor,body_link_color:astroidcolor,body_link_hover_color:astroidcolor" />
 			<field type="astroidgroup" name="header_colors" title="TPL_ASTROID_COLOURS_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-header-colors" preset="header_bg:astroidcolor,header_text_color:astroidcolor,header_logo_text_color:astroidcolor,header_logo_text_tagline_color:astroidcolor" />
 			<field type="astroidgroup" name="sticky_header" title="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_LABEL" description="TPL_ASTROID_COLOURS_STICKY_HEADER_TITLE_DESC" help="https://docs.joomdev.com/article/astroid-sticky-header-colors" preset="stick_header_bg_color:astroidcolor,stick_header_menu_link_color:astroidcolor,stick_header_menu_link_active_color:astroidcolor,stick_header_menu_link_hover_color:astroidcolor" />

@@ -35,7 +35,14 @@ $interval           =   $params->get('interval', 3);
 $slide_settings     =   array();
 $slide_responsive   =   array();
 
+$enable_column_alignment    =   $params->get('enable_column_alignment', 0);
+$column_alignment           =   $params->get('column_alignment', '');
+
 $row_column_cls     =   'row';
+
+if ($enable_column_alignment) {
+    $row_column_cls .=  ' ' . $column_alignment;
+}
 
 if ($use_masonry && !$enable_slider) {
     $row_column_cls .=  ' as-masonry';

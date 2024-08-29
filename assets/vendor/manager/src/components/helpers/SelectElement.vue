@@ -117,7 +117,7 @@ function selectElement(addon) {
                                 <div v-for="sublayout in sublayouts" v-show="currentFilter === '' || currentFilter === 'Sublayouts'" :class="`order-` + orders['Sublayouts']">
                                     <div class="addon-block card card-default card-body align-items-center justify-content-center" @click="selectElement(sublayout)">
                                         <img v-if="sublayout.thumbnail !== ``" class="img-fluid" :src="sublayout.thumbnail" :alt="sublayout.title">
-                                        <i v-else class="fa-2x mb-2 text-body-tertiary fas fa-cubes"></i>
+                                        <i v-else class="fa-2x mb-2 text-body-tertiary as-icon as-icon-layers"></i>
                                         <div class="form-text">{{ sublayout.title }}</div>
                                     </div>
                                 </div>

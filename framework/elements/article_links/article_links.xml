@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_ELEMENTS_ARTICLE_LINKS</title>
     <description>ASTROID_ELEMENTS_ARTICLE_LINKS</description>
-    <icon>fa-solid fa-link</icon>
+    <icon>as-icon as-icon-link</icon>
     <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
     <element_type>article</element_type>
     <multiple>false</multiple>

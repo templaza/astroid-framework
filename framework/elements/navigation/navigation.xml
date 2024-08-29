@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_NAVIGATION_LABEL</title>
     <description>ASTROID_WIDGET_NAVIGATION_DESC</description>
-    <icon>fa-solid fa-bars</icon>
+    <icon>as-icon as-icon-menu</icon>
     <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
     <element_type>widget</element_type>
     <form>

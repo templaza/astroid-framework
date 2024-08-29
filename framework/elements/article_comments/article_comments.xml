@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_ARTICLE_OPTIONS_COMMENTS_LBL</title>
     <description>ASTROID_ARTICLE_OPTIONS_COMMENTS_LBL</description>
-    <icon>fa-solid fa-comments</icon>
+    <icon>as-icon as-icon-bubbles</icon>
     <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
     <element_type>article</element_type>
     <multiple>false</multiple>

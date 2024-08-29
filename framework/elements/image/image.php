@@ -34,17 +34,17 @@ $hover_effect   = $params->get('hover_effect', '');
 $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
-$max_width      = $params->get('max_width', '');
-$max_width      = $max_width !== '' ? ' style="max-width:'.$max_width.'"' : '';
+$display        = $params->get('display', '');
+$display        = $display !== '' ? ' ' . $display : '';
 if (!empty($image)) {
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'"'.$target.'>';
     }
-    echo '<div class="as-image position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
+    echo '<div class="as-image position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . $display . '">';
     echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
     echo '</div>';
     if (!empty($image_dark)) {
-        echo '<div class="as-image-dark d-none position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '"'.$max_width.'>';
+        echo '<div class="as-image-dark d-none position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . $display . '">';
         echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image_dark.'" alt="'.$title.'">';
         echo '</div>';
         $element->style_dark->child('.as-image')->addCss('display', 'none !important');

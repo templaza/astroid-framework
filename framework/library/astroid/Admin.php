@@ -242,6 +242,7 @@ class Admin extends Helper\Client
         Framework::getDebugger()->log('Loading Languages');
         $document->addScript('media/system/js/core.min.js');
         $document->addScript('media/system/js/keepalive.min.js');
+        $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js');
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
@@ -346,7 +347,7 @@ class Admin extends Helper\Client
         $document->addScriptOptions('astroid_content', $form_content);
 
         // styles
-        $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css'];
+        $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css', 'media/astroid/assets/vendor/linearicons/font.min.css'];
         $document->addStyleSheet($stylesheets);
         $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
 

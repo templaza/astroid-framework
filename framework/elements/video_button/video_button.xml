@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_VIDEO_BUTTON_LABEL</title>
     <description>ASTROID_WIDGET_VIDEO_BUTTON_DESC</description>
-    <icon>fa-solid fa-play</icon>
+    <icon>as-icon as-icon-play</icon>
     <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
     <element_type>widget</element_type>
     <form>

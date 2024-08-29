@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_IMAGE_GROUP_LABEL</title>
     <description>ASTROID_WIDGET_IMAGE_GROUP_DESC</description>
-    <icon>fa-regular fa-images</icon>
+    <icon>as-icon as-icon-pictures</icon>
     <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
     <element_type>widget</element_type>
     <form>
@@ -40,6 +40,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="xl_column" label="ASTROID_WIDGET_XL_COLUMN" default="">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -49,6 +50,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='lg'" type="astroidlist" name="lg_column" label="ASTROID_WIDGET_LG_COLUMN" default="3">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -58,6 +60,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='md'" type="astroidlist" name="md_column" label="ASTROID_WIDGET_MD_COLUMN" default="1">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -67,6 +70,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='sm'" type="astroidlist" name="sm_column" label="ASTROID_WIDGET_SM_COLUMN" default="1">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -76,6 +80,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='xs'" type="astroidlist" name="xs_column" label="ASTROID_WIDGET_XS_COLUMN" default="1">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -85,6 +90,7 @@
                     <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
                     <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
                     <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
                 </field>
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='xxl'" type="astroidlist" name="row_gutter_xxl" label="ASTROID_WIDGET_ROW_GUTTER_XXL_LABEL" default="">
                     <option value="">JGLOBAL_INHERIT</option>
@@ -191,6 +197,12 @@
                     <option value="3">Medium</option>
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
+                </field>
+                <field astroidgroup="column_options" name="enable_column_alignment" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_COLUMN_ALIGNMENT"/>
+                <field astroidgroup="column_options" ngShow="[enable_column_alignment]==1" name="column_alignment" type="astroidradio" width="full" default="">
+                    <option value="">ASTROID_WIDGET_TOP_ICON</option>
+                    <option value="align-items-center">ASTROID_WIDGET_MIDDLE_ICON</option>
+                    <option value="align-items-end">ASTROID_WIDGET_BOTTOM_ICON</option>
                 </field>
 
                 <field astroidgroup="slider_options" name="enable_slider" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_SLIDER"/>

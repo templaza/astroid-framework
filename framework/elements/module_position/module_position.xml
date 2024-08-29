@@ -2,7 +2,7 @@
 <element>
    <title>TPL_ASTROID_MODULE_POSITION_LABEL</title>
    <description>ASTROID_ELEMENT_MODULE_TITLE_DESC</description>
-   <icon>fas fa-cube</icon>
+   <icon>as-icon as-icon-puzzle</icon>
    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
    <color>#00B8D8</color>
    <element_type>system</element_type>

@@ -2,7 +2,7 @@
 <element>
     <title>ASTROID_WIDGET_ICONS_LABEL</title>
     <description>ASTROID_WIDGET_ICONS_DESC</description>
-    <icon>fa-solid fa-font-awesome</icon>
+    <icon>as-icon as-icon-flag</icon>
     <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
     <element_type>widget</element_type>
     <form>

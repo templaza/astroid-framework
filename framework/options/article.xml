@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
 	<fields name="params">
-		<fieldset label="ASTROID_OPTIONS_ARTICLE_BLOG" icon="far fa-newspaper" name="articles" addfieldpath="/libraries/astroid/framework/fields" order="6">
+		<fieldset label="ASTROID_OPTIONS_ARTICLE_BLOG" icon="as-icon as-icon-news" name="articles" addfieldpath="/libraries/astroid/framework/fields" order="6">
 			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS" option-type="tab"/>
 			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" option-type="tab" />
 			<field type="astroidgroup" name="article_layouts_options" title="ASTROID_ARTICLE_LAYOUT_OPTIONS" description="ASTROID_ARTICLE_LAYOUT_OPTIONS_DESC" option-type="tab" preset="none" />
