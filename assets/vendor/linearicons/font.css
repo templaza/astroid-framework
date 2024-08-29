@@ -1,11 +1,11 @@
 @font-face {
-	font-family: 'Linearicons';
-	src: url('Linearicons.ttf') format('truetype');
+	font-family: 'Astroid Icons';
+	src: url('AstroidIcons.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 .as-icon {
-	font-family: 'Linearicons';
+	font-family: 'Astroid Icons';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
