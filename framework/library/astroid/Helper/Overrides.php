@@ -22,7 +22,7 @@ class Overrides
             return '';
         }
 
-        $path = explode('/', trim($path, '/'));
+        $path = explode(DIRECTORY_SEPARATOR, trim($path, DIRECTORY_SEPARATOR));
 
         $version = JVERSION;
         $extension = $path[0];
@@ -35,12 +35,12 @@ class Overrides
             else {
                 \array_splice($path, 1, 0, ['tmpl']);
             }
-            return JPATH_ROOT . '/components/' . \implode('/', $path);
+            return JPATH_ROOT . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . \implode(DIRECTORY_SEPARATOR, $path);
         }
 
         elseif (\strpos($extension, 'mod_') === 0) {
             \array_splice($path, 1, 0, ['tmpl']);
-            return JPATH_ROOT . '/modules/' . \implode('/', $path);
+            return JPATH_ROOT . DIRECTORY_SEPARATOR. 'modules' . DIRECTORY_SEPARATOR . \implode(DIRECTORY_SEPARATOR, $path);
         }
 
         elseif (\strpos($extension, 'plg_') === 0) {
@@ -49,13 +49,13 @@ class Overrides
             \array_push($pluginPath, 'tmpl');
 
             \array_splice($path, 0, 1, $pluginPath);
-            return JPATH_ROOT . '/plugins/' . \implode('/', $path);
+            return JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . \implode(DIRECTORY_SEPARATOR, $path);
         }
         elseif ($extension === 'layouts') {
-            return JPATH_ROOT . '/' . \implode('/', $path);
+            return JPATH_ROOT . DIRECTORY_SEPARATOR . \implode(DIRECTORY_SEPARATOR, $path);
         }
 
-        return \implode('/', $path);
+        return \implode(DIRECTORY_SEPARATOR, $path);
     }
 
     public static function getHTMLTemplate(): string
