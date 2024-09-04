@@ -26,6 +26,7 @@ if ($type == 'vertical') {
     $element->style->child('.divider-content:after')->addCss('content', '""');
     $element->style->child('.divider-content:after')->addCss('height', $height . 'px');
     $element->style->child('.divider-content:after')->addCss('border-left', $border_width. 'px ' . $border_style . ' ' . $color['light']);
+    $element->style_dark->child('.divider-content:after')->addCss('border-color', $color['dark']);
 } else {
     $element->style->child('.divider-content')->addCss('border-top', $border_width. 'px ' . $border_style . ' ' . $color['light']);
     $element->style_dark->child('.divider-content')->addCss('border-color', $color['dark']);
