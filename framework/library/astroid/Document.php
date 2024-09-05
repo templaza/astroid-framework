@@ -829,11 +829,8 @@ class Document
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
         }
-
-        if (Framework::isAdmin()) {
-            $root = Uri::root();
-        } else {
-            $root = Uri::root(true). '/';
+        $root = Uri::root(true). '/';
+        if (Framework::isSite()) {
             $postfix = '';
         }
 
