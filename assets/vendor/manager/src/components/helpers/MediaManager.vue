@@ -17,7 +17,7 @@ const _imagePreview     = ref('');
 
 onMounted(() => {
     if (props.modelValue !== '') {
-        _imagePreview.value = constant.site_url + props.field.input.mediaPath + '/'+ props.modelValue;
+        updatePreview();
     }
     const mediaContent = document.getElementById(props.field.input.id+'modal');
     if (mediaContent) {
@@ -31,10 +31,16 @@ onMounted(() => {
 })
 
 onUpdated(()=>{
-  if (props.modelValue !== _imagePreview.value.replace(constant.site_url + props.field.input.mediaPath + '/','')) {
-    _imagePreview.value = constant.site_url + props.field.input.mediaPath + '/'+ props.modelValue;
-  }
+    updatePreview();
 })
+
+function updatePreview() {
+    if (props.modelValue.search(/https*:\/\//i) !== -1) {
+        _imagePreview.value = props.modelValue;
+    } else if (props.modelValue !== '') {
+        _imagePreview.value = constant.site_url + props.field.input.mediaPath + '/'+ props.modelValue;
+    }
+}
 
 function generateData(json = null) {
   if (!json) return false;
@@ -149,6 +155,10 @@ function uploadReset() {
     <div v-if="_imagePreview !== ''" class="image-preview mb-3">
       <i v-if="props.field.input.media === 'videos'" class="fa-solid fa-video fa-3x"></i>
       <img v-else :src="_imagePreview" :alt="props.field.name" />
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" :id="props.field.input.id+`url`">Url</span>
+        <input type="text" class="form-control" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" aria-label="URL" :aria-describedby="props.field.input.id+`url`">
     </div>
     <div v-if="_imagePreview === ''" class="astroid-media-selector">
       <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="" data-bs-toggle="modal" :data-bs-target="`#`+props.field.input.id+`modal`">{{ props.field.input.lang['select_media'] }}</button>
