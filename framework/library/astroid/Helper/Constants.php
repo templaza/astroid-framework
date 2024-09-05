@@ -44,7 +44,7 @@ class Constants
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
         return [
-            'site_url'              =>  Uri::root(),
+            'site_url'              =>  Uri::root(true). '/',
             'base_url'              =>  Uri::base(true),
             'astroid_media_url'     => ASTROID_MEDIA_URL,
             'template_id'           => $template->id,
