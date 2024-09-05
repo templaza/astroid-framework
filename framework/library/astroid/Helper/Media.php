@@ -33,6 +33,15 @@ class Media
         }
     }
 
+    public static function getMediaPath($link): string
+    {
+        if(strpos($link, "http://") !== false || strpos($link, "https://") !== false){
+            return $link;
+        } else {
+            return self::getPath() . '/' . $link;
+        }
+    }
+
     public static function library()
     {
         $input = Factory::getApplication()->input;
