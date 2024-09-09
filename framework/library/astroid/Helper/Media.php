@@ -311,8 +311,7 @@ class Media
         if (file_exists($dir)) {
             throw new \Exception("Folder `$name` already exists", 0);
         }
-
-        mkdir($dir, 0777);
+        Folder::create($dir);
 
         $folder = $name;
         if ($directory != 'images') {
