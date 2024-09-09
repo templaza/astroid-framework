@@ -25,7 +25,7 @@ class Head
         $document->addMeta('', 'IE=edge', ['http-equiv' => 'X-UA-Compatible']);
         $document->addMeta('viewport', 'width=device-width, initial-scale=1');
         $document->addMeta('HandheldFriendly', 'true');
-        $document->addMeta('apple-mobile-web-app-capable', 'YES');
+        $document->addMeta('mobile-web-app-capable', 'YES');
     }
 
     public static function favicon()
