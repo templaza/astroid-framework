@@ -150,6 +150,29 @@ function uploadReset() {
   _uploadBtnText.value = 'Upload';
   callAjax();
 }
+
+const newFolderName = ref('');
+const newFolderInput = ref(null);
+function createFolder() {
+    if (newFolderName.value.trim() === '') {
+        alert('Folder Name can not empty!');
+        newFolderInput.value.focus();
+        return false;
+    }
+    let url = constant.site_url+`administrator/index.php?option=com_ajax&astroid=media&action=createFolder&dir=images/`+_currentFolder.value+"&ts="+Date.now();
+    const formData = new FormData(); // pass data as a form
+    formData.append("name", newFolderName.value.trim());
+    formData.append(constant.astroid_admin_token, 1);
+    axios.post(url, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    }).then((response) => {
+        document.getElementById(props.field.input.id+`close_create_folder_dialog`).click();
+    }).catch((err) => {
+        console.error(err);
+    });
+}
 </script>
 <template>
     <div v-if="_imagePreview !== ''" class="image-preview mb-3">
@@ -195,7 +218,26 @@ function uploadReset() {
                 <div class="modal-footer">
                     <button v-if="!_uploadForm" type="button" class="btn btn-sm btn-as btn-as-light" data-bs-dismiss="modal">Close</button>
                     <button v-else type="button" class="btn btn-sm btn-as btn-as-light" @click="uploadReset">Cancel</button>
+                    <button v-if="!_uploadForm" class="btn btn-sm btn-as btn-as-light" @click.prevent="" :data-bs-target="`#`+props.field.input.id+`create_folder_dialog`" data-bs-toggle="modal">Create New Folder</button>
                     <button type="button" class="btn btn-sm btn-as btn-primary btn-as-primary" @click="uploadFile">{{ _uploadBtnText }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" :id="props.field.input.id+`create_folder_dialog`" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Folder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label :for="props.field.input.id + `folder_name`" class="form-label">Folder Name</label>
+                    <input type="text" ref="newFolderInput" class="form-control" v-model="newFolderName" :id="props.field.input.id + `folder_name`" placeholder="Enter folder name">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-as btn-as-light" :id="props.field.input.id+`close_create_folder_dialog`" :data-bs-target="`#`+props.field.input.id+`modal`" @click.prevent="" data-bs-toggle="modal">Cancel</button>
+                    <button class="btn btn-sm btn-as btn-primary btn-as-primary" @click.prevent="createFolder">Create</button>
                 </div>
             </div>
         </div>
