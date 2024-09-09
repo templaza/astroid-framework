@@ -357,7 +357,7 @@ foreach ($items as $key => $item) {
         echo '</dl>';
     }
     if (!empty($item->introtext) && $enable_intro_text) {
-        echo '<div class="astroid-article-introtext">' . mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') . '</div>';
+        echo '<div class="astroid-article-introtext">' . (!empty($intro_limit) ? mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') : $item->introtext) . '</div>';
     }
 
     if (count($info_after_intro)) {
