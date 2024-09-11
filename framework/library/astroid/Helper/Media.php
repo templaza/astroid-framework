@@ -49,7 +49,7 @@ class Media
         $asset = $input->get('asset');
         $author = $input->get('author');
 
-        $user = Factory::getUser();
+        $user = Factory::getApplication()->getIdentity();
 
         if (!$user->authorise('core.manage', 'com_media') && (!$asset || (!$user->authorise('core.edit', $asset) && !$user->authorise('core.create', $asset) && count($user->getAuthorisedCategories($asset, 'core.create')) == 0) && !($user->id == $author && $user->authorise('core.edit.own', $asset)))) {
             throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
