@@ -27,7 +27,7 @@ class JFormFieldAstroidMedia extends FormField {
            'value'      =>  $this->value,
            'media'      =>  (string) $mediaType,
            'mediaPath'  =>  Media::getPath(),
-           'ajax'       =>  Uri::root().'administrator/index.php?option=com_ajax&astroid=media',
+           'ajax'       =>  Uri::root('base').'/administrator/index.php?option=com_ajax&astroid=media',
            'type'       =>  strtolower($this->type),
            'lang'       =>  [
                'select_media'   =>  Text::_('TPL_ASTROID_SELECT_'.strtoupper($mediaType)),

@@ -94,6 +94,7 @@ class JFormFieldAstroidLayoutData extends FormField {
                                     if (file_exists($article_data)) {
                                         $widget_data = file_get_contents($article_data);
                                         $widget_data = json_decode($widget_data, true);
+                                        $element['state'] = $widget_data['state'];
                                         $element['params'] = array_merge($element['params'], $widget_data['params']);
                                     }
                                     $widgets[]  =   $element;
