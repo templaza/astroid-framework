@@ -67,6 +67,7 @@ class Admin extends Helper\Client
 
     protected function media()
     {
+        $this->checkAuth();
         $action = Factory::getApplication()->input->get('action', '', 'RAW');
         $func = Helper::classify($action);
         if (!method_exists(Helper\Media::class, $func)) {

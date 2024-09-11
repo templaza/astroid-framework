@@ -1,5 +1,5 @@
 .astroid-media {
-    .icon-folder {
+    .as-system-icon {
         color: var(--as-violet);
     }
     .media-icon {
@@ -44,7 +44,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
         transition: all 0.3s ease;
         &:hover{
             --bs-border-color: var(--as-violet);
@@ -75,6 +74,28 @@
             padding: 5px 10px;
             border-radius: 8px;
             cursor: pointer;
+        }
+    }
+    .toolbox {
+        font-size: 0.895rem;
+        opacity: 0;
+        transition: opacity 300ms;
+        span {
+            display: none;
+        }
+    }
+    .media-item {
+        &:hover {
+            .toolbox {
+                opacity: 1;
+            }
+            .nav-link {
+                &:hover {
+                    span {
+                        display: inline;
+                    }
+                }
+            }
         }
     }
 }
