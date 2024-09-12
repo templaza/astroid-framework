@@ -86,6 +86,8 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $form_template  =   $constant['form_template'];
                 $layout     =   json_decode($sublayout['data'], true);
                 foreach ($layout['sections'] as $section) {
+                    $section_widgets = array();
+
                     foreach ($section['rows'] as $row) {
                         foreach ($row['cols'] as $col) {
                             foreach ($col['elements'] as $element) {
@@ -97,10 +99,17 @@ class JFormFieldAstroidLayoutData extends FormField {
                                         $element['state'] = $widget_data['state'];
                                         $element['params'] = array_merge($element['params'], $widget_data['params']);
                                     }
-                                    $widgets[]  =   $element;
+                                    $section_widgets[]  =   $element;
                                 }
                             }
                         }
+                    }
+                    if (count($section_widgets)) {
+                        $section_params = Helper::loadParams($section['params']);
+                        $widgets[$section['id']] = [
+                            'title'     =>  $section_params->get('title', ''),
+                            'widgets'   =>  $section_widgets
+                        ];
                     }
                 }
                 $json = [

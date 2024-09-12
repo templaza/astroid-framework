@@ -43,8 +43,12 @@ foreach ($buttons as $key => $button) {
             $bd_radius = '';
         }
     }
+    $title = $btn_params['title'];
+    if (isset($btn_params['icon']) && $btn_params['icon']) {
+        $title      =   $btn_params['icon_position'] === 'first' ? '<i class="'.$btn_params['icon'].' me-2"></i>' . $title : $title . '<i class="'.$btn_params['icon'].' ms-2"></i>';
+    }
     $link_target    =   !empty($btn_params['link_target']) ? ' target="'.$btn_params['link_target'].'"' : '';
-    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $button_size . $bd_radius . '"'.$link_target.'>'.$btn_params['title'].'</a>';
+    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $button_size . $bd_radius . '"'.$link_target.'>'.$title.'</a>';
 }
 echo '</div>';
 
