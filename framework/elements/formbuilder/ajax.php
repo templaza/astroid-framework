@@ -74,7 +74,7 @@ if (!empty($asformbuilder) && !empty($element)) {
         $senderip       = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
         // Subject Structure
         $site_name 	    = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-        $mail_subject   = $params->get('email_subject', '');
+        $mail_subject   = $params->get('email_subject', '') . ' - ' . $site_name;
         $mail_subject = preg_replace_callback('/\{\{(\S+?)\}\}/siU', function ($matches) use (&$asformbuilder, &$site_name) {
             if (isset($asformbuilder[$matches[1]])) {
                 return $asformbuilder[$matches[1]];
