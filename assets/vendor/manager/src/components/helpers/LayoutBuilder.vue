@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, ref } from "vue";
+import { onBeforeMount, onUpdated, ref } from "vue";
 import draggable from "vuedraggable";
 import LayoutGrid from "./LayoutGrid.vue";
 const emit = defineEmits(['edit:Element', 'select:Element', 'update:System', 'save:Sublayout']);
@@ -66,11 +66,6 @@ onBeforeMount(()=>{
 
 onUpdated(()=>{
     initLayout();
-})
-
-onMounted(()=>{
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
 })
 
 function updateSystem(addonType, value = false) {
@@ -290,19 +285,19 @@ function selectLayout(element) {
                     <span class="navbar-text" href="#"><span class="section-handle handle bg-body-secondary px-1 py-1 rounded me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span> {{ element.params.find((param) => param.name === 'title').value }}</span>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Section" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="nav-link px-1" href="#" title="Edit Section" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Section" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
+                            <a class="nav-link px-1" href="#" title="Duplicate Section" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#" @click.prevent="deleteElement(element, index)" title="Remove Section"><i class="fas fa-trash-alt"></i></a>
                         </li>
                         <li class="nav-item" v-if="props.source === `root`">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Load Section from Sublayout" @click.prevent="selectLayout(element)"><i class="fa-solid fa-cubes"></i></a>
+                            <a class="nav-link px-1" href="#" title="Load Section from Sublayout" @click.prevent="selectLayout(element)"><i class="fa-solid fa-cubes"></i></a>
                         </li>
                         <li class="nav-item" v-if="props.source === `root`">
-                            <a class="nav-link px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Save Section as Sublayout" @click.prevent="saveLayout(element)"><i class="fa-solid fa-floppy-disk"></i></a>
+                            <a class="nav-link px-1" href="#" title="Save Section as Sublayout" @click.prevent="saveLayout(element)"><i class="fa-solid fa-floppy-disk"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-1" href="#" @click.prevent="showGridModal(element.id, 'row')"><i class="fas fa-plus"></i> New Row</a>
@@ -320,11 +315,11 @@ function selectLayout(element) {
             <div v-else-if="props.group === `sections`" class="astroid-row-container position-relative">
                 <div class="row-toolbar position-absolute">
                     <div class="row-handle handle text-dark-emphasis"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>
-                    <div><a href="#" data-bs-toggle="tooltip" data-bs-title="Edit Columns" class="text-dark-emphasis" @click.prevent="showGridModal(element.id, 'row')"><i class="fa-solid fa-table-columns"></i></a></div>
-                    <div><a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
+                    <div><a href="#" title="Edit Columns" class="text-dark-emphasis" @click.prevent="showGridModal(element.id, 'row')"><i class="fa-solid fa-table-columns"></i></a></div>
+                    <div><a href="#" @click.prevent="_editElement(element)" title="Edit Row" class="text-dark-emphasis"><i class="fa-solid fa-pencil"></i></a></div>
                     <div><a href="#" @click.prevent="deleteElement(element, index)" title="Remove Row" class="text-dark-emphasis"><i class="fa-solid fa-trash"></i></a></div>
                     <div>
-                        <input class="form-check-input" type="checkbox" v-model="element.fill" :id="`fill-row-`+element.id" data-bs-toggle="tooltip" data-bs-title="Fill Up Row">
+                        <input class="form-check-input" type="checkbox" v-model="element.fill" :id="`fill-row-`+element.id" title="Fill Up Row">
                     </div>
                 </div>
                 <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
@@ -341,7 +336,7 @@ function selectLayout(element) {
                     </div>
                     <div class="column-toolbar">
                         <span class="column-handle handle bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fa-solid fa-arrows-up-down-left-right"></i></span>
-                        <a href="#" @click.prevent="_editElement(element)" data-bs-toggle="tooltip" data-bs-title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
+                        <a href="#" @click.prevent="_editElement(element)" title="Edit Column"><span class="bg-body-secondary px-1 py-1 rounded text-dark-emphasis me-1"><i class="fas fa-pencil-alt"></i></span></a>
                     </div>
                 </div>
                 <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
@@ -352,19 +347,19 @@ function selectLayout(element) {
             <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body" :class="{'element-disabled' : !element.state}">
                 <div class="d-flex justify-content-between">
                     <div class="element-name">
-                        <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}<i v-if="element.type === `sublayout`" class="fa-regular fa-circle-question text-body-tertiary ms-1" data-bs-toggle="tooltip" :data-bs-title="element.params.find((param) => param.name === 'desc').value"></i></div>
+                        <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}<i v-if="element.type === `sublayout`" class="fa-regular fa-circle-question text-body-tertiary ms-1" :title="element.params.find((param) => param.name === 'desc').value"></i></div>
                         <div class="text-body-tertiary form-text">{{ element.type }}</div>
                     </div>
                     <div class="element-toolbar">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link py-0 ps-0 pe-1" href="#" data-bs-toggle="tooltip" data-bs-title="Enable/Disable Element" @click.prevent="elementState(element)"><i :class="{'fas fa-eye' : element.state, 'fas fa-eye-slash' : !element.state}"></i></a>
+                                <a class="nav-link py-0 ps-0 pe-1" href="#" title="Enable/Disable Element" @click.prevent="elementState(element)"><i :class="{'fas fa-eye' : element.state, 'fas fa-eye-slash' : !element.state}"></i></a>
                             </li>
                             <li class="nav-item" v-if="element.type !== `sublayout`">
-                                <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Edit Element" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="nav-link py-0 px-1" href="#" title="Edit Element" @click.prevent="_editElement(element)"><i class="fas fa-pencil-alt"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Duplicate Element" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
+                                <a class="nav-link py-0 px-1" href="#" title="Duplicate Element" @click.prevent="duplicateElement(element, index)"><i class="fas fa-copy"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link py-0 pe-0 ps-1" href="#" @click.prevent="deleteElement(element, index)" title="Remove Element"><i class="fas fa-trash-alt"></i></a>

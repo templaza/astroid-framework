@@ -91,7 +91,7 @@ function elementState(widget) {
                                     <a class="nav-link py-0 px-1" href="#" @click.prevent="editElement(widget)"><i class="fas fa-pencil-alt me-1"></i>Edit</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link py-0 px-1" href="#" data-bs-toggle="tooltip" data-bs-title="Enable/Disable Element" @click.prevent="elementState(widget)"><i class="me-1" :class="{'fas fa-eye' : widget.state, 'fas fa-eye-slash' : !widget.state}"></i>{{ (widget.state ? 'Enabled' : 'Disabled') }}</a>
+                                    <a class="nav-link py-0 px-1" href="#" title="Enable/Disable Element" @click.prevent="elementState(widget)"><i class="me-1" :class="{'fas fa-eye' : widget.state, 'fas fa-eye-slash' : !widget.state}"></i>{{ (widget.state ? 'Enabled' : 'Disabled') }}</a>
                                 </li>
                             </ul>
                             <i v-else class="fa-solid fa-spinner fa-spin-pulse"></i>
