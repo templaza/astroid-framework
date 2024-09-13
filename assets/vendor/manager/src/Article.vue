@@ -27,33 +27,25 @@ function closeElement() {
 }
 function saveElement(params) {
     const action_link = 'index.php?option=com_ajax&astroid=saveArticleElement&ts='+Date.now();
-    const formData = new FormData(); 
-    widgets.value.every(widget => {
-        if (element.value.type === widget.type && element.value.id === widget.id) {
-            widget.params = params;
-            formData.append(data.constant.astroid_admin_token, 1);
-            formData.append('article_id', data.article_id);
-            formData.append('template', data.template);
-            formData.append('data', JSON.stringify(widget));
-            save_disabled.value = true;
-            axios.post(action_link, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                if (response.data.status === 'success') {
-                    save_disabled.value = false;
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-            element.value = {};
-            return false;
+    const formData = new FormData();
+    element.value.params = params;
+    formData.append(data.constant.astroid_admin_token, 1);
+    formData.append('article_id', data.article_id);
+    formData.append('template', data.template);
+    formData.append('data', JSON.stringify(element.value));
+    save_disabled.value = true;
+    axios.post(action_link, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    }).then((response) => {
+        if (response.data.status === 'success') {
+            save_disabled.value = false;
         }
-        return true;
+    }).catch((err) => {
+        console.error(err);
     });
+    element.value = {};
 }
 
 function elementState(widget) {
