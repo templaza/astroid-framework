@@ -27,7 +27,11 @@ if (!count($accordions)) {
     return false;
 }
 $style          = $params->get('style', '');
+$style          = $params->get('style', '');
 $style          = $style !== '' ? ' '. $style : '';
+
+$collapse       = $params->get('collapse', '');
+$always_open    = $params->get('always_open', 0);
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.collapse');
 echo '<div class="accordion'.$style.'" id="accordion-'.$element->id.'">';
@@ -36,10 +40,10 @@ foreach ($accordions as $key => $accordions) {
     echo '<div class="accordion-item">';
 
     echo '<h2 class="accordion-header">';
-    echo '<button class="accordion-button'.($key != 0 ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$item_params->get('title', '').'</button>';
+    echo '<button class="accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$item_params->get('title', '').'</button>';
     echo '</h2>';
 
-    echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 ? ' show' : '').'" data-bs-parent="#accordion-'.$element->id.'">';
+    echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 && $collapse === '' ? ' show' : '').'"'.(!$always_open ? ' data-bs-parent="#accordion-'.$element->id.'"' : '').'>';
     echo '<div class="accordion-body">'. $item_params->get('content', '') . '</div>';
     echo '</div>';
 

@@ -25,6 +25,11 @@
                     <option value="">Default</option>
                     <option value="accordion-flush">Flush</option>
                 </field>
+                <field astroidgroup="widget_styles" type="astroidlist" name="collapse" label="ASTROID_WIDGET_ACCORDION_COLLAPSE_STYLE_LABEL" default="">
+                    <option value="">ASTROID_WIDGET_ACCORDION_OPEN_FIRST_ITEM_LABEL</option>
+                    <option value="close-all">ASTROID_WIDGET_ACCORDION_CLOSE_ALL_LABEL</option>
+                </field>
+                <field astroidgroup="widget_styles" name="always_open" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ACCORDION_ALWAYS_OPEN_LABEL"/>
                 <field astroidgroup="widget_styles" name="color_settings" type="astroidradio" width="full" default="color">
                     <option value="color">TPL_ASTROID_COLOR</option>
                     <option value="hover">TPL_ASTROID_COLOR_HOVER</option>
