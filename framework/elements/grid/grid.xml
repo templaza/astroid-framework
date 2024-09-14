@@ -287,7 +287,7 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
-                <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="top">
+                <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="inside">
                     <option value="top">ASTROID_TOP</option>
                     <option value="left">ASTROID_LEFT</option>
                     <option value="bottom">ASTROID_BOTTOM</option>

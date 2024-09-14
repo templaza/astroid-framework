@@ -31,22 +31,18 @@ if (!count($grids)) {
 $style = new Style('#'. $element->id);
 $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   '';
-$xxl_column         =   $params->get('xxl_column', '');
-$row_column_cls     .=  $xxl_column ? ' row-cols-xxl-' . $xxl_column : '';
-$xl_column          =   $params->get('xl_column', '');
-$row_column_cls     .=  $xl_column ? ' row-cols-xl-' . $xl_column : '';
-$lg_column          =   $params->get('lg_column', 3);
-$row_column_cls     .=  $lg_column ? ' row-cols-lg-' . $lg_column : '';
-$md_column          =   $params->get('md_column', 1);
-$row_column_cls     .=  $md_column ? ' row-cols-md-' . $md_column : '';
-$sm_column          =   $params->get('sm_column', 1);
-$row_column_cls     .=  $sm_column ? ' row-cols-sm-' . $sm_column : '';
-$xs_column          =   $params->get('xs_column', 1);
-$row_column_cls     .=  $xs_column ? ' row-cols-' . $xs_column : '';
 
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 foreach ($responsive_key as $key) {
+    $default        =   match ($key) {
+        'xxl', 'xl' =>  '',
+        'lg'        =>  3,
+        default     =>  1
+    };
+    $column         =   $params->get($key . '_column', $default);
+
     if ($key !== 'xs') {
+        $row_column_cls     .=  $column ? ' row-cols-'. $key .'-' . $column : '';
         $row_gutter         =   $params->get('row_gutter_'.$key, '');
         $column_gutter      =   $params->get('column_gutter_'. $key, '');
         if ($row_gutter) {
@@ -56,6 +52,7 @@ foreach ($responsive_key as $key) {
             $row_column_cls .=  ' gx-' . $key . '-' . $column_gutter;
         }
     } else {
+        $row_column_cls     .=  $column ? ' row-cols-' . $column : '';
         $row_gutter         =   $params->get('row_gutter', 3);
         $column_gutter      =   $params->get('column_gutter', 3);
         $row_column_cls     .=  ' gy-' . $row_gutter;
@@ -80,18 +77,20 @@ if ($media_position == 'right') {
 } else {
     $media_width_cls.=  'order-0';
 }
-$xxl_column_media   =   $params->get('xxl_column_media', '');
-$media_width_cls    .=  $xxl_column_media ? ' col-xxl-' . $xxl_column_media : '';
-$xl_column_media    =   $params->get('xl_column_media', '');
-$media_width_cls    .=  $xl_column_media ? ' col-xl-' . $xl_column_media : '';
-$lg_column_media    =   $params->get('lg_column_media', 4);
-$media_width_cls    .=  $lg_column_media ? ' col-lg-' . $lg_column_media : '';
-$md_column_media    =   $params->get('md_column_media', 12);
-$media_width_cls    .=  $md_column_media ? ' col-md-' . $md_column_media : '';
-$sm_column_media    =   $params->get('sm_column_media', 12);
-$media_width_cls    .=  $sm_column_media ? ' col-sm-' . $sm_column_media : '';
-$xs_column_media    =   $params->get('xs_column_media', 12);
-$media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
+
+foreach ($responsive_key as $device) {
+    $default        =   match ($device) {
+        'xxl', 'xl' =>  '',
+        'lg'        =>  4,
+        default     =>  12
+    };
+    $column_media   =   $params->get($device . '_column_media', $default);
+    if ($device === 'xs') {
+        $media_width_cls.=  $column_media ? ' col-' . $column_media . ($media_position == 'right' && $column_media < 12 ? ' text-end' : '') : '';
+    } else {
+        $media_width_cls.=  $column_media ? ' col-' . $device . '-' . $column_media . ($media_position == 'right' && $column_media < 12 ? ' text-'.$device.'-end' : '') : '';
+    }
+}
 
 $icon_size          =   $params->get('icon_size', 60);
 
