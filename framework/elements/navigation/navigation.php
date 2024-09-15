@@ -45,7 +45,7 @@ $bgcolor        = Style::getColor($params->get('bgcolor', ''));
 $bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
 $bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
 
-$nav_column_cls        =   '';
+$nav_column_cls        =   'as-nav-'. (empty($list_style) ? 'bar' : 'list');
 $xxl_column             =   $params->get('nav_column_xxl', '');
 $nav_column_cls        .=  $xxl_column ? ' as-column-xxl-' . $xxl_column : '';
 $xl_column              =   $params->get('nav_column_xl', '');
