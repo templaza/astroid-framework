@@ -57,4 +57,5 @@ if (!empty($heading_margin)) {
 
 if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-content-text', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-content-text *', $content_font_style);
 }
