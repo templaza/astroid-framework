@@ -32,14 +32,15 @@ class Document
     protected $minify_css = false;
     protected $minify_js = false;
     protected $minify_html = false;
-    protected static $_fontawesome = false;
-    protected static $_fancybox = false;
-    protected static $_masonry = false;
-    protected static $_imagesloaded = false;
-    protected static $_gsap = false;
-    protected static $_slick = false;
-    protected static $_videojs = false;
-    protected static $_layout_paths = [];
+    protected static bool $_fontawesome = false;
+    protected static bool $_fancybox = false;
+    protected static bool $_masonry = false;
+    protected static bool $_imagesloaded = false;
+    protected static bool $_gsap = false;
+    protected static array $_gsap_plugins = [];
+    protected static bool $_slick = false;
+    protected static bool $_videojs = false;
+    protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
 
@@ -956,12 +957,16 @@ class Document
         }
     }
 
-    public function loadGSAP(): void
+    public function loadGSAP($plugin = ''): void
     {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_gsap) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseScript('astroid.gsap', 'astroid/gsap.min.js', ['relative' => true, 'version' => 'auto']);
+            $wa->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_gsap = true;
+        }
+        if (!empty($plugin) && !in_array($plugin, self::$_gsap_plugins)) {
+            $wa->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_gsap_plugins[] = $plugin;
         }
     }
 
