@@ -21,6 +21,9 @@
                 </field>
                 <field astroidgroup="widget_styles" name="rows" type="astroidrange" min="2" max="10" step="1" postfix="rows" default="5" label="ASTROID_WIDGET_ROWS_LABEL" description="ASTROID_WIDGET_HOVER_MOTION_GALLERY_ROWS_DESC" />
                 <field astroidgroup="widget_styles" type="astroidtext" class="form-control" label="JFIELD_MEDIA_HEIGHT_LABEL" name="height" hint="80vh"/>
+                <field astroidgroup="widget_styles" name="angle" type="astroidrange" min="-60" max="60" step="1" postfix="deg" default="-5" label="ASTROID_WIDGET_ANGLE_LABEL" description="ASTROID_WIDGET_IMAGE_ANGLE_DESC" />
+                <field astroidgroup="widget_styles" name="gap" type="astroidrange" min="0" max="10" step="0.1" postfix="rem" default="1" label="ASTROID_WIDGET_GUTTER_LABEL" description="ASTROID_WIDGET_IMAGE_GUTTER_DESC" />
+                <field astroidgroup="widget_styles" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="gallery_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
                 <field astroidgroup="widget_styles" name="view_detail" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIEW_DETAIL"/>
 
                 <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">

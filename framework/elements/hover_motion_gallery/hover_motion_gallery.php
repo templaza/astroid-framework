@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use Astroid\Framework;
 use Astroid\Helper;
+use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
 
 extract($displayData);
@@ -39,6 +40,8 @@ $view_detail        =   $view_detail ? ' as-item-click' : '';
 $rounded_size       =   $params->get('rounded_size', '3');
 $border_radius      =   $params->get('border_radius', '');
 $height             =   $params->get('height', '80vh');
+$angle              =   $params->get('angle', '-5');
+$gap                =   $params->get('gap', '1');
 if ($border_radius == 'rounded') {
     $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
 } else {
@@ -62,18 +65,23 @@ foreach ($images as $index => $image) {
     if (($index + 1) % $columns === 0 || $index + 1 === count($images)) {
         echo '</div>';
     }
-
 }
 echo '</div>';
-
-//echo '<div class="as-hover-motion-gallery-fullview d-none"><div class="as-hover-motion-close position-absolute top-0 end-0 p-4"><i class="fa-solid fa-2xl fa-xmark"></i></div></div>';
 echo '</div>';
 
 $document->loadGSAP('Flip');
 $document->loadImagesLoaded();
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->registerAndUseStyle('astroid.hovermotion', 'media/astroid/assets/vendor/hover_motion/css/base.css');
-$wa->registerAndUseScript('astroid.hovermotion', 'media/astroid/assets/vendor/hover_motion/js/index.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+$wa->registerAndUseStyle('astroid.hovermotion', 'media/astroid/assets/vendor/hover_motion/css/base.min.css');
+$wa->registerAndUseScript('astroid.hovermotion', 'media/astroid/assets/vendor/hover_motion/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 $element->style->child('.as-hover-motion-gallery')->addCss('height', $height);
 $element->style->child('.as-hover-motion-gallery-inner')->addCss('grid-template-rows', 'repeat(' . $rows . ',1fr)');
 $element->style->child('.as-hover-motion-row')->addCss('grid-template-columns', 'repeat(' . $columns . ',1fr)');
+if (!empty($angle)) {
+    $element->style->child('.as-hover-motion-gallery-inner')->addCss('--angle', $angle . 'deg');
+}
+$element->style->child('.as-hover-motion-gallery::after')->addCss('background-image', Style::getGradientValue($params->get('gallery_overlay_gradient', '')));
+if (!empty($gap)) {
+    $element->style->child('.as-hover-motion-gallery-inner')->addCss('gap', $gap . 'rem');
+    $element->style->child('.as-hover-motion-row')->addCss('gap', $gap . 'rem');
+}

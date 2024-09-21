@@ -200,12 +200,8 @@
         fullview.classList.add('as-hover-motion-gallery-fullview');
         document.body.appendChild(fullview);
         // Logic to animate the middle image to full view using gsap Flip
-        // element.querySelector('.as-hover-motion-row-item-image').classList.add('as-hover-motion-row-item-img-large');
         const flipstate = Flip.getState(element);
-        // return;
         fullview.prepend(element);
-        // Get the CSS variable value for the translation
-        // const transContent = getCSSVariableValue(content, '--trans-content');
 
         // Create a GSAP timeline for the Flip animation
         const tl = gsap.timeline();
@@ -219,7 +215,7 @@
         }))
         // Scale and move
         .to(element, {
-          scale: 1.2,
+          scale: 1.1,
           duration: 0.9,
           ease: 'sine'
         }, '<');
