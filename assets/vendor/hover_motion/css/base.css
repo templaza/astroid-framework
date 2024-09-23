@@ -45,7 +45,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #000;
 }
 
 .as-hover-motion-gallery::after {
