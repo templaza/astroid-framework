@@ -25,8 +25,10 @@
 
       // Cache window size and update on resize
       let winsize = { width: window.innerWidth, height: window.innerHeight };
+      $(grid).css('width', gallery.offsetWidth * 2).css('height', gallery.offsetHeight * 2);
       window.addEventListener('resize', () => {
         winsize = { width: window.innerWidth, height: window.innerHeight };
+        $(grid).css('width', gallery.offsetWidth * 2).css('height', gallery.offsetHeight * 2);
       });
 
       // Initialize mouse position object
