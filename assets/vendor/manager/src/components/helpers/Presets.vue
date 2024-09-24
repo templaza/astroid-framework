@@ -252,7 +252,7 @@ const download = async (url, filename) => {
 }
 
 function exportPreset(preset) {
-    download(constant.site_url+'/media/templates/site/'+constant.tpl_template_name+'/astroid/presets/'+preset.name+'.json', preset.name+'.json');
+    download(constant.root_url+'media/templates/site/'+constant.tpl_template_name+'/astroid/presets/'+preset.name+'.json', preset.name+'.json');
 }
 </script>
 <template>
