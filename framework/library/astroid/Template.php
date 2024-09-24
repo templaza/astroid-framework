@@ -107,7 +107,9 @@ class Template
             $this->isAstroid = true;
         }
         if ($this->isAstroid) {
-            define('ASTROID_TEMPLATE_NAME', $this->template);
+            if (!defined('ASTROID_TEMPLATE_NAME')) {
+                define('ASTROID_TEMPLATE_NAME', $this->template);
+            }
             Helper::loadLanguage('astroid');
         }
     }

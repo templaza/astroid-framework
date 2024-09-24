@@ -12,6 +12,9 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -279,6 +282,19 @@ class Client
             }
         }
         return true;
+    }
+
+    public function onContentAfterDelete($context, $article): void
+    {
+        if ($context === 'com_content.article' && isset($article->id)) {
+            $templates = Folder::folders(JPATH_SITE . '/media/templates/site');
+            foreach ($templates as $template) {
+                if (file_exists(Path::clean(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/article_widget_data'))) {
+                    $files = Folder::files(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/article_widget_data', '^'. $article->id . '_', false, true);
+                    File::delete($files);
+                }
+            }
+        }
     }
 
     public function saveArticleElement() {

@@ -182,9 +182,9 @@ function selectPreset(event, group) {
       </div>
     </form>
     <nav class="nav justify-content-center mb-3 astroid-footer-links">
-      <a class="nav-link d-inline-flex align-items-center" href="https://ko-fi.com/astroidframework" data-bs-toggle="tooltip" data-bs-title="Buy Me a Coffee" target="_blank"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee" class="me-2">Support Astroid with $10</a>
-      <a class="nav-link" :href="constant.jed_link" data-bs-toggle="tooltip" data-bs-title="Reviews for Astroid on JED" target="_blank"><i class="fa-brands fa-joomla me-2"></i>Astroid on JED</a>
-      <a class="nav-link" :href="constant.document_link" data-bs-toggle="tooltip" data-bs-title="Go to Documentation" target="_blank">Documentation</a>
+      <a class="nav-link d-inline-flex align-items-center" href="https://ko-fi.com/astroidframework" title="Buy Me a Coffee" target="_blank"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee" class="me-2">Support Astroid with $10</a>
+      <a class="nav-link" :href="constant.jed_link" title="Reviews for Astroid on JED" target="_blank"><i class="fa-brands fa-joomla me-2"></i>Astroid on JED</a>
+      <a class="nav-link" :href="constant.document_link" title="Go to Documentation" target="_blank">Documentation</a>
     </nav>
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="loadGroupPreset" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

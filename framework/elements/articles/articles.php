@@ -236,8 +236,9 @@ $info_margin                =   $params->get('info_margin', '');
 $info_margin_before_title   =   $params->get('info_margin_before_title', '');
 $info_margin_after_intro    =   $params->get('info_margin_after_intro', '');
 
-$enable_intro_text =   $params->get('enable_intro_text', 1);
+$enable_intro_text  =   $params->get('enable_intro_text', 1);
 $content_font_style =   $params->get('content_font_style');
+$intro_limit        =   $params->get('intro_limit', 0);
 if (!empty($content_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-article-introtext', $content_font_style);
 }
@@ -356,7 +357,7 @@ foreach ($items as $key => $item) {
         echo '</dl>';
     }
     if (!empty($item->introtext) && $enable_intro_text) {
-        echo '<div class="astroid-article-introtext">' . $item->introtext . '</div>';
+        echo '<div class="astroid-article-introtext">' . (!empty($intro_limit) ? mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') : $item->introtext) . '</div>';
     }
 
     if (count($info_after_intro)) {

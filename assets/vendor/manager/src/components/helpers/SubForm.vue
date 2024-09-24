@@ -116,7 +116,7 @@ function deleteItem(index) {
                 <div>
                     <div class="card card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div><i class="item-move fa-solid fa-up-down me-3"></i>{{ element.params.find((param) => param.name === itemLabel) ? element.params.find((param) => param.name === itemLabel).value : 'Item ' + (index+1) }}</div>
+                            <div><i class="item-move fa-solid fa-up-down me-3"></i>{{ element.params.find((param) => param.name === itemLabel) ? (element.params.find((param) => param.name === itemLabel) && element.params.find((param) => param.name === itemLabel).value !== '' ? element.params.find((param) => param.name === itemLabel).value : 'Item ' + (index+1)) : 'Item ' + (index+1) }}</div>
                             <div class="toolbar">
                                 <a href="#" title="Edit" class="me-2" @click.prevent="editItem(index)"><i class="fa-solid fa-gear"></i></a>
                                 <a href="#" title="Duplicate" class="me-2" @click.prevent="duplicateItem(element,index)"><i class="fa-solid fa-copy"></i></a>

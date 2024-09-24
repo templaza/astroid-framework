@@ -44,7 +44,22 @@ $color_active   = Style::getColor($params->get('color_active', ''));
 $bgcolor        = Style::getColor($params->get('bgcolor', ''));
 $bgcolor_hover  = Style::getColor($params->get('bgcolor_hover', ''));
 $bgcolor_active = Style::getColor($params->get('bgcolor_active', ''));
-echo '<nav class="nav' . $alignment . $list_style . '">';
+
+$nav_column_cls        =   'as-nav-'. (empty($list_style) ? 'bar' : 'list');
+$xxl_column             =   $params->get('nav_column_xxl', '');
+$nav_column_cls        .=  $xxl_column ? ' as-column-xxl-' . $xxl_column : '';
+$xl_column              =   $params->get('nav_column_xl', '');
+$nav_column_cls        .=  $xl_column ? ' as-column-xl-' . $xl_column : '';
+$lg_column              =   $params->get('nav_column_lg', '');
+$nav_column_cls        .=  $lg_column ? ' as-column-lg-' . $lg_column : '';
+$md_column              =   $params->get('nav_column_md', '');
+$nav_column_cls        .=  $md_column ? ' as-column-md-' . $md_column : '';
+$sm_column              =   $params->get('nav_column_sm', '');
+$nav_column_cls        .=  $sm_column ? ' as-column-sm-' . $sm_column : '';
+$xs_column              =   $params->get('nav_column_xs', '');
+$nav_column_cls        .=  $xs_column ? ' as-column-' . $xs_column : '';
+echo '<nav id="'.$element->id.'-nav" class="'.$nav_column_cls.'" aria-label="'.$params->get('title', '').'">';
+echo '<ul class="nav' . $alignment . $list_style . '">';
 foreach ($menu_items as $item) {
     $menu_params    =   Style::getSubFormParams($item->params);
     $target         =   isset($menu_params['target']) && $menu_params['target'] ? ' target="'.$menu_params['target'].'"' : '';
@@ -52,8 +67,9 @@ foreach ($menu_items as $item) {
     $active         =   isset($menu_params['active']) && intval($menu_params['active']) ? ' active' : '';
     $rel            =   isset($menu_params['rel']) && $menu_params['rel'] ? ' rel="'.$menu_params['rel'].'"' : '';
     $icon           =   $menu_params['icon'] !== '' ? '<i class="me-2 '.$menu_params['icon'].'"></i>' : '';
-    echo '<a id="item-'.$item->id.'"  class="nav-link'.$active.'" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a>';
+    echo '<li class="nav-item"><a id="item-'.$item->id.'"  class="nav-link'.$active.'" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a></li>';
 }
+echo '</ul>';
 echo '</nav>';
 
 // Set styles for widget

@@ -21,6 +21,11 @@
                                     <option value="_parent">Parent Frame</option>
                                     <option value="_top">Full body of the window</option>
                                 </field>
+                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
+                                <field ngShow="[icon]!=''" type="astroidlist" label="ASTROID_WIDGET_ICON_POSITION_LABEL" name="icon_position" default="first">
+                                    <option value="first">ASTROID_WIDGET_ICON_POSITION_FIRST_LABEL</option>
+                                    <option value="last">ASTROID_WIDGET_ICON_POSITION_LAST_LABEL</option>
+                                </field>
                                 <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                                     <option value="primary">Primary</option>
                                     <option value="secondary">Secondary</option>
@@ -33,6 +38,13 @@
                                     <option value="link">Link</option>
                                 </field>
                                 <field name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
+                                <field type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
+                                    <option value="">Default</option>
+                                    <option value="btn-lg">Large</option>
+                                    <option value="btn-sm">Small</option>
+                                    <option value="custom">Custom</option>
+                                </field>
+                                <field ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                             </fieldset>
                         </fields>
                     </form>

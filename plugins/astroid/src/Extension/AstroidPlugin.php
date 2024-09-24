@@ -42,58 +42,52 @@ final class AstroidPlugin extends CMSPlugin
 
     public function onContentPrepareForm($form, $data)
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
+        if (defined('_ASTROID')) {
+            Framework::getClient()->onContentPrepareForm($form, $data);
         }
-        Framework::getClient()->onContentPrepareForm($form, $data);
     }
 
     public function onContentBeforeSave($context, $table, $isNew, $data = null)
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
+        if (defined('_ASTROID')) {
+            return Framework::getClient()->onContentBeforeSave($context, $table, $isNew, $data);
         }
-
-        return Framework::getClient()->onContentBeforeSave($context, $table, $isNew, $data);
     }
 
     public function onBeforeRender()
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
+        if (defined('_ASTROID')) {
+            Framework::getClient()->onBeforeRender();
         }
-        Framework::getClient()->onBeforeRender();
     }
 
     public function onAfterRender()
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
+        if (defined('_ASTROID')) {
+            Framework::getClient()->onAfterRender();
         }
-        Framework::getClient()->onAfterRender();
     }
 
     public function onAfterRespond()
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
-        }
-        if (!(Helper::getPluginParams()->get('astroid_debug', 0)) || Framework::isAdmin()) {
-            return false;
-        }
+        if (defined('_ASTROID')) {
+            if (!(Helper::getPluginParams()->get('astroid_debug', 0)) || Framework::isAdmin()) {
+                return;
+            }
 
-        $cache = PluginHelper::getPlugin('system', 'cache');
-        if (Framework::isSite() && !empty($cache)) {
-            return false;
-        }
+            $cache = PluginHelper::getPlugin('system', 'cache');
+            if (Framework::isSite() && !empty($cache)) {
+                return;
+            }
 
-        // Capture output.
-        $contents = ob_get_contents();
+            // Capture output.
+            $contents = ob_get_contents();
 
-        if ($contents) {
-            ob_end_clean();
+            if ($contents) {
+                ob_end_clean();
+            }
+            echo Helper::str_lreplace('</body>', Helper::debug() . '</body>', $contents);
         }
-        echo Helper::str_lreplace('</body>', Helper::debug() . '</body>', $contents);
     }
 
     public function onContentPrepareData($context, $user)
@@ -131,21 +125,22 @@ final class AstroidPlugin extends CMSPlugin
 
     public function onInstallerAfterInstaller($installmodel, $package, $installer, $result)
     {
-        if (!$result || Framework::isSite()) {
-            return false;
+        if (defined('_ASTROID')) {
+            if (!$result || Framework::isSite()) {
+                return false;
+            }
+            Framework::getClient()->onInstallerAfterInstaller($package);
         }
-        Framework::getClient()->onInstallerAfterInstaller($package);
     }
 
     public function onExtensionAfterSave($context, $table, $isNew)
     {
-        if (!file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-            return false;
-        }
-        if (Framework::isAdmin() && $context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
-            $params = \json_decode($table->params, TRUE);
-            $parent_id = $params['astroid'];
-            Template::setTemplateDefaults($table->template, $table->id, $parent_id);
+        if (defined('_ASTROID')) {
+            if (Framework::isAdmin() && $context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
+                $params = \json_decode($table->params, TRUE);
+                $parent_id = $params['astroid'];
+                Template::setTemplateDefaults($table->template, $table->id, $parent_id);
+            }
         }
     }
 
@@ -154,6 +149,13 @@ final class AstroidPlugin extends CMSPlugin
         if ($template->isAstroid && Framework::isAdmin() && !count($template->getPresets())) {
             $form->removeField('template_preset', 'params');
             $form->removeField('presets', 'params');
+        }
+    }
+
+    public function onContentAfterDelete($context, $article): void
+    {
+        if (defined('_ASTROID')) {
+            Framework::getClient()->onContentAfterDelete($context, $article);
         }
     }
 }

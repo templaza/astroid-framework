@@ -32,12 +32,15 @@ class Document
     protected $minify_css = false;
     protected $minify_js = false;
     protected $minify_html = false;
-    protected static $_fontawesome = false;
-    protected static $_fancybox = false;
-    protected static $_masonry = false;
-    protected static $_slick = false;
-    protected static $_videojs = false;
-    protected static $_layout_paths = [];
+    protected static bool $_fontawesome = false;
+    protected static bool $_fancybox = false;
+    protected static bool $_masonry = false;
+    protected static bool $_imagesloaded = false;
+    protected static bool $_gsap = false;
+    protected static array $_gsap_plugins = [];
+    protected static bool $_slick = false;
+    protected static bool $_videojs = false;
+    protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
 
@@ -291,7 +294,11 @@ class Document
         $base_path = str_replace($juri->getScheme() . '://' . $juri->getHost() . '/', '', $juri->root());
 
         Framework::getDebugger()->log('Minifying JS');
+        $excludeScripts = ['*validate.js*', '*tinymce.min.js*', '*tiny_mce.js*', '*tinymce.js*', '*editor.min.js*'];
         $excludes = Framework::getTemplate()->getParams()->get('minify_js_excludes', '');
+        $excludes = \explode(',', $excludes);
+        $excludes = array_merge($excludeScripts, $excludes);
+
         $javascripts = [];
         $javascriptFiles = [];
         $html = preg_replace_callback('/(<script\s[^>]*src=")([^"]*)("[^>]*>)(.*)(<\/script>)|(<script>)(.*)(<\/script>)|(<script\s[^>]*type=")([^"]*)("[^>]*>)(.*)(<\/script>)/siU', function ($matches) use (&$javascripts, &$javascriptFiles, $base_path, $excludes) {
@@ -310,7 +317,7 @@ class Document
                 }
 
                 $file = basename($file_path);
-                if (Helper::matchFilename($file, \explode(',', $excludes))) {
+                if (Helper::matchFilename($file, $excludes)) {
                     return $matches[0];
                 }
                 $script = ['content' => $scriptName, 'type' => 'url'];
@@ -347,7 +354,7 @@ class Document
 
                     $file = basename($file_path);
 
-                    if (!Helper::matchFilename($file, \explode(',', $excludes))) {
+                    if (!Helper::matchFilename($file, $excludes)) {
                         $content = "/* `{$file_path}` minified by Astroid */";
                         if (file_exists(JPATH_SITE . '/' . $file_path)) {
                             $minifier->add(JPATH_SITE . '/' . $file_path);
@@ -482,6 +489,8 @@ class Document
     public function _replace($rx, $replacement, $code, $callback = null): array|string|null
     {
         if ($callback === null) {
+            if ($rx === null) return $code;
+            if ($code === null) return '';
             return preg_replace($rx, $replacement, $code);
         } else {
             return preg_replace_callback($rx, $callback, $code);
@@ -829,11 +838,8 @@ class Document
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
         }
-
-        if (Framework::isAdmin()) {
-            $root = Uri::root();
-        } else {
-            $root = Uri::root(true). '/';
+        $root = Uri::root(true). '/';
+        if (Framework::isSite()) {
             $postfix = '';
         }
 
@@ -939,6 +945,28 @@ class Document
         }
         if (!empty($obj) && !empty($config)) {
             $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+        }
+    }
+
+    public function loadImagesLoaded(): void
+    {
+        if (!self::$_imagesloaded) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_imagesloaded = true;
+        }
+    }
+
+    public function loadGSAP($plugin = ''): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        if (!self::$_gsap) {
+            $wa->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_gsap = true;
+        }
+        if (!empty($plugin) && !in_array($plugin, self::$_gsap_plugins)) {
+            $wa->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_gsap_plugins[] = $plugin;
         }
     }
 

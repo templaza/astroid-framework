@@ -12,7 +12,6 @@ const theme = ref('light');
 provide('theme', theme);
 provide('constant', astroid_config.astroid_lib);
 provide('language', astroid_config.astroid_lang);
-window.Tooltip = bootstrap.Tooltip;
 window.Toast = bootstrap.Toast;
 window.Modal = bootstrap.Modal;
 onBeforeMount(()=>{

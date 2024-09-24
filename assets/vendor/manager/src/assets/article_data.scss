@@ -3,7 +3,10 @@
     .nav {
         --bs-nav-link-color: var(--bs-dark-text-emphasis);
         --bs-nav-link-hover-color: var(--as-violet);
-        font-size: .895rem;
+        font-size: 0.8rem;
+    }
+    .title {
+        font-size: 0.897rem;
     }
     .widget-toolbar {
         .nav {
@@ -18,6 +21,10 @@
                 }
             }
         }
+    }
+    .element-disabled {
+        background-image: linear-gradient(45deg, rgba(100, 100, 100, 0.15) 25%, transparent 25%, transparent 50%, rgba(100, 100, 100, 0.15) 50%, rgba(100, 100, 100, 0.15) 75%, transparent 75%, transparent) !important;
+        background-size: 1rem 1rem !important;
     }
 }
 .admin .as-article-widget-data {

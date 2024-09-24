@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use Astroid\Framework;
 use Astroid\Helper\Style;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 $images       = $params->get('images', '');
@@ -37,11 +38,16 @@ $slide_responsive   =   array();
 
 $enable_column_alignment    =   $params->get('enable_column_alignment', 0);
 $column_alignment           =   $params->get('column_alignment', '');
+$text_alignment             =   $params->get('text_alignment', '');
 
 $row_column_cls     =   'row';
 
 if ($enable_column_alignment) {
     $row_column_cls .=  ' ' . $column_alignment;
+}
+
+if ($text_alignment) {
+    $row_column_cls .=  ' justify-content-' . $text_alignment;
 }
 
 if ($use_masonry && !$enable_slider) {
@@ -165,7 +171,7 @@ foreach ($images as $image) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
         }
         echo '<div class="position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '">';
-        echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image_params['image'].'" alt="'.$image_params['title'].'" class="d-inline-block">';
+        echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block">';
         echo '</div>';
         if ($image_params['use_link']) {
             echo '</a>';

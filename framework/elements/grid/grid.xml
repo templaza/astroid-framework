@@ -45,6 +45,37 @@
                                     <option value="_parent">Parent Frame</option>
                                     <option value="_top">Full body of the window</option>
                                 </field>
+
+                                <field name="enable_background_image" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_BACKGROUND_IMAGE"/>
+                                <field ngShow="[enable_background_image]==1" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+                                <field ngShow="[enable_background_image]==1" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL">
+                                    <option value="">JGLOBAL_INHERIT</option>
+                                    <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
+                                    <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+                                    <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+                                </field>
+                                <field ngShow="[enable_background_image]==1" name="background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+                                    <option value="">JGLOBAL_INHERIT</option>
+                                    <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+                                    <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+                                </field>
+                                <field ngShow="[enable_background_image]==1" name="background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+                                    <option value="">JGLOBAL_INHERIT</option>
+                                    <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
+                                    <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
+                                </field>
+                                <field ngShow="[enable_background_image]==1" name="background_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+                                    <option value="">JGLOBAL_INHERIT</option>
+                                    <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+                                    <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+                                    <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+                                    <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+                                    <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+                                    <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+                                    <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+                                    <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+                                    <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+                                </field>
                             </fieldset>
                         </fields>
                     </form>
@@ -256,7 +287,7 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
-                <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="top">
+                <field astroidgroup="card_options" type="astroidlist" name="media_position" label="ASTROID_WIDGET_MEDIA_POSITION_LABEL" default="inside">
                     <option value="top">ASTROID_TOP</option>
                     <option value="left">ASTROID_LEFT</option>
                     <option value="bottom">ASTROID_BOTTOM</option>

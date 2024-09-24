@@ -52,6 +52,7 @@ class Element extends BaseElement
                 $article_json = file_get_contents($layout_path);
                 $article_data = json_decode($article_json, true);
                 $article_params = Helper::loadParams($article_data['params']);
+                $this->state = $article_data['state'];
                 $this->params->merge($article_params);
             }
         }

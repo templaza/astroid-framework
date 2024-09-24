@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Text;
 
@@ -22,7 +22,7 @@ defined('_JEXEC') or die;
 
 class Media
 {
-    public static function getPath()
+    public static function getPath(): string
     {
         $params = ComponentHelper::getParams('com_media');
         $mediaPath  =   $params->get('image_path', 'images');
@@ -33,6 +33,15 @@ class Media
         }
     }
 
+    public static function getMediaPath($link): string
+    {
+        if(strpos($link, "http://") !== false || strpos($link, "https://") !== false){
+            return $link;
+        } else {
+            return self::getPath() . '/' . $link;
+        }
+    }
+
     public static function library()
     {
         $input = Factory::getApplication()->input;
@@ -40,7 +49,7 @@ class Media
         $asset = $input->get('asset');
         $author = $input->get('author');
 
-        $user = Factory::getUser();
+        $user = Factory::getApplication()->getIdentity();
 
         if (!$user->authorise('core.manage', 'com_media') && (!$asset || (!$user->authorise('core.edit', $asset) && !$user->authorise('core.create', $asset) && count($user->getAuthorisedCategories($asset, 'core.create')) == 0) && !($user->id == $author && $user->authorise('core.edit.own', $asset)))) {
             throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
@@ -52,7 +61,7 @@ class Media
         return $data;
     }
 
-    public static function getList($folder)
+    public static function getList($folder): array
     {
         define('COM_MEDIA_BASE', JPATH_ROOT . '/' . self::getPath());
         define('COM_MEDIA_BASEURL', Uri::root() . self::getPath());
@@ -184,7 +193,7 @@ class Media
         return $list;
     }
 
-    public static function imageResize($width, $height, $target)
+    public static function imageResize($width, $height, $target): array
     {
         if ($width > $height) {
             $percentage = ($target / $width);
@@ -196,7 +205,7 @@ class Media
         return array($width, $height);
     }
 
-    public static function countFiles($dir)
+    public static function countFiles($dir): array
     {
         $total_file = 0;
         $total_dir = 0;
@@ -216,7 +225,7 @@ class Media
         return array($total_file, $total_dir);
     }
 
-    public static function upload()
+    public static function upload(): array
     {
         $input = Factory::getApplication()->input;
         $dir = $input->get('dir', '', 'RAW');
@@ -292,7 +301,7 @@ class Media
         }
     }
 
-    public static function createFolder()
+    public static function createFolder(): array
     {
         $input = Factory::getApplication()->input;
         $directory = $input->get('dir', '', 'RAW');
@@ -302,8 +311,7 @@ class Media
         if (file_exists($dir)) {
             throw new \Exception("Folder `$name` already exists", 0);
         }
-
-        mkdir($dir, 0777);
+        Folder::create($dir);
 
         $folder = $name;
         if ($directory != 'images') {
@@ -312,5 +320,60 @@ class Media
         }
 
         return ['message' => "Folder `$name` successfully created.", 'folder' => $folder];
+    }
+
+    public static function remove(): array
+    {
+        $input = Factory::getApplication()->input;
+        $directory = $input->get('dir', '', 'RAW');
+        $name = $input->get('name', '', 'RAW');
+        $type = $input->get('type', '', 'RAW');
+
+        $dir = JPATH_SITE . '/' . $directory . '/' . $name;
+        if (!file_exists($dir)) {
+            throw new \Exception("File/Folder `$name` is not exists", 0);
+        }
+
+        if ($type === 'folder') {
+            Folder::delete($dir);
+        } else {
+            File::delete($dir);
+        }
+
+        $item = $name;
+        if ($directory != 'images') {
+            $directory = preg_replace('/images\//', '', $directory, 1);
+            $item = $directory . '/' . $name;
+        }
+
+        return ['message' => $type . " `$name` successfully created.", 'item' => $item];
+    }
+
+    public static function rename(): array
+    {
+        $input      = Factory::getApplication()->input;
+        $directory  = $input->get('dir', '', 'RAW');
+        $name       = $input->get('name', '', 'RAW');
+        $new_name   = $input->get('new_name', '', 'RAW');
+        $type       = $input->get('type', '', 'RAW');
+
+        $dir = JPATH_SITE . '/' . $directory . '/' ;
+        if (!file_exists($dir.$name)) {
+            throw new \Exception("File/Folder `$name` is not exists", 0);
+        }
+
+        if ($type === 'folder') {
+            Folder::move($dir . $name, $dir . $new_name);
+        } else {
+            File::move($dir . $name, $dir . $new_name);
+        }
+
+        $item = $name;
+        if ($directory != 'images') {
+            $directory = preg_replace('/images\//', '', $directory, 1);
+            $item = $directory . '/' . $name;
+        }
+
+        return ['message' => $type . " `$name` successfully rename.", 'item' => $item];
     }
 }

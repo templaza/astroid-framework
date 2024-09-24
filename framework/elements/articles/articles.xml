@@ -426,7 +426,7 @@
                 <field astroidgroup="info_options" ngShow="([info_before_title]!='[]') OR ([info_after_title]!='[]') OR ([info_after_intro]!='[]')" name="info_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
 
                 <field astroidgroup="content_options" name="enable_intro_text" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_ARTICLES_ENABLE_INTRO_TEXT"/>
-                <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" type="astroidtext" label="ASTROID_WIDGET_ARTICLES_INTRO_LIMIT_LABEL" name="intro_limit" default="200"/>
+                <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" type="astroidtext" label="ASTROID_WIDGET_ARTICLES_INTRO_LIMIT_LABEL" name="intro_limit" default=""/>
                 <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="content_options" ngShow="[enable_intro_text]==1" name="content_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 

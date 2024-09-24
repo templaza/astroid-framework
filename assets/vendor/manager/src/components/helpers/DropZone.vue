@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onUpdated } from 'vue';
+import { reactive, onUpdated, inject } from 'vue';
 import axios from "axios";
 import { useDropzone } from "vue3-dropzone";
 
@@ -11,7 +11,7 @@ const emit = defineEmits(['update:media']);
 const state = reactive({
   files: [],
 });
-
+const constant = inject('constant', {});
 const { getRootProps, getInputProps, isDragActive, ...rest } = useDropzone({
   onDrop,
 });
@@ -32,6 +32,7 @@ const saveFiles = (files) => {
     for (var x = 0; x < files.length; x++) {
         const formData = new FormData(); // pass data as a form
         formData.append("file", files[x]);
+        formData.append(constant.astroid_admin_token, 1);
         axios.post(props.url, formData, {
             headers: {
             "Content-Type": "multipart/form-data",

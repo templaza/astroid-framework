@@ -158,6 +158,15 @@ body.rtl {
          }
       }
    }
+   .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      @include border-start-radius(var(--bs-border-radius));
+      @include border-end-radius(0);
+      margin-left: 0;
+      margin-right: calc(var(--bs-border-width)* -1);
+   }
+   .input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3), .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control, .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select {
+      @include border-end-radius(var(--bs-border-radius));
+   }
    .input-group>.input-group-prepend>.btn,
    .input-group>.input-group-prepend>.input-group-text,
    .input-group>.input-group-append:not(:last-child)>.btn,

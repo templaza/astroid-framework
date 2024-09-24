@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_HOVER_MOTION_GALLERY_LABEL</title>
+    <description>ASTROID_WIDGET_HOVER_MOTION_GALLERY_LABEL</description>
+    <icon>as-icon as-icon-select</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field astroidgroup="general" name="images" type="astroidsubform" label="ASTROID_WIDGET_IMAGES_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
+                                <field name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="widget_styles" name="rows" type="astroidrange" min="2" max="10" step="1" postfix="rows" default="5" label="ASTROID_WIDGET_ROWS_LABEL" description="ASTROID_WIDGET_HOVER_MOTION_GALLERY_ROWS_DESC" />
+                <field astroidgroup="widget_styles" type="astroidtext" class="form-control" label="JFIELD_MEDIA_HEIGHT_LABEL" name="height" hint="80vh"/>
+                <field astroidgroup="widget_styles" name="angle" type="astroidrange" min="-60" max="60" step="1" postfix="deg" default="-5" label="ASTROID_WIDGET_ANGLE_LABEL" description="ASTROID_WIDGET_IMAGE_ANGLE_DESC" />
+                <field astroidgroup="widget_styles" name="gap" type="astroidrange" min="0" max="10" step="0.1" postfix="rem" default="1" label="ASTROID_WIDGET_GUTTER_LABEL" description="ASTROID_WIDGET_IMAGE_GUTTER_DESC" />
+                <field astroidgroup="widget_styles" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="gallery_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
+                <field astroidgroup="widget_styles" name="view_detail" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_VIEW_DETAIL"/>
+
+                <field astroidgroup="widget_styles" name="border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
+                    <option value="rounded-circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
+                    <option value="rounded-pill">TPL_ASTROID_ICON_STYLE_PILL</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[border_radius]=='rounded'" type="astroidlist" name="rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
+                    <option value="1">X-Small</option>
+                    <option value="2">Small</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Large</option>
+                    <option value="5">X-Large</option>
+                </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

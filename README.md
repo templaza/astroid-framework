@@ -57,6 +57,8 @@
 * Testimonials Widget
 * Map Widget
 * Accordion Widget
+* Hover Motion Widget
+* [View all Widgets](https://astroidframe.work/widgets)
 
 ## Article Widgets
 * Author Info
@@ -79,7 +81,7 @@
 
 ## Requirements
 * Joomla: 4.x, 5.x
-* PHP : 8.0+
+* PHP : 8.1+
 
 ## Browser Support
 | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)|![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)|![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)|![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)|
@@ -87,18 +89,19 @@
 | &nbsp;&nbsp;Chrome 64+&nbsp;&nbsp; | &nbsp;&nbsp;Firefox 58+&nbsp;&nbsp; | &nbsp;&nbsp;Edge 14+&nbsp;&nbsp; | &nbsp;&nbsp;Safari 10+ &nbsp;&nbsp; |
 
 ## How to install
-1. [Download Astroid Latest](https://github.com/templaza/astroid-framework/releases/latest)
-2. Go to Joomla Administrator -> System -> Install Extensions -> Upload Package File
-3. Upload 'astroid-package-v.x.x.Framework-Template.zip'
-4. Back to System -> Templates -> Site Template Styles
-5. Find one of Astroid template make it default
-6. Go to front-end and check it.
+
+1. Go to Joomla Administrator -> System -> Install Extensions -> Install from Web
+2. On search box type "astroid" -> Enter -> You can see "Astroid Framework" right below
+3. Click and install it. -> Click "Get Started" Button
+4. Install one of Astroid template & make it default
+5. Go to front-end and check it.
 
 ## Links
 * [Homepage](https://astroidframe.work/) - Learn more about Astroid
 * [Documentation](https://docs.astroidframe.work/) - How to use Astroid
-* [Translations](https://github.com/templaza/astroid-framework/tree/language) - Join to translate Astroid
+* [Roadmap](https://github.com/orgs/templaza/projects/3/views/4?sortedBy%5Bdirection%5D=desc&sortedBy%5BcolumnId%5D=Milestone) - See our roadmap
 * [Changelogs](https://github.com/templaza/astroid-framework/releases) - View our Changelogs
+* [Join our Community](https://www.facebook.com/groups/astroid) - Come and share with us.
 * [Discord Chat](https://discord.gg/2MwtsAX4Py) - Join our developer chat on Discord.
 
 ## Find an Astroid Template provider
