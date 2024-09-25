@@ -36,7 +36,7 @@ $use_masonry = $this->params->get('use_masonry', 0);
 
 if ($use_masonry) {
     $document = Framework::getDocument();
-    $document->loadMasonry();
+    $document->loadMasonry('.as-masonry');
 }
 
 ?>

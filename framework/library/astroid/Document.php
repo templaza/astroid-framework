@@ -925,13 +925,15 @@ class Document
         self::$_fancybox = true;
     }
 
-    public function loadMasonry(): void
+    public function loadMasonry($selector = ''): void
     {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_masonry) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-            $wa->addInlineScript('jQuery(window).on("load", function(){$(\'.as-masonry\').masonry({itemSelector: \'.as-masonry > div\',percentPosition: true});});');
             self::$_masonry = true;
+        }
+        if (!empty($selector)) {
+            $wa->addInlineScript('jQuery(window).on("load", function(){$(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true});});');
         }
     }
 

@@ -58,6 +58,7 @@
 * Map Widget
 * Accordion Widget
 * Hover Motion Widget
+* CodePen Widget
 * [View all Widgets](https://astroidframe.work/widgets)
 
 ## Article Widgets

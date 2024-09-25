@@ -401,7 +401,7 @@ if ($enable_slider) {
     }
 
 } elseif ($use_masonry) {
-    $document->loadMasonry();
+    $document->loadMasonry('.as-masonry');
 }
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');

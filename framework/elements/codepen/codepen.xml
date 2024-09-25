@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_CODEPEN_LABEL</title>
+    <description>ASTROID_WIDGET_CODEPEN_LABEL</description>
+    <icon>fa-brands fa-codepen</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_ADVANCED,ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" name="code_selector" type="astroidradio" width="full" default="html">
+                    <option value="html">ASTROID_WIDGET_CODEPEN_HTML_LABEL</option>
+                    <option value="css">ASTROID_WIDGET_CODEPEN_CSS_LABEL</option>
+                    <option value="js">ASTROID_WIDGET_CODEPEN_JS_LABEL</option>
+                </field>
+                <field astroidgroup="general" ngShow="[code_selector]=='html'" code="html" name="custom_html" type="astroidtextarea" label="ASTROID_WIDGET_CODEPEN_CUSTOM_HTML_LABEL" description="ASTROID_WIDGET_CODEPEN_CUSTOM_HTML_LABEL"/>
+                <field astroidgroup="general" ngShow="[code_selector]=='css'" code="css" name="custom_css" type="astroidtextarea" label="ASTROID_WIDGET_CODEPEN_CUSTOM_CSS_LABEL" description="ASTROID_WIDGET_CODEPEN_CUSTOM_CSS_LABEL"/>
+                <field astroidgroup="general" ngShow="[code_selector]=='js'" code="javascript" name="custom_js" type="astroidtextarea" label="ASTROID_WIDGET_CODEPEN_CUSTOM_JS_LABEL" description="ASTROID_WIDGET_CODEPEN_CUSTOM_JS_LABEL"/>
+                <field astroidgroup="general" ngShow="[code_selector]=='js'" name="astroid_libs" type="astroidmultiselect" label="ASTROID_LIBRARIES" default="[]" description="ASTROID_LIBRARIES_DESC" hint="ASTROID_LIBRARIES_HINT">
+                    <option value="gsap">GSAP</option>
+                    <option value="gsap.Flip">GSAP.Flip</option>
+                    <option value="fancybox">FancyBox</option>
+                    <option value="masonry">Masonry</option>
+                    <option value="slick">Slick</option>
+                    <option value="imagesloaded">Images Loaded</option>
+                </field>
+                <field astroidgroup="general" ngShow="[code_selector]=='js'" name="external_js" as-index="url" type="astroidsubform" label="ASTROID_WIDGET_CODEPEN_EXTERNAL_JS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_CODEPEN_EXTERNAL_JS_URL_LABEL" name="url"/>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+                <field astroidgroup="general" ngShow="[code_selector]=='css'" name="external_css" as-index="url" type="astroidsubform" label="ASTROID_WIDGET_CODEPEN_EXTERNAL_CSS_LABEL">
+                    <form>
+                        <fields>
+                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_CODEPEN_EXTERNAL_CSS_URL_LABEL" name="url"/>
+                            </fieldset>
+                        </fields>
+                    </form>
+                </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

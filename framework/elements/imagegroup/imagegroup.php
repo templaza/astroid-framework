@@ -29,6 +29,7 @@ if (!count($images)) {
 
 $enable_slider      =   $params->get('enable_slider', 0);
 $use_masonry        =   $params->get('use_masonry', 0);
+$use_lightbox       =   $params->get('use_lightbox', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
@@ -169,11 +170,13 @@ foreach ($images as $image) {
         echo '<div>';
         if ($image_params['use_link']) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
+        } elseif ($use_lightbox) {
+            echo '<a href="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" data-fancybox="astroid-'.$element->id.'">';
         }
         echo '<div class="position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . '">';
         echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block">';
         echo '</div>';
-        if ($image_params['use_link']) {
+        if ($image_params['use_link'] || $use_lightbox) {
             echo '</a>';
         }
         echo '</div>';
@@ -182,8 +185,12 @@ foreach ($images as $image) {
 echo '</div>';
 $document = Framework::getDocument();
 
+if ($use_lightbox) {
+    $document->loadFancyBox();
+    $document->addScriptDeclaration('Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');', 'body');
+}
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
 } elseif ($use_masonry) {
-    $document->loadMasonry();
+    $document->loadMasonry('.as-masonry');
 }
