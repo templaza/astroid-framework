@@ -185,5 +185,5 @@ $document = Framework::getDocument();
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
 } elseif ($use_masonry) {
-    $document->loadMasonry();
+    $document->loadMasonry('.as-masonry');
 }
