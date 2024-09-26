@@ -602,7 +602,7 @@
 .as-effect-unveil {
 	position: relative;
 	overflow: hidden;
-	> img {
+	img {
 		transition: opacity 0.35s, transform 0.35s, filter 0.35s;
 	}
 	&:before {
@@ -644,7 +644,7 @@
 			border-left-color: rgba(255, 255, 255, 0.75);
 			transform: rotate(-35deg);
 		}
-		> img {
+		img {
 			opacity: 0.9;
 			filter: brightness(100%) contrast(113%) saturate(159%) blur(0.2px) hue-rotate(0deg);
 			-webkit-transform: scale3d(1.05, 1.05, 1);
