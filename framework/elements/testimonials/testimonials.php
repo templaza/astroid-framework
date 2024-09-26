@@ -209,11 +209,21 @@ $overlay_text_color =   $params->get('overlay_text_color', '');
 $overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
 
 $enable_rating      =   $params->get('enable_rating', 0);
+
+// Alignment
+$text_alignment             =   $params->get('text_alignment','');
+$text_alignment_breakpoint  =   $params->get('text_alignment_breakpoint','');
+$text_alignment_fallback    =   $params->get('text_alignment_fallback','');
+if ($text_alignment) {
+    $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
+} else {
+    $alignment              =   '';
+}
 echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
     $testimonial_params    =   Helper::loadParams($testimonial->params);
     $avatar =   $testimonial_params->get('avatar', '');
-    $rating =   $testimonial_params->get('rating', 0);
+    $rating =   $testimonial_params->get('rating', 5);
     $media  =   '';
     if ($avatar) {
         $media      =   '<div class="as-author-avatar d-inline-block position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . '">';
@@ -246,7 +256,7 @@ foreach ($testimonials as $key => $testimonial) {
         echo $media;
     }
     if (!empty($enable_rating)) {
-        echo '<div class="as-rating-block row row-cols-auto gx-2">';
+        echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
         for ($i = 0; $i < 5 ; $i++) {
             if ($i < $rating) {
                 if ($rating - $i >= 1) {
