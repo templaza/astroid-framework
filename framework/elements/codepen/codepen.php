@@ -72,5 +72,5 @@ if (!empty($custom_css)) {
     $wa->addInlineStyle($custom_css);
 }
 if (!empty($custom_js)) {
-    $wa->addInlineScript($custom_js);
+    $document->addScriptDeclaration($custom_js, 'body');
 }
