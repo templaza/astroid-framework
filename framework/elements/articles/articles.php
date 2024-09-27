@@ -272,6 +272,7 @@ foreach ($items as $key => $item) {
                 $active =   true;
                 foreach ($gallery as $gallery_item) {
                     $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'" data-bs-interval="3000">';
+                    $media  .=  '<a href="'.Route::_($link).'" title="'. $item->title . '">';
                     if ($enable_image_cover) {
                         $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
                     }
@@ -279,6 +280,7 @@ foreach ($items as $key => $item) {
                     if ($enable_image_cover) {
                         $media  .=  '</div>';
                     }
+                    $media  .=  '</a>';
                     $media  .=  '</div>';
                     $active =   false;
                 }
@@ -302,7 +304,7 @@ foreach ($items as $key => $item) {
                 }
             } elseif (!empty($video_local_url)) {
                 $document->loadVideoBG();
-                $media = '<div class="as-article-video-local as-image-cover astroid-image-overlay-cover" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div>';
+                $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
             }
 
             break;
