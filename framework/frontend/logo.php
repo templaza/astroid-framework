@@ -12,7 +12,7 @@
 // No direct access.
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\File;
+use Astroid\Helper\Media;
 use Astroid\Helper\Style;
 defined('_JEXEC') or die;
 
@@ -103,21 +103,21 @@ $position = $position ?? '';
                 $style->render();
                 ?>
             <?php
-            if (!empty($default_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $default_logo)) {
-                if (File::getExt($default_logo) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" /><?php
+            if (!empty($default_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $default_logo)) {
+                if (Media::getExt($default_logo) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $default_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $default_logo);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $default_logo);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-default"'.$default_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
             <?php
-            if (!empty($default_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $default_logo_dark)) {
-                if (File::getExt($default_logo_dark) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" /><?php
+            if (!empty($default_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $default_logo_dark)) {
+                if (Media::getExt($default_logo_dark) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $default_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-default dark" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $default_logo_dark);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $default_logo_dark);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-default dark"'.$default_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
@@ -141,20 +141,20 @@ $position = $position ?? '';
                 }
                 $style->render();
                 ?>
-            <?php if (!empty($stickey_header_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo)) {
-                if (File::getExt($stickey_header_logo) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" /><?php
+            <?php if (!empty($stickey_header_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo)) {
+                if (Media::getExt($stickey_header_logo) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $stickey_header_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $stickey_header_logo);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-sticky"'.$sticky_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
-            <?php if (!empty($stickey_header_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo_dark)) {
-                if (File::getExt($stickey_header_logo_dark) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" /><?php
+            <?php if (!empty($stickey_header_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $stickey_header_logo_dark)) {
+                if (Media::getExt($stickey_header_logo_dark) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $stickey_header_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-sticky dark d-none" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $stickey_header_logo_dark);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $stickey_header_logo_dark);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-sticky dark d-none"'.$sticky_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
@@ -178,20 +178,20 @@ $position = $position ?? '';
                 $style->child('> .astroid-logo-mobile')->addCss('max-height', $mobile_logo_height);
             }
             $style->render();
-            if (!empty($mobile_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo)) {
-                if (File::getExt($mobile_logo) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
+            if (!empty($mobile_logo) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo)) {
+                if (Media::getExt($mobile_logo) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $mobile_logo; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $mobile_logo);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile"'.$mobile_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }
             } ?>
-            <?php if (!empty($mobile_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Astroid\Helper\Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo_dark)) {
-                if (File::getExt($mobile_logo_dark) !== 'svg') {
-                    ?><img src="<?php echo Uri::root() . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
+            <?php if (!empty($mobile_logo_dark) && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . Media::getPath() . DIRECTORY_SEPARATOR . $mobile_logo_dark)) {
+                if (Media::getExt($mobile_logo_dark) !== 'svg') {
+                    ?><img src="<?php echo Uri::root() . Media::getPath() . '/' . $mobile_logo_dark; ?>" alt="<?php echo $sitename; ?>" class="astroid-logo-mobile dark d-none" /><?php
                 } else {
-                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Astroid\Helper\Media::getPath() . '/' . $mobile_logo_dark);
+                    $logo_svg = file_get_contents(JPATH_ROOT . '/' . Media::getPath() . '/' . $mobile_logo_dark);
                     $logo_svg = preg_replace('/\<svg(.*?)\>/is', '<svg$1 class="astroid-logo-mobile dark d-none"'.$mobile_logo_style.'>', $logo_svg);
                     echo $logo_svg;
                 }

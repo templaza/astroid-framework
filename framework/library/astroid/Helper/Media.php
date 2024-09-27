@@ -97,7 +97,7 @@ class Media
                     $tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
                     $tmp->size = filesize($tmp->path);
 
-                    $ext = strtolower(File::getExt($file));
+                    $ext = strtolower(self::getExt($file));
 
                     switch ($ext) {
                             // Image
@@ -375,5 +375,14 @@ class Media
         }
 
         return ['message' => $type . " `$name` successfully rename.", 'item' => $item];
+    }
+
+    public static function getExt($filename): string
+    {
+        if (ASTROID_JOOMLA_VERSION > 4) {
+            return File::getExt($filename);
+        } else {
+            return \Joomla\CMS\Filesystem\File::getExt($filename);
+        }
     }
 }

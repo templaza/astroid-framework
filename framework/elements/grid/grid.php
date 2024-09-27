@@ -165,8 +165,10 @@ foreach ($grids as $key => $grid) {
 
     $media          =   '';
     if ($grid_params->get('type', '') == 'image' && $grid_params->get('image', '')) {
-        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . ($layout == 'overlay' ? ' astroid-image-overlay-cover' : '') . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
+        $media      =   '<div class="as-image-cover position-relative overflow-hidden' . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
+        $media      .=  $layout == 'overlay' ? '<div class="as-image-cover astroid-image-overlay-cover">' : '';
         $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getPath() . '/' . $grid_params->get('image', '').'" alt="'.$grid_params->get('title', '').'">';
+        $media      .=  $layout == 'overlay' ? '</div>' : '';
         $media      .=  '</div>';
         if ( !empty($grid_params->get('link', '')) ) {
             $media      =   '<a href="'. $grid_params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';

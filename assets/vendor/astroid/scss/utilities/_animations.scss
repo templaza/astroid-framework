@@ -599,6 +599,62 @@
 	}
 }
 
+.as-effect-unveil {
+	position: relative;
+	overflow: hidden;
+	img {
+		transition: opacity 0.35s, transform 0.35s, filter 0.35s;
+	}
+	&:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 50%;
+		height: 130%;
+		border-right: 1px solid rgba(255, 255, 255, 0);
+		content: "";
+		opacity: 0.5;
+		transform-origin: top right;
+		transition: opacity 0.35s, transform 0.35s;
+		background: rgba(0, 0, 0, 0.1);
+		z-index: 1
+	}
+	&:after {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 50%;
+		height: 130%;
+		border-left: 1px solid rgba(255, 255, 255, 0);
+		content: "";
+		opacity: 0.5;
+		transform-origin: top left;
+		transition: opacity 0.35s, transform 0.35s;
+		background: rgba(0, 0, 0, 0.1);
+		z-index: 1
+	}
+	&:hover {
+		&:before {
+			border-radius: 0 0 120%;
+			border-right-color: rgba(255, 255, 255, 0.75);
+			transform: rotate(35deg);
+		}
+		&:after {
+			border-radius: 0 0 0 120%;
+			border-left-color: rgba(255, 255, 255, 0.75);
+			transform: rotate(-35deg);
+		}
+		img {
+			opacity: 0.9;
+			filter: brightness(100%) contrast(113%) saturate(159%) blur(0.2px) hue-rotate(0deg);
+			-webkit-transform: scale3d(1.05, 1.05, 1);
+			-moz-transform: scale3d(1.05, 1.05, 1);
+			-ms-transform: scale3d(1.05, 1.05, 1);
+			transform: scale3d(1.05, 1.05, 1);
+		}
+	}
+}
+
 @-webkit-keyframes fadeInOpacity {
 	0% {
 		opacity: 0;

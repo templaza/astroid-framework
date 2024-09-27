@@ -207,17 +207,29 @@ $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' .
 
 $overlay_text_color =   $params->get('overlay_text_color', '');
 $overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
+
+$enable_rating      =   $params->get('enable_rating', 0);
+
+// Alignment
+$text_alignment             =   $params->get('text_alignment','');
+$text_alignment_breakpoint  =   $params->get('text_alignment_breakpoint','');
+$text_alignment_fallback    =   $params->get('text_alignment_fallback','');
+if ($text_alignment) {
+    $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
+} else {
+    $alignment              =   '';
+}
 echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
     $testimonial_params    =   Helper::loadParams($testimonial->params);
     $avatar =   $testimonial_params->get('avatar', '');
+    $rating =   $testimonial_params->get('rating', 5);
     $media  =   '';
     if ($avatar) {
         $media      =   '<div class="as-author-avatar d-inline-block position-relative overflow-hidden' . $image_border_radius . $box_shadow . $hover_effect . $transition . '">';
         $media      .=  '<img class="' . ($avatar_position == 'left' || $avatar_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') .'" src="'. Astroid\Helper\Media::getPath() . '/' . $avatar .'" alt="'.$testimonial_params->get('title', '').'">';
         $media      .=  '</div>';
     }
-
 
     echo '<div id="testimonial-'. $testimonial -> id .'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($avatar_position == 'left' || $avatar_position == 'right') {
@@ -242,6 +254,21 @@ foreach ($testimonials as $key => $testimonial) {
     }
     if ($avatar_position == 'bottom') {
         echo $media;
+    }
+    if (!empty($enable_rating)) {
+        echo '<div class="as-rating-block row row-cols-auto gx-2'.$alignment.'">';
+        for ($i = 0; $i < 5 ; $i++) {
+            if ($i < $rating) {
+                if ($rating - $i >= 1) {
+                    echo '<div class="as-star"><i class="fa-solid fa-star"></i></div>';
+                } else {
+                    echo '<div class="as-star"><i class="fa-solid fa-star-half-stroke"></i></div>';
+                }
+            } else {
+                echo '<div class="as-star"><i class="fa-regular fa-star"></i></div>';
+            }
+        }
+        echo '</div>';
     }
     if (!empty($testimonial_params->get('designation', '')) && $designation_position == 'before') {
         echo '<div class="as-author-designation">' . $testimonial_params->get('designation', '') . '</div>';
@@ -310,4 +337,9 @@ if (!empty($image_border)) {
 }
 if (!empty($dot_alignment)) {
     $element->style->child('.astroid-slick .slick-dots')->addCss('text-align', $dot_alignment);
+}
+if (!empty($enable_rating)) {
+    $rating_color   =   Style::getColor($params->get('rating_color', ''));
+    $element->style->child('.as-rating-block')->addCss('color', $rating_color['light']);
+    $element->style_dark->child('.as-rating-block')->addCss('color', $rating_color['dark']);
 }

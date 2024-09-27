@@ -55,6 +55,7 @@
                     <option value="">TPL_ASTROID_DEFAULT</option>
                     <option value="light-up">ASTROID_WIDGET_EFFECT_LIGHT_UP</option>
                     <option value="flash">ASTROID_WIDGET_EFFECT_FLASH</option>
+                    <option value="unveil">ASTROID_WIDGET_EFFECT_UNVEIL</option>
                 </field>
                 <field astroidgroup="widget_styles" name="hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>

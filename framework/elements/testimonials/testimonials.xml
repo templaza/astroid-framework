@@ -15,6 +15,7 @@
                 <field type="astroidgroup" name="name_options" title="ASTROID_WIDGET_NAME_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="designation_options" title="ASTROID_WIDGET_TESTIMONIALS_DESIGNATION_POSITION_LABEL"/>
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_MESSAGE_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="rating_options" title="ASTROID_WIDGET_RATING_OPTIONS_LABEL"/>
                 <field astroidgroup="general" name="testimonials" type="astroidsubform" label="ASTROID_WIDGET_TESTIMONIALS_LABEL">
                     <form>
                         <fields>
@@ -25,6 +26,7 @@
                                 <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="astroidframe.work"/>
                                 <field name="avatar" type="astroidmedia" label="ASTROID_WIDGET_AVATAR_LABEL"/>
                                 <field type="astroideditor" label="ASTROID_WIDGET_MESSAGE_LABEL" name="message"/>
+                                <field name="rating" type="astroidrange" min="0" max="5" step="0.5" default="5" label="ASTROID_RATING" postfix="stars" />
                             </fieldset>
                         </fields>
                     </form>
@@ -402,6 +404,7 @@
                     <option value="">TPL_ASTROID_DEFAULT</option>
                     <option value="light-up">ASTROID_WIDGET_EFFECT_LIGHT_UP</option>
                     <option value="flash">ASTROID_WIDGET_EFFECT_FLASH</option>
+                    <option value="unveil">ASTROID_WIDGET_EFFECT_UNVEIL</option>
                 </field>
                 <field astroidgroup="avatar_options" name="hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>
@@ -455,6 +458,8 @@
 
                 <field astroidgroup="content_options" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="content_options" name="content_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+                <field astroidgroup="rating_options" name="enable_rating" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_RATING"/>
+                <field astroidgroup="rating_options" name="rating_color" type="astroidcolor" label="ASTROID_WIDGET_RATING_COLOR"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
