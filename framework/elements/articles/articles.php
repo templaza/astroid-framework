@@ -338,7 +338,7 @@ foreach ($items as $key => $item) {
     }
 
     if (count($info_before_title)) {
-        echo '<dl class="astroid-article-info before-title as-gutter-lg">';
+        echo '<dl class="astroid-article-info before-title as-gutter-x-lg">';
         echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_before_title as $info_item) {
             echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
@@ -349,7 +349,7 @@ foreach ($items as $key => $item) {
         echo '<'.$title_html_element.' class="astroid-article-heading"><a href="'.Route::_($link).'" title="'. $item->title . '">'. $item->title . '</a></'.$title_html_element.'>';
     }
     if (count($info_after_title)) {
-        echo '<dl class="astroid-article-info after-title as-gutter-lg">';
+        echo '<dl class="astroid-article-info after-title as-gutter-x-lg">';
         echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_after_title as $info_item) {
             echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
@@ -361,7 +361,7 @@ foreach ($items as $key => $item) {
     }
 
     if (count($info_after_intro)) {
-        echo '<dl class="astroid-article-info after-intro as-gutter-lg">';
+        echo '<dl class="astroid-article-info after-intro as-gutter-x-lg">';
         echo '<dt class="article-info-term">'.Text::_('COM_CONTENT_ARTICLE_INFO').'</dt>';
         foreach ($info_after_intro as $info_item) {
             echo LayoutHelper::render('joomla.content.info_block.' . $info_item['value'], array('item' => $item, 'params' => $item->params));
