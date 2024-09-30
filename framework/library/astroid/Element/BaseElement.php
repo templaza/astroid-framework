@@ -91,7 +91,12 @@ class BaseElement
         $this->_styles();
         $max_width                  =   $this->params->get('max_width','');
         $max_width_breakpoint       =   $this->params->get('max_width_breakpoint','');
-        $class_maxwidth             =   $max_width ? 'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width : '';
+        if ($max_width) {
+            $class_maxwidth         =   'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width;
+            $this->addClass('w-100');
+        } else {
+            $class_maxwidth         =   '';
+        }
         $content                    =   "<{$this->_tag}{$this->_attrbs()}>";
         if ($class_maxwidth) {
             $content                .=  '<div class="'.$class_maxwidth.'">'. $this->content .'</div>';
