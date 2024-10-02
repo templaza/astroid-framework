@@ -19,10 +19,12 @@
                 <field astroidgroup="general" ngShow="[code_selector]=='js'" name="astroid_libs" type="astroidmultiselect" label="ASTROID_LIBRARIES" default="[]" description="ASTROID_LIBRARIES_DESC" hint="ASTROID_LIBRARIES_HINT">
                     <option value="gsap">GSAP</option>
                     <option value="gsap.Flip">GSAP.Flip</option>
+                    <option value="gsap.ScrollTrigger">GSAP.ScrollTrigger</option>
                     <option value="fancybox">FancyBox</option>
                     <option value="masonry">Masonry</option>
                     <option value="slick">Slick</option>
                     <option value="imagesloaded">Images Loaded</option>
+                    <option value="lenis">Lenis</option>
                 </field>
                 <field astroidgroup="general" ngShow="[code_selector]=='js'" name="external_js" as-index="url" type="astroidsubform" label="ASTROID_WIDGET_CODEPEN_EXTERNAL_JS_LABEL">
                     <form>

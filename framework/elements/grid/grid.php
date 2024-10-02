@@ -13,6 +13,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use Astroid\Framework;
 use Astroid\Helper\Style;
 use Astroid\Helper;
 use Astroid\Helper\Media;
@@ -158,7 +159,9 @@ $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $button_margin_top  =   $params->get('button_margin_top', '');
-echo '<div class="row'.$row_column_cls.'">';
+
+$use_masonry        =   $params->get('use_masonry', 0);
+echo '<div class="row'.($use_masonry ? ' as-masonry' : '').$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Helper::loadParams($grid->params);
     $link_target    =   !empty($grid_params->get('link_target', '')) ? ' target="'.$grid_params->get('link_target', '').'"' : '';
@@ -241,7 +244,10 @@ foreach ($grids as $key => $grid) {
     }
 }
 echo '</div>';
-
+if ($use_masonry) {
+    $document = Framework::getDocument();
+    $document->loadMasonry('.as-masonry');
+}
 $style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');

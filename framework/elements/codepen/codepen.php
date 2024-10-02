@@ -29,6 +29,9 @@ if (count($astroid_libs)) {
             case 'gsap.Flip':
                 $document->loadGSAP('Flip');
                 break;
+            case 'gsap.ScrollTrigger':
+                $document->loadGSAP('ScrollTrigger');
+                break;
             case 'fancybox':
                 $document->loadFancyBox();
                 break;
@@ -40,6 +43,9 @@ if (count($astroid_libs)) {
                 break;
             case 'imagesloaded':
                 $document->loadImagesLoaded();
+                break;
+            case 'lenis':
+                $document->loadLenis();
                 break;
         }
     }
