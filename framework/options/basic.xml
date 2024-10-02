@@ -9,6 +9,7 @@
          <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#back-to-top"/>
          <field type="astroidgroup" name="colormode" title="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" help="https://docs.astroidframe.work/basic-settings/color-mode"/>
          <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
+         <field type="astroidgroup" name="cursor_options" title="ASTROID_CURSOR_EFFECT_TITLE"/>
 
          <field astroidgroup="bootstrap" name="bootstrap_js" type="astroidmultiselect" label="TPL_ASTROID_BOOTSTRAP_JS_LABEL" default="[]" description="TPL_ASTROID_BOOTSTRAP_JS_DESC" hint="TPL_ASTROID_BOOTSTRAP_JS_HINT_LABEL">
             <option value="alert">Alert</option>
@@ -163,7 +164,12 @@
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]==1 AND [enable_color_mode_transform]==1" name="astroid_colormode_transform_offset" type="astroidrange" min="1" max="100" step="1" default="50" label="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_LABEL" description="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_DESC" postfix="%" />
 
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
-         <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
+
+         <field astroidgroup="cursor_options" description="ASTROID_CURSOR_EFFECT_ENABLE_DESC" name="enable_cursor_effect" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_CURSOR_EFFECT_ENABLE"/>
+         <field astroidgroup="cursor_options" name="cursor_effect" type="astroidlist" label="ASTROID_CURSOR_EFFECT" default="" ngShow="[enable_cursor_effect]==1">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="filter-6">ASTROID_CURSOR_EFFECT_FILTER_6</option>
+         </field>
       </fieldset>
    </fields>
 </form>
