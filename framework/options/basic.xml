@@ -168,6 +168,13 @@
          <field astroidgroup="cursor_options" description="ASTROID_CURSOR_EFFECT_ENABLE_DESC" name="enable_cursor_effect" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_CURSOR_EFFECT_ENABLE"/>
          <field astroidgroup="cursor_options" name="cursor_effect" type="astroidlist" label="ASTROID_CURSOR_EFFECT" default="" ngShow="[enable_cursor_effect]==1">
             <option value="">JGLOBAL_INHERIT</option>
+            <option value="filled-circle">ASTROID_CURSOR_EFFECT_FILLED_CIRCLE</option>
+            <option value="two-circles">ASTROID_CURSOR_EFFECT_TWO_CIRCLES</option>
+            <option value="filter-1">ASTROID_CURSOR_EFFECT_FILTER_1</option>
+            <option value="filter-2">ASTROID_CURSOR_EFFECT_FILTER_2</option>
+            <option value="filter-3">ASTROID_CURSOR_EFFECT_FILTER_3</option>
+            <option value="filter-4">ASTROID_CURSOR_EFFECT_FILTER_4</option>
+            <option value="filter-5">ASTROID_CURSOR_EFFECT_FILTER_5</option>
             <option value="filter-6">ASTROID_CURSOR_EFFECT_FILTER_6</option>
          </field>
       </fieldset>
