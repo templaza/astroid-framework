@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_ARTICLES_LISTING_LABEL</title>
+    <description>ASTROID_WIDGEt_ARTICLES_LISTING_LABEL</description>
+    <icon>as-icon as-icon-list4</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_JOOMLA</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="info_options" title="ASTROID_WIDGET_INFO_OPTIONS_LABEL"/>
+                <field astroidgroup="general" type="astroidcategories" name="catids" label="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES" description="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES_DESC" default="[]"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_LIMIT_LABEL" description="ASTROID_WIDGET_ARTICLES_LIMIT_DESC" name="limit" default="3"/>
+                <field astroidgroup="general" type="astroidlist" name="ordering" label="JFIELD_ORDERING_LABEL" description="ASTROID_WIDGET_ARTICLES_ORDERING_DESC" default="latest">
+                    <option value="latest">ASTROID_WIDGET_ORDERING_LATEST</option>
+                    <option value="oldest">ASTROID_WIDGET_ORDERING_OLDEST</option>
+                    <option value="popular">ASTROID_WIDGET_ORDERING_POPULAR</option>
+                    <option value="featured">ASTROID_WIDGET_ORDERING_FEATURED</option>
+                    <option value="ascending">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
+                    <option value="descending">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
+                    <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
+                </field>
+
+                <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="h4">h4</option>
+                    <option value="h5">h5</option>
+                    <option value="h6">h6</option>
+                    <option value="div">div</option>
+                </field>
+                <field astroidgroup="title_options" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="title_options" name="title_heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
+
+                <field astroidgroup="info_options" name="info_after_title" type="astroidmultiselect" label="ASTROID_WIDGET_INFO_AFTER_TITLE" default="[]" description="ASTROID_WIDGET_INFO_AFTER_TITLE_DESC" hint="ASTROID_WIDGET_INFO_SELECT">
+                    <option value="author">Author</option>
+                    <option value="category">Category</option>
+                    <option value="publish_date">Publish Date</option>
+                    <option value="create_date">Create Date</option>
+                    <option value="modify_date">Modify Date</option>
+                    <option value="hits">Hits</option>
+                </field>
+                <field astroidgroup="info_options" ngShow="[info_after_title]!='[]'" name="info_margin" type="astroidspacing" label="ASTROID_WIDGET_INFO_AFTER_TITLE_MARGIN_LABEL" description="ASTROID_WIDGET_INFO_AFTER_TITLE_MARGIN_DESC" />
+                <field astroidgroup="info_options" ngShow="([info_after_title]!='[]')" name="info_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
