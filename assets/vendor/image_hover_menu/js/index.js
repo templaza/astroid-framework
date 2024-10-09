@@ -25,7 +25,6 @@
     let direction = {x: mousePosCache.x-mousepos.x, y: mousePosCache.y-mousepos.y};
 
     window.addEventListener('mousemove', ev => mousepos = getCursorPos(ev));
-
     class MenuItem {
         constructor(el, inMenuPosition, animatableProperties, total) {
             // el is the <a> with class "menu__item"
@@ -77,6 +76,10 @@
         getMouseArea() {
             return this.bounds.el.top + this.bounds.el.height/2 <= window.innerHeight/2 ? 'up' : 'down';
         }
+
+        getMouseAreaHorizontal() {
+            return mousepos.x + this.bounds.reveal.width < window.innerWidth ? 'left' : 'right';
+        }
         // calculate the position/size of both the menu item and reveal element
         calcBounds() {
             this.bounds = {
@@ -90,7 +93,7 @@
                 // show the image element
                 this.showImage();
                 this.firstRAFCycle = true;
-                this.DOM.reveal.style.transformOrigin = `0% ${this.mouseArea === 'up' ? 0 : 100}%`;
+                this.DOM.reveal.style.transformOrigin = `${this.mouseAreaY === 'left' ? 0 : 100}% ${this.mouseArea === 'up' ? 0 : 100}%`;
 
                 // start the render loop animation (rAF)
                 this.loopRender();
@@ -101,9 +104,14 @@
                 // hide the image element
                 this.hideImage();
             };
+            this.mousemoveFn = () => {
+                this.calcBounds();
+                this.mouseAreaY = this.getMouseAreaHorizontal();
+            }
 
             this.DOM.el.addEventListener('mouseenter', this.mouseenterFn);
             this.DOM.el.addEventListener('mouseleave', this.mouseleaveFn);
+            this.DOM.el.addEventListener('mouseover', this.mousemoveFn);
         }
         // show the image element
         showImage() {
@@ -182,6 +190,7 @@
                 // calculate position/sizes the first time
                 this.calcBounds();
                 this.mouseArea = this.getMouseArea();
+                this.mouseAreaY = this.getMouseAreaHorizontal();
             }
             // calculate the mouse distance (current vs previous cycle)
             const mouseDistanceX = clamp(Math.abs(mousePosCache.x - mousepos.x), 0, 100);
@@ -191,7 +200,8 @@
             mousePosCache = {x: mousepos.x, y: mousepos.y};
 
             // new translation values
-            this.animatableProperties.tx.current = Math.abs(mousepos.x - this.bounds.el.left);
+            // this.animatableProperties.tx.current = Math.abs(mousepos.x - this.bounds.el.left);
+            this.animatableProperties.tx.current = this.mouseAreaY === 'left' ? Math.abs(mousepos.x - this.bounds.el.left) : Math.abs(mousepos.x - this.bounds.el.left) - this.bounds.reveal.width;
             this.animatableProperties.ty.current = this.mouseArea === 'up' ? Math.abs(mousepos.y - this.bounds.el.top) : Math.abs(mousepos.y - this.bounds.el.top) - this.bounds.reveal.height;
             // new rotation value
             this.animatableProperties.rotation.current = this.firstRAFCycle ? 0 : map(mouseDistanceX,0,175,0,direction.x < 0 ? this.mouseArea === 'up' ? 60 : -60 : this.mouseArea === 'up' ? -60 : 60);
