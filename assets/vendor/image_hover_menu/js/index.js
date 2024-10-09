@@ -1,3 +1,9 @@
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2024 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
 (function ($) {
     // Map number x from range [a, b] to [c, d]
     const map = (x, a, b, c, d) => (x - a) * (d - c) / (b - a) + c;
