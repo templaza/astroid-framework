@@ -44,7 +44,6 @@
 .as-image-hover-sub {
     white-space: nowrap;
     position: relative;
-    mix-blend-mode: difference;
     font-size: 0.895rem;
     margin: 0;
 }

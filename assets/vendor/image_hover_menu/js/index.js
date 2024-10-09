@@ -1,5 +1,3 @@
-
-
 (function ($) {
     // Map number x from range [a, b] to [c, d]
     const map = (x, a, b, c, d) => (x - a) * (d - c) / (b - a) + c;
@@ -18,6 +16,7 @@
     // track the mouse position
     let mousepos = {x: 0, y: 0};
     let mousePosCache = mousepos;
+    let direction = {x: mousePosCache.x-mousepos.x, y: mousePosCache.y-mousepos.y};
 
     window.addEventListener('mousemove', ev => mousepos = getCursorPos(ev));
 
@@ -54,7 +53,8 @@
             this.DOM.reveal = document.createElement('div');
             if (this.DOM.imgInner) {
                 this.DOM.reveal.className = 'as-hover-reveal';
-                this.DOM.reveal.style.perspective = '1000px';
+                // this.DOM.reveal.style.perspective = '1000px';
+                this.DOM.reveal.style.transformOrigin = '0% 0%';
                 // the next two elements could actually be only one, the image element
                 // adding an extra wrapper (revealInner) around the image element with overflow hidden, gives us the possibility to scale the image inside
                 this.DOM.revealInner = document.createElement('div');
@@ -67,6 +67,9 @@
                 this.DOM.reveal.appendChild(this.DOM.revealInner);
                 this.DOM.el.appendChild(this.DOM.reveal);
             }
+        }
+        getMouseArea() {
+            return this.bounds.el.top + this.bounds.el.height/2 <= window.innerHeight/2 ? 'up' : 'down';
         }
         // calculate the position/size of both the menu item and reveal element
         calcBounds() {
@@ -81,6 +84,8 @@
                 // show the image element
                 this.showImage();
                 this.firstRAFCycle = true;
+                this.DOM.reveal.style.transformOrigin = `0% ${this.mouseArea === 'up' ? 0 : 100}%`;
+
                 // start the render loop animation (rAF)
                 this.loopRender();
             };
@@ -110,15 +115,15 @@
                     }
                 })
                     // animate the image wrap
-                    .to(this.DOM.revealInner, 1.2, {
-                        ease: 'expo.out',
-                        startAt: {rotationY: -90, scale: 0.7},
-                        rotationY: 0,
+                    .to(this.DOM.revealInner, 0.6, {
+                        ease: 'Expo.easeOut',
+                        startAt: {scale: 0.6},
                         scale: 1
                     })
-                    .to(this.DOM.revealImage, 1.2, {
-                        ease: 'expo.out',
-                        startAt: {scale: 1.3, filter: 'blur(8px) brightness(2)'},
+                    // animate the image element
+                    .to(this.DOM.revealImage, 0.6, {
+                        ease: 'Expo.easeOut',
+                        startAt: {scale: 1.4, filter: 'blur(8px) brightness(2)'},
                         scale: 1,
                         filter: 'blur(0px) brightness(1)'
                     }, 0);
@@ -139,11 +144,15 @@
                         gsap.set(this.DOM.reveal, {opacity: 0});
                     }
                 })
-                    .to(this.DOM.revealInner, 0.5, {
+                    .to(this.DOM.revealInner, 0.6, {
                         ease: 'Expo.easeOut',
-                        rotationY: 90,
+                        scale: 0.6,
                         opacity: 0
                     })
+                    .to(this.DOM.revealImage, 0.6, {
+                        ease: 'Expo.easeOut',
+                        scale: 1.4
+                    }, 0);
             }
         }
         // start the render loop animation (rAF)
@@ -166,15 +175,21 @@
             if ( this.firstRAFCycle ) {
                 // calculate position/sizes the first time
                 this.calcBounds();
+                this.mouseArea = this.getMouseArea();
             }
+            // calculate the mouse distance (current vs previous cycle)
             const mouseDistanceX = clamp(Math.abs(mousePosCache.x - mousepos.x), 0, 100);
+            // direction where the mouse is moving
+            direction = {x: mousePosCache.x-mousepos.x, y: mousePosCache.y-mousepos.y};
+            // updated cache values
             mousePosCache = {x: mousepos.x, y: mousepos.y};
 
             // new translation values
-            this.animatableProperties.tx.current = Math.abs(mousepos.x - this.bounds.el.left) - this.bounds.reveal.width/2;
-            this.animatableProperties.ty.current = Math.abs(mousepos.y - this.bounds.el.top) - this.bounds.reveal.height/2;
+            this.animatableProperties.tx.current = Math.abs(mousepos.x - this.bounds.el.left);
+            this.animatableProperties.ty.current = this.mouseArea === 'up' ? Math.abs(mousepos.y - this.bounds.el.top) : Math.abs(mousepos.y - this.bounds.el.top) - this.bounds.reveal.height;
             // new rotation value
-            this.animatableProperties.rotation.current = map(Math.abs(mousepos.x - this.bounds.el.left),0,this.bounds.el.left+this.bounds.el.width,-20,20);
+            this.animatableProperties.rotation.current = this.firstRAFCycle ? 0 : map(mouseDistanceX,0,175,0,direction.x < 0 ? this.mouseArea === 'up' ? 60 : -60 : this.mouseArea === 'up' ? -60 : 60);
+            // new filter value
             this.animatableProperties.brightness.current = this.firstRAFCycle ? 1 : map(mouseDistanceX,0,100,1,8);
 
             // set up the interpolated values
@@ -214,7 +229,7 @@
                 // translationY
                 ty: {previous: 0, current: 0, amt: 0.08},
                 // Rotation angle
-                rotation: {previous: 0, current: 0, amt: 0.06},
+                rotation: {previous: 0, current: 0, amt: 0.08},
                 // CSS filter (brightness) value
                 brightness: {previous: 1, current: 1, amt: 0.08},
             };
