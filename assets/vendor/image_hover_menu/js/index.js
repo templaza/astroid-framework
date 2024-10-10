@@ -256,14 +256,13 @@
             gsap.from(this.DOM.menuItems, {
                 scrollTrigger: {
                     trigger: this.DOM.menuItems,
-                    scrub: 1
                 },
                 duration: 1.2,
                 ease: 'Expo.easeOut',
                 opacity: 0,
                 y: '100%',
                 stagger: 0.2,
-                delay: pos => pos*0.06
+                delay: pos => pos*0.05
             });
         }
     }
