@@ -257,12 +257,6 @@ foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $media          =   '';
     switch ($item->post_format) {
-        case 'regular':
-        case 'review':
-            if (!empty($item->image_thumbnail)) {
-                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
-            }
-            break;
         case 'gallery':
             $gallery    =   (array) $item->params->get('astroid_article_gallery_items', array());
             if (count($gallery)) {
@@ -307,13 +301,18 @@ foreach ($items as $key => $item) {
                 }
             } elseif (!empty($video_local_url)) {
                 $document->loadVideoBG();
-                $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
+                $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover'.(!$enable_image_cover ? ' ratio ratio-16x9' : '').'" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
             }
 
             break;
         case 'audio':
             $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
             $media      =   $renderer->render(['article' => $item]);
+            break;
+        default:
+            if (!empty($item->image_thumbnail)) {
+                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+            }
             break;
     }
     $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
