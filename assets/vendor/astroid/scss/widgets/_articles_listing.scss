@@ -1,4 +1,13 @@
 .article-listing {
+  .astroid-article-heading::before {
+    counter-increment: menucounter;
+    content: counters(menucounter, ".", decimal-leading-zero)".";
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    font-weight: bold;
+    min-width: 60px;
+  }
   .astroid-article-info {
     > dd {
       display: inline;
