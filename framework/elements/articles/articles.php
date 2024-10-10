@@ -301,6 +301,9 @@ foreach ($items as $key => $item) {
                     $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
                     $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
                     $media .=   '</div>';
+                    if ($video_type == 'youtube' && !empty($item->image_thumbnail)) {
+                        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                    }
                 }
             } elseif (!empty($video_local_url)) {
                 $document->loadVideoBG();
