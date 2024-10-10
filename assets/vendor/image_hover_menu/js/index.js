@@ -23,7 +23,6 @@
     let mousepos = {x: 0, y: 0};
     let mousePosCache = mousepos;
     let direction = {x: mousePosCache.x-mousepos.x, y: mousePosCache.y-mousepos.y};
-    gsap.registerPlugin(scrollTrigger);
 
     window.addEventListener('mousemove', ev => mousepos = getCursorPos(ev));
     class MenuItem {
