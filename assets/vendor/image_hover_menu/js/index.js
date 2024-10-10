@@ -253,6 +253,18 @@
             this.menuItems = [];
             // initialize the MenuItems
             [...this.DOM.menuItems].forEach((item, pos) => this.menuItems.push(new MenuItem(item, pos, this.animatableProperties, this.DOM.menuItems.length)));
+            gsap.from(this.DOM.menuItems, {
+                scrollTrigger: {
+                    trigger: this.DOM.menuItems,
+                    scrub: 1
+                },
+                duration: 1.2,
+                ease: 'Expo.easeOut',
+                opacity: 0,
+                y: '100%',
+                stagger: 0.2,
+                delay: pos => pos*0.06
+            });
         }
     }
     $(document).ready(function (){
