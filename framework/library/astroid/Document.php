@@ -40,6 +40,7 @@ class Document
     protected static array $_gsap_plugins = [];
     protected static bool $_slick = false;
     protected static bool $_videojs = false;
+    protected static bool $_lenis = false;
     protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -978,6 +979,15 @@ class Document
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_videojs = true;
+        }
+    }
+
+    public function loadLenis(): void
+    {
+        if (!self::$_lenis) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_lenis = true;
         }
     }
 

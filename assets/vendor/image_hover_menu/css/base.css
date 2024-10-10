@@ -1,0 +1,68 @@
+.as-image-hover-menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    counter-reset: menucounter;
+}
+
+.as-image-hover-item {
+    flex: none;
+    position: relative;
+    border-top: 1px solid var(--bs-border-color);
+    padding: 20px 0.5rem;
+}
+.as-image-hover-item:hover {
+    border-color: var(--bs-primary);
+}
+
+.as-image-hover-text {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 7px;
+}
+
+.as-image-hover-text-inner {
+    display: block;
+    white-space: nowrap;
+}
+
+.as-image-hover-sub {
+    white-space: nowrap;
+    position: relative;
+    font-size: 0.895rem;
+    margin: 0;
+}
+
+.as-hover-reveal {
+    position: absolute;
+    z-index: -1;
+    max-width: 400px;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, filter;
+}
+
+.as-hover-reveal__inner {
+    overflow: hidden;
+}
+
+.as-hover-reveal__inner,
+.as-hover-reveal__img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.as-hover-reveal__img {
+    background-size: cover;
+    background-position: 50% 50%;
+}

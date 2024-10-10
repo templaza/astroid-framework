@@ -129,21 +129,43 @@ class Utility
     public static function smoothScroll(): void
     {
         $params = Framework::getTemplate()->getParams();
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $enable_smooth_scroll = $params->get('enable_smooth_scroll', '');
         if ($enable_smooth_scroll == '1') {
-            $speed = $params->get('smooth_scroll_speed', '');
-            $wa->registerAndUseScript('astroid.smooth-scroll', 'astroid/smooth-scroll.polyfills.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-            $header = $params->get('header', TRUE);
-            $mode = $params->get('header_mode', 'horizontal');
-            $sidebar = ($header && $mode == 'sidebar');
+            $document   =   Framework::getDocument();
+            $document->loadLenis();
+            $script = 'const initSmoothScrollingGSAP = () => {
+const lenis = new Lenis()
+lenis.on(\'scroll\', ScrollTrigger.update)
+gsap.ticker.add((time)=>{
+  lenis.raf(time * 1000)
+})
+gsap.ticker.lagSmoothing(0)
+};
+const initSmoothScrolling = () => {
+const lenis = new Lenis()
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
+};
+if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
+            $document->addScriptDeclaration($script, 'body');
+        }
+    }
 
-            $script = '
-			var scroll = new SmoothScroll(\'a[href*="#"]\', {
-            speed: ' . $speed . '
-            ' . ($sidebar ? '' : ', header: ".astroid-header"') . '
-			});';
-            $wa->addInlineScript($script);
+    public static function cursorEffect(): void
+    {
+        $params = Framework::getTemplate()->getParams();
+        $enable_cursor_effect = $params->get('enable_cursor_effect', 0);
+        if ($enable_cursor_effect) {
+            $cursor_effect = $params->get('cursor_effect', 0);
+            if ($cursor_effect) {
+                Framework::getDocument()->loadGSAP();
+                $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+                $wa->registerAndUseStyle('astroid.cursor', 'media/astroid/assets/vendor/cursors/'.$cursor_effect.'/css/base.min.css');
+                $wa->registerAndUseScript('astroid.cursor', 'media/astroid/assets/vendor/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            }
         }
     }
 

@@ -248,6 +248,8 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+                <field astroidgroup="grid_options" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="primary">Primary</option>
@@ -261,7 +263,6 @@
                     <option value="none">None</option>
                     <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                 </field>
-
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="bg_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="card_border" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />

@@ -42,6 +42,15 @@ class Media
         }
     }
 
+    public static function getMediaFullPath($link): string
+    {
+        if(strpos($link, "http://") !== false || strpos($link, "https://") !== false){
+            return $link;
+        } else {
+            return Uri::root(true) . '/' . self::getPath() . '/' . $link;
+        }
+    }
+
     public static function library()
     {
         $input = Factory::getApplication()->input;

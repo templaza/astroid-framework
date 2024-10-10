@@ -62,7 +62,9 @@ foreach ($buttons as $key => $button) {
         }
     }
     $link_target    =   !empty($btn_params['link_target']) ? ' target="'.$btn_params['link_target'].'"' : '';
-    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="btn btn-' .(intval($btn_params['button_outline']) ? 'outline-' : ''). $btn_params['button_style'] . $btn_element_size . $bd_radius . '"'.$link_target.'>'.$title.'</a>';
+    $button_class   =   $btn_params['button_style'] !== 'text' ? 'btn btn-' . (intval($btn_params['button_outline']) ? 'outline-' : '') . $btn_params['button_style'] . $btn_element_size. $bd_radius : 'as-btn-text text-uppercase text-reset';
+    $btn_title      =   $btn_params['button_style'] == 'text' ? '<small>'. $title . '</small>' : $title;
+    echo '<a id="btn-'.$button->id.'" href="' .$btn_params['link']. '" class="' .$button_class . '"'.$link_target.'>'.$btn_title.'</a>';
 }
 echo '</div>';
 
