@@ -303,7 +303,6 @@ foreach ($items as $key => $item) {
                 $document->loadVideoBG();
                 $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover'.(!$enable_image_cover ? ' ratio ratio-16x9' : '').'" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
             }
-
             break;
         case 'audio':
             $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');

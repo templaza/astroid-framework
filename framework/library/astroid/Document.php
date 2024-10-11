@@ -39,6 +39,7 @@ class Document
     protected static bool $_gsap = false;
     protected static array $_gsap_plugins = [];
     protected static bool $_slick = false;
+    protected static bool $_swiper = false;
     protected static bool $_videojs = false;
     protected static bool $_lenis = false;
     protected static array $_layout_paths = [];
@@ -948,6 +949,19 @@ class Document
         }
         if (!empty($obj) && !empty($config)) {
             $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+        }
+    }
+
+    public function loadSwiper($obj = '', $config = ''): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        if (!self::$_swiper) {
+            $wa->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
+            $wa->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_swiper = true;
+        }
+        if (!empty($obj) && !empty($config)) {
+            $wa->addInlineScript('jQuery(document).ready(function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'});});');
         }
     }
 
