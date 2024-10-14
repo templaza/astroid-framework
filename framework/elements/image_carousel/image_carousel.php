@@ -26,9 +26,6 @@ if (!count($images)) {
     return false;
 }
 
-$enable_slider      =   $params->get('enable_slider', 0);
-$use_masonry        =   $params->get('use_masonry', 0);
-$use_lightbox       =   $params->get('use_lightbox', 0);
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
 $height             =   $params->get('height', '');
@@ -134,7 +131,7 @@ foreach ($images as $image) {
         echo '<div class="astroid-image-overlay-cover position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . '">';
         echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'">';
         echo '</div>';
-        if ($image_params['use_link'] || $use_lightbox) {
+        if ($image_params['use_link']) {
             echo '</a>';
         }
         if ($image_params['title']) {
@@ -156,10 +153,6 @@ if ($slider_scrollbar) {
 echo '</div>';
 $document = Framework::getDocument();
 
-if ($use_lightbox) {
-    $document->loadFancyBox();
-    $document->addScriptDeclaration('Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');', 'body');
-}
 $document->loadSwiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
 if ($enable_image_cover) {
     if (!empty($height)) {
