@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
 
 use Astroid\Framework;
 use Astroid\Helper\Style;
-use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 $images       = $params->get('images', '');
@@ -118,6 +117,10 @@ $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');
 $hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
+$overlay_padding    = $params->get('overlay_padding', '3');
+$overlay_position   = $params->get('overlay_position', 'justify-content-center align-items-center');
+
+$title_html_element =   $params->get('title_html_element', 'h3');
 
 echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper">';
@@ -128,11 +131,14 @@ foreach ($images as $image) {
         if ($image_params['use_link']) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
         }
-        echo '<div class="position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . '">';
+        echo '<div class="astroid-image-overlay-cover position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . '">';
         echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'">';
         echo '</div>';
         if ($image_params['use_link'] || $use_lightbox) {
             echo '</a>';
+        }
+        if ($image_params['title']) {
+            echo '<div class="position-absolute pe-none top-0 start-0 end-0 bottom-0 p-'.$overlay_padding.' d-flex '.$overlay_position.'"><'.$title_html_element.' class="astroid-heading mb-0">'.$image_params['title'].'</'.$title_html_element.'></div>';
         }
         echo '</div>';
     }
@@ -162,4 +168,35 @@ if ($enable_image_cover) {
     } else {
         $element->style->child('.as-image-cover')->addCss('height', $min_height . 'px');
     }
+}
+
+$overlay_type       =   $params->get('overlay_type', '');
+switch ($overlay_type) {
+    case 'color':
+        $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
+        $element->style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
+        $element->style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+        break;
+    case 'background-color':
+        $overlay_gradient   =   $params->get('overlay_gradient', '');
+        if (!empty($overlay_gradient)) {
+            $element->style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+        }
+        break;
+}
+
+if ($overlay_padding == 'custom') {
+    $overlay_custom_padding   =   $params->get('overlay_custom_padding', '');
+    if (!empty($overlay_custom_padding)) {
+        $padding = \json_decode($overlay_custom_padding, false);
+        foreach ($padding as $device => $props) {
+            $element->style->child('.p-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
+        }
+    }
+}
+
+
+$title_font_style   =   $params->get('title_font_style');
+if (!empty($title_font_style)) {
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
 }
