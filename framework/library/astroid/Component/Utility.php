@@ -163,8 +163,8 @@ if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {in
             if ($cursor_effect) {
                 Framework::getDocument()->loadGSAP();
                 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-                $wa->registerAndUseStyle('astroid.cursor', 'media/astroid/assets/vendor/cursors/'.$cursor_effect.'/css/base.min.css');
-                $wa->registerAndUseScript('astroid.cursor', 'media/astroid/assets/vendor/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                $wa->registerAndUseStyle('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/css/base.min.css');
+                $wa->registerAndUseScript('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             }
         }
     }

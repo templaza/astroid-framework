@@ -1,7 +1,0 @@
-@media (any-pointer:fine) {
-	.cursor__inner {
-		fill: none;
-		stroke: var(--bs-body-color);
-		stroke-width: 1px;
-	}
-}
