@@ -94,17 +94,27 @@ class BaseElement
         $max_width_breakpoint       =   $this->params->get('max_width_breakpoint','');
         if ($max_width) {
             $class_maxwidth         =   'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width;
-            $this->addClass('w-100');
         } else {
             $class_maxwidth         =   '';
         }
-        $content                    =   "<{$this->_tag}{$this->_attrbs()}>";
+        $content    =   '';
         if ($class_maxwidth) {
-            $content                .=  '<div class="'.$class_maxwidth.'">'. $this->content .'</div>';
+            if ($this->type === 'row') {
+                $block_align                =   $this->params->get('block_align','');
+                $block_align_breakpoint     =   $this->params->get('block_align_breakpoint','');
+                $block_align_fallback       =   $this->params->get('block_align_fallback','');
+
+                $block_align_class          =   '';
+                if ($max_width && $block_align) {
+                    $block_align_class      =   'w-100 d-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
+                }
+                $content            .=  '<div class="'.$block_align_class.'"><div class="'.$class_maxwidth.'">' . "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>" . '</div></div>';
+            } else {
+                $content            .=  "<{$this->_tag}{$this->_attrbs()}>".'<div class="'.$class_maxwidth.'">'. $this->content .'</div>'."</{$this->_tag}>";
+            }
         } else {
-            $content                .=  $this->content;
+            $content                .=  "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>";
         }
-        $content                    .=  "</{$this->_tag}>";
         return $content;
     }
 
@@ -166,8 +176,8 @@ class BaseElement
         $block_align_fallback       =   $this->params->get('block_align_fallback','');
 
         $classes                    =   array();
-        if ($max_width && $block_align) {
-            $classes[]              =   'd-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
+        if ($max_width && $block_align && $this->type !== 'row') {
+            $classes[]              =   'w-100 d-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
         }
 
         $text_alignment             =   $this->params->get('text_alignment','');

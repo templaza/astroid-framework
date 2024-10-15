@@ -115,7 +115,7 @@ class Row extends BaseElement
                 }
             }
             foreach ($columns as $column) {
-                $this->content .= $column->wrap();
+                $this->content  .=  $column->wrap();
             }
         }
         return $this->wrap();

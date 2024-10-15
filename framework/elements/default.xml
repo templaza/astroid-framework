@@ -101,7 +101,7 @@
 
             <field astroidgroup="general" ngShow="[background_setting] =='image' OR [background_setting] =='video'" name="background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
 
-            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="Background Repeat">
+            <field astroidgroup="general" ngShow="[background_setting] =='image'" name="background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="TPL_ASTROID_BACKGROUND_REPEAT_LABEL">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
                <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
@@ -155,13 +155,13 @@
             <field astroidgroup="custom_settings" code="css" name="custom_css" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_CSS_DESC"/>
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="device_settings" type="astroidheading" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
-            <field description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
+            <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
+            <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
          </fieldset>
       </fields>
    </form>
