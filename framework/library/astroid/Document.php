@@ -33,6 +33,7 @@ class Document
     protected $minify_js = false;
     protected $minify_html = false;
     protected static bool $_fontawesome = false;
+    protected static bool $_asicon = false;
     protected static bool $_fancybox = false;
     protected static bool $_masonry = false;
     protected static bool $_imagesloaded = false;
@@ -914,6 +915,13 @@ class Document
             return;
         }
         Helper\Font::loadFontAwesome();
+    }
+
+    public function loadASIcon(): void
+    {
+        if (!self::$_asicon) {
+            Helper\Font::loadASIcon();
+        }
     }
 
     public function loadFancyBox(): void

@@ -37,19 +37,7 @@ $interval           =   $params->get('interval', 3);
 $slide_settings     =   array();
 $slide_responsive   =   array();
 
-$enable_column_alignment    =   $params->get('enable_column_alignment', 0);
 $column_alignment           =   $params->get('column_alignment', '');
-$text_alignment             =   $params->get('text_alignment', '');
-
-$row_column_cls     =   'row';
-
-if ($enable_column_alignment) {
-    $row_column_cls .=  ' ' . $column_alignment;
-}
-
-if ($text_alignment) {
-    $row_column_cls .=  ' justify-content-' . $text_alignment;
-}
 
 $responsive_key     =   [
     'xs'    => '',
@@ -120,7 +108,7 @@ $overlay_position   = $params->get('overlay_position', 'justify-content-center a
 $title_html_element =   $params->get('title_html_element', 'h3');
 
 echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
-echo '<div class="swiper-wrapper">';
+echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
     if (!empty($image_params['image'])) {
@@ -129,7 +117,7 @@ foreach ($images as $image) {
             echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
         }
         echo '<div class="astroid-image-overlay-cover position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . '">';
-        echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'">';
+        echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block w-100'.($enable_image_cover ? ' object-fit-cover h-100' : '').'">';
         echo '</div>';
         if ($image_params['use_link']) {
             echo '</a>';

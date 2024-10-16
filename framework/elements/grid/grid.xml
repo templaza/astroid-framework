@@ -27,9 +27,11 @@
                                 </field>
                                 <field ngShow="[type]=='icon'" type="astroidlist" label="ASTROID_WIDGET_ICON_TYPE" name="icon_type" default="fontawesome">
                                     <option value="fontawesome">TPL_ASTROID_FONTAWESOME</option>
+                                    <option value="astroid">TPL_ASTROID_ASTROID_ICONS</option>
                                     <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                                 </field>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='fontawesome'" type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="fa_icon"/>
+                                <field ngShow="[type]=='icon' AND [icon_type]=='astroid'" type="astroidicons" source="astroid" label="ASTROID_WIDGET_ICON_LABEL" name="as_icon"/>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon"/>
                                 <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
 

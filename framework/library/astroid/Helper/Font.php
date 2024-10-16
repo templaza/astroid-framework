@@ -14,6 +14,7 @@ use Astroid\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -170,6 +171,33 @@ class Font
         return $fonts;
     }
 
+    public static function fontAstroidIcons() {
+        $icons = self::_getASIcons();
+        $array = [];
+        $array[] = ['value' => '', 'name' => 'None'];
+        foreach ($icons as $icon) {
+            $array[] = ['value' => $icon['value'], 'name' => '<i class="' . $icon['value'] . '"></i> ' . $icon['name']];
+        }
+        $icons = $array;
+        return $icons;
+    }
+
+    public static function _getASIcons()
+    {
+        $cache  =   Path::clean(JPATH_ROOT . '/cache/astroid/asicon/asicon.json');
+        if (file_exists($cache)) {
+            return json_decode(file_get_contents($cache), true);
+        }
+        $json = file_get_contents(ASTROID_MEDIA . '/vendor/linearicons/Linearicons.json');
+        $json = \json_decode($json, true);
+        $icons = [];
+        foreach ($json['selection'] as $icon) {
+            $icons[] = ['value' => 'as-icon as-icon-' . $icon['name'], 'name' => $icon['name'], 'type' => 'as-icon'];
+        }
+        Helper::putContents($cache, json_encode($icons));
+        return $icons;
+    }
+
     public static function fontAwesomeIcons($html = false)
     {
         $icons = self::_getFAIcons();
@@ -299,7 +327,7 @@ class Font
         return $value;
     }
 
-    public static function loadFontAwesome()
+    public static function loadFontAwesome(): void
     {
         $params = Helper::getPluginParams();
         $source = $params->get('astroid_load_fontawesome', "cdn");
@@ -317,5 +345,11 @@ class Font
                 }
                 break;
         }
+    }
+
+    public static function loadASIcon(): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('linearicons', 'media/astroid/assets/vendor/linearicons/font.min.css');
     }
 }

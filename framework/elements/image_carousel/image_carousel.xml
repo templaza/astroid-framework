@@ -161,8 +161,7 @@
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='sm'" name="gutter_sm" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_SM_LABEL" postfix="px" />
                 <field astroidgroup="column_options" ngShow="[column_responsive]=='xs'" name="gutter_xs" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_XS_LABEL" postfix="px" />
 
-                <field astroidgroup="column_options" name="enable_column_alignment" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_COLUMN_ALIGNMENT"/>
-                <field astroidgroup="column_options" ngShow="[enable_column_alignment]==1" name="column_alignment" type="astroidradio" width="full" default="">
+                <field astroidgroup="column_options" name="column_alignment" label="ASTROID_WIDGET_COLUMN_ALIGNMENT" type="astroidradio" width="full" default="">
                     <option value="">ASTROID_WIDGET_TOP_ICON</option>
                     <option value="align-items-center">ASTROID_WIDGET_MIDDLE_ICON</option>
                     <option value="align-items-end">ASTROID_WIDGET_BOTTOM_ICON</option>
