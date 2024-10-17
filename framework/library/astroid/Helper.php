@@ -9,6 +9,7 @@
 
 namespace Astroid;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Event\Cache\AfterPurgeEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
@@ -251,7 +252,7 @@ class Helper
         $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)
             ->createCacheController('callback', $options);
         $cache->clean(null, 'notgroup');
-        $app->getDispatcher()->dispatch('onAfterPurge');
+        $app->getDispatcher()->dispatch('onAfterPurge', new AfterPurgeEvent('onAfterPurge'));
     }
 
     public static function getFileHash($file)
