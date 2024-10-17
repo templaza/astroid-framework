@@ -204,6 +204,8 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+                <field astroidgroup="grid_options" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="primary">Primary</option>
