@@ -11,6 +11,7 @@
 
 // No direct access.
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 extract($displayData);
@@ -44,6 +45,27 @@ if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
 if ($header && !empty($header_mode) && $header_mode != 'sidebar') {
     $wa->registerAndUseScript('astroid.jquery.easing', 'astroid/jquery.easing.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 }
+
+// Astroid Layout Background
+$background         =   $params->get('container_background_setting', '');
+$overlay_type       =   $params->get('container_background_image_overlay', '');
+$as_layout_attrs    =   '';
+$as_layout_cls      =   '';
+if ($background === 'video') {
+    $video          =   $params->get('container_background_video', '');
+    $poster         =   $params->get('container_background_image', '');
+    $as_layout_attrs    .=  ' data-as-video-bg="'.Uri::base(true) . '/' . Astroid\Helper\Media::getPath() . '/' . $video.'"';
+    $as_layout_attrs    .=  ' data-as-video-poster="'.Uri::base(true) . '/' . Astroid\Helper\Media::getPath() . '/' . $poster.'"';
+    $as_layout_attrs    .=  ' data-as-video-position="fixed"';
+    $document->loadVideoBG();
+}
+if (!empty($overlay_type)) {
+    if ($background === 'video') {
+        $as_layout_cls  .=  ' position-relative';
+    } else {
+        $as_layout_cls  .=  ' position-relative astroid-element-overlay';
+    }
+}
 ?>
 <!-- astroid container -->
 <div class="astroid-container">
@@ -58,7 +80,7 @@ if ($header && !empty($header_mode) && $header_mode != 'sidebar') {
         <?php $document->include('contentStart'); // Content Start 
         ?>
         <!-- astroid layout -->
-        <div class="astroid-layout astroid-layout-<?php echo $params->get('template_layout', 'wide') ?>">
+        <div class="astroid-layout astroid-layout-<?php echo $params->get('template_layout', 'wide'). $as_layout_cls; ?>"<?php echo $as_layout_attrs; ?>>
             <?php $document->include('layoutStart'); // Layout Start 
             ?>
             <!-- astroid wrapper -->

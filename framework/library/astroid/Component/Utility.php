@@ -110,19 +110,108 @@ class Utility
         }
 
         $template_layout = $params->get('template_layout', 'wide');
-        if ($template_layout != 'boxed') {
-            return false;
+        if ($template_layout == 'boxed') {
+            $layout_background_image = $params->get('layout_background_image', '');
+            if (!empty($layout_background_image)) {
+                $style = new Style('body');
+                $style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
+                $style->addCss('background-repeat', $params->get('layout_background_repeat', 'inherit'));
+                $style->addCss('background-size', $params->get('layout_background_size', 'inherit'));
+                $style->addCss('background-position', $params->get('layout_background_position', 'inherit'));
+                $style->addCss('background-attachment', $params->get('layout_background_attachment', 'inherit'));
+                $style->render();
+            }
         }
+        self::addBackgroundCSS('.astroid-layout', $params, 'container_');
+    }
 
-        $layout_background_image = $params->get('layout_background_image', '');
-        if (!empty($layout_background_image)) {
-            $style = new Style('body');
-            $style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
-            $style->addCss('background-repeat', $params->get('layout_background_repeat', 'inherit'));
-            $style->addCss('background-size', $params->get('layout_background_size', 'inherit'));
-            $style->addCss('background-position', $params->get('layout_background_position', 'inherit'));
-            $style->addCss('background-attachment', $params->get('layout_background_attachment', 'inherit'));
+    public static function addBackgroundCSS ($obj, $obj_params, $prefix = ''): void
+    {
+        $background = $obj_params->get($prefix . 'background_setting', '');
+        if (!empty($background)) {
+            $style = new Style($obj);
+            $style_dark = new Style($obj, 'dark');
+            switch ($background) {
+                case 'color': // if color background
+                    $background_color   =   Style::getColor($obj_params->get($prefix . 'background_color', ''));
+                    $style->addCss('background-color', $background_color['light']);
+                    $style_dark->addCss('background-color', $background_color['dark']);
+                    break;
+                case 'image': // if image background
+                    $background_color   =   Style::getColor($obj_params->get($prefix . 'img_background_color', ''));
+                    $style->addCss('background-color', $background_color['light']);
+                    $style_dark->addCss('background-color', $background_color['dark']);
+                    $image = $obj_params->get($prefix . 'background_image', '');
+                    if (!empty($image)) {
+                        $style->addCss('background-image', 'url(' . Uri::base(true) . '/' . Helper\Media::getPath() . '/' . $image . ')');
+                        $style->addCss('background-repeat', $obj_params->get($prefix . 'background_repeat', ''));
+                        $style->addCss('background-size', $obj_params->get($prefix . 'background_size', ''));
+                        $style->addCss('background-attachment', $obj_params->get($prefix . 'background_attchment', ''));
+                        $style->addCss('background-position', $obj_params->get($prefix . 'background_position', ''));
+                        self::addOverlayColor($obj, $obj_params, $prefix);
+                    }
+                    break;
+                case 'video': // if video background
+                    $video = $obj_params->get($prefix . 'background_video', '');
+                    if (!empty($video)) {
+                        self::addOverlayColor($obj, $obj_params, $prefix);
+                    }
+                    break;
+                case 'gradient': // if gradient background
+                    $style->addCss('background-image', Style::getGradientValue($obj_params->get($prefix . 'background_gradient', '')));
+                    break;
+            }
             $style->render();
+            $style_dark->render();
+        }
+    }
+
+    public static function addOverlayColor($obj, $obj_params, $prefix = '') {
+        $overlay_type   =   $obj_params->get($prefix . 'background_image_overlay', '');
+        if (!empty($overlay_type)) {
+            $background = $obj_params->get($prefix . 'background_setting', '');
+            $overlay_style_cls      =   '.astroid-element-overlay';
+            if ($background == 'video') {
+                $overlay_style_cls  =   ' > ' . $overlay_style_cls;
+            }
+
+            switch ($overlay_type) {
+                case 'color':
+                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_color)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                        $overlay_style->render();
+
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before', 'dark');
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'gradient':
+                    $background_image_overlay_gradient  =   $obj_params->get($prefix . 'background_image_overlay_gradient', '');
+                    if (!empty($background_image_overlay_gradient)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
+                        $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'pattern':
+                    $background_image_overlay_pattern   =   $obj_params->get($prefix . 'background_image_overlay_pattern', '');
+                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_pattern)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
+                        if ($background_image_overlay_color) {
+                            $overlay_style_dark   =   new Style($obj . $overlay_style_cls . ':before', 'dark');
+                            $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                            $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
+                            $overlay_style_dark->render();
+                        }
+                        $overlay_style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $background_image_overlay_pattern . ')');
+                        $overlay_style->render();
+                    }
+                    break;
+            }
         }
     }
 
