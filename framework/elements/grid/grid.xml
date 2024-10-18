@@ -82,6 +82,7 @@
                         </fields>
                     </form>
                 </field>
+                <field type="astroidhidden" name="animation_element" default=".as-grid" />
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>

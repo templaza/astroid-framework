@@ -363,9 +363,14 @@ class BaseElement
         if (empty($animation)) {
             return;
         }
+        $animation_element = $this->params->get('animation_element', '');
         $document = Framework::getDocument();
         if (!Helper::isPro()) {
             $this->addAttribute('style', 'visibility: hidden;');
+        } else {
+            if (!empty($animation_element)) {
+                $this->addAttribute('data-animation-element', $animation_element);
+            }
         }
         $this->addAttribute('data-animation', $animation);
         $delay = $this->params->get('animation_delay', '');
