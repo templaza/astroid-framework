@@ -158,36 +158,37 @@
       }
    };
 
-   var initAnimations = function () {
-      var bindAnimation = function () {
+   const initAnimations = function () {
+      const bindAnimation = function () {
          $('[data-animation]').each(function () {
-            var _animation = $(this).data('animation');
-            var _delay = $(this).data('animation-delay');
-            var _duration = $(this).data('animation-duration');
-            if (_animation != '' && elementInViewport($(this)) && !$(this).hasClass('animation-done')) {
-               if (_delay != '' && _delay != 0 && _delay != '0' && _delay != undefined) {
+            const _animation = $(this).data('animation');
+            let _delay = $(this).data('animation-delay');
+            let _duration = $(this).data('animation-duration');
+            const _prefix = 'animate__';
+            if (_animation !== '' && elementInViewport($(this)) && !$(this).hasClass('animation-done')) {
+               if (_delay !== '' && _delay !== 0 && _delay !== '0' && _delay !== undefined) {
                   _delay = parseInt(_delay);
                } else {
                   _delay = 0;
                }
 
-               if (_duration != '' && _duration != 0 && _duration != '0' && _duration != undefined) {
+               if (_duration !== '' && _duration !== 0 && _duration !== '0' && _duration !== undefined) {
                   _duration = parseInt(_duration) + 10;
                } else {
                   _duration = 1010;
                }
 
-               var _this = this;
+               const _this = this;
                $(_this).css('animation-duration', _duration + 'ms');
                setTimeout(function () {
                   $(_this).css('visibility', 'visible');
                   $(_this).addClass('animate');
-                  $(_this).addClass(_animation);
+                  $(_this).addClass(_prefix + _animation);
                   $(_this).addClass('animation-done');
                   setTimeout(function () {
                      $(_this).removeClass('animate');
                      $(_this).addClass('animated');
-                     $(_this).removeClass(_animation);
+                     $(_this).removeClass(_prefix + _animation);
                   }, (_duration + _delay));
                }, _delay);
             }
