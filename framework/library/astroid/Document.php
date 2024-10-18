@@ -43,6 +43,7 @@ class Document
     protected static bool $_swiper = false;
     protected static bool $_videojs = false;
     protected static bool $_lenis = false;
+    protected static bool $_animation = false;
     protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -979,6 +980,23 @@ class Document
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_imagesloaded = true;
+        }
+    }
+
+    public function loadAnimation(): void
+    {
+        if (!self::$_animation) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            if (Helper::isPro()) {
+                $this->loadImagesLoaded();
+                $this->loadGSAP('ScrollTrigger');
+                $wa->registerAndUseScript('astroid.animation.pro', 'media/astroidpro/assets/animations/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            } else {
+                $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
+                $wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            }
+
+            self::$_animation = true;
         }
     }
 

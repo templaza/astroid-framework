@@ -242,6 +242,15 @@ class Helper
         }
     }
 
+    public static function isPro(): bool
+    {
+        if (defined('ASTROID_PRO')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function clearJoomlaCache()
     {
         $app = Factory::getApplication();

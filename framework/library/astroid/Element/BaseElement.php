@@ -357,20 +357,17 @@ class BaseElement
         $linkHover_dark->addCss('color', $link_hover_color['dark']);
     }
 
-    protected function _animation()
+    protected function _animation(): void
     {
         $animation = $this->params->get('animation', '');
         if (empty($animation)) {
             return;
         }
-
-        $app = Factory::getApplication();
-        $wa = $app->getDocument()->getWebAssetManager();
-        $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
-
-        $this->addAttribute('style', 'visibility: hidden;');
+        $document = Framework::getDocument();
+        if (!Helper::isPro()) {
+            $this->addAttribute('style', 'visibility: hidden;');
+        }
         $this->addAttribute('data-animation', $animation);
-
         $delay = $this->params->get('animation_delay', '');
         if (!empty($delay)) {
             $this->addAttribute('data-animation-delay', $delay);
@@ -380,5 +377,6 @@ class BaseElement
         if (!empty($duration)) {
             $this->addAttribute('data-animation-duration', $duration);
         }
+        $document->loadAnimation();
     }
 }
