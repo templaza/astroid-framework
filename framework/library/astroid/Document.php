@@ -944,7 +944,8 @@ class Document
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $wa->addInlineScript('jQuery(window).on("load", function(){$(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true});});');
+            $this->loadImagesLoaded();
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$selector.'\').addClass("as-loading");jQuery(\''.$selector.'\').imagesLoaded(function() { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });});');
         }
     }
 
@@ -970,7 +971,8 @@ class Document
             self::$_swiper = true;
         }
         if (!empty($obj) && !empty($config)) {
-            $wa->addInlineScript('jQuery(document).ready(function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'});});');
+            $this->loadImagesLoaded();
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').addClass("as-loading");jQuery(\''.$obj.'\').imagesLoaded( function() {const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading"); });});');
         }
     }
 

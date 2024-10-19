@@ -367,7 +367,7 @@ class Helper
             $plugin_folders = Folder::folders($plugin_elements_dir);
             if (count($plugin_folders)) {
                 foreach ($plugin_folders as $plugin_folder) {
-                    if (file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
+                    if (PluginHelper::isEnabled('astroid', $plugin_folder) && file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
                         // Merging Plugin Elements
                         $elements = array_merge($elements, Folder::folders($plugin_elements_dir . '/' . $plugin_folder . '/elements/', '.', false, true));
                     }

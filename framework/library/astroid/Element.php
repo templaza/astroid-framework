@@ -10,6 +10,7 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 
@@ -103,7 +104,7 @@ class Element
                 $plugin_folders = Folder::folders($plugin_elements_directory);
                 if (count($plugin_folders)) {
                     foreach ($plugin_folders as $plugin_folder) {
-                        if (file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
+                        if (PluginHelper::isEnabled('astroid', $plugin_folder) && file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
                             $this->xml_file = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml');
                             $this->layout = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.php');
                         }
