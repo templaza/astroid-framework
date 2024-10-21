@@ -1,0 +1,10 @@
+.as-listing-pro-item {
+  .astroid-text > * {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .astroid-meta {
+    min-width: 60px;
+  }
+}

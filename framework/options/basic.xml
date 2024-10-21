@@ -143,6 +143,56 @@
          <field astroidgroup="page_setting" name="theme_width" type="astroidtext" label="TPL_ASTROID_THEME_WIDTH_LABEL" description="TPL_ASTROID_THEME_WIDTH_DESC" hint="1400px" class="form-control">
          </field>
 
+         <field astroidgroup="page_setting" description="ASTROID_CONTAINER_BG_MODE_DESC" name="container_background_setting" type="astroidradio" default="" label="ASTROID_CONTAINER_BG_MODE">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="image">TPL_ASTROID_BACKGROUND_IMAGE_LABEL</option>
+            <option value="video">TPL_ASTROID_BACKGROUND_VIDEO_LABEL</option>
+         </field>
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image'" name="container_img_background_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image' OR [container_background_setting] =='video'" name="container_background_image" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_IMAGE_LABEL"/>
+
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image'" name="container_background_repeat" type="astroidlist" label="TPL_ASTROID_BACKGROUND_REPEAT_LABEL" hint="TPL_ASTROID_BACKGROUND_REPEAT_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="no-repeat">TPL_ASTROID_BACKGROUND_NO_REPEAT_LABEL</option>
+            <option value="repeat-x">TPL_ASTROID_BACKGROUND_REPEAT_HORIZONTALLY_LABEL</option>
+            <option value="repeat-y">TPL_ASTROID_BACKGROUND_REPEAT_VERTICAL_LABEL</option>
+         </field>
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image'" name="container_background_size" type="astroidlist" label="ASTROID_BACKGROUND_SIZE">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="cover">ASTROID_BACKGROUND_SIZE_COVER</option>
+            <option value="contain">ASTROID_BACKGROUND_SIZE_CONTAIN</option>
+         </field>
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image'" name="container_background_attchment" type="astroidlist" label="ASTROID_BACKGROUND_ATTCHMENT">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="scroll">ASTROID_BACKGROUND_ATTCHMENT_SCROLL</option>
+            <option value="fixed">ASTROID_BACKGROUND_ATTCHMENT_FIXED</option>
+         </field>
+         <field astroidgroup="page_setting" ngShow="[container_background_setting] =='image'" name="container_background_position" type="astroidlist" label="ASTROID_BACKGROUND_POSITION_LABEL">
+            <option value="">JGLOBAL_INHERIT</option>
+            <option value="left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+
+         <field astroidgroup="page_setting" ngShow="[container_background_setting]=='video'" name="container_background_video" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+
+         <field astroidgroup="page_setting" ngShow="[container_background_setting]=='image' OR [container_background_setting]=='video'" description="TPL_ASTROID_OVERLAY_COLOR_DESC" name="container_background_image_overlay" type="astroidradio" default="0" label="TPL_ASTROID_OVERLAY_COLOR_LABEL">
+            <option value="">ASTROID_NONE</option>
+            <option value="color">TPL_ASTROID_COLOR</option>
+            <option value="gradient">TPL_ASTROID_GRADIENT</option>
+            <option value="pattern">TPL_ASTROID_PATTERN</option>
+         </field>
+         <field astroidgroup="page_setting" ngShow="([container_background_setting]=='image' OR [container_background_setting]=='video') AND ([container_background_image_overlay]=='color' OR [container_background_image_overlay]=='pattern')" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="container_background_image_overlay_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
+         <field astroidgroup="page_setting" ngShow="([container_background_setting]=='image' OR [container_background_setting]=='video') AND [container_background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="container_background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
+         <field astroidgroup="page_setting" ngShow="([container_background_setting]=='image' OR [container_background_setting]=='video') AND [container_background_image_overlay]=='pattern'" name="container_background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
+
          <field astroidgroup="colormode" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" />
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1'" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_DESC" name="enable_color_mode_transform" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_LABEL" />
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==0" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
@@ -163,7 +213,6 @@
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]==1 AND [enable_color_mode_transform]==1" name="astroid_colormode_transform_offset" type="astroidrange" min="1" max="100" step="1" default="50" label="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_LABEL" description="TPL_ASTROID_BASIC_COLOR_MODE_TRANSFORM_OFFSET_DESC" postfix="%" />
 
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
-         <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" astroid-scss-variable="spinkit-size" min="1" max="10000" step="1" default="300" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
       </fieldset>
    </fields>
 </form>

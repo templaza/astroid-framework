@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>mod_astroid_menu</name>
 	<author>Astroid Framework</author>
-	<creationDate>July 2024</creationDate>
+	<creationDate>October 2024</creationDate>
 	<copyright>(C) 2024 Astroid Framework</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>sonlv@templaza.com</authorEmail>
 	<authorUrl>astroidframe.work</authorUrl>
-	<version>3.1.1</version>
+	<version>3.1.7</version>
 	<description>MOD_ASTROID_MENU_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_astroid_menu">mod_astroid_menu.php</filename>

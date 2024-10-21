@@ -9,6 +9,7 @@
 
 namespace Astroid;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version;
 
@@ -36,7 +37,8 @@ abstract class Framework
         self::$document = new Document(); // Document
 
         self::constants();
-        self::audit();
+        PluginHelper::importPlugin('astroid');
+        Helper::triggerEvent('onAstroidAfterInitialise', [&self::$template]);
     }
 
     public static function getVersion()
@@ -122,10 +124,6 @@ abstract class Framework
                 $app->redirect(base64_decode(urldecode($redirect)));
             }
         }
-    }
-
-    public static function audit()
-    {
     }
 
     public static function getClientType()

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+   <form>
+      <fields>
+         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <field name="device_gutter_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_LABEL" description="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_DESC" />
+            <field astroidgroup="device_gutter_settings" name="gutter_xs" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XS_LABEL" description="ASTROID_ROW_GUTTER_XS_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-0</option>
+               <option value="1">gx-1</option>
+               <option value="2">gx-2</option>
+               <option value="3">gx-3</option>
+               <option value="4">gx-4</option>
+               <option value="5">gx-5</option>
+            </field>
+            <field astroidgroup="device_gutter_settings" name="gutter_sm" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_SM_LABEL" description="ASTROID_ROW_GUTTER_SM_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-sm-0</option>
+               <option value="1">gx-sm-1</option>
+               <option value="2">gx-sm-2</option>
+               <option value="3">gx-sm-3</option>
+               <option value="4">gx-sm-4</option>
+               <option value="5">gx-sm-5</option>
+            </field>
+            <field astroidgroup="device_gutter_settings" name="gutter_md" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_MD_LABEL" description="ASTROID_ROW_GUTTER_MD_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-md-0</option>
+               <option value="1">gx-md-1</option>
+               <option value="2">gx-md-2</option>
+               <option value="3">gx-md-3</option>
+               <option value="4">gx-md-4</option>
+               <option value="5">gx-md-5</option>
+            </field>
+            <field astroidgroup="device_gutter_settings" name="gutter_lg" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_LG_LABEL" description="ASTROID_ROW_GUTTER_LG_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-lg-0</option>
+               <option value="1">gx-lg-1</option>
+               <option value="2">gx-lg-2</option>
+               <option value="3">gx-lg-3</option>
+               <option value="4">gx-lg-4</option>
+               <option value="5">gx-lg-5</option>
+            </field>
+            <field astroidgroup="device_gutter_settings" name="gutter_xl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XL_LABEL" description="ASTROID_ROW_GUTTER_XL_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-xl-0</option>
+               <option value="1">gx-xl-1</option>
+               <option value="2">gx-xl-2</option>
+               <option value="3">gx-xl-3</option>
+               <option value="4">gx-xl-4</option>
+               <option value="5">gx-xl-5</option>
+            </field>
+            <field astroidgroup="device_gutter_settings" name="gutter_xxl" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XXL_LABEL" description="ASTROID_ROW_GUTTER_XXL_DESC">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="0">gx-xxl-0</option>
+               <option value="1">gx-xxl-1</option>
+               <option value="2">gx-xxl-2</option>
+               <option value="3">gx-xxl-3</option>
+               <option value="4">gx-xxl-4</option>
+               <option value="5">gx-xxl-5</option>
+            </field>
+         </fieldset>
+      </fields>
+   </form>
+</element>

@@ -27,9 +27,11 @@
                                 </field>
                                 <field ngShow="[type]=='icon'" type="astroidlist" label="ASTROID_WIDGET_ICON_TYPE" name="icon_type" default="fontawesome">
                                     <option value="fontawesome">TPL_ASTROID_FONTAWESOME</option>
+                                    <option value="astroid">TPL_ASTROID_ASTROID_ICONS</option>
                                     <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                                 </field>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='fontawesome'" type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="fa_icon"/>
+                                <field ngShow="[type]=='icon' AND [icon_type]=='astroid'" type="astroidicons" source="astroid" label="ASTROID_WIDGET_ICON_LABEL" name="as_icon"/>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon"/>
                                 <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
 
@@ -248,6 +250,8 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+                <field astroidgroup="grid_options" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="primary">Primary</option>
@@ -261,7 +265,6 @@
                     <option value="none">None</option>
                     <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                 </field>
-
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="bg_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="card_border" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
@@ -553,6 +556,9 @@
                     <option value="4">J4</option>
                     <option value="5">J5</option>
                 </field>
+            </fieldset>
+            <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidtext" default=".as-grid" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
