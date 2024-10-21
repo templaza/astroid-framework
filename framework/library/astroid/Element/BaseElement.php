@@ -363,16 +363,10 @@ class BaseElement
         if (empty($animation)) {
             return;
         }
-        $animation_element = $this->params->get('animation_element', '');
         $document = Framework::getDocument();
-        if (!Helper::isPro()) {
-            $this->addAttribute('style', 'visibility: hidden;');
-        } else {
-            if (!empty($animation_element)) {
-                $this->addAttribute('data-animation-element', $animation_element);
-            }
-        }
+
         $this->addAttribute('data-animation', $animation);
+
         $delay = $this->params->get('animation_delay', '');
         if (!empty($delay)) {
             $this->addAttribute('data-animation-delay', $delay);
@@ -381,6 +375,24 @@ class BaseElement
         $duration = $this->params->get('animation_duration', '');
         if (!empty($duration)) {
             $this->addAttribute('data-animation-duration', $duration);
+        }
+
+        if (!Helper::isPro()) {
+            $this->addAttribute('style', 'visibility: hidden;');
+        } else {
+            $animation_element = $this->params->get('animation_element', '');
+            if (!empty($animation_element)) {
+                $this->addAttribute('data-animation-element', $animation_element);
+            }
+            $animation_loop = $this->params->get('animation_loop', 0);
+            if (!empty($animation_loop)) {
+                $this->addAttribute('data-animation-loop', $this->params->get('animation_scrub', 0));
+            }
+            $animation_easing = $this->params->get('animation_easing', 'power3');
+            if ($animation_easing !== 'none' && $animation_easing !== 'steps') {
+                $animation_easing .= '.' . $this->params->get('animation_easing_type', 'out');
+            }
+            $this->addAttribute('data-animation-ease', $animation_easing);
         }
         $document->loadAnimation();
     }

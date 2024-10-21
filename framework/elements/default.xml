@@ -10,6 +10,7 @@
          </fieldset>
          <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field type="astroidgroup" name="general"/>
+            <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
             <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
@@ -17,9 +18,9 @@
                <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
             </field>
 
-            <field astroidgroup="general" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
-            <field astroidgroup="general" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
-            <field astroidgroup="general" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
+            <field astroidgroup="animation_settings" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
 
             <field astroidgroup="general" name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>

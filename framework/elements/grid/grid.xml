@@ -82,7 +82,6 @@
                         </fields>
                     </form>
                 </field>
-                <field type="astroidhidden" name="animation_element" default=".as-grid" />
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>
@@ -557,6 +556,9 @@
                     <option value="4">J4</option>
                     <option value="5">J5</option>
                 </field>
+            </fieldset>
+            <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidtext" default=".as-grid" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">

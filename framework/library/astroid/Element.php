@@ -31,6 +31,7 @@ class Element
     public string $element_type = 'layout';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
+    protected string $default_pro_xml_file = '';
     protected string $layout = '';
     public array $params = [];
     public mixed $data = [];
@@ -165,6 +166,10 @@ class Element
         if ($this->type !== 'subform') {
             $defaultXml = simplexml_load_file($this->default_xml_file);
             $this->form->load($defaultXml->form, false);
+            if ($this->mode !== 'article_data' && Helper::isPro()) {
+                $defaultXml = simplexml_load_file(ASTROID_PRO_PATH . DIRECTORY_SEPARATOR . 'elements' . DIRECTORY_SEPARATOR . 'default.xml');
+                $this->form->load($defaultXml->form, false);
+            }
         } else {
             if ($this->subform['formtype'] == 'string') {
                 $defaultXml = simplexml_load_string($this->subform['formsource']);
