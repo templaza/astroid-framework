@@ -160,12 +160,21 @@ if ($border_radius == 'rounded') {
 $box_shadow     = $params->get('box_shadow', '');
 $box_shadow     = $box_shadow !== '' ? ' ' . $box_shadow : '';
 $hover_effect   = $params->get('hover_effect', '');
-$hover_effect   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : '';
+$hover_effect_cls   = $hover_effect !== '' ? ' as-effect-' . $hover_effect : ' astroid-image-overlay-cover';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
 $text_color_mode    =   $params->get('text_color_mode', '');
 $text_color_mode    =   $text_color_mode !== '' ? ' ' . $text_color_mode : '';
+
+$display_title      =   $params->get('display_title', 0);
+$title_html_element =   $params->get('title_html_element', 'h3');
+$title_font_style   =   $params->get('title_font_style');
+if (!empty($display_title) && !empty($title_font_style)) {
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+}
+
+$overlay_type       =   $params->get('overlay_type', '');
 echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
@@ -176,8 +185,9 @@ foreach ($images as $image) {
         } elseif ($use_lightbox) {
             echo '<a href="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" data-fancybox="astroid-'.$element->id.'">';
         }
-        echo '<div class="position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . $transition . '">';
+        echo '<div class="as-image-group-item position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect_cls . $transition . '">';
         echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'">';
+        echo !empty($display_title) && !empty($image_params['title']) ? '<'.$title_html_element.' class="astroid-heading position-absolute bottom-0 w-100 p-5 m-0 pe-none">'. $image_params['title'] .'</'.$title_html_element.'>' : '';
         echo '</div>';
         if ($image_params['use_link'] || $use_lightbox) {
             echo '</a>';
@@ -204,5 +214,21 @@ if ($enable_image_cover) {
         $element->style->child('.as-image-cover')->addCss('height', $height);
     } else {
         $element->style->child('.as-image-cover')->addCss('height', $min_height . 'px');
+    }
+}
+
+if ($hover_effect == '') {
+    switch ($overlay_type) {
+        case 'color':
+            $overlay_color      =   Style::getColor($params->get('overlay_color', ''));
+            $element->style->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['light']);
+            $element->style_dark->child('.astroid-image-overlay-cover:after')->addCss('background-color', $overlay_color['dark']);
+            break;
+        case 'gradient':
+            $overlay_gradient   =   $params->get('overlay_gradient', '');
+            if (!empty($overlay_gradient)) {
+                $element->style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+            }
+            break;
     }
 }

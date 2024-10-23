@@ -11,6 +11,7 @@
                 <field type="astroidgroup" name="column_options" title="ASTROID_WIDGET_COLUMN_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="slider_options" title="ASTROID_WIDGET_SLIDER_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
                 <field astroidgroup="general" name="images" type="astroidsubform" label="ASTROID_WIDGET_IMAGES_LABEL">
                     <form>
                         <fields>
@@ -247,6 +248,13 @@
                     <option value="flash">ASTROID_WIDGET_EFFECT_FLASH</option>
                     <option value="unveil">ASTROID_WIDGET_EFFECT_UNVEIL</option>
                 </field>
+                <field astroidgroup="widget_styles" ngShow="[hover_effect]==''" name="overlay_type" type="astroidradio" width="full" default="">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="color">TPL_ASTROID_COLOR</option>
+                    <option value="gradient">TPL_ASTROID_GRADIENT</option>
+                </field>
+                <field astroidgroup="widget_styles" ngShow="[hover_effect]=='' AND [overlay_type]=='color'" name="overlay_color" type="astroidcolor" label="ASTROID_WIDGET_OVERLAY_COLOR" />
+                <field astroidgroup="widget_styles" ngShow="[hover_effect]=='' AND [overlay_type]=='gradient'" name="overlay_gradient" type="astroidgradient" label="ASTROID_WIDGET_OVERLAY_GRADIENT"/>
                 <field astroidgroup="widget_styles" name="hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>
                     <option value="scale-up">ASTROID_WIDGET_TRANSITION_SCALE_UP</option>
@@ -277,6 +285,17 @@
                     <option value="buzz">ASTROID_WIDGET_TRANSITION_BUZZ</option>
                     <option value="buzz-out">ASTROID_WIDGET_TRANSITION_BUZZ_OUT</option>
                 </field>
+                <field astroidgroup="title_options" name="display_title" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DISPLAY_TITLE"/>
+                <field astroidgroup="title_options" ngShow="[display_title]==1" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="h4">h4</option>
+                    <option value="h5">h5</option>
+                    <option value="h6">h6</option>
+                    <option value="div">div</option>
+                </field>
+                <field astroidgroup="title_options" ngShow="[display_title]==1" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
