@@ -12,7 +12,11 @@
     top: auto;
   }
 }
-
+.astroid-article-heading {
+  > a {
+    color: inherit;
+  }
+}
 .card-img-overlay {
   --bs-card-img-overlay-padding: 2.5rem;
   &.card-size-large {

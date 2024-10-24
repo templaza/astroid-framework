@@ -1,0 +1,28 @@
+.astroid-imagegroup {
+  .as-image-group-item {
+    .astroid-heading {
+      opacity: 0;
+      transform:translate3d(0,100%,0);
+      transition: opacity 600ms, transform 600ms;
+      z-index: 1;
+    }
+    &:hover {
+      .astroid-heading {
+        opacity: 1;
+        transform:translateZ(0)
+      }
+    }
+  }
+  .astroid-image-overlay-cover {
+    &:after {
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 600ms;
+    }
+    &:hover {
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+}

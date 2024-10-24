@@ -13,6 +13,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use Astroid\Framework;
 use Astroid\Helper\Style;
 use Astroid\Helper;
 use Astroid\Helper\Media;
@@ -28,6 +29,7 @@ if (!count($grids)) {
     return false;
 }
 
+$document = Framework::getDocument();
 $style = new Style('#'. $element->id);
 $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   '';
@@ -158,7 +160,9 @@ $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $button_margin_top  =   $params->get('button_margin_top', '');
-echo '<div class="row'.$row_column_cls.'">';
+
+$use_masonry        =   $params->get('use_masonry', 0);
+echo '<div class="row'.($use_masonry ? ' as-masonry' : '').$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Helper::loadParams($grid->params);
     $link_target    =   !empty($grid_params->get('link_target', '')) ? ' target="'.$grid_params->get('link_target', '').'"' : '';
@@ -174,10 +178,17 @@ foreach ($grids as $key => $grid) {
             $media      =   '<a href="'. $grid_params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
         }
     } elseif ($grid_params->get('type', '') == 'icon') {
-        if ($grid_params->get('icon_type', '') == 'fontawesome') {
-            $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('fa_icon', '').'"></i>';
-        } else {
-            $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('custom_icon', '').'"></i>';
+        switch ($grid_params->get('icon_type', '')) {
+            case 'fontawesome':
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('fa_icon', '').'"></i>';
+                break;
+            case 'astroid':
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('as_icon', '').'"></i>';
+                $document->loadASIcon();
+                break;
+            default:
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('custom_icon', '').'"></i>';
+                break;
         }
         if ( !empty($grid_params->get('link', '')) && !empty($params->get('enable_icon_link', 0)) ) {
             $media      =   '<a href="'. $grid_params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
@@ -241,7 +252,9 @@ foreach ($grids as $key => $grid) {
     }
 }
 echo '</div>';
-
+if ($use_masonry) {
+    $document->loadMasonry('.as-masonry');
+}
 $style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');

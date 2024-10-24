@@ -92,6 +92,14 @@ class JFormFieldAstroidLayoutData extends FormField {
                         foreach ($row['cols'] as $col) {
                             foreach ($col['elements'] as $element) {
                                 if (isset($form_template[$element['type']]) && $form_template[$element['type']]['info']['element_type'] == 'widget') {
+                                    $availableForm = Helper\AstroidForm::getAvailableFormArray($form_template[$element['type']]['content']);
+                                    $availableElements = [];
+                                    foreach ($element['params'] as $availableElement) {
+                                        if (isset($availableForm[$availableElement['name']])) {
+                                            $availableElements[] = $availableElement;
+                                        }
+                                    }
+                                    $element['params'] = $availableElements;
                                     $article_data = Path::clean(JPATH_SITE . '/media/templates/site/' . $article_layout->template . '/astroid/article_widget_data/'. $id . '_' . $element['id'] . '.json');
                                     if (file_exists($article_data)) {
                                         $widget_data = file_get_contents($article_data);

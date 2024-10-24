@@ -8,4 +8,16 @@
       margin-left: #{$gutter-value};
     }
   }
+  .as-gutter-y-#{$gutter-point} {
+    margin-top: -#{$gutter-value};
+    > * {
+      margin-top: #{$gutter-value};
+    }
+  }
+  .as-gutter-x-#{$gutter-point} {
+    margin-left: -#{$gutter-value};
+    > * {
+      margin-left: #{$gutter-value};
+    }
+  }
 }

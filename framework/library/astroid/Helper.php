@@ -9,6 +9,7 @@
 
 namespace Astroid;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Event\Cache\AfterPurgeEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
@@ -241,6 +242,15 @@ class Helper
         }
     }
 
+    public static function isPro(): bool
+    {
+        if (defined('ASTROID_PRO')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function clearJoomlaCache()
     {
         $app = Factory::getApplication();
@@ -251,7 +261,7 @@ class Helper
         $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)
             ->createCacheController('callback', $options);
         $cache->clean(null, 'notgroup');
-        $app->getDispatcher()->dispatch('onAfterPurge');
+        $app->getDispatcher()->dispatch('onAfterPurge', new AfterPurgeEvent('onAfterPurge'));
     }
 
     public static function getFileHash($file)
@@ -357,7 +367,7 @@ class Helper
             $plugin_folders = Folder::folders($plugin_elements_dir);
             if (count($plugin_folders)) {
                 foreach ($plugin_folders as $plugin_folder) {
-                    if (file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
+                    if (PluginHelper::isEnabled('astroid', $plugin_folder) && file_exists(Path::clean($plugin_elements_dir . '/' . $plugin_folder . '/elements/'))) {
                         // Merging Plugin Elements
                         $elements = array_merge($elements, Folder::folders($plugin_elements_dir . '/' . $plugin_folder . '/elements/', '.', false, true));
                     }

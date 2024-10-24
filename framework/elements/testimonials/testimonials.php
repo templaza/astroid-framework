@@ -219,7 +219,9 @@ if ($text_alignment) {
 } else {
     $alignment              =   '';
 }
-echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls).$gutter_cls.$overlay_text_color.'">';
+
+$use_masonry        =   $params->get('use_masonry', 0);
+echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls . ($use_masonry ? ' as-masonry' : '')).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
     $testimonial_params    =   Helper::loadParams($testimonial->params);
     $avatar =   $testimonial_params->get('avatar', '');
@@ -295,11 +297,14 @@ foreach ($testimonials as $key => $testimonial) {
 echo '</div>';
 $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();
+$document = Astroid\Framework::getDocument();
 
 if ($enable_slider) {
     $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
     $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
+} elseif ($use_masonry) {
+    $document->loadMasonry('.as-masonry');
 }
 
 if ($params->get('card_size', '') == 'custom') {

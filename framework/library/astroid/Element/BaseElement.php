@@ -22,6 +22,7 @@ use Astroid\Framework;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
+use ScssPhp\ScssPhp\Compiler;
 
 defined('_JEXEC') or die;
 
@@ -91,14 +92,29 @@ class BaseElement
         $this->_styles();
         $max_width                  =   $this->params->get('max_width','');
         $max_width_breakpoint       =   $this->params->get('max_width_breakpoint','');
-        $class_maxwidth             =   $max_width ? 'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width : '';
-        $content                    =   "<{$this->_tag}{$this->_attrbs()}>";
-        if ($class_maxwidth) {
-            $content                .=  '<div class="'.$class_maxwidth.'">'. $this->content .'</div>';
+        if ($max_width) {
+            $class_maxwidth         =   'as-width' . ($max_width_breakpoint ? '-' . $max_width_breakpoint : '') . '-' . $max_width;
         } else {
-            $content                .=  $this->content;
+            $class_maxwidth         =   '';
         }
-        $content                    .=  "</{$this->_tag}>";
+        $content    =   '';
+        if ($class_maxwidth) {
+            if ($this->type === 'row') {
+                $block_align                =   $this->params->get('block_align','');
+                $block_align_breakpoint     =   $this->params->get('block_align_breakpoint','');
+                $block_align_fallback       =   $this->params->get('block_align_fallback','');
+
+                $block_align_class          =   '';
+                if ($max_width && $block_align) {
+                    $block_align_class      =   'w-100 d-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
+                }
+                $content            .=  '<div class="'.$block_align_class.'"><div class="'.$class_maxwidth.'">' . "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>" . '</div></div>';
+            } else {
+                $content            .=  "<{$this->_tag}{$this->_attrbs()}>".'<div class="'.$class_maxwidth.'">'. $this->content .'</div>'."</{$this->_tag}>";
+            }
+        } else {
+            $content                .=  "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>";
+        }
         return $content;
     }
 
@@ -159,9 +175,11 @@ class BaseElement
         $block_align_breakpoint     =   $this->params->get('block_align_breakpoint','');
         $block_align_fallback       =   $this->params->get('block_align_fallback','');
 
-        $classes                    =   array();
-        if ($max_width && $block_align) {
-            $classes[]              =   'd-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : '');
+        if ($max_width && $block_align && $this->type !== 'row') {
+            if ($this->type !== 'column') {
+                $this->addClass('w-100');
+            }
+            $this->addClass('d-flex justify-content' . ($block_align_breakpoint ? '-' . $block_align_breakpoint : '') . '-' . $block_align . ($block_align_fallback ? ' justify-content-' . $block_align_fallback : ''));
         }
 
         $text_alignment             =   $this->params->get('text_alignment','');
@@ -169,11 +187,9 @@ class BaseElement
         $text_alignment_fallback    =   $this->params->get('text_alignment_fallback','');
 
         if ($text_alignment) {
-            $classes[]              =   'text' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' text-' . $text_alignment_fallback : '');
+            $this->addClass('text' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' text-' . $text_alignment_fallback : ''));
         }
 
-        $class                      =   implode(' ', $classes);
-        $this->addClass($class);
         $this->addClass($this->params->get('customclass', ''));
         $this->addClass($this->params->get('hideonxs', 0) ? 'hideonxs' : '');
         $this->addClass($this->params->get('hideonsm', 0) ? 'hideonsm' : '');
@@ -189,8 +205,20 @@ class BaseElement
         $this->_marginPadding();
         $this->_typography();
         $this->_animation();
+        $this->_custom_css();
         $this->style->render();
         $this->style_dark->render();
+    }
+
+    protected function _custom_css(): void
+    {
+        $custom_css = $this->params->get('custom_css', '');
+        if (!empty($custom_css)) {
+            $scss = new Compiler();
+            $css = $scss->compileString('#' . $this->getAttribute('id') .'{'.$custom_css.'}');
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->addInlineStyle($css->getCss());
+        }
     }
 
     protected function _background()
@@ -329,18 +357,14 @@ class BaseElement
         $linkHover_dark->addCss('color', $link_hover_color['dark']);
     }
 
-    protected function _animation()
+    protected function _animation(): void
     {
         $animation = $this->params->get('animation', '');
         if (empty($animation)) {
             return;
         }
+        $document = Framework::getDocument();
 
-        $app = Factory::getApplication();
-        $wa = $app->getDocument()->getWebAssetManager();
-        $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
-
-        $this->addAttribute('style', 'visibility: hidden;');
         $this->addAttribute('data-animation', $animation);
 
         $delay = $this->params->get('animation_delay', '');
@@ -352,5 +376,24 @@ class BaseElement
         if (!empty($duration)) {
             $this->addAttribute('data-animation-duration', $duration);
         }
+
+        if (!Helper::isPro()) {
+            $this->addAttribute('style', 'visibility: hidden;');
+        } else {
+            $animation_element = $this->params->get('animation_element', '');
+            if (!empty($animation_element)) {
+                $this->addAttribute('data-animation-element', $animation_element);
+            }
+            $animation_loop = $this->params->get('animation_loop', 0);
+            if (!empty($animation_loop)) {
+                $this->addAttribute('data-animation-loop', $this->params->get('animation_scrub', 0));
+            }
+            $animation_easing = $this->params->get('animation_easing', 'power3');
+            if ($animation_easing !== 'none' && $animation_easing !== 'steps') {
+                $animation_easing .= '.' . $this->params->get('animation_easing_type', 'out');
+            }
+            $this->addAttribute('data-animation-ease', $animation_easing);
+        }
+        $document->loadAnimation();
     }
 }

@@ -36,6 +36,7 @@
                                     <option value="light">Light</option>
                                     <option value="dark">Dark</option>
                                     <option value="link">Link</option>
+                                    <option value="text">Text</option>
                                 </field>
                                 <field name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
                                 <field type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
