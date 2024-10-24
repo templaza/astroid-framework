@@ -334,7 +334,7 @@ foreach ($items as $key => $item) {
         echo '<div class="col order-1">';
     }
 
-    echo '<div class="'.($layout == 'overlay' || $enable_image_cover ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
+    echo '<div class="'.($layout == 'overlay' ? 'card-img-overlay as-light z-1' : 'order-1 card-body' ) . $card_size.'">'; // Start Card-Body
 
     if ($media_position == 'inside') {
         echo $media;
