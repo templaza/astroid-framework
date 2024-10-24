@@ -945,7 +945,7 @@ class Document
         }
         if (!empty($selector)) {
             $this->loadImagesLoaded();
-            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$selector.'\').addClass("as-loading");jQuery(\''.$selector.'\').imagesLoaded(function() { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });});');
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$selector.'\').addClass("as-loading");imagesLoaded( document.querySelector(\''.$selector.'\'), function( instance ) { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });});');
         }
     }
 
@@ -972,7 +972,7 @@ class Document
         }
         if (!empty($obj) && !empty($config)) {
             $this->loadImagesLoaded();
-            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').addClass("as-loading");jQuery(\''.$obj.'\').imagesLoaded( function() {const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading"); });});');
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').addClass("as-loading");imagesLoaded( document.querySelector(\''.$obj.'\'), function( instance ) {const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading"); });});');
         }
     }
 
