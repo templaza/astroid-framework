@@ -34,7 +34,7 @@
                         $(_this).addClass('animation-done');
                         setTimeout(function () {
                             $(_this).removeClass('animate');
-                            $(_this).addClass('animated');
+                            $(_this).addClass(_prefix + 'animated');
                             $(_this).removeClass(_prefix + _animation);
                         }, (_duration + _delay));
                     }, _delay);
