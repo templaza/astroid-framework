@@ -205,7 +205,7 @@ if ($use_lightbox) {
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
 } elseif ($use_masonry) {
-    $document->loadMasonry('.as-masonry');
+    $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
 
 if ($enable_image_cover) {

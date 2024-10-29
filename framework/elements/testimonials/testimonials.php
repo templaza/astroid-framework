@@ -304,7 +304,7 @@ if ($enable_slider) {
     $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
     echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
 } elseif ($use_masonry) {
-    $document->loadMasonry('.as-masonry');
+    $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
 
 if ($params->get('card_size', '') == 'custom') {

@@ -253,7 +253,7 @@ foreach ($grids as $key => $grid) {
 }
 echo '</div>';
 if ($use_masonry) {
-    $document->loadMasonry('.as-masonry');
+    $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
 $style->child('.astroid-icon')->addCss('font-size', $icon_size.'px');
 if ($params->get('card_size', '') == 'custom') {
