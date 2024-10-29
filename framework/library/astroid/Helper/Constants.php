@@ -144,7 +144,11 @@ class Constants
             'fadeInRight' => 'fadeInRight',
             'fadeInRightBig' => 'fadeInRightBig',
             'fadeInUp' => 'fadeInUp',
-            'fadeInUpBig' => 'fadeInUpBig'
+            'fadeInUpBig' => 'fadeInUpBig',
+            'fadeInTopLeft' => 'fadeInTopLeft',
+            'fadeInTopRight' => 'fadeInTopRight',
+            'fadeInBottomLeft' => 'fadeInBottomLeft',
+            'fadeInBottomRight' => 'fadeInBottomRight',
         ],
         'Flippers Entrances' => [
             'flip' => 'flip',
@@ -152,7 +156,8 @@ class Constants
             'flipInY' => 'flipInY'
         ],
         'Lightspeed Entrances' => [
-            'lightSpeedIn' => 'lightSpeedIn',
+            'lightSpeedInRight' => 'lightSpeedInRight',
+            'lightSpeedInLeft' => 'lightSpeedInLeft',
         ],
         'Rotating Entrances' => [
             'rotateIn' => 'rotateIn',
