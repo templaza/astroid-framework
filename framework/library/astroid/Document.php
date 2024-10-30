@@ -33,13 +33,17 @@ class Document
     protected $minify_js = false;
     protected $minify_html = false;
     protected static bool $_fontawesome = false;
+    protected static bool $_asicon = false;
     protected static bool $_fancybox = false;
     protected static bool $_masonry = false;
     protected static bool $_imagesloaded = false;
     protected static bool $_gsap = false;
     protected static array $_gsap_plugins = [];
     protected static bool $_slick = false;
+    protected static bool $_swiper = false;
     protected static bool $_videojs = false;
+    protected static bool $_lenis = false;
+    protected static bool $_animation = false;
     protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -914,6 +918,13 @@ class Document
         Helper\Font::loadFontAwesome();
     }
 
+    public function loadASIcon(): void
+    {
+        if (!self::$_asicon) {
+            Helper\Font::loadASIcon();
+        }
+    }
+
     public function loadFancyBox(): void
     {
         if (self::$_fancybox) {
@@ -933,7 +944,8 @@ class Document
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $wa->addInlineScript('jQuery(window).on("load", function(){$(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true});});');
+            $this->loadImagesLoaded();
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$selector.'\').addClass("as-loading");imagesLoaded( document.querySelector(\''.$selector.'\'), function( instance ) { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });});');
         }
     }
 
@@ -950,12 +962,42 @@ class Document
         }
     }
 
+    public function loadSwiper($obj = '', $config = ''): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        if (!self::$_swiper) {
+            $wa->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
+            $wa->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_swiper = true;
+        }
+        if (!empty($obj) && !empty($config)) {
+            $this->loadImagesLoaded();
+            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').addClass("as-loading");imagesLoaded( document.querySelector(\''.$obj.'\'), function( instance ) {const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading"); });});');
+        }
+    }
+
     public function loadImagesLoaded(): void
     {
         if (!self::$_imagesloaded) {
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_imagesloaded = true;
+        }
+    }
+
+    public function loadAnimation(): void
+    {
+        if (!self::$_animation) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
+            if (Helper::isPro()) {
+                $this->loadImagesLoaded();
+                $this->loadGSAP('ScrollTrigger');
+                $wa->registerAndUseScript('astroid.animation.pro', 'media/astroidpro/assets/animations/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            } else {
+                $wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            }
+            self::$_animation = true;
         }
     }
 
@@ -978,6 +1020,15 @@ class Document
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_videojs = true;
+        }
+    }
+
+    public function loadLenis(): void
+    {
+        if (!self::$_lenis) {
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
+            self::$_lenis = true;
         }
     }
 

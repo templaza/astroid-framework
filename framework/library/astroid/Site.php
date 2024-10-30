@@ -40,6 +40,7 @@ class Site extends Helper\Client
         Component\Utility::typography(); // site typography
         Helper\Head::styles(); // site Styles
         Component\LazyLoad::run(); // to execute lazy load
+        Component\Utility::cursorEffect(); // smooth scroll utility
         Component\Utility::smoothScroll(); // smooth scroll utility
         Helper\Head::scripts(); // site scripts
     }

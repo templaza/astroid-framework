@@ -90,27 +90,30 @@ if ($mode == 'divided-logo-left') {
                          <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
                      </div>
                  </div>
-             <?php } ?>
-             <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-                 <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
-                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                 <?php echo '</div>'; ?>
-             <?php } ?>
-             <?php
-             // header block 1 starts
-             if ($block_1_type == 'position') {
-                 echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
-                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
-                 echo $document->position($block_1_position, 'xhtml');
-                 echo '</div>';
-                 echo '</div>';
-             }
-             if ($block_1_type == 'custom') {
-                 echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
-                 echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
-                 echo $block_1_custom;
-                 echo '</div>';
-                 echo '</div>';
+             <?php }
+             if (($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') || $block_1_type == 'position' || $block_1_type == 'custom') {
+                 if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') {
+                     echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">';
+                     $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]);
+                     echo '</div>';
+                 }
+                 // header block 1 starts
+                 if ($block_1_type == 'position') {
+                     echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
+                     echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
+                     echo $document->position($block_1_position, 'xhtml');
+                     echo '</div>';
+                     echo '</div>';
+                 }
+                 if ($block_1_type == 'custom') {
+                     echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
+                     echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
+                     echo $block_1_custom;
+                     echo '</div>';
+                     echo '</div>';
+                 }
+             } else {
+                 echo '<div class="w-100"></div>';
              }
              // header block 1 ends
 
@@ -119,7 +122,7 @@ if ($mode == 'divided-logo-left') {
                  echo '<div class="d-flex w-100 justify-content-center">' . $logo . '</div>';
              }
 
-             if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom' || $color_mode) {
+             if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom') {
                  echo '<div class="w-100 d-flex justify-content-end align-items-center">';
                  // header block 2 starts
                  if ($block_2_type == 'position') {
@@ -142,6 +145,8 @@ if ($mode == 'divided-logo-left') {
                      <?php
                  }
                  echo '</div>';
+             } else {
+                 echo '<div class="w-100"></div>';
              }
 
              echo '</div>';

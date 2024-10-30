@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.1.6';
+    public static $astroid_version = '3.1.7';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -144,7 +144,11 @@ class Constants
             'fadeInRight' => 'fadeInRight',
             'fadeInRightBig' => 'fadeInRightBig',
             'fadeInUp' => 'fadeInUp',
-            'fadeInUpBig' => 'fadeInUpBig'
+            'fadeInUpBig' => 'fadeInUpBig',
+            'fadeInTopLeft' => 'fadeInTopLeft',
+            'fadeInTopRight' => 'fadeInTopRight',
+            'fadeInBottomLeft' => 'fadeInBottomLeft',
+            'fadeInBottomRight' => 'fadeInBottomRight',
         ],
         'Flippers Entrances' => [
             'flip' => 'flip',
@@ -152,7 +156,8 @@ class Constants
             'flipInY' => 'flipInY'
         ],
         'Lightspeed Entrances' => [
-            'lightSpeedIn' => 'lightSpeedIn',
+            'lightSpeedInRight' => 'lightSpeedInRight',
+            'lightSpeedInLeft' => 'lightSpeedInLeft',
         ],
         'Rotating Entrances' => [
             'rotateIn' => 'rotateIn',

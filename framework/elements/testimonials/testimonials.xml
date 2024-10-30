@@ -204,6 +204,8 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+                <field astroidgroup="grid_options" name="use_masonry" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_USE_MASONRY"/>
+
                 <field astroidgroup="card_options" type="astroidlist" name="card_style" label="ASTROID_WIDGET_CARD_STYLE_LABEL" default="">
                     <option value="">Default</option>
                     <option value="primary">Primary</option>
@@ -460,6 +462,9 @@
                 <field astroidgroup="content_options" name="content_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
                 <field astroidgroup="rating_options" name="enable_rating" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_RATING"/>
                 <field astroidgroup="rating_options" name="rating_color" type="astroidcolor" label="ASTROID_WIDGET_RATING_COLOR"/>
+            </fieldset>
+            <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidtext" default=".card" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">

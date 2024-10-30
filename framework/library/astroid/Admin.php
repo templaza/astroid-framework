@@ -207,13 +207,23 @@ class Admin extends Helper\Client
 
     protected function icons() : void
     {
+        $source = Factory::getApplication()->input->get('source', '', 'ALNUM');
         if ($this->format == 'html') {
             $this->format = 'json';
             $return = ['success' => true];
-            $return['results'] = Helper\Font::fontAwesomeIcons(true);
+            if ($source === 'astroid') {
+                $return['results'] = Helper\Font::fontAstroidIcons();
+            } else {
+                $return['results'] = Helper\Font::fontAwesomeIcons(true);
+            }
+
             $this->response($return, true);
         } else {
-            $this->response(Helper\Font::fontAwesomeIcons());
+            if ($source === 'astroid') {
+                $this->response(Helper\Font::fontAstroidIcons());
+            } else {
+                $this->response(Helper\Font::fontAwesomeIcons());
+            }
         }
     }
 

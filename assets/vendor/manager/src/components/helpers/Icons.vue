@@ -24,7 +24,7 @@ const showIcons = computed(()=>{
 })
 
 onMounted(()=>{
-    let url = "index.php?option=com_ajax&astroid=search&format=html&search=icon&ts="+Date.now();
+    let url = "index.php?option=com_ajax&astroid=search&format=html&search=icon&source="+props.field.input.source+"&ts="+Date.now();
     if (process.env.NODE_ENV === 'development') {
         url = "icon_ajax.txt?ts="+Date.now();
     }

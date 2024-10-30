@@ -10,6 +10,7 @@ namespace Astroid;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 
@@ -30,6 +31,7 @@ class Element
     public string $element_type = 'layout';
     protected string $xml_file = '';
     protected string $default_xml_file = '';
+    protected string $default_pro_xml_file = '';
     protected string $layout = '';
     public array $params = [];
     public mixed $data = [];
@@ -73,37 +75,37 @@ class Element
             $plugin_elements_directory = Path::clean(JPATH_SITE . '/plugins/astroid/');
             $template_elements_directory = Path::clean(JPATH_SITE . '/media/templates/site/' . $template_name . '/astroid/elements/');
 
-            switch ($this->type) {
-                case 'section':
-                    $this->default_xml_file = $library_elements_directory . 'section-default.xml';
-                    break;
-                case 'column':
-                    $this->default_xml_file = $library_elements_directory . 'column-default.xml';
-                    break;
-                case 'row':
-                    $this->default_xml_file = $library_elements_directory . 'row-default.xml';
-                    break;
-                default:
-                    if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
-                        $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
-                    } elseif ($this->mode === 'article_data') {
-                        $this->default_xml_file = $library_elements_directory . 'default_article.xml';
-                    } else {
-                        $this->default_xml_file = $library_elements_directory . 'default.xml';
-                    }
-                    break;
+            if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
+                $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
+            } elseif ($this->mode === 'article_data') {
+                $this->default_xml_file = $library_elements_directory . 'default_article.xml';
+            } else {
+                $this->default_xml_file = $library_elements_directory . 'default.xml';
             }
 
-            if (file_exists(Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
-                $this->xml_file = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml');
-                $this->layout = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.php');
+            switch ($this->type) {
+                case 'section':
+                    $this->xml_file = $library_elements_directory . 'section.xml';
+                    break;
+                case 'column':
+                    $this->xml_file = $library_elements_directory . 'column.xml';
+                    break;
+                case 'row':
+                    $this->xml_file = $library_elements_directory . 'row.xml';
+                    break;
+                default:
+                    if (file_exists(Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml'))) {
+                        $this->xml_file = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.xml');
+                        $this->layout = Path::clean($library_elements_directory . $this->type . '/' . $this->type . '.php');
+                    }
+                    break;
             }
 
             if (file_exists($plugin_elements_directory)) {
                 $plugin_folders = Folder::folders($plugin_elements_directory);
                 if (count($plugin_folders)) {
                     foreach ($plugin_folders as $plugin_folder) {
-                        if (file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
+                        if (PluginHelper::isEnabled('astroid', $plugin_folder) && file_exists(Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml'))) {
                             $this->xml_file = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.xml');
                             $this->layout = Path::clean($plugin_elements_directory . '/' . $plugin_folder . '/elements/' . $this->type . '/' . $this->type . '.php');
                         }
@@ -164,6 +166,10 @@ class Element
         if ($this->type !== 'subform') {
             $defaultXml = simplexml_load_file($this->default_xml_file);
             $this->form->load($defaultXml->form, false);
+            if ($this->mode !== 'article_data' && Helper::isPro()) {
+                $defaultXml = simplexml_load_file(ASTROID_PRO_PATH . DIRECTORY_SEPARATOR . 'elements' . DIRECTORY_SEPARATOR . 'default.xml');
+                $this->form->load($defaultXml->form, false);
+            }
         } else {
             if ($this->subform['formtype'] == 'string') {
                 $defaultXml = simplexml_load_string($this->subform['formsource']);

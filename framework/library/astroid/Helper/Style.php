@@ -392,7 +392,7 @@ class Style
             } else {
                 foreach (['top', 'right', 'bottom', 'left'] as $position) {
                     $pvalue = $value->{$position};
-                    if (($value->unit == 'Custom' && isset($pvalue)) || is_numeric($pvalue)) {
+                    if (($value->unit == 'Custom' && isset($pvalue) && $pvalue !== '') || is_numeric($pvalue)) {
                         $return[$position] = self::getPropertySubset($property, $position) . ":{$pvalue}{$unit}";
                         $values[$position] = "{$pvalue}{$unit}";
                     }

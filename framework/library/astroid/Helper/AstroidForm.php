@@ -73,4 +73,19 @@ class AstroidForm
     {
         return $this->form;
     }
+
+    public static function getAvailableFormArray($fieldsets = []): array
+    {
+        $arr = [];
+        foreach ($fieldsets as $fieldset) {
+            foreach ($fieldset->childs as $group) {
+                foreach ($group['fields'] as $field) {
+                    if (isset($field['name']) && !empty($field['name'])) {
+                        $arr[$field['name']] = true;
+                    }
+                }
+            }
+        }
+        return $arr;
+    }
 }

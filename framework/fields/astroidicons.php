@@ -33,10 +33,15 @@ class JFormFieldAstroidicons extends FormField {
      * @since   3.7.0
      */
     protected function getInput() {
+        $source =   (string)$this->element['source'];
+        if (empty($source)) {
+            $source = 'fontawesome';
+        }
         $json =   [
             'id'      =>  $this->id,
             'name'    =>  $this->name,
             'value'   =>  $this->value,
+            'source'  =>  $source,
             'type'    =>  strtolower($this->type),
         ];
         return json_encode($json);
