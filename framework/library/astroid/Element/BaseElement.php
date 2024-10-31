@@ -384,15 +384,8 @@ class BaseElement
             if (!empty($animation_element)) {
                 $this->addAttribute('data-animation-element', $animation_element);
             }
-            $animation_loop = $this->params->get('animation_loop', 0);
-            if (!empty($animation_loop)) {
-                $this->addAttribute('data-animation-loop', $this->params->get('animation_scrub', 0));
-            }
-            $animation_easing = $this->params->get('animation_easing', 'power3');
-            if ($animation_easing !== 'none' && $animation_easing !== 'steps') {
-                $animation_easing .= '.' . $this->params->get('animation_easing_type', 'out');
-            }
-            $this->addAttribute('data-animation-ease', $animation_easing);
+            $this->addAttribute('data-animation-loop', $this->params->get('animation_loop', 0));
+            $this->addAttribute('data-animation-stagger', $this->params->get('animation_stagger', 200));
         }
         $document->loadAnimation();
     }
