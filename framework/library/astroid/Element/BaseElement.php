@@ -377,9 +377,8 @@ class BaseElement
             $this->addAttribute('data-animation-duration', $duration);
         }
 
-        if (!Helper::isPro()) {
-            $this->addAttribute('style', 'visibility: hidden;');
-        } else {
+        $this->addAttribute('style', 'visibility: hidden;');
+        if (Helper::isPro()) {
             $animation_element = $this->params->get('animation_element', '');
             if (!empty($animation_element)) {
                 $this->addAttribute('data-animation-element', $animation_element);
