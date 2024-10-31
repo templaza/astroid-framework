@@ -32,6 +32,7 @@ class Constants
     public static $astroid_link = 'https://astroidframe.work/';
     public static $templates_link = 'https://astroidframe.work/partners';
     public static $jed_link = 'https://extensions.joomla.org/extension/astroid-framework/';
+    public static $go_pro = 'https://astroidframe.work/pricing';
 
     /**
      * Return configurations of Manager

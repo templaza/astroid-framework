@@ -197,4 +197,8 @@ function updateSubLayouts() {
     <div v-else-if="props.field.input.type === `articlelayouts`" class="astroid-article-layouts">
         <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" type="article_layouts" />
     </div>
+    <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card card-body">
+        <h6 class="card-title">{{ props.field.input.title }}</h6>
+        <div class="card-text form-text" v-html="props.field.input.desc"></div>
+    </div>
 </template>
