@@ -105,6 +105,7 @@ if (!class_exists('astroidInstallerScript')) {
             $db->setQuery($query);
             $db->execute();
 
+            var_dump($module_name); die();
             if ($module_name === 'mod_astroid_clear_cache') {
                 $query = $db->getQuery(true);
                 $query->update('#__modules');
