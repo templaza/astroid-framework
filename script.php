@@ -105,38 +105,37 @@ if (!class_exists('astroidInstallerScript')) {
             $db->setQuery($query);
             $db->execute();
 
-            var_dump($module_name); die();
-            if ($module_name === 'mod_astroid_clear_cache') {
-                $query = $db->getQuery(true);
-                $query->update('#__modules');
-                $query->set($db->quoteName('published') . ' = 1');
-                $query->set($db->quoteName('position') . ' = ' . $db->quote('status'));
-                $query->set($db->quoteName('params') . ' = ' . $db->quote('{"layout":"_:default","moduleclass_sfx":"","style":"0","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":""}'));
-                $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
-                $db->setQuery($query);
-                $db->execute();
-            }
-
-            // Retrieve ID
-            $query = $db->getQuery(true);
-            $query->select($db->quoteName('id'));
-            $query->from($db->quoteName('#__modules'));
-            $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
-            $db->setQuery($query);
-            $id = (int) $db->loadResult();
-
-            if ($id) {
-                $query = $db->getQuery(true);
-                $query->select($db->quoteName('moduleid'));
-                $query->from($db->quoteName('#__modules_menu'));
-                $query->where($db->quoteName('moduleid') . ' = ' . $id);
-                $db->setQuery($query);
-                if (!$db->loadResult()) {
-                    $db->getQuery(true);
-                    $db->setQuery("INSERT INTO #__modules_menu (`moduleid`,`menuid`) VALUES (".$id.", 0)");
-                    $db->execute();
-                }
-            }
+//            if ($module_name === 'mod_astroid_clear_cache') {
+//                $query = $db->getQuery(true);
+//                $query->update('#__modules');
+//                $query->set($db->quoteName('published') . ' = 1');
+//                $query->set($db->quoteName('position') . ' = ' . $db->quote('status'));
+//                $query->set($db->quoteName('params') . ' = ' . $db->quote('{"layout":"_:default","moduleclass_sfx":"","style":"0","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":""}'));
+//                $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
+//                $db->setQuery($query);
+//                $db->execute();
+//            }
+//
+//            // Retrieve ID
+//            $query = $db->getQuery(true);
+//            $query->select($db->quoteName('id'));
+//            $query->from($db->quoteName('#__modules'));
+//            $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
+//            $db->setQuery($query);
+//            $id = (int) $db->loadResult();
+//
+//            if ($id) {
+//                $query = $db->getQuery(true);
+//                $query->select($db->quoteName('moduleid'));
+//                $query->from($db->quoteName('#__modules_menu'));
+//                $query->where($db->quoteName('moduleid') . ' = ' . $id);
+//                $db->setQuery($query);
+//                if (!$db->loadResult()) {
+//                    $db->getQuery(true);
+//                    $db->setQuery("INSERT INTO #__modules_menu (`moduleid`,`menuid`) VALUES (".$id.", 0)");
+//                    $db->execute();
+//                }
+//            }
             return true;
         }
 
