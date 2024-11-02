@@ -43,6 +43,8 @@
                 </field>
                 <field astroidgroup="slideshow_options" name="autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
                 <field astroidgroup="slideshow_options" ngShow="[autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
+                <field astroidgroup="slideshow_options" name="controls" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_CONTROLS"/>
+                <field astroidgroup="slideshow_options" name="indicators" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_INDICATORS"/>
                 <field astroidgroup="slideshow_options" type="astroidlist" name="slide_border_radius" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
                     <option value="0">TPL_ASTROID_ICON_STYLE_SQUARE</option>
