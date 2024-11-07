@@ -220,26 +220,31 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         $enable_smooth_scroll = $params->get('enable_smooth_scroll', '');
         if ($enable_smooth_scroll == '1') {
+            $options    =   [];
+            $options[]  =   'duration: '. (float)($params->get('smooth_scroll_speed', '1200')/1000);
+            $configs    =   implode(',', $options);
+            $wa         =   Factory::getApplication()->getDocument()->getWebAssetManager();
             $document   =   Framework::getDocument();
             $document->loadLenis();
-            $script = 'const initSmoothScrollingGSAP = () => {
-const lenis = new Lenis()
-lenis.on(\'scroll\', ScrollTrigger.update)
-gsap.ticker.add((time)=>{
-  lenis.raf(time * 1000)
-})
-gsap.ticker.lagSmoothing(0)
-};
-const initSmoothScrolling = () => {
-const lenis = new Lenis()
-function raf(time) {
-  lenis.raf(time)
-  requestAnimationFrame(raf)
-}
-requestAnimationFrame(raf)
-};
-if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
-            $document->addScriptDeclaration($script, 'body');
+            $script     =   'const initSmoothScrollingGSAP = () => {'
+                .'const lenis = new Lenis({' . $configs . '});'
+                .'lenis.on(\'scroll\', ScrollTrigger.update);'
+                .'gsap.ticker.add((time)=>{'
+                    .'lenis.raf(time * 1000)'
+                .'});'
+                .'gsap.ticker.lagSmoothing(0);'.
+                '};'
+                .'const initSmoothScrolling = () => {'
+                .'const lenis = new Lenis({' . $configs . '});'
+                .'function raf(time) {'
+                . 'lenis.raf(time);'
+                . 'requestAnimationFrame(raf);'
+                .'}'
+                .'requestAnimationFrame(raf);'
+                .'};'
+                .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
+            $wa->registerAndUseStyle('astroid.lenis', 'astroid/lenis.min.css');
+            $wa->addInlineScript($script);
         }
     }
 
