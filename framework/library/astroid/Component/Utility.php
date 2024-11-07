@@ -222,6 +222,10 @@ class Utility
         if ($enable_smooth_scroll == '1') {
             $options    =   [];
             $options[]  =   'duration: '. (float)($params->get('smooth_scroll_speed', '1200')/1000);
+            $easing     =   $params->get('smooth_scroll_easing', '');
+            if (!empty($easing)) {
+                $options[]  =   'easing: '. Helper\Constants::$easing[$easing];
+            }
             $configs    =   implode(',', $options);
             $wa         =   Factory::getApplication()->getDocument()->getWebAssetManager();
             $document   =   Framework::getDocument();

@@ -215,6 +215,38 @@
 
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
          <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" min="1" max="10000" step="1" default="1200" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
+         <field astroidgroup="smooth_scroll" ngShow="[enable_smooth_scroll]=='1'" name="smooth_scroll_easing" type="astroidlist" label="ASTROID_SMOOTH_SCROLL_EASING" description="ASTROID_SMOOTH_SCROLL_EASING_DESC" default="">
+            <option value="">JDEFAULT</option>
+            <option value="easeInSine">easeInSine</option>
+            <option value="easeOutSine">easeOutSine</option>
+            <option value="easeInOutSine">easeInOutSine</option>
+            <option value="easeInCubic">easeInCubic</option>
+            <option value="easeOutCubic">easeOutCubic</option>
+            <option value="easeInOutCubic">easeInOutCubic</option>
+            <option value="easeInQuint">easeInQuint</option>
+            <option value="easeOutQuint">easeOutQuint</option>
+            <option value="easeInOutQuint">easeInOutQuint</option>
+            <option value="easeInCirc">easeInCirc</option>
+            <option value="easeOutCirc">easeOutCirc</option>
+            <option value="easeInOutCirc">easeInOutCirc</option>
+            <option value="easeInElastic">easeInElastic</option>
+            <option value="easeOutElastic">easeOutElastic</option>
+            <option value="easeInOutElastic">easeInOutElastic</option>
+            <option value="easeInQuad">easeInQuad</option>
+            <option value="easeOutQuad">easeOutQuad</option>
+            <option value="easeInOutQuad">easeInOutQuad</option>
+            <option value="easeInQuart">easeInQuart</option>
+            <option value="easeOutQuart">easeOutQuart</option>
+            <option value="easeInOutQuart">easeInOutQuart</option>
+            <option value="easeInExpo">easeInExpo</option>
+            <option value="easeOutExpo">easeOutExpo</option>
+            <option value="easeInOutExpo">easeInOutExpo</option>
+            <option value="easeInBack">easeInBack</option>
+            <option value="easeOutBack">easeOutBack</option>
+            <option value="easeInOutBack">easeInOutBack</option>
+            <option value="easeInBounce">easeInBounce</option>
+            <option value="easeOutBounce">easeOutBounce</option>
+         </field>
          <field astroidgroup="cursor_options" name="enable_cursor_effect" type="astroidgetpro" label="ASTROID_CURSOR_EFFECT_ENABLE" description="ASTROID_CURSOR_EFFECT_ENABLE_DESC" />
       </fieldset>
    </fields>
