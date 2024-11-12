@@ -226,6 +226,20 @@ class Utility
             if (!empty($easing)) {
                 $options[]  =   'easing: '. Helper\Constants::$easing[$easing];
             }
+            $prevent    =   $params->get('smooth_scroll_prevent', '');
+            $prevent_script     =   '';
+            if (!empty($prevent)) {
+                $prevent_arr    =   explode(',', $prevent);
+                if (count($prevent_arr)) {
+                    $prevent_script .= 'jQuery(document).ready(function($){';
+                    foreach ($prevent_arr as $key => $value) {
+                        if (!empty(trim($value))) {
+                            $prevent_script .= '$("'.trim($value).'").attr("data-lenis-prevent", "");';
+                        }
+                    }
+                    $prevent_script .= '});';
+                }
+            }
             $configs    =   implode(',', $options);
             $wa         =   Factory::getApplication()->getDocument()->getWebAssetManager();
             $document   =   Framework::getDocument();
@@ -248,7 +262,7 @@ class Utility
                 .'};'
                 .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
             $wa->registerAndUseStyle('astroid.lenis', 'astroid/lenis.min.css');
-            $wa->addInlineScript($script);
+            $wa->addInlineScript($script.$prevent_script);
         }
     }
 

@@ -247,6 +247,7 @@
             <option value="easeInBounce">easeInBounce</option>
             <option value="easeOutBounce">easeOutBounce</option>
          </field>
+         <field astroidgroup="smooth_scroll" ngShow="[enable_smooth_scroll]=='1'" name="smooth_scroll_prevent" type="astroidtextarea" label="TPL_SMOOTH_SCROLL_PREVENT_LBL" description="TPL_SMOOTH_SCROLL_PREVENT_DESC" />
          <field astroidgroup="cursor_options" name="enable_cursor_effect" type="astroidgetpro" label="ASTROID_CURSOR_EFFECT_ENABLE" description="ASTROID_CURSOR_EFFECT_ENABLE_DESC" />
       </fieldset>
    </fields>
