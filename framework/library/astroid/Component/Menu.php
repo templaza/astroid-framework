@@ -145,7 +145,7 @@ class Menu
             }
         }
 
-        if (count($list) == 1 && $logo_position == 1 && $logo !== null) {
+        if (count($list) == 1 && $logo_position == 1 && !empty($logo)) {
             echo '<li class="nav-item nav-stacked-logo text-center">';
             $document->include('logo');
             echo '</li>';

@@ -130,37 +130,26 @@ function editElement(el) {
     _showModal.value = true;
 }
 function saveElement(param) {
-    layout.value.sections.every(section => {
-        if (element.value.type === section.type && element.value.id === section.id) {
-            section.params = param;
+    const updateParams = (el) => {
+        if (element.value.type === el.type && element.value.id === el.id) {
+            el.params = param;
             element.value = {};
-            return false;
-        }
-        section.rows.every(row => {
-            if (element.value.type === row.type && element.value.id === row.id) {
-                row.params = param;
-                element.value = {};
-                return false;
-            }
-            row.cols.every(column => {
-                if (element.value.type === column.type && element.value.id === column.id) {
-                    column.params = param;
-                    element.value = {};
-                    return false;
-                }
-                column.elements.every(el => {
-                    if (element.value.type === el.type && element.value.id === el.id) {
-                        el.params = param;
-                        element.value = {};
-                        return false;
-                    }
-                    return true;
-                });
-                return true;
-            });
             return true;
+        }
+        return false;
+    };
+
+    layout.value.sections.forEach(section => {
+        if (updateParams(section)) return;
+        section.rows.forEach(row => {
+            if (updateParams(row)) return;
+            row.cols.forEach(column => {
+                if (updateParams(column)) return;
+                column.elements.forEach(el => {
+                    if (updateParams(el)) return;
+                });
+            });
         });
-        return true;
     });
 }
 
