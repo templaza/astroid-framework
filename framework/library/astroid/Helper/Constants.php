@@ -32,6 +32,7 @@ class Constants
     public static $astroid_link = 'https://astroidframe.work/';
     public static $templates_link = 'https://astroidframe.work/partners';
     public static $jed_link = 'https://extensions.joomla.org/extension/astroid-framework/';
+    public static $go_pro = 'https://astroidframe.work/pricing';
 
     /**
      * Return configurations of Manager
@@ -291,6 +292,38 @@ class Constants
         ['title' => 'VK', 'link' => '', 'icons' => ['fab fa-vk'], 'color' => '#4273AD', 'enabled' => false, 'icon' => 'fab fa-vk'],
         ['title' => 'WhatsApp', 'link' => '', 'icons' => ['fab fa-whatsapp', 'fab fa-whatsapp-square'], 'color' => '#00C033', 'enabled' => false, 'icon' => 'fab fa-whatsapp'],
         ['title' => 'YouTube', 'link' => '', 'icons' => ['fab fa-youtube', 'fab fa-youtube-square'], 'color' => '#DE0000', 'enabled' => false, 'icon' => 'fab fa-youtube'],
+    ];
+
+    public static $easing = [
+        'easeInSine' => '(x)=>{return 1-Math.cos((x*Math.PI)/2)}',
+        'easeOutSine' => '(x)=>{return Math.sin((x*Math.PI)/2)}',
+        'easeInOutSine' => '(x)=>{return-(Math.cos(Math.PI*x)-1)/2}',
+        'easeInCubic' => '(x)=>{return x*x*x}',
+        'easeOutCubic' => '(x)=>{return 1-Math.pow(1-x,3)}',
+        'easeInOutCubic' => '(x)=>{return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2}',
+        'easeInQuint' => '(x)=>{return x*x*x*x*x}',
+        'easeOutQuint' => '(x)=>{return 1-Math.pow(1-x,5)}',
+        'easeInOutQuint' => '(x)=>{return x<0.5?16*x*x*x*x*x:1-Math.pow(-2*x+2,5)/2}',
+        'easeInCirc' => '(x)=>{return 1-Math.sqrt(1-Math.pow(x,2))}',
+        'easeOutCirc' => '(x)=>{return Math.sqrt(1-Math.pow(x-1,2))}',
+        'easeInOutCirc' => '(x)=>{return x<0.5?(1-Math.sqrt(1-Math.pow(2*x,2)))/2:(Math.sqrt(1-Math.pow(-2*x+2,2))+1)/2}',
+        'easeInElastic' => '(x)=>{const c4=(2*Math.PI)/3;return x===0?0:x===1?1:-Math.pow(2,10*x-10)*Math.sin((x*10-10.75)*c4)}',
+        'easeOutElastic' => '(x)=>{const c4=(2*Math.PI)/3;return x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-0.75)*c4)+1}',
+        'easeInOutElastic' => '(x)=>{const c5=(2*Math.PI)/4.5;return x===0?0:x===1?1:x<0.5?-(Math.pow(2,20*x-10)*Math.sin((20*x-11.125)*c5))/2:(Math.pow(2,-20*x+10)*Math.sin((20*x-11.125)*c5))/2+1}',
+        'easeInQuad' => '(x)=>{return x*x}',
+        'easeOutQuad' => '(x)=>{return 1-(1-x)*(1-x)}',
+        'easeInOutQuad' => '(x)=>{return x<0.5?2*x*x:1-Math.pow(-2*x+2,2)/2}',
+        'easeInQuart' => '(x)=>{return x*x*x*x}',
+        'easeOutQuart' => '(x)=>{return 1-Math.pow(1-x,4)}',
+        'easeInOutQuart' => '(x)=>{return x<0.5?8*x*x*x*x:1-Math.pow(-2*x+2,4)/2}',
+        'easeInExpo' => '(x)=>{return x===0?0:Math.pow(2,10*x-10)}',
+        'easeOutExpo' => '(x)=>{return x===1?1:1-Math.pow(2,-10*x)}',
+        'easeInOutExpo' => '(x)=>{return x===0?0:x===1?1:x<0.5?Math.pow(2,20*x-10)/2:(2-Math.pow(2,-20*x+10))/2}',
+        'easeInBack' => '(x)=>{const c1=1.70158;const c3=c1+1;return c3*x*x*x-c1*x*x}',
+        'easeOutBack' => '(x)=>{const c1=1.70158;const c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)}',
+        'easeInOutBack' => '(x)=>{const c1=1.70158;const c2=c1*1.525;return x<0.5?(Math.pow(2*x,2)*((c2+1)*2*x-c2))/2:(Math.pow(2*x-2,2)*((c2+1)*(x*2-2)+c2)+2)/2}',
+        'easeInBounce' => '(x)=>{const n1=7.5625;const d1=2.75;let t=1-x;if(t<1/d1){return 1-(n1*t*t)}else if(t<2/d1){return 1-(n1*(t-=1.5/d1)*t+0.75)}else if(t<2.5/d1){return 1-(n1*(t-=2.25/d1)*t+0.9375)}else{return 1-(n1*(t-=2.625/d1)*t+0.984375)}}',
+        'easeOutBounce' => '(x)=>{const n1=7.5625;const d1=2.75;if(x<1/d1){return n1*x*x}else if(x<2/d1){return n1*(x-=1.5/d1)*x+0.75}else if(x<2.5/d1){return n1*(x-=2.25/d1)*x+0.9375}else{return n1*(x-=2.625/d1)*x+0.984375}}',
     ];
 
     public static $preloaders = [

@@ -105,14 +105,16 @@ if (!class_exists('astroidInstallerScript')) {
             $db->setQuery($query);
             $db->execute();
 
-            $query = $db->getQuery(true);
-            $query->update('#__modules');
-            $query->set($db->quoteName('published') . ' = 1');
-            $query->set($db->quoteName('position') . ' = ' . $db->quote('status'));
-            $query->set($db->quoteName('params') . ' = ' . $db->quote('{"layout":"_:default","moduleclass_sfx":"","style":"0","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":""}'));
-            $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
-            $db->setQuery($query);
-            $db->execute();
+            if ($module_name === 'mod_astroid_clear_cache') {
+                $query = $db->getQuery(true);
+                $query->update('#__modules');
+                $query->set($db->quoteName('published') . ' = 1');
+                $query->set($db->quoteName('position') . ' = ' . $db->quote('status'));
+                $query->set($db->quoteName('params') . ' = ' . $db->quote('{"layout":"_:default","moduleclass_sfx":"","style":"0","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":""}'));
+                $query->where($db->quoteName('module') . ' = ' . $db->quote($module_name));
+                $db->setQuery($query);
+                $db->execute();
+            }
 
             // Retrieve ID
             $query = $db->getQuery(true);

@@ -344,7 +344,7 @@ function selectLayout(element) {
                     <a href="#" @click.prevent="selectElement(element)" class="bg-light text-dark border px-2 py-1 rounded-pill"><i class="fas fa-plus"></i><span class="add-element-text ms-1">Add Element</span></a>
                 </div>
             </div>
-            <div v-else-if="props.group === `cols`" class="astroid-element card card-default card-body" :class="{'element-disabled' : !element.state}">
+            <div v-else-if="props.group === `cols` && typeof props.form[element.type] !== `undefined`" class="astroid-element card card-default card-body" :class="{'element-disabled' : !element.state}">
                 <div class="d-flex justify-content-between">
                     <div class="element-name">
                         <div><i class="text-body-tertiary me-2" :class="props.form[element.type].info.icon"></i>{{ element.params.find((param) => param.name === 'title').value }}<i v-if="element.type === `sublayout`" class="fa-regular fa-circle-question text-body-tertiary ms-1" :title="element.params.find((param) => param.name === 'desc').value"></i></div>
@@ -367,10 +367,6 @@ function selectLayout(element) {
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div v-else>
-                {{ element.id }}
-                <LayoutBuilder :list="element" :group="map[props.group]" :system="props.system" :form="props.form" :device="props.device" @edit:Element="_editElement" @select:Element="selectElement" @update:System="updateSystem" />
             </div>
         </template>
     </draggable>

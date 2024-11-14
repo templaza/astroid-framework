@@ -36,7 +36,7 @@ $effect = $params->get('offcanvas_animation', 'st-effect-1');
 $panelwidth = $params->get('offcanvas_panelwidth', '320px');
 $openfrom = $params->get('offcanvas_openfrom', 'left');
 ?>
-<div class="astroid-offcanvas d-none d-init" id="astroid-offcanvas">
+<div class="astroid-offcanvas d-none d-init" id="astroid-offcanvas" data-lenis-prevent>
    <?php echo $document->include('offcanvas.close'); ?>
    <div class="astroid-offcanvas-inner">
       <?php $content = $document->position($module_position, 'astroidxhtml');
