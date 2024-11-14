@@ -149,8 +149,8 @@ try {
     $mail->Encoding = 'base64';
     $mail->setBody($mail_body);
 
-    $message_success    =   $params->get('success_message', Text::_('ASTROID_FORMBUILDER_SENT_SUCCESSFULLY'));
-    $message_failed     =   $params->get('failed_message', Text::_('ASTROID_FORMBUILDER_SENT_MAIL_FAILED'));
+    $message_success    =   $params->get('form_submit_success', Text::_('ASTROID_FORMBUILDER_SENT_SUCCESSFULLY'));
+    $message_failed     =   $params->get('form_submit_failed', Text::_('ASTROID_FORMBUILDER_SENT_MAIL_FAILED'));
 
     if ($mail->Send()) {
         $return["status"]   =   'success';
