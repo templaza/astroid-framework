@@ -8,6 +8,7 @@
  */
 
 namespace Astroid;
+use Astroid\Element\Layout;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Event\Cache\AfterPurgeEvent;
 use Joomla\CMS\Factory;
@@ -402,11 +403,20 @@ class Helper
         return $return;
     }
 
-    public static function getElement($unqid, $template = null) {
+    public static function getElement($unqid, $template = null, $options = []) {
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
-        $layout =   $template->getLayout();
+        if (isset($options['source']) && !empty($options['source'])) {
+            $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
+            if (!isset($sublayout['data']) || !$sublayout['data']) {
+                return false;
+            }
+            $layout     = \json_decode($sublayout['data'], true);
+        } else {
+            $layout =   $template->getLayout();
+        }
+
         foreach ($layout['sections'] as $section) {
             if ($section['id'] == $unqid) {
                 $section['params'] = self::loadParams($section['params']);

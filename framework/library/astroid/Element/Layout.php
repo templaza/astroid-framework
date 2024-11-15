@@ -54,7 +54,9 @@ class Layout
                 'title'=> 'title'
             ]
         ];
-        $options['layout_type'] = 'sublayout';
+        $options['layout_type'] = $type;
+        $options['source'] = $source;
+        $options['template'] = !empty($template) ? $template : Framework::getTemplate()->template;
         $content = '';
         foreach ($layout['sections'] as $section) {
             $section = new Section($section, $devices, $options);

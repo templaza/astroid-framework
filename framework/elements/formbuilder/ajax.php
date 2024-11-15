@@ -20,17 +20,20 @@ use Joomla\CMS\Language\Text;
 use Astroid\Helper;
 
 $mainframe      =   Factory::getApplication();
-$asformbuilder  =   $mainframe->input->get('as-form-builder-', array(), 'RAW');
-$unqid          =   $mainframe->input->get('form_id', '', 'ALNUM');
-$element        =   Helper::getElement($unqid);
+$asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
+$unqid          =   $mainframe->input->post->get('form_id', '', 'string');
+$source         =   $mainframe->input->post->get('source', '', 'string');
+$template       =   $mainframe->input->post->get('template', '', 'string');
+$layout_type    =   $mainframe->input->post->get('layout_type', '', 'string');
+$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template, 'layout_type' => $layout_type]);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 $return = array();
 try {
-    if (!empty($asformbuilder)) {
+    if (empty($asformbuilder)) {
         throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_FORM_DATA'));
     }
-    if (!empty($element)) {
+    if (empty($element)) {
         throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_FORM_ID'));
     }
     $params         =   $element['params'];

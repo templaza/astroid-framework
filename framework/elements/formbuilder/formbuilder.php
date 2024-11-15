@@ -33,7 +33,6 @@ $form_elements  = json_decode($form_elements);
 if (empty($form_elements) || !count($form_elements)) {
     return false;
 }
-
 $row_column_cls     =   '';
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 foreach ($responsive_key as $key) {
@@ -158,6 +157,15 @@ endif;
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
 echo '<input type="hidden" name="template" value="'.Astroid\Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
+if (isset($options['source']) && $options['source']) {
+    echo '<input type="hidden" name="source" value="'.$options['source'].'">';
+}
+if (isset($options['template']) && $options['template']) {
+    echo '<input type="hidden" name="template" value="'.$options['template'].'">';
+}
+if (isset($options['layout_type']) && $options['layout_type']) {
+    echo '<input type="hidden" name="layout_type" value="'.$options['layout_type'].'">';
+}
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
 
 $button_style       =   $params->get('button_style', 'primary');
