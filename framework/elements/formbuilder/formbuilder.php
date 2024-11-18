@@ -103,7 +103,7 @@ foreach ($form_elements as $key => $form_element) :
                     $field_option_params  =   Helper::loadParams($field_option['params']);
                     $checked   =   $field_option_params->get('opt_selected', 0) == 1 ? ' checked' : '';
                     echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="checkbox" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'>';
+                    echo '<input class="form-check-input" type="checkbox" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'.'.$required.'>';
                     echo '<label class="form-check-label" for="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'">'.$field_option_params->get('opt_text', '').'</label>';
                     echo '</div>';
                 }
@@ -116,7 +116,7 @@ foreach ($form_elements as $key => $form_element) :
                     $field_option_params  =   Helper::loadParams($field_option['params']);
                     $checked   =   $field_option_params->get('opt_selected', 0) == 1 ? ' checked' : '';
                     echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="radio" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'>';
+                    echo '<input class="form-check-input" type="radio" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.checked.'.'.$required.'>';
                     echo '<label class="form-check-label" for="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'">'.$field_option_params->get('opt_text', '').'</label>';
                     echo '</div>';
                 }

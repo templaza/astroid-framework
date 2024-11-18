@@ -23,8 +23,8 @@
                     <option value="oldest">ASTROID_WIDGET_ORDERING_OLDEST</option>
                     <option value="popular">ASTROID_WIDGET_ORDERING_POPULAR</option>
                     <option value="featured">ASTROID_WIDGET_ORDERING_FEATURED</option>
-                    <option value="ascending">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
-                    <option value="descending">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
+                    <option value="alphabet_asc">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
+                    <option value="alphabet_desc">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
                     <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
                 </field>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
