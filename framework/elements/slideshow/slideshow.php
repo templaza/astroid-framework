@@ -89,7 +89,7 @@ $btn_radius         =   $params->get('border_radius', '');
 $btn_radius         =   $btn_radius ? ' '. $btn_radius : '';
 
 echo '<div id="slide-'.$element->id.'" class="carousel slide overflow-hidden'. $overlay_text_color . $effect_type . $box_shadow . $box_shadow_hover .$bd_radius .'"'. (intval($autoplay) ? ' data-bs-ride="carousel"' : '') .'>';
-if (!empty($indicators)) {
+if (!empty($params->get('indicators', 1))) {
 echo '<div class="carousel-indicators">';
 for ($key = 0 ; $key < count($slides); $key ++) {
     echo '<button type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide-to="'.$key.'" aria-label="'.$slides[$key]->params['title'].'"'.($key == 0 ? ' class="active" aria-current="true"' : '').'></button>';
@@ -121,7 +121,7 @@ for ($key = 0 ; $key < count($slides); $key ++) {
     echo '</div>';
 }
 echo '</div>';
-if (!empty($controls)) {
+if (!empty($params->get('controls', 1))) {
 echo '<button class="carousel-control-prev" type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>';
 echo '<button class="carousel-control-next" type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
 }
