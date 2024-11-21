@@ -76,7 +76,7 @@
          </field>
          <field astroidgroup="favicongroup" name="apple_touch_icon" type="astroidmedia" label="TPL_ASTROID_BASIC_FAVICON_APPLE_TOUCH_LABEL" description="TPL_ASTROID_BASIC_FAVICON_APPLE_TOUCH_DESC">
          </field>
-         <field astroidgroup="favicongroup" name="site_webmanifest" type="astroidtext" label="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_LABEL" description="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_DESC" hint="/manifest.json" class="form-control">
+         <field astroidgroup="favicongroup" name="site_webmanifest" type="astroidtext" label="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_LABEL" description="TPL_ASTROID_BASIC_FAVICON_SITE_WEBMANIFEST_DESC" hint="manifest.json" class="form-control">
          </field>
 
          <field astroidgroup="enable_back_to_top" description="TPL_ASTROID_BASIC_BACK_TO_TOP_DESC" name="backtotop" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL" />
