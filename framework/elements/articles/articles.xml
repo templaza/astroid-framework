@@ -21,7 +21,7 @@
                 <field astroidgroup="general" type="astroidlist" name="ordering" label="JFIELD_ORDERING_LABEL" description="ASTROID_WIDGET_ARTICLES_ORDERING_DESC" default="latest">
                     <option value="latest">ASTROID_WIDGET_ORDERING_LATEST</option>
                     <option value="oldest">ASTROID_WIDGET_ORDERING_OLDEST</option>
-                    <option value="popular">ASTROID_WIDGET_ORDERING_POPULAR</option>
+                    <option value="hits">ASTROID_WIDGET_ORDERING_POPULAR</option>
                     <option value="featured">ASTROID_WIDGET_ORDERING_FEATURED</option>
                     <option value="alphabet_asc">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
                     <option value="alphabet_desc">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
