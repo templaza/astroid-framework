@@ -4,8 +4,9 @@
         <version>1.0.1</version>
         <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
         <element>astroidpro</element>
+        <folder>astroid</folder>
         <type>plugin</type>
-        <client>1</client>
+        <client>0</client>
         <downloads>
             <downloadurl type="full" format="zip">https://astroidframe.work/download?task=download.fileUpdateviaDomain&amp;produce=astroid-pro</downloadurl>
         </downloads>
