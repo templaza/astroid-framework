@@ -5,7 +5,7 @@
         <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
         <element>astroidpro</element>
         <type>plugin</type>
-        <client>1</client>
+        <client>0</client>
         <downloads>
             <downloadurl type="full" format="zip">https://astroidframe.work/download?task=download.fileUpdateviaDomain&amp;produce=astroid-pro</downloadurl>
         </downloads>
