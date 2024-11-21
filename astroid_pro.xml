@@ -1,0 +1,20 @@
+<updates>
+    <update>
+        <name>Astroid Pro</name>
+        <version>1.0.0</version>
+        <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
+        <element>astroidpro</element>
+        <type>plugin</type>
+        <client>1</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://astroidframe.work/download?task=download.fileUpdateviaDomain&amp;produce=astroid-pro</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Astroid Framework</maintainer>
+        <maintainerurl>https://astroidframe.work/</maintainerurl>
+        <targetplatform name="joomla" version="(4.)|(5.)"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+</updates>
