@@ -156,7 +156,7 @@
 
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
-            <field astroidgroup="custom_settings" code="scss" name="custom_css" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
+            <field astroidgroup="custom_settings" name="custom_css" type="astroidgetpro" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
