@@ -9,7 +9,7 @@
 	padding: 2px 7px;
 	font-weight: normal;
 	text-transform: none;
-	line-height: 15px;
+	line-height: 14px;
 	font-size: 10px;
 	border-radius: 2px;
 }
@@ -96,9 +96,15 @@
 
 .astroid-nav {
 	.nav-title {
-		display: block;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
 		position: relative;
-		sup {
+		margin-left: -5px;
+		> * {
+			margin-left: 5px;
+		}
+		> sup {
 			position: absolute;
 			top: -25px;
 			left: 10%;
