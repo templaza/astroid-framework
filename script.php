@@ -85,7 +85,6 @@ return new class () implements ServiceProviderInterface {
 
                 public function postflight(string $type, InstallerAdapter $parent): bool
                 {
-                    $this->app->enqueueMessage('Postflight Init.');
                     $plugin_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'plugins' . '/';
                     $plugins = array_filter(glob($plugin_dir . '*'), 'is_dir');
                     foreach ($plugins as $plugin) {
@@ -138,9 +137,9 @@ return new class () implements ServiceProviderInterface {
 
                     $installer = new Installer;
                     if ($installer->install($module)) {
-                        $this->app->enqueueMessage($module_name . ' Modules has been successfully installed.');
+                        $this->app->enqueueMessage(Text::_(strtoupper($module_name)) . ' Modules has been successfully installed.');
                     } else {
-                        $this->app->enqueueMessage($module_name . ' Modules has been failed to install.');
+                        $this->app->enqueueMessage(Text::_(strtoupper($module_name)) . ' Modules has been failed to install.');
                     }
 
                     $query = $db->getQuery(true);
