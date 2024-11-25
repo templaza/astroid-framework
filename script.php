@@ -44,21 +44,21 @@ return new class () implements ServiceProviderInterface {
 
                 public function install(InstallerAdapter $parent): bool
                 {
-                    $this->app->enqueueMessage('Successful installed.');
+                    $this->app->enqueueMessage('Astroid Library has been successful installed.');
 
                     return true;
                 }
 
                 public function update(InstallerAdapter $parent): bool
                 {
-                    $this->app->enqueueMessage('Successful updated.');
+                    $this->app->enqueueMessage('Astroid Library has been successful updated.');
 
                     return true;
                 }
 
                 public function uninstall(InstallerAdapter $parent): bool
                 {
-                    $this->app->enqueueMessage('Successful uninstalled.');
+                    $this->app->enqueueMessage('Astroid Library has been successful uninstalled.');
 
                     return true;
                 }
