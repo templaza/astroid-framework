@@ -65,6 +65,7 @@ return new class () implements ServiceProviderInterface {
 
                 public function preflight(string $type, InstallerAdapter $parent): bool
                 {
+                    $this->app->enqueueMessage('Preflight Init.');
                     $plugin_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'plugins' . '/';
                     $plugins = array_filter(glob($plugin_dir . '*'), 'is_dir');
                     foreach ($plugins as $plugin) {
@@ -85,6 +86,7 @@ return new class () implements ServiceProviderInterface {
 
                 public function postflight(string $type, InstallerAdapter $parent): bool
                 {
+                    $this->app->enqueueMessage('Postflight Init.');
                     $plugin_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'plugins' . '/';
                     $plugins = array_filter(glob($plugin_dir . '*'), 'is_dir');
                     foreach ($plugins as $plugin) {
