@@ -6,7 +6,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  * You can easily override all files under /astroid/ folder.
- * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/component/component.php folder to create and override
+ * Just copy the file to JROOT/media/templates/site/{YOUR_TEMPLATE_NAME}/astroid/elements/component/component.php folder to create and override
  * See https://docs.joomdev.com/article/override-core-layouts/ for documentation
  */
 use Joomla\CMS\Factory;

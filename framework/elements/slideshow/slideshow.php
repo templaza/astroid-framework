@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  * You can easily override all files under /astroid/ folder.
- * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/module_position/module_position.php folder to create and override
+ * Just copy the file to JROOT/media/templates/site/{YOUR_TEMPLATE_NAME}/astroid/elements/module_position/module_position.php folder to create and override
  */
 
 // No direct access.
@@ -89,11 +89,13 @@ $btn_radius         =   $params->get('border_radius', '');
 $btn_radius         =   $btn_radius ? ' '. $btn_radius : '';
 
 echo '<div id="slide-'.$element->id.'" class="carousel slide overflow-hidden'. $overlay_text_color . $effect_type . $box_shadow . $box_shadow_hover .$bd_radius .'"'. (intval($autoplay) ? ' data-bs-ride="carousel"' : '') .'>';
+if (!empty($params->get('indicators', 1))) {
 echo '<div class="carousel-indicators">';
 for ($key = 0 ; $key < count($slides); $key ++) {
     echo '<button type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide-to="'.$key.'" aria-label="'.$slides[$key]->params['title'].'"'.($key == 0 ? ' class="active" aria-current="true"' : '').'></button>';
 }
 echo '</div>';
+}
 echo '<div class="carousel-inner">';
 for ($key = 0 ; $key < count($slides); $key ++) {
     echo '<div id="' . $slides[$key]->id . '" class="carousel-item'.($key == 0 ? ' active' : '').'" data-bs-interval="'.$interval.'">';
@@ -119,8 +121,10 @@ for ($key = 0 ; $key < count($slides); $key ++) {
     echo '</div>';
 }
 echo '</div>';
+if (!empty($params->get('controls', 1))) {
 echo '<button class="carousel-control-prev" type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>';
 echo '<button class="carousel-control-next" type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>';
+}
 echo '</div>';
 
 $mainframe = Factory::getApplication();

@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  * You can easily override all files under /astroid/ folder.
- * Just copy the file to JROOT/templates/YOUR_ASTROID_TEMPLATE/astroid/elements/module_position/module_position.php folder to create and override
+ * Just copy the file to JROOT/media/templates/site/{YOUR_TEMPLATE_NAME}/astroid/elements/module_position/module_position.php folder to create and override
  */
 
 // No direct access.
@@ -33,7 +33,6 @@ $form_elements  = json_decode($form_elements);
 if (empty($form_elements) || !count($form_elements)) {
     return false;
 }
-
 $row_column_cls     =   '';
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
 foreach ($responsive_key as $key) {
@@ -104,7 +103,7 @@ foreach ($form_elements as $key => $form_element) :
                     $field_option_params  =   Helper::loadParams($field_option['params']);
                     $checked   =   $field_option_params->get('opt_selected', 0) == 1 ? ' checked' : '';
                     echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="checkbox" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'>';
+                    echo '<input class="form-check-input" type="checkbox" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'.'.$required.'>';
                     echo '<label class="form-check-label" for="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'">'.$field_option_params->get('opt_text', '').'</label>';
                     echo '</div>';
                 }
@@ -117,7 +116,7 @@ foreach ($form_elements as $key => $form_element) :
                     $field_option_params  =   Helper::loadParams($field_option['params']);
                     $checked   =   $field_option_params->get('opt_selected', 0) == 1 ? ' checked' : '';
                     echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="radio" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'>';
+                    echo '<input class="form-check-input" type="radio" value="'.$field_option_params->get('opt_value', '').'" name="as-form-builder-['.$form_builder_item['field_name'].']" id="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'"'.$checked.'.'.$required.'>';
                     echo '<label class="form-check-label" for="as-form-builder-checkbox-'.$form_builder_item['field_name'].'-'.$key_opt.'">'.$field_option_params->get('opt_text', '').'</label>';
                     echo '</div>';
                 }
@@ -158,6 +157,15 @@ endif;
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
 echo '<input type="hidden" name="template" value="'.Astroid\Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
+if (isset($options['source']) && $options['source']) {
+    echo '<input type="hidden" name="source" value="'.$options['source'].'">';
+}
+if (isset($options['template']) && $options['template']) {
+    echo '<input type="hidden" name="template" value="'.$options['template'].'">';
+}
+if (isset($options['layout_type']) && $options['layout_type']) {
+    echo '<input type="hidden" name="layout_type" value="'.$options['layout_type'].'">';
+}
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
 
 $button_style       =   $params->get('button_style', 'primary');

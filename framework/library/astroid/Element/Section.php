@@ -22,7 +22,7 @@ class Section extends BaseElement
 
     public function __construct($data, $devices, $options = array())
     {
-        if (isset($options['layout_type']) && $options['layout_type'] == 'sublayout') {
+        if (isset($options['layout_type']) && ($options['layout_type'] == 'layouts' || $options['layout_type'] == 'article_layouts')) {
             $this->_tag = 'div';
         }
         parent::__construct($data, $devices, $options);

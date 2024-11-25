@@ -21,6 +21,9 @@
             <field astroidgroup="animation_settings" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_loop" type="astroidgetpro" label="ASTROID_ANIMATION_LOOP" description="ASTROID_ANIMATION_LOOP_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" type="astroidgetpro" name="animation_stagger" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidgetpro" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
 
             <field astroidgroup="general" name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
@@ -153,7 +156,7 @@
 
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
-            <field astroidgroup="custom_settings" code="scss" name="custom_css" type="astroidtextarea" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
+            <field astroidgroup="custom_settings" name="custom_css" type="astroidgetpro" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
          </fieldset>
          <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />

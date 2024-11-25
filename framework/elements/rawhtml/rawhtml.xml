@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_RAWHTML_LABEL</title>
+    <description>ASTROID_WIDGET_RAWHTML_LABEL</description>
+    <icon>fa-brands fa-html5</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_ADVANCED,ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" code="html" name="custom_html" type="astroidtextarea" label="ASTROID_WIDGET_CODEPEN_CUSTOM_HTML_LABEL" description="ASTROID_WIDGET_CODEPEN_CUSTOM_HTML_LABEL"/>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>

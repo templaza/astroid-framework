@@ -118,11 +118,11 @@ if ($item->type == 'url') {
             <img src="<?php echo Uri::root() . $item->menu_image; ?>" alt="<?php echo $item->title; ?>" <?php echo !empty($item->menu_image_css) ? "class='$item->menu_image_css'" : "";?> />
          <?php } ?>
          <?php if (!empty($item->menu_image) && $item->getParams()->get('menu_text', 1)) { ?>
-            <?php echo $item->title; ?>
+            <?php echo '<span class="nav-title-text">'.$item->title.'</span>'; ?>
          <?php } else if (!empty($item->menu_image) && !$item->getParams()->get('menu_text', 1)) { ?>
 
          <?php } else { ?>
-            <?php echo $item->title; ?>
+            <?php echo '<span class="nav-title-text">'.$item->title.'</span>'; ?>
          <?php } ?>
       <?php } ?>
       <?php if ($options->badge && ($header != 'sticky' || $enable_sticky_badge)) { ?>
