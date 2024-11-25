@@ -65,7 +65,6 @@ return new class () implements ServiceProviderInterface {
 
                 public function preflight(string $type, InstallerAdapter $parent): bool
                 {
-                    $this->app->enqueueMessage('Preflight Init.');
                     $plugin_dir = JPATH_LIBRARIES . '/' . 'astroid' . '/' . 'plugins' . '/';
                     $plugins = array_filter(glob($plugin_dir . '*'), 'is_dir');
                     foreach ($plugins as $plugin) {
@@ -116,7 +115,11 @@ return new class () implements ServiceProviderInterface {
                     $plugin_name = str_replace($plugin_dir, '', $plugin);
 
                     $installer = new Installer;
-                    $installer->install($plugin);
+                    if ($installer->install($plugin)) {
+                        $this->app->enqueueMessage('Astroid Plugins has been successfully installed.');
+                    } else {
+                        $this->app->enqueueMessage('Astroid Plugins has been failed to install.');
+                    }
 
                     $query = $db->getQuery(true);
                     $query->update('#__extensions');
@@ -134,7 +137,11 @@ return new class () implements ServiceProviderInterface {
                     $module_name = str_replace($module_dir, '', $module);
 
                     $installer = new Installer;
-                    $installer->install($module);
+                    if ($installer->install($module)) {
+                        $this->app->enqueueMessage($module_name . ' Modules has been successfully installed.');
+                    } else {
+                        $this->app->enqueueMessage($module_name . ' Modules has been failed to install.');
+                    }
 
                     $query = $db->getQuery(true);
                     $query->update('#__extensions');
@@ -180,29 +187,46 @@ return new class () implements ServiceProviderInterface {
 
                 private function uninstallPlugin($plugin, $plugin_dir)
                 {
-                    $db = $this->db;
-                    $plugin_name = str_replace($plugin_dir, '', $plugin);
-                    $query = $db->getQuery(true);
-                    $query->update('#__extensions');
-                    $query->set($db->quoteName('enabled') . ' = 0');
-                    $query->where($db->quoteName('element') . ' = ' . $db->quote($plugin_name));
-                    $query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-                    $db->setQuery($query);
-                    $db->execute();
+                    try {
+                        $db = $this->db;
+                        $plugin_name = str_replace($plugin_dir, '', $plugin);
+                        $query = $db->getQuery(true);
+                        $query->update('#__extensions');
+                        $query->set($db->quoteName('enabled') . ' = 0');
+                        $query->where($db->quoteName('element') . ' = ' . $db->quote($plugin_name));
+                        $query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
+                        $db->setQuery($query);
+                        if ($db->execute()) {
+                            $this->app->enqueueMessage('Astroid Plugins has been successfully uninstalled.');
+                        } else {
+                            $this->app->enqueueMessage('Astroid Plugins has been failed to uninstall.');
+                        }
+                    } catch (\Exception $e) {
+                        echo $e->getMessage() . '<br>';
+                    }
+
                     return true;
                 }
 
                 private function uninstallModule($module, $module_dir)
                 {
-                    $db = $this->db;
-                    $module_name = str_replace($module_dir, '', $module);
-                    $query = $db->getQuery(true);
-                    $query->update('#__extensions');
-                    $query->set($db->quoteName('enabled') . ' = 0');
-                    $query->where($db->quoteName('element') . ' = ' . $db->quote($module_name));
-                    $query->where($db->quoteName('type') . ' = ' . $db->quote('module'));
-                    $db->setQuery($query);
-                    $db->execute();
+                    try {
+                        $db = $this->db;
+                        $module_name = str_replace($module_dir, '', $module);
+                        $query = $db->getQuery(true);
+                        $query->update('#__extensions');
+                        $query->set($db->quoteName('enabled') . ' = 0');
+                        $query->where($db->quoteName('element') . ' = ' . $db->quote($module_name));
+                        $query->where($db->quoteName('type') . ' = ' . $db->quote('module'));
+                        $db->setQuery($query);
+                        if ($db->execute()) {
+                            $this->app->enqueueMessage('Astroid Modules has been successfully uninstalled.');
+                        } else {
+                            $this->app->enqueueMessage('Astroid Modules has been failed to uninstall.');
+                        }
+                    } catch (\Exception $e) {
+                        echo $e->getMessage() . '<br>';
+                    }
                     return true;
                 }
             }
