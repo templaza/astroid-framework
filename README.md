@@ -3,10 +3,11 @@
 [![GitHub release](https://img.shields.io/github/release/templaza/astroid-framework.svg)](https://github.com/templaza/astroid-framework/releases)
 [![Discord](https://img.shields.io/discord/1098077651496874005)](https://discord.gg/2MwtsAX4Py)
 [![Donate](https://img.shields.io/badge/donate-Buy%20me%20a%20coffee-blueviolet)](https://ko-fi.com/astroidframework)
+[![Donate](https://img.shields.io/badge/extend-with%20Astroid%20Pro-orange)](https://astroidframe.work/pricing)
 
 # Astroid Framework - Powerful Joomla Template Framework
 
-[Watch Intro Video here](https://www.youtube.com/watch?v=ZflNq3fDaXE)
+Powerful framework for designers and developers to create responsive, fast & robust Joomla based websites and templates. A great framework for Joomla with outstanding features such as Layout Builder, Article Layout Builder, typography, colors will be a powerful tool to help you create unique styles for your website.
 
 ## Features
 * Bootstrap 5 Compatible
@@ -58,7 +59,8 @@
 * Map Widget
 * Accordion Widget
 * Hover Motion Widget
-* CodePen Widget
+* Raw HTML Widget
+* Image Carousel Widget
 * [View all Widgets](https://astroidframe.work/widgets)
 
 ## Article Widgets
@@ -111,3 +113,4 @@
 
 ## You love this project
 * [Buy me a coffee](https://ko-fi.com/astroidframework)
+* [Extend Astroid with Astroid Pro](https://astroidframe.work/pricing)
