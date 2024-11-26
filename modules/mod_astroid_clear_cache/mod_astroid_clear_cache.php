@@ -10,6 +10,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\ExtensionHelper;
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+
+Text::script('MOD_ASTROID_SYSTEM_MESSAGES_CACHE');
+Text::script('MOD_ASTROID_MESSAGE_JOOMLA_CACHE');
 
 $joomlaFilesExtensionId = ExtensionHelper::getExtensionRecord('joomla', 'file')->extension_id;
 $wa = $app->getDocument()->getWebAssetManager();
