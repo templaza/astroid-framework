@@ -618,7 +618,7 @@ class Document
     private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
-        $document = Factory::getDocument();
+        $document = Factory::getApplication()->getDocument();
         $renderer = $document->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
