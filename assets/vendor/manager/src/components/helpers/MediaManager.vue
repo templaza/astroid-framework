@@ -42,6 +42,7 @@ function updatePreview() {
     }
 }
 
+const _isloading = ref(false);
 function generateData(json = null) {
   if (!json) return false;
   _showDirLocation.value = json.current_folder.split('/');
@@ -95,6 +96,7 @@ function callAjax() {
     const formData = new FormData(); // pass data as a form
     formData.append("folder", _currentFolder.value);
     formData.append(constant.astroid_admin_token, 1);
+    _isloading.value = true;
     axios.post(url, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -102,6 +104,7 @@ function callAjax() {
     }).then(function (response) {
         if (response.data.status === 'success') {
             generateData(response.data.data);
+            _isloading.value = false;
         }
     }).catch(function (error) {
         // handle error
@@ -265,20 +268,24 @@ function remove(item) {
                 </div>
                 <div class="modal-body p-3">
                     <div v-if="!_uploadForm" class="row row-cols-2 row-cols-lg-4 row-cols-xl-5 gx-3 gy-2">
-                      <div v-for="item in _showMediaContent" :key="item.id" class="col p-4 text-center media-item">
-                        <div class="card card-default media-icon justify-content-center align-items-center border" :class="item.type+`-type`" @click="selectMedia(item)">
-                          <i v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :class="item.icon" class="as-system-icon fa-3x"></i>
-                          <img v-else-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" class="img-fluid" :alt="item.name" />
-                          <i v-else-if="item.type === 'video'" class="fa-solid fa-video fa-3x"></i>
+                        <div v-if="!_isloading" v-for="item in _showMediaContent" :key="item.id" class="col p-4 text-center media-item">
+                            <div class="card card-default media-icon justify-content-center align-items-center border" :class="item.type+`-type`" @click="selectMedia(item)">
+                                <i v-if="(item.type === 'folder' || item.type ==='back') && item.icon !== undefined && item.icon" :class="item.icon" class="as-system-icon fa-3x"></i>
+                                <img v-else-if="(item.type === 'image' && item.path !== undefined && item.path)" :src="item.path" class="img-fluid" :alt="item.name" />
+                                <i v-else-if="item.type === 'video'" class="fa-solid fa-video fa-3x"></i>
+                            </div>
+                            <div v-if="item.name !== undefined && item.name">
+                                <div class="form-text">{{ item.name }}</div>
+                                <ul v-if="item.type !== 'back'" class="nav toolbox justify-content-center">
+                                    <li class="nav-item"><a class="nav-link position-relative px-2" href="#" title="Rename" @click.prevent="initFormEdit('rename', item)" :data-bs-target="`#`+props.field.input.id+`edit_item_dialog`" data-bs-toggle="modal"><i class="fa-solid fa-pencil"></i><span class="position-absolute top-100 start-50 translate-middle form-text">Rename</span></a></li>
+                                    <li class="nav-item"><a class="nav-link position-relative px-2" href="#" title="Remove" @click.prevent="remove(item)"><i class="fa-solid fa-trash"></i><span class="position-absolute top-100 start-50 translate-middle form-text">Delete</span></a></li>
+                                </ul>
+                            </div>
                         </div>
-                          <div v-if="item.name !== undefined && item.name">
-                              <div class="form-text">{{ item.name }}</div>
-                              <ul v-if="item.type !== 'back'" class="nav toolbox justify-content-center">
-                                  <li class="nav-item"><a class="nav-link position-relative px-2" href="#" title="Rename" @click.prevent="initFormEdit('rename', item)" :data-bs-target="`#`+props.field.input.id+`edit_item_dialog`" data-bs-toggle="modal"><i class="fa-solid fa-pencil"></i><span class="position-absolute top-100 start-50 translate-middle form-text">Rename</span></a></li>
-                                  <li class="nav-item"><a class="nav-link position-relative px-2" href="#" title="Remove" @click.prevent="remove(item)"><i class="fa-solid fa-trash"></i><span class="position-absolute top-100 start-50 translate-middle form-text">Delete</span></a></li>
-                              </ul>
-                          </div>
-                      </div>
+                        <div v-else class="loading d-flex justify-content-center flex-column w-100" style="align-items: center;">
+                            <i class="fa-solid fa-basketball fa-bounce fa-3x" style="--fa-bounce-land-scale-x: 1.2;--fa-bounce-land-scale-y: .8;--fa-bounce-rebound: 5px;"></i>
+                            <div class="fa-beat-fade mt-3" style="--fa-beat-fade-opacity: 0.1; --fa-beat-fade-scale: 1.05;">Loading...</div>
+                        </div>
                     </div>
                     <div v-else>
                       <DropZone 
