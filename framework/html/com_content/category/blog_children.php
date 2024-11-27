@@ -21,7 +21,7 @@ $user   = $this->getCurrentUser();
 $groups = $user->getAuthorisedViewLevels();
 
 if ($this->maxLevel != 0 && count($this->children[$this->category->id]) > 0) : ?>
-<div class="com-content-category-blog__children-container row gx-xl-5 gy-5 row-cols-lg-2">
+<div class="com-content-category-blog__children-container row gx-xl-5 gy-5 row-cols-lg-<?php echo $this->params->get('num_columns'); ?>">
     <?php foreach ($this->children[$this->category->id] as $id => $child) : ?>
         <?php // Check whether category access level allows access to subcategories. ?>
         <?php if (in_array($child->access, $groups)) : ?>
