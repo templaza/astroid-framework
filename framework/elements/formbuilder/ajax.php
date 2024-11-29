@@ -18,14 +18,20 @@ use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
 use Astroid\Helper;
+use Astroid\Framework;
 
 $mainframe      =   Factory::getApplication();
 $asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
 $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
 $source         =   $mainframe->input->post->get('source', '', 'string');
-$template       =   $mainframe->input->post->get('template', '', 'string');
+$template_id    =   $mainframe->input->post->get('template', '', 'ALNUM');
+$template       =   Framework::getTemplate(intval($template_id));
 $layout_type    =   $mainframe->input->post->get('layout_type', '', 'string');
-$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template, 'layout_type' => $layout_type]);
+$article_id     =   0;
+if ($layout_type == 'article_layouts') {
+    $article_id     =   $mainframe->input->post->get('id', 0, 'int');
+}
+$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type, 'article_id' => $article_id]);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 $return = array();

@@ -407,11 +407,13 @@ class Helper
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
+        $layout_type    =   'templates';
         if (isset($options['source']) && !empty($options['source'])) {
             $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
             if (!isset($sublayout['data']) || !$sublayout['data']) {
                 return false;
             }
+            $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
             $layout     = \json_decode($sublayout['data'], true);
         } else {
             $layout =   $template->getLayout();
@@ -435,6 +437,17 @@ class Helper
                                 foreach ($col['elements'] as $element) {
                                     if ($element['id'] == $unqid) {
                                         $element['params'] = self::loadParams($element['params']);
+                                        if ($layout_type == 'article_layouts') {
+                                            $template_name = isset($options['template']) && !empty($options['template']) ? $options['template'] : $template->template;
+                                            $article_id = isset($options['article_id']) && !empty($options['article_id']) ? $options['article_id'] : 0;
+                                            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            if (file_exists($layout_path)) {
+                                                $article_json = file_get_contents($layout_path);
+                                                $article_data = json_decode($article_json, true);
+                                                $article_params = self::loadParams($article_data['params']);
+                                                $element['params']->merge($article_params);
+                                            }
+                                        }
                                         return $element;
                                     }
                                 }

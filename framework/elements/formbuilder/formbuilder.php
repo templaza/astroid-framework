@@ -160,11 +160,11 @@ echo '<input type="hidden" name="widget" value="formbuilder">';
 if (isset($options['source']) && $options['source']) {
     echo '<input type="hidden" name="source" value="'.$options['source'].'">';
 }
-if (isset($options['template']) && $options['template']) {
-    echo '<input type="hidden" name="template" value="'.$options['template'].'">';
-}
 if (isset($options['layout_type']) && $options['layout_type']) {
     echo '<input type="hidden" name="layout_type" value="'.$options['layout_type'].'">';
+    if ($options['layout_type'] == 'article_layouts') {
+        echo '<input type="hidden" name="id" value="'.$mainframe->input->get('id', 0, 'INT').'">';
+    }
 }
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
 
