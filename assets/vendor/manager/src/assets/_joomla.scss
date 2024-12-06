@@ -1,4 +1,3 @@
-@import "base";
 .article-layout-data {
     .nav {
         --bs-nav-link-color: var(--bs-dark-text-emphasis);
@@ -27,25 +26,27 @@
         background-size: 1rem 1rem !important;
     }
 }
-.admin .as-article-widget-data {
-    --bs-body-bg: var(--body-bg);
-    --bs-border-color: var(--border-color);
-    .astroid-heading-line {
-        font-size: 1.2rem;
-        >::before, >::after {
-            border-bottom: 3px solid var(--border-color);
+.admin {
+    .as-article-widget-data, #astroid-layout-module {
+        --bs-body-bg: var(--body-bg);
+        --bs-border-color: var(--border-color);
+        .astroid-heading-line {
+            font-size: 1.2rem;
+            >::before, >::after {
+                border-bottom: 3px solid var(--border-color);
+            }
         }
-    }
-    .card {
-        --card-border-width: 1px;
-        --card-border-color: var(--border-color);
-    }
-    .astroid-subform .add-item {
-        border: 2px dashed var(--border-color);
-    }
-    .astroid-btn-group {
-        label {
-            width: auto;
+        .card {
+            --card-border-width: 1px;
+            --card-border-color: var(--border-color);
+        }
+        .astroid-subform .add-item {
+            border: 2px dashed var(--border-color);
+        }
+        .astroid-btn-group {
+            label {
+                width: auto;
+            }
         }
     }
 }

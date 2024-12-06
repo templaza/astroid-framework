@@ -15,16 +15,19 @@ const title = ref('Select an Element');
 onMounted(()=> {
     let addon = {};
     if (props.type !== 'loadSublayout') {
-        filters.value.push('System');
-        orders['System'] = 0;
-        counter['System'] = 0;
+        if (props.source !== 'joomla_module') {
+            filters.value.push('System');
+            orders['System'] = 0;
+            counter['System'] = 0;
+        }
         Object.keys(props.form).every(key => {
             if (props.form[key].type === 'addon') {
                 addon = props.form[key].info;
                 if (typeof props.system[addon.type] !== 'undefined' && !props.system[addon.type]) {
                     return true;
                 }
-                if ((props.source !== `article_layouts` && addon.element_type === 'article') || (props.source === 'article_layouts' && addon.element_type === 'system')) {
+                if ((props.source !== `article_layouts` && addon.element_type === 'article')
+                    || ((props.source === 'article_layouts' || props.source === 'joomla_module') && addon.element_type === 'system')) {
                     return true;
                 }
                 if (addon.element_type === 'widget' && parseInt(constant.enable_widget) === 0) {
@@ -91,7 +94,7 @@ function selectElement(addon) {
                     <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement')"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body p-3">
                     <div class="row g-3">
                         <div v-if="props.type !== `loadSublayout`" class="col-lg-auto col-12">
                             <ul class="astroid-element-nav nav nav-pills flex-column">
