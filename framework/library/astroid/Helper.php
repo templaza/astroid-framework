@@ -498,7 +498,8 @@ class Helper
 
     public static function getPositions()
     {
-        $templateXML = \JPATH_SITE . '/templates/' . ASTROID_TEMPLATE_NAME . '/templateDetails.xml';
+        $template_name = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
+        $templateXML = \JPATH_SITE . '/templates/' . $template_name . '/templateDetails.xml';
         $template = simplexml_load_file($templateXML);
         $positions = [];
         foreach ($template->positions[0] as $position) {
@@ -510,7 +511,7 @@ class Helper
 
     public static function getModuleStyles()
     {
-        $template_name      = ASTROID_TEMPLATE_NAME;
+        $template_name      = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
         $options            = array();
         $isChildTemplate    = self::isChildTemplate($template_name);
 
