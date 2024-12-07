@@ -10,9 +10,9 @@
 namespace Astroid\Element;
 
 use Astroid\Framework;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -71,7 +71,7 @@ class Layout
             $template   =   Framework::getTemplate()->template;
         }
 
-        $layouts_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/";
+        $layouts_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/");
         if (!file_exists($layouts_path)) {
             return [];
         }
@@ -102,16 +102,16 @@ class Layout
         }
         if (!$filename) {
             if ($type == 'article_layouts') {
-                if (file_exists(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json")) {
-                    $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json";
+                if (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json"))) {
+                    $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json");
                 } else {
-                    $layout_path = JPATH_SITE . '/media/astroid/assets/json/article_layouts/default.json';
+                    $layout_path = Path::clean(JPATH_SITE . '/media/astroid/assets/json/article_layouts/default.json');
                 }
             } else {
                 return [];
             }
         } else {
-            $layout_path = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json';
+            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json');
         }
 
         if (!file_exists($layout_path)) {
@@ -132,8 +132,8 @@ class Layout
             $template   =   Framework::getTemplate()->template;
         }
 
-        $layouts_path   = JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/";
-        $images_path    = JPATH_SITE . "/media/templates/site/{$template}/images/{$type}/";
+        $layouts_path   = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/");
+        $images_path    = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/images/{$type}/");
         foreach ($layouts as $layout) {
             if (file_exists($layouts_path . $layout . '.json')) {
                 $json = file_get_contents($layouts_path . $layout . '.json');
@@ -145,5 +145,17 @@ class Layout
             }
         }
         return true;
+    }
+
+    public static function loadModuleLayout($id)
+    {
+        $layout_path = Path::clean(JPATH_SITE . '/media/mod_astroid_layout/params/' . $id . '.json');
+        if (empty($id) || !file_exists($layout_path)) {
+            return ['sections' => []];
+        }
+        $json = file_get_contents($layout_path);
+        $data = \json_decode($json, true);
+
+        return $data;
     }
 }
