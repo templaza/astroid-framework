@@ -1031,6 +1031,12 @@ class Document
         }
     }
 
+    public function loadGoogleReCaptcha(): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js', ['relative' => true, 'version' => 'auto']);
+    }
+
     public function moveFile(&$array, $a, $b): void
     {
         $out = array_splice($array, $a, 1);

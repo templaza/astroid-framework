@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Helper\Style;
 use Astroid\Helper;
+use Astroid\Framework;
 
 extract($displayData);
 
@@ -53,6 +54,7 @@ foreach ($responsive_key as $key) {
     }
 }
 
+$document = Framework::getDocument();
 $show_label     =   $params->get('show_label', 1);
 
 echo '<form class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget">';
@@ -140,10 +142,11 @@ if ($params->get('enable_captcha', 0) == 1) :
     $captcha_type = $params->get('captcha_type', 'default');
     echo '<div class="mt-2">';
     if ($captcha_type == 'recaptcha') {
-        PluginHelper::importPlugin('captcha', 'recaptcha');
-        $recaptcha = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'as_form_builder_recaptcha' , 'as-form-builder-recaptcha'));
-        echo (isset($recaptcha[0])) ? $recaptcha[0] : '<p class="uk-alert-danger">' . Text::_('ASTROID_RECAPTCHA_NOT_INSTALLED') . '</p>';
+        $document->loadGoogleReCaptcha();
+        $pluginParams   =   Helper::getPluginParams();
+        echo '<div id="'.$element->id.'-recaptcha" class="g-recaptcha" data-sitekey="'.$pluginParams->get('g_site_key', '').'"></div>';
     } elseif ($captcha_type == 'invisible-recaptcha') {
+        $document->loadGoogleReCaptcha();
         PluginHelper::importPlugin('captcha', 'recaptcha_invisible');
         $recaptcha = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'as_form_builder_invisible_recaptcha' , 'as-form-builder-invisible-recaptcha'));
         echo (isset($recaptcha[0])) ? $recaptcha[0] : '<p class="uk-alert-danger">' . Text::_('ASTROID_RECAPTCHA_NOT_INSTALLED') . '</p>';
@@ -155,7 +158,7 @@ if ($params->get('enable_captcha', 0) == 1) :
 endif;
 
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
-echo '<input type="hidden" name="template" value="'.Astroid\Framework::getTemplate()->id.'">';
+echo '<input type="hidden" name="template" value="'.Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
 if (isset($options['source']) && $options['source']) {
     echo '<input type="hidden" name="source" value="'.$options['source'].'">';
@@ -185,4 +188,4 @@ echo '<button type="submit" class="as-form-builer-submit btn ' . $button_class .
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 
-Factory::getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto'], [], ['jquery']);
