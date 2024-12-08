@@ -9,7 +9,12 @@
    <form>
       <fields>
          <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field astroidgroup="general" name="position" type="astroidmodulesposition" label="TPL_ASTROID_MODULE_POSITION_LABEL"/>
+            <field astroidgroup="general" type="astroidlist" name="type" label="TPL_ASTROID_PRELOADER_TYPE" default="">
+               <option value="">ASTROID_POSITION</option>
+               <option value="module">ASTROID_MODULE</option>
+            </field>
+            <field astroidgroup="general" ngShow="[type]==''" name="position" type="astroidmodulesposition" label="ASTROID_POSITION"/>
+            <field astroidgroup="general" ngShow="[type]=='module'" name="module" type="astroidmoduleslist" label="ASTROID_MODULE"/>
             <field astroidgroup="general" name="module_styles" type="astroidmodulesstyle" label="TPL_ASTROID_MODULE_STYLE_LABEL"/>
          </fieldset>
       </fields>

@@ -90,6 +90,9 @@ function updateSubLayouts() {
     <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-position form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
     </select>
+    <select v-else-if="props.field.input.type === `astroidmoduleslist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-list form-select" :aria-label="props.field.label">
+        <option v-for="(option, key) in props.field.input.options" :key="key" :value="option.id">{{ option.title }}</option>
+    </select>
     <select v-else-if="props.field.input.type === `astroidmodulesstyle`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-style form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="option.value">{{ option.text }}</option>
     </select>
