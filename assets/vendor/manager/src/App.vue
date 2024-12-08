@@ -18,6 +18,8 @@ onBeforeMount(()=>{
   const colorMode = getCookie('astroid_colormode');
   if (colorMode) {
     theme.value = colorMode;
+  } else if (getCookie('osColorScheme')) {
+    theme.value = getCookie('osColorScheme');
   }
 })
 
