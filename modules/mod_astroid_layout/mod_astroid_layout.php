@@ -10,5 +10,4 @@
 defined('_JEXEC') or die;
 defined('_ASTROID') or die('Please install and activate <a href="https://astroidframe.work/" target="_blank">Astroid Framework</a> in order to use this module.');
 use Joomla\CMS\Helper\ModuleHelper;
-$class_sfx  = htmlspecialchars($params->get('class_sfx', ''), ENT_COMPAT, 'UTF-8');
 require ModuleHelper::getLayoutPath('mod_astroid_layout', $params->get('layout', 'default'));

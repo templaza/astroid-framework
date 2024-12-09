@@ -138,8 +138,8 @@ final class AstroidPlugin extends CMSPlugin
         if (defined('_ASTROID')) {
             if ($context == 'com_modules.module' && $table->module == 'mod_astroid_layout') {
                 $params = new \Joomla\Registry\Registry($table->params);
-                $table->astroiddata = $params->get('layout', '');
-                $params->remove('layout');
+                $table->astroiddata = $params->get('astroid_module_layout', '');
+                $params->remove('astroid_module_layout');
                 $table->params = $params->toString();
             }
         }
