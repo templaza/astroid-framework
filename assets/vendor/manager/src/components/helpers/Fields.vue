@@ -25,7 +25,8 @@ import SubLayouts from './SubLayouts.vue';
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
   field: { type: Object, default: null },
-  scope: { type: Object, default: null }
+  scope: { type: Object, default: null },
+    actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
 
@@ -170,7 +171,7 @@ function updateSubLayouts() {
         <Presets :field="props.field" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidsubform`" class="astroid-subform">
-        <SubForm v-model="props.scope[props.field.name]" :field="props.field" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
+        <SubForm v-model="props.scope[props.field.name]" :field="props.field" :actSave="props.actSave" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicons`" class="astroid-icons">
         <Icons v-model="props.scope[props.field.name]" :field="props.field" />

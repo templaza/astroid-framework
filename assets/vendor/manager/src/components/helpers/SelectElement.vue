@@ -52,7 +52,9 @@ onMounted(()=> {
     } else {
         title.value = 'Select a sub-layout';
     }
-    getSublayouts();
+    if (props.source === 'root') {
+        getSublayouts();
+    }
 })
 
 function getSublayouts() {

@@ -19,7 +19,7 @@ onBeforeMount(()=>{
   if (colorMode) {
     theme.value = colorMode;
   } else if (getCookie('osColorScheme')) {
-    theme.value = getCookie('osColorScheme');
+      theme.value = getCookie('osColorScheme');
   }
 })
 

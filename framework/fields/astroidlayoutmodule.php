@@ -36,7 +36,7 @@ class JFormFieldAstroidLayoutModule extends FormField {
             && $app->input->get('layout', '') == 'edit') {
             $id     =   $app->input->get('id');
             $layout =   Layout::loadModuleLayout($id);
-            $constant   =   Helper\Constants::manager_configs('article_data');
+            $constant   =   Helper\Constants::manager_configs('joomla_module');
             $json = [
                 'id'      =>  $this->id,
                 'name' => $this->name,
