@@ -1,10 +1,10 @@
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, onUpdated } from "vue";
 import draggable from "vuedraggable";
 import Fields from './Fields.vue';
 
 const emit = defineEmits(['update:modelValue', 'update:subFormState']);
-const props = defineProps(['modelValue', 'field']);
+const props = defineProps(['modelValue', 'field', 'actSave']);
 const items = ref([]);
 const edit  = ref(false);
 const params = ref(new Object());
@@ -15,6 +15,12 @@ onBeforeMount(()=>{
         items.value = JSON.parse(props.modelValue);
     }
     itemLabel.value = props.field.input.form.index !== '' ? props.field.input.form.index : 'title';
+})
+
+onUpdated(() => {
+    if (props.actSave && edit.value) {
+        saveItem();
+    }
 })
 
 function listUpdated() {
@@ -132,7 +138,7 @@ function deleteItem(index) {
         <div v-for="(fieldset, idx) in props.field.input.form.content" :key="fieldset.name" class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>Add Item</div>
-                <button class="btn btn-sm btn-primary btn-as-primary" @click.prevent="saveItem">Apply</button>
+                <button class="as-subform-apply btn btn-sm btn-primary btn-as-primary" @click.prevent="saveItem">Apply</button>
             </div>
             <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid" class="card-body">
                 <div v-if="group.title || group.description" class="heading-group mb-4">

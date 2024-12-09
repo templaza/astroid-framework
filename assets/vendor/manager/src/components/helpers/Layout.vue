@@ -399,7 +399,7 @@ function saveSublayout() {
         </div>
     </div>
     <div v-if="(typeof layout.sections === 'undefined' || layout.sections.length === 0)" class="text-center">
-        <button class="btn btn-lg btn-as btn-as-primary mt-4" @click.prevent="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
+        <button class="btn btn-lg btn-as btn-as-primary mt-4" :class="{'btn-primary' : props.source === 'joomla_module'}" @click.prevent="_showGrid = true"><i class="fa-solid fa-plus me-2"></i>Add Section</button>
         <Transition name="fade">
             <LayoutGrid v-if="_showGrid" @update:close-element="_showGrid = false" @update:saveElement="addGrid" />
         </Transition>

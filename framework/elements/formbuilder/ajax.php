@@ -18,14 +18,20 @@ use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
 use Astroid\Helper;
+use Astroid\Framework;
 
 $mainframe      =   Factory::getApplication();
 $asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
 $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
 $source         =   $mainframe->input->post->get('source', '', 'string');
-$template       =   $mainframe->input->post->get('template', '', 'string');
+$template_id    =   $mainframe->input->post->get('template', '', 'ALNUM');
+$template       =   Framework::getTemplate(intval($template_id));
 $layout_type    =   $mainframe->input->post->get('layout_type', '', 'string');
-$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template, 'layout_type' => $layout_type]);
+$article_id     =   0;
+if ($layout_type == 'article_layouts') {
+    $article_id     =   $mainframe->input->post->get('id', 0, 'int');
+}
+$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type, 'article_id' => $article_id]);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 $return = array();
@@ -40,7 +46,7 @@ try {
     $mail           =   Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
     $message        =   $params->get('email_body', '');
     $email_headers  =   $params->get('email_headers', '');
-    $gcaptcha       =   '';
+    $gcaptcha       =   $mainframe->input->post->get('g-recaptcha-response');
 
     foreach ($asformbuilder as $field => $value) {
         $message        =   str_replace('{{'.$field.'}}', $value, $message);
@@ -55,19 +61,12 @@ try {
     if (intval($params->get('enable_captcha', 0))) {
         $captcha_type   =   $params->get('captcha_type', 'default');
         if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+
             if($gcaptcha == ''){
                 throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
             } else {
-                if($captcha_type == 'recaptcha_invisible') {
-                    PluginHelper::importPlugin('captcha', 'recaptcha_invisible');
-                } else {
-                    PluginHelper::importPlugin('captcha', 'recaptcha');
-                }
-                $dispatcher = Factory::getApplication()->getDispatcher();
-                $event = new Joomla\Event\Event('onCheckAnswer', [$gcaptcha]);
-                $res = $dispatcher->dispatch('onCheckAnswer', $event);
-
-                if (!$res[0]) {
+                $res = Helper::verifyGoogleCaptcha($gcaptcha);
+                if (!$res) {
                     throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
                 }
             }

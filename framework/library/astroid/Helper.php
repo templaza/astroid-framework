@@ -407,11 +407,13 @@ class Helper
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
+        $layout_type    =   'templates';
         if (isset($options['source']) && !empty($options['source'])) {
             $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
             if (!isset($sublayout['data']) || !$sublayout['data']) {
                 return false;
             }
+            $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
             $layout     = \json_decode($sublayout['data'], true);
         } else {
             $layout =   $template->getLayout();
@@ -435,6 +437,17 @@ class Helper
                                 foreach ($col['elements'] as $element) {
                                     if ($element['id'] == $unqid) {
                                         $element['params'] = self::loadParams($element['params']);
+                                        if ($layout_type == 'article_layouts') {
+                                            $template_name = isset($options['template']) && !empty($options['template']) ? $options['template'] : $template->template;
+                                            $article_id = isset($options['article_id']) && !empty($options['article_id']) ? $options['article_id'] : 0;
+                                            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            if (file_exists($layout_path)) {
+                                                $article_json = file_get_contents($layout_path);
+                                                $article_data = json_decode($article_json, true);
+                                                $article_params = self::loadParams($article_data['params']);
+                                                $element['params']->merge($article_params);
+                                            }
+                                        }
                                         return $element;
                                     }
                                 }
@@ -483,9 +496,42 @@ class Helper
         return ( $value1 + $value2 == $value_result );
     }
 
+    public static function verifyGoogleCaptcha($gRecaptchaResponse, $secretKey = '') {
+        if (empty($gRecaptchaResponse)) {
+            return false;
+        }
+        if (empty($secretKey)) {
+            $pluginParams   =   self::getPluginParams();
+            $secretKey = $pluginParams->get('g_secret_key', '');
+        }
+        if (empty($secretKey)) {
+            return false;
+        }
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = [
+            'secret' => $secretKey,
+            'response' => $gRecaptchaResponse
+        ];
+
+        $options = [
+            'http' => [
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data),
+            ],
+        ];
+
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $response = json_decode($result, true);
+
+        return isset($response['success']) && $response['success'] === true;
+    }
+
     public static function getPositions()
     {
-        $templateXML = \JPATH_SITE . '/templates/' . ASTROID_TEMPLATE_NAME . '/templateDetails.xml';
+        $template_name = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
+        $templateXML = \JPATH_SITE . '/templates/' . $template_name . '/templateDetails.xml';
         $template = simplexml_load_file($templateXML);
         $positions = [];
         foreach ($template->positions[0] as $position) {
@@ -497,7 +543,7 @@ class Helper
 
     public static function getModuleStyles()
     {
-        $template_name      = ASTROID_TEMPLATE_NAME;
+        $template_name      = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
         $options            = array();
         $isChildTemplate    = self::isChildTemplate($template_name);
 

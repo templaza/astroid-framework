@@ -39,30 +39,31 @@ function checkShowGroup(fields) {
     }
     return hasField;
 }
-function saveModal(){
-    let allowSave = true;
+const actSave = ref(false);
+function storeParams() {
+    const tmp = Object.keys(params.value).map(key => ({
+        name: key,
+        value: typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null
+            ? JSON.parse(JSON.stringify(params.value[key]))
+            : params.value[key]
+    }));
+    emit('update:saveElement', tmp);
+    emit('update:closeElement');
+}
+function saveModal() {
     if (subFormOpen.value.value) {
-        if (!confirm(subFormOpen.value.name + ' has not been saved. Are you sure to skip the subform?')) {
-            allowSave = false;
+        const message = `${subFormOpen.value.name} has not been saved. Are you sure to save the subform?`;
+        if (confirm(message)) {
+            actSave.value = true;
+            setTimeout(() => {
+                storeParams();
+                actSave.value = false;
+            }, 1000);
+        } else {
+            storeParams();
         }
-    }
-    if (allowSave) {
-        let tmp = [];
-        Object.keys(params.value).forEach(key => {
-            if (typeof params.value[key] === 'object' && !Array.isArray(params.value[key]) && params.value[key] !== null) {
-                tmp.push({
-                    'name': key,
-                    'value': JSON.parse(JSON.stringify(params.value[key]))
-                });
-            } else {
-                tmp.push({
-                    'name': key,
-                    'value': params.value[key]
-                });
-            }
-        });
-        emit('update:saveElement', tmp);
-        emit('update:closeElement')
+    } else {
+        storeParams();
     }
 }
 function updateSubForm(value) {
@@ -102,6 +103,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                                     <Fields 
                                         :field="field" 
                                         :scope="params"
+                                        :actSave="actSave"
                                         @update:subFormState="updateSubForm"
                                         />
                                 </div>

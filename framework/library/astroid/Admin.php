@@ -18,6 +18,7 @@ use Astroid\Component\Includer;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
+use Astroid\Helper\Template;
 
 defined('_JEXEC') or die;
 
@@ -31,6 +32,15 @@ class Admin extends Helper\Client
     public function onBeforeRender()
     {
         Utility::showFreeTemplate();
+    }
+
+    public function onExtensionAfterSave($context, $table, $isNew)
+    {
+        if ($context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
+            $params = \json_decode($table->params, TRUE);
+            $parent_id = $params['astroid'];
+            Template::setTemplateDefaults($table->template, $table->id, $parent_id);
+        }
     }
 
     protected function save()

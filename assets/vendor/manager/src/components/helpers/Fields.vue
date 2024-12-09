@@ -25,7 +25,8 @@ import SubLayouts from './SubLayouts.vue';
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
   field: { type: Object, default: null },
-  scope: { type: Object, default: null }
+  scope: { type: Object, default: null },
+    actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
 
@@ -89,6 +90,9 @@ function updateSubLayouts() {
     </select>
     <select v-else-if="props.field.input.type === `astroidmodulesposition`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-position form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="key">{{ option }}</option>
+    </select>
+    <select v-else-if="props.field.input.type === `astroidmoduleslist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-list form-select" :aria-label="props.field.label">
+        <option v-for="(option, key) in props.field.input.options" :key="key" :value="option.id">{{ option.title }}</option>
     </select>
     <select v-else-if="props.field.input.type === `astroidmodulesstyle`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-module-style form-select" :aria-label="props.field.label">
         <option v-for="(option, key) in props.field.input.options" :key="key" :value="option.value">{{ option.text }}</option>
@@ -167,7 +171,7 @@ function updateSubLayouts() {
         <Presets :field="props.field" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidsubform`" class="astroid-subform">
-        <SubForm v-model="props.scope[props.field.name]" :field="props.field" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
+        <SubForm v-model="props.scope[props.field.name]" :field="props.field" :actSave="props.actSave" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicons`" class="astroid-icons">
         <Icons v-model="props.scope[props.field.name]" :field="props.field" />
