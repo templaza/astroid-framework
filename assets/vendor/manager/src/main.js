@@ -50,8 +50,5 @@ if (typeof(as_module) !== 'undefined' && as_module !== null)
             vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
         },
     });
-    app.component('font-awesome-icon', FontAwesomeIcon);
-    app.component('font-awesome-layers', FontAwesomeLayers);
-    app.component('font-awesome-layers-text', FontAwesomeLayersText);
     app.mount('#astroid-layout-module')
 }

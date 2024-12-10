@@ -43,9 +43,10 @@
         .astroid-subform .add-item {
             border: 2px dashed var(--border-color);
         }
-        .astroid-btn-group {
+        .astroid-btn-group:not(.full) {
             label {
                 width: auto;
+                margin: 0;
             }
         }
     }
