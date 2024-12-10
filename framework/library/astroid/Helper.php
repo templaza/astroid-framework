@@ -265,6 +265,49 @@ class Helper
         $app->getDispatcher()->dispatch('onAfterPurge', new AfterPurgeEvent('onAfterPurge'));
     }
 
+    public static function cleanImageUrl($url): object
+    {
+        $obj = new \stdClass();
+
+        $obj->attributes = [
+            'width'  => 0,
+            'height' => 0,
+        ];
+
+        if ($url === null) {
+            $url = '';
+        }
+
+        $mediaUri = new Uri($url);
+
+        // Old image URL format
+        if ($mediaUri->hasVar('joomla_image_height')) {
+            $height = (int) $mediaUri->getVar('joomla_image_height');
+            $width  = (int) $mediaUri->getVar('joomla_image_width');
+
+            $mediaUri->delVar('joomla_image_height');
+            $mediaUri->delVar('joomla_image_width');
+        } else {
+            // New Image URL format
+            $fragmentUri = new Uri($mediaUri->getFragment());
+            $width       = (int) $fragmentUri->getVar('width', 0);
+            $height      = (int) $fragmentUri->getVar('height', 0);
+        }
+
+        if ($width > 0) {
+            $obj->attributes['width'] = $width;
+        }
+
+        if ($height > 0) {
+            $obj->attributes['height'] = $height;
+        }
+
+        $mediaUri->setFragment('');
+        $obj->url = $mediaUri->toString();
+
+        return $obj;
+    }
+
     public static function getFileHash($file)
     {
         $content = file_get_contents($file);
