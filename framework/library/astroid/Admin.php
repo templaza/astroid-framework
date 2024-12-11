@@ -34,15 +34,6 @@ class Admin extends Helper\Client
         Utility::showFreeTemplate();
     }
 
-    public function onExtensionAfterSave($context, $table, $isNew)
-    {
-        if ($context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
-            $params = \json_decode($table->params, TRUE);
-            $parent_id = $params['astroid'];
-            Template::setTemplateDefaults($table->template, $table->id, $parent_id);
-        }
-    }
-
     protected function save()
     {
         $this->checkAuth();

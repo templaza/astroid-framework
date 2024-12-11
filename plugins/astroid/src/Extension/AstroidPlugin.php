@@ -136,11 +136,13 @@ final class AstroidPlugin extends CMSPlugin
     public function onExtensionBeforeSave($context, $table, $isNew)
     {
         if (defined('_ASTROID')) {
-            if ($context == 'com_modules.module' && $table->module == 'mod_astroid_layout') {
-                $params = new \Joomla\Registry\Registry($table->params);
-                $table->astroiddata = $params->get('astroid_module_layout', '');
-                $params->remove('astroid_module_layout');
-                $table->params = $params->toString();
+            if (Framework::isAdmin()) {
+                if ($context == 'com_modules.module' && $table->module == 'mod_astroid_layout') {
+                    $params = new \Joomla\Registry\Registry($table->params);
+                    $table->astroiddata = $params->get('astroid_module_layout', '');
+                    $params->remove('astroid_module_layout');
+                    $table->params = $params->toString();
+                }
             }
         }
     }
@@ -148,10 +150,16 @@ final class AstroidPlugin extends CMSPlugin
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if (defined('_ASTROID')) {
-            if ($context == 'com_modules.module' && $table->module == 'mod_astroid_layout' && !empty($table->id) && !empty($table->astroiddata)) {
-                Helper::putContents(JPATH_SITE . '/media/mod_astroid_layout/params/' . $table->id . '.json', $table->astroiddata);
+            if (Framework::isAdmin()) {
+                if ($context == 'com_modules.module' && $table->module == 'mod_astroid_layout' && !empty($table->id) && !empty($table->astroiddata)) {
+                    Helper::putContents(JPATH_SITE . '/media/mod_astroid_layout/params/' . $table->id . '.json', $table->astroiddata);
+                }
+                if ($context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
+                    $params = \json_decode($table->params, TRUE);
+                    $parent_id = $params['astroid'];
+                    Template::setTemplateDefaults($table->template, $table->id, $parent_id);
+                }
             }
-            Framework::getClient()->onExtensionAfterSave($context, $table, $isNew);
         }
     }
 
