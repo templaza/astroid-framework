@@ -56,8 +56,18 @@ foreach ($responsive_key as $key) {
 
 $document = Framework::getDocument();
 $show_label     =   $params->get('show_label', 1);
+$pluginParams   =   Helper::getPluginParams();
+$captcha_attr   =   '';
+if ($params->get('enable_captcha', 0) == 1) {
+    $captcha_type   =   $pluginParams->get('captcha_type', 'default');
+    $captcha_attr   =   ' data-captcha="'.$captcha_type.'"';
+    if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        $document->loadGoogleReCaptcha();
+        $captcha_attr .= ' data-sitekey="'.$pluginParams->get('g_site_key', '').'"';
+    }
+}
 
-echo '<form class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget">';
+echo '<form id="'.$element->id.'_formbuilder" class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget"'.$captcha_attr.'>';
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
@@ -138,25 +148,6 @@ foreach ($form_elements as $key => $form_element) :
 endforeach;
 echo '</div>';
 
-if ($params->get('enable_captcha', 0) == 1) :
-    $captcha_type = $params->get('captcha_type', 'default');
-    echo '<div class="mt-2">';
-    if ($captcha_type == 'recaptcha') {
-        $document->loadGoogleReCaptcha();
-        $pluginParams   =   Helper::getPluginParams();
-        echo '<div id="'.$element->id.'-recaptcha" class="g-recaptcha" data-sitekey="'.$pluginParams->get('g_site_key', '').'"></div>';
-    } elseif ($captcha_type == 'invisible-recaptcha') {
-        $document->loadGoogleReCaptcha();
-        PluginHelper::importPlugin('captcha', 'recaptcha_invisible');
-        $recaptcha = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'as_form_builder_invisible_recaptcha' , 'as-form-builder-invisible-recaptcha'));
-        echo (isset($recaptcha[0])) ? $recaptcha[0] : '<p class="uk-alert-danger">' . Text::_('ASTROID_RECAPTCHA_NOT_INSTALLED') . '</p>';
-    } else {
-        echo Helper::loadCaptcha('as-formbuilder-captcha');
-    }
-    echo '<input type="hidden" name="captcha_type" value="'.$captcha_type.'">';
-    echo '</div>';
-endif;
-
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
 echo '<input type="hidden" name="template" value="'.Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
@@ -180,11 +171,23 @@ $button_size        =   $button_size ? ' '. $button_size : '';
 $button_radius      =   $params->get('border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
-$button_margin_top  =   $params->get('button_margin_top', '');
+$button_margin_top  =   $params->get('button_margin_top', '4');
 $button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
 $button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
 $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
-echo '<button type="submit" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
+
+if ($params->get('enable_captcha', 0) == 1) {
+    $captcha_type = $pluginParams->get('captcha_type', 'default');
+    echo '<div class="mt-2">';
+    if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        echo '<div class="google-recaptcha"></div>';
+    } else {
+        echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha');
+    }
+    echo '<input type="hidden" name="captcha_type" value="'.$captcha_type.'">';
+    echo '</div>';
+}
+echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 

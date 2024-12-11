@@ -19,7 +19,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
 use Astroid\Helper;
 use Astroid\Framework;
-
 $mainframe      =   Factory::getApplication();
 $asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
 $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
@@ -47,36 +46,25 @@ try {
     $message        =   $params->get('email_body', '');
     $email_headers  =   $params->get('email_headers', '');
     $gcaptcha       =   $mainframe->input->post->get('g-recaptcha-response');
+    $pluginParams   =   Helper::getPluginParams();
 
     foreach ($asformbuilder as $field => $value) {
         $message        =   str_replace('{{'.$field.'}}', $value, $message);
         $email_headers  =   str_replace('{{'.$field.'}}', $value, $email_headers);
-        if ($field == 'g-recaptcha-response') {
-            $gcaptcha = $value;
-        }
     }
-
     $replyToMail = $replyToName = '';
-
     if (intval($params->get('enable_captcha', 0))) {
-        $captcha_type   =   $params->get('captcha_type', 'default');
-        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        $captcha_type   =   $pluginParams->get('captcha_type', 'default');
+        $invalidCaptchaMessage = Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA');
 
-            if($gcaptcha == ''){
-                throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
-            } else {
-                $res = Helper::verifyGoogleCaptcha($gcaptcha);
-                if (!$res) {
-                    throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
-                }
+        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+            if (empty($gcaptcha) || !Helper\Captcha::verifyGoogleCaptcha($gcaptcha)) {
+                throw new \Exception($invalidCaptchaMessage);
             }
-        } else {
-            if (!Helper::getCaptcha('as-formbuilder-captcha')) {
-                throw new \Exception(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
-            }
+        } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha')) {
+            throw new \Exception($invalidCaptchaMessage);
         }
     }
-
     //get sender UP
     $senderip       = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
     // Subject Structure
