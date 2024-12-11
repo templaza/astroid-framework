@@ -18,6 +18,7 @@ use Astroid\Component\Includer;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
+use Astroid\Helper\Template;
 
 defined('_JEXEC') or die;
 

@@ -1,14 +1,14 @@
 .astroid-icons {
-    .icon-text {
+    .asicon-item {
         cursor: pointer;
     }
-    .icon-box {
+    .asicon-box {
         > .card-body {
             height: 300px;
             overflow-y: auto;
         }
     }
-    .icon-item {
+    .asicon-item {
         cursor: pointer;
         i {
             font-size: 1.2rem;

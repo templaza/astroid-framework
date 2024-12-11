@@ -618,7 +618,7 @@ class Document
     private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
-        $document = Factory::getDocument();
+        $document = Factory::getApplication()->getDocument();
         $renderer = $document->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
@@ -1029,6 +1029,12 @@ class Document
             $wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_lenis = true;
         }
+    }
+
+    public function loadGoogleReCaptcha(): void
+    {
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js', ['relative' => true, 'version' => 'auto']);
     }
 
     public function moveFile(&$array, $a, $b): void

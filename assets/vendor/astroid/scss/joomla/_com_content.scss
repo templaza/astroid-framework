@@ -1,5 +1,5 @@
 .blog {
-  .blog-items + .blog-items {
+  .cat-children + .blog-items, .blog-items + .blog-items {
     margin-top: 3rem;
   }
   .item-content.border-top {
@@ -20,6 +20,13 @@
   }
   .readmore {
     margin-bottom: 0;
+  }
+  .com-content-category-blog__child {
+    .item-title {
+      .badge {
+        font-size: 0.55em;
+      }
+    }
   }
 }
 .astroid-img-cover {

@@ -105,9 +105,16 @@ class Article
             $og_description = $this->article->params->get('astroid_og_desc', '');
         }
         $images = json_decode($this->article->images);
-        if (isset($images->image_intro) && !empty($images->image_intro)) {
-            $og_image = Uri::base() . htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8');
+        if (isset($images->image_fulltext) && !empty($images->image_fulltext)) {
+            $img = Helper::cleanImageUrl($images->image_fulltext);
+            $og_image = Uri::base() . htmlspecialchars($img->url, ENT_COMPAT, 'UTF-8');
+        } elseif (isset($images->image_intro) && !empty($images->image_intro)) {
+            $img = Helper::cleanImageUrl($images->image_intro);
+            $og_image = Uri::base() . htmlspecialchars($img->url, ENT_COMPAT, 'UTF-8');
+        } else {
+            $og_image = '';
         }
+
         if (!empty($this->article->params->get('astroid_og_image', ''))) {
             $og_image = Uri::base() . $this->article->params->get('astroid_og_image', '');
         }
@@ -141,7 +148,7 @@ class Article
         }
         $meta = implode('', $meta);
         if (!empty($meta)) {
-            $document = Factory::getDocument();
+            $document = Factory::getApplication()->getDocument();
             $document->addCustomTag($meta);
         }
     }

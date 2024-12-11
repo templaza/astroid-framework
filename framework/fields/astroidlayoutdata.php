@@ -132,6 +132,7 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $wa->registerAndUseStyle('astroid.article.widget.data', "media/astroid/assets/vendor/manager/dist/index.css");
                 $wa->registerAndUseStyle('astroid.icons', "media/astroid/assets/vendor/linearicons/font.min.css");
                 $wa->useScript('bootstrap.tab');
+                $wa->useScript('bootstrap.modal');
                 $wa->registerAndUseScript('astroid.article.widget.data', 'media/astroid/assets/vendor/manager/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
                 return $html;
             }

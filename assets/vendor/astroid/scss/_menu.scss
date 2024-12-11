@@ -247,6 +247,7 @@ ul {
 		position: absolute;
 		top: 100%;
 		cursor: pointer;
+		z-index: 1003;
 	}
 
 	&.open {
