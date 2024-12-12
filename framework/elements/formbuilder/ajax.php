@@ -46,17 +46,17 @@ try {
     $message        =   $params->get('email_body', '');
     $email_headers  =   $params->get('email_headers', '');
     $gcaptcha       =   $mainframe->input->post->get('g-recaptcha-response');
-    $pluginParams   =   Helper::getPluginParams();
+    $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
 
     foreach ($asformbuilder as $field => $value) {
         $message        =   str_replace('{{'.$field.'}}', $value, $message);
         $email_headers  =   str_replace('{{'.$field.'}}', $value, $email_headers);
     }
     $replyToMail = $replyToName = '';
+
     if (intval($params->get('enable_captcha', 0))) {
         $captcha_type   =   $pluginParams->get('captcha_type', 'default');
         $invalidCaptchaMessage = Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA');
-
         if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
             if (empty($gcaptcha) || !Helper\Captcha::verifyGoogleCaptcha($gcaptcha)) {
                 throw new \Exception($invalidCaptchaMessage);

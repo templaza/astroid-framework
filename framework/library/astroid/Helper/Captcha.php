@@ -11,6 +11,10 @@ namespace Astroid\Helper;
 
 use Astroid\Helper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Captcha\Google\HttpBridgePostRequestMethod;
+use ReCaptcha\ReCaptcha;
+use ReCaptcha\RequestMethod;
+use Joomla\Utilities\IpHelper;
 
 defined('_JEXEC') or die;
 
@@ -24,7 +28,7 @@ class Captcha {
         $value2 =   rand(1,100);
         $app->setUserState( $context.'.value1', $value1 );
         $app->setUserState( $context.'.value2', $value2 );
-        return '<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
+        return '<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control required" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'" required></div>';
     }
 
     public static function getCaptcha($context = '') {
@@ -35,35 +39,31 @@ class Captcha {
         return ( $value1 + $value2 == $value_result );
     }
 
-    public static function verifyGoogleCaptcha($gRecaptchaResponse, $secretKey = '') {
-        if (empty($gRecaptchaResponse)) {
-            return false;
-        }
+    public static function verifyGoogleCaptcha($gRecaptchaResponse, $secretKey = '', RequestMethod $requestMethod = new HttpBridgePostRequestMethod()) {
+        $app    =   Factory::getApplication();
         if (empty($secretKey)) {
-            $pluginParams   =   Helper::getPluginParams();
+            $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
             $secretKey      =   $pluginParams->get('g_secret_key', '');
         }
         if (empty($secretKey)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_RECAPTCHA_ERROR_NO_PRIVATE_KEY'));
+        }
+        $remoteip   = IpHelper::getIp();
+        // Check for IP
+        if (empty($remoteip)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_RECAPTCHA_ERROR_NO_IP'));
+        }
+        if (empty($gRecaptchaResponse)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_RECAPTCHA_ERROR_EMPTY_SOLUTION'));
+        }
+        $reCaptcha = new ReCaptcha($secretKey, $requestMethod);
+        $response  = $reCaptcha->verify($gRecaptchaResponse, $remoteip);
+        if (!$response->isSuccess()) {
+            foreach ($response->getErrorCodes() as $error) {
+                throw new \RuntimeException($error);
+            }
             return false;
         }
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = [
-            'secret' => $secretKey,
-            'response' => $gRecaptchaResponse
-        ];
-
-        $options = [
-            'http' => [
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data),
-            ],
-        ];
-
-        $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        $response = json_decode($result, true);
-
-        return isset($response['success']) && $response['success'] === true;
+        return true;
     }
 }

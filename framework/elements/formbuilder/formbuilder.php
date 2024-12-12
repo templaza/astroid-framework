@@ -56,14 +56,21 @@ foreach ($responsive_key as $key) {
 
 $document = Framework::getDocument();
 $show_label     =   $params->get('show_label', 1);
-$pluginParams   =   Helper::getPluginParams();
+$pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
 $captcha_attr   =   '';
 if ($params->get('enable_captcha', 0) == 1) {
     $captcha_type   =   $pluginParams->get('captcha_type', 'default');
     $captcha_attr   =   ' data-captcha="'.$captcha_type.'"';
     if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
-        $document->loadGoogleReCaptcha();
+
         $captcha_attr .= ' data-sitekey="'.$pluginParams->get('g_site_key', '').'"';
+        if ($captcha_type == 'recaptcha_invisible') {
+            $document->loadGoogleReCaptcha([], 'explicit');
+            $captcha_attr .= ' data-badge="'.$pluginParams->get('badge', 'bottomright').'"';
+        } else {
+            $document->loadGoogleReCaptcha();
+        }
+        $captcha_attr .= ' data-tabindex="'.$pluginParams->get('tabindex', '0').'"';
     }
 }
 
@@ -184,7 +191,6 @@ if ($params->get('enable_captcha', 0) == 1) {
     } else {
         echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha');
     }
-    echo '<input type="hidden" name="captcha_type" value="'.$captcha_type.'">';
     echo '</div>';
 }
 echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';

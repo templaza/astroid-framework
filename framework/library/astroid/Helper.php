@@ -36,9 +36,9 @@ class Helper
         $lang->load($extension, ($client == 'site' ? JPATH_SITE : JPATH_ADMINISTRATOR));
     }
 
-    public static function getPluginParams()
+    public static function getPluginParams($group = 'system', $plugin = 'astroid')
     {
-        $plugin = PluginHelper::getPlugin('system', 'astroid');
+        $plugin = PluginHelper::getPlugin($group, $plugin);
         return new Registry($plugin->params);
     }
 

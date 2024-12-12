@@ -1031,10 +1031,26 @@ class Document
         }
     }
 
-    public function loadGoogleReCaptcha(): void
+    public function loadGoogleReCaptcha($onload = [], $render = ''): void
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js', ['relative' => true, 'version' => 'auto']);
+        $app = Factory::getApplication();
+        $wa = $app->getDocument()->getWebAssetManager();
+        $query = array();
+        $depends = [];
+        if (empty($onload)) {
+            $onload = ['url' => '', 'function' => ''];
+        }
+        if (!empty($onload['url'])) {
+            $wa->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
+            $query[] = 'onload=' . $onload['function'];
+            $depends[] = 'google.recaptcha.onload';
+        }
+        if (!empty($render)) {
+            $query[] = 'render=' . $render;
+        }
+        $query[] = 'hl=' . $app->getLanguage()->getTag();
+        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
+            .implode('&',$query), [], ['defer' => true], $depends);
     }
 
     public function moveFile(&$array, $a, $b): void

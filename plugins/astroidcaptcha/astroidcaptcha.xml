@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="plugin" group="captcha" method="upgrade">
+   <name>Astroid Captcha</name>
+   <author>Astroid Framework Team</author>
+   <creationDate>December 2024</creationDate>
+   <version>1.0.0</version>
+   <url>https://www.astroidframe.work</url>
+   <copyright>Copyright (C) 2024 TemPlaza, Inc. All rights reserved.</copyright>
+   <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+   <authorEmail>info@templaza.com</authorEmail>
+   <authorUrl>https://www.templaza.com</authorUrl>
+   <description>Astroid Framework Plugin Description Here</description>
+   <namespace path="src">Joomla\Plugin\Captcha\AstroidCaptcha</namespace>
+   <files>
+      <folder plugin="astroidcaptcha">services</folder>
+      <folder>src</folder>
+   </files>
+   <config>
+      <fields name="params">
+         <fieldset name="basic">
+            <field type="list" name="captcha_type" label="ASTROID_WIDGET_FORM_CAPTCHA_TYPE_LABEL" default="default">
+               <option value="default">TPL_ASTROID_DEFAULT</option>
+               <option value="recaptcha">reCaptcha</option>
+               <option value="recaptcha_invisible">reCaptcha Invisible</option>
+            </field>
+            <field type="spacer" name="recaptcha_spacer" hr="true" showon="captcha_type!:default"/>
+            <field name="recaptcha_note" type="note" label="ASTROID_RECAPTCHA_NOTE" showon="captcha_type!:default" />
+            <field name="g_site_key" type="text" default="" label="ASTROID_GOOGLE_SITE_KEY" showon="captcha_type!:default" />
+            <field name="g_secret_key" type="text" default="" label="ASTROID_GOOGLE_SECRET_KEY" showon="captcha_type!:default" />
+            <field
+                    name="badge"
+                    type="list"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_DESC"
+                    default="bottomright"
+                    validate="options"
+                    showon="captcha_type:recaptcha_invisible"
+            >
+               <option value="bottomright">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_BOTTOMRIGHT</option>
+               <option value="bottomleft">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_BOTTOMLEFT</option>
+               <option value="inline">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_INLINE</option>
+            </field>
+
+            <field
+                    name="tabindex"
+                    type="number"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_TABINDEX_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_TABINDEX_DESC"
+                    default="0"
+                    min="0"
+                    filter="integer"
+                    showon="captcha_type!:default"
+            />
+
+            <field
+                    name="callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type!:default"
+            />
+
+            <field
+                    name="expired_callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_EXPIRED_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_EXPIRED_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type!:default"
+            />
+
+            <field
+                    name="error_callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_ERROR_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_ERROR_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type!:default"
+            />
+         </fieldset>
+      </fields>
+   </config>
+</extension>
