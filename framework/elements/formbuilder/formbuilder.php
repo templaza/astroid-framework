@@ -14,7 +14,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -61,16 +60,21 @@ $captcha_attr   =   '';
 if ($params->get('enable_captcha', 0) == 1) {
     $captcha_type   =   $pluginParams->get('captcha_type', 'default');
     $captcha_attr   =   ' data-captcha="'.$captcha_type.'"';
-    if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
-
+    if ($captcha_type == 'recaptcha') {
+        $size = $pluginParams->get('g_size', 'normal');
         $captcha_attr .= ' data-sitekey="'.$pluginParams->get('g_site_key', '').'"';
-        if ($captcha_type == 'recaptcha_invisible') {
+        $captcha_attr .= ' data-size="'.$size.'"';
+        if ($size == 'invisible') {
             $document->loadGoogleReCaptcha([], 'explicit');
             $captcha_attr .= ' data-badge="'.$pluginParams->get('badge', 'bottomright').'"';
         } else {
             $document->loadGoogleReCaptcha();
         }
         $captcha_attr .= ' data-tabindex="'.$pluginParams->get('tabindex', '0').'"';
+    } else if ($captcha_type == 'turnstile') {
+        $captcha_attr .= ' data-sitekey="'.$pluginParams->get('t_site_key', '').'"';
+        $captcha_attr .= ' data-size="'.$pluginParams->get('t_size', 'normal').'"';
+        $document->loadCloudFlareTurnstile();
     }
 }
 
@@ -186,8 +190,10 @@ $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '<
 if ($params->get('enable_captcha', 0) == 1) {
     $captcha_type = $pluginParams->get('captcha_type', 'default');
     echo '<div class="mt-2">';
-    if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+    if ($captcha_type == 'recaptcha') {
         echo '<div class="google-recaptcha"></div>';
+    } else if ($captcha_type == 'turnstile') {
+        echo '<div class="cloudflare-turnstile"></div>';
     } else {
         echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha');
     }
@@ -197,4 +203,4 @@ echo '<button type="button" class="as-form-builer-submit btn ' . $button_class .
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 
-Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto']);

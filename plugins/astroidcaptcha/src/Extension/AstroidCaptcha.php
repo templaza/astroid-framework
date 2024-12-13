@@ -29,11 +29,11 @@ final class AstroidCaptcha extends CMSPlugin
     {
         $app = $this->getApplication();
         $captcha_type   =   $this->params->get('captcha_type', 'default');
-        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        if ($captcha_type == 'recaptcha') {
             if ($this->params->get('g_site_key', '') === '') {
                 throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_RECAPTCHA_ERROR_NO_PUBLIC_KEY'));
             }
-            if ($captcha_type == 'recaptcha_invisible') {
+            if ($this->params->get('g_size', 'normal') == 'invisible') {
                 $onload = ['url' => 'astroid/recaptcha_invisible.min.js', 'function' => 'AstroidinitReCaptchaInvisible'];
                 $render = 'explicit';
             } else {
@@ -41,23 +41,29 @@ final class AstroidCaptcha extends CMSPlugin
                 $render = '';
             }
             Framework::getDocument()->loadGoogleReCaptcha($onload, $render);
+        } else if ($captcha_type == 'turnstile') {
+            if ($this->params->get('t_site_key', '') === '') {
+                throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_TURNSTILE_ERROR_NO_PUBLIC_KEY'));
+            }
+            Framework::getDocument()->loadCloudFlareTurnstile();
         }
         return true;
     }
-    public function onDisplay($name = null, $id = 'astroid-recaptcha', $class = '')
+    public function onDisplay($name = null, $id = 'astroid-captcha', $class = '')
     {
         $captcha_type = $this->params->get('captcha_type', 'default');
         $html = '<div class="mt-2">';
-        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        if ($captcha_type == 'recaptcha') {
             $dom = new \DOMDocument('1.0', 'UTF-8');
             $ele = $dom->createElement('div');
             $ele->setAttribute('id', $id);
             $ele->setAttribute('class', ((trim($class) == '') ? 'g-recaptcha' : ($class . ' g-recaptcha')));
             $ele->setAttribute('data-sitekey', $this->params->get('g_site_key', ''));
-            if ($captcha_type == 'recaptcha_invisible') {
+            $size = $this->params->get('g_size', 'normal');
+            if ($size == 'invisible') {
                 $ele->setAttribute('data-badge', $this->params->get('badge', 'bottomright'));
-                $ele->setAttribute('data-size', 'invisible');
             }
+            $ele->setAttribute('data-size', $size);
             $ele->setAttribute('data-tabindex', $this->params->get('tabindex', '0'));
             $callback = $this->params->get('callback', '');
             if ($callback != '') {
@@ -73,6 +79,27 @@ final class AstroidCaptcha extends CMSPlugin
             }
             $dom->appendChild($ele);
             $html .= $dom->saveHTML($ele);
+        } else if ($captcha_type == 'turnstile') {
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $ele = $dom->createElement('div');
+            $ele->setAttribute('id', $id);
+            $ele->setAttribute('class', ((trim($class) == '') ? 'cf-turnstile' : ($class . ' cf-turnstile')));
+            $ele->setAttribute('data-sitekey', $this->params->get('t_site_key', ''));
+            $ele->setAttribute('data-size', $this->params->get('t_size', 'normal'));
+            $callback = $this->params->get('t_callback', '');
+            if ($callback != '') {
+                $ele->setAttribute('data-callback', $callback);
+            }
+            $expired_callback = $this->params->get('t_expired_callback', '');
+            if ($expired_callback != '') {
+                $ele->setAttribute('data-expired-callback', $expired_callback);
+            }
+            $error_callback = $this->params->get('t_error_callback', '');
+            if ($error_callback != '') {
+                $ele->setAttribute('data-error-callback', $error_callback);
+            }
+            $dom->appendChild($ele);
+            $html .= $dom->saveHTML($ele);
         } else {
             $html .= Helper\Captcha::loadCaptcha('as-joomla-captcha');
         }
@@ -82,11 +109,16 @@ final class AstroidCaptcha extends CMSPlugin
     public function onCheckAnswer($code = null)
     {
         $captcha_type = $this->params->get('captcha_type', 'default');
-        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        if ($captcha_type == 'recaptcha') {
             $input      = $this->getApplication()->getInput();
             $privatekey = $this->params->get('g_secret_key', '');
             $gcaptcha  = $input->post->get('g-recaptcha-response', '', 'string');
             return Helper\Captcha::verifyGoogleCaptcha($gcaptcha, $privatekey, $this->requestMethod);
+        } elseif ($captcha_type == 'turnstile') {
+            $input      = $this->getApplication()->getInput();
+            $privatekey = $this->params->get('t_secret_key', '');
+            $token      = $input->post->get('cf-turnstile-response', '', 'string');
+            return Helper\Captcha::verifyCloudFlareTurnstile($token, $privatekey);
         } elseif (!Helper\Captcha::getCaptcha('as-joomla-captcha')) {
             throw new \RuntimeException(Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA'));
         } else {

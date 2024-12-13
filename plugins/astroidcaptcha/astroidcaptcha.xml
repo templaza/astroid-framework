@@ -21,26 +21,22 @@
             <field type="list" name="captcha_type" label="ASTROID_WIDGET_FORM_CAPTCHA_TYPE_LABEL" default="default">
                <option value="default">TPL_ASTROID_DEFAULT</option>
                <option value="recaptcha">reCaptcha</option>
-               <option value="recaptcha_invisible">reCaptcha Invisible</option>
+               <option value="turnstile">CloudFlare Turnstile</option>
             </field>
             <field type="spacer" name="recaptcha_spacer" hr="true" showon="captcha_type!:default"/>
-            <field name="recaptcha_note" type="note" label="ASTROID_RECAPTCHA_NOTE" showon="captcha_type!:default" />
-            <field name="g_site_key" type="text" default="" label="ASTROID_GOOGLE_SITE_KEY" showon="captcha_type!:default" />
-            <field name="g_secret_key" type="text" default="" label="ASTROID_GOOGLE_SECRET_KEY" showon="captcha_type!:default" />
-            <field
-                    name="badge"
-                    type="list"
-                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_LABEL"
-                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_DESC"
-                    default="bottomright"
-                    validate="options"
-                    showon="captcha_type:recaptcha_invisible"
-            >
+            <field name="recaptcha_note" type="note" label="ASTROID_RECAPTCHA_NOTE" showon="captcha_type:recaptcha" />
+            <field name="g_site_key" type="text" default="" label="ASTROID_GOOGLE_SITE_KEY" showon="captcha_type:recaptcha" />
+            <field name="g_secret_key" type="text" default="" label="ASTROID_GOOGLE_SECRET_KEY" showon="captcha_type:recaptcha" />
+            <field name="g_size" type="list" label="ASTROID_CAPTCHA_SIZE_LABEL" default="normal" showon="captcha_type:recaptcha">
+               <option value="normal">Normal</option>
+               <option value="compact">Compact</option>
+               <option value="invisible">Invisible</option>
+            </field>
+            <field name="badge" type="list" label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_LABEL" description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_DESC" default="bottomright" validate="options" showon="captcha_type:recaptcha[AND]g_size:invisible">
                <option value="bottomright">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_BOTTOMRIGHT</option>
                <option value="bottomleft">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_BOTTOMLEFT</option>
                <option value="inline">ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_BADGE_INLINE</option>
             </field>
-
             <field
                     name="tabindex"
                     type="number"
@@ -49,9 +45,8 @@
                     default="0"
                     min="0"
                     filter="integer"
-                    showon="captcha_type!:default"
+                    showon="captcha_type:recaptcha"
             />
-
             <field
                     name="callback"
                     type="text"
@@ -59,9 +54,8 @@
                     description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_CALLBACK_DESC"
                     default=""
                     filter="string"
-                    showon="captcha_type!:default"
+                    showon="captcha_type:recaptcha"
             />
-
             <field
                     name="expired_callback"
                     type="text"
@@ -69,9 +63,8 @@
                     description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_EXPIRED_CALLBACK_DESC"
                     default=""
                     filter="string"
-                    showon="captcha_type!:default"
+                    showon="captcha_type:recaptcha"
             />
-
             <field
                     name="error_callback"
                     type="text"
@@ -79,7 +72,43 @@
                     description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_ERROR_CALLBACK_DESC"
                     default=""
                     filter="string"
-                    showon="captcha_type!:default"
+                    showon="captcha_type:recaptcha"
+            />
+
+            <field name="turnstile_note" type="note" label="ASTROID_TURNSTILE_NOTE" showon="captcha_type:turnstile" />
+            <field name="t_site_key" type="text" default="" label="ASTROID_GOOGLE_SITE_KEY" showon="captcha_type:turnstile" />
+            <field name="t_secret_key" type="text" default="" label="ASTROID_GOOGLE_SECRET_KEY" showon="captcha_type:turnstile" />
+            <field name="t_size" type="list" label="ASTROID_CAPTCHA_SIZE_LABEL" default="normal" showon="captcha_type:turnstile">
+               <option value="normal">Normal</option>
+               <option value="compact">Compact</option>
+               <option value="flexible">Flexible</option>
+            </field>
+            <field
+                    name="t_callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type:turnstile"
+            />
+            <field
+                    name="t_expired_callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_EXPIRED_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_EXPIRED_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type:turnstile"
+            />
+            <field
+                    name="t_error_callback"
+                    type="text"
+                    label="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_ERROR_CALLBACK_LABEL"
+                    description="ASTROID_GOOGLE_RECAPTCHA_INVISIBLE_ERROR_CALLBACK_DESC"
+                    default=""
+                    filter="string"
+                    showon="captcha_type:turnstile"
             />
          </fieldset>
       </fields>

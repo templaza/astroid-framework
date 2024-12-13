@@ -15,8 +15,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Mail\MailerFactoryInterface;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\IpHelper;
 use Astroid\Helper;
 use Astroid\Framework;
 $mainframe      =   Factory::getApplication();
@@ -45,7 +45,7 @@ try {
     $mail           =   Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
     $message        =   $params->get('email_body', '');
     $email_headers  =   $params->get('email_headers', '');
-    $gcaptcha       =   $mainframe->input->post->get('g-recaptcha-response');
+
     $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
 
     foreach ($asformbuilder as $field => $value) {
@@ -57,8 +57,14 @@ try {
     if (intval($params->get('enable_captcha', 0))) {
         $captcha_type   =   $pluginParams->get('captcha_type', 'default');
         $invalidCaptchaMessage = Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA');
-        if ($captcha_type == 'recaptcha' || $captcha_type == 'recaptcha_invisible') {
+        if ($captcha_type == 'recaptcha') {
+            $gcaptcha   =   $mainframe->input->post->get('g-recaptcha-response');
             if (empty($gcaptcha) || !Helper\Captcha::verifyGoogleCaptcha($gcaptcha)) {
+                throw new \Exception($invalidCaptchaMessage);
+            }
+        } elseif ($captcha_type == 'turnstile') {
+            $token      =   $mainframe->input->post->get('cf-turnstile-response');
+            if (empty($token) || !Helper\Captcha::verifyCloudFlareTurnstile($token)) {
                 throw new \Exception($invalidCaptchaMessage);
             }
         } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha')) {
@@ -66,11 +72,12 @@ try {
         }
     }
     //get sender UP
-    $senderip       = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+    $senderip       = IpHelper::getIp();
     // Subject Structure
-    $site_name 	    = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-    $mail_subject   = $params->get('email_subject', '') . ' - ' . $site_name;
-    $mail_subject = preg_replace_callback('/\{\{(\S+?)\}\}/siU', function ($matches) use (&$asformbuilder, &$site_name) {
+    $config         = Factory::getApplication()->getConfig();
+    $site_name 	    = $config->get( 'sitename', '' );
+    $mail_subject   = $params->get('email_subject', '');
+    $mail_subject   = preg_replace_callback('/\{\{(\S+?)\}\}/siU', function ($matches) use (&$asformbuilder, &$site_name) {
         if (isset($asformbuilder[$matches[1]])) {
             return $asformbuilder[$matches[1]];
         } elseif ($matches[1] == 'site-name') {
@@ -81,8 +88,6 @@ try {
     // Message structure
     $mail_body =  $message;
     $mail_body .= '<p><strong>' . Text::_('ASTROID_FORMBUILDER_SENDER_IP'). '</strong>: ' . $senderip .'</p>';
-
-    $config = Factory::getConfig();
 
     $sender = array( $config->get( 'mailfrom' ), $config->get( 'fromname' ) );
     $recipient = $config->get( 'mailfrom' );

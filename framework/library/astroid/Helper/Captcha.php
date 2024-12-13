@@ -66,4 +66,41 @@ class Captcha {
         }
         return true;
     }
+
+    public static function verifyCloudFlareTurnstile($turnstileResponse, $secretKey = '') {
+        $app    =   Factory::getApplication();
+        if (empty($secretKey)) {
+            $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
+            $secretKey      =   $pluginParams->get('t_secret_key', '');
+        }
+        if (empty($secretKey)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_TURNSTILE_ERROR_NO_PRIVATE_KEY'));
+        }
+        $remoteip   = IpHelper::getIp();
+        // Check for IP
+        if (empty($remoteip)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_TURNSTILE_ERROR_NO_IP'));
+        }
+        if (empty($turnstileResponse)) {
+            throw new \RuntimeException($app->getLanguage()->_('ASTROID_GOOGLE_RECAPTCHA_ERROR_EMPTY_SOLUTION'));
+        }
+        $response = file_get_contents("https://challenges.cloudflare.com/turnstile/v0/siteverify", false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query([
+                    'secret' => $secretKey,
+                    'response' => $turnstileResponse,
+                    'remoteip' => $remoteip
+                ]),
+            ],
+        ]));
+
+        $result = json_decode($response, true);
+        if ($result['success']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
