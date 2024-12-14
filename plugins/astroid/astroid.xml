@@ -50,10 +50,6 @@
          </fieldset>
          <fieldset name="astroid_api">
             <field name="gmap_api" type="text" default="" label="ASTROID_WIDGET_GMAP_API" description="ASTROID_WIDGET_GMAP_API_DESC"/>
-            <field type="spacer" name="recaptcha_spacer" hr="true"/>
-            <field name="recaptcha_note" type="note" label="ASTROID_RECAPTCHA_NOTE" />
-            <field name="g_site_key" type="text" default="" label="ASTROID_GOOGLE_SITE_KEY"/>
-            <field name="g_secret_key" type="text" default="" label="ASTROID_GOOGLE_SECRET_KEY"/>
          </fieldset>
          <fieldset name="astroid-tabs-visibility">
             <field name="frontend_tabs_visibility" type="radio" default="1" label="ASTROID_TABS_FRONTEND_VISIBILTY" description="" class="btn-group btn-group-yesno">
