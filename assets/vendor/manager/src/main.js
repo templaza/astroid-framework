@@ -5,7 +5,6 @@ import Module from './Module.vue';
 import "vue-search-select/dist/VueSearchSelect.css"
 import 'vue-color-kit/dist/vue-color-kit.css'
 import 'quill/dist/quill.snow.css'
-import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 let astroid_app = document.getElementById('astroid-app');
 let as_widgets = document.querySelectorAll('.as-article-widget-data');
@@ -19,9 +18,6 @@ if (typeof(astroid_app) !== 'undefined' && astroid_app !== null)
             vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
         },
     });
-    app.component('font-awesome-icon', FontAwesomeIcon);
-    app.component('font-awesome-layers', FontAwesomeLayers);
-    app.component('font-awesome-layers-text', FontAwesomeLayersText);
     app.mount('#astroid-app')
 }
 else if (as_widgets.length > 0) {
@@ -35,13 +31,10 @@ else if (as_widgets.length > 0) {
                 vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
             },
         });
-        app.component('font-awesome-icon', FontAwesomeIcon);
-        app.component('font-awesome-layers', FontAwesomeLayers);
-        app.component('font-awesome-layers-text', FontAwesomeLayersText);
         app.mount('#'+as_widget.id);
     });
 }
-if (typeof(as_module) !== 'undefined' && as_module !== null)
+else if (typeof(as_module) !== 'undefined' && as_module !== null)
 {
     const app = createApp(Module);
     app.use(VueMonacoEditorPlugin, {
