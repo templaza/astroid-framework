@@ -49,13 +49,13 @@ function selectIcon(icon) {
 </script>
 <template>
     <div class="input-group mb-3">
-        <div class="form-control icon-text" @click="showIconsBox = true">
+        <div class="form-control asicon-item" @click="showIconsBox = true">
             <span v-if="modelValue!=``" v-html="iconSelected.name"></span>
             <span v-else>{{ btnIcon }}..</span>
         </div>
         <button class="btn btn-outline-secondary" type="button" @click.prevent="showIconsBox = true">{{ btnIcon }}</button>
     </div>
-    <div v-if="showIconsBox" class="card icon-box">
+    <div v-if="showIconsBox" class="card asicon-box">
         <div class="card-header d-flex justify-content-between align-items-center">
             <input type="text" class="form-control me-3" placeholder="Find your icon" v-model="searchText">
             <button type="button" class="btn-close" @click.prevent="showIconsBox = false"></button>
@@ -63,7 +63,7 @@ function selectIcon(icon) {
         <div class="card-body">
             <div class="row row-cols-md-2 row-cols-1 g-3">
                 <div v-for="icon in showIcons">
-                    <div class="card icon-item" @click="selectIcon(icon)">
+                    <div class="card asicon-item" @click="selectIcon(icon)">
                         <div class="card-body" v-html="icon.name"></div>
                     </div>
                 </div>

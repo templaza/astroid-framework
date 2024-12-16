@@ -14,12 +14,12 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Helper\Style;
 use Astroid\Helper;
+use Astroid\Framework;
 
 extract($displayData);
 
@@ -53,9 +53,32 @@ foreach ($responsive_key as $key) {
     }
 }
 
+$document = Framework::getDocument();
 $show_label     =   $params->get('show_label', 1);
+$pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
+$captcha_attr   =   '';
+if ($params->get('enable_captcha', 0) == 1) {
+    $captcha_type   =   $pluginParams->get('captcha_type', 'default');
+    $captcha_attr   =   ' data-captcha="'.$captcha_type.'"';
+    if ($captcha_type == 'recaptcha') {
+        $size = $pluginParams->get('g_size', 'normal');
+        $captcha_attr .= ' data-sitekey="'.$pluginParams->get('g_site_key', '').'"';
+        $captcha_attr .= ' data-size="'.$size.'"';
+        if ($size == 'invisible') {
+            $document->loadGoogleReCaptcha([], 'explicit');
+            $captcha_attr .= ' data-badge="'.$pluginParams->get('badge', 'bottomright').'"';
+        } else {
+            $document->loadGoogleReCaptcha();
+        }
+        $captcha_attr .= ' data-tabindex="'.$pluginParams->get('tabindex', '0').'"';
+    } else if ($captcha_type == 'turnstile') {
+        $captcha_attr .= ' data-sitekey="'.$pluginParams->get('t_site_key', '').'"';
+        $captcha_attr .= ' data-size="'.$pluginParams->get('t_size', 'normal').'"';
+        $document->loadCloudFlareTurnstile();
+    }
+}
 
-echo '<form class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget">';
+echo '<form id="'.$element->id.'_formbuilder" class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget"'.$captcha_attr.'>';
 echo '<div class="row'.$row_column_cls.'">';
 foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
@@ -136,35 +159,17 @@ foreach ($form_elements as $key => $form_element) :
 endforeach;
 echo '</div>';
 
-if ($params->get('enable_captcha', 0) == 1) :
-    $captcha_type = $params->get('captcha_type', 'default');
-    echo '<div class="mt-2">';
-    if ($captcha_type == 'recaptcha') {
-        PluginHelper::importPlugin('captcha', 'recaptcha');
-        $recaptcha = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'as_form_builder_recaptcha' , 'as-form-builder-recaptcha'));
-        echo (isset($recaptcha[0])) ? $recaptcha[0] : '<p class="uk-alert-danger">' . Text::_('ASTROID_RECAPTCHA_NOT_INSTALLED') . '</p>';
-    } elseif ($captcha_type == 'invisible-recaptcha') {
-        PluginHelper::importPlugin('captcha', 'recaptcha_invisible');
-        $recaptcha = Factory::getApplication()->triggerEvent('onDisplay', array(null, 'as_form_builder_invisible_recaptcha' , 'as-form-builder-invisible-recaptcha'));
-        echo (isset($recaptcha[0])) ? $recaptcha[0] : '<p class="uk-alert-danger">' . Text::_('ASTROID_RECAPTCHA_NOT_INSTALLED') . '</p>';
-    } else {
-        echo Helper::loadCaptcha('as-formbuilder-captcha');
-    }
-    echo '<input type="hidden" name="captcha_type" value="'.$captcha_type.'">';
-    echo '</div>';
-endif;
-
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
-echo '<input type="hidden" name="template" value="'.Astroid\Framework::getTemplate()->id.'">';
+echo '<input type="hidden" name="template" value="'.Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
 if (isset($options['source']) && $options['source']) {
     echo '<input type="hidden" name="source" value="'.$options['source'].'">';
 }
-if (isset($options['template']) && $options['template']) {
-    echo '<input type="hidden" name="template" value="'.$options['template'].'">';
-}
 if (isset($options['layout_type']) && $options['layout_type']) {
     echo '<input type="hidden" name="layout_type" value="'.$options['layout_type'].'">';
+    if ($options['layout_type'] == 'article_layouts') {
+        echo '<input type="hidden" name="id" value="'.$mainframe->input->get('id', 0, 'INT').'">';
+    }
 }
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
 
@@ -177,12 +182,25 @@ $button_size        =   $button_size ? ' '. $button_size : '';
 $button_radius      =   $params->get('border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
-$button_margin_top  =   $params->get('button_margin_top', '');
+$button_margin_top  =   $params->get('button_margin_top', '4');
 $button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
 $button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
 $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
-echo '<button type="submit" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
+
+if ($params->get('enable_captcha', 0) == 1) {
+    $captcha_type = $pluginParams->get('captcha_type', 'default');
+    echo '<div class="mt-2">';
+    if ($captcha_type == 'recaptcha') {
+        echo '<div class="google-recaptcha"></div>';
+    } else if ($captcha_type == 'turnstile') {
+        echo '<div class="cloudflare-turnstile"></div>';
+    } else {
+        echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha');
+    }
+    echo '</div>';
+}
+echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 
-Factory::getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto']);

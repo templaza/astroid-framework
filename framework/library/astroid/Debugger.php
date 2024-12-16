@@ -50,7 +50,7 @@ class Debugger
         $utime = $this->getRunTime($stop, $this->markers[$name], "utime");
         $stime = $this->getRunTime($stop, $this->markers[$name], "stime");
 
-        $report = new DebugReport($name);
+        $report = new Helper\DebugReport($name);
         $report->save($utime, $stime, memory_get_usage(), memory_get_peak_usage());
         Framework::getReporter('Debug')->add($report->render());
     }
@@ -58,29 +58,5 @@ class Debugger
     protected function getRunTime($ru, $rus, $index)
     {
         return ($ru["ru_$index.tv_sec"] * 1000 + intval($ru["ru_$index.tv_usec"] / 1000)) - ($rus["ru_$index.tv_sec"] * 1000 + intval($rus["ru_$index.tv_usec"] / 1000));
-    }
-}
-
-class DebugReport
-{
-    public $id = '', $title = '', $utime = 0, $stime = 0, $memory = 0, $memorypeak = 0, $processed = false;
-    public function __construct($id)
-    {
-        $this->id = $id;
-        $this->title = str_replace(['-', '_'], ' ', Helper::title($id));
-    }
-
-    public function save($utime, $stime, $memory, $memorypeak)
-    {
-        $this->utime = $utime;
-        $this->stime = $stime;
-        $this->memory = $memory;
-        $this->memorypeak = $memorypeak;
-        $this->processed = true;
-    }
-
-    public function render()
-    {
-        return '<p class="m-0"><strong class="mr-2"><em>' . $this->title . '</em></strong> <span class="badge badge-light mr-2">Time: ' . $this->utime . ' ms</span> <span class="badge badge-light">Memory: ' . round(($this->memorypeak - $this->memory) / 1048576, 3) . ' MB' . '</span></p>';
     }
 }

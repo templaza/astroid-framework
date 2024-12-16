@@ -47,6 +47,8 @@
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
+         </fieldset>
+         <fieldset name="astroid_api">
             <field name="gmap_api" type="text" default="" label="ASTROID_WIDGET_GMAP_API" description="ASTROID_WIDGET_GMAP_API_DESC"/>
          </fieldset>
          <fieldset name="astroid-tabs-visibility">

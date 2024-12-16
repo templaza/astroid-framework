@@ -115,9 +115,9 @@ return new class () implements ServiceProviderInterface {
 
                     $installer = new Installer;
                     if ($installer->install($plugin)) {
-                        $this->app->enqueueMessage('Astroid Plugin has been successfully installed.');
+                        $this->app->enqueueMessage(Text::_(strtoupper($plugin_name)) . ' Plugin has been successfully installed.');
                     } else {
-                        $this->app->enqueueMessage('Astroid Plugin has been failed to install.');
+                        $this->app->enqueueMessage(Text::_(strtoupper($plugin_name)) . ' Plugin has been failed to install.');
                     }
 
                     $query = $db->getQuery(true);

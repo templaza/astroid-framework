@@ -79,6 +79,11 @@ class Template
                 if (!empty($id)) {
                     $this->_upload($id);
                 }
+            } else {
+                $jtemplate = $this->getDefault();
+                if (!empty($jtemplate) && !empty($jtemplate->id)) {
+                    $this->_upload($jtemplate -> id);
+                }
             }
         }
 
@@ -240,6 +245,24 @@ class Template
             ->select('`template`,`id`,`title`,`params`,`home`')
             ->from('#__template_styles')
             ->where('`id`=' . $id);
+        $db->setQuery($query);
+        $result = $db->loadObject();
+
+        $params = new Registry();
+        $params->loadString($result->params);
+
+        $result->params = $params;
+        return $result;
+    }
+
+    public function getDefault()
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db
+            ->getQuery(true)
+            ->select('`template`,`id`,`title`,`params`,`home`')
+            ->from('#__template_styles')
+            ->where('`home`= 1 AND `client_id` = 0');
         $db->setQuery($query);
         $result = $db->loadObject();
 

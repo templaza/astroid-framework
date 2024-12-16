@@ -36,9 +36,9 @@ class Helper
         $lang->load($extension, ($client == 'site' ? JPATH_SITE : JPATH_ADMINISTRATOR));
     }
 
-    public static function getPluginParams()
+    public static function getPluginParams($group = 'system', $plugin = 'astroid')
     {
-        $plugin = PluginHelper::getPlugin('system', 'astroid');
+        $plugin = PluginHelper::getPlugin($group, $plugin);
         return new Registry($plugin->params);
     }
 
@@ -265,6 +265,49 @@ class Helper
         $app->getDispatcher()->dispatch('onAfterPurge', new AfterPurgeEvent('onAfterPurge'));
     }
 
+    public static function cleanImageUrl($url): object
+    {
+        $obj = new \stdClass();
+
+        $obj->attributes = [
+            'width'  => 0,
+            'height' => 0,
+        ];
+
+        if ($url === null) {
+            $url = '';
+        }
+
+        $mediaUri = new Uri($url);
+
+        // Old image URL format
+        if ($mediaUri->hasVar('joomla_image_height')) {
+            $height = (int) $mediaUri->getVar('joomla_image_height');
+            $width  = (int) $mediaUri->getVar('joomla_image_width');
+
+            $mediaUri->delVar('joomla_image_height');
+            $mediaUri->delVar('joomla_image_width');
+        } else {
+            // New Image URL format
+            $fragmentUri = new Uri($mediaUri->getFragment());
+            $width       = (int) $fragmentUri->getVar('width', 0);
+            $height      = (int) $fragmentUri->getVar('height', 0);
+        }
+
+        if ($width > 0) {
+            $obj->attributes['width'] = $width;
+        }
+
+        if ($height > 0) {
+            $obj->attributes['height'] = $height;
+        }
+
+        $mediaUri->setFragment('');
+        $obj->url = $mediaUri->toString();
+
+        return $obj;
+    }
+
     public static function getFileHash($file)
     {
         $content = file_get_contents($file);
@@ -407,11 +450,13 @@ class Helper
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
+        $layout_type    =   'templates';
         if (isset($options['source']) && !empty($options['source'])) {
             $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
             if (!isset($sublayout['data']) || !$sublayout['data']) {
                 return false;
             }
+            $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
             $layout     = \json_decode($sublayout['data'], true);
         } else {
             $layout =   $template->getLayout();
@@ -435,6 +480,17 @@ class Helper
                                 foreach ($col['elements'] as $element) {
                                     if ($element['id'] == $unqid) {
                                         $element['params'] = self::loadParams($element['params']);
+                                        if ($layout_type == 'article_layouts') {
+                                            $template_name = isset($options['template']) && !empty($options['template']) ? $options['template'] : $template->template;
+                                            $article_id = isset($options['article_id']) && !empty($options['article_id']) ? $options['article_id'] : 0;
+                                            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            if (file_exists($layout_path)) {
+                                                $article_json = file_get_contents($layout_path);
+                                                $article_data = json_decode($article_json, true);
+                                                $article_params = self::loadParams($article_data['params']);
+                                                $element['params']->merge($article_params);
+                                            }
+                                        }
                                         return $element;
                                     }
                                 }
@@ -463,29 +519,10 @@ class Helper
         return $params_data;
     }
 
-    public static function loadCaptcha($context = '') {
-        if (empty($context)) {
-            return '';
-        }
-        $app    =   Factory::getApplication();
-        $value1 =   rand(1,100);
-        $value2 =   rand(1,100);
-        $app->setUserState( $context.'.value1', $value1 );
-        $app->setUserState( $context.'.value2', $value2 );
-        return '<div class="'.$context.'">'.($value1 . ' + ' . $value2 .' = ?').'</div><div class="'.$context.'-result"><input type="text" name="'.$context.'" class="form-control" placeholder="'.($value1 . ' + ' . $value2 .' = ?').'"></div>';
-    }
-
-    public static function getCaptcha($context = '') {
-        $app    =   Factory::getApplication();
-        $value1 =   intval($app->getUserState( $context.'.value1' ));
-        $value2 =   intval($app->getUserState( $context.'.value2' ));
-        $value_result = intval($app->input->get($context, 0, 'ALNUM'));
-        return ( $value1 + $value2 == $value_result );
-    }
-
     public static function getPositions()
     {
-        $templateXML = \JPATH_SITE . '/templates/' . ASTROID_TEMPLATE_NAME . '/templateDetails.xml';
+        $template_name = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
+        $templateXML = \JPATH_SITE . '/templates/' . $template_name . '/templateDetails.xml';
         $template = simplexml_load_file($templateXML);
         $positions = [];
         foreach ($template->positions[0] as $position) {
@@ -497,7 +534,7 @@ class Helper
 
     public static function getModuleStyles()
     {
-        $template_name      = ASTROID_TEMPLATE_NAME;
+        $template_name      = defined('ASTROID_TEMPLATE_NAME') ? ASTROID_TEMPLATE_NAME : Framework::getTemplate()->template;
         $options            = array();
         $isChildTemplate    = self::isChildTemplate($template_name);
 

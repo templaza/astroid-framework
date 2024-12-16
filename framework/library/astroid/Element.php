@@ -285,7 +285,6 @@ class Element
     protected function getParams()
     {
         $formData = [];
-        $return = [];
         foreach ($this->data as $data) {
             $data = (array) $data;
             $formData[$data['name']] = $data['value'];
@@ -300,26 +299,6 @@ class Element
            }
         } */
 
-        return $AstroidParams = new AstroidParams($formData);
+        return new Helper\AstroidParams($formData);
     }
-}
-
-class AstroidParams
-{
-
-   public $params = [];
-
-   function __construct($params)
-   {
-      $this->params = $params;
-   }
-
-   public function get($key, $default = null)
-   {
-      if (isset($this->params[$key])) {
-         return $this->params[$key];
-      } else {
-         return $default;
-      }
-   }
 }

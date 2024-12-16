@@ -618,7 +618,7 @@ class Document
     private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
-        $document = Factory::getDocument();
+        $document = Factory::getApplication()->getDocument();
         $renderer = $document->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
@@ -1029,6 +1029,53 @@ class Document
             $wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_lenis = true;
         }
+    }
+
+    public function loadGoogleReCaptcha($onload = [], $render = ''): void
+    {
+        $app = Factory::getApplication();
+        $wa = $app->getDocument()->getWebAssetManager();
+        $query = array();
+        $depends = [];
+        if (empty($onload)) {
+            $onload = ['url' => '', 'function' => ''];
+        }
+        if (!empty($onload['url'])) {
+            $wa->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
+            if (!empty($onload['function'])) {
+                $query[] = 'onload=' . $onload['function'];
+            }
+            $depends[] = 'google.recaptcha.onload';
+        }
+        if (!empty($render)) {
+            $query[] = 'render=' . $render;
+        }
+        $query[] = 'hl=' . $app->getLanguage()->getTag();
+        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
+            .implode('&',$query), [], ['defer' => true], $depends);
+    }
+
+    public function loadCloudFlareTurnstile($onload = [], $render = ''): void
+    {
+        $app = Factory::getApplication();
+        $wa = $app->getDocument()->getWebAssetManager();
+        $query = array();
+        $depends = [];
+        if (empty($onload)) {
+            $onload = ['url' => '', 'function' => ''];
+        }
+        if (!empty($onload['url'])) {
+            $wa->registerAndUseScript('cloudflare.turnstile.onload', $onload['url'], [], ['defer' => true]);
+            if (!empty($onload['function'])) {
+                $query[] = 'onload=' . $onload['function'];
+            }
+            $depends[] = 'cloudflare.turnstile.onload';
+        }
+        if (!empty($render)) {
+            $query[] = 'render=' . $render;
+        }
+        $query = !empty($query) ? '?' . implode('&',$query) : '';
+        $wa->registerAndUseScript('cloudflare.turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js'.$query, [], ['defer' => true], $depends);
     }
 
     public function moveFile(&$array, $a, $b): void

@@ -3,7 +3,7 @@ import { onBeforeMount, ref, provide } from 'vue';
 import axios from "axios";
 import { faCircle, faArrowsLeftRight, faTrash, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import './assets/article_data.scss'
+import './assets/base.scss'
 import Modal from "./components/helpers/Modal.vue";
 library.add(faCircle, faArrowsLeftRight, faTrash, faDownload);
 const props = defineProps(['widget_json_id']);

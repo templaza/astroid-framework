@@ -31,7 +31,7 @@ class JFormFieldAstroidGetPro extends FormField
             'value'   =>  $this->value,
             'type'    =>  strtolower($this->type),
             'title'   =>  Text::_('ASTROID_GET_PRO_TITLE'),
-            'desc'    =>  Text::sprintf('ASTROID_GET_PRO_DESCRIPTION', Text::_($this->getAttribute('label')), Constants::$go_pro)
+            'desc'    =>  Text::sprintf('ASTROID_GET_PRO_DESCRIPTION', Text::_($this->getAttribute('label')), Constants::$go_pro . '?utm_source=feature_links&utm_medium=getpro_link&utm_campaign=go_pro&utm_id=astroid_signup')
         ];
         return json_encode($json);
     }

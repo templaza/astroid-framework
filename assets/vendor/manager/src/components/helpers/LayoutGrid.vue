@@ -41,7 +41,7 @@ function chooseGrid(grid) {
                     <button type="button" class="btn-close" aria-label="Close" @click="emit('update:closeElement', id)"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body p-3">
                     <div class="row row-cols-4 g-4">
                         <div v-for="grid in grids">
                             <div class="row g-1 astroid-grid" @click="chooseGrid(grid)">

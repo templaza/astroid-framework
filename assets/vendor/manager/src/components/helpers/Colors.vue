@@ -102,14 +102,14 @@ function changeColor(color) {
                 'col-4 text-center' : (props.field.input.colormode === '1'),
                 'col-12': (props.field.input.colormode !== '1')
         }">
-            <font-awesome-icon :id="props.field.input.id+`-colorcircle-light`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.light}" @click="showColorPicker('light')" />
+            <i class="border astroid-color-picker fas fa-circle fa-3x" :id="props.field.input.id+`-colorcircle-light`" :style="{'color': _color.light}" @click="showColorPicker('light')"></i>
             <div v-if="props.field.input.colormode === '1'">Light</div>
         </div>
         <div v-if="props.field.input.colormode === '1'" class="col text-center py-3">
-            <font-awesome-icon :icon="['fas', 'arrows-left-right']" />
+            <i class="fa-solid fa-arrows-left-right"></i>
         </div>
         <div v-if="props.field.input.colormode === '1'" class="col-4 text-center">
-            <font-awesome-icon :id="props.field.input.id+`-colorcircle-dark`" :icon="['fas', 'circle']" size="3x" class="border astroid-color-picker" :style="{'color': _color.dark}" @click="showColorPicker('dark')" />
+            <i class="border astroid-color-picker fas fa-circle fa-3x" :id="props.field.input.id+`-colorcircle-dark`" :style="{'color': _color.dark}" @click="showColorPicker('dark')"></i>
             <div>Dark</div>
         </div>
     </div>
