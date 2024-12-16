@@ -15,7 +15,7 @@
             </field>
             <field astroidgroup="general" ngShow="[type]==''" name="position" type="astroidmodulesposition" label="ASTROID_POSITION"/>
             <field astroidgroup="general" ngShow="[type]=='module'" name="module" type="astroidmoduleslist" label="ASTROID_MODULE"/>
-            <field astroidgroup="general" ngShow="[type]==''" name="module_styles" type="astroidmodulesstyle" label="TPL_ASTROID_MODULE_STYLE_LABEL"/>
+            <field astroidgroup="general" ngShow="[type]==''" name="module_styles" type="astroidmodulesstyle" default="astroidxhtml" label="TPL_ASTROID_MODULE_STYLE_LABEL"/>
          </fieldset>
       </fields>
    </form>
