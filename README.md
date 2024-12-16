@@ -36,7 +36,14 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Transform Color Mode (Light to Dark or Dark to Light)
 * SVG Logo Support
 * Customize Breakpoint
+* Protect your site with Astroid Captcha Integration (Google reCAPTCHA, Cloudflare Turnstile)
 * Many widgets integrated
+
+## Pro Features
+* Advanced Custom SCSS & CSS
+* Animation Pro
+* Cursor Effects
+* Premium Support 24/7
 
 ## Widgets
 * Articles Widget
@@ -58,7 +65,6 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Testimonials Widget
 * Map Widget
 * Accordion Widget
-* Hover Motion Widget
 * Raw HTML Widget
 * Image Carousel Widget
 * [View all Widgets](https://astroidframe.work/widgets)
@@ -81,6 +87,12 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Text
 * Title
 * Toc
+
+## Pro Widgets
+* Hover Motion Widget
+* Listing Pro Widget
+* Article Listing Widget
+* CodePend Widget
 
 ## Requirements
 * Joomla: 4.x, 5.x
@@ -106,6 +118,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * [Changelogs](https://github.com/templaza/astroid-framework/releases) - View our Changelogs
 * [Join our Community](https://www.facebook.com/groups/astroid) - Come and share with us.
 * [Discord Chat](https://discord.gg/2MwtsAX4Py) - Join our developer chat on Discord.
+* [Go Pro](https://astroidframe.work/pricing) - Extend Astroid with Astroid Pro
 
 ## Find an Astroid Template provider
 * [TemPlaza - Joomla Template](https://www.templaza.com/joomla-templates.html)
