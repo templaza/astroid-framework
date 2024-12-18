@@ -31,7 +31,8 @@ class JFormFieldAstroidLayoutModule extends FormField {
 
     protected function getInput() {
         $app    =   Factory::getApplication();
-        if ($app->input->get('option', '') == 'com_modules'
+        $option =   $app->input->get('option', '');
+        if (($option == 'com_modules' || $option == 'com_advancedmodules')
             && $app->input->get('view', '') == 'module'
             && $app->input->get('layout', '') == 'edit') {
             $id     =   $app->input->get('id');
