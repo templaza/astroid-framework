@@ -778,6 +778,9 @@ class Document
         foreach ($url as $u) {
             if (!empty(trim($u))) {
                 $script = [];
+                if (JDEBUG) {
+                    $u = Helper::getAssetPath($u);
+                }
                 $script['url'] = $u;
                 $script['attribs'] = $attribs;
                 $script['options'] = $options;

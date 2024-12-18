@@ -564,6 +564,37 @@ class Helper
         return $options;
     }
 
+    public static function checkAssetRelativePath($url) : bool
+    {
+        $template = Framework::getTemplate();
+        $paths = [
+            JPATH_SITE . '/media/astroid/assets/' . $url,
+            Framework::isSite() ? JPATH_SITE . '/media/templates/site/' . $template->template . '/' . $url : null,
+            Framework::isSite() ? JPATH_SITE . '/templates/' . $template->template . '/' . $url : null,
+            JPATH_SITE . '/' . $url
+        ];
+
+        foreach ($paths as $path) {
+            if ($path && file_exists($path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function getAssetPath($path) : string
+    {
+        $position = strrpos($path, '.min.');
+        if ($position !== false && JDEBUG) {
+            $nonMinifiedPath = substr_replace($path, '', $position, 4);
+            if (self::checkAssetRelativePath($nonMinifiedPath)) {
+                return $nonMinifiedPath;
+            }
+        }
+        return $path;
+    }
+
     public static function getMenuLinks() {
         $menuTypes = MenusHelper::getMenuLinks();
         $menus  =   array();
