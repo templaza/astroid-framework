@@ -37,7 +37,16 @@
                                     <option value="dark">Dark</option>
                                     <option value="link">Link</option>
                                     <option value="text">Text</option>
+                                    <option value="custom">Custom</option>
                                 </field>
+                                <field ngShow="[button_style]=='custom'" name="color_settings" type="astroidradio" width="full" default="color">
+                                    <option value="color">TPL_ASTROID_COLOR</option>
+                                    <option value="hover">TPL_ASTROID_COLOR_HOVER</option>
+                                </field>
+                                <field ngShow="[button_style]=='custom' AND [color_settings]=='color'" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                                <field ngShow="[button_style]=='custom' AND [color_settings]=='hover'" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                                <field ngShow="[button_style]=='custom' AND [color_settings]=='color'" name="bgcolor" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                                <field ngShow="[button_style]=='custom' AND [color_settings]=='hover'" name="bgcolor_hover" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
                                 <field name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
                                 <field type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
                                     <option value="">Default</option>
@@ -57,6 +66,8 @@
                     <option value="btn-sm">Small</option>
                     <option value="custom">Custom</option>
                 </field>
+                <field astroidgroup="widget_styles" ngShow="[button_size]=='custom'" name="button_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" color-picker="false" preview="false"/>
+
                 <field astroidgroup="widget_styles" ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                 <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
