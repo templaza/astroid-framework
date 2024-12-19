@@ -564,35 +564,16 @@ class Helper
         return $options;
     }
 
-    public static function checkAssetRelativePath($url) : bool
+    public static function getNonMinifiedPath($path, $url) : string
     {
-        $template = Framework::getTemplate();
-        $paths = [
-            JPATH_SITE . '/media/astroid/assets/' . $url,
-            Framework::isSite() ? JPATH_SITE . '/media/templates/site/' . $template->template . '/' . $url : null,
-            Framework::isSite() ? JPATH_SITE . '/templates/' . $template->template . '/' . $url : null,
-            JPATH_SITE . '/' . $url
-        ];
-
-        foreach ($paths as $path) {
-            if ($path && file_exists($path)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static function getAssetPath($path) : string
-    {
-        $position = strrpos($path, '.min.');
-        if ($position !== false && JDEBUG) {
-            $nonMinifiedPath = substr_replace($path, '', $position, 4);
-            if (self::checkAssetRelativePath($nonMinifiedPath)) {
+        $position = strrpos($url, '.min.');
+        if ($position !== false) {
+            $nonMinifiedPath = substr_replace($url, '', $position, 4);
+            if (file_exists($path.$nonMinifiedPath)) {
                 return $nonMinifiedPath;
             }
         }
-        return $path;
+        return $url;
     }
 
     public static function getMenuLinks() {

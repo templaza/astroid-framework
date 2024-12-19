@@ -778,9 +778,6 @@ class Document
         foreach ($url as $u) {
             if (!empty(trim($u))) {
                 $script = [];
-                if (JDEBUG) {
-                    $u = Helper::getAssetPath($u);
-                }
                 $script['url'] = $u;
                 $script['attribs'] = $attribs;
                 $script['options'] = $options;
@@ -851,12 +848,24 @@ class Document
         }
 
         if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/media/astroid/assets' . '/', $url);
+            }
             $url = $root . 'media/astroid/assets/' . $url;
         } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/media/templates/site/' . $template->template . '/', $url);
+            }
             $url = $root . 'media/templates/site/' . $template->template . '/' . $url;
         } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/templates/' . $template->template . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/templates/' . $template->template . '/', $url);
+            }
             $url = $root . 'templates/' . Framework::getTemplate()->template . '/' . $url;
         } else if (file_exists(JPATH_SITE . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/', $url);
+            }
             $url = $root . $url;
         } else {
             $postfix = '';
