@@ -564,6 +564,18 @@ class Helper
         return $options;
     }
 
+    public static function getNonMinifiedPath($path, $url) : string
+    {
+        $position = strrpos($url, '.min.');
+        if ($position !== false) {
+            $nonMinifiedPath = substr_replace($url, '', $position, 4);
+            if (file_exists($path.$nonMinifiedPath)) {
+                return $nonMinifiedPath;
+            }
+        }
+        return $url;
+    }
+
     public static function getMenuLinks() {
         $menuTypes = MenusHelper::getMenuLinks();
         $menus  =   array();
