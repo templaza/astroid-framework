@@ -100,7 +100,10 @@ class JFormFieldAstroidLayoutData extends FormField {
                                         }
                                     }
                                     $element['params'] = $availableElements;
-                                    $article_data = Path::clean(JPATH_SITE . '/media/templates/site/' . $article_layout->template . '/astroid/article_widget_data/'. $id . '_' . $element['id'] . '.json');
+                                    $article_data = Path::clean(JPATH_SITE . '/media/templates/site/' . $article_layout->template . '/params/article_widget_data/'. $id . '_' . $element['id'] . '.json');
+                                    if (!file_exists($article_data)) {
+                                        $article_data = Path::clean(JPATH_SITE . '/media/templates/site/' . $article_layout->template . '/astroid/article_widget_data/'. $id . '_' . $element['id'] . '.json');
+                                    }
                                     if (file_exists($article_data)) {
                                         $widget_data = file_get_contents($article_data);
                                         $widget_data = json_decode($widget_data, true);

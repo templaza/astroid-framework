@@ -62,75 +62,77 @@ if (!$template->params->get('article_rating', 1)) {
    <script>
       (function($) {
          $(function() {
-            var ratingtimer = null;
-            var ratingtimer2 = null;
-            var lastrate = <?php echo $rating; ?>;
-            var call = true;
-            $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating({
-               initialRating: <?php echo $rating; ?>,
-               maxRating: 5,
-               onRate: function(value) {
-                  if (!call) {
-                     call = true;
-                     return false;
-                  }
-                  $.ajax({
-                     url: "<?php echo Uri::root(); ?>index.php?option=com_ajax&astroid=rate",
-                     option: 'com_ajax',
-                     method: 'POST',
-                     beforeSend: function() {
-                        window.clearTimeout(ratingtimer);
-                        window.clearTimeout(ratingtimer2);
-                        $('.article-rating-loading-<?php echo $row->id; ?>').removeClass('d-none');
-                        $('.article-rating-votecount-<?php echo $row->id; ?>').addClass('d-none');
-                        $('.article-rating-message-<?php echo $row->id; ?>').addClass('d-none').text('').removeClass('error').removeClass('success').removeClass('animated').removeClass('fadeIn').removeClass('fadeOut');
-                     },
-                     data: {
-                        vote: value,
-                        id: '<?php echo $row->id; ?>',
-                        '<?php echo Session::getFormToken(); ?>': 1
-                     },
-                     dataType: 'json',
-                     error: function() {
-                        $('.article-rating-votecount-<?php echo $row->id; ?>').removeClass('d-none');
-                        $('.article-rating-loading-<?php echo $row->id; ?>').addClass('d-none');
-                     },
-                     success: function(response) {
-                        $('.article-rating-votecount-<?php echo $row->id; ?>').removeClass('d-none');
-                        $('.article-rating-loading-<?php echo $row->id; ?>').addClass('d-none');
-                         if (response.status === 'success') {
-                             $('.article-rating-message-<?php echo $row->id; ?>').text(response.data.message).removeClass('d-none').addClass(response.status).addClass('animated').addClass('fadeIn');
-                         } else {
-                             $('.article-rating-message-<?php echo $row->id; ?>').text(response.message).removeClass('d-none').addClass(response.status).addClass('animated').addClass('fadeIn');
+             $(document).ready(function() {
+                 var ratingtimer = null;
+                 var ratingtimer2 = null;
+                 var lastrate = <?php echo $rating; ?>;
+                 var call = true;
+                 $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating({
+                     initialRating: <?php echo $rating; ?>,
+                     maxRating: 5,
+                     onRate: function(value) {
+                         if (!call) {
+                             call = true;
+                             return false;
                          }
+                         $.ajax({
+                             url: "<?php echo Uri::root(); ?>index.php?option=com_ajax&astroid=rate",
+                             option: 'com_ajax',
+                             method: 'POST',
+                             beforeSend: function() {
+                                 window.clearTimeout(ratingtimer);
+                                 window.clearTimeout(ratingtimer2);
+                                 $('.article-rating-loading-<?php echo $row->id; ?>').removeClass('d-none');
+                                 $('.article-rating-votecount-<?php echo $row->id; ?>').addClass('d-none');
+                                 $('.article-rating-message-<?php echo $row->id; ?>').addClass('d-none').text('').removeClass('error').removeClass('success').removeClass('animated').removeClass('fadeIn').removeClass('fadeOut');
+                             },
+                             data: {
+                                 vote: value,
+                                 id: '<?php echo $row->id; ?>',
+                                 '<?php echo Session::getFormToken(); ?>': 1
+                             },
+                             dataType: 'json',
+                             error: function() {
+                                 $('.article-rating-votecount-<?php echo $row->id; ?>').removeClass('d-none');
+                                 $('.article-rating-loading-<?php echo $row->id; ?>').addClass('d-none');
+                             },
+                             success: function(response) {
+                                 $('.article-rating-votecount-<?php echo $row->id; ?>').removeClass('d-none');
+                                 $('.article-rating-loading-<?php echo $row->id; ?>').addClass('d-none');
+                                 if (response.status === 'success') {
+                                     $('.article-rating-message-<?php echo $row->id; ?>').text(response.data.message).removeClass('d-none').addClass(response.status).addClass('animated').addClass('fadeIn');
+                                 } else {
+                                     $('.article-rating-message-<?php echo $row->id; ?>').text(response.message).removeClass('d-none').addClass(response.status).addClass('animated').addClass('fadeIn');
+                                 }
 
-                        ratingtimer = setTimeout(function() {
-                           $('.article-rating-message-<?php echo $row->id; ?>').removeClass('fadeIn').addClass('fadeOut');
-                           ratingtimer2 = setTimeout(function() {
-                              $('.article-rating-message-<?php echo $row->id; ?>').addClass('d-none').text('').removeClass('error').removeClass('success').removeClass('animated').removeClass('fadeIn').removeClass('fadeOut');
-                           }, 600);
-                        }, 5000);
+                                 ratingtimer = setTimeout(function() {
+                                     $('.article-rating-message-<?php echo $row->id; ?>').removeClass('fadeIn').addClass('fadeOut');
+                                     ratingtimer2 = setTimeout(function() {
+                                         $('.article-rating-message-<?php echo $row->id; ?>').addClass('d-none').text('').removeClass('error').removeClass('success').removeClass('animated').removeClass('fadeIn').removeClass('fadeOut');
+                                     }, 600);
+                                 }, 5000);
 
-                        if (response.status === 'success') {
-                           var _votes = $('.vote-count').data('votes');
-                           _votes = parseInt(_votes) + 1;
-                           _text = '<?php echo Text::_('TPL_ASTROID_VOTE'); ?>' + (_votes === 1 ? '' : '<?php echo Text::_('TPL_ASTROID_VOTES'); ?>');
-                           $('.vote-count').text('(' + _votes + ' ' + _text + ')').addClass('change');
-                           lastrate = response.data.rating;
-                           setTimeout(function() {
-                              $('.vote-count').removeClass('change');
-                              call = false;
-                              $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating('set rating', lastrate);
-                           }, 300);
-                        }
-                        if (response.status === 'error') {
-                           call = false;
-                           $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating('set rating', lastrate);
-                        }
+                                 if (response.status === 'success') {
+                                     var _votes = $('.vote-count').data('votes');
+                                     _votes = parseInt(_votes) + 1;
+                                     _text = '<?php echo Text::_('TPL_ASTROID_VOTE'); ?>' + (_votes === 1 ? '' : '<?php echo Text::_('TPL_ASTROID_VOTES'); ?>');
+                                     $('.vote-count').text('(' + _votes + ' ' + _text + ')').addClass('change');
+                                     lastrate = response.data.rating;
+                                     setTimeout(function() {
+                                         $('.vote-count').removeClass('change');
+                                         call = false;
+                                         $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating('set rating', lastrate);
+                                     }, 300);
+                                 }
+                                 if (response.status === 'error') {
+                                     call = false;
+                                     $('#<?php echo 'content_vote_' . (int) $row->id; ?>').rating('set rating', lastrate);
+                                 }
+                             }
+                         });
                      }
-                  });
-               }
-            });
+                 });
+             });
          });
       })(jQuery);
    </script>

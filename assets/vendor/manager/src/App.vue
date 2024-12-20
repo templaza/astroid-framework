@@ -1,12 +1,9 @@
 <script setup>
 import Heading from "@/components/Heading.vue";
 import Container from "./components/Container.vue";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircle, faArrowsLeftRight, faTrash, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { onBeforeMount, provide, ref } from "vue";
 import 'bootstrap/scss/bootstrap.scss'
 import './assets/base.scss'
-library.add(faCircle, faArrowsLeftRight, faTrash, faDownload);
 const astroid_config = JSON.parse(document.getElementById("astroid-script-options").innerHTML);
 const theme = ref('light');
 provide('theme', theme);

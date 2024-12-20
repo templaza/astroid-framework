@@ -483,7 +483,10 @@ class Helper
                                         if ($layout_type == 'article_layouts') {
                                             $template_name = isset($options['template']) && !empty($options['template']) ? $options['template'] : $template->template;
                                             $article_id = isset($options['article_id']) && !empty($options['article_id']) ? $options['article_id'] : 0;
-                                            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/params/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            if (!file_exists($layout_path)) {
+                                                $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $unqid . '.json');
+                                            }
                                             if (file_exists($layout_path)) {
                                                 $article_json = file_get_contents($layout_path);
                                                 $article_data = json_decode($article_json, true);
@@ -562,6 +565,18 @@ class Helper
             $options[] = $tmp;
         }
         return $options;
+    }
+
+    public static function getNonMinifiedPath($path, $url) : string
+    {
+        $position = strrpos($url, '.min.');
+        if ($position !== false) {
+            $nonMinifiedPath = substr_replace($url, '', $position, 4);
+            if (file_exists($path.$nonMinifiedPath)) {
+                return $nonMinifiedPath;
+            }
+        }
+        return $url;
     }
 
     public static function getMenuLinks() {

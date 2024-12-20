@@ -13,6 +13,7 @@ use Astroid\Framework;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Path;
+use Joomla\Filesystem\File;
 
 defined('_JEXEC') or die;
 
@@ -68,31 +69,48 @@ class Layout
     public static function getDatalayouts($template = '', $type = '')
     {
         if (!$template) {
-            $template   =   Framework::getTemplate()->template;
+            $template = Framework::getTemplate()->template;
         }
 
-        $layouts_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/");
-        if (!file_exists($layouts_path)) {
+        $layouts = array_merge(
+            self::readLayoutsFromPath(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/", $template, $type),
+            self::readLayoutsFromPath(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/", $template, $type)
+        );
+
+        return self::mergeLayouts($layouts);
+    }
+
+    public static function readLayoutsFromPath($path, $template, $type)
+    {
+        if (!file_exists($path)) {
             return [];
         }
-        $files = array_filter(glob($layouts_path . '*.json'), 'is_file');
-        $layouts    =   [];
-        foreach ($files as $file) {
+
+        $files = array_filter(glob($path . '*.json'), 'is_file');
+        return array_map(function ($file) use ($template, $type) {
             $json = file_get_contents($file);
             $data = \json_decode($json, true);
-            $layout = ['title' => pathinfo($file)['filename'], 'desc' => '', 'thumbnail' => '', 'name' => pathinfo($file)['filename']];
-            if (isset($data['title']) && !empty($data['title'])) {
-                $layout['title'] = Text::_($data['title']);
+            return [
+                'title' => Text::_($data['title'] ?? pathinfo($file, PATHINFO_FILENAME)),
+                'desc' => Text::_($data['desc'] ?? ''),
+                'thumbnail' => !empty($data['thumbnail']) ? Uri::root() . "media/templates/site/{$template}/images/{$type}/" . $data['thumbnail'] : '',
+                'name' => pathinfo($file, PATHINFO_FILENAME)
+            ];
+        }, $files);
+    }
+
+    private static function mergeLayouts($layouts)
+    {
+        $merged = [];
+        foreach ($layouts as $layout) {
+            $key = $layout['name'];
+            if (isset($merged[$key])) {
+                $merged[$key] = $layout;
+            } else {
+                $merged[$key] = $layout;
             }
-            if (isset($data['desc'])) {
-                $layout['desc'] = Text::_($data['desc']);
-            }
-            if (isset($data['thumbnail']) && !empty($data['thumbnail'])) {
-                $layout['thumbnail'] = Uri::root() . 'media/templates/site/' . $template . '/images/' . $type . '/' . $data['thumbnail'];
-            }
-            $layouts[] = $layout;
         }
-        return $layouts;
+        return array_values($merged);
     }
 
     public static function getDataLayout($filename = '', $template = '', $type = '')
@@ -102,7 +120,9 @@ class Layout
         }
         if (!$filename) {
             if ($type == 'article_layouts') {
-                if (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json"))) {
+                if (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/default.json"))) {
+                    $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/default.json");
+                } elseif (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json"))) {
                     $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/default.json");
                 } else {
                     $layout_path = Path::clean(JPATH_SITE . '/media/astroid/assets/json/article_layouts/default.json');
@@ -111,7 +131,13 @@ class Layout
                 return [];
             }
         } else {
-            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json');
+            if (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/" . $filename . '.json'))){
+                $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/" . $filename . '.json');
+            } elseif (file_exists(Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json'))){
+                $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/" . $filename . '.json');
+            } else {
+                return [];
+            }
         }
 
         if (!file_exists($layout_path)) {
@@ -125,25 +151,33 @@ class Layout
 
     public static function deleteDatalayouts($layouts = [], $template = '', $type = '')
     {
-        if (!count($layouts)) {
+        if (empty($layouts)) {
             return false;
         }
         if (!$template) {
-            $template   =   Framework::getTemplate()->template;
+            $template = Framework::getTemplate()->template;
         }
 
-        $layouts_path   = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/");
-        $images_path    = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/images/{$type}/");
-        foreach ($layouts as $layout) {
-            if (file_exists($layouts_path . $layout . '.json')) {
-                $json = file_get_contents($layouts_path . $layout . '.json');
+        $layouts_params = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/params/{$type}/");
+        $layouts_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/astroid/{$type}/");
+        $images_path = Path::clean(JPATH_SITE . "/media/templates/site/{$template}/images/{$type}/");
+
+        $deleteFile = function ($path, $layout) use ($images_path) {
+            if (file_exists($path . $layout . '.json')) {
+                $json = file_get_contents($path . $layout . '.json');
                 $data = \json_decode($json, true);
-                unlink($layouts_path . $layout . '.json');
-                if (file_exists($images_path . $data['thumbnail'])) {
-                    unlink($images_path . $data['thumbnail']);
+                File::delete($path . $layout . '.json');
+                if (!empty($data['thumbnail']) && file_exists($images_path . $data['thumbnail'])) {
+                    File::delete($images_path . $data['thumbnail']);
                 }
             }
-        }
+        };
+
+        array_map(function ($layout) use ($layouts_params, $layouts_path, $deleteFile) {
+            $deleteFile($layouts_params, $layout);
+            $deleteFile($layouts_path, $layout);
+        }, $layouts);
+
         return true;
     }
 

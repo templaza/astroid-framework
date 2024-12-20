@@ -47,7 +47,10 @@ class Element extends BaseElement
         $id             = (int) $app->input->get('id', null, 'RAW');
         if ($option === 'com_content' && $view === 'article' && !empty($id)) {
             $template_name = Framework::getTemplate()->template;
-            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $id . '_' . $this->unqid . '.json');
+            $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/params/article_widget_data/". $id . '_' . $this->unqid . '.json');
+            if (!file_exists($layout_path)) {
+                $layout_path = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $id . '_' . $this->unqid . '.json');
+            }
             if (file_exists($layout_path)) {
                 $article_json = file_get_contents($layout_path);
                 $article_data = json_decode($article_json, true);
