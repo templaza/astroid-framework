@@ -18,7 +18,6 @@ use Astroid\Component\Includer;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
-use Astroid\Helper\Template;
 
 defined('_JEXEC') or die;
 
@@ -110,7 +109,7 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
-            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/$type/";
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/$type/";
 
             $layout = [
                 'title' => $app->input->post->get('title', '', 'RAW'),
@@ -150,12 +149,12 @@ class Admin extends Helper\Client
                 $fileTemp       = $thumbnail_file['tmp_name'];
                 $thumbnail      = file_get_contents($fileTemp);
                 if ($layout['thumbnail'] != '' && file_exists(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'])) {
-                    unlink(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
+                    File::delete(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
                 }
                 $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
 
                 Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'], $thumbnail);
-                unlink($fileTemp);
+                File::delete($fileTemp);
             }
             Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
             $this->response($layout_name);

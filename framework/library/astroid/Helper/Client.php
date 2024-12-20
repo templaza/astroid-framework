@@ -289,8 +289,14 @@ class Client
         if ($context === 'com_content.article' && isset($article->id)) {
             $templates = Folder::folders(JPATH_SITE . '/media/templates/site');
             foreach ($templates as $template) {
-                if (file_exists(Path::clean(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/article_widget_data'))) {
-                    $files = Folder::files(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/article_widget_data', '^'. $article->id . '_', false, true);
+                $article_data_default = Path::clean(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/article_widget_data');
+                $article_data_params = Path::clean(JPATH_SITE . '/media/templates/site/' . $template . '/params/article_widget_data');
+                if (file_exists($article_data_default)) {
+                    $files = Folder::files($article_data_default, '^'. $article->id . '_', false, true);
+                    File::delete($files);
+                }
+                if (file_exists($article_data_params)) {
+                    $files = Folder::files($article_data_params, '^'. $article->id . '_', false, true);
                     File::delete($files);
                 }
             }
@@ -305,7 +311,7 @@ class Client
             $data           = $app->input->post->get('data', '', 'RAW');
             $article_id     = $app->input->post->get('article_id', 0, 'RAW');
             $template_name  = $app->input->post->get('template', NULL, 'RAW');
-            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/";
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/article_widget_data/";
             if ($data && $article_id) {
                 $json_data      = json_decode($data, true);
                 if ($json_data['id']) {
