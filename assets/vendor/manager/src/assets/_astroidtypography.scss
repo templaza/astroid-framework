@@ -5,6 +5,22 @@
             --bs-btn-padding-x: 0.7rem;
         }
     }
+    .font-collapse {
+        cursor: pointer;
+        .cogIcon {
+            display: none;
+        }
+        &:hover, &.active {
+            .card {
+                background-color: var(--as-layout-block-bg);
+            }
+        }
+        &:hover {
+            .cogIcon {
+                display: block;
+            }
+        }
+    }
 }
 .typography-underline {
     text-decoration: underline;
