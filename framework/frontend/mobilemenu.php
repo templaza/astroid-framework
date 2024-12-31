@@ -37,7 +37,13 @@ else :
     $header = $params->get('header', TRUE);
     $header_mode = $params->get('header_mode', 'horizontal');
     $mode = $params->get('header_sidebar_menu_mode', 'left');
-    $dir = $header ? ($header_mode == 'sidebar' ? $mode : $dir) : $dir;
+    if ($header_mode == 'sidebar') {
+        if ($mode == 'topbar') {
+            $dir = $params->get('sidebar_position', 'left');
+        } else {
+            $dir = $mode;
+        }
+    }
 
     $wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
     $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);

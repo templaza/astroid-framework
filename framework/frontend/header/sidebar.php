@@ -27,6 +27,11 @@ if (!($header && !empty($header_mode) && $header_mode == 'sidebar')) {
 }
 
 $mode = $params->get('header_sidebar_menu_mode', 'left');
+if ($mode == 'topbar') {
+    $sidebar_position = $params->get('sidebar_position', 'left');
+} else {
+    $sidebar_position = $mode;
+}
 
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
@@ -42,17 +47,55 @@ $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$class = ['astroid-header', 'astroid-sidebar-header', 'sidebar-dir-' . $mode, 'h-100', 'has-sidebar'];
+$class = ['astroid-header', 'astroid-sidebar-header', 'astroid-sidebar-' . $mode, 'sidebar-dir-' . $sidebar_position, 'has-sidebar'];
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
 $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
+$position_count = 0;
 ?>
 <!-- header starts -->
 <div id="astroid-header" class="<?php echo implode(' ', $class); ?>">
-    <div class="astroid-sidebar-content h-100">
+    <?php if ($mode == 'topbar') : ?>
+    <div class="astroid-sidebar-header">
+        <div class="astroid-sidebar-header-inner row">
+            <div class="astroid-sidebar-logo col-12 col-lg">
+                <?php if (!empty($header_mobile_menu)) { ?>
+                    <div class="justify-content-start astroid-sidebar-mobile-menu">
+                        <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
+                            <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
+                        </div>
+                    </div>
+                <?php } ?>
+                <div class="flex-grow-1">
+                    <?php $document->include('logo'); ?>
+                </div>
+            </div>
+            <?php
+            $position_count ++;
+            if (${'block_'.$position_count.'_type'} != 'blank') : ?>
+                <div class="astroid-sidebar-block d-none d-lg-block col-lg-auto astroid-sidebar-block-<?php echo $position_count; ?>">
+                    <?php
+                    if (${'block_'.$position_count.'_type'} == 'position') {
+                        echo '<div class="header-block-item">';
+                        echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                        echo '</div>';
+                    }
+                    if (${'block_'.$position_count.'_type'} == 'custom') {
+                        echo '<div class="header-block-item">';
+                        echo ${'block_'.$position_count.'_custom'};
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+    <div class="astroid-sidebar-content">
         <div class="astroid-sidebar-collapsable">
             <i class="fa"></i>
         </div>
-        <div class="astroid-sidebar-logo">
+        <?php if ($mode != 'topbar') : ?>
+        <div class="astroid-sidebar-logo mb-xl-4">
             <?php if (!empty($header_mobile_menu)) { ?>
                 <div class="justify-content-start astroid-sidebar-mobile-menu">
                     <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
@@ -64,17 +107,20 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
                 <?php $document->include('logo'); ?>
             </div>
         </div>
-        <?php if ($block_1_type != 'blank') : ?>
-            <div class="astroid-sidebar-block astroid-sidebar-block-1">
+        <?php endif; ?>
+        <?php
+        $position_count ++;
+        if (${'block_'.$position_count.'_type'} != 'blank') : ?>
+            <div class="astroid-sidebar-block astroid-sidebar-block-<?php echo $position_count; ?>">
                 <?php
-                if ($block_1_type == 'position') {
+                if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position($block_1_position, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
                     echo '</div>';
                 }
-                if ($block_1_type == 'custom') {
+                if (${'block_'.$position_count.'_type'} == 'custom') {
                     echo '<div class="header-block-item">';
-                    echo $block_1_custom;
+                    echo ${'block_'.$position_count.'_custom'};
                     echo '</div>';
                 }
                 ?>
@@ -89,17 +135,19 @@ $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
             }
             ?>
         </div>
-        <?php if ($block_2_type != 'blank') : ?>
-            <div class="astroid-sidebar-block astroid-sidebar-block-2">
+        <?php
+        $position_count ++;
+        if (${'block_'.$position_count.'_type'} != 'blank') : ?>
+            <div class="astroid-sidebar-block astroid-sidebar-block-<?php echo $position_count; ?>">
                 <?php
-                if ($block_2_type == 'position') {
+                if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position($block_2_position, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
                     echo '</div>';
                 }
-                if ($block_2_type == 'custom') {
+                if (${'block_'.$position_count.'_type'} == 'custom') {
                     echo '<div class="header-block-item">';
-                    echo $block_2_custom;
+                    echo ${'block_'.$position_count.'_custom'};
                     echo '</div>';
                 }
                 ?>

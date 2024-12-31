@@ -835,9 +835,8 @@ class Document
     protected function _systemUrl($url, $version = true): string
     {
         $config = Factory::getApplication()->getConfig();
-        $params = Helper::getPluginParams();
         $template = Framework::getTemplate();
-        if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
+        if ($config->get('debug', 0) || Framework::getDebugger()->debug) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
@@ -1300,9 +1299,27 @@ class Document
             $class[] = 'itemid-' . $Itemid;
         }
 
-        if ($header && !empty($headerMode) && $headerMode == 'sidebar') {
-            $sidebarDirection = $params->get('header_sidebar_menu_mode', 'left');
-            $class[] = "header-sidebar-" . $sidebarDirection;
+        if ($header && !empty($headerMode)) {
+            $header_class = 'astroid-header-' . $headerMode;
+            switch ($headerMode) {
+                case 'horizontal':
+                    $header_class .= '-' . $params->get('header_horizontal_menu_mode', 'center');
+                    break;
+                case 'sidebar':
+                    $header_class .= '-' . $params->get('header_sidebar_menu_mode', 'left');
+                    break;
+                case 'stacked':
+                    $header_class .= '-' . $params->get('header_stacked_menu_mode', 'left');
+                    break;
+            }
+            $class[] = $header_class;
+            if ($headerMode == 'sidebar') {
+                $sidebarDirection = $params->get('header_sidebar_menu_mode', 'left');
+                if ($sidebarDirection == 'topbar') {
+                    $sidebarDirection = $params->get('sidebar_position', 'left');
+                }
+                $class[] = "header-sidebar-" . $sidebarDirection;
+            }
         }
 
         if (isset($menu) && $menu) {
