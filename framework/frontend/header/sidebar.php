@@ -47,17 +47,19 @@ $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$class = ['astroid-header', 'astroid-sidebar-header', 'astroid-sidebar-' . $mode, 'sidebar-dir-' . $sidebar_position, 'has-sidebar'];
+$class = ['astroid-header', 'astroid-sidebar-header', 'col-12', 'col-xl-auto', 'astroid-sidebar-' . $mode, 'sidebar-dir-' . $sidebar_position, 'has-sidebar'];
+if ($sidebar_position == 'right') {
+    $class[] = 'order-xl-1';
+}
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
 $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];
 $position_count = 0;
 ?>
 <!-- header starts -->
-<div id="astroid-header" class="<?php echo implode(' ', $class); ?>">
-    <?php if ($mode == 'topbar') : ?>
-    <div class="astroid-sidebar-header">
+<?php if ($mode == 'topbar') : ?>
+    <div class="astroid-header astroid-sidebar-header astroid-sidebar-header-topbar">
         <div class="astroid-sidebar-header-inner row">
-            <div class="astroid-sidebar-logo col-12 col-lg">
+            <div class="astroid-sidebar-logo col-12 col-lg d-flex align-items-center">
                 <?php if (!empty($header_mobile_menu)) { ?>
                     <div class="justify-content-start astroid-sidebar-mobile-menu">
                         <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
@@ -89,8 +91,9 @@ $position_count = 0;
             <?php endif; ?>
         </div>
     </div>
-    <?php endif; ?>
-    <div class="astroid-sidebar-content">
+<?php endif; ?>
+<div class="<?php echo implode(' ', $class); ?>">
+    <div class="astroid-sidebar-content sticky-top">
         <div class="astroid-sidebar-collapsable">
             <i class="fa"></i>
         </div>

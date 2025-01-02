@@ -37,7 +37,7 @@ $layout = Astroid\Framework::getTemplate()->getLayout();
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
 
-$astroid_content_class = ['astroid-content']; // astroid_content_class
+$astroid_content_class = ['astroid-content', 'col']; // astroid_content_class
 if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
     $astroid_content_class[] = 'has-sidebar';
     $mode = $params->get('header_sidebar_menu_mode', 'left');
@@ -74,7 +74,7 @@ if (!empty($overlay_type)) {
 }
 ?>
 <!-- astroid container -->
-<div class="astroid-container">
+<div class="astroid-container row g-0">
     <?php
     $document->include('containerStart'); // Container Start
     $document->include('header.sidebar'); // sidebar

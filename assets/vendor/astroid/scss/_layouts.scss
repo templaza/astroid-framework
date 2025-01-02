@@ -101,8 +101,8 @@ img {
 }
 
 .astroid-content {
-	left: 0;
-	z-index: $zindex-modal-backdrop;
+	//left: 0;
+	//z-index: $zindex-modal-backdrop;
 	-webkit-transition: -webkit-transform .5s;
 	transition: transform .5s;
 
@@ -121,8 +121,8 @@ img {
 	}
 
 	&.has-sidebar {
-		height: 100vh;
-		overflow-y: inherit;
+		//height: 100vh;
+		//overflow-y: inherit;
 
 		&.sidebar-dir-left {
 
@@ -149,6 +149,12 @@ img {
 		@include media-breakpoint-down(xl) {
 			height: auto;
 		}
+	}
+}
+
+.astroid-offcanvas-opened {
+	.astroid-content {
+		z-index: 1025;
 	}
 }
 
