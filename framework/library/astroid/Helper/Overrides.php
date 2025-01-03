@@ -10,7 +10,7 @@
 namespace Astroid\Helper;
 use Astroid\Helper;
 use Joomla\Filesystem\Folder;
-use Joomla\Factory;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
