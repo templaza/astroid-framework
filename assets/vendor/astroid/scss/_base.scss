@@ -12,7 +12,12 @@
     }
 }
 .container {
-    --bs-gutter-x: 3rem;
+    @media (min-width: 640px) {
+        --bs-gutter-x: 2rem;
+    }
+    @media (min-width: 960px) {
+        --bs-gutter-x: 3rem;
+    }
 }
 
 .float-left {float:left}
