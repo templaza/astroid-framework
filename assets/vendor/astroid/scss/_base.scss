@@ -11,6 +11,9 @@
         }
     }
 }
+.container {
+    --bs-gutter-x: 3rem;
+}
 
 .float-left {float:left}
 .float-right {float:right}

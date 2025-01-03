@@ -77,12 +77,12 @@ $position_count = 0;
                 <div class="astroid-sidebar-block d-none d-lg-block col-lg-auto astroid-sidebar-block-<?php echo $position_count; ?>">
                     <?php
                     if (${'block_'.$position_count.'_type'} == 'position') {
-                        echo '<div class="header-block-item">';
+                        echo '<div class="header-block-item d-flex align-item-center as-gutter-lg">';
                         echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
                         echo '</div>';
                     }
                     if (${'block_'.$position_count.'_type'} == 'custom') {
-                        echo '<div class="header-block-item">';
+                        echo '<div class="header-block-item d-flex align-item-center as-gutter-lg">';
                         echo ${'block_'.$position_count.'_custom'};
                         echo '</div>';
                     }
