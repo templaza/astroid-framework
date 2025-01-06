@@ -11,7 +11,7 @@
         }
     }
 }
-.container {
+.container, .container-fluid {
     @media (min-width: 640px) {
         --bs-gutter-x: 2rem;
     }

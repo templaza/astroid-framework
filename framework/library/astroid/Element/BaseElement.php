@@ -58,7 +58,7 @@ class BaseElement
         $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
     }
 
-    protected function wrap()
+    protected function wrap(): string
     {
         if (empty($this->content) || !$this->state) {
             return '';
@@ -118,7 +118,7 @@ class BaseElement
         return $content;
     }
 
-    protected function _attrbs()
+    protected function _attrbs(): string
     {
         $this->_getclasses();
         $attributes = [];
@@ -134,7 +134,7 @@ class BaseElement
         return !empty($attributes) ? ' ' . implode(' ', $attributes) : '';
     }
 
-    protected function _id()
+    protected function _id(): void
     {
         $customid = $this->params->get('customid', '');
         if (!empty($customid)) {
@@ -148,14 +148,14 @@ class BaseElement
         }
     }
 
-    protected function addClass($class)
+    protected function addClass($class): void
     {
         if (!empty($class)) {
             $this->_classes[] = $class;
         }
     }
 
-    protected function addAttribute($prop, $value)
+    protected function addAttribute($prop, $value): void
     {
         $this->_attributes[$prop] = $value;
     }
@@ -168,7 +168,7 @@ class BaseElement
         return null;
     }
 
-    protected function _getclasses()
+    protected function _getclasses(): void
     {
         $max_width                  =   $this->params->get('max_width','');
         $block_align                =   $this->params->get('block_align','');
@@ -199,9 +199,10 @@ class BaseElement
         $this->addClass($this->params->get('hideonxxl', 0) ? 'hideonxxl' : '');
     }
 
-    protected function _styles()
+    protected function _styles(): void
     {
         $this->_background();
+        $this->_border();
         $this->_marginPadding();
         $this->_typography();
         $this->_animation();
@@ -221,7 +222,15 @@ class BaseElement
         }
     }
 
-    protected function _background()
+    protected function _border(): void
+    {
+        $border = json_decode($this->params->get('border_style', ''), true);
+        if (!empty($border)) {
+            Style::addBorderStyle('#'. $this->getAttribute('id'), $border);
+        }
+    }
+
+    protected function _background(): void
     {
         $background = $this->params->get('background_setting', '');
         if (empty($background)) {
@@ -263,7 +272,7 @@ class BaseElement
         }
     }
 
-    protected function addOverlayColor() {
+    protected function addOverlayColor(): void {
         $overlay_type   =   $this->params->get('background_image_overlay', '');
         if (!empty($overlay_type)) {
             $background = $this->params->get('background_setting', '');
@@ -315,7 +324,7 @@ class BaseElement
         }
     }
 
-    protected function _marginPadding()
+    protected function _marginPadding(): void
     {
         $margin = $this->params->get('margin', '');
         $padding = $this->params->get('padding', '');
@@ -335,7 +344,7 @@ class BaseElement
         }
     }
 
-    protected function _typography()
+    protected function _typography(): void
     {
         if (!$this->params->get('custom_colors', 0)) {
             return;

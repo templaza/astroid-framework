@@ -121,7 +121,7 @@ class Row extends BaseElement
         return $this->wrap();
     }
 
-    protected function _getclasses()
+    protected function _getclasses(): void
     {
         $this->addClass('row');
 

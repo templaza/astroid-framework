@@ -40,6 +40,11 @@ $block_2_custom = $params->get('header_block_2_custom', '');
 $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
 $block_1_custom = $params->get('header_block_1_custom', '');
+
+$block_3_type = $params->get('header_block_3_type', 'blank');
+$block_3_position = $params->get('header_block_3_position', '');
+$block_3_custom = $params->get('header_block_3_custom', '');
+
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_menu_method = $params->get('header_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');

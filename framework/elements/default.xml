@@ -147,7 +147,7 @@
             <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
             <field astroidgroup="general" ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
-
+            <field astroidgroup="general" name="border_style" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
             <field astroidgroup="general" name="custom_colors" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
 
             <field astroidgroup="general" ngShow="[custom_colors]==1" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
