@@ -21,11 +21,13 @@ import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
 import Border from './Border.vue';
 import SubLayouts from './SubLayouts.vue';
+import Range from './Range.vue';
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
 const props = defineProps({
-  field: { type: Object, default: null },
-  scope: { type: Object, default: null },
+    field: { type: Object, default: null },
+    scope: { type: Object, default: null },
+    update: {type: Object, default: null},
     actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
@@ -122,11 +124,7 @@ function updateSubLayouts() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <div class="row">
-            <div class="col"><input type="number" class="form-control form-control-sm" aria-label="Range Number" v-model="props.scope[props.field.name]"></div>
-            <div class="col-auto"><label :for="props.field.input.id" class="form-label">{{ props.field.input.postfix }}</label></div>
-        </div>
-        <input type="range" class="form-range" :name="props.field.input.name" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
+        <Range v-model="props.scope[props.field.name]" :field="props.field" :update="props.update[props.field.name]" @update:Preset="$event => (props.update[props.field.name] = $event)" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />

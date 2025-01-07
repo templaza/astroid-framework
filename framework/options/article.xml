@@ -6,8 +6,8 @@
 			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" option-type="tab" />
 			<field type="astroidgroup" name="article_layouts_options" title="ASTROID_ARTICLE_LAYOUT_OPTIONS" description="ASTROID_ARTICLE_LAYOUT_OPTIONS_DESC" option-type="tab" preset="none" />
 
-			<field astroidgroup="article_listing_options" name="article_listing_lead_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="32" label="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_DESC" />
-			<field astroidgroup="article_listing_options" name="article_listing_intro_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="26" label="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_DESC" />
+			<field astroidgroup="article_listing_options" name="article_listing_lead_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="32" responsive="true" label="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_DESC" />
+			<field astroidgroup="article_listing_options" name="article_listing_intro_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="26" responsive="true" label="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_DESC" />
 			<field astroidgroup="article_listing_options" name="article_posttype" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_ARTICLE_TYPE_ICON_LBL" description="ASTROID_ARTICLE_TYPE_ICON_DESC"/>
 
 			<field astroidgroup="article_listing_options" name="astroid_readtime" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_ARTICLE_READTIME_LBL" description="ASTROID_ARTICLE_OPTIONS_READTIME_DESC"/>

@@ -13,12 +13,14 @@ const $scope = ref(new Object());
 const astroidcontentlayouts = ref(new Object());
 const constant  =   inject('constant', {});
 let action_link = '';
+const updatePreset = ref(new Object());
 
 onBeforeMount(() => {
   props.config.astroid_content.forEach((fieldSet, idx) => {
     Object.keys(fieldSet.childs).forEach(key => {
       fieldSet.childs[key].fields.forEach(field => {
         $scope.value[field.name] = field.value;
+        updatePreset.value[field.name] = false;
       });
     });
   });
@@ -81,10 +83,14 @@ const toast_msg = reactive({
   icon: '',
   color:'darkviolet'
 });
+function onUpdatePreset(key) {
+    updatePreset.value[key] = true;
+}
 function loadPreset(value) {
   let tmp = JSON.parse(value);
   Object.keys(tmp).forEach(key => {
     $scope.value[key] = tmp[key];
+      updatePreset.value[key] = true;
   })
 }
 function getPreset(value) {
@@ -114,7 +120,8 @@ function selectPreset(event, group) {
         const tmp = JSON.parse(response.data.data);
         group.fields.forEach(field => {
           if (typeof tmp[field.name] !== 'undefined') {
-            $scope.value[field.name] = tmp[field.name]
+              $scope.value[field.name] = tmp[field.name]
+              updatePreset.value[field.name] = true;
           }
         });
         toast_msg.icon = 'fa-solid fa-rocket';
@@ -169,6 +176,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                     <Fields 
                       :field="field" 
                       :scope="$scope"
+                      :update="updatePreset"
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
                       @update:getPreset="getPreset"

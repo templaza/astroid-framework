@@ -1,1 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="150" height="104" viewBox="0 0 150 104"><style>.a{fill:none;stroke:#8E2DE2;}.b{fill:#232323;stroke-width:2;stroke:#8E2DE2;}</style><rect x="0.8" y="1" width="149" height="59.8" fill="#ede5f6"/><line y1="61.2" x2="130.3" y2="61.2" class="a"/><line x1="136.9" y1="61.2" x2="149.4" y2="61.2" class="a"/><rect x="0.5" y="0.5" width="149" height="103" fill="none"/><path d="M52.1 33.2h8.6H52.1z" class="b"/><path d="M64.5 33.2h8.6H64.5z" class="b"/><path d="M77.1 33.2h8.6H77.1z" class="b"/><path d="M89.3 33.2h8.6H89.3z" class="b"/><text transform="matrix(1 0 0 1 71.792 51.9824)" font-family="'MyriadPro-Semibold'" font-size="12" fill="#8E2DE2">  1</text><rect x="63.9" y="14" width="22.1" height="8" style="fill:#FFF;stroke-width:0.8;stroke:#8E2DE2"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1601 1001" style="enable-background:new 0 0 1601 1001;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#8E2DE2;}
+	.st1{fill:#EDE5F6;}
+	.st2{enable-background:new    ;}
+	.st3{fill:#8E2DE2;}
+</style>
+<g id="stacked_style1" transform="translate(-4.743)">
+	<rect id="Rectangle_43" x="5.2" y="0.5" class="st0" width="1600" height="1000"/>
+	<line id="Line_1" class="st0" x1="5.2" y1="600.5" x2="1415.2" y2="600.5"/>
+	<line id="Line_2" class="st0" x1="1475.2" y1="600.5" x2="1605.2" y2="600.5"/>
+	<rect id="Rectangle_44" x="10.2" y="5.5" class="st1" width="1590" height="590"/>
+	<g class="st2">
+		<path class="st3" d="M817.9,492.5h-11.2v-71.7c-2.7,2.6-6.3,5.2-10.7,7.8c-4.4,2.6-8.3,4.5-11.8,5.8v-10.9
+			c6.3-3,11.8-6.5,16.5-10.8c4.7-4.2,8-8.3,10-12.2h7.2V492.5z"/>
+	</g>
+	<rect id="Rectangle_45" x="690.2" y="105.5" class="st3" width="230" height="84"/>
+	<rect id="Rectangle_49" x="580.2" y="289.5" class="st3" width="90" height="10"/>
+	<rect id="Rectangle_49-2" x="700.2" y="289.5" class="st3" width="90" height="10"/>
+	<rect id="Rectangle_49-3" x="820.2" y="289.5" class="st3" width="90" height="10"/>
+	<rect id="Rectangle_49-4" x="940.2" y="289.5" class="st3" width="90" height="10"/>
+</g>
+</svg>
