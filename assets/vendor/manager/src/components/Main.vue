@@ -176,10 +176,11 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                     <Fields 
                       :field="field" 
                       :scope="$scope"
-                      :update="updatePreset"
+                      :update="updatePreset[field.name]"
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
                       @update:getPreset="getPreset"
+                      @update:presetState="state => (updatePreset[field.name] = state)"
                       />
                   </div>
                   <div v-else v-html="field.input"></div>

@@ -6,11 +6,12 @@ import LayoutBuilder from "./LayoutBuilder.vue";
 import Modal from "./Modal.vue";
 import SelectElement from "./SelectElement.vue";
 import LayoutGrid from "./LayoutGrid.vue";
-const emit = defineEmits(['update:modelValue', 'update:subLayouts']);
+const emit = defineEmits(['update:modelValue', 'update:subLayouts', 'update:Preset']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
     field: { type: Object, default: null },
     source: { type: String, default: 'root' },
+    update: { type: Boolean, default: false }
 });
 const constant  =   inject('constant', {});
 const language  =   inject('language', []);
@@ -54,11 +55,22 @@ onBeforeMount(()=>{
     }
 })
 onUpdated(()=>{
-    if (layout_text.value !== props.modelValue) {
+    if (props.update === true) {
+        emit('update:Preset', false);
         const tmp = JSON.parse(props.modelValue);
         layout.value.sections = tmp.sections;
-        layout.value.devices = tmp.devices;
-        activeDevice.value = tmp.devices[0].code;
+        if (typeof tmp.devices !== 'undefined') {
+            layout.value.devices = tmp.devices;
+            activeDevice.value = tmp.devices[0].code;
+        } else {
+            layout.value.devices = [
+                { "code": "lg", "icon": "fa-solid fa-computer", "title": "Large Device" },
+                { "code": "md", "icon": "fa-solid fa-laptop", "title": "Medium Device" },
+                { "code": "sm", "icon": "fa-solid fa-tablet-screen-button", "title": "On Tablet" },
+                { "code": "xs", "icon": "fa-solid fa-mobile-screen", "title": "On Mobile" }
+            ];
+            activeDevice.value = layout.value.devices[0].code;
+        }
     }
 })
 const layout = ref([]);

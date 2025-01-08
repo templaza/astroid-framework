@@ -23,11 +23,11 @@ import Border from './Border.vue';
 import SubLayouts from './SubLayouts.vue';
 import Range from './Range.vue';
 
-const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
+const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState', 'update:presetState']);
 const props = defineProps({
     field: { type: Object, default: null },
     scope: { type: Object, default: null },
-    update: {type: Object, default: null},
+    update: {type: Boolean, default: false},
     actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
@@ -124,7 +124,7 @@ function updateSubLayouts() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <Range v-model="props.scope[props.field.name]" :field="props.field" :update="props.update[props.field.name]" @update:Preset="$event => (props.update[props.field.name] = $event)" />
+        <Range v-model="props.scope[props.field.name]" :field="props.field" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
@@ -148,7 +148,7 @@ function updateSubLayouts() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />

@@ -26,7 +26,7 @@ class Document
     protected $_javascripts = ['head' => [], 'body' => []];
     protected $_stylesheets = [];
     protected $_scripts = ['head' => [], 'body' => []];
-    protected $_styles = ['desktop' => [], 'tablet' => [], 'mobile' => []];
+    protected $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
     protected $_customtags = ['head' => [], 'body' => []];
     protected $_dev = null;
     protected $minify_css = false;
@@ -883,7 +883,7 @@ class Document
         $this->_scripts[$position][] = $script;
     }
 
-    public function addStyleDeclaration($content, $device = 'desktop'): void
+    public function addStyleDeclaration($content, $device = 'mobile'): void
     {
         if (empty($content)) {
             return;
@@ -1252,13 +1252,14 @@ class Document
         } */
         $cssScript = '';
         foreach ($this->_styles as $device => $css) {
-            if ($device == 'mobile') {
-                $cssScript .= '@media (max-width: 767.98px) {' . implode('', $this->_styles[$device]) . '}';
-            } elseif ($device == 'tablet') {
-                $cssScript .= '@media (max-width: 991.98px) {' . implode('', $this->_styles[$device]) . '}';
-            } else {
-                $cssScript .= implode('', $this->_styles[$device]);
-            }
+            $cssScript .= match ($device) {
+                'landscape_mobile' => '@media (min-width: 576px) {' . implode('', $this->_styles[$device]) . '}',
+                'tablet' => '@media (min-width: 768px) {' . implode('', $this->_styles[$device]) . '}',
+                'desktop' => '@media (min-width: 992px) {' . implode('', $this->_styles[$device]) . '}',
+                'large_desktop' => '@media (min-width: 1200px) {' . implode('', $this->_styles[$device]) . '}',
+                'larger_desktop' => '@media (min-width: 1400px) {' . implode('', $this->_styles[$device]) . '}',
+                default => implode('', $this->_styles[$device]),
+            };
         }
         return $cssScript;
     }

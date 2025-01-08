@@ -42,7 +42,6 @@ onBeforeMount(()=>{
 })
 
 onUpdated(()=>{
-    console.log(props.update);
     if (props.update === true) {
         emit('update:Preset', false);
         init();
