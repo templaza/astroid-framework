@@ -1,27 +1,36 @@
 <script setup>
-import {onBeforeMount, onUpdated, ref, watch, computed} from 'vue';
+import {onBeforeMount, onUpdated, ref, watch, computed, inject} from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'update:Preset']);
 const props = defineProps(['modelValue', 'field', 'update']);
+const language  =   inject('language', []);
 const devices = [
-    'xs', 'sm', 'md', 'lg', 'xl', 'xxl'
+    'mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'
 ]
-const active = ref('lg');
+const active = ref('mobile');
 const data = ref({
-    xs: '',
-    sm: '',
-    md: '',
-    lg: '',
-    xl: '',
-    xxl: ''
+    mobile: '',
+    landscape_mobile: '',
+    tablet: '',
+    desktop: '',
+    large_desktop: '',
+    larger_desktop: ''
 })
 const icons = {
-    xxl: 'fa-solid fa-tv',
-    xl: 'fa-solid fa-desktop',
-    lg: 'fa-solid fa-computer',
-    md: 'fa-solid fa-laptop',
-    sm: 'fa-solid fa-tablet',
-    xs: 'fa-solid fa-mobile'
+    larger_desktop: 'fa-solid fa-tv',
+    large_desktop: 'fa-solid fa-desktop',
+    desktop: 'fa-solid fa-computer',
+    tablet: 'fa-solid fa-laptop',
+    landscape_mobile: 'fa-solid fa-tablet',
+    mobile: 'fa-solid fa-mobile'
+}
+const texts = {
+    larger_desktop: language.ASTROID_XXL,
+    large_desktop: language.ASTROID_XL,
+    desktop: language.ASTROID_DESKTOP,
+    tablet: language.ASTROID_LAPTOP,
+    landscape_mobile: language.ASTROID_SM,
+    mobile: language.JDEFAULT
 }
 function init() {
     if (props.modelValue !== '') {
@@ -30,10 +39,10 @@ function init() {
             if (typeof tmp === 'object' && !Array.isArray(tmp) && tmp !== null) {
                 data.value    = JSON.parse(props.modelValue);
             } else {
-                data.value.xs = data.value.sm = data.value.md = data.value.lg = props.modelValue;
+                data.value.mobile = props.modelValue;
             }
         } catch (e) {
-            data.value.xs = data.value.sm = data.value.md = data.value.lg = props.modelValue;
+            data.value.mobile = props.modelValue;
         }
     }
 }
@@ -65,7 +74,7 @@ watch(data_text, (newText) => {
         <div class="col-auto d-flex align-items-center"><i :class="icons[active]"></i></div>
         <div class="col-auto">
             <select v-model="active" class="form-select form-select-sm">
-                <option v-for="device in devices" :value="device">{{device}}</option>
+                <option v-for="device in devices" :value="device">{{ texts[device] }}</option>
             </select>
         </div>
     </div>
