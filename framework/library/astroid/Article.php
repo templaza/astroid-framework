@@ -126,7 +126,7 @@ class Article
         $meta[] = '<meta property="og:type" content="article">';
         $meta[] = '<meta name="twitter:card" content="' . $this->template->params->get('twittercardtype', 'summary_large_image') . '" />';
         if (!empty($og_title)) {
-            $meta[] = '<meta property="og:title" content="' . $og_title . '">';
+            $meta[] = '<meta property="og:title" content="' . htmlentities($og_title, ENT_QUOTES, "UTF-8", false) . '">';
         }
         if (!empty($og_sitename)) {
             $meta[] = '<meta property="og:site_name" content="' . $og_sitename . '">';
