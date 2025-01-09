@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, ref, watch, inject } from 'vue';
+import { onBeforeMount, onUpdated, inject } from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -22,6 +22,7 @@ import Assignment from './Assignment.vue';
 import Border from './Border.vue';
 import SubLayouts from './SubLayouts.vue';
 import Range from './Range.vue';
+import SwitchBox from "./SwitchBox.vue";
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState', 'update:presetState']);
 const props = defineProps({
@@ -48,22 +49,6 @@ onBeforeMount(()=>{
 
 onUpdated(()=>{
     updateContentLayout();
-})
-
-onMounted(()=>{
-    if (props.field.input.type === `astroidradio`) {
-        if (props.field.input.role === `switch`) {
-            if (parseInt(props.scope[props.field.name]) === 1) {
-                switchField.value = true;
-            }
-        }
-    }
-})
-
-// Switch Field
-const switchField = ref(false);
-watch(switchField, (newValue) => {
-    props.scope[props.field.name] = newValue ? 1 : 0;
 })
 
 // Update state for Astroid Content Layout
@@ -109,10 +94,7 @@ function updateSubLayouts() {
                 <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx" v-html="option.text"></label>
             </span>
         </div>
-        <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
-            <input v-model="switchField" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
-            <input type="hidden" :name="props.field.input.name" :value="props.scope[props.field.name]">
-        </div>
+        <SwitchBox v-else-if="props.field.input.role === `switch`" v-model="props.scope[props.field.name]" :field="props.field" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
             <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
