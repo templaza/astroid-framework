@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 class Style
 {
     public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_child = [];
-    private static $_alias = ['xs' => 'mobile', 'sm' => 'landscape_mobile', 'md' => 'tablet', 'lg' => 'desktop', 'xl' => 'large_desktop', 'xxl' => 'larger_desktop'];
+
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public function __construct($selectors, $mode = '')
     {
@@ -142,21 +142,25 @@ class Style
             }
         }
         if (is_array($value)) {
-            foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $device) {
-                if ($value[$device]) {
-                    $this->_css[Style::$_alias[$device]][$property] = $value[$device] . $unit;
+            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                if (isset($value[$device]) && !empty($value[$device])) {
+                    $this->_css[$device][$property] = $value[$device] . $unit;
                 }
             }
         } elseif (is_object($value)) {
-            foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $device) {
-                if ($value->{$device}) {
-                    $this->_css[Style::$_alias[$device]][$property] = $value->{$device} . $unit;
+            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                if (isset($value->{$device}) && !empty($value->{$device})) {
+                    $this->_css[$device][$property] = $value->{$device} . $unit;
                 }
             }
         } else {
             $this->_css['mobile'][$property] = $value . $unit;
         }
         return $this;
+    }
+
+    public function addBorder($value) {
+        self::addBorderStyle($this->_selector, $value);
     }
 
     public static function addCssBySelector($selector, $property, $value, $device = 'mobile')

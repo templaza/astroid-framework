@@ -85,12 +85,11 @@
 
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_icon_size" type="astroidrange" min="20" max="200" step="1" postfix="px" default="20" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_icon_padding" type="astroidrange" min="5" max="100" step="1" postfix="px" default="10" label="TPL_ASTROID_BASIC_ICON_PADDING_LABEL" description="TPL_ASTROID_BASIC_ICON_PADDING_DESC" />
-         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_icon_border_size" type="astroidrange" min="0" max="10" step="1" postfix="px" default="0" label="TPL_ASTROID_BASIC_ICON_BORDER_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_BORDER_SIZE_DESC" />
+         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" name="backtotop_border_style" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" description="TPL_ASTROID_BASIC_ICON_BORDER_STYLE_DESC" />
 
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_COLOR_DESC" name="backtotop_icon_color" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_COLOR_LABEL" />
 
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_DESC" name="backtotop_icon_bgcolor" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_BACKGROUND_COLOR_LABEL" />
-         <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_BORDER_COLOR_DESC" name="backtotop_icon_bordercolor" type="astroidcolor" label="TPL_ASTROID_BASIC_ICON_BORDER_COLOR_LABEL" />
 
          <field astroidgroup="enable_back_to_top" ngShow="[backtotop]=='1'" description="TPL_ASTROID_BASIC_ICON_STYLE_DESC" name="backtotop_icon_style" type="astroidlist" class="form-select" default="circle" label="TPL_ASTROID_BASIC_ICON_STYLE_LABEL">
             <option value="circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>

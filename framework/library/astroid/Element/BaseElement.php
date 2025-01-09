@@ -226,8 +226,10 @@ class BaseElement
     {
         $border = json_decode($this->params->get('border_style', ''), true);
         if (!empty($border)) {
-            Style::addBorderStyle('#'. $this->getAttribute('id'), $border);
+            $this->style->addBorder($border);
         }
+        $border_radius = $this->params->get('border_radius', '');
+        $this->style->addResponsiveCSS('border-radius', $border_radius, 'px');
     }
 
     protected function _background(): void

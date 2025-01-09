@@ -26,10 +26,8 @@ $html = '';
 $backtotop_icon         = $params->get('backtotop_icon', 'fas fa-arrow-up');
 $backtotop_icon_size    = $params->get('backtotop_icon_size', 20);
 $backtotop_icon_padding = $params->get('backtotop_icon_padding', 10);
-$backtotop_icon_border_size = $params->get('backtotop_icon_border_size', 0);
 $backtotop_icon_color   = Style::getColor($params->get('backtotop_icon_color', ''));
 $backtotop_icon_bgcolor = Style::getColor($params->get('backtotop_icon_bgcolor', ''));
-$backtotop_icon_bdcolor = Style::getColor($params->get('backtotop_icon_bordercolor', ''));
 $backtotop_icon_style   = $params->get('backtotop_icon_style', 'circle');
 $backtotop_on_mobile    = $params->get('backtotop_on_mobile', 1);
 $paddingpercent         = 10;
@@ -38,7 +36,7 @@ $a_style        =   new Style('#astroid-backtotop');
 $a_style_dark   =   new Style('#astroid-backtotop', 'dark');
 $i_style        =   new Style('#astroid-backtotop > i');
 $i_style_dark   =   new Style('#astroid-backtotop > i', 'dark');
-$i_style->addCss('font-size', $backtotop_icon_size . 'px');
+$i_style->addResponsiveCSS('font-size', $backtotop_icon_size , 'px');
 $i_style->addCss('color', $backtotop_icon_color['light']);
 $i_style_dark->addCss('color', $backtotop_icon_color['dark']);
 
@@ -61,9 +59,9 @@ switch ($backtotop_icon_style) {
 $a_style->addCss('background', $backtotop_icon_bgcolor['light']);
 $a_style_dark->addCss('background', $backtotop_icon_bgcolor['dark']);
 $a_style->addResponsiveCSS('padding', $backtotop_icon_padding , 'px');
-if (!empty($backtotop_icon_border_size)) {
-    $a_style->addCss('border', $backtotop_icon_border_size.'px solid ' . $backtotop_icon_bdcolor['light']);
-    $a_style_dark->addCss('border-color', $backtotop_icon_bdcolor['dark']);
+$border = json_decode($params->get('backtotop_border_style', ''), true);
+if (!empty($border)) {
+    $a_style->addBorder($border);
 }
 
 $a_style->render();

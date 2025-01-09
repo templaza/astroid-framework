@@ -18,12 +18,6 @@ class JFormFieldAstroidRange extends FormField {
     protected $ordering;
 
    public function getInput() {
-
-       if (isset($this->element['responsive'])) {
-           $responsive = (bool) $this->element['responsive'];
-       } else {
-           $responsive = false;
-       }
        $json =   [
            'id'      =>  $this->id,
            'name'    =>  $this->name,
@@ -32,7 +26,6 @@ class JFormFieldAstroidRange extends FormField {
            'max'     =>  (string)$this->element['max'],
            'step'    =>  (string)$this->element['step'],
            'postfix' =>  (string)$this->element['postfix'],
-           'responsive' => $responsive,
            'type'    =>  strtolower($this->type),
        ];
 
