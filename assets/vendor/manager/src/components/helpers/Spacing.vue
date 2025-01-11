@@ -1,12 +1,28 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-
+import ResponsiveToggle from "./ResponsiveToggle.vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
-const devices = ['desktop', 'tablet', 'mobile'];
+const devices = ['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'];
 const unitOptions = ['px', 'em', 'rem', 'pt', '%', 'Custom'];
-const currentDevice = ref('desktop');
+const currentDevice = ref('mobile');
 const data = ref({
+    'larger_desktop' : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+        'lock'      : false,
+        'unit'      : 'px'
+    },
+    'large_desktop' : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+        'lock'      : false,
+        'unit'      : 'px'
+    },
     'desktop' : {
         'top'       : null,
         'right'     : null,
@@ -16,6 +32,14 @@ const data = ref({
         'unit'      : 'px'
     },
     'tablet'  : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+        'lock'      : false,
+        'unit'      : 'px'
+    },
+    'landscape_mobile'  : {
         'top'       : null,
         'right'     : null,
         'bottom'    : null,
@@ -58,7 +82,7 @@ function updateUnit() {
 }
 </script>
 <template>
-    <div class="row g-3">
+    <div class="row g-3 justify-content-between">
         <div class="col col-auto">
             <div v-for="device in devices" v-show="currentDevice===device" class="input-group input-group-sm">
                 <div class="input-group-text">
@@ -73,14 +97,8 @@ function updateUnit() {
                 </select>
             </div>
         </div>
-        <div class="col">
-            <div class="row row-cols-auto g-3 justify-content-end">
-                <div v-for="device in devices" :key="device">
-                    <a href="#" @click.prevent="changeDevice(device)" :class="{'link-primary' : currentDevice === device, 'link-secondary' : currentDevice !== device}">
-                        <i class="fas" :class="`fa-`+device"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="col col-auto">
+            <ResponsiveToggle v-model="currentDevice" />
         </div>
     </div>
     <div v-for="device in devices" class="input-group mt-2" v-show="currentDevice===device">

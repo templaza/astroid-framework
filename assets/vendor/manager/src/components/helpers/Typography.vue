@@ -58,7 +58,7 @@ const fontSelected= ref({
 });
 const fonttypes = ref(['system','google'])
 const font_type = ref('google');
-const currentDevice = ref('desktop');
+const currentDevice = ref('mobile');
 const collapse = ref(false);
 
 function getFontType(font_face) {
@@ -150,8 +150,18 @@ watch(fontSelected, (newFont) => {
     }
 })
 
-function changeDeviceStatus(device) {
+const updateStatus = ref({
+    font_size: false,
+    letter_spacing: false,
+    line_height: false
+});
+function changeDeviceStatus(device, fieldname) {
     currentDevice.value = device;
+    Object.keys(updateStatus.value).forEach(key => {
+        if (key !== fieldname) {
+            updateStatus.value[key] = true;
+        }
+    });
 }
 
 const _showColorPicker = ref(false);
@@ -290,7 +300,10 @@ function toggleCollapse() {
                         :field="props.field" 
                         :fieldname="'font_size'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.font_size"
+                        @update:statusField="status => (updateStatus.font_size = status)"
+                    />
                 </div>
                 <div v-if="props.field.input.options.letterspacingpicker">
                     <typo-responsive 
@@ -298,7 +311,10 @@ function toggleCollapse() {
                         :field="props.field" 
                         :fieldname="'letter_spacing'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.letter_spacing"
+                        @update:statusField="status => (updateStatus.letter_spacing = status)"
+                    />
                 </div>
                 <div v-if="props.field.input.options.lineheightpicker">
                     <typo-responsive 
@@ -306,7 +322,10 @@ function toggleCollapse() {
                         :field="props.field" 
                         :fieldname="'line_height'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.line_height"
+                        @update:statusField="status => (updateStatus.line_height = status)"
+                    />
                 </div>
             </div>
         </div>

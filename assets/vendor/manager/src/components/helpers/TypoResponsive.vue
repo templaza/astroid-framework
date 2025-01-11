@@ -1,16 +1,29 @@
 <script setup>
 import { onMounted, onUpdated, reactive, ref, watch } from 'vue';
-const emit = defineEmits(['update:changeDevice']);
-const props = defineProps(['modelValue', 'field', 'fieldname', 'currentDevice']);
-const devices = ['desktop', 'tablet', 'mobile'];
+import ResponsiveToggle from "./ResponsiveToggle.vue";
+const emit = defineEmits(['update:changeDevice', 'update:statusField']);
+const props = defineProps(['modelValue', 'field', 'fieldname', 'currentDevice', 'fieldChanged']);
+const devices = ['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'];
 const unitOptions = ['px', 'em', 'rem', 'pt', '%'];
 const rangeConfig = reactive(
     {
+        'larger_desktop' : {
+            'max' : 100,
+            'step': 1
+        },
+        'large_desktop' : {
+            'max' : 100,
+            'step': 1
+        },
         'desktop' : {
             'max' : 100,
             'step': 1
         },
         'tablet'  : {
+            'max' : 100,
+            'step': 1
+        },
+        'landscape_mobile'  : {
             'max' : 100,
             'step': 1
         },
@@ -21,7 +34,7 @@ const rangeConfig = reactive(
     }
 )
 function changeDevice(device) {
-    emit('update:changeDevice', device);
+    emit('update:changeDevice', device, props.fieldname);
 }
 function updateRange(device) {
     if (['em', 'rem'].includes(props.modelValue[props.fieldname+`_unit`][device])) {
@@ -47,18 +60,17 @@ onUpdated(() => {
 })
 </script>
 <template>
-    <div class="row g-3">
+    <div class="row g-3 justify-content-between">
         <div class="col col-auto">
             {{ props.field.input.lang[props.fieldname] }}
         </div>
-        <div class="col">
-            <div class="row row-cols-auto g-3 justify-content-end">
-                <div v-for="device in devices" :key="device">
-                    <a href="#" @click.prevent="changeDevice(device)" :class="{'link-primary' : props.currentDevice === device, 'link-secondary' : props.currentDevice !== device}">
-                        <i class="fas" :class="`fa-`+device"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="col col-auto">
+            <ResponsiveToggle
+                :modelValue="props.currentDevice"
+                @update:modelValue="device => changeDevice(device)"
+                :fieldChanged="props.fieldChanged"
+                @update:statusField="data => emit('update:statusField', data)"
+            />
         </div>
     </div>
     <div class="mt-2" v-for="device in devices" v-show="props.currentDevice===device">

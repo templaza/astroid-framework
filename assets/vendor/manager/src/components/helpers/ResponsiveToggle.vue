@@ -1,11 +1,12 @@
 <script setup>
 import {inject, onBeforeMount, ref} from "vue";
 import SelectBox from "./SelectBox.vue";
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'update:statusField']);
 const props = defineProps({
     modelValue: { type: String, default: '' },
     options: { type: Object, default: {} },
     icons: { type: Object, default: {} },
+    fieldChanged: { type: Boolean, default: false }
 });
 const language  =   inject('language', []);
 const icons = ref({
@@ -14,7 +15,7 @@ const icons = ref({
     desktop: 'fa-solid fa-computer',
     tablet: 'fa-solid fa-laptop',
     landscape_mobile: 'fa-solid fa-tablet',
-    mobile: 'fa-solid fa-mobile'
+    mobile: 'fa-solid fa-house-laptop'
 })
 const options = ref({
     mobile: language.JDEFAULT,
@@ -34,5 +35,12 @@ onBeforeMount(()=>{
 })
 </script>
 <template>
-    <SelectBox :modelValue="props.modelValue" @update:modelValue="data => emit('update:modelValue', data)" :options="options" :icons="icons"/>
+    <SelectBox
+        :modelValue="props.modelValue"
+        @update:modelValue="data => emit('update:modelValue', data)"
+        :options="options"
+        :icons="icons"
+        :fieldChanged="props.fieldChanged"
+        @update:statusField="data => emit('update:statusField', data)"
+    />
 </template>
