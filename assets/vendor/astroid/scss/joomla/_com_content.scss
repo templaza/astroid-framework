@@ -136,3 +136,60 @@
     }
   }
 }
+
+body.rtl {
+  .astroid-content-media-left {
+    .article-icon {
+      left: auto;
+      right: 20px;
+    }
+    @each $breakpoint, $width in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+        @if ($breakpoint == 'xs') {
+          &:not(.margin-0) {
+            padding: 15px 20px 15px 0;
+          }
+        } @else if ($breakpoint == 'sm') {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 15px 20px 15px 0;
+          }
+        } @else if ($breakpoint == 'md' or $breakpoint == 'lg') {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 25px 30px 25px 0;
+          }
+        } @else {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 30px 40px 30px 0;
+          }
+        }
+      }
+    }
+  }
+  .astroid-content-media-right {
+    .article-icon {
+      left: 20px;
+      right: auto;
+    }
+    @each $breakpoint, $width in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+        @if ($breakpoint == 'xs') {
+          &:not(.margin-0) {
+            padding: 15px 0 15px 20px;
+          }
+        } @else if ($breakpoint == 'sm') {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 15px 0 15px 20px;
+          }
+        } @else if ($breakpoint == 'md' or $breakpoint == 'lg') {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 25px 0 25px 30px;
+          }
+        } @else {
+          &:not(.margin-#{$breakpoint}-0) {
+            padding: 30px 0 30px 40px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -28,12 +28,6 @@ body.rtl {
    .article-info {
       >dd {
          float: right;
-         &:not(:first-child) {
-            border-right: 1px solid #ccc;
-         }
-         &:not(:last-child) {
-            border: none;
-         }
       }
    }
    .pagenav {
