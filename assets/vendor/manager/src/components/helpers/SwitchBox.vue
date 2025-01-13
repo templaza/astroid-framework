@@ -2,14 +2,14 @@
 import {onUpdated, ref, watch, onMounted} from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'update:Preset']);
-const props = defineProps(['modelValue', 'field', 'update']);
+const props = defineProps(['modelValue', 'field', 'presetUpdated']);
 onMounted(()=>{
     if (parseInt(props.modelValue) === 1) {
         switchField.value = true;
     }
 })
 onUpdated(()=>{
-    if (props.update === true) {
+    if (props.presetUpdated === true) {
         emit('update:Preset', false);
         switchField.value = parseInt(props.modelValue) === 1;
     }

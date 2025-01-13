@@ -28,7 +28,7 @@ const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:g
 const props = defineProps({
     field: { type: Object, default: null },
     scope: { type: Object, default: null },
-    update: {type: Boolean, default: false},
+    presetUpdated: {type: Boolean, default: false},
     actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
@@ -94,7 +94,7 @@ function updateSubLayouts() {
                 <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx" v-html="option.text"></label>
             </span>
         </div>
-        <SwitchBox v-else-if="props.field.input.role === `switch`" v-model="props.scope[props.field.name]" :field="props.field" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
+        <SwitchBox v-else-if="props.field.input.role === `switch`" v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
             <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
@@ -106,7 +106,7 @@ function updateSubLayouts() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <Range v-model="props.scope[props.field.name]" :field="props.field" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
+        <Range v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
@@ -130,7 +130,7 @@ function updateSubLayouts() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" :update="props.update" @update:Preset="state => (emit('update:presetState', state))" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />

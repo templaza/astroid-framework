@@ -11,7 +11,7 @@ const props = defineProps({
     modelValue: { type: String, default: '' },
     field: { type: Object, default: null },
     source: { type: String, default: 'root' },
-    update: { type: Boolean, default: false }
+    presetUpdated: { type: Boolean, default: false }
 });
 const constant  =   inject('constant', {});
 const language  =   inject('language', []);
@@ -55,7 +55,7 @@ onBeforeMount(()=>{
     }
 })
 onUpdated(()=>{
-    if (props.update === true) {
+    if (props.presetUpdated === true) {
         emit('update:Preset', false);
         const tmp = JSON.parse(props.modelValue);
         layout.value.sections = tmp.sections;

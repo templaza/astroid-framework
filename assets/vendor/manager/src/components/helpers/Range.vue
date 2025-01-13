@@ -3,7 +3,7 @@ import ResponsiveToggle from "./ResponsiveToggle.vue";
 import {onBeforeMount, onUpdated, ref, watch, computed, inject} from 'vue';
 
 const emit = defineEmits(['update:modelValue', 'update:Preset']);
-const props = defineProps(['modelValue', 'field', 'update']);
+const props = defineProps(['modelValue', 'field', 'presetUpdated']);
 const language  =   inject('language', []);
 const active = ref('mobile');
 const data = ref({
@@ -33,7 +33,7 @@ onBeforeMount(()=>{
 })
 
 onUpdated(()=>{
-    if (props.update === true) {
+    if (props.presetUpdated === true) {
         emit('update:Preset', false);
         init();
     }

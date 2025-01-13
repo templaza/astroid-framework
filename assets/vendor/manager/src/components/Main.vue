@@ -176,7 +176,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                     <Fields 
                       :field="field" 
                       :scope="$scope"
-                      :update="updatePreset[field.name]"
+                      :presetUpdated="updatePreset[field.name]"
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"
                       @update:getPreset="getPreset"
