@@ -1,0 +1,11 @@
+body.rtl {
+  .breadcrumb-item + .breadcrumb-item{
+    padding-left: 0;
+    padding-right: var(--bs-breadcrumb-item-padding-x);
+    &::before {
+      float: right;
+      padding-right: 0;
+      padding-left: var(--bs-breadcrumb-item-padding-x);
+    }
+  }
+}
