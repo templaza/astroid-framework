@@ -151,6 +151,9 @@ try {
         $return["status"]   =   'success';
         $return["message"]  =   $message_success;
         $return["code"]     =   200;
+        if ($params->get('enable_redirect', 0) && !empty($params->get('redirect_url', ''))) {
+            $return["redirect"] = $params->get('redirect_url', '');
+        }
     } else {
         throw new \Exception($message_failed);
     }
