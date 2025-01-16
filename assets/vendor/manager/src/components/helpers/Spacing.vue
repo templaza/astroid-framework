@@ -1,9 +1,9 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import ResponsiveToggle from "./ResponsiveToggle.vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
-const devices = ['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'];
+const devices = ['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'];
 const unitOptions = ['px', 'em', 'rem', 'pt', '%', 'Custom'];
 const currentDevice = ref('mobile');
 const data = ref({
@@ -56,6 +56,45 @@ const data = ref({
         'unit'      : 'px'
     }
 });
+const placeholder = ref({
+    'larger_desktop' : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    },
+    'large_desktop' : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    },
+    'desktop' : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    },
+    'tablet'  : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    },
+    'landscape_mobile'  : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    },
+    'mobile'  : {
+        'top'       : null,
+        'right'     : null,
+        'bottom'    : null,
+        'left'      : null,
+    }
+});
+const positions = ['top', 'right', 'bottom', 'left'];
 onBeforeMount(()=>{
     if (typeof props.modelValue !== 'undefined' && props.modelValue !== '') {
         data.value = {
@@ -64,14 +103,52 @@ onBeforeMount(()=>{
         };
     }
 })
+onMounted(()=>{
+    let lastDevice = null;
+    positions.forEach(position => {
+        lastDevice = null;
+        devices.forEach(device => {
+            placeholder.value[device][position] = lastDevice;
+            if (data.value[device][position]) {
+                lastDevice = data.value[device][position];
+            }
+        });
+    });
+})
+function updatePlaceholder(position) {
+    let lastDevice = null;
+    devices.forEach(device => {
+        placeholder.value[device][position] = lastDevice;
+        if (data.value[device][position]) {
+            lastDevice = data.value[device][position];
+        }
+    });
+}
 function changeDevice(device) {
     currentDevice.value = device;
 }
+function updateLock(device) {
+    let lockValue = null;
+    positions.every(position => {
+        if (data.value[device][position]) {
+            lockValue = data.value[device][position];
+            return false;
+        }
+        return true;
+    });
+    positions.forEach(position => {
+        data.value[device][position] = lockValue;
+        updatePlaceholder(position);
+    });
+    emit('update:modelValue', JSON.stringify(data.value));
+}
 function updateData(device, position) {
+    updatePlaceholder(position);
     if (data.value[device].lock === true) {
-        ['top', 'right', 'bottom', 'left'].forEach(pos => {
+        positions.forEach(pos => {
             if (pos !== position) {
                 data.value[device][pos] = data.value[device][position];
+                updatePlaceholder(pos);
             }
         });
     }
@@ -86,7 +163,7 @@ function updateUnit() {
         <div class="col col-auto">
             <div v-for="device in devices" v-show="currentDevice===device" class="input-group input-group-sm">
                 <div class="input-group-text">
-                    <input type="checkbox"  class="btn-check" v-model="data[device].lock" :id="props.field.input.id+`-lock-`+device" autocomplete="off">
+                    <input type="checkbox"  class="btn-check" v-model="data[device].lock" @change="updateLock(device)" :id="props.field.input.id+`-lock-`+device" autocomplete="off">
                     <label class="spacing-lock" :for="props.field.input.id+`-lock-`+device"><i class="fas" :class="{ 
                         'fa-unlock ': data[device].lock === false,
                         'fa-lock' : data[device].lock === true
@@ -101,8 +178,13 @@ function updateUnit() {
             <ResponsiveToggle v-model="currentDevice" />
         </div>
     </div>
-    <div v-for="device in devices" class="input-group mt-2" v-show="currentDevice===device">
-        <input v-for="position in ['top', 'right', 'bottom', 'left']" v-model="data[device][position]" @input="updateData(device, position)" type="text" class="form-control" :aria-label="position" :placeholder="position">
+    <div v-for="device in devices" class="mt-2" v-show="currentDevice===device">
+        <div class="input-group">
+            <input v-for="position in positions" v-model="data[device][position]" @input="updateData(device, position)" type="text" class="form-control" :aria-label="position" :placeholder="placeholder[device][position]">
+        </div>
+        <div class="row">
+            <div v-for="position in positions" class="col text-center form-text">{{ position }}</div>
+        </div>
     </div>
     <input
         :id="props.field.input.id"
