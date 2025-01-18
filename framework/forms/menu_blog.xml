@@ -20,6 +20,14 @@
             <option value="1">JYES</option>
             <option value="0">JNO</option>
          </field>
+         <field name="category_show_intro" type="radio" default="1" label="ASTROID_SHOW_INTRO_ON_CATEGORY_VIEW" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
+         <field name="category_hide_extrafields" type="radio" default="0" label="ASTROID_HIDE_EXTRAFIELDS_ON_CATEGORY_VIEW" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
          <field type="spacer" name="image_lead_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_OPTIONS" />
          <field name="image_lead_position" type="list" default="" label="Lead Item Image Position">
             <option value="">Default</option>
@@ -159,6 +167,16 @@
             <option value="7">7/12</option>
             <option value="2">1/6</option>
             <option value="10">5/6</option>
+         </field>
+         <field type="spacer" name="blog_layout_spacer" label="ASTROID_ARTICLE_BLOG_LAYOUT_OPTIONS" />
+         <field name="as_blog_layout" type="list" default="" label="ASTROID_WIDGET_CHOOSE_LAYOUT_LABEL">
+            <option value="">JDEFAULT</option>
+            <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
+         </field>
+         <field showon="as_blog_layout:overlay" type="radio" name="as_overlay_content_position" label="ASTROID_ARTICLE_BADGE" class="btn-group" default="justify-content-end">
+            <option value="justify-content-end">ASTROID_BOTTOM</option>
+            <option value="justify-content-center">ASTROID_MIDDLE</option>
+            <option value="justify-content-start">ASTROID_TOP</option>
          </field>
       </fieldset>
    </fields>

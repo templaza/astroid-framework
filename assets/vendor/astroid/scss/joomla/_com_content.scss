@@ -29,6 +29,16 @@
     }
   }
 }
+.as-hide-extrafields {
+  .fields-container {
+    display: none;
+  }
+}
+.as-blog-overlay {
+  .item-image {
+    margin-bottom: 0;
+  }
+}
 .astroid-img-cover {
   > * {
     top: 0;
