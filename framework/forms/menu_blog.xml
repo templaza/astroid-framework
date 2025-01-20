@@ -173,11 +173,17 @@
             <option value="">JDEFAULT</option>
             <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
          </field>
-         <field showon="as_blog_layout:overlay" type="radio" name="as_overlay_content_position" label="ASTROID_ARTICLE_BADGE" class="btn-group" default="justify-content-end">
+         <field showon="as_blog_layout:overlay" type="radio" name="as_overlay_content_position" label="ASTROID_ARTICLE_OVERLAY_CONTENT_POSITION" class="btn-group" default="justify-content-end">
             <option value="justify-content-end">ASTROID_BOTTOM</option>
             <option value="justify-content-center">ASTROID_MIDDLE</option>
             <option value="justify-content-start">ASTROID_TOP</option>
          </field>
+         <field showon="as_blog_layout:overlay" name="as_overlay_color_type" type="radio" default="" label="ASTROID_WIDGET_OVERLAY_COLOR" class="btn-group">
+            <option value="">ASTROID_NONE</option>
+            <option value="color">TPL_ASTROID_COLOR</option>
+            <option value="gradient">TPL_ASTROID_GRADIENT</option>
+         </field>
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:color" name="as_overlay_color" type="color" default="" format="rgba" label="TPL_ASTROID_OVERLAY_COLOR_LABEL" />
       </fieldset>
    </fields>
 </form>

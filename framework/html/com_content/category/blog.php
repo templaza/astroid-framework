@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
 use Astroid\Framework;
+use Astroid\Helper\Style;
 
 $app = Factory::getApplication();
 
@@ -38,7 +39,18 @@ if ($use_masonry) {
     $document = Framework::getDocument();
     $document->loadMasonry('.as-masonry');
 }
+$blog_style = new Style('.blog');
+$blog_layout = $this->params->get('as_blog_layout', '');
+// Overlay Color
+if ($blog_layout == 'overlay') {
+    $as_overlay_color_type = $this->params->get('as_overlay_color_type', '');
 
+    if ($as_overlay_color_type == 'color') {
+        $as_overlay_color = $this->params->get('as_overlay_color', '');
+        $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-color', $as_overlay_color);
+    }
+}
+$blog_style->render();
 ?>
 <div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
     <?php if ($this->params->get('show_page_heading')) : ?>

@@ -284,6 +284,7 @@ ul {
 		margin: 5px 0;
 		.nav-item-inner {
 			border-radius: var(--bs-border-radius);
+			transition: all 500ms ease;
 		}
 
 		.as-menu-item {

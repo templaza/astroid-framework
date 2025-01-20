@@ -245,8 +245,10 @@ header .logo-wrapper {
          }
       }
       > .astroid-sidebar-content {
-         width: $sidebar-header-width;
          min-height: 100vh;
+         @include media-breakpoint-up(xl) {
+            width: $sidebar-header-width;
+         }
          @media (max-width: 1200px) {
             min-height: auto;
          }
