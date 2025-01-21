@@ -32,7 +32,7 @@ $wa->useScript('bootstrap.alert');
         <div class="as-width-large my-5 px-3">
             <jdoc:include type="message" />
             <div id="frame" class="card card-body">
-                <?php if ($app->get('offline_image') && file_exists($app->get('offline_image'))) : ?>
+                <?php if ($app->get('offline_image')) : ?>
                     <img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>" />
                 <?php endif; ?>
                 <h1>
