@@ -184,6 +184,8 @@
             <option value="gradient">TPL_ASTROID_GRADIENT</option>
          </field>
          <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:color" name="as_overlay_color" type="color" default="" format="rgba" label="TPL_ASTROID_OVERLAY_COLOR_LABEL" />
+         <field type="spacer" name="responsive_spacer" label="ASTROID_ARTICLE_RESPONSIVE_OPTIONS_HR" />
+         <field type="note" name="responsive_options_note" label="ASTROID_GET_PRO_FEATURES" />
       </fieldset>
    </fields>
 </form>

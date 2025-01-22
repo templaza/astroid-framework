@@ -9,12 +9,84 @@
 defined('_JEXEC') or die;
 
 use Astroid\Framework;
+use Astroid\Helper\Style;
+use Astroid\Helper;
 $use_masonry = $this->params->get('use_masonry', 0);
 
-if ($use_masonry) {
+$blog_style = new Style('.blog');
+
+// Blog Responsive Columns
+$lead_row_cls       =   $intro_row_cls      =   ['row'];
+if (Helper::isPro()) {
+    $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+    foreach ($responsive_key as $key) {
+        foreach (['lead', 'intro'] as $type) {
+            if ($key !== 'xs') {
+                // Lead options
+                $row_gutter         =   $this->params->get($type . '_row_gutter_' . $key, '');
+                $column_gutter      =   $this->params->get($type . '_column_gutter_' . $key, '');
+
+                if (!empty($row_gutter)) {
+                    ${$type . '_row_cls'}[]     =  'gy-' . $key . '-' . $row_gutter;
+                }
+                if (!empty($column_gutter)) {
+                    ${$type . '_row_cls'}[]     =  'gx-' . $key . '-' . $column_gutter;
+                }
+                $param_column       =   $this->params->get($type . '_' . $key . '_column', '');
+                if (!empty($param_column)) {
+                    ${$type . '_row_cls'}[]      =  'row-cols-' . $key . '-' . $param_column;
+                }
+
+            } else {
+                $row_gutter         =   $this->params->get($type . '_row_gutter', 3);
+                $column_gutter      =   $this->params->get($type . '_column_gutter', 3);
+                if (!empty($row_gutter)) {
+                    ${$type . '_row_cls'}[]    =  'gy-' . $row_gutter;
+                }
+                if (!empty($column_gutter)) {
+                    ${$type . '_row_cls'}[]    =  'gx-' . $column_gutter;
+                }
+                $column_default             =   $type === 'intro' ? $this->params->get('num_columns') : 1;
+                $param_column               =   $this->params->get($type . '_column', $column_default);
+                if (!empty($param_column)) {
+                    ${$type . '_row_cls'}[]     =   'row-cols-' . $param_column;
+                }
+            }
+        }
+    }
+} else {
+    if ((int) $this->params->get('num_columns') > 1) {
+        $intro_row_cls[] = 'row-cols-' . $this->params->get('num_columns');
+    }
+}
+
+$blog_class_leading = $this->params->get('blog_class_leading', '');
+if (!empty($blog_class_leading)) {
+    $lead_row_cls[] = $blog_class_leading;
+}
+$blog_class = $this->params->get('blog_class', '');
+if (!empty($blog_class)) {
+    $intro_row_cls[] = $blog_class;
+}
+
+if (!empty($use_masonry)) {
     $document = Framework::getDocument();
     $document->loadMasonry('.as-masonry');
+    $lead_row_cls[] = 'as-masonry';
+    $intro_row_cls[] = 'as-masonry';
 }
+
+$blog_layout = $this->params->get('as_blog_layout', '');
+// Overlay Color
+if ($blog_layout == 'overlay') {
+    $as_overlay_color_type = $this->params->get('as_overlay_color_type', '');
+
+    if ($as_overlay_color_type == 'color') {
+        $as_overlay_color = $this->params->get('as_overlay_color', '');
+        $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-color', $as_overlay_color);
+    }
+}
+$blog_style->render();
 ?>
 <div class="blog blog-featured<?php echo $this->pageclass_sfx; ?>">
     <?php if ($this->params->get('show_page_heading') != 0) : ?>
@@ -25,7 +97,8 @@ if ($use_masonry) {
         </div>
     <?php endif; ?>
     <?php if (!empty($this->lead_items)) : ?>
-        <div class="blog-items items-leading <?php echo $this->params->get('blog_class_leading'); ?>">
+        <div class="blog-items items-leading">
+            <div class="<?php echo implode(' ', $lead_row_cls); ?>">
             <?php foreach ($this->lead_items as $key => &$item) : ?>
                 <div class="blog-item">
                     <?php
@@ -36,16 +109,13 @@ if ($use_masonry) {
                     ?>
                 </div>
             <?php endforeach; ?>
+            </div>
         </div>
     <?php endif; ?>
 
     <?php if (!empty($this->intro_items)) : ?>
-        <?php $blogClass = $this->params->get('blog_class', ''); ?>
-        <?php if ((int) $this->params->get('num_columns') > 1) : ?>
-            <?php $blogClass .= ' gx-xl-5 gy-5 row-cols-lg-'.$this->params->get('num_columns'); ?>
-        <?php endif; ?>
         <div class="blog-items items-row">
-            <div class="row gx-xl-5 gy-5 <?php echo $blogClass; ?>">
+            <div class="<?php echo implode(' ', $intro_row_cls); ?>">
                 <?php foreach ($this->intro_items as $key => &$item) : ?>
                     <div class="blog-item">
                         <?php

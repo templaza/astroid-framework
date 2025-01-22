@@ -32,6 +32,14 @@ class AstroidForm
         }
     }
 
+    public function loadForm($dir, $form)
+    {
+        if (file_exists($dir . '/' . $form . '.xml')) {
+            Form::addFormPath($dir);
+            $this->form->loadFile($form, true);
+        }
+    }
+
     protected static function _ording($a, $b)
     {
         if ($a->order == $b->order) {

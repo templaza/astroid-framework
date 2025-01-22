@@ -215,6 +215,8 @@ class Client
             $loaded = true;
         }
 
+        Helper::triggerEvent('onAstroidAfterFormLoad', [&$form, &$data]);
+
         $version = new Version;
         $version = $version->getShortVersion();
         $version = substr($version, 0, 1);
