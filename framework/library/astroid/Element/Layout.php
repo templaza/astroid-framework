@@ -104,11 +104,7 @@ class Layout
         $merged = [];
         foreach ($layouts as $layout) {
             $key = $layout['name'];
-            if (isset($merged[$key])) {
-                $merged[$key] = $layout;
-            } else {
-                $merged[$key] = $layout;
-            }
+            $merged[$key] = $layout;
         }
         return array_values($merged);
     }
