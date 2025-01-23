@@ -38,7 +38,7 @@ $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
-$navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-'.$header_breakpoint.'-block'];
+$navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
 $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu,.nav-submenu-static"' : '';
 ?>
 <!-- header starts -->
@@ -51,7 +51,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
             </div>
          </div>
       <?php } ?>
-      <div class="header-left-section d-flex justify-content-start<?php echo $mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+      <div class="header-left-section as-gutter-x-xl@lg d-flex justify-content-start<?php echo $mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
           <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
               <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
@@ -103,7 +103,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
       }
       ?>
       <?php if ($block_1_type != 'blank' || $mode == 'right' || $enable_offcanvas || $color_mode) : ?>
-         <div class="header-right-section d-flex justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+         <div class="header-right-section as-gutter-x-xl@lg d-flex justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($mode == 'right') {
                // header nav starts
@@ -116,7 +116,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
             }
             ?>
             <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-<?php echo $header_breakpoint; ?>-block align-self-center ms-4">
+               <div class="header-right-block d-none d-<?php echo $header_breakpoint; ?>-block align-self-center">
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
@@ -132,7 +132,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                </div>
             <?php endif; ?>
              <?php if ($enable_offcanvas) { ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-'.$header_breakpoint.'-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>

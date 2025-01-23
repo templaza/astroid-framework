@@ -74,6 +74,10 @@ class FormBuilder {
 
                 if (response.status === 'success') {
                     statusElement.innerHTML = '<div class="alert alert-success" role="alert">' + response.message + '</div>';
+                    if (typeof response.redirect !== 'undefined') {
+                        window.location.href = response.redirect;
+                        return false;
+                    }
                     form.reset();
                     form.querySelectorAll('.google-recaptcha').forEach(function(el) {
                         grecaptcha.reset(el);

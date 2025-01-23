@@ -51,7 +51,7 @@ class Column extends BaseElement
         return $this->wrap();
     }
 
-    protected function _getclasses()
+    protected function _getclasses(): void
     {
         foreach ($this->devices as $device) {
             $size = $device['code'];

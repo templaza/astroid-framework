@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, onUpdated, ref, watch, inject } from 'vue';
+import { onBeforeMount, onUpdated, inject } from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -21,11 +21,14 @@ import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
 import Border from './Border.vue';
 import SubLayouts from './SubLayouts.vue';
+import Range from './Range.vue';
+import SwitchBox from "./SwitchBox.vue";
 
-const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState']);
+const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState', 'update:presetState']);
 const props = defineProps({
-  field: { type: Object, default: null },
-  scope: { type: Object, default: null },
+    field: { type: Object, default: null },
+    scope: { type: Object, default: null },
+    presetUpdated: {type: Boolean, default: false},
     actSave: {type: Boolean, default: false}
 });
 const constant = inject('constant', {});
@@ -46,22 +49,6 @@ onBeforeMount(()=>{
 
 onUpdated(()=>{
     updateContentLayout();
-})
-
-onMounted(()=>{
-    if (props.field.input.type === `astroidradio`) {
-        if (props.field.input.role === `switch`) {
-            if (parseInt(props.scope[props.field.name]) === 1) {
-                switchField.value = true;
-            }
-        }
-    }
-})
-
-// Switch Field
-const switchField = ref(false);
-watch(switchField, (newValue) => {
-    props.scope[props.field.name] = newValue ? 1 : 0;
 })
 
 // Update state for Astroid Content Layout
@@ -107,10 +94,7 @@ function updateSubLayouts() {
                 <label class="btn btn-sm btn-as btn-outline-primary btn-as-outline-primary" :for="props.field.input.id+idx" v-html="option.text"></label>
             </span>
         </div>
-        <div v-else-if="props.field.input.role === `switch`" class="form-check form-switch">
-            <input v-model="switchField" class="form-check-input" type="checkbox" role="switch" :id="props.field.input.id">
-            <input type="hidden" :name="props.field.input.name" :value="props.scope[props.field.name]">
-        </div>
+        <SwitchBox v-else-if="props.field.input.role === `switch`" v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
         <div v-else-if="props.field.input.role === `image`" class="radio-image row g-2">
             <div v-for="(option, idx) in props.field.input.options" :key="idx" class="col col-auto">
                 <input type="radio" class="btn-check" v-model="props.scope[props.field.name]" :name="props.field.input.name" :id="props.field.input.id+idx" :value="option.value" autocomplete="off">
@@ -122,11 +106,7 @@ function updateSubLayouts() {
         <Colors v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
-        <div class="row">
-            <div class="col"><input type="number" class="form-control form-control-sm" aria-label="Range Number" v-model="props.scope[props.field.name]"></div>
-            <div class="col-auto"><label :for="props.field.input.id" class="form-label">{{ props.field.input.postfix }}</label></div>
-        </div>
-        <input type="range" class="form-range" :name="props.field.input.name" v-model="props.scope[props.field.name]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id">
+        <Range v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicon`">
         <BackToTopIcon v-model="props.scope[props.field.name]" :field="props.field" />
@@ -150,7 +130,7 @@ function updateSubLayouts() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />

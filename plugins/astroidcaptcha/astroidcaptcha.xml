@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="plugin" group="captcha" method="upgrade">
-   <name>Astroid Captcha</name>
+   <name>Captcha - AstroidCaptcha</name>
    <author>Astroid Framework Team</author>
    <creationDate>December 2024</creationDate>
    <version>1.0.0</version>
@@ -113,4 +113,7 @@
          </fieldset>
       </fields>
    </config>
+   <updateservers>
+      <server type="extension" priority="1" name="Astroid Captcha">https://raw.githubusercontent.com/templaza/astroid-framework/master/astroid_framework.xml</server>
+   </updateservers>
 </extension>

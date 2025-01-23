@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 28.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 150 104" style="enable-background:new 0 0 150 104;" xml:space="preserve">
+	 viewBox="0 0 1601 1001" style="enable-background:new 0 0 1601 1001;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#EDE5F6;}
-	.st1{fill:none;stroke:#8E2DE2;}
-	.st2{fill:none;}
-	.st3{fill:#232323;stroke:#8E2DE2;stroke-width:2;}
-	.st4{fill:none;stroke:#8E2DE2;stroke-width:0.3;}
-	.st5{fill:#FFFFFF;stroke:#8E2DE2;stroke-width:0.8;}
-	.st6{fill:#8E2DE2;}
-	.st7{font-family:'ArialMT';}
-	.st8{font-size:12px;}
-	.st9{fill:none;stroke:#9223E2;}
+	.st0{fill:none;stroke:#8E2DE2;}
+	.st1{fill:#EDE5F6;}
+	.st2{enable-background:new    ;}
+	.st3{fill:#8E2DE2;}
+	.st4{fill:none;stroke:#8E2DE2;stroke-miterlimit:10;}
 </style>
-<rect x="0.8" y="1" class="st0" width="149" height="59.9"/>
-<line class="st1" x1="0.8" y1="61.3" x2="130.3" y2="61.3"/>
-<line class="st1" x1="136.9" y1="61.3" x2="149.3" y2="61.3"/>
-<rect x="0.5" y="0.5" class="st2" width="149" height="103"/>
-<path class="st3" d="M53.2,46h8.6H53.2z"/>
-<path class="st3" d="M65.7,46h8.6H65.7z"/>
-<path class="st3" d="M78.2,46h8.6H78.2z"/>
-<line class="st4" x1="41.8" y1="31.7" x2="149.3" y2="31.7"/>
-<rect x="9.5" y="27.7" class="st5" width="22.1" height="8"/>
-<text transform="matrix(1 0 0 1 48.5706 20.1661)" class="st6 st7 st8">1</text>
-<text transform="matrix(1 0 0 1 134.6621 20.1661)" class="st6 st7 st8">2</text>
-<line class="st9" x1="41.8" y1="1" x2="41.8" y2="61.3"/>
+<g id="stacked_style4" transform="translate(-4.743)">
+	<rect id="Rectangle_43" x="5.2" y="0.5" class="st0" width="1600" height="1000"/>
+	<line id="Line_1" class="st0" x1="5.2" y1="580.5" x2="1415.2" y2="580.5"/>
+	<line id="Line_2" class="st0" x1="1475.2" y1="580.5" x2="1605.2" y2="580.5"/>
+	<rect id="Rectangle_44" x="10.2" y="5.5" class="st1" width="1590" height="570"/>
+	<g class="st2">
+		<path class="st3" d="M588.9,193.5h-11.2v-71.7c-2.7,2.6-6.3,5.2-10.7,7.8c-4.4,2.6-8.3,4.5-11.8,5.8v-10.9
+			c6.3-3,11.8-6.5,16.5-10.8c4.7-4.2,8-8.3,10-12.2h7.2V193.5z"/>
+	</g>
+	<rect id="Rectangle_45" x="110.2" y="248.5" class="st3" width="230" height="84"/>
+	<g id="Group_45" transform="translate(1429.243 77.5)">
+		<g class="st2">
+			<path class="st3" d="M64.4,105.2V116H3.9c-0.1-2.7,0.4-5.3,1.3-7.8c1.5-4.1,4-8.2,7.4-12.2c3.4-4,8.3-8.6,14.7-13.9
+				C37.3,74,44,67.5,47.5,62.7c3.5-4.8,5.2-9.3,5.2-13.5c0-4.5-1.6-8.2-4.8-11.3s-7.3-4.6-12.5-4.6c-5.4,0-9.8,1.6-13,4.9
+				s-4.9,7.8-4.9,13.5L6,50.5c0.8-8.6,3.8-15.2,8.9-19.7C20.1,26.3,27,24,35.7,24c8.8,0,15.8,2.4,20.9,7.3s7.7,10.9,7.7,18.1
+				c0,3.7-0.7,7.3-2.2,10.8c-1.5,3.5-4,7.3-7.5,11.2c-3.5,3.9-9.3,9.3-17.3,16.1c-6.8,5.7-11.1,9.5-13,11.5c-1.9,2-3.5,4.1-4.8,6.1
+				H64.4z"/>
+		</g>
+	</g>
+	<rect id="Rectangle_49" x="540.2" y="427.5" class="st3" width="90" height="10"/>
+	<rect id="Rectangle_49-2" x="660.2" y="427.5" class="st3" width="90" height="10"/>
+	<rect id="Rectangle_49-3" x="780.2" y="427.5" class="st3" width="90" height="10"/>
+	<line id="Line_8" class="st0" x1="440.2" y1="290.5" x2="1605.2" y2="290.5"/>
+	<g id="Group_46" transform="translate(441.243 0.5)">
+		<line id="Line_3" class="st4" x1="0" y1="580" x2="0" y2="0"/>
+	</g>
+</g>
 </svg>

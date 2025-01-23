@@ -8,7 +8,7 @@
  */
 
 namespace Joomla\Plugin\Captcha\AstroidCaptcha\Extension;
-
+defined('_JEXEC') or die;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Astroid\Framework;
 use Astroid\Helper;

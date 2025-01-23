@@ -10,6 +10,7 @@
 namespace Astroid\Helper;
 use Astroid\Helper;
 use Joomla\Filesystem\Folder;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -154,6 +155,8 @@ class Overrides
             if (file_exists($path_template . '/fonts')) {
                 Folder::move($path_template . '/fonts', $path_template_media . '/fonts');
             }
+            Helper::clearCacheByTemplate($template);
+            Factory::getApplication()->enqueueMessage('Astroid Cache Cleared.');
         }
     }
 }

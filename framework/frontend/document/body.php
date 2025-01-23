@@ -37,10 +37,19 @@ $layout = Astroid\Framework::getTemplate()->getLayout();
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
 
+$container_class = ['astroid-container']; // container class
 $astroid_content_class = ['astroid-content']; // astroid_content_class
 if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
     $astroid_content_class[] = 'has-sidebar';
-    $astroid_content_class[] = 'sidebar-dir-' . $params->get('header_sidebar_menu_mode', 'left');
+    $mode = $params->get('header_sidebar_menu_mode', 'left');
+    if ($mode == 'topbar') {
+        $sidebar_position = $params->get('sidebar_position', 'left');
+    } else {
+        $sidebar_position = $mode;
+    }
+    $astroid_content_class[] = 'sidebar-dir-' . $sidebar_position;
+    array_push($container_class, 'row', 'g-0');
+    $astroid_content_class[] = 'col';
 }
 if ($header && !empty($header_mode) && $header_mode != 'sidebar') {
     $wa->registerAndUseScript('astroid.jquery.easing', 'astroid/jquery.easing.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
@@ -68,12 +77,10 @@ if (!empty($overlay_type)) {
 }
 ?>
 <!-- astroid container -->
-<div class="astroid-container">
+<div class="<?php echo implode(' ', $container_class) ?>">
     <?php
     $document->include('containerStart'); // Container Start
     $document->include('header.sidebar'); // sidebar
-    $document->include('offcanvas'); // offcanvas
-    $document->include('mobilemenu'); // mobile menu
     ?>
     <!-- astroid content -->
     <div class="<?php echo implode(' ', $astroid_content_class); ?>">
@@ -100,7 +107,9 @@ if (!empty($overlay_type)) {
         ?>
     </div>
     <!-- end of astroid content -->
-    <?php $document->include('containerEnd'); // Container End 
+    <?php $document->include('containerEnd'); // Container End
+    $document->include('offcanvas'); // offcanvas
+    $document->include('mobilemenu'); // mobile menu
     ?>
 </div>
 <!-- end of astroid container -->

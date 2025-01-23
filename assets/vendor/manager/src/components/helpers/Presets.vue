@@ -270,16 +270,10 @@ function exportPreset(preset) {
                     <a v-if="preset.demo" class="btn btn-sm btn-as btn-as-light ms-2" :href="preset.demo">Demo</a>
                     <div class="preset-toolbar">
                         <a href="#" @click.prevent="exportPreset(preset)" class="link-primary me-2" title="Export">
-                            <font-awesome-layers class="fa-2x">
-                                <font-awesome-icon :icon="['fas', 'circle']" />
-                                <font-awesome-icon :icon="['fas', 'download']" transform="shrink-9" :style="{ color: 'white' }" />
-                            </font-awesome-layers>
+                            <div class="fa-layers fa-2x"><svg class="svg-inline--fa fa-circle" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="transform-origin: 0.5em 0.5em; color: white;"><g class="" transform="translate(256 256)"><g class="" transform="translate(0, 0)  scale(0.4375, 0.4375)  rotate(0 0 0)"><path class="" fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" transform="translate(-256 -256)"></path></g></g></svg></div>
                         </a>
                         <a href="#" @click.prevent="deletePreset(index)" class="link-danger" title="Delete">
-                            <font-awesome-layers class="fa-2x">
-                                <font-awesome-icon :icon="['fas', 'circle']" />
-                                <font-awesome-icon :icon="['fas', 'trash']" transform="shrink-9" :style="{ color: 'white' }" />
-                            </font-awesome-layers>
+                            <div class="fa-layers fa-2x"><svg class="svg-inline--fa fa-circle" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="" fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><svg class="svg-inline--fa fa-trash" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="transform-origin: 0.4375em 0.5em; color: white;"><g class="" transform="translate(224 256)"><g class="" transform="translate(0, 0)  scale(0.4375, 0.4375)  rotate(0 0 0)"><path class="" fill="currentColor" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" transform="translate(-224 -256)"></path></g></g></svg></div>
                         </a>
                     </div>
                 </div>

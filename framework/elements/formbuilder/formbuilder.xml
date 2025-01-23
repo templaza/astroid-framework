@@ -23,7 +23,7 @@
                 <field astroidgroup="message_options" type="astroidtext" label="ASTROID_WIDGET_FORM_SUBMIT_FAILED_LABEL" description="ASTROID_WIDGET_FORM_SUBMIT_FAILED_DESC" name="form_submit_failed" default="Email sent failed, fill required field and try again!"/>
 
                 <field astroidgroup="policy_options" name="enable_redirect" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_FORM_ENABLE_REDIRECT_LABEL"/>
-                <field astroidgroup="policy_options" ngShow="[enable_redirect]==1" label="ASTROID_WIDGET_FORM_REDIRECT_URL_LABEL" description="ASTROID_WIDGET_FORM_REDIRECT_URL_DESC" name="redirect_url"/>
+                <field astroidgroup="policy_options" ngShow="[enable_redirect]==1" type="astroidtext" label="ASTROID_WIDGET_FORM_REDIRECT_URL_LABEL" description="ASTROID_WIDGET_FORM_REDIRECT_URL_DESC" name="redirect_url"/>
                 <field astroidgroup="policy_options" name="enable_captcha" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_FORM_ENABLE_CAPTCHA_LABEL"/>
 
                 <field astroidgroup="button_options" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">

@@ -17,7 +17,7 @@ $article-posttype-spacing: 40px;
 
 .article-info {
 	font-size: 14px;
-
+	margin-left: -10px;
 	a,
 	span,
 	i {
@@ -27,9 +27,8 @@ $article-posttype-spacing: 40px;
 	>dd {
 		display: inline-block;
 		margin-bottom: 0;
-	}
-	> dd:not(:last-child) {
-		padding-right: 10px;
+		margin-inline-start: 0;
+		padding-left: 10px;
 	}
 	> dd.article-post-type {
 		padding-right: 0;

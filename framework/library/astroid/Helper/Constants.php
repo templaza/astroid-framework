@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.1.9';
+    public static $astroid_version = '3.1.10';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -103,6 +103,7 @@ class Constants
         'JSAVE',
         'JCANCEL',
         'ASTROID_BACK',
+        'JDEFAULT',
         'TPL_ASTROID_LAYOUT_INFO',
         'TPL_ASTROID_EDIT_INFO',
         'TPL_ASTROID_NO_LAYOUT_INFO',
@@ -112,7 +113,12 @@ class Constants
         'TPL_ASTROID_NEW_LAYOUT',
         'TPL_ASTROID_DELETE_LAYOUT',
         'TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING',
-        'TPL_ASTROID_SAVE_AS_DEFAULT'
+        'TPL_ASTROID_SAVE_AS_DEFAULT',
+        'ASTROID_SM',
+        'ASTROID_LAPTOP',
+        'ASTROID_DESKTOP',
+        'ASTROID_XL',
+        'ASTROID_XXL'
     ];
 
     public static $animations = [

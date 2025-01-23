@@ -1,23 +1,23 @@
 (function ($) {
    // Functions
-   var lastScrollTop = 0;
-   var windowloaded = false;
-   var initLastScrollTop = function () {
+   let lastScrollTop = 0;
+   let windowloaded = false;
+   let initLastScrollTop = function () {
       var st = $(window).scrollTop();
       lastScrollTop = st;
    };
-   var isScrollDown = function () {
+   let isScrollDown = function () {
       var st = $(window).scrollTop();
       return (st > lastScrollTop);
    };
-   var initMobileMenu = function () {
+   let initMobileMenu = function () {
       if (!$('.astroid-mobile-menu').length) {
          return;
       }
       $('.astroid-mobile-menu').astroidMobileMenu();
       $('.astroid-mobile-menu').removeClass('d-none');
    };
-   var initOffcanvasMenu = function () {
+   let initOffcanvasMenu = function () {
       if (!$('#astroid-offcanvas').length) {
          return;
       }
@@ -25,7 +25,7 @@
          $('#astroid-offcanvas').find('ul.menu').astroidMobileMenu();
       }
    };
-   var initSidebarMenu = function () {
+   let initSidebarMenu = function () {
       if (!$('.astroid-sidebar-menu').length) {
          return;
       }
@@ -39,12 +39,12 @@
          $('#astroid-header').toggleClass('expanded');
       });
    };
-   var initDisplay = function () {
+   let initDisplay = function () {
       setTimeout(function () {
          $('.d-init').removeClass('d-none');
       }, 100);
    };
-   var initBackToTop = function () {
+   let initBackToTop = function () {
       $(window).scroll(function () {
          if ($(this).scrollTop() >= 200) { // If page is scrolled more than 200px
             $('#astroid-backtotop').fadeIn(200); // Fade in the arrow
@@ -60,7 +60,11 @@
       });
    };
 
-   var initHeader = function () {
+   let initHeader = function () {
+      if ($('.astroid-sidebar-header-topbar').length) {
+         let _sidebarTop = $('.astroid-sidebar-topbar').offset().top;
+         $('.astroid-sidebar-topbar > .astroid-sidebar-content').css('top', _sidebarTop).css('min-height', 'calc(100vh - ' + _sidebarTop + 'px)');
+      }
       var stickyHeader = $('#astroid-sticky-header');
 
       var _header = $('header');
@@ -129,7 +133,7 @@
       }
    };
 
-   var initEmptyHeaderContent = function () {
+   let initEmptyHeaderContent = function () {
       $('.header-left-section:empty').each(function () {
          if (!$.trim($(this).html())) {
             $(this).prop('hidden', true);
@@ -149,7 +153,7 @@
       });
    };
 
-   var initTooltip = function () {
+   let initTooltip = function () {
       if ($('[data-toggle="tooltip"]').length) {
          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -158,7 +162,7 @@
       }
    };
 
-   var initProgressBar = function () {
+   let initProgressBar = function () {
       $('.progress-bar-viewport-animation').each(function () {
          var _this = $(this);
          if (!_this.hasClass('viewport-animation-done') && elementInViewport(_this)) {
@@ -169,13 +173,13 @@
       });
    }
 
-   var elementInViewport = function (element) {
+   let elementInViewport = function (element) {
       var _this = element;
       var _this_top = _this.offset().top;
       return (_this_top <= window.scrollY + parseInt(window.innerHeight)) && (_this_top >= window.scrollY);
    };
 
-   var deviceBreakpoint = function (_return) {
+   let deviceBreakpoint = function (_return) {
       if ($('.astroid-breakpoints').length == 0) {
          var _breakpoints = '<div class="astroid-breakpoints d-none"><div class="d-block d-sm-none device-xs"></div><div class="d-none d-sm-block d-md-none device-sm"></div><div class="d-none d-md-block d-lg-none device-md"></div><div class="d-none d-lg-block d-xl-none device-lg"></div><div class="d-none d-xl-block device-xl"></div></div>';
          $('body').append(_breakpoints);
@@ -197,11 +201,11 @@
       }
    };
 
-   var initPreloader = function () {
+   let initPreloader = function () {
       $("#astroid-preloader").removeClass('d-flex').addClass('d-none');
    };
 
-   var setCookie = function (name, value, days) {
+   let setCookie = function (name, value, days) {
       if (days) {
          var date = new Date();
          date.setTime(date.getTime()+(days*24*60*60*1000));
@@ -211,7 +215,7 @@
       document.cookie = name+"="+value+expires+"; path=/";
    }
 
-   var initColorMode = function () {
+   let initColorMode = function () {
       if ($('.astroid-color-mode').length) {
          var switcher   =  $('.astroid-color-mode .switcher'),
              color_mode =  'light';
@@ -253,7 +257,7 @@
    }
 
    // Events
-   var docReady = function () {
+   let docReady = function () {
       initDisplay();
       initMobileMenu();
       initOffcanvasMenu();
@@ -268,19 +272,19 @@
       deviceBreakpoint(false);
    };
 
-   var winLoad = function () {
+   let winLoad = function () {
       deviceBreakpoint(false);
       initPreloader();
       initProgressBar();
       windowloaded = true;
    };
 
-   var winResize = function () {
+   let winResize = function () {
       deviceBreakpoint(false);
       initHeader();
    };
 
-   var winScroll = function () {
+   let winScroll = function () {
       initHeader();
       initLastScrollTop();
       if (windowloaded) {

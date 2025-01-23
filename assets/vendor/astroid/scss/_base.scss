@@ -11,6 +11,14 @@
         }
     }
 }
+.container, .container-fluid {
+    @media (min-width: 640px) {
+        --bs-gutter-x: 2rem;
+    }
+    @media (min-width: 960px) {
+        --bs-gutter-x: 3rem;
+    }
+}
 
 .float-left {float:left}
 .float-right {float:right}
@@ -21,7 +29,7 @@
 
 .as-light {
     color: #ffffff !important;
-    a {
+    a, span, i {
         color: #ffffff !important;
     }
     h1,h2,h3,h4,h5,h6 {

@@ -66,7 +66,7 @@
             e.stopPropagation();
             e.preventDefault();
             _trigger.addClass('active');
-            _container.removeClass().addClass('astroid-container').addClass(_effect);
+            _container.removeClass().addClass('astroid-container row g-0').addClass(_effect);
             setTimeout(function () {
                _container.addClass(_class + '-open');
             }, 25);

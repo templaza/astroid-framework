@@ -1,16 +1,29 @@
 <script setup>
-import { onMounted, onUpdated, reactive, ref, watch } from 'vue';
-const emit = defineEmits(['update:changeDevice']);
-const props = defineProps(['modelValue', 'field', 'fieldname', 'currentDevice']);
-const devices = ['desktop', 'tablet', 'mobile'];
+import { onMounted, onUpdated, onBeforeMount, reactive, ref, watch } from 'vue';
+import ResponsiveToggle from "./ResponsiveToggle.vue";
+const emit = defineEmits(['update:changeDevice', 'update:statusField']);
+const props = defineProps(['modelValue', 'field', 'fieldname', 'currentDevice', 'fieldChanged']);
+const devices = ['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'];
 const unitOptions = ['px', 'em', 'rem', 'pt', '%'];
 const rangeConfig = reactive(
     {
+        'larger_desktop' : {
+            'max' : 100,
+            'step': 1
+        },
+        'large_desktop' : {
+            'max' : 100,
+            'step': 1
+        },
         'desktop' : {
             'max' : 100,
             'step': 1
         },
         'tablet'  : {
+            'max' : 100,
+            'step': 1
+        },
+        'landscape_mobile'  : {
             'max' : 100,
             'step': 1
         },
@@ -20,8 +33,16 @@ const rangeConfig = reactive(
         }
     }
 )
+const placeholder = ref({
+    'larger_desktop' : '',
+    'large_desktop' : '',
+    'desktop' : '',
+    'tablet'  : '',
+    'landscape_mobile'  : '',
+    'mobile'  : ''
+});
 function changeDevice(device) {
-    emit('update:changeDevice', device);
+    emit('update:changeDevice', device, props.fieldname);
 }
 function updateRange(device) {
     if (['em', 'rem'].includes(props.modelValue[props.fieldname+`_unit`][device])) {
@@ -37,28 +58,52 @@ function updateRange(device) {
         rangeConfig[device]['step'] = 1;
     }
 }
+onBeforeMount(() => {
+    updateUnit();
+})
 onMounted(() => {
     Object.keys(props.modelValue[props.fieldname+`_unit`]).forEach(key => {
         updateRange(key);
     });
+    updatePlaceholder();
 })
 onUpdated(() => {
+    updateUnit();
     updateRange(props.currentDevice);
+    updatePlaceholder();
 })
+function updateUnit() {
+    let lastDevice = 'px';
+    devices.forEach(device => {
+        if (typeof props.modelValue[props.fieldname][device] === 'undefined' || props.modelValue[props.fieldname][device] === '') {
+            props.modelValue[props.fieldname+`_unit`][device] = lastDevice;
+        } else {
+            lastDevice = props.modelValue[props.fieldname+`_unit`][device];
+        }
+    })
+}
+function updatePlaceholder() {
+    let lastDevice = '';
+    devices.forEach(device => {
+        placeholder.value[device] = lastDevice;
+        if (props.modelValue[props.fieldname][device]) {
+            lastDevice = props.modelValue[props.fieldname][device];
+        }
+    })
+}
 </script>
 <template>
-    <div class="row g-3">
+    <div class="row g-3 justify-content-between">
         <div class="col col-auto">
             {{ props.field.input.lang[props.fieldname] }}
         </div>
-        <div class="col">
-            <div class="row row-cols-auto g-3 justify-content-end">
-                <div v-for="device in devices" :key="device">
-                    <a href="#" @click.prevent="changeDevice(device)" :class="{'link-primary' : props.currentDevice === device, 'link-secondary' : props.currentDevice !== device}">
-                        <i class="fas" :class="`fa-`+device"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="col col-auto">
+            <ResponsiveToggle
+                :modelValue="props.currentDevice"
+                @update:modelValue="device => changeDevice(device)"
+                :fieldChanged="props.fieldChanged"
+                @update:statusField="data => emit('update:statusField', data)"
+            />
         </div>
     </div>
     <div class="mt-2" v-for="device in devices" v-show="props.currentDevice===device">
@@ -66,7 +111,7 @@ onUpdated(() => {
             <div class="col col-3">
                 <div class="row gx-1 align-items-center form-text">
                     <div class="col">
-                        <input class="form-control form-control-sm" :id="props.field.input.id +`_`+ props.fieldname +`_`+ device" :name="props.field.input.name + `[` + props.fieldname + `]` + `[` + device + `]`" type="text" v-model="props.modelValue[props.fieldname][device]">
+                        <input class="form-control form-control-sm" :id="props.field.input.id +`_`+ props.fieldname +`_`+ device" :name="props.field.input.name + `[` + props.fieldname + `]` + `[` + device + `]`" type="text" v-model="props.modelValue[props.fieldname][device]" :placeholder="placeholder[device]">
                     </div> 
                     <div class="col-auto">
                         {{ props.modelValue[props.fieldname+`_unit`][device] }}

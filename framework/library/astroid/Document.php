@@ -26,7 +26,7 @@ class Document
     protected $_javascripts = ['head' => [], 'body' => []];
     protected $_stylesheets = [];
     protected $_scripts = ['head' => [], 'body' => []];
-    protected $_styles = ['desktop' => [], 'tablet' => [], 'mobile' => []];
+    protected $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
     protected $_customtags = ['head' => [], 'body' => []];
     protected $_dev = null;
     protected $minify_css = false;
@@ -835,9 +835,8 @@ class Document
     protected function _systemUrl($url, $version = true): string
     {
         $config = Factory::getApplication()->getConfig();
-        $params = Helper::getPluginParams();
         $template = Framework::getTemplate();
-        if ($config->get('debug', 0) || $params->get('astroid_debug', 0)) {
+        if ($config->get('debug', 0) || Framework::getDebugger()->debug) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
@@ -848,12 +847,24 @@ class Document
         }
 
         if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/media/astroid/assets' . '/', $url);
+            }
             $url = $root . 'media/astroid/assets/' . $url;
         } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/media/templates/site/' . $template->template . '/', $url);
+            }
             $url = $root . 'media/templates/site/' . $template->template . '/' . $url;
         } elseif (Framework::isSite() && file_exists(JPATH_SITE . '/templates/' . $template->template . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/templates/' . $template->template . '/', $url);
+            }
             $url = $root . 'templates/' . Framework::getTemplate()->template . '/' . $url;
         } else if (file_exists(JPATH_SITE . '/' . $url)) {
+            if (JDEBUG) {
+                $url = Helper::getNonMinifiedPath(JPATH_SITE . '/', $url);
+            }
             $url = $root . $url;
         } else {
             $postfix = '';
@@ -872,7 +883,7 @@ class Document
         $this->_scripts[$position][] = $script;
     }
 
-    public function addStyleDeclaration($content, $device = 'desktop'): void
+    public function addStyleDeclaration($content, $device = 'mobile'): void
     {
         if (empty($content)) {
             return;
@@ -1241,13 +1252,14 @@ class Document
         } */
         $cssScript = '';
         foreach ($this->_styles as $device => $css) {
-            if ($device == 'mobile') {
-                $cssScript .= '@media (max-width: 767.98px) {' . implode('', $this->_styles[$device]) . '}';
-            } elseif ($device == 'tablet') {
-                $cssScript .= '@media (max-width: 991.98px) {' . implode('', $this->_styles[$device]) . '}';
-            } else {
-                $cssScript .= implode('', $this->_styles[$device]);
-            }
+            $cssScript .= match ($device) {
+                'landscape_mobile' => '@media (min-width: 576px) {' . implode('', $this->_styles[$device]) . '}',
+                'tablet' => '@media (min-width: 768px) {' . implode('', $this->_styles[$device]) . '}',
+                'desktop' => '@media (min-width: 992px) {' . implode('', $this->_styles[$device]) . '}',
+                'large_desktop' => '@media (min-width: 1200px) {' . implode('', $this->_styles[$device]) . '}',
+                'larger_desktop' => '@media (min-width: 1400px) {' . implode('', $this->_styles[$device]) . '}',
+                default => implode('', $this->_styles[$device]),
+            };
         }
         return $cssScript;
     }
@@ -1288,9 +1300,27 @@ class Document
             $class[] = 'itemid-' . $Itemid;
         }
 
-        if ($header && !empty($headerMode) && $headerMode == 'sidebar') {
-            $sidebarDirection = $params->get('header_sidebar_menu_mode', 'left');
-            $class[] = "header-sidebar-" . $sidebarDirection;
+        if ($header && !empty($headerMode)) {
+            $header_class = 'astroid-header-' . $headerMode;
+            switch ($headerMode) {
+                case 'horizontal':
+                    $header_class .= '-' . $params->get('header_horizontal_menu_mode', 'center');
+                    break;
+                case 'sidebar':
+                    $header_class .= '-' . $params->get('header_sidebar_menu_mode', 'left');
+                    break;
+                case 'stacked':
+                    $header_class .= '-' . $params->get('header_stacked_menu_mode', 'left');
+                    break;
+            }
+            $class[] = $header_class;
+            if ($headerMode == 'sidebar') {
+                $sidebarDirection = $params->get('header_sidebar_menu_mode', 'left');
+                if ($sidebarDirection == 'topbar') {
+                    $sidebarDirection = $params->get('sidebar_position', 'left');
+                }
+                $class[] = "header-sidebar-" . $sidebarDirection;
+            }
         }
 
         if (isset($menu) && $menu) {

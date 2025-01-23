@@ -20,6 +20,14 @@
             <option value="1">JYES</option>
             <option value="0">JNO</option>
          </field>
+         <field name="category_show_intro" type="radio" default="1" label="ASTROID_SHOW_INTRO_ON_CATEGORY_VIEW" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
+         <field name="category_hide_extrafields" type="radio" default="0" label="ASTROID_HIDE_EXTRAFIELDS_ON_CATEGORY_VIEW" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
          <field type="spacer" name="image_lead_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_OPTIONS" />
          <field name="image_lead_position" type="list" default="" label="Lead Item Image Position">
             <option value="">Default</option>
@@ -160,6 +168,48 @@
             <option value="2">1/6</option>
             <option value="10">5/6</option>
          </field>
+         <field type="spacer" name="blog_layout_spacer" label="ASTROID_ARTICLE_BLOG_LAYOUT_OPTIONS" />
+         <field name="as_blog_layout" type="list" default="" label="ASTROID_WIDGET_CHOOSE_LAYOUT_LABEL">
+            <option value="">JDEFAULT</option>
+            <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
+         </field>
+         <field showon="as_blog_layout:overlay" type="radio" name="as_overlay_content_position" label="ASTROID_ARTICLE_OVERLAY_CONTENT_POSITION" class="btn-group" default="justify-content-end">
+            <option value="justify-content-end">ASTROID_BOTTOM</option>
+            <option value="justify-content-center">ASTROID_MIDDLE</option>
+            <option value="justify-content-start">ASTROID_TOP</option>
+         </field>
+         <field showon="as_blog_layout:overlay" name="as_overlay_hover" type="radio" default="0" label="ASTROID_SHOW_CONTENT_ON_HOVER" class="btn-group btn-group-yesno">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+         </field>
+         <field showon="as_blog_layout:overlay" name="as_overlay_color_type" type="radio" default="" label="ASTROID_WIDGET_OVERLAY_COLOR" class="btn-group">
+            <option value="">ASTROID_NONE</option>
+            <option value="color">TPL_ASTROID_COLOR</option>
+            <option value="gradient">TPL_ASTROID_GRADIENT</option>
+         </field>
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:color" name="as_overlay_color" type="color" default="" format="rgba" label="TPL_ASTROID_OVERLAY_COLOR_LABEL" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient" name="as_overlay_color_start" type="color" default="" format="rgba" label="ASTROID_COLOR_START" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient" name="as_overlay_color_end" type="color" default="" format="rgba" label="ASTROID_COLOR_END" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient" name="as_overlay_start" type="range" default="0" min="0" max="100" step="1" label="ASTROID_START_POSITION" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient" name="as_overlay_end" type="range" default="100" min="0" max="100" step="1" label="ASTROID_END_POSITION" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient" name="as_gradient_type" type="list" default="linear" label="ASTROID_GRADIENT_TYPE">
+            <option value="linear">ASTROID_GRADIENT_TYPE_LINEAR</option>
+            <option value="radial">ASTROID_GRADIENT_TYPE_RADIAL</option>
+         </field>
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient[AND]as_gradient_type:linear" name="as_gradient_angle" type="range" default="0" min="0" max="360" step="1" label="ASTROID_GRADIENT_ANGLE" description="ASTROID_GRADIENT_ANGLE_DESC" />
+         <field showon="as_blog_layout:overlay[AND]as_overlay_color_type:gradient[AND]as_gradient_type:radial" name="as_gradient_position" type="list" default="at center center" label="ASTROID_GRADIENT_POSITION" description="ASTROID_GRADIENT_POSITION_DESC">
+            <option value="at left top">ASTROID_BACKGROUND_POSITION_LEFT_TOP</option>
+            <option value="at left center">ASTROID_BACKGROUND_POSITION_LEFT_CENTER</option>
+            <option value="at left bottom">ASTROID_BACKGROUND_POSITION_LEFT_BOTTOM</option>
+            <option value="at right top">ASTROID_BACKGROUND_POSITION_RIGHT_TOP</option>
+            <option value="at right center">ASTROID_BACKGROUND_POSITION_RIGHT_CENTER</option>
+            <option value="at right bottom">ASTROID_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+            <option value="at center top">ASTROID_BACKGROUND_POSITION_CENTER_TOP</option>
+            <option value="at center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
+            <option value="at center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
+         </field>
+         <field type="spacer" name="responsive_spacer" label="ASTROID_ARTICLE_RESPONSIVE_OPTIONS_HR" />
+         <field type="note" name="responsive_options_note" label="ASTROID_GET_PRO_FEATURES" />
       </fieldset>
    </fields>
 </form>

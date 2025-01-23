@@ -440,8 +440,8 @@ class Utility
         $header->link()->hover()->addCss('color', $header_link_hover_color['dark']);
         $header->render();
 
-        Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header', 'background-color', $header_bg['light']);
-        Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header', 'background-color', $header_bg['dark']);
+        Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header, .astroid-sidebar-header > *', 'background-color', $header_bg['light']);
+        Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header, [data-bs-theme=dark] .astroid-sidebar-header > *', 'background-color', $header_bg['dark']);
 
         // Sticky Header
         $stick_header_bg_color              =   Style::getColor($params->get('stick_header_bg_color', ''));
@@ -522,8 +522,10 @@ class Utility
         $sidebar_menu_style     =   new Style('.astroid-sidebar-menu');
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['light']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->hover()->child('> i')->addCss('color', $main_menu_link_hover_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['light']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->child('> i')->addCss('color', $main_menu_link_active_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['light']);
         $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
         $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['light']);
@@ -674,13 +676,13 @@ class Utility
         $intro_heading_fontsize =   $params->get('article_listing_intro_heading_fontsize', '');
         if (!empty($lead_heading_fontsize)) {
             $article    =   new Style('.items-leading .article-title .page-header h2');
-            $article->addCss('font-size', $lead_heading_fontsize.'px');
+            $article->addResponsiveCSS('font-size', $lead_heading_fontsize,'px');
             $article->render();
         }
 
         if (!empty($intro_heading_fontsize)) {
             $article    =   new Style('.items-row .article-title .page-header h2');
-            $article->addCss('font-size', $intro_heading_fontsize.'px');
+            $article->addResponsiveCSS('font-size', $intro_heading_fontsize,'px');
             $article->render();
         }
     }

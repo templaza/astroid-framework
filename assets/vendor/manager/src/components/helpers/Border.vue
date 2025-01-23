@@ -8,10 +8,10 @@ const constant = inject('constant', {});
 const theme = inject('theme', 'light');
 const data = ref({
     'border_width' : '1',
-    'border_style' : 'solid',
+    'border_style' : 'none',
     'border_color' : {
-        light: '#ccc',
-        dark: '#ccc'
+        light: '',
+        dark: ''
     }
 })
 

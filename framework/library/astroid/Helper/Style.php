@@ -17,7 +17,8 @@ defined('_JEXEC') or die;
 
 class Style
 {
-    public $_selector, $_css = ['desktop' => [], 'tablet' => [], 'mobile' => []], $_styles = ['desktop' => [], 'tablet' => [], 'mobile' => []], $_child = [];
+    public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_child = [];
+
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public function __construct($selectors, $mode = '')
     {
@@ -117,7 +118,7 @@ class Style
         }
     }
 
-    public function addCss($property, $value, $device = 'desktop')
+    public function addCss($property, $value, $device = 'mobile')
     {
         if (empty($value)) {
             return $this;
@@ -126,7 +127,43 @@ class Style
         return $this;
     }
 
-    public static function addCssBySelector($selector, $property, $value, $device = 'desktop')
+    public function addResponsiveCSS($property, $value, $unit = '')
+    {
+        if (empty($value)) {
+            return $this;
+        }
+        if (is_string($value)) {
+            $json = json_decode($value, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->_css['mobile'][$property] = $value . $unit;
+                return $this;
+            } else {
+                $value = $json;
+            }
+        }
+        if (is_array($value)) {
+            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                if (isset($value[$device]) && !empty($value[$device])) {
+                    $this->_css[$device][$property] = $value[$device] . $unit;
+                }
+            }
+        } elseif (is_object($value)) {
+            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                if (isset($value->{$device}) && !empty($value->{$device})) {
+                    $this->_css[$device][$property] = $value->{$device} . $unit;
+                }
+            }
+        } else {
+            $this->_css['mobile'][$property] = $value . $unit;
+        }
+        return $this;
+    }
+
+    public function addBorder($value) {
+        self::addBorderStyle($this->_selector, $value);
+    }
+
+    public static function addCssBySelector($selector, $property, $value, $device = 'mobile')
     {
         $style = new Style($selector);
         $style->addCss($property, $value, $device);
@@ -134,7 +171,7 @@ class Style
         return $style;
     }
 
-    public function addStyle($css, $device = 'desktop')
+    public function addStyle($css, $device = 'mobile')
     {
         if (empty($css)) {
             return;
@@ -164,7 +201,7 @@ class Style
         return $selector;
     }
 
-    public static function addBorderStyle($selector, $border, $device = 'desktop') {
+    public static function addBorderStyle($selector, $border, $device = 'mobile') {
         $style      = new Style($selector);
         $style_dark = new Style($selector, 'dark');
         if (isset($border['border_width'])) {
@@ -187,7 +224,7 @@ class Style
 
     public function render()
     {
-        $css = ['desktop' => '', 'tablet' => '', 'mobile' => ''];
+        $css = ['mobile' => '', 'landscape_mobile' => '', 'tablet' => '', 'desktop' => '', 'large_desktop' => '', 'larger_desktop' => ''];
         foreach ($this->_css as $device => $styles) {
             foreach ($styles as $property => $value) {
                 $css[$device] .= $property . ':' . $value . ';';
@@ -209,8 +246,8 @@ class Style
             }
         }
 
-        $this->_css = ['desktop' => [], 'tablet' => [], 'mobile' => []];
-        $this->_styles = ['desktop' => [], 'tablet' => [], 'mobile' => []];
+        $this->_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
+        $this->_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
 
         if ($this->_hover !== null) {
             $this->_hover->render();
@@ -254,8 +291,8 @@ class Style
 
         if (!empty($font_size)) {
             if (is_object($font_size)) {
-                foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    if ($font_size->{$device}) {
+                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                    if (isset($font_size->{$device}) && $font_size->{$device}) {
                         $unit = isset($font_size_unit->{$device}) ? $font_size_unit->{$device} : 'em';
                         $style->addCss('font-size', $font_size->{$device} . $unit, $device);
                     }
@@ -289,8 +326,8 @@ class Style
 
         if (!empty($letter_spacing)) {
             if (is_object($letter_spacing)) {
-                foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    if (!empty($letter_spacing->{$device})) {
+                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                    if (isset($letter_spacing->{$device}) && !empty($letter_spacing->{$device})) {
                         $letter_spacing_unit_value = isset($letter_spacing_unit->{$device}) ? $letter_spacing_unit->{$device} : 'em';
                         $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
                     }
@@ -306,8 +343,8 @@ class Style
 
         if (!empty($line_height)) {
             if (is_object($line_height)) {
-                foreach (['desktop', 'tablet', 'mobile'] as $device) {
-                    if ($line_height->{$device}) {
+                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                    if (isset($line_height->{$device}) && $line_height->{$device}) {
                         $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
                         $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
                     }

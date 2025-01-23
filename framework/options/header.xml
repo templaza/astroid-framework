@@ -29,6 +29,7 @@
          <field ngShow="[header]==true AND [header_mode]=='sidebar'" astroidgroup="header_element" name="header_sidebar_menu_mode" type="astroidradio" image-width="150" radio-image="true" default="left" label="TPL_ASTROID_HEADER_SIDEBAR_HEADER_MODE_LABEL" description="TPL_ASTROID_HEADER_SIDEBAR_HEADER_MODE_DESC">
             <option label="JGLOBAL_LEFT" value="left">media/astroid/assets/images/header/sidebar-1.svg</option>
             <option label="JGLOBAL_RIGHT" value="right">media/astroid/assets/images/header/sidebar-2.svg</option>
+            <option label="ASTROID_TOPBAR" value="topbar">media/astroid/assets/images/header/sidebar-topbar.svg</option>
          </field>
 
          <field ngShow="[header]==true AND [header_mode]=='stacked'" astroidgroup="header_element" name="header_stacked_menu_mode" type="astroidradio" image-width="150" radio-image="true" default="seperated" label="TPL_ASTROID_HEADER_STACKED_HEADER_MODE_LABEL" description="TPL_ASTROID_HEADER_STACKED_HEADER_MODE_DESC">
@@ -37,6 +38,11 @@
             <option label="TPL_ASTROID_STACKED_SEPERATED" value="seperated">media/astroid/assets/images/header/stacked_style2.svg</option>
             <option label="TPL_ASTROID_STACKED_DIVIDED" value="divided">media/astroid/assets/images/header/stacked_style3.svg</option>
             <option label="TPL_ASTROID_STACKED_DIVIDED_LOGO_LEFT" value="divided-logo-left">media/astroid/assets/images/header/stacked_style4.svg</option>
+         </field>
+
+         <field ngShow="[header]==true AND [header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar'" astroidgroup="header_element" description="ASTROID_SIDEBAR_POSITION_DESC" name="sidebar_position" type="astroidradio" default="left" label="ASTROID_SIDEBAR_POSITION">
+            <option value="left">JGLOBAL_LEFT</option>
+            <option value="right">JGLOBAL_RIGHT</option>
          </field>
 
          <field ngShow="[header]==true AND [header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left'" astroidgroup="header_element" name="divided_logo_width" type="astroidrange" min="20" max="600" step="1" postfix="px" default="200" label="TPL_ASTROID_HEADER_STACKED_DIVIDED_LOGO_WIDTH_LABEL" description="TPL_ASTROID_HEADER_STACKED_DIVIDED_LOGO_WIDTH_DESC" />
@@ -66,7 +72,7 @@
 
          <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_2_type]=='custom'" astroidgroup="header_element" name="header_block_2_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_DESC" />
 
-         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left'))" astroidgroup="header_element" name="header_block_3_type" type="astroidlist" default="blank" class="form-select" label="TPL_ASTROID_HEADER_BLOCK_3_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_TYPE_DESC">
+         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left') OR ([header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar'))" astroidgroup="header_element" name="header_block_3_type" type="astroidlist" default="blank" class="form-select" label="TPL_ASTROID_HEADER_BLOCK_3_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_TYPE_DESC">
             <option value="blank">TPL_ASTROID_BLANK_OPTIONS</option>
             <option value="position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
             <option value="custom">TPL_ASTROID_CUSTOM_HTML_OPTIONS</option>

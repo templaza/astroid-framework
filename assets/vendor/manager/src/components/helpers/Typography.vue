@@ -58,7 +58,8 @@ const fontSelected= ref({
 });
 const fonttypes = ref(['system','google'])
 const font_type = ref('google');
-const currentDevice = ref('desktop');
+const currentDevice = ref('mobile');
+const collapse = ref(false);
 
 function getFontType(font_face) {
     if (font_face.search(/^library-font-/) !== -1) {
@@ -149,8 +150,18 @@ watch(fontSelected, (newFont) => {
     }
 })
 
-function changeDeviceStatus(device) {
+const updateStatus = ref({
+    font_size: false,
+    letter_spacing: false,
+    line_height: false
+});
+function changeDeviceStatus(device, fieldname) {
     currentDevice.value = device;
+    Object.keys(updateStatus.value).forEach(key => {
+        if (key !== fieldname) {
+            updateStatus.value[key] = true;
+        }
+    });
 }
 
 const _showColorPicker = ref(false);
@@ -199,9 +210,47 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function toggleCollapse() {
+    collapse.value = !collapse.value;
+}
 </script>
 <template>
-    <div class="row g-4" :class="`row-cols-lg-`+(Math.ceil(props.field.input.options.columns/2))+` row-cols-xl-`+props.field.input.options.columns">
+    <div v-if="props.field.input.options.collapse === true" class="font-collapse mb-4" @click.prevent="toggleCollapse" :class="{'active' : collapse}">
+        <link v-if="font_type === `google` && (typeof options[font_type].find((font) => font.value === fontSelected.value) !== 'undefined') && fontSelected.value !== `` && fontSelected.value !== `__default` && fontSelected.value.search(/^library-font-/) === -1" :href="`https://fonts.googleapis.com/css?family=`+fontSelected.value" rel="stylesheet" />
+        <div class="card card-body">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="fontName position-relative" :style="
+            {
+            'font-family' : fontSelected.text,
+            'font-weight': (props.modelValue['font_style'].find((element) => element === 'bold') !== undefined ? 'bold' : props.modelValue['font_weight']),
+            'text-transform': props.modelValue['text_transform'],
+            'font-size' : props.modelValue['font_size'][currentDevice]+props.modelValue['font_size_unit'][currentDevice],
+            'line-height' : props.modelValue['line_height'][currentDevice]+props.modelValue['line_height_unit'][currentDevice],
+            'letter-spacing' : props.modelValue['letter_spacing'][currentDevice]+props.modelValue['letter_spacing_unit'][currentDevice],
+            'text-decoration': (props.modelValue['font_style'].find((element) => element === 'underline') !== undefined ? 'underline' : 'none'),
+            'font-style': (props.modelValue['font_style'].find((element) => element === 'italic') !== undefined ? 'italic' : 'normal'),
+
+            }">
+                    {{ fontSelected.text === '' || fontSelected.text === 'Default' ? props.field.input.lang.inherit : fontSelected.text }}
+                    <div class="position-absolute top-0 start-100 ms-2 cogIcon" :style="{'font-size' : '0.86rem', 'line-height': '1'}"><i class="fa-solid fa-gear"></i></div>
+                </div>
+                <div class="fontProperties d-flex align-items-center">
+                    <div class="fontSize">
+                        <div class="form-text mt-0" aria-label="Font Size">{{ props.field.input.lang.font_size }}</div>
+                        <div class="value">{{ props.modelValue['font_size'][currentDevice] !== '' ? props.modelValue['font_size'][currentDevice]+props.modelValue['font_size_unit'][currentDevice] : props.field.input.lang.inherit }}</div>
+                    </div>
+                    <div class="px-3 opacity-50">/</div>
+                    <div class="lineHeight">
+                        <div class="form-text mt-0" aria-label="Line Height">{{ props.field.input.lang.line_height }}</div>
+                        <div class="value">{{ props.modelValue['line_height'][currentDevice] !== '' ? props.modelValue['line_height'][currentDevice]+props.modelValue['line_height_unit'][currentDevice] : props.field.input.lang.inherit }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Transition name="fade">
+    <div v-if="(props.field.input.options.collapse === true && collapse === true) || props.field.input.options.collapse === false" class="row g-4" :class="`row-cols-lg-`+(Math.ceil(props.field.input.options.columns/2))+` row-cols-xl-`+props.field.input.options.columns">
         <div>
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.fontpicker">
@@ -251,7 +300,10 @@ function getRandomInt(min, max) {
                         :field="props.field" 
                         :fieldname="'font_size'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.font_size"
+                        @update:statusField="status => (updateStatus.font_size = status)"
+                    />
                 </div>
                 <div v-if="props.field.input.options.letterspacingpicker">
                     <typo-responsive 
@@ -259,7 +311,10 @@ function getRandomInt(min, max) {
                         :field="props.field" 
                         :fieldname="'letter_spacing'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.letter_spacing"
+                        @update:statusField="status => (updateStatus.letter_spacing = status)"
+                    />
                 </div>
                 <div v-if="props.field.input.options.lineheightpicker">
                     <typo-responsive 
@@ -267,7 +322,10 @@ function getRandomInt(min, max) {
                         :field="props.field" 
                         :fieldname="'line_height'" 
                         :current-device="currentDevice"
-                        @update:change-device="changeDeviceStatus" />
+                        @update:change-device="changeDeviceStatus"
+                        :fieldChanged="updateStatus.line_height"
+                        @update:statusField="status => (updateStatus.line_height = status)"
+                    />
                 </div>
             </div>
         </div>
@@ -322,7 +380,8 @@ function getRandomInt(min, max) {
             </div>
         </div>
     </div>
-    <div v-if="props.field.input.options.preview" class="typography-preview">
+    </Transition><Transition name="fade">
+    <div v-if="props.field.input.options.preview && props.field.input.options.collapse === false" class="typography-preview">
         <link v-if="font_type === `google` && (typeof options[font_type].find((font) => font.value === fontSelected.value) !== 'undefined') && fontSelected.value !== `` && fontSelected.value !== `__default` && fontSelected.value.search(/^library-font-/) === -1" :href="`https://fonts.googleapis.com/css?family=`+fontSelected.value" rel="stylesheet" />
         <div class="card card-default card-body mt-4" :style="
             {
@@ -338,4 +397,5 @@ function getRandomInt(min, max) {
             <p class="mb-0">0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</p>
         </div>
     </div>
+    </Transition>
 </template>
