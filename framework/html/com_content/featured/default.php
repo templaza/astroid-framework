@@ -38,7 +38,7 @@ if (Helper::isPro()) {
                 }
 
             } else {
-                $row_gutter         =   $this->params->get($type . '_row_gutter', 3);
+                $row_gutter         =   $this->params->get($type . '_row_gutter', 5);
                 $column_gutter      =   $this->params->get($type . '_column_gutter', 3);
                 if (!empty($row_gutter)) {
                     ${$type . '_row_cls'}[]    =  'gy-' . $row_gutter;
