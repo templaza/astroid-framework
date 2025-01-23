@@ -40,6 +40,28 @@
         bottom: 0;
       }
     }
+    &.as-overlay-hover {
+      .item-image {
+        &:after {
+          transition: all 500ms ease-in-out;
+          opacity: 0;
+        }
+      }
+      .card-img-overlay {
+        transition: all 500ms ease-in-out;
+        opacity: 0;
+      }
+      &:hover {
+        .item-image {
+          &:after {
+            opacity: 1;
+          }
+        }
+        .card-img-overlay {
+          opacity: 1;
+        }
+      }
+    }
   }
 }
 .astroid-article-full-image {

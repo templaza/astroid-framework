@@ -58,6 +58,7 @@ if (Helper::isPro()) {
     if ((int) $this->params->get('num_columns') > 1) {
         $intro_row_cls[] = 'row-cols-' . $this->params->get('num_columns');
     }
+    $intro_row_cls[] = 'gy-5';
 }
 
 $blog_class_leading = $this->params->get('blog_class_leading', '');
@@ -84,6 +85,16 @@ if ($blog_layout == 'overlay') {
     if ($as_overlay_color_type == 'color') {
         $as_overlay_color = $this->params->get('as_overlay_color', '');
         $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-color', $as_overlay_color);
+    } elseif ($as_overlay_color_type == 'gradient') {
+        $gradient = [];
+        $gradient['start'] = $this->params->get('as_overlay_color_start', '');
+        $gradient['stop'] = $this->params->get('as_overlay_color_end', '');
+        $gradient['start_pos'] = $this->params->get('as_overlay_start', '0');
+        $gradient['stop_pos'] = $this->params->get('as_overlay_end', '100');
+        $gradient['type'] = $this->params->get('as_gradient_type', 'linear');
+        $gradient['angle'] = $this->params->get('as_gradient_angle', '0');
+        $gradient['position'] = $this->params->get('as_gradient_position', 'center center');
+        $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-image', Style::getGradientValue(json_encode($gradient)));
     }
 }
 $blog_style->render();

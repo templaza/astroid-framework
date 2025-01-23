@@ -76,10 +76,11 @@ $clsItemBody        = $astroidArticle->getStyle('body');
 
 //Blog Layout
 $blog_layout = $params->get('as_blog_layout', '');
+$as_overlay_hover = $params->get('as_overlay_hover', 0);
 $overlay_content_position = $params->get('as_overlay_content_position', 'justify-content-end');
 $category_show_intro = $params->get('category_show_intro', 1);
 $category_hide_extrafields = $params->get('category_hide_extrafields', 0);
-$clsItemContainer .= $blog_layout == 'overlay' ? ' as-blog-overlay ' . $overlay_content_position : '';
+$clsItemContainer .= $blog_layout == 'overlay' ? ' as-blog-overlay ' . $overlay_content_position . ($as_overlay_hover == 1 ? ' as-overlay-hover' : '') : '';
 $clsItemContainer .= $category_hide_extrafields ? ' as-hide-extrafields' : '';
 $clsItemContainer .= ($image_position == 'left' || $image_position == 'right') ? ' border-top media-'.$image_position : '';
 $clsItemBody .= $tpl_params->get('show_post_format') ? ' has-post-format' : '';
