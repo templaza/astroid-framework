@@ -56,7 +56,7 @@ if (Helper::isPro()) {
     }
 } else {
     if ((int) $this->params->get('num_columns') > 1) {
-        $intro_row_cls[] = 'row-cols-' . $this->params->get('num_columns');
+        $intro_row_cls[] = 'row-cols-lg-' . $this->params->get('num_columns');
     }
     $intro_row_cls[] = 'gy-5';
 }
