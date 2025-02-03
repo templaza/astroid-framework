@@ -52,7 +52,7 @@ class Head
             } else {
                 $site_webmanifest = Uri::root() . $params->get('site_webmanifest', '');
             }
-            $wa->registerAndUseStyle('astroid.manifest', $site_webmanifest, ['version' => 'auto'], ['rel' => 'manifest', 'type' => 'application/json']);
+            $wa->registerAndUseStyle('astroid.manifest', $site_webmanifest, ['version' => 'auto'], ['rel' => 'manifest', 'type' => 'application/json', 'crossorigin' => 'use-credentials']);
         }
     }
 
