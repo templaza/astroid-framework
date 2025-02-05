@@ -115,6 +115,7 @@ class Constants
         'TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING',
         'TPL_ASTROID_SAVE_AS_DEFAULT',
         'ASTROID_SM',
+        'ASTROID_TABLET',
         'ASTROID_LAPTOP',
         'ASTROID_DESKTOP',
         'ASTROID_XL',

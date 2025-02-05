@@ -48,10 +48,7 @@ if (!empty($font_style)) {
 }
 if (!empty($heading_margin)) {
     $heading_style = new Style('#'.$element->id.' .astroid-content-heading');
-    $margin = \json_decode($heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $heading_style->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($heading_style, $heading_margin, 'margin');
     $heading_style->render();
 }
 

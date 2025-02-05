@@ -330,20 +330,8 @@ class BaseElement
     {
         $margin = $this->params->get('margin', '');
         $padding = $this->params->get('padding', '');
-
-        if (!empty($margin)) {
-            $margin = \json_decode($margin, false);
-            foreach ($margin as $device => $props) {
-                $this->style->addStyle(Style::spacingValue($props, "margin"), $device);
-            }
-        }
-
-        if (!empty($padding)) {
-            $padding = \json_decode($padding, false);
-            foreach ($padding as $device => $props) {
-                $this->style->addStyle(Style::spacingValue($props, "padding"), $device);
-            }
-        }
+        Style::setSpacingStyle($this->style, $margin, 'margin');
+        Style::setSpacingStyle($this->style, $padding, 'padding');
     }
 
     protected function _typography(): void
