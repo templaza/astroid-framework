@@ -16,12 +16,13 @@ extract($displayData);
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
 $image_dark     = $params->get('image_dark', '');
+$figure_caption = $params->get('figure_caption', '');
 $use_link       = $params->get('use_link', 0);
 $link           = $params->get('link', '');
 $target         = $params->get('target', '');
 $target         = $target !== '' ? ' target="'.$target.'"' : '';
 
-$border_radius      =   $params->get('border_radius', '');
+$border_radius      =   $params->get('img_border_radius', '');
 $rounded_size       =   $params->get('image_rounded_size', '3');
 if ($border_radius == 'rounded') {
     $border_radius  =   ' ' . $border_radius . '-' . $rounded_size;
@@ -40,15 +41,21 @@ if (!empty($image)) {
     if ($use_link) {
         echo '<a href="'.$link.'" title="'.$title.'"'.$target.'>';
     }
-    echo '<div class="as-image position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . $display . '">';
-    echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
-    echo '</div>';
+
+    if (!empty($figure_caption)) {
+        echo '<figure class="m-0">';
+    }
+    echo '<div class="as-image-wrapper position-relative overflow-hidden'. $display . $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<img class="as-image" src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
     if (!empty($image_dark)) {
-        echo '<div class="as-image-dark d-none position-relative overflow-hidden' . $border_radius . $box_shadow . $hover_effect . $transition . $display . '">';
-        echo '<img src="'. Astroid\Helper\Media::getPath() . '/' . $image_dark.'" alt="'.$title.'">';
-        echo '</div>';
+        echo '<img class="as-image-dark d-none" src="'. Astroid\Helper\Media::getPath() . '/' . $image_dark.'" alt="'.$title.'">';
         $element->style_dark->child('.as-image')->addCss('display', 'none !important');
         $element->style_dark->child('.as-image-dark')->addCss('display', 'inline-block !important');
+    }
+    echo '</div>';
+    if (!empty($figure_caption)) {
+        echo '<figcaption class="figure-caption">'.$figure_caption.'</figcaption>';
+        echo '</figure>';
     }
     if ($use_link) {
         echo '</a>';
