@@ -33,8 +33,5 @@ if ($type == 'vertical') {
 }
 
 if (!empty($margin)) {
-    $margin = \json_decode($margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.divider-content')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.divider-content'), $margin, 'margin');
 }

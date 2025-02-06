@@ -169,10 +169,7 @@ switch ($overlay_type) {
 if ($overlay_padding == 'custom') {
     $overlay_custom_padding   =   $params->get('overlay_custom_padding', '');
     if (!empty($overlay_custom_padding)) {
-        $padding = \json_decode($overlay_custom_padding, false);
-        foreach ($padding as $device => $props) {
-            $element->style->child('.p-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
-        }
+        Style::setSpacingStyle($element->style->child('.p-custom'), $overlay_custom_padding);
     }
 }
 

@@ -310,32 +310,20 @@ if ($enable_slider) {
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
-        $padding = \json_decode($card_padding, false);
-        foreach ($padding as $device => $props) {
-            $element->style->child('.card-size-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
-        }
+        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
     }
 }
 if (!empty($image_max_width)) {
     $element->style->child('.as-author-avatar > img')->addCss('max-width', $image_max_width . 'px');
 }
 if (!empty($title_heading_margin)) {
-    $margin = \json_decode($title_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.as-author-name')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.as-author-name'), $title_heading_margin, 'margin');
 }
 if (!empty($designation_heading_margin)) {
-    $margin = \json_decode($designation_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.as-author-designation')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.as-author-designation'), $designation_heading_margin, 'margin');
 }
 if (!empty($content_margin)) {
-    $margin = \json_decode($content_margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.as-author-message')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.as-author-message'), $content_margin, 'margin');
 }
 if (!empty($image_border)) {
     Style::addBorderStyle('#'. $element->id . ' .as-author-avatar', $image_border);

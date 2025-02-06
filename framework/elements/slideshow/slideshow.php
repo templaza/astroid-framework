@@ -136,23 +136,14 @@ $style->child('.carousel-item')->addCss('height', $min_height . 'px');
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
-        $padding = \json_decode($card_padding, false);
-        foreach ($padding as $device => $props) {
-            $style->child('.card-size-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
-        }
+        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
     }
 }
 if (!empty($title_heading_margin)) {
-    $margin = \json_decode($title_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-heading')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-heading'), $title_heading_margin, 'margin');
 }
 if (!empty($meta_heading_margin)) {
-    $margin = \json_decode($meta_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-meta')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-meta'), $meta_heading_margin, 'margin');
 }
 switch ($overlay_type) {
     case 'color':
