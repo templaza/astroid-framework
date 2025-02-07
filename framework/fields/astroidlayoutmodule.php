@@ -34,11 +34,17 @@ class JFormFieldAstroidLayoutModule extends FormField {
         $id     =   $app->input->get('id');
         $layout =   Layout::loadModuleLayout($id);
         $constant   =   Helper\Constants::manager_configs('joomla_module');
+        // Get Language
+        $language = array();
+        foreach (Helper\Constants::$translationStrings as $string) {
+            $language[strtoupper($string)] = $app->getLanguage()->_($string);
+        }
         $json = [
             'id'      =>  $this->id,
             'name' => $this->name,
             'layout' => $layout,
             'constant'   => $constant,
+            'language'  =>  $language
         ];
         $html   =   '<script type="application/json" id="astroid_layout_module_json">'.json_encode($json).'</script>';
         $html   .=  '<div id="astroid-layout-module" class="astroid-layout border rounded p-4"></div>';

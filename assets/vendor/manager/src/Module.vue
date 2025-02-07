@@ -6,6 +6,7 @@ import './assets/base.scss'
 const data = JSON.parse(document.getElementById('astroid_layout_module_json').innerHTML);
 const layout = ref('{"sections":[]}');
 provide('constant', data.constant);
+provide('language', data.language);
 onBeforeMount(()=>{
     layout.value = JSON.stringify(data.layout);
 })
