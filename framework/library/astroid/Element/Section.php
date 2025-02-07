@@ -15,18 +15,9 @@ defined('_JEXEC') or die;
 
 class Section extends BaseElement
 {
-    protected $_tag = 'section';
     public $hasComponent = false;
     public $hasHeader = false;
     public $hasFooter = false;
-
-    public function __construct($data, $devices, $options = array())
-    {
-        if (isset($options['layout_type']) && ($options['layout_type'] == 'layouts' || $options['layout_type'] == 'article_layouts')) {
-            $this->_tag = 'div';
-        }
-        parent::__construct($data, $devices, $options);
-    }
 
     public function render()
     {

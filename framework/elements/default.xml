@@ -18,6 +18,19 @@
                <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
             </field>
 
+            <field astroidgroup="general" name="astroid_element_tag" type="astroidlist" label="ASTROID_ELEMENT_TAG" description="ASTROID_ELEMENT_TAG_DESC" default="div">
+               <option value="div">div</option>
+               <option value="section">section</option>
+               <option value="header">header</option>
+               <option value="footer">footer</option>
+               <option value="aside">aside</option>
+               <option value="nav">nav</option>
+               <option value="article">article</option>
+               <option value="address">address</option>
+               <option value="hgroup">hgroup</option>
+               <option value="main">main</option>
+            </field>
+
             <field astroidgroup="animation_settings" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
@@ -154,6 +167,21 @@
             <field astroidgroup="general" ngShow="[custom_colors]==1" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
             <field astroidgroup="general" ngShow="[custom_colors]==1" name="link_color" type="astroidcolor" label="TPL_ASTROID_LINK_COLOR_LABEL" />
             <field astroidgroup="general" ngShow="[custom_colors]==1" name="link_hover_color" type="astroidcolor" label="TPL_ASTROID_LINK_HOVER_COLOR_LABEL" />
+
+            <field astroidgroup="general" name="astroid_element_sticky_effect" type="astroidlist" label="ASTROID_ELEMENT_STICKY_EFFECT" description="ASTROID_ELEMENT_STICKY_EFFECT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="top">ASTROID_TOP</option>
+               <option value="bottom">ASTROID_BOTTOM</option>
+            </field>
+            <field astroidgroup="general" name="astroid_element_sticky_effect_offset" ngShow="[astroid_element_sticky_effect]!=''" type="astroidrange" min="0" max="2000" step="1" postfix="px" responsive="true" label="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET" description="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET_DESC" />
+            <field astroidgroup="general" name="astroid_element_sticky_effect_breakpoint" ngShow="[astroid_element_sticky_effect]!=''" type="astroidlist" label="ASTROID_ELEMENT_STICKY_EFFECT_BREAKPOINT_LABEL" description="ASTROID_ELEMENT_STICKY_EFFECT_BREAKPOINT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="sm">ASTROID_BREAKPOINT_SM</option>
+               <option value="md">ASTROID_BREAKPOINT_MD</option>
+               <option value="lg">ASTROID_BREAKPOINT_LG</option>
+               <option value="xl">ASTROID_BREAKPOINT_XL</option>
+               <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
+            </field>
 
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />

@@ -54,6 +54,7 @@ class BaseElement
         $this->addClass('astroid-' . Helper::slugify($this->type));
 
         $this->_id();
+        $this->_tag         =   $this->params->get('astroid_element_tag', 'div');
         $this->style        =   new Style('#' . $this->getAttribute('id'));
         $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
     }
@@ -199,11 +200,25 @@ class BaseElement
         $this->addClass($this->params->get('hideonxxl', 0) ? 'hideonxxl' : '');
     }
 
+    protected function _sticky(): void
+    {
+        $sticky_effect          =   $this->params->get('astroid_element_sticky_effect','');
+        if (!empty($sticky_effect)) {
+            $sticky_effect_breakpoint   =   $this->params->get('astroid_element_sticky_effect_breakpoint','');
+            $sticky_effect_offset       =   $this->params->get('astroid_element_sticky_effect_offset', '');
+            $this->addClass('sticky' . ($sticky_effect_breakpoint ? '-' . $sticky_effect_breakpoint : '') . '-' . $sticky_effect);
+            if (!empty($sticky_effect_offset)) {
+                $this->style->addResponsiveCSS($sticky_effect, $sticky_effect_offset, 'px');
+            }
+        }
+    }
+
     protected function _styles(): void
     {
         $this->_background();
         $this->_border();
         $this->_marginPadding();
+        $this->_sticky();
         $this->_typography();
         $this->_animation();
         $this->_custom_css();
