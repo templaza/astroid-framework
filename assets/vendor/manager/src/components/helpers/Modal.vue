@@ -75,7 +75,7 @@ function sidebarClick(id) {
 const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
 </script>
 <template>
-    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-hidden="true">
+    <div class="astroid-modal modal d-block" :id="props.element.type+`-`+props.element.id" tabindex="-1" aria-modal="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="position-absolute top-0 end-0 p-3">

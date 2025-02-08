@@ -173,7 +173,7 @@
                <option value="top">ASTROID_TOP</option>
                <option value="bottom">ASTROID_BOTTOM</option>
             </field>
-            <field astroidgroup="general" name="astroid_element_sticky_effect_offset" ngShow="[astroid_element_sticky_effect]!=''" type="astroidrange" min="0" max="2000" step="1" postfix="px" responsive="true" label="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET" description="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET_DESC" />
+            <field astroidgroup="general" name="astroid_element_sticky_effect_offset" ngShow="[astroid_element_sticky_effect]!=''" type="astroidrange" min="0" max="2000" step="1" postfix="px|vh|rem|em|%" responsive="true" label="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET" description="ASTROID_ELEMENT_STICKY_EFFECT_OFFSET_DESC" />
             <field astroidgroup="general" name="astroid_element_sticky_effect_breakpoint" ngShow="[astroid_element_sticky_effect]!=''" type="astroidlist" label="ASTROID_ELEMENT_STICKY_EFFECT_BREAKPOINT_LABEL" description="ASTROID_ELEMENT_STICKY_EFFECT_BREAKPOINT_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
                <option value="sm">ASTROID_BREAKPOINT_SM</option>

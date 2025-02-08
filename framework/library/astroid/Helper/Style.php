@@ -144,13 +144,13 @@ class Style
         if (is_array($value)) {
             foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
                 if (isset($value[$device]) && !empty($value[$device])) {
-                    $this->_css[$device][$property] = $value[$device] . $unit;
+                    $this->_css[$device][$property] = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
                 }
             }
         } elseif (is_object($value)) {
             foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
                 if (isset($value->{$device}) && !empty($value->{$device})) {
-                    $this->_css[$device][$property] = $value->{$device} . $unit;
+                    $this->_css[$device][$property] = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
                 }
             }
         } else {

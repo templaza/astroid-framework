@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.1.11-rc1';
+    public static $astroid_version = '3.1.11-rc2';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -116,8 +116,11 @@ class Constants
         'TPL_ASTROID_SAVE_AS_DEFAULT',
         'ASTROID_SM',
         'ASTROID_TABLET',
-        'ASTROID_LAPTOP',
+        'ASTROID_MOBILE',
         'ASTROID_DESKTOP',
+        'ASTROID_LANDSCAPE_MOBILE',
+        'ASTROID_LARGE_DESKTOP',
+        'ASTROID_LARGER_DESKTOP',
         'ASTROID_XL',
         'ASTROID_XXL'
     ];

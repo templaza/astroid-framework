@@ -208,7 +208,8 @@ class BaseElement
             $sticky_effect_offset       =   $this->params->get('astroid_element_sticky_effect_offset', '');
             $this->addClass('sticky' . ($sticky_effect_breakpoint ? '-' . $sticky_effect_breakpoint : '') . '-' . $sticky_effect);
             if (!empty($sticky_effect_offset)) {
-                $this->style->addResponsiveCSS($sticky_effect, $sticky_effect_offset, 'px');
+                $sticky_effect_offset   =   json_decode($sticky_effect_offset, true);
+                $this->style->addResponsiveCSS($sticky_effect, $sticky_effect_offset, $sticky_effect_offset['postfix']);
             }
         }
     }

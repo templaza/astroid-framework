@@ -29,9 +29,9 @@ function fieldChanged(event) {
 }
 </script>
 <template>
-    <div class="input-group">
+    <div class="input-group input-group-sm">
         <span class="input-group-text"><i :class="icons[modelValue]"></i></span>
-        <select @change="event => fieldChanged(event)" v-model="selected" class="form-select form-select-sm">
+        <select @change="event => fieldChanged(event)" v-model="selected" class="form-select">
             <option v-for="(text, value) in options" :value="value">{{ text }}</option>
         </select>
     </div>
