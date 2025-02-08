@@ -57,7 +57,6 @@ function editLayout(filename = '') {
             },
         })
         .then((response) => {
-            console.log(response.data.status);
             if (response.data.status === 'success') {
                 layout.value = response.data.data.data;
                 formInfo.title = response.data.data.title;
