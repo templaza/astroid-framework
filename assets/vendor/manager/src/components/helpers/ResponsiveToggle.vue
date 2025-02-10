@@ -12,15 +12,15 @@ const language  =   inject('language', []);
 const icons = ref({
     larger_desktop: 'fa-solid fa-tv',
     large_desktop: 'fa-solid fa-desktop',
-    desktop: 'fa-solid fa-computer',
-    tablet: 'fa-solid fa-laptop',
-    landscape_mobile: 'fa-solid fa-tablet',
-    mobile: 'fa-solid fa-house-laptop'
+    desktop: 'fa-solid fa-laptop',
+    tablet: 'fa-solid fa-tablet',
+    landscape_mobile: 'fa-solid fa-mobile fa-rotate-90',
+    mobile: 'fa-solid fa-mobile'
 })
 const options = ref({
     mobile: language.JDEFAULT,
     landscape_mobile: language.ASTROID_SM,
-    tablet: language.ASTROID_LAPTOP,
+    tablet: language.ASTROID_TABLET,
     desktop: language.ASTROID_DESKTOP,
     large_desktop: language.ASTROID_XL,
     larger_desktop: language.ASTROID_XXL

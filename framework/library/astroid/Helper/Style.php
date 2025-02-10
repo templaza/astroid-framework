@@ -144,13 +144,13 @@ class Style
         if (is_array($value)) {
             foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
                 if (isset($value[$device]) && !empty($value[$device])) {
-                    $this->_css[$device][$property] = $value[$device] . $unit;
+                    $this->_css[$device][$property] = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
                 }
             }
         } elseif (is_object($value)) {
             foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
                 if (isset($value->{$device}) && !empty($value->{$device})) {
-                    $this->_css[$device][$property] = $value->{$device} . $unit;
+                    $this->_css[$device][$property] = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
                 }
             }
         } else {
@@ -275,6 +275,7 @@ class Style
         $typography = new Registry();
         $typography->loadObject($object);
 
+        $globalParams = Helper::getPluginParams();
         $style = new Style($selector);
         $style_dark = new Style($selector, 'dark');
 
@@ -291,10 +292,16 @@ class Style
 
         if (!empty($font_size)) {
             if (is_object($font_size)) {
-                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                $default_value = '';
+                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
                     if (isset($font_size->{$device}) && $font_size->{$device}) {
-                        $unit = isset($font_size_unit->{$device}) ? $font_size_unit->{$device} : 'em';
+                        $unit = $font_size_unit->{$device} ?? 'em';
                         $style->addCss('font-size', $font_size->{$device} . $unit, $device);
+                        if ($globalParams->get('astroid_safemode', 0)) {
+                            $default_value = $font_size->{$device} . $unit;
+                        }
+                    } elseif ($device == 'mobile') {
+                        $style->addCss('font-size', $default_value, $device);
                     }
                 }
             } elseif ($font_size) {
@@ -326,10 +333,16 @@ class Style
 
         if (!empty($letter_spacing)) {
             if (is_object($letter_spacing)) {
-                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                $default_value = '';
+                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
                     if (isset($letter_spacing->{$device}) && !empty($letter_spacing->{$device})) {
-                        $letter_spacing_unit_value = isset($letter_spacing_unit->{$device}) ? $letter_spacing_unit->{$device} : 'em';
+                        $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
                         $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
+                        if ($globalParams->get('astroid_safemode', 0)) {
+                            $default_value = $letter_spacing->{$device} . $letter_spacing_unit_value;
+                        }
+                    } elseif ($device == 'mobile') {
+                        $style->addCss('letter-spacing', $default_value, $device);
                     }
                 }
             } else {
@@ -343,10 +356,16 @@ class Style
 
         if (!empty($line_height)) {
             if (is_object($line_height)) {
-                foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
+                $default_value = '';
+                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
                     if (isset($line_height->{$device}) && $line_height->{$device}) {
-                        $line_height_unit_value = isset($line_height_unit->{$device}) ? $line_height_unit->{$device} : 'em';
+                        $line_height_unit_value = $line_height_unit->{$device} ?? 'em';
                         $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
+                        if ($globalParams->get('astroid_safemode', 0)) {
+                            $default_value = $line_height->{$device} . $line_height_unit_value;
+                        }
+                    } elseif ($device == 'mobile') {
+                        $style->addCss('line-height', $default_value, $device);
                     }
                 }
             } elseif ($line_height) {
@@ -415,6 +434,32 @@ class Style
         }
     }
 
+    public static function setSpacingStyle($style, $value, $type = 'padding'): void
+    {
+        if (!empty($value)) {
+            $globalParams = Helper::getPluginParams();
+            $object = \json_decode($value, false);
+            $default_value = ['top' => '', 'right' => '', 'bottom' => '', 'left' => '', 'unit' => 'Custom'];
+            foreach ($object as $device => $props) {
+                if ($globalParams->get('astroid_safemode', 0)) {
+                    $style->addStyle(Style::spacingValue($props, $type, ($device == 'mobile' ? $default_value : [])), $device);
+                    Style::setDefaultSpace($props, $default_value);
+                } else {
+                    $style->addStyle(Style::spacingValue($props, $type), $device);
+                }
+            }
+        }
+    }
+
+    public static function setDefaultSpace ($props, &$default_value): void
+    {
+        foreach (['top', 'right', 'bottom', 'left'] as $direction) {
+            if (isset($props->{$direction}) && (!empty($props->{$direction}) || is_numeric($props->{$direction}))) {
+                $default_value[$direction] = $props->{$direction} . ($props->unit == 'Custom' ? '' : $props->unit);
+            }
+        }
+    }
+
     public static function spacingValue($value = null, $property = "padding", $default = [])
     {
         $return = [];
@@ -440,12 +485,15 @@ class Style
         if (!isset($default['unit'])) {
             $default['unit'] = 'px';
         }
+        if ($default['unit'] == 'Custom') {
+            $default['unit'] = '';
+        }
 
         foreach (array_keys($default) as $position) {
             if ($position == "unit") {
                 continue;
             }
-            if (!isset($return[$position])) {
+            if (!isset($return[$position]) && $default[$position] !== '') {
                 $return[$position] = self::getPropertySubset($property, $position) . ":{$default[$position]}{$default['unit']}";
                 $values[$position] = "{$default[$position]}{$default['unit']}";
             }

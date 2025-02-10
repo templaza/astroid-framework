@@ -75,7 +75,7 @@ if ($item->browserNav == 1) {
    $iframe_options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes';
    $attributes['onclick'] = "window.open(this.href, 'targetWindow', '" . $iframe_options . "'); return false;";
 }
-$attributes['data-drop-action'] = 'hover';
+$attributes['data-drop-action'] = $params->get('dropdown_trigger', 'hover');
 if (($options->megamenu || ($item->parent && $item->deeper == 1)) && !$is_mobile_menu) {
    $attributes['class'] .= " megamenu-item-link";
 }

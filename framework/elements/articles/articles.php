@@ -414,35 +414,20 @@ if ($enable_slider) {
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');
     if (!empty($card_padding)) {
-        $padding = \json_decode($card_padding, false);
-        foreach ($padding as $device => $props) {
-            $style->child('.card-size-custom')->addStyle(Style::spacingValue($props, "padding"), $device);
-        }
+        Style::setSpacingStyle($element->style->child('.card-size-custom'), $card_padding);
     }
 }
 if (!empty($title_heading_margin)) {
-    $margin = \json_decode($title_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-article-heading')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-article-heading'), $title_heading_margin, 'margin');
 }
 if (!empty($info_margin)) {
-    $margin = \json_decode($info_margin, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-article-info.after-title')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-article-info.after-title'), $info_margin, 'margin');
 }
 if (!empty($info_margin_before_title)) {
-    $margin = \json_decode($info_margin_before_title, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-article-info.before-title')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-article-info.before-title'), $info_margin_before_title, 'margin');
 }
 if (!empty($info_margin_after_intro)) {
-    $margin = \json_decode($info_margin_after_intro, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.astroid-article-info.after-intro')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.astroid-article-info.after-intro'), $info_margin_after_intro, 'margin');
 }
 if ($enable_image_cover) {
     if (!empty($height)) {

@@ -49,6 +49,9 @@ try {
     $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
 
     foreach ($asformbuilder as $field => $value) {
+        if (is_array($value)) {
+            $value = implode(', ', $value);
+        }
         $message        =   str_replace('{{'.$field.'}}', $value, $message);
         $email_headers  =   str_replace('{{'.$field.'}}', $value, $email_headers);
     }

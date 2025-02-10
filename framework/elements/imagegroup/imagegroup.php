@@ -151,7 +151,7 @@ foreach ($responsive_key as $key) {
 }
 
 $rounded_size       =   $params->get('rounded_size', '3');
-$border_radius      =   $params->get('border_radius', '');
+$border_radius      =   $params->get('img_border_radius', '');
 if ($border_radius == 'rounded') {
     $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
 } else {

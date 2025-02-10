@@ -98,17 +98,11 @@ $style_dark->child('.nav-link')->active('.active')->addCss('background-color', $
 
 // Item Margin
 if (!empty($item_margin)) {
-    $margin = \json_decode($item_margin, false);
-    foreach ($margin as $device => $props) {
-        $style->child('.nav-link')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.nav-link'), $item_margin, 'margin');
 }
 // Item Padding
 if (!empty($item_padding)) {
-    $padding = \json_decode($item_padding, false);
-    foreach ($padding as $device => $props) {
-        $style->child('.nav-link')->addStyle(Style::spacingValue($props, "padding"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.nav-link'), $item_padding);
 }
 
 $style->render();

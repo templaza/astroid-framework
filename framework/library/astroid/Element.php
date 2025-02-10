@@ -78,7 +78,7 @@ class Element
             if (file_exists($library_elements_directory . $this->type . '/default.xml')) {
                 $this->default_xml_file = $library_elements_directory . $this->type . '/default.xml';
             } elseif ($this->mode === 'article_data') {
-                $this->default_xml_file = $library_elements_directory . 'default_article.xml';
+                $this->default_xml_file = $library_elements_directory . 'article.xml';
             } else {
                 $this->default_xml_file = $library_elements_directory . 'default.xml';
             }

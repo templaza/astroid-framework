@@ -93,23 +93,14 @@ foreach ($list_items as $item) {
 echo '</'.$tag.'>';
 
 if (!empty($title_heading_margin)) {
-    $margin = \json_decode($title_heading_margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.as-list-title')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.as-list-title'), $title_heading_margin, 'margin');
 }
 
 // Item Margin
 if (!empty($item_margin)) {
-    $margin = \json_decode($item_margin, false);
-    foreach ($margin as $device => $props) {
-        $element->style->child('.list-item')->addStyle(Style::spacingValue($props, "margin"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.list-item'), $item_margin, 'margin');
 }
 // Item Padding
 if (!empty($item_padding)) {
-    $padding = \json_decode($item_padding, false);
-    foreach ($padding as $device => $props) {
-        $element->style->child('.list-item')->addStyle(Style::spacingValue($props, "padding"), $device);
-    }
+    Style::setSpacingStyle($element->style->child('.list-item'), $item_padding);
 }

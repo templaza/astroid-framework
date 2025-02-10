@@ -142,6 +142,11 @@ class Row extends BaseElement
                 }
             }
         }
+
+        $astroid_element_vertical_alignment = $this->params->get('astroid_element_vertical_alignment', '');
+        if (!empty($astroid_element_vertical_alignment)) {
+            $this->addClass('align-items-' . $astroid_element_vertical_alignment);
+        }
         parent::_getclasses();
     }
 }

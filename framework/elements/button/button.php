@@ -54,10 +54,7 @@ foreach ($buttons as $key => $button) {
         if (trim($btn_params->get('button_size', '')) == 'custom') {
             $item_padding   =   $btn_params->get('btn_padding', '');
             if (!empty($item_padding)) {
-                $padding = \json_decode($item_padding, false);
-                foreach ($padding as $device => $props) {
-                    $element->style->child('#btn-'.$button->id)->addStyle(Style::spacingValue($props, "padding"), $device);
-                }
+                Style::setSpacingStyle($element->style->child('#btn-'.$button->id), $item_padding);
             }
         }
     }
@@ -102,10 +99,7 @@ echo '</div>';
 if (trim($button_size) == 'custom') {
     $item_padding   =   $params->get('btn_padding', '');
     if (!empty($item_padding)) {
-        $padding = \json_decode($item_padding, false);
-        foreach ($padding as $device => $props) {
-            $element->style->child('.btn')->addStyle(Style::spacingValue($props, "padding"), $device);
-        }
+        Style::setSpacingStyle($element->style->child('.btn'), $item_padding);
     }
     $button_font_style =   $params->get('button_font_style');
     if (!empty($button_font_style)) {

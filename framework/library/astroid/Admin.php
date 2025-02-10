@@ -112,7 +112,7 @@ class Admin extends Helper\Client
             $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/$type/";
 
             $layout = [
-                'title' => $app->input->post->get('title', '', 'RAW'),
+                'title' => $app->input->post->get('title', 'layout', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
                 'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
                 'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
@@ -121,6 +121,10 @@ class Admin extends Helper\Client
 
             if ($default === 'true') {
                 $layout_name = 'default';
+                // Rename old default layout
+                if (file_exists($layout_path . 'default.json')) {
+                    File::move($layout_path . 'default.json', $layout_path . uniqid(OutputFilter::stringURLSafe('default').'-') . '.json');
+                }
             } elseif (!$filename) {
                 $layout_name = uniqid(OutputFilter::stringURLSafe($layout['title']).'-');
             } else {
@@ -152,7 +156,6 @@ class Admin extends Helper\Client
                     File::delete(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail']);
                 }
                 $layout['thumbnail'] = $layout_name.'.'.$uploadedFileExtension;
-
                 Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'], $thumbnail);
                 File::delete($fileTemp);
             }

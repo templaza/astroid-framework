@@ -12,7 +12,7 @@ use Astroid\Framework;
 use Astroid\Helper\Style;
 use Astroid\Helper;
 $use_masonry = $this->params->get('use_masonry', 0);
-
+$num_columns = $this->params->get('num_columns', 1);
 $blog_style = new Style('.blog');
 
 // Blog Responsive Columns
@@ -32,7 +32,7 @@ if (Helper::isPro()) {
                 if (!empty($column_gutter)) {
                     ${$type . '_row_cls'}[]     =  'gx-' . $key . '-' . $column_gutter;
                 }
-                $param_column       =   $this->params->get($type . '_' . $key . '_column', '');
+                $param_column       =   $this->params->get($type . '_' . $key . '_column', ($key == 'lg' && $type == 'intro' ? $num_columns : ''));
                 if (!empty($param_column)) {
                     ${$type . '_row_cls'}[]      =  'row-cols-' . $key . '-' . $param_column;
                 }
@@ -46,8 +46,7 @@ if (Helper::isPro()) {
                 if (!empty($column_gutter)) {
                     ${$type . '_row_cls'}[]    =  'gx-' . $column_gutter;
                 }
-                $column_default             =   $type === 'intro' ? $this->params->get('num_columns') : 1;
-                $param_column               =   $this->params->get($type . '_column', $column_default);
+                $param_column               =   $this->params->get($type . '_column', 1);
                 if (!empty($param_column)) {
                     ${$type . '_row_cls'}[]     =   'row-cols-' . $param_column;
                 }
@@ -56,7 +55,7 @@ if (Helper::isPro()) {
     }
 } else {
     if ((int) $this->params->get('num_columns') > 1) {
-        $intro_row_cls[] = 'row-cols-' . $this->params->get('num_columns');
+        $intro_row_cls[] = 'row-cols-lg-' . $num_columns;
     }
     $intro_row_cls[] = 'gy-5';
 }

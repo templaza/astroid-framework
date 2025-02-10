@@ -54,6 +54,7 @@ class BaseElement
         $this->addClass('astroid-' . Helper::slugify($this->type));
 
         $this->_id();
+        $this->_tag         =   $this->params->get('astroid_element_tag', 'div');
         $this->style        =   new Style('#' . $this->getAttribute('id'));
         $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
     }
@@ -199,11 +200,26 @@ class BaseElement
         $this->addClass($this->params->get('hideonxxl', 0) ? 'hideonxxl' : '');
     }
 
+    protected function _sticky(): void
+    {
+        $sticky_effect          =   $this->params->get('astroid_element_sticky_effect','');
+        if (!empty($sticky_effect)) {
+            $sticky_effect_breakpoint   =   $this->params->get('astroid_element_sticky_effect_breakpoint','');
+            $sticky_effect_offset       =   $this->params->get('astroid_element_sticky_effect_offset', '');
+            $this->addClass('sticky' . ($sticky_effect_breakpoint ? '-' . $sticky_effect_breakpoint : '') . '-' . $sticky_effect);
+            if (!empty($sticky_effect_offset)) {
+                $sticky_effect_offset   =   json_decode($sticky_effect_offset, true);
+                $this->style->addResponsiveCSS($sticky_effect, $sticky_effect_offset, $sticky_effect_offset['postfix']);
+            }
+        }
+    }
+
     protected function _styles(): void
     {
         $this->_background();
         $this->_border();
         $this->_marginPadding();
+        $this->_sticky();
         $this->_typography();
         $this->_animation();
         $this->_custom_css();
@@ -330,20 +346,8 @@ class BaseElement
     {
         $margin = $this->params->get('margin', '');
         $padding = $this->params->get('padding', '');
-
-        if (!empty($margin)) {
-            $margin = \json_decode($margin, false);
-            foreach ($margin as $device => $props) {
-                $this->style->addStyle(Style::spacingValue($props, "margin"), $device);
-            }
-        }
-
-        if (!empty($padding)) {
-            $padding = \json_decode($padding, false);
-            foreach ($padding as $device => $props) {
-                $this->style->addStyle(Style::spacingValue($props, "padding"), $device);
-            }
-        }
+        Style::setSpacingStyle($this->style, $margin, 'margin');
+        Style::setSpacingStyle($this->style, $padding, 'padding');
     }
 
     protected function _typography(): void

@@ -250,7 +250,7 @@ function toggleCollapse() {
         </div>
     </div>
     <Transition name="fade">
-    <div v-if="(props.field.input.options.collapse === true && collapse === true) || props.field.input.options.collapse === false" class="row g-4" :class="`row-cols-lg-`+(Math.ceil(props.field.input.options.columns/2))+` row-cols-xl-`+props.field.input.options.columns">
+    <div v-show="(props.field.input.options.collapse === true && collapse === true) || props.field.input.options.collapse === false" class="row g-4" :class="`row-cols-lg-`+(Math.ceil(props.field.input.options.columns/2))+` row-cols-xl-`+props.field.input.options.columns">
         <div>
             <div class="row row-cols-1 g-4">
                 <div v-if="props.field.input.options.fontpicker">

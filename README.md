@@ -44,6 +44,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Animation Pro
 * Cursor Effects
 * Premium Support 24/7
+* Joomla Blog Responsive Layout Columns
 
 ## Widgets
 * Articles Widget
@@ -92,7 +93,8 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Hover Motion Widget
 * Listing Pro Widget
 * Article Listing Widget
-* CodePend Widget
+* CodePen Widget
+* Countdown Widget
 
 ## Requirements
 * Joomla: 4.x, 5.x
