@@ -4,7 +4,7 @@
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
    <creationDate>February 2025</creationDate>
-   <version>3.1.11-rc2</version>
+   <version>3.1.11</version>
    <url>https://astroidframe.work/</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
