@@ -188,7 +188,7 @@
             <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
          </field>
 
-         <field astroidgroup="header_logo_options_element" ngShow="[logo_typography]=='custom' AND [header]==true AND [logo_type]=='text'" name="logo_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3" font-size-unit="rem" letter-spacing="0px" line-height="1" font-weight="700" text-transform="none" />
+         <field astroidgroup="header_logo_options_element" ngShow="[logo_typography]=='custom' AND [header]==true AND [logo_type]=='text'" name="logo_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3" font-size-unit="rem" letter-spacing="0px" line-height="1" font-weight="700" text-transform="none" collapse="false" />
 
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" ngShow="[header]==true AND [logo_type]=='text'" ngRequired="logo_type=='text'" name="logo_tag_line_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_LOGO_TAG_LINE">
             <option value="inherit">JGLOBAL_INHERIT</option>
