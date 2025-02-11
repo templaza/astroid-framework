@@ -63,7 +63,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_2_type == 'position') {
                       echo '<div class="header-block-item d-flex justify-content-start align-items-center">';
-                      echo $document->position($block_2_position, 'xhtml');
+                      echo $document->position($block_2_position, 'astroidxhtml');
                       echo '</div>';
                   }
                   if ($block_2_type == 'custom') {
@@ -120,7 +120,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
-                     echo $document->position($block_1_position, 'xhtml');
+                     echo $document->position($block_1_position, 'astroidxhtml');
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {

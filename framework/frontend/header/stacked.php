@@ -101,7 +101,7 @@ if ($mode == 'divided-logo-left') {
                  if ($block_1_type == 'position') {
                      echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
                      echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
-                     echo $document->position($block_1_position, 'xhtml');
+                     echo $document->position($block_1_position, 'astroidxhtml');
                      echo '</div>';
                      echo '</div>';
                  }
@@ -127,7 +127,7 @@ if ($mode == 'divided-logo-left') {
                  // header block 2 starts
                  if ($block_2_type == 'position') {
                      echo '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
-                     echo $document->position($block_2_position, 'xhtml');
+                     echo $document->position($block_2_position, 'astroidxhtml');
                      echo '</div>';
                  }
                  if ($block_2_type == 'custom') {
@@ -210,7 +210,7 @@ if ($mode == 'divided-logo-left') {
             // header block starts
             if ($block_1_type == 'position') {
                echo '<div class="w-100 header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-center py-3">';
-               echo $document->position($block_1_position, 'xhtml');
+               echo $document->position($block_1_position, 'astroidxhtml');
                echo '</div>';
             }
             if ($block_1_type == 'custom') {
@@ -242,7 +242,7 @@ if ($mode == 'divided-logo-left') {
                // header block starts
                if ($block_1_type == 'position') {
                    echo '<div class="header-block-item header-block-1 d-none d-'.$header_breakpoint.'-flex justify-content-start">';
-                   echo $document->position($block_1_position, 'xhtml');
+                   echo $document->position($block_1_position, 'astroidxhtml');
                    echo '</div>';
                }
                if ($block_1_type == 'custom') {
@@ -266,7 +266,7 @@ if ($mode == 'divided-logo-left') {
                // header block starts
                if ($block_2_type == 'position') {
                    echo '<div class="header-block-item header-block-2 d-none d-'.$header_breakpoint.'-flex justify-content-end">';
-                   echo $document->position($block_2_position, 'xhtml');
+                   echo $document->position($block_2_position, 'astroidxhtml');
                    echo '</div>';
                }
                if ($block_2_type == 'custom') {
@@ -312,7 +312,7 @@ if ($mode == 'divided-logo-left') {
             if ($block_1_type == 'position') {
                echo '<div class="d-none d-'.$header_breakpoint.'-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
                echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
-               echo $document->position($block_1_position, 'xhtml');
+               echo $document->position($block_1_position, 'astroidxhtml');
                echo '</div>';
                echo '</div>';
             }
@@ -347,7 +347,7 @@ if ($mode == 'divided-logo-left') {
                     if ($block_2_type == 'position') {
                         echo '<div class="d-flex col-auto">';
                         echo '<div class="d-flex align-items-center header-block-item">';
-                        echo $document->position($block_2_position, 'xhtml');
+                        echo $document->position($block_2_position, 'astroidxhtml');
                         echo '</div>';
                         echo '</div>';
                     }
@@ -399,7 +399,7 @@ if ($mode == 'divided-logo-left') {
                  // header block starts
                  if ($block_1_type == 'position') {
                      echo '<div class="d-flex header-block-item justify-content-start align-items-center">';
-                     echo $document->position($block_1_position, 'xhtml');
+                     echo $document->position($block_1_position, 'astroidxhtml');
                      echo '</div>';
                  }
                  if ($block_1_type == 'custom') {
@@ -409,7 +409,7 @@ if ($mode == 'divided-logo-left') {
                  }
                  if ($block_2_type == 'position') {
                      echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
-                     echo $document->position($block_2_position, 'xhtml');
+                     echo $document->position($block_2_position, 'astroidxhtml');
                      echo '</div>';
                  }
                  if ($block_2_type == 'custom') {
@@ -442,7 +442,7 @@ if ($mode == 'divided-logo-left') {
              if ($block_3_type != '') {
                  if ($block_3_type == 'position') {
                      echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
-                     echo $document->position($block_3_position, 'xhtml');
+                     echo $document->position($block_3_position, 'astroidxhtml');
                      echo '</div>';
                  }
                  if ($block_3_type == 'custom') {

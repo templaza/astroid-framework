@@ -83,7 +83,7 @@ $position_count = 0;
                     <?php
                     if (${'block_'.$position_count.'_type'} == 'position') {
                         echo '<div class="header-block-item d-flex align-item-center as-gutter-lg">';
-                        echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                        echo $document->position(${'block_'.$position_count.'_position'}, 'astroidxhtml');
                         echo '</div>';
                     }
                     if (${'block_'.$position_count.'_type'} == 'custom') {
@@ -123,7 +123,7 @@ $position_count = 0;
                 <?php
                 if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, 'astroidxhtml');
                     echo '</div>';
                 }
                 if (${'block_'.$position_count.'_type'} == 'custom') {
@@ -150,7 +150,7 @@ $position_count = 0;
                 <?php
                 if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, 'astroidxhtml');
                     echo '</div>';
                 }
                 if (${'block_'.$position_count.'_type'} == 'custom') {

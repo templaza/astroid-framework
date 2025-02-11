@@ -118,7 +118,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex">';
-                     echo $document->position($block_1_position, 'xhtml');
+                     echo $document->position($block_1_position, 'astroidxhtml');
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {
