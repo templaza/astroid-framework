@@ -466,12 +466,14 @@ class Utility
 
         // Menu
         $main_menu_link_color           =   Style::getColor($params->get('main_menu_link_color', ''));
+        $main_menu_link_background      =   Style::getColor($params->get('main_menu_link_background', ''));
         $main_menu_link_hover_color     =   Style::getColor($params->get('main_menu_link_hover_color', ''));
         $main_menu_link_active_color    =   Style::getColor($params->get('main_menu_link_active_color', ''));
         $main_menu_active_background    =   Style::getColor($params->get('main_menu_active_background', ''));
         $main_menu_hover_background     =   Style::getColor($params->get('main_menu_hover_background', ''));
         $navLink = new Style(['.astroid-nav .nav-link']);
         $navLink->addCss('color', $main_menu_link_color['light']);
+        $navLink->addCss('background-color', $main_menu_link_background['light']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['light']);
         $navLink->hover()->addCss('background-color', $main_menu_hover_background['light']);
         $navLink->focus()->addCss('color', $main_menu_link_hover_color['light']);
@@ -481,6 +483,7 @@ class Utility
 
         $navLink = new Style(['.astroid-nav .nav-link'], 'dark');
         $navLink->addCss('color', $main_menu_link_color['dark']);
+        $navLink->addCss('background-color', $main_menu_link_background['dark']);
         $navLink->hover()->addCss('color', $main_menu_link_hover_color['dark']);
         $navLink->hover()->addCss('background-color', $main_menu_hover_background['dark']);
         $navLink->focus()->addCss('color', $main_menu_link_hover_color['dark']);
@@ -521,6 +524,7 @@ class Utility
         // Sidebar Submenu
         $sidebar_menu_style     =   new Style('.astroid-sidebar-menu');
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['light']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->hover()->child('> i')->addCss('color', $main_menu_link_hover_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['light']);
@@ -538,6 +542,7 @@ class Utility
 
         $sidebar_menu_style     =   new Style('.astroid-sidebar-menu', 'dark');
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['dark']);
+        $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['dark']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['dark']);
         $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['dark']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['dark']);

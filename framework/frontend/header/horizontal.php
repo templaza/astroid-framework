@@ -22,9 +22,11 @@ $color_mode = $template->getColorMode();
 $mode = $params->get('header_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
+$block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('header_block_1_custom', '');
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
+$block_2_style = $params->get('header_block_2_style', 'none');
 $block_2_custom = $params->get('header_block_2_custom', '');
 $header_menu_method = $params->get('header_menu_method', 'default');
 $header_menu = $params->get('header_menu', 'mainmenu');
@@ -63,7 +65,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_2_type == 'position') {
                       echo '<div class="header-block-item d-flex justify-content-start align-items-center">';
-                      echo $document->position($block_2_position, 'astroidxhtml');
+                      echo $document->position($block_2_position, $block_2_style);
                       echo '</div>';
                   }
                   if ($block_2_type == 'custom') {
@@ -120,7 +122,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
-                     echo $document->position($block_1_position, 'astroidxhtml');
+                     echo $document->position($block_1_position, $block_1_style);
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {

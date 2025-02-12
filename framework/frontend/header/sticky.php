@@ -41,6 +41,7 @@ $mode = $params->get('header_horizontal_menu_mode', 'left');
 $stickey_mode = $params->get('stickey_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('stickey_block_1_type', 'left');
 $block_1_position = $params->get('stickey_block_1_position', '');
+$block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('stickey_block_1_custom', '');
 switch ($stickey_mode) {
    case 'left':
@@ -118,7 +119,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   <?php
                   if ($block_1_type == 'position') {
                      echo '<div class="header-block-item d-flex">';
-                     echo $document->position($block_1_position, 'astroidxhtml');
+                     echo $document->position($block_1_position, $block_1_style);
                      echo '</div>';
                   }
                   if ($block_1_type == 'custom') {
