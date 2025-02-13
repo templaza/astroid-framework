@@ -72,8 +72,8 @@ if (!empty($blog_class)) {
 if (!empty($use_masonry)) {
     $document = Framework::getDocument();
     $document->loadMasonry('.as-masonry');
-    $lead_row_cls[] = 'as-masonry';
-    $intro_row_cls[] = 'as-masonry';
+    $lead_row_cls[] = 'as-masonry as-loading';
+    $intro_row_cls[] = 'as-masonry as-loading';
 }
 
 $blog_layout = $this->params->get('as_blog_layout', '');
