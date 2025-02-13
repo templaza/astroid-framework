@@ -955,8 +955,7 @@ class Document
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $this->loadImagesLoaded();
-            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$selector.'\').addClass("as-loading");imagesLoaded( document.querySelector(\''.$selector.'\'), function( instance ) { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });});');
+            $wa->addInlineScript('jQuery(window).on(\'load\', function () { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });');
         }
     }
 

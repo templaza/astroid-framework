@@ -55,7 +55,7 @@ if ($text_alignment) {
 }
 
 if ($use_masonry && !$enable_slider) {
-    $row_column_cls .=  ' as-masonry';
+    $row_column_cls .=  ' as-masonry as-loading';
 }
 
 $xxl_column         =   $params->get('xxl_column', '');

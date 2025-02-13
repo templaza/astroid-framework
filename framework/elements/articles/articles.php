@@ -53,7 +53,7 @@ $style_dark = new Style('#'. $element->id, 'dark');
 $row_column_cls     =   'row';
 
 if ($use_masonry && !$enable_slider) {
-    $row_column_cls .=  ' as-masonry';
+    $row_column_cls .=  ' as-masonry as-loading';
 }
 
 $xxl_column         =   $params->get('xxl_column', '');
@@ -256,6 +256,7 @@ $has_gallery        =   false;
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
+    $video_type     =   $item->params->get('astroid_article_video_type', '');
     $media          =   '';
     if ($thumbnail_only && !empty($item->image_thumbnail)) {
         $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
@@ -289,7 +290,6 @@ foreach ($items as $key => $item) {
             case 'video':
                 $video_url  =   $item->params->get('astroid_article_video_url', '');
                 $video_local_url  =   $item->params->get('astroid_article_video_local', '');
-                $video_type =   $item->params->get('astroid_article_video_type', '');
                 $video_src  =   Article::getVideoSrc($video_url);
                 if ($video_type !== 'local') {
                     if ($video_src) {

@@ -162,7 +162,7 @@ $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' .
 $button_margin_top  =   $params->get('button_margin_top', '');
 
 $use_masonry        =   $params->get('use_masonry', 0);
-echo '<div class="row'.($use_masonry ? ' as-masonry' : '').$row_column_cls.'">';
+echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Helper::loadParams($grid->params);
     $link_target    =   !empty($grid_params->get('link_target', '')) ? ' target="'.$grid_params->get('link_target', '').'"' : '';
