@@ -144,7 +144,7 @@ $button_outline     =   $params->get('button_outline', 0);
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
 
-$button_radius      =   $params->get('border_radius', '');
+$button_radius      =   $params->get('btn_border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
 $image_rounded_size     =   $params->get('image_rounded_size', '3');
