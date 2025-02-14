@@ -951,11 +951,11 @@ class Document
     {
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_masonry) {
-            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $wa->addInlineScript('jQuery(window).on(\'load\', function () { jQuery(\''.$selector.'\').masonry({itemSelector: \''.$selector.' > div\',percentPosition: true}); jQuery(\''.$selector.'\').removeClass("as-loading"); });');
+            $wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelector(\''.$selector.'\').classList.remove("as-loading"); });');
         }
     }
 
