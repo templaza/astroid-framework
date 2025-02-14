@@ -106,7 +106,7 @@ class Utility
 
         $theme_width    =   $params->get('theme_width', '');
         if (!empty($theme_width)) {
-            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
+            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .container-fluid, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
         }
 
         $template_layout = $params->get('template_layout', 'wide');
@@ -382,6 +382,8 @@ class Utility
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
+        $root = new Style(':root, [data-bs-theme="light"]');
+        $root_dark = new Style('[data-bs-theme="dark"]');
         // Body
         $body_background_color  =   Style::getColor($params->get('body_background_color', ''));
         $body_text_color        =   Style::getColor($params->get('body_text_color', ''));
@@ -398,16 +400,16 @@ class Utility
         }
         $body = new Style('body');
         $body_dark = new Style('body', 'dark');
-        $body->addCss('--bs-body-bg', $body_background_color['light']);
-        $body->addCss('--bs-body-color', $body_text_color['light']);
+        $root->addCss('--bs-body-bg', $body_background_color['light']);
+        $root->addCss('--bs-body-color', $body_text_color['light']);
         $body->link()->addCss('color', 'var(--as-link-color)');
         $body->link()->addCss('--as-link-color', $body_link_color['light']);
         $body->link()->hover()->addCss('color', 'var(--as-link-hover-color)');
         $body->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['light']);
         $body->render();  // render body colors
 
-        $body_dark->addCss('--bs-body-bg', $body_background_color['dark']);
-        $body_dark->addCss('--bs-body-color', $body_text_color['dark']);
+        $root_dark->addCss('--bs-body-bg', $body_background_color['dark']);
+        $root_dark->addCss('--bs-body-color', $body_text_color['dark']);
         $body_dark->link()->addCss('--as-link-color', $body_link_color['dark']);
         $body_dark->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['dark']);
         $body_dark->render();  // render body colors
@@ -440,8 +442,10 @@ class Utility
         $header->link()->hover()->addCss('color', $header_link_hover_color['dark']);
         $header->render();
 
-        Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header, .astroid-sidebar-header > *', 'background-color', $header_bg['light']);
-        Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header, [data-bs-theme=dark] .astroid-sidebar-header > *', 'background-color', $header_bg['dark']);
+        $root->addCss('--as-header-bg', $header_bg['light']);
+        $root_dark->addCss('--as-header-bg', $header_bg['dark']);
+//        Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header, .astroid-sidebar-header > *', '--as-header-bg', $header_bg['light']);
+//        Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header, [data-bs-theme=dark] .astroid-sidebar-header > *', 'background-color', $header_bg['dark']);
 
         // Sticky Header
         $stick_header_bg_color              =   Style::getColor($params->get('stick_header_bg_color', ''));
@@ -527,10 +531,10 @@ class Utility
         $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['light']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->hover()->child('> i')->addCss('color', $main_menu_link_hover_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('--as-main-menu-hover-background', $main_menu_hover_background['light']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['light']);
         $sidebar_menu_style->child('.nav-item-inner')->active('.active')->child('> i')->addCss('color', $main_menu_link_active_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['light']);
+        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('--as-main-menu-active-background', $main_menu_active_background['light']);
         $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
         $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['light']);
         $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['light']);
@@ -544,9 +548,9 @@ class Utility
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['dark']);
         $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['dark']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['dark']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['dark']);
+        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('--as-main-menu-hover-background', $main_menu_hover_background['dark']);
         $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['dark']);
+        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('--as-main-menu-active-background', $main_menu_active_background['dark']);
         $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
         $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['dark']);
         $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['dark']);
@@ -671,6 +675,9 @@ class Utility
         $contact_icon_color     =   Style::getColor($params->get('icon_color', ''));
         Style::addCssBySelector('.astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['light']);
         Style::addCssBySelector('[data-bs-theme=dark] .astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['dark']);
+
+        $root->render();
+        $root_dark->render();
     }
 
     public static function article(): void

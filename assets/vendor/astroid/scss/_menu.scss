@@ -285,6 +285,12 @@ ul {
 		.nav-item-inner {
 			border-radius: var(--bs-border-radius);
 			transition: all 500ms ease;
+			&.active, &:active {
+				background-color: var(--as-main-menu-active-background);
+			}
+			&:hover {
+				background-color: var(--as-main-menu-hover-background);
+			}
 		}
 
 		.as-menu-item {
