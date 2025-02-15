@@ -92,7 +92,7 @@ if (count($slide_responsive)) {
 }
 
 $rounded_size       =   $params->get('rounded_size', '3');
-$border_radius      =   $params->get('border_radius', '');
+$border_radius      =   $params->get('btn_border_radius', '');
 if ($border_radius == 'rounded') {
     $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
 } else {

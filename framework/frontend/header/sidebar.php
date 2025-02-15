@@ -35,14 +35,17 @@ if ($mode == 'topbar') {
 
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
+$block_2_style = $params->get('header_block_2_style', 'none');
 $block_2_custom = $params->get('header_block_2_custom', '');
 
 $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
+$block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('header_block_1_custom', '');
 
 $block_3_type = $params->get('header_block_3_type', 'blank');
 $block_3_position = $params->get('header_block_3_position', '');
+$block_3_style = $params->get('header_block_3_style', 'none');
 $block_3_custom = $params->get('header_block_3_custom', '');
 
 $header_menu = $params->get('header_menu', 'mainmenu');
@@ -83,7 +86,7 @@ $position_count = 0;
                     <?php
                     if (${'block_'.$position_count.'_type'} == 'position') {
                         echo '<div class="header-block-item d-flex align-item-center as-gutter-lg">';
-                        echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                        echo $document->position(${'block_'.$position_count.'_position'}, ${'block_'.$position_count.'_style'});
                         echo '</div>';
                     }
                     if (${'block_'.$position_count.'_type'} == 'custom') {
@@ -123,7 +126,7 @@ $position_count = 0;
                 <?php
                 if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, ${'block_'.$position_count.'_style'});
                     echo '</div>';
                 }
                 if (${'block_'.$position_count.'_type'} == 'custom') {
@@ -150,7 +153,7 @@ $position_count = 0;
                 <?php
                 if (${'block_'.$position_count.'_type'} == 'position') {
                     echo '<div class="header-block-item">';
-                    echo $document->position(${'block_'.$position_count.'_position'}, 'xhtml');
+                    echo $document->position(${'block_'.$position_count.'_position'}, ${'block_'.$position_count.'_style'});
                     echo '</div>';
                 }
                 if (${'block_'.$position_count.'_type'} == 'custom') {
