@@ -95,6 +95,18 @@
 }
 
 .astroid-nav {
+	.nav-link {
+		color: var(--as-main-menu-link-color);
+		background-color: var(--as-main-menu-link-background);
+		&:hover, &:focus {
+			color: var(--as-main-menu-link-hover-color);
+			background-color: var(--as-main-menu-hover-background);
+		}
+		&.active, &:active {
+			color: var(--as-main-menu-link-active-color);
+			background-color: var(--as-main-menu-active-background);
+		}
+	}
 	.nav-title {
 		display: flex;
 		align-items: center;
@@ -271,6 +283,20 @@ ul {
 	}
 }
 
+.astroid-header-sticky {
+	.astroid-nav {
+		.nav-link {
+			color: var(--as-stick-header-menu-link-color);
+			&:hover {
+				color: var(--as-stick-header-menu-link-hover-color);
+			}
+			&.active, &:active {
+				color: var(--as-stick-header-menu-link-active-color);
+			}
+		}
+	}
+}
+
 .astroid-sidebar-menu {
 	list-style-type: none;
 	margin: 0;
@@ -285,12 +311,19 @@ ul {
 		.nav-item-inner {
 			border-radius: var(--bs-border-radius);
 			transition: all 500ms ease;
+
 			&.active, &:active {
 				background-color: var(--as-main-menu-active-background);
 			}
 			&:hover {
 				background-color: var(--as-main-menu-hover-background);
 			}
+			> .as-menu-item {
+				color: var(--as-main-menu-link-color);
+			}
+		}
+		> .nav-item-inner {
+			background-color: var(--as-main-menu-link-background);
 		}
 
 		.as-menu-item {

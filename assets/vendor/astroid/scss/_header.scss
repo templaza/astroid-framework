@@ -70,6 +70,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      background-color: var(--as-stick-header-bg-color);
       -webkit-animation-fill-mode: both;
       animation-fill-mode: both;
       z-index: $sticky-header-zindex;
@@ -230,6 +231,16 @@ header .logo-wrapper {
 
 /* Sidebar Header */
 .astroid-header {
+   color: var(--as-header-text-color);
+   h1,h2,h3,h4,h5,h6,.megamenu-container .item-link-heading {
+      color: var(--as-header-heading-color);
+   }
+   a {
+      color: var(--as-header-link-color);
+      &:hover {
+         --as-header-link-color: var(--as-header-link-hover-color);
+      }
+   }
    &.has-sidebar {
       z-index: 1;
       transition: .1s linear all;
