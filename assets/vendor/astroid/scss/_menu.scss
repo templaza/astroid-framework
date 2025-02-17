@@ -23,8 +23,13 @@
 .megamenu-container {
 	--as-menu-gutter-x: #{$megamenu-gutter-width};
 	display: none;
+	background-color: var(--as-dropdown-bg-color);
 	position: absolute;
 	z-index: 1003;
+
+	.nav-submenu {
+		background-color: var(--as-dropdown-bg-color);
+	}
 
 	&.nav-submenu-container {
 		padding: 0;
@@ -42,6 +47,18 @@
 					padding-bottom: 0 !important;
 				}
 			}
+		}
+	}
+
+	li.nav-item-submenu > a {
+		color: var(--as-dropdown-link-color);
+		&:hover {
+			color: var(--as-dropdown-menu-link-hover-color);
+			background-color: var(--as-dropdown-menu-hover-bg-color);
+		}
+		&:active, &.active {
+			color: var(--as-dropdown-menu-active-link-color);
+			background-color: var(--as-dropdown-menu-active-bg-color);
 		}
 	}
 }
@@ -309,21 +326,30 @@ ul {
 		width: 100%;
 		margin: 5px 0;
 		.nav-item-inner {
+			background-color: var(--as-main-menu-link-background);
 			border-radius: var(--bs-border-radius);
 			transition: all 500ms ease;
-
 			&.active, &:active {
 				background-color: var(--as-main-menu-active-background);
+				> i {
+					color: var(--as-main-menu-link-active-color);
+				}
 			}
 			&:hover {
 				background-color: var(--as-main-menu-hover-background);
+				> i {
+					color: var(--as-main-menu-link-hover-color);
+				}
 			}
 			> .as-menu-item {
 				color: var(--as-main-menu-link-color);
+				&:active, &.active {
+					color: var(--as-main-menu-link-active-color);
+				}
+				&:hover {
+					color: var(--as-main-menu-link-hover-color);
+				}
 			}
-		}
-		> .nav-item-inner {
-			background-color: var(--as-main-menu-link-background);
 		}
 
 		.as-menu-item {
@@ -334,11 +360,15 @@ ul {
 
 		ul.nav-child {
 			display: none;
+			background-color: var(--as-dropdown-bg-color);
 			list-style: none;
 			border-left: 1px dashed var(--bs-border-color);
 			margin-left: 20px;
 			padding-left: 15px;
-			> li > div.nav-item-inner > a {
+		}
+
+		.nav-item-submenu .nav-item-inner {
+			> a {
 				position: relative;
 				&:before {
 					content: "";
@@ -349,6 +379,24 @@ ul {
 					position: absolute;
 					top: 50%;
 					left: -13px;
+				}
+				&.as-menu-item {
+					color: var(--as-dropdown-link-color);
+				}
+			}
+			> i {
+				color: var(--as-dropdown-link-color);
+			}
+			&:active, &.active {
+				background-color: var(--as-dropdown-menu-active-bg-color);
+				> a.as-menu-item, > i {
+					color: var(--as-dropdown-menu-active-link-color);
+				}
+			}
+			&:hover {
+				background-color: var(--as-dropdown-menu-hover-bg-color);
+				> a.as-menu-item, > i {
+					color: var(--as-dropdown-menu-link-hover-color);
 				}
 			}
 		}

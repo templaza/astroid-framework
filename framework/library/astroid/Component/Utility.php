@@ -475,60 +475,23 @@ class Utility
         $dropdown_menu_active_bg_color  =   Style::getColor($params->get('dropdown_menu_active_bg_color', ''));
         $dropdown_menu_active_link_color=   Style::getColor($params->get('dropdown_menu_active_link_color', ''));
 
-        $dropdown           = Style::addCssBySelector('.megamenu-container', 'background-color', $dropdown_bg_color['light']);
-        $submenuDropdown    = Style::addCssBySelector('.megamenu-container .nav-submenu .nav-submenu', 'background-color', $dropdown_bg_color['light']);
+        $root->addCss('--as-dropdown-bg-color', $dropdown_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-bg-color', $dropdown_bg_color['dark']);
 
-        Style::addCssBySelector('.has-megamenu.open .arrow', 'border-bottom-color', $dropdown_bg_color['light']);
+        $root->addCss('--as-dropdown-link-color', $dropdown_link_color['light']);
+        $root_dark->addCss('--as-dropdown-link-color', $dropdown_link_color['dark']);
 
-        $link = $dropdown->child('li.nav-item-submenu > a');
-        $link->addCss('color', $dropdown_link_color['light']);
-        $link->hover()->addCss('color', $dropdown_menu_link_hover_color['light'])->addCss('background-color', $dropdown_menu_hover_bg_color['light']);
-        $link->active('.active')->addCss('color', $dropdown_menu_active_link_color['light'])->addCss('background-color', $dropdown_menu_active_bg_color['light']);
-        $dropdown->render(); // render dropdown
+        $root->addCss('--as-dropdown-menu-link-hover-color', $dropdown_menu_link_hover_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-link-hover-color', $dropdown_menu_link_hover_color['dark']);
 
-        $dropdown           = Style::addCssBySelector('[data-bs-theme=dark] .megamenu-container', 'background-color', $dropdown_bg_color['dark']);
-        $submenuDropdown    = Style::addCssBySelector('[data-bs-theme=dark] .megamenu-container .nav-submenu .nav-submenu', 'background-color', $dropdown_bg_color['dark']);
+        $root->addCss('--as-dropdown-menu-hover-bg-color', $dropdown_menu_hover_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-hover-bg-color', $dropdown_menu_hover_bg_color['dark']);
 
-        Style::addCssBySelector('[data-bs-theme=dark] .has-megamenu.open .arrow', 'border-bottom-color', $dropdown_bg_color['dark']);
+        $root->addCss('--as-dropdown-menu-active-link-color', $dropdown_menu_active_link_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-active-link-color', $dropdown_menu_active_link_color['dark']);
 
-        $link = $dropdown->child('li.nav-item-submenu > a');
-        $link->addCss('color', $dropdown_link_color['dark']);
-        $link->hover()->addCss('color', $dropdown_menu_link_hover_color['dark'])->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
-        $link->active('.active')->addCss('color', $dropdown_menu_active_link_color['dark'])->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
-        $dropdown->render(); // render dropdown
-
-        // Sidebar Submenu
-        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu');
-        $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['light']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->child('> i')->addCss('color', $main_menu_link_hover_color['light']);
-        $root->addCss('--as-main-menu-hover-background', $main_menu_hover_background['light']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->child('> i')->addCss('color', $main_menu_link_active_color['light']);
-        $root->addCss('--as-main-menu-active-background', $main_menu_active_background['light']);
-        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
-        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['light']);
-        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['light']);
-        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['light']);
-        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['light']);
-        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['light']);
-        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['light']);
-        $sidebar_menu_style->render();
-
-        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu', 'dark');
-        $sidebar_menu_style->child('.nav-item-inner')->addCss('background-color', $main_menu_link_background['dark']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['dark']);
-        $root_dark->addCss('--as-main-menu-hover-background', $main_menu_hover_background['dark']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
-        $root_dark->addCss('--as-main-menu-active-background', $main_menu_active_background['dark']);
-        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
-        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['dark']);
-        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['dark']);
-        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
-        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['dark']);
-        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
-        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['dark']);
-        $sidebar_menu_style->render();
+        $root->addCss('--as-dropdown-menu-active-bg-color', $dropdown_menu_active_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-active-bg-color', $dropdown_menu_active_bg_color['dark']);
 
         // Sticky Menu
         $stick_header_mobile_menu_icon_color = Style::getColor($params->get('stick_header_mobile_menu_icon_color', ''));
