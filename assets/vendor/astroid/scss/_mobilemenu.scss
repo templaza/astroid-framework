@@ -6,13 +6,14 @@ $menu-indicator-width: 60px !default;
    position: fixed;
    top: 0;
    left: 0;
+   background-color: var(--as-mobilemenu-backgroundcolor);
+   color: var(--as-mobilemenu-menu-text-color);
    z-index: $zindex-popover;
    visibility: hidden;
    height: 100%;
    width: 250px;
    overflow: auto;
    -webkit-overflow-scrolling: touch;
-   background-color: $white;
    -webkit-transition: all .5s;
    transition: all .5s;
    max-width: 100vw !important;
@@ -33,6 +34,34 @@ $menu-indicator-width: 60px !default;
       left: 0;
       width: 100%;
       z-index: 9;
+   }
+   .menu-indicator {
+      color: var(--as-mobilemenu-menu-link-color);
+   }
+   .astroid-mobilemenu-container .astroid-mobilemenu-inner {
+      .dropdown-menus {
+         background-color: var(--as-mobilemenu-backgroundcolor);
+      }
+      .menu-item {
+         a {
+            color: var(--as-mobilemenu-menu-link-color);
+            &:hover {
+               background-color: var(--as-mobilemenu-hover-background-color);
+            }
+         }
+         &.active {
+            background-color: var(--as-mobilemenu-menu-active-bg-color);
+            > a, > .nav-header {
+               color: var(--as-mobilemenu-menu-active-link-color);
+            }
+         }
+         &.nav-item-active {
+            background-color: var(--as-mobilemenu-menu-active-bg-color);
+            > a, > a + .menu-indicator {
+               color: var(--as-mobilemenu-menu-active-link-color);
+            }
+         }
+      }
    }
 }
 
@@ -184,7 +213,7 @@ $menu-indicator-width: 60px !default;
    .burger-menu-button .inner,
    .burger-menu-button .inner::before,
    .burger-menu-button .inner::after {
-      background-color: $black;
+      background-color: var(--as-mobilemenu-menu-active-icon-color);
       opacity: 1;
    }
 }

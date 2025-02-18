@@ -227,11 +227,24 @@
 .megamenu-module {
 	padding: 15px;
 }
-
+.burger-menu-button {
+	&.header-mobilemenu-trigger {
+		.inner, .inner:before, .inner:after{
+			background-color: var(--as-mobilemenu-menu-icon-color);
+		}
+	}
+}
 #astroid-sticky-header {
 	.nav-title {
 		sup {
 			top: -20px;
+		}
+	}
+	.burger-menu-button {
+		&.header-mobilemenu-trigger {
+			.inner, .inner:before, .inner:after{
+				background-color: var(--as-stick-header-mobile-menu-icon-color);
+			}
 		}
 	}
 }

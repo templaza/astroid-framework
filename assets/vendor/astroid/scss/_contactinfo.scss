@@ -8,6 +8,9 @@
 			margin-right: 5px;
 		}
 	}
+	i[class*="fa-"] {
+		color: var(--as-contact-info-icon-color);
+	}
 }
 .rtl {
 	.astroid-contact-info {
