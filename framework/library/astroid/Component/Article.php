@@ -246,6 +246,8 @@ class Article
             $query->order($db->quoteName('a.title') . ' DESC');
         } elseif($ordering == 'random') {
             $query->order($query->Rand());
+        } elseif($ordering == 'ordering') {
+            $query->order($db->quoteName('a.ordering') . ' ASC');
         } else {
             $query->order($db->quoteName('a.publish_up') . ' DESC');
         }

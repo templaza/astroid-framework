@@ -26,6 +26,7 @@
                     <option value="alphabet_asc">ASTROID_WIDGET_ORDERING_ALPHABET_ASCENDING</option>
                     <option value="alphabet_desc">ASTROID_WIDGET_ORDERING_ALPHABET_DESCENDING</option>
                     <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
+                    <option value="ordering">ASTROID_WIDGET_ORDERING_ARTICLEORDER</option>
                 </field>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
