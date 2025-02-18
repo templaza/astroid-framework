@@ -75,5 +75,5 @@ if (!$backtotop_on_mobile) {
    $class[] = 'hideonxs';
 }
 
-$html .= '<a title="Back to Top" id="astroid-backtotop" class="' . implode(' ', $class) . '" href="#"><i class="' . $backtotop_icon . '"></i></a>';
+$html .= '<button type="button" title="Back to Top" id="astroid-backtotop" class="btn ' . implode(' ', $class) . '" ><i class="' . $backtotop_icon . '"></i></button>';
 echo $html;
