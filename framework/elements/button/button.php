@@ -88,11 +88,11 @@ foreach ($buttons as $key => $button) {
         }
     }
 
-    $link_target    =   !empty($btn_params->get('link_target', '')) ? ' target="'.$btn_params->get('link_target', '').'"' : '';
+    $customclass = $btn_params->get('customclass', '');
+    $onclick = $btn_params->get('onclick', '');
     $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($btn_params->get('button_outline', '')) ? 'outline-' : '') . $button_style . $btn_element_size. $bd_radius : 'as-btn-text text-uppercase text-reset';
     $btn_title      =   $button_style == 'text' ? '<small>'. $title . '</small>' : $title;
-    echo '<a id="btn-'.$button->id.'" href="' .$btn_params->get('link', ''). '" class="' .$button_class . '"'.$link_target.'>'.$btn_title.'</a>';
-}
+    echo '<button id="btn-'.$button->id.'" class="'. $customclass . ' ' .$button_class . '" onclick="' .$onclick.'" >'.$btn_title.'</button>';
 echo '</div>';
 
 // Item Padding

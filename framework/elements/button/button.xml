@@ -14,18 +14,13 @@
                         <fields>
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
                                 <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
-                                <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
-                                    <option value="">Default</option>
-                                    <option value="_blank">New Window</option>
-                                    <option value="_parent">Parent Frame</option>
-                                    <option value="_top">Full body of the window</option>
-                                </field>
+                                <field type="astroidtext" label="ASTROID_WIDGET_ONCLICK_LABEL" description="ASTROID_WIDGET_BUTTON_ONCLICK_DESC" name="onclick" hint="location.href='https://astroidframe.work/'"/>
                                 <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
                                 <field ngShow="[icon]!=''" type="astroidlist" label="ASTROID_WIDGET_ICON_POSITION_LABEL" name="icon_position" default="first">
                                     <option value="first">ASTROID_WIDGET_ICON_POSITION_FIRST_LABEL</option>
                                     <option value="last">ASTROID_WIDGET_ICON_POSITION_LAST_LABEL</option>
                                 </field>
+                                <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_LINK_CLASS_LABEL" name="customclass"/>
                                 <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                                     <option value="primary">Primary</option>
                                     <option value="secondary">Secondary</option>
