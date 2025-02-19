@@ -44,8 +44,6 @@
 			</field>
 			<field astroidgroup="sticky_header" name="stick_header_mobile_menu_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_HAMBURGER_ICON_COLOR">
 			</field>
-			<field astroidgroup="sticky_header" name="stick_header_mobile_menu_active_icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_HAMBURGER_ICON_COLOR">
-			</field>
 
 			<field astroidgroup="main_menu" name="main_menu_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_COLOR_LABEL" description="TPL_ASTROID_M_MENU_LINK_COLOR_DESC"/>
 			<field astroidgroup="main_menu" name="main_menu_link_background" type="astroidcolor" large="true" label="TPL_ASTROID_LINK_BG_COLOR_LABEL" description="TPL_ASTROID_LINK_BG_COLOR_DESC"/>

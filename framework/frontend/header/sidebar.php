@@ -137,7 +137,7 @@ $position_count = 0;
                 ?>
             </div>
         <?php endif; ?>
-        <div class="astroid-sidebar-menu">
+        <div class="astroid-sidebar-menu-wrap">
             <?php
             if ($header_menu_method == 'module_position') {
                 echo $document->position($header_menu_module_position);

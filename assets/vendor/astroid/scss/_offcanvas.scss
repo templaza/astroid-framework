@@ -12,6 +12,11 @@ $offcanvas-btn: 50px !default;
 	width: 34px;
 	height: 34px;
 	padding: 2px;
+	&.burger-menu-button {
+		.inner, .inner:before, .inner:after{
+			background-color: var(--as-mobile-menu-icon-color);
+		}
+	}
 }
 
 .burger-menu-button {
@@ -213,7 +218,8 @@ $offcanvas-btn: 50px !default;
 	overflow-x: hidden;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
-	background-color: $white;
+	color: var(--as-mobile-menu-text-color);
+	background-color: var(--as-mobile-backgroundcolor);
 	-webkit-transition: all .5s;
 	transition: all .5s;
 	max-width: 100vw !important;
@@ -245,8 +251,33 @@ $offcanvas-btn: 50px !default;
 	.burger-menu-button .inner,
 	.burger-menu-button .inner::before,
 	.burger-menu-button .inner::after {
-		background-color: $black;
+		background-color: var(--as-mobile-menu-active-icon-color);
 		opacity: 1;
+	}
+	.menu-indicator {
+		color: var(--as-mobile-menu-link-color);
+	}
+	.astroid-mobilemenu-container .astroid-mobilemenu-inner {
+		.menu-item {
+			a {
+				color: var(--as-mobile-menu-link-color);
+				&:hover {
+					background-color: var(--as-mobile-hover-background-color);
+				}
+			}
+			&.active {
+				background-color: var(--as-mobile-menu-active-bg-color);
+				> a, > .nav-header {
+					color: var(--as-mobile-menu-active-link-color);
+				}
+			}
+			&.nav-item-active {
+				background-color: var(--as-mobile-menu-active-bg-color);
+				> a, > a + .menu-indicator {
+					color: var(--as-mobile-menu-active-link-color);
+				}
+			}
+		}
 	}
 }
 
