@@ -67,7 +67,7 @@ $position_count = 0;
 <?php if ($mode == 'topbar') : ?>
     <div class="astroid-header astroid-sidebar-header astroid-sidebar-header-topbar">
         <div class="astroid-sidebar-header-inner row">
-            <div class="astroid-sidebar-logo col-12 col-lg d-flex align-items-center">
+            <div class="astroid-sidebar-logo col-12 col-lg-auto d-flex align-items-center">
                 <?php if (!empty($header_mobile_menu)) { ?>
                     <div class="justify-content-start astroid-sidebar-mobile-menu">
                         <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
@@ -82,7 +82,7 @@ $position_count = 0;
             <?php
             $position_count ++;
             if (${'block_'.$position_count.'_type'} != 'blank') : ?>
-                <div class="astroid-sidebar-block d-none d-lg-block col-lg-auto astroid-sidebar-block-<?php echo $position_count; ?>">
+                <div class="astroid-sidebar-block d-none d-lg-flex col-lg justify-content-end astroid-sidebar-block-<?php echo $position_count; ?>">
                     <?php
                     if (${'block_'.$position_count.'_type'} == 'position') {
                         echo '<div class="header-block-item d-flex align-item-center as-gutter-lg">';

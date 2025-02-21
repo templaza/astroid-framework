@@ -107,7 +107,7 @@ $overlay_position   = $params->get('overlay_position', 'justify-content-center a
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 
-echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
+echo '<div class="swiper as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);
