@@ -121,11 +121,7 @@ img {
 	}
 
 	&.has-sidebar {
-		.astroid-layout {
-			@include media-breakpoint-up(xl) {
-				width: calc(100vw - #{$sidebar-header-width});
-			}
-		}
+		min-width: 1%;
 	}
 }
 
