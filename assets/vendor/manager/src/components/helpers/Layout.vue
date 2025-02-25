@@ -479,7 +479,7 @@ function saveSublayout() {
     </div>
     <input
         :id="props.field.input.id"
-        :name="props.field.input.name"
+        :name="props.source === 'joomla_module' ? 'astroid_module_layout' : props.field.input.name"
         :value="modelValue"
         type="hidden"
     />
