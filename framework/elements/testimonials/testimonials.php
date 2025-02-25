@@ -221,7 +221,7 @@ if ($text_alignment) {
 }
 
 $use_masonry        =   $params->get('use_masonry', 0);
-echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls . ($use_masonry ? ' as-masonry' : '')).$gutter_cls.$overlay_text_color.'">';
+echo '<div class="astroid-grid '.($enable_slider ? 'astroid-slick opacity-0' . $nav_position : $row_column_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$gutter_cls.$overlay_text_color.'">';
 foreach ($testimonials as $key => $testimonial) {
     $testimonial_params    =   Helper::loadParams($testimonial->params);
     $avatar =   $testimonial_params->get('avatar', '');

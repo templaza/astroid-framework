@@ -45,7 +45,6 @@ class Font
     {
         $fonts = Helper::getJSONData('webfonts');
         $options = [];
-
         if (!isset($fonts['items'])) {
             return $options;
         }
