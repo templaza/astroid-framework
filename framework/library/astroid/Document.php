@@ -1000,12 +1000,7 @@ class Document
         if (!self::$_animation) {
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
             $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
-            if (Helper::isPro()) {
-                $this->loadImagesLoaded();
-                $wa->registerAndUseScript('astroid.animation.pro', 'media/astroidpro/assets/animations/js/index.min.js', ['relative' => true, 'version' => 'auto']);
-            } else {
-                $wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-            }
+            $wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_animation = true;
         }
     }
