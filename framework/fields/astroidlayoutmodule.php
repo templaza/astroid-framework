@@ -53,6 +53,7 @@ class JFormFieldAstroidLayoutModule extends FormField {
         $wa->registerAndUseStyle('astroid.icons', "media/astroid/assets/vendor/linearicons/font.min.css");
         $wa->useScript('bootstrap.tab');
         $wa->useScript('bootstrap.modal');
+        $wa->registerAndUseScript('astroid.manager.tinymce', 'media/astroid/assets/vendor/tinymce/tinymce.min.js', ['relative' => true, 'version' => 'auto']);
         $wa->registerAndUseScript('astroid.manager', 'media/astroid/assets/vendor/manager/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
         $wa->addInlineScript("(function ($) { $(document).ready(function () { $('#astroid-layout-module').parent().prev().remove(); }); })(jQuery)");
         return $html;

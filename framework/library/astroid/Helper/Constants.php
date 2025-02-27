@@ -44,6 +44,8 @@ class Constants
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
+        $tinyMceLicense =   $pluginParams->get('tinymce_license', '');
+
         return [
             'site_url'              =>  Uri::root(true). '/',
             'base_url'              =>  Uri::base(true),
@@ -65,7 +67,8 @@ class Constants
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
-            'form_template'         => Helper::getFormTemplate($mode)
+            'form_template'         => Helper::getFormTemplate($mode),
+            'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
         ];
     }
 
