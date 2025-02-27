@@ -3,7 +3,7 @@
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>February 2025</creationDate>
-   <version>3.1.11</version>
+   <version>3.1.12</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -54,6 +54,7 @@
          </fieldset>
          <fieldset name="astroid_api">
             <field name="gmap_api" type="text" default="" label="ASTROID_WIDGET_GMAP_API" description="ASTROID_WIDGET_GMAP_API_DESC"/>
+            <field name="tinymce_license" type="text" default="" label="ASTROID_WIDGET_TINY_LICENSE" description="ASTROID_WIDGET_TINY_LICENSE"/>
          </fieldset>
          <fieldset name="astroid-tabs-visibility">
             <field name="frontend_tabs_visibility" type="radio" default="1" label="ASTROID_TABS_FRONTEND_VISIBILTY" description="" class="btn-group btn-group-yesno">

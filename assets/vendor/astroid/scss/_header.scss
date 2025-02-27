@@ -8,6 +8,7 @@
    width: 100%;
    left: 0;
    z-index: $header-section-zindex;
+   background-color: var(--as-header-bg);
 
    /* Header Element */
    header {
@@ -69,6 +70,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      background-color: var(--as-stick-header-bg-color);
       -webkit-animation-fill-mode: both;
       animation-fill-mode: both;
       z-index: $sticky-header-zindex;
@@ -229,6 +231,16 @@ header .logo-wrapper {
 
 /* Sidebar Header */
 .astroid-header {
+   color: var(--as-header-text-color);
+   h1,h2,h3,h4,h5,h6,.megamenu-container .item-link-heading {
+      color: var(--as-header-heading-color);
+   }
+   a {
+      color: var(--as-header-link-color);
+      &:hover {
+         --as-header-link-color: var(--as-header-link-hover-color);
+      }
+   }
    &.has-sidebar {
       z-index: 1;
       transition: .1s linear all;
@@ -318,17 +330,11 @@ header .logo-wrapper {
       max-width: $sidebar-header-width;
    }
 
-   .astroid-sidebar-header {
-      @media(min-width: 1200px) {
-         padding: 15px 20px;
-      }
-
-      @media(min-width: 1400px) {
-         padding: 15px 30px;
-      }
-   }
-
    .astroid-sidebar-content {
+      background-color: var(--as-header-bg);
+      > * {
+         background-color: var(--as-header-bg);
+      }
       overflow-y: auto;
       @media(min-width: 1200px) {
          padding: 20px;
@@ -363,7 +369,7 @@ header .logo-wrapper {
 
    @media(max-width: 1200px) {
       .astroid-sidebar-content {
-         >div.astroid-sidebar-menu {
+         >div.astroid-sidebar-menu-wrap {
             display: none;
          }
 
@@ -405,6 +411,7 @@ header .logo-wrapper {
 
 .astroid-header-sidebar-topbar {
    .astroid-sidebar-header-topbar {
+      background-color: var(--as-header-bg);
       position: sticky;
       top: 0;
       z-index: 1021;

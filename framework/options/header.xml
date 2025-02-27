@@ -59,7 +59,7 @@
          </field>
 
          <field ngShow="[header]==true AND [header_block_1_type]=='position'" astroidgroup="header_element" name="header_block_1_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_1_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_1_POSITION_DESC" />
-
+         <field astroidgroup="header_element" ngShow="[header]==true AND [header_block_1_type]=='position'" name="header_block_1_style" type="astroidmodulesstyle" default="none" label="TPL_ASTROID_HEADER_BLOCK_1_STYLE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_1_STYLE_DESC" />
          <field ngShow="[header]==true AND [header_block_1_type]=='custom'" astroidgroup="header_element" name="header_block_1_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_1_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_1_CUSTOM_DESC" />
 
          <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar'))" astroidgroup="header_element" name="header_block_2_type" type="astroidlist" default="blank" class="form-select" label="TPL_ASTROID_HEADER_BLOCK_2_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_TYPE_DESC">
@@ -69,7 +69,7 @@
          </field>
 
          <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_2_type]=='position'" astroidgroup="header_element" name="header_block_2_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_POSITION_DESC" />
-
+         <field astroidgroup="header_element" ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_2_type]=='position'" name="header_block_2_style" type="astroidmodulesstyle" default="none" label="TPL_ASTROID_HEADER_BLOCK_2_STYLE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_STYLE_DESC" />
          <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_2_type]=='custom'" astroidgroup="header_element" name="header_block_2_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_2_CUSTOM_DESC" />
 
          <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left') OR ([header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar'))" astroidgroup="header_element" name="header_block_3_type" type="astroidlist" default="blank" class="form-select" label="TPL_ASTROID_HEADER_BLOCK_3_TYPE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_TYPE_DESC">
@@ -78,9 +78,9 @@
             <option value="custom">TPL_ASTROID_CUSTOM_HTML_OPTIONS</option>
          </field>
 
-         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_3_type]=='position'" astroidgroup="header_element" name="header_block_3_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_3_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_POSITION_DESC" />
-
-         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]!='center') OR ([header_mode]=='horizontal') OR ([header_mode]=='sidebar')) AND [header_block_3_type]=='custom'" astroidgroup="header_element" name="header_block_3_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_3_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_CUSTOM_DESC" />
+         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left') OR ([header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar')) AND [header_block_3_type]=='position'" astroidgroup="header_element" name="header_block_3_position" type="astroidmodulesposition" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_3_POSITION_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_POSITION_DESC" />
+         <field astroidgroup="header_element" ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left') OR ([header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar')) AND [header_block_3_type]=='position'" name="header_block_3_style" type="astroidmodulesstyle" default="none" label="TPL_ASTROID_HEADER_BLOCK_3_STYLE_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_STYLE_DESC" />
+         <field ngShow="[header]==true AND (([header_mode]=='stacked' AND [header_stacked_menu_mode]=='divided-logo-left') OR ([header_mode]=='sidebar' AND [header_sidebar_menu_mode]=='topbar')) AND [header_block_3_type]=='custom'" astroidgroup="header_element" name="header_block_3_custom" type="astroidtextarea" filter="raw" class="form-control" label="TPL_ASTROID_HEADER_BLOCK_3_CUSTOM_LABEL" description="TPL_ASTROID_HEADER_BLOCK_3_CUSTOM_DESC" />
 
          <field ngShow="[header]==true" astroidgroup="header_element" name="header_menu_method" type="astroidlist" default="default" label="TPL_ASTROID_HEADER_MENU_METHOD_LABEL" description="TPL_ASTROID_HEADER_MENU_METHOD_DESC">
             <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
@@ -188,7 +188,7 @@
             <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
          </field>
 
-         <field astroidgroup="header_logo_options_element" ngShow="[logo_typography]=='custom' AND [header]==true AND [logo_type]=='text'" name="logo_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3" font-size-unit="rem" letter-spacing="0px" line-height="1" font-weight="700" text-transform="none" collapse="false" />
+         <field astroidgroup="header_logo_options_element" ngShow="[logo_typography]=='custom' AND [header]==true AND [logo_type]=='text'" name="logo_typography_options" type="astroidtypography" font-style-picker="false" font-face="Arial, Helvetica, sans-serif" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="3" font-size-unit="rem" letter-spacing="0px" line-height="1" font-weight="700" text-transform="none" />
 
          <field astroidgroup="header_logo_options_element" description="TPL_ASTROID_TYPOGRAPHY_OPTION_DESC" ngShow="[header]==true AND [logo_type]=='text'" ngRequired="logo_type=='text'" name="logo_tag_line_typography" type="astroidradio" default="inherit" label="TPL_ASTROID_TYPOGRAPHY_LOGO_TAG_LINE">
             <option value="inherit">JGLOBAL_INHERIT</option>

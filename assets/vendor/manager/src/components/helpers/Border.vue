@@ -77,11 +77,11 @@ watch(border_text, (newText) => {
 </script>
 <template>
     <div class="row g-3">
-        <div class="col-12">
+        <div v-if="data.border_style !== `none`" class="col-12">
             <label :for="props.field.input.id + `_border_width`" class="form-label">{{ data.border_width }}px</label>
             <input v-model="data.border_width" type="range" class="form-range" min="1" max="50" step="1" :id="props.field.input.id + `_border_width`">
         </div>
-        <div class="col-6">
+        <div :class="{'col-6' : data.border_style !== `none`, 'col-12' : data.border_style === `none`}">
             <label class="form-label" :for="props.field.input.id + `_border_style`">Border Style</label>
             <select class="form-select" v-model="data.border_style" :id="props.field.input.id + `_border_style`">
                 <option value="solid">Solid</option>
@@ -91,7 +91,7 @@ watch(border_text, (newText) => {
                 <option value="none">None</option>
             </select>
         </div>
-        <div class="col-6">
+        <div v-if="data.border_style !== `none`" class="col-6">
             <div class="row">
                 <div :class="{
                     'col-4 text-center' : (constant.color_mode === '1'),

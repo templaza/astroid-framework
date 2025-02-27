@@ -95,7 +95,7 @@
                            closeSubMenu($(this));
                         });
                      } else {
-                        _thisSubMenu.find('.megamenu-item-link.item-level-2').unbind('click').click(function (e) {
+                        _thisSubMenu.find('.megamenu-item-link').unbind('click').click(function (e) {
                            e.preventDefault();
                            e.stopPropagation();
                            if ($(this).parent('.nav-item-submenu').hasClass('open')) {

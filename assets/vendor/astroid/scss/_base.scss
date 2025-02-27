@@ -1,3 +1,12 @@
+html {
+    background-color: var(--bs-body-bg);
+}
+a {
+    color: var(--bs-link-color);
+    &:hover {
+        --bs-link-color: var(--bs-link-hover-color);
+    }
+}
 @each $breakpoint in map-keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);

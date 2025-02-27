@@ -133,26 +133,15 @@ final class AstroidPlugin extends CMSPlugin
         }
     }
 
-    public function onExtensionBeforeSave($context, $table, $isNew)
-    {
-        if (defined('_ASTROID')) {
-            if (Framework::isAdmin()) {
-                if (($context == 'com_modules.module' || $context == 'com_advancedmodules.module') && $table->module == 'mod_astroid_layout') {
-                    $params = new \Joomla\Registry\Registry($table->params);
-                    $table->astroiddata = $params->get('astroid_module_layout', '');
-                    $params->remove('astroid_module_layout');
-                    $table->params = $params->toString();
-                }
-            }
-        }
-    }
-
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if (defined('_ASTROID')) {
             if (Framework::isAdmin()) {
-                if (($context == 'com_modules.module' || $context == 'com_advancedmodules.module') && $table->module == 'mod_astroid_layout' && !empty($table->id) && !empty($table->astroiddata)) {
-                    Helper::putContents(JPATH_SITE . '/media/mod_astroid_layout/params/' . $table->id . '.json', $table->astroiddata);
+                if (($context == 'com_modules.module' || $context == 'com_advancedmodules.module') && $table->module == 'mod_astroid_layout' && !empty($table->id)) {
+                    $astroid_module_layout = Factory::getApplication()->input->get('astroid_module_layout', '', 'raw');
+                    if (!empty($astroid_module_layout)) {
+                        Helper::putContents(JPATH_SITE . '/media/mod_astroid_layout/params/' . $table->id . '.json', $astroid_module_layout);
+                    }
                 }
                 if ($context == "com_templates.style" && $isNew && Template::isAstroidTemplate(JPATH_SITE . "/templates/{$table->template}/templateDetails.xml")) {
                     $params = \json_decode($table->params, TRUE);
