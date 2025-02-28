@@ -26,7 +26,7 @@ if (!count($buttons)) {
 }
 $button_group   =   intval($params->get('button_group', 0));
 $gutter         =   $params->get('gutter', 'lg');
-$border_radius  =   $params->get('border_radius', '');
+$border_radius  =   $params->get('btn_border_radius', '');
 $bd_radius      =   $border_radius ? ' ' . $border_radius : '';
 $button_size    =   $params->get('button_size', '');
 

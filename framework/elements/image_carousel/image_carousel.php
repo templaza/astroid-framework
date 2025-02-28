@@ -92,7 +92,7 @@ if (count($slide_responsive)) {
 }
 
 $rounded_size       =   $params->get('rounded_size', '3');
-$border_radius      =   $params->get('border_radius', '');
+$border_radius      =   $params->get('btn_border_radius', '');
 if ($border_radius == 'rounded') {
     $border_radius  = ' ' . $border_radius . '-' . $rounded_size;
 } else {
@@ -107,7 +107,7 @@ $overlay_position   = $params->get('overlay_position', 'justify-content-center a
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 
-echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
+echo '<div class="swiper as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
 foreach ($images as $image) {
     $image_params   =   Style::getSubFormParams($image->params);

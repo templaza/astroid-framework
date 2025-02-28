@@ -33,7 +33,7 @@ if (!empty($url)) {
     echo '<a class="video-button button-ripple d-inline-flex align-items-center justify-content-center rounded-pill" href="'.$url.'" title="'.$title.'" data-fancybox="astroid-'.$element->id.'"><span class="d-inline-flex justify-content-center align-items-center"><i class="fas fa-play"></i></span></a>';
     $document = Framework::getDocument();
     $document->loadFancyBox();
-    $document->addScriptDeclaration('Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');', 'body');
+    $document->addScriptDeclaration('document.addEventListener(\'DOMContentLoaded\', () => {Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');});', 'body');
     $style = new Style('#'. $element->id);
     $style_dark = new Style('#'. $element->id, 'dark');
 

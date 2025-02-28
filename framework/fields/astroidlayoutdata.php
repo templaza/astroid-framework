@@ -136,6 +136,16 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $wa->registerAndUseStyle('astroid.icons', "media/astroid/assets/vendor/linearicons/font.min.css");
                 $wa->useScript('bootstrap.tab');
                 $wa->useScript('bootstrap.modal');
+
+                // Check if Joomla tinyMCE is not loaded then load from Astroid
+                try {
+                    $isLoaded = $wa->isAssetActive('script', 'plg_editors_tinymce');
+                } catch (Exception $e) {
+                    $isLoaded = false; // or handle the error as needed
+                }
+                if (!$isLoaded) {
+                    $wa->registerAndUseScript('astroid.tinymce', 'media/astroid/assets/vendor/tinymce/tinymce.min.js', ['relative' => true, 'version' => 'auto']);
+                }
                 $wa->registerAndUseScript('astroid.article.widget.data', 'media/astroid/assets/vendor/manager/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
                 return $html;
             }

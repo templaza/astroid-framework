@@ -44,7 +44,7 @@
                     <option value="btn-lg">Large</option>
                     <option value="btn-sm">Small</option>
                 </field>
-                <field astroidgroup="button_options" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                <field astroidgroup="button_options" type="astroidlist" name="btn_border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>

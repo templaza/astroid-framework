@@ -85,7 +85,7 @@ if (!empty($content_font_style)) {
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
 
-$btn_radius         =   $params->get('border_radius', '');
+$btn_radius         =   $params->get('btn_border_radius', '');
 $btn_radius         =   $btn_radius ? ' '. $btn_radius : '';
 
 echo '<div id="slide-'.$element->id.'" class="carousel slide overflow-hidden'. $overlay_text_color . $effect_type . $box_shadow . $box_shadow_hover .$bd_radius .'"'. (intval($autoplay) ? ' data-bs-ride="carousel"' : '') .'>';
