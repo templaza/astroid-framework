@@ -2,8 +2,8 @@
 import {inject, onUpdated, ref} from 'vue';
 import Editor from '@tinymce/tinymce-vue'
 
-const emit = defineEmits(['update:modelValue']);
-const props = defineProps(['modelValue', 'field']);
+const emit = defineEmits(['update:modelValue', 'update:Preset']);
+const props = defineProps(['modelValue', 'field', 'presetUpdated']);
 const constant  =   inject('constant', {});
 const theme = inject('theme', 'light');
 const content = ref(props.modelValue);
@@ -19,18 +19,16 @@ const MONACO_EDITOR_OPTIONS = {
 const field_id = props.field.input.id + '-' + (Date.now() * 1000 + Math.random() * 1000).toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
 
 onUpdated(()=>{
-    // if (quill.value.getSemanticHTML() !== props.modelValue) {
-    //     quill.value.setContents(htmlToDelta(props.modelValue));
-    // }
+    if (props.presetUpdated === true) {
+        emit('update:Preset', false);
+        content.value = props.modelValue;
+    }
 })
 function handleChange() {
     emit('update:modelValue', content.value);
 }
 const _isloading = ref(true);
-function handleInit() {
-    _isloading.value = true;
-}
-function handleShow(editor) {
+function handleInit(editor) {
     _isloading.value = false;
 }
 </script>
@@ -54,7 +52,7 @@ function handleShow(editor) {
                     toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media codesample | removeformat searchreplace | fullscreen',
                 }"
                     @change="handleChange"
-                    @init="handleShow"
+                    @init="handleInit"
                 />
             </div>
             <div v-if="_isloading" class="loading d-flex justify-content-center flex-column w-100" style="align-items: center;">

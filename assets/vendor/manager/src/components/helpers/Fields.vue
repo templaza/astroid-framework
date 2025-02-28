@@ -121,7 +121,7 @@ function updateSubLayouts() {
         <Typography v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroideditor`" class="astroid-editor">
-        <AstroidEditor v-model="props.scope[props.field.name]" :field="props.field" />
+        <AstroidEditor v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtextarea`" class="astroid-textarea">
         <TextArea v-model="props.scope[props.field.name]" :field="props.field" />
