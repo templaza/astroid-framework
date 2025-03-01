@@ -770,7 +770,7 @@ class Document
         return $url;
     }
 
-    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = ''): void
+    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '', $version = false): void
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -782,6 +782,7 @@ class Document
                 $script['attribs'] = $attribs;
                 $script['options'] = $options;
                 $script['type'] = $type;
+                $script['version'] = $version;
                 $this->_javascripts[$position][md5(serialize($script))] = $script;
             }
         }
@@ -791,7 +792,7 @@ class Document
     {
         $html = '';
         foreach ($this->_javascripts[$position] as $javascript) {
-            $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
+            $html .= '<script src="' . $this->_systemUrl($javascript['url'], $javascript['version']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
         }
         foreach ($this->_scripts[$position] as $script) {
             $html .= '<script type="' . $script['type'] . '">' . $script['content'] . '</script>';
@@ -832,19 +833,16 @@ class Document
         return $this->scriptOptions;
     }
 
-    protected function _systemUrl($url, $version = true): string
+    protected function _systemUrl($url, $version = false): string
     {
         $config = Factory::getApplication()->getConfig();
         $template = Framework::getTemplate();
-        if ($config->get('debug', 0) || Framework::getDebugger()->debug) {
+        if (Framework::isSite() && ($config->get('debug', 0) || Framework::getDebugger()->debug)) {
             $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
         }
         $root = Uri::root(true). '/';
-        if (Framework::isSite()) {
-            $postfix = '';
-        }
 
         if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
             if (JDEBUG) {
@@ -891,7 +889,7 @@ class Document
         $this->_styles[$device][] = trim($content);
     }
 
-    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0): void
+    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0, $version = false): void
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -904,7 +902,7 @@ class Document
         }
         foreach ($url as $u) {
             if (!empty(trim($u))) {
-                $stylesheet = ['url' => $u, 'attribs' => $attribs, 'shifted' => $shifted];
+                $stylesheet = ['url' => $u, 'attribs' => $attribs, 'shifted' => $shifted, 'version' => $version];
                 $this->_stylesheets[md5($u)] = $stylesheet;
             }
         }
@@ -1101,7 +1099,7 @@ class Document
         $content = '';
         foreach ($keys as $key) {
             $stylesheet = $this->_stylesheets[$key];
-            $content .= '<link href="' . $this->_systemUrl($stylesheet['url']) . '"';
+            $content .= '<link href="' . $this->_systemUrl($stylesheet['url'], $stylesheet['version']) . '"';
             foreach ($stylesheet['attribs'] as $prop => $value) {
                 $content .= ' ' . $prop . '="' . $value . '"';
             }
@@ -1440,7 +1438,7 @@ class Document
             // adding compiled scss
 
 //            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
-            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css');
+            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0, true);
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
