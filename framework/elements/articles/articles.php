@@ -190,6 +190,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 // Image Options
 $layout             =   $params->get('layout', 'classic');
 $thumbnail_only     =   $params->get('thumbnail_only', 0);
+$linked_image       =   $params->get('linked_image', 0);
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
 $height             =   $params->get('height', '');
@@ -286,6 +287,7 @@ foreach ($items as $key => $item) {
     $media          =   '';
     if ($thumbnail_only && !empty($item->image_thumbnail)) {
         $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+            if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
     } else {
         switch ($item->post_format) {
             case 'gallery':
@@ -342,6 +344,7 @@ foreach ($items as $key => $item) {
             default:
                 if (!empty($item->image_thumbnail)) {
                     $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                        if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
                 }
                 break;
         }
