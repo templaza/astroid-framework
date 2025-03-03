@@ -252,6 +252,33 @@ $button_outline     =   $params->get('button_outline', 0);
 $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
+// Button Custom Style
+
+if ($button_style === 'custom') {
+$color          = Style::getColor($params->get('btn_color', ''));
+$color_hover    = Style::getColor($params->get('btn_color_hover', ''));
+$color_active   = Style::getColor($params->get('btn_color_active', ''));
+$bgcolor        = Style::getColor($params->get('btn_bgcolor', ''));
+$bgcolor_hover  = Style::getColor($params->get('btn_bgcolor_hover', ''));
+$bgcolor_active = Style::getColor($params->get('btn_bgcolor_active', ''));
+
+// Color style
+$element->style->child('.btn')->addCss('color', $color['light']);
+$element->style_dark->child('.btn')->addCss('color', $color['dark']);
+$element->style->child('.btn')->hover()->addCss('color', $color_hover['light']);
+$element->style_dark->child('.btn')->hover()->addCss('color', $color_hover['dark']);
+$element->style->child('.btn:not(.collapsed)')->addCss('color', $color_active['light']);
+$element->style_dark->child('.btn:not(.collapsed)')->addCss('color', $color_active['dark']);
+
+// Background color style
+$element->style->child('.btn')->addCss('background-color', $bgcolor['light']);
+$element->style_dark->child('.btn')->addCss('background-color', $bgcolor['dark']);
+$element->style->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['light']);
+$element->style_dark->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['dark']);
+$element->style->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
+$element->style_dark->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
+    }
+
 $has_gallery        =   false;
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
