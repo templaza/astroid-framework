@@ -106,7 +106,7 @@ class Utility
 
         $theme_width    =   $params->get('theme_width', '');
         if (!empty($theme_width)) {
-            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
+            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .container-fluid, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
         }
 
         $template_layout = $params->get('template_layout', 'wide');
@@ -382,42 +382,27 @@ class Utility
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
+        $root = new Style(':root, [data-bs-theme="light"]');
+        $root_dark = new Style('[data-bs-theme="dark"]');
         // Body
         $body_background_color  =   Style::getColor($params->get('body_background_color', ''));
         $body_text_color        =   Style::getColor($params->get('body_text_color', ''));
         $body_link_color        =   Style::getColor($params->get('body_link_color', ''));
         $body_link_hover_color  =   Style::getColor($params->get('body_link_hover_color', ''));
         $body_heading_color     =   Style::getColor($params->get('body_heading_color', ''));
-        $template_layout        =   $params->get('template_layout', 'wide');
-        Style::addCssBySelector('html', 'background-color', $body_background_color['light']);
-        Style::addCssBySelector('[data-bs-theme=dark]', 'background-color', $body_background_color['dark']);
 
-        if ($template_layout == 'boxed') {
-            Style::addCssBySelector('.astroid-layout.astroid-layout-boxed .astroid-wrapper', 'background-color', $body_background_color['light']);
-            Style::addCssBySelector('[data-bs-theme=dark] .astroid-layout.astroid-layout-boxed .astroid-wrapper', 'background-color', $body_background_color['dark']);
-        }
-        $body = new Style('body');
-        $body_dark = new Style('body', 'dark');
-        $body->addCss('--bs-body-bg', $body_background_color['light']);
-        $body->addCss('--bs-body-color', $body_text_color['light']);
-        $body->link()->addCss('color', 'var(--as-link-color)');
-        $body->link()->addCss('--as-link-color', $body_link_color['light']);
-        $body->link()->hover()->addCss('color', 'var(--as-link-hover-color)');
-        $body->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['light']);
-        $body->render();  // render body colors
+        $root->addCss('--bs-body-bg', $body_background_color['light']);
+        $root->addCss('--bs-body-color', $body_text_color['light']);
+        $root->addCss('--bs-link-color', $body_link_color['light']);
+        $root->addCss('--bs-link-hover-color', $body_link_hover_color['light']);
 
-        $body_dark->addCss('--bs-body-bg', $body_background_color['dark']);
-        $body_dark->addCss('--bs-body-color', $body_text_color['dark']);
-        $body_dark->link()->addCss('--as-link-color', $body_link_color['dark']);
-        $body_dark->link()->hover()->addCss('--as-link-hover-color', $body_link_hover_color['dark']);
-        $body_dark->render();  // render body colors
+        $root_dark->addCss('--bs-body-bg', $body_background_color['dark']);
+        $root_dark->addCss('--bs-body-color', $body_text_color['dark']);
+        $root_dark->addCss('--bs-link-color', $body_link_color['dark']);
+        $root_dark->addCss('--bs-link-hover-color', $body_link_hover_color['dark']);
 
-        $body = new Style(['h1','h2','h3','h4','h5','h6']);
-        $body->addCss('--bs-heading-color', $body_heading_color['light']);
-        $body->render();
-        $body = new Style(['h1','h2','h3','h4','h5','h6'], 'dark');
-        $body->addCss('--bs-heading-color', $body_heading_color['dark']);
-        $body->render();
+        $root->addCss('--bs-heading-color', $body_heading_color['light']);
+        $root_dark->addCss('--bs-heading-color', $body_heading_color['dark']);
 
         // Header
         $header_text_color      =   Style::getColor($params->get('header_text_color', ''));
@@ -426,67 +411,56 @@ class Utility
         $header_link_color      =   Style::getColor($params->get('header_link_color', ''));
         $header_link_hover_color=   Style::getColor($params->get('header_link_hover_color', ''));
 
-        $header = new Style('header');
-        $header->addCss('color', $header_text_color['light']);
-        $header->child('h1,h2,h3,h4,h5,h6,.megamenu-container .item-link-heading')->addCss('color', $header_heading_color['light']);
-        $header->link()->addCss('color', $header_link_color['light']);
-        $header->link()->hover()->addCss('color', $header_link_hover_color['light']);
-        $header->render();
+        $root->addCss('--as-header-text-color', $header_text_color['light']);
+        $root->addCss('--as-header-heading-color', $header_heading_color['light']);
+        $root->addCss('--as-header-link-color', $header_link_color['light']);
+        $root->addCss('--as-header-link-hover-color', $header_link_hover_color['light']);
 
-        $header = new Style('header', 'dark');
-        $header->addCss('color', $header_text_color['dark']);
-        $header->child('h1,h2,h3,h4,h5,h6,.megamenu-container .item-link-heading')->addCss('color', $header_heading_color['dark']);
-        $header->link()->addCss('color', $header_link_color['dark']);
-        $header->link()->hover()->addCss('color', $header_link_hover_color['dark']);
-        $header->render();
+        $root_dark->addCss('--as-header-text-color', $header_text_color['dark']);
+        $root_dark->addCss('--as-header-heading-color', $header_heading_color['dark']);
+        $root_dark->addCss('--as-header-link-color', $header_link_color['dark']);
+        $root_dark->addCss('--as-header-link-hover-color', $header_link_hover_color['dark']);
 
-        Style::addCssBySelector('.astroid-header-section, .astroid-sidebar-header, .astroid-sidebar-header > *', 'background-color', $header_bg['light']);
-        Style::addCssBySelector('[data-bs-theme=dark] .astroid-header-section, [data-bs-theme=dark] .astroid-sidebar-header, [data-bs-theme=dark] .astroid-sidebar-header > *', 'background-color', $header_bg['dark']);
+        $root->addCss('--as-header-bg', $header_bg['light']);
+        $root_dark->addCss('--as-header-bg', $header_bg['dark']);
 
         // Sticky Header
         $stick_header_bg_color              =   Style::getColor($params->get('stick_header_bg_color', ''));
         $stick_header_menu_link_color       =   Style::getColor($params->get('stick_header_menu_link_color', ''));
         $stick_header_menu_link_hover_color =   Style::getColor($params->get('stick_header_menu_link_hover_color', ''));
         $stick_header_menu_link_active_color=   Style::getColor($params->get('stick_header_menu_link_active_color', ''));
-        $stickyHeader = new Style('#astroid-sticky-header');
-        $stickyHeader->addCss('background-color', $stick_header_bg_color['light']);
-        $stickyHeaderLink = $stickyHeader->child('.astroid-nav .nav-link');
-        $stickyHeaderLink->addCss('color', $stick_header_menu_link_color['light']);
-        $stickyHeaderLink->hover()->addCss('color', $stick_header_menu_link_hover_color['light']);
-        $stickyHeaderLink->active('.active')->addCss('color', $stick_header_menu_link_active_color['light']);
-        $stickyHeader->render();  // render sticky header
 
-        $stickyHeader = new Style('#astroid-sticky-header', 'dark');
-        $stickyHeader->addCss('background-color', $stick_header_bg_color['dark']);
-        $stickyHeaderLink = $stickyHeader->child('.astroid-nav .nav-link');
-        $stickyHeaderLink->addCss('color', $stick_header_menu_link_color['dark']);
-        $stickyHeaderLink->hover()->addCss('color', $stick_header_menu_link_hover_color['dark']);
-        $stickyHeaderLink->active('.active')->addCss('color', $stick_header_menu_link_active_color['dark']);
-        $stickyHeader->render();  // render sticky header
+        $root->addCss('--as-stick-header-bg-color', $stick_header_bg_color['light']);
+        $root->addCss('--as-stick-header-menu-link-color', $stick_header_menu_link_color['light']);
+        $root->addCss('--as-stick-header-menu-link-hover-color', $stick_header_menu_link_hover_color['light']);
+        $root->addCss('--as-stick-header-menu-link-active-color', $stick_header_menu_link_active_color['light']);
+
+        $root_dark->addCss('--as-stick-header-bg-color', $stick_header_bg_color['dark']);
+        $root_dark->addCss('--as-stick-header-menu-link-color', $stick_header_menu_link_color['dark']);
+        $root_dark->addCss('--as-stick-header-menu-link-hover-color', $stick_header_menu_link_hover_color['dark']);
+        $root_dark->addCss('--as-stick-header-menu-link-active-color', $stick_header_menu_link_active_color['dark']);
 
         // Menu
         $main_menu_link_color           =   Style::getColor($params->get('main_menu_link_color', ''));
+        $main_menu_link_background      =   Style::getColor($params->get('main_menu_link_background', ''));
         $main_menu_link_hover_color     =   Style::getColor($params->get('main_menu_link_hover_color', ''));
         $main_menu_link_active_color    =   Style::getColor($params->get('main_menu_link_active_color', ''));
         $main_menu_active_background    =   Style::getColor($params->get('main_menu_active_background', ''));
         $main_menu_hover_background     =   Style::getColor($params->get('main_menu_hover_background', ''));
-        $navLink = new Style(['.astroid-nav .nav-link']);
-        $navLink->addCss('color', $main_menu_link_color['light']);
-        $navLink->hover()->addCss('color', $main_menu_link_hover_color['light']);
-        $navLink->hover()->addCss('background-color', $main_menu_hover_background['light']);
-        $navLink->focus()->addCss('color', $main_menu_link_hover_color['light']);
-        $navLink->active('.active')->addCss('color', $main_menu_link_active_color['light']);
-        $navLink->active('.active')->addCss('background-color', $main_menu_active_background['light']);
-        $navLink->render(); // render navlink
 
-        $navLink = new Style(['.astroid-nav .nav-link'], 'dark');
-        $navLink->addCss('color', $main_menu_link_color['dark']);
-        $navLink->hover()->addCss('color', $main_menu_link_hover_color['dark']);
-        $navLink->hover()->addCss('background-color', $main_menu_hover_background['dark']);
-        $navLink->focus()->addCss('color', $main_menu_link_hover_color['dark']);
-        $navLink->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
-        $navLink->active('.active')->addCss('background-color', $main_menu_active_background['dark']);
-        $navLink->render(); // render navlink
+        $root->addCss('--as-main-menu-link-color', $main_menu_link_color['light']);
+        $root->addCss('--as-main-menu-link-background', $main_menu_link_background['light']);
+        $root->addCss('--as-main-menu-link-hover-color', $main_menu_link_hover_color['light']);
+        $root->addCss('--as-main-menu-hover-background', $main_menu_hover_background['light']);
+        $root->addCss('--as-main-menu-link-active-color', $main_menu_link_active_color['light']);
+        $root->addCss('--as-main-menu-active-background', $main_menu_active_background['light']);
+
+        $root_dark->addCss('--as-main-menu-link-color', $main_menu_link_color['dark']);
+        $root_dark->addCss('--as-main-menu-link-background', $main_menu_link_background['dark']);
+        $root_dark->addCss('--as-main-menu-link-hover-color', $main_menu_link_hover_color['dark']);
+        $root_dark->addCss('--as-main-menu-hover-background', $main_menu_hover_background['dark']);
+        $root_dark->addCss('--as-main-menu-link-active-color', $main_menu_link_active_color['dark']);
+        $root_dark->addCss('--as-main-menu-active-background', $main_menu_active_background['dark']);
 
         // Dropdown Menu
         $dropdown_bg_color  =   Style::getColor($params->get('dropdown_bg_color', ''));
@@ -496,77 +470,28 @@ class Utility
         $dropdown_menu_active_bg_color  =   Style::getColor($params->get('dropdown_menu_active_bg_color', ''));
         $dropdown_menu_active_link_color=   Style::getColor($params->get('dropdown_menu_active_link_color', ''));
 
-        $dropdown           = Style::addCssBySelector('.megamenu-container', 'background-color', $dropdown_bg_color['light']);
-        $submenuDropdown    = Style::addCssBySelector('.megamenu-container .nav-submenu .nav-submenu', 'background-color', $dropdown_bg_color['light']);
+        $root->addCss('--as-dropdown-bg-color', $dropdown_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-bg-color', $dropdown_bg_color['dark']);
 
-        Style::addCssBySelector('.has-megamenu.open .arrow', 'border-bottom-color', $dropdown_bg_color['light']);
+        $root->addCss('--as-dropdown-link-color', $dropdown_link_color['light']);
+        $root_dark->addCss('--as-dropdown-link-color', $dropdown_link_color['dark']);
 
-        $link = $dropdown->child('li.nav-item-submenu > a');
-        $link->addCss('color', $dropdown_link_color['light']);
-        $link->hover()->addCss('color', $dropdown_menu_link_hover_color['light'])->addCss('background-color', $dropdown_menu_hover_bg_color['light']);
-        $link->active('.active')->addCss('color', $dropdown_menu_active_link_color['light'])->addCss('background-color', $dropdown_menu_active_bg_color['light']);
-        $dropdown->render(); // render dropdown
+        $root->addCss('--as-dropdown-menu-link-hover-color', $dropdown_menu_link_hover_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-link-hover-color', $dropdown_menu_link_hover_color['dark']);
 
-        $dropdown           = Style::addCssBySelector('[data-bs-theme=dark] .megamenu-container', 'background-color', $dropdown_bg_color['dark']);
-        $submenuDropdown    = Style::addCssBySelector('[data-bs-theme=dark] .megamenu-container .nav-submenu .nav-submenu', 'background-color', $dropdown_bg_color['dark']);
+        $root->addCss('--as-dropdown-menu-hover-bg-color', $dropdown_menu_hover_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-hover-bg-color', $dropdown_menu_hover_bg_color['dark']);
 
-        Style::addCssBySelector('[data-bs-theme=dark] .has-megamenu.open .arrow', 'border-bottom-color', $dropdown_bg_color['dark']);
+        $root->addCss('--as-dropdown-menu-active-link-color', $dropdown_menu_active_link_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-active-link-color', $dropdown_menu_active_link_color['dark']);
 
-        $link = $dropdown->child('li.nav-item-submenu > a');
-        $link->addCss('color', $dropdown_link_color['dark']);
-        $link->hover()->addCss('color', $dropdown_menu_link_hover_color['dark'])->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
-        $link->active('.active')->addCss('color', $dropdown_menu_active_link_color['dark'])->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
-        $dropdown->render(); // render dropdown
-
-        // Sidebar Submenu
-        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu');
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->child('> i')->addCss('color', $main_menu_link_hover_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['light']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->child('> i')->addCss('color', $main_menu_link_active_color['light']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['light']);
-        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
-        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['light']);
-        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['light']);
-        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['light']);
-        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['light']);
-        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['light']);
-        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['light']);
-        $sidebar_menu_style->render();
-
-        $sidebar_menu_style     =   new Style('.astroid-sidebar-menu', 'dark');
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->addCss('color', $main_menu_link_color['dark']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->hover()->addCss('color', $main_menu_link_hover_color['dark']);
-        $sidebar_menu_style->child('.nav-item-inner')->hover()->addCss('background-color', $main_menu_hover_background['dark']);
-        $sidebar_menu_style->child('.nav-item-inner > .as-menu-item')->active('.active')->addCss('color', $main_menu_link_active_color['dark']);
-        $sidebar_menu_style->child('.nav-item-inner')->active('.active')->addCss('background-color', $main_menu_active_background['dark']);
-        $sidebar_link   =   $sidebar_menu_style->child('.nav-item-submenu .nav-item-inner');
-        $sidebar_link->child('a.as-menu-item')->addCss('color', $dropdown_link_color['dark']);
-        $sidebar_link->hover()->child('a.as-menu-item')->addCss('color', $dropdown_menu_link_hover_color['dark']);
-        $sidebar_link->hover()->addCss('background-color', $dropdown_menu_hover_bg_color['dark']);
-        $sidebar_link->child('a.as-menu-item')->active()->addCss('color', $dropdown_menu_active_bg_color['dark']);
-        $sidebar_link->active()->addCss('background-color', $dropdown_menu_active_bg_color['dark']);
-        $sidebar_menu_style->child('.navbar-subnav')->addCss('background-color', $dropdown_bg_color['dark']);
-        $sidebar_menu_style->render();
+        $root->addCss('--as-dropdown-menu-active-bg-color', $dropdown_menu_active_bg_color['light']);
+        $root_dark->addCss('--as-dropdown-menu-active-bg-color', $dropdown_menu_active_bg_color['dark']);
 
         // Sticky Menu
         $stick_header_mobile_menu_icon_color = Style::getColor($params->get('stick_header_mobile_menu_icon_color', ''));
-        $stick_header_mobile_menu_active_icon_color = Style::getColor($params->get('stick_header_mobile_menu_active_icon_color', ''));
-        $sticky_menu_styles = new Style('#astroid-sticky-header');
-        $header_mobilemenu_trigger  =   $sticky_menu_styles->child('.header-mobilemenu-trigger.burger-menu-button .inner, .header-mobilemenu-trigger.burger-menu-button .inner::before, .header-mobilemenu-trigger.burger-menu-button .inner::after');
-        $header_mobilemenu_trigger->addCss('background-color', $stick_header_mobile_menu_icon_color['light']);
-        $astroid_mobilemenu_open    =   $sticky_menu_styles->child('.astroid-mobilemenu-open .burger-menu-button .inner, .astroid-mobilemenu-open .burger-menu-button .inner::before, .astroid-mobilemenu-open .burger-menu-button .inner::after');
-        $astroid_mobilemenu_open->addCss('background-color', $stick_header_mobile_menu_active_icon_color['light']);
-        $sticky_menu_styles->render();
-
-        $sticky_menu_styles = new Style('#astroid-sticky-header', 'dark');
-        $header_mobilemenu_trigger  =   $sticky_menu_styles->child('.header-mobilemenu-trigger.burger-menu-button .inner, .header-mobilemenu-trigger.burger-menu-button .inner::before, .header-mobilemenu-trigger.burger-menu-button .inner::after');
-        $header_mobilemenu_trigger->addCss('background-color', $stick_header_mobile_menu_icon_color['dark']);
-        $astroid_mobilemenu_open    =   $sticky_menu_styles->child('.astroid-mobilemenu-open .burger-menu-button .inner, .astroid-mobilemenu-open .burger-menu-button .inner::before, .astroid-mobilemenu-open .burger-menu-button .inner::after');
-        $astroid_mobilemenu_open->addCss('background-color', $stick_header_mobile_menu_active_icon_color['dark']);
-        $sticky_menu_styles->render();
+        $root->addCss('--as-stick-header-mobile-menu-icon-color', $stick_header_mobile_menu_icon_color['light']);
+        $root_dark->addCss('--as-stick-header-mobile-menu-icon-color', $stick_header_mobile_menu_icon_color['dark']);
 
         // Offcanvas Menu
         $mobile_background_color = Style::getColor($params->get('mobile_backgroundcolor', ''));
@@ -578,39 +503,24 @@ class Utility
         $mobile_menu_icon_color = Style::getColor($params->get('mobile_menu_icon_color', ''));
         $mobile_menu_active_icon_color = Style::getColor($params->get('mobile_menu_active_icon_color', ''));
 
-        $mobilemenu_styles = new Style('.astroid-offcanvas');
-        $mobilemenu_styles->addCss('color', $mobile_menu_text_color['light'] . ' !important');
-        $mobilemenu_styles->addCss('background-color', $mobile_background_color['light'] . ' !important');
-        $mobilemenu_styles->child('.burger-menu-button, .astroid-mobilemenu-container .astroid-mobilemenu-inner .dropdown-menus')->addCss('background-color', $mobile_background_color['light'] . ' !important');
-        $mobilemenu_styles->child('.menu-indicator')->addCss('color', $mobile_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner   =   $mobilemenu_styles->child('.astroid-mobilemenu-container .astroid-mobilemenu-inner');
-        $astroid_mobilemenu_inner->child('.menu-item a')->addCss('color', $mobile_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a:hover')->addCss('background-color', $mobile_hover_background_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active > a,  .menu-item.active > .nav-header, .menu-item.nav-item-active > a, .menu-item.nav-item-active > a + .menu-indicator')->addCss('color', $mobile_active_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active, .menu-item.nav-item-active')->addCss('background-color', $mobile_active_background_color['light'] . ' !important');
-        $mobilemenu_styles->child('.burger-menu-button .inner, .burger-menu-button .inner::before, .burger-menu-button .inner::after')->addCss('background-color', $mobile_menu_active_icon_color['light']);
-        $mobilemenu_styles->render();
+        $root->addCss('--as-mobile-menu-text-color', $mobile_menu_text_color['light']);
+        $root->addCss('--as-mobile-backgroundcolor', $mobile_background_color['light']);
+        $root->addCss('--as-mobile-menu-link-color', $mobile_link_color['light']);
+        $root->addCss('--as-mobile-hover-background-color', $mobile_hover_background_color['light']);
+        $root->addCss('--as-mobile-menu-active-link-color', $mobile_active_link_color['light']);
+        $root->addCss('--as-mobile-menu-active-bg-color', $mobile_active_background_color['light']);
+        $root->addCss('--as-mobile-menu-active-icon-color', $mobile_menu_active_icon_color['light']);
 
-        $mobilemenu_styles = new Style('.astroid-offcanvas', 'dark');
-        $mobilemenu_styles->addCss('color', $mobile_menu_text_color['dark'] . ' !important');
-        $mobilemenu_styles->addCss('background-color', $mobile_background_color['dark'] . ' !important');
-        $mobilemenu_styles->child('.burger-menu-button, .astroid-mobilemenu-container .astroid-mobilemenu-inner .dropdown-menus')->addCss('background-color', $mobile_background_color['dark'] . ' !important');
-        $mobilemenu_styles->child('.menu-indicator')->addCss('color', $mobile_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner   =   $mobilemenu_styles->child('.astroid-mobilemenu-container .astroid-mobilemenu-inner');
-        $astroid_mobilemenu_inner->child('.menu-item a')->addCss('color', $mobile_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a:hover')->addCss('background-color', $mobile_hover_background_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active > a,  .menu-item.active > .nav-header, .menu-item.nav-item-active > a, .menu-item.nav-item-active > a + .menu-indicator')->addCss('color', $mobile_active_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active, .menu-item.nav-item-active')->addCss('background-color', $mobile_active_background_color['dark'] . ' !important');
-        $mobilemenu_styles->child('.burger-menu-button .inner, .burger-menu-button .inner::before, .burger-menu-button .inner::after')->addCss('background-color', $mobile_menu_active_icon_color['dark']);
-        $mobilemenu_styles->render();
+        $root_dark->addCss('--as-mobile-menu-text-color', $mobile_menu_text_color['dark']);
+        $root_dark->addCss('--as-mobile-backgroundcolor', $mobile_background_color['dark']);
+        $root_dark->addCss('--as-mobile-menu-link-color', $mobile_link_color['dark']);
+        $root_dark->addCss('--as-mobile-hover-background-color', $mobile_hover_background_color['dark']);
+        $root_dark->addCss('--as-mobile-menu-active-link-color', $mobile_active_link_color['dark']);
+        $root_dark->addCss('--as-mobile-menu-active-bg-color', $mobile_active_background_color['dark']);
+        $root_dark->addCss('--as-mobile-menu-active-icon-color', $mobile_menu_active_icon_color['dark']);
 
-        $mobilemenu_styles = new Style('.header-offcanvas-trigger.burger-menu-button');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobile_menu_icon_color['light']);
-        $mobilemenu_styles->render();
-
-        $mobilemenu_styles = new Style('.header-offcanvas-trigger.burger-menu-button', 'dark');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobile_menu_icon_color['dark']);
-        $mobilemenu_styles->render();
+        $root->addCss('--as-mobile-menu-icon-color', $mobile_menu_icon_color['light']);
+        $root_dark->addCss('--as-mobile-menu-icon-color', $mobile_menu_icon_color['dark']);
 
         // Mobile Menu
         $mobilemenu_background_color = Style::getColor($params->get('mobilemenu_backgroundcolor', ''));
@@ -622,50 +532,33 @@ class Utility
         $mobilemenu_menu_icon_color = Style::getColor($params->get('mobilemenu_menu_icon_color', ''));
         $mobilemenu_menu_active_icon_color = Style::getColor($params->get('mobilemenu_menu_active_icon_color', ''));
 
-        $mobilemenu_styles = new Style('.astroid-mobilemenu');
-        $mobilemenu_styles->addCss('background-color', $mobilemenu_background_color['light'] . ' !important');
-        $mobilemenu_styles->addCss('color', $mobilemenu_menu_text_color['light'] . ' !important');
-        $astroid_mobilemenu_inner   =   $mobilemenu_styles->child('.astroid-mobilemenu-container .astroid-mobilemenu-inner');
-        $astroid_mobilemenu_inner->child('.dropdown-menus')->addCss('background-color', $mobilemenu_background_color['light'] . ' !important');
-        $mobilemenu_styles->child('.menu-indicator')->addCss('color', $mobilemenu_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a')->addCss('color', $mobilemenu_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a:hover')->addCss('background-color', $mobilemenu_hover_background_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active > a, .menu-item.active > .nav-header, .menu-item.nav-item-active > a, .menu-item.nav-item-active > a + .menu-indicator')->addCss('color', $mobilemenu_active_link_color['light'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active, .menu-item.nav-item-active')->addCss('background-color', $mobilemenu_active_background_color['light'] . ' !important');
-        $mobilemenu_styles->render();
+        $root->addCss('--as-mobilemenu-backgroundcolor', $mobilemenu_background_color['light']);
+        $root->addCss('--as-mobilemenu-menu-text-color', $mobilemenu_menu_text_color['light']);
+        $root->addCss('--as-mobilemenu-menu-link-color', $mobilemenu_link_color['light']);
+        $root->addCss('--as-mobilemenu-hover-background-color', $mobilemenu_hover_background_color['light']);
+        $root->addCss('--as-mobilemenu-menu-active-link-color', $mobilemenu_active_link_color['light']);
+        $root->addCss('--as-mobilemenu-menu-active-bg-color', $mobilemenu_active_background_color['light']);
 
-        $mobilemenu_styles = new Style('.astroid-mobilemenu', 'dark');
-        $mobilemenu_styles->addCss('background-color', $mobilemenu_background_color['dark'] . ' !important');
-        $mobilemenu_styles->addCss('color', $mobilemenu_menu_text_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner   =   $mobilemenu_styles->child('.astroid-mobilemenu-container .astroid-mobilemenu-inner');
-        $astroid_mobilemenu_inner->child('.dropdown-menus')->addCss('background-color', $mobilemenu_background_color['dark'] . ' !important');
-        $mobilemenu_styles->child('.menu-indicator')->addCss('color', $mobilemenu_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a')->addCss('color', $mobilemenu_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item a:hover')->addCss('background-color', $mobilemenu_hover_background_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active > a, .menu-item.active > .nav-header, .menu-item.nav-item-active > a, .menu-item.nav-item-active > a + .menu-indicator')->addCss('color', $mobilemenu_active_link_color['dark'] . ' !important');
-        $astroid_mobilemenu_inner->child('.menu-item.active, .menu-item.nav-item-active')->addCss('background-color', $mobilemenu_active_background_color['dark'] . ' !important');
-        $mobilemenu_styles->render();
+        $root_dark->addCss('--as-mobilemenu-backgroundcolor', $mobilemenu_background_color['dark']);
+        $root_dark->addCss('--as-mobilemenu-menu-text-color', $mobilemenu_menu_text_color['dark']);
+        $root_dark->addCss('--as-mobilemenu-menu-link-color', $mobilemenu_link_color['dark']);
+        $root_dark->addCss('--as-mobilemenu-hover-background-color', $mobilemenu_hover_background_color['dark']);
+        $root_dark->addCss('--as-mobilemenu-menu-active-link-color', $mobilemenu_active_link_color['dark']);
+        $root_dark->addCss('--as-mobilemenu-menu-active-bg-color', $mobilemenu_active_background_color['dark']);
 
-        $mobilemenu_styles = new Style('.header-mobilemenu-trigger.burger-menu-button');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobilemenu_menu_icon_color['light']);
-        $mobilemenu_styles->render();
+        $root->addCss('--as-mobilemenu-menu-icon-color', $mobilemenu_menu_icon_color['light']);
+        $root_dark->addCss('--as-mobilemenu-menu-icon-color', $mobilemenu_menu_icon_color['dark']);
 
-        $mobilemenu_styles = new Style('.header-mobilemenu-trigger.burger-menu-button', 'dark');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobilemenu_menu_icon_color['dark']);
-        $mobilemenu_styles->render();
-
-        $mobilemenu_styles = new Style('.astroid-mobilemenu-open .burger-menu-button');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobilemenu_menu_active_icon_color['light']);
-        $mobilemenu_styles->render();
-
-        $mobilemenu_styles = new Style('.astroid-mobilemenu-open .burger-menu-button', 'dark');
-        $mobilemenu_styles->child('.inner, .inner::before, .inner::after')->addCss('background-color', $mobilemenu_menu_active_icon_color['dark']);
-        $mobilemenu_styles->render();
+        $root->addCss('--as-mobilemenu-menu-active-icon-color', $mobilemenu_menu_active_icon_color['light']);
+        $root_dark->addCss('--as-mobilemenu-menu-active-icon-color', $mobilemenu_menu_active_icon_color['dark']);
 
         // Contact Icon
         $contact_icon_color     =   Style::getColor($params->get('icon_color', ''));
-        Style::addCssBySelector('.astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['light']);
-        Style::addCssBySelector('[data-bs-theme=dark] .astroid-contact-info i[class*="fa-"]', 'color', $contact_icon_color['dark']);
+        $root->addCss('--as-contact-info-icon-color', $contact_icon_color['light']);
+        $root_dark->addCss('--as-contact-info-icon-color', $contact_icon_color['dark']);
+
+        $root->render();
+        $root_dark->render();
     }
 
     public static function article(): void

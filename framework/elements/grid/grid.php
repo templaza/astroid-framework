@@ -144,7 +144,7 @@ $button_outline     =   $params->get('button_outline', 0);
 $button_size        =   $params->get('button_size', '');
 $button_size        =   $button_size ? ' '. $button_size : '';
 
-$button_radius      =   $params->get('border_radius', '');
+$button_radius      =   $params->get('btn_border_radius', '');
 $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 
 $image_rounded_size     =   $params->get('image_rounded_size', '3');
@@ -162,7 +162,7 @@ $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' .
 $button_margin_top  =   $params->get('button_margin_top', '');
 
 $use_masonry        =   $params->get('use_masonry', 0);
-echo '<div class="row'.($use_masonry ? ' as-masonry' : '').$row_column_cls.'">';
+echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.'">';
 foreach ($grids as $key => $grid) {
     $grid_params    =   Helper::loadParams($grid->params);
     $link_target    =   !empty($grid_params->get('link_target', '')) ? ' target="'.$grid_params->get('link_target', '').'"' : '';

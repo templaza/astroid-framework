@@ -69,7 +69,7 @@
                 <field astroidgroup="widget_styles" ngShow="[button_size]=='custom'" name="button_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" color-picker="false" preview="false"/>
 
                 <field astroidgroup="widget_styles" ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
-                <field astroidgroup="widget_styles" type="astroidlist" name="border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                <field astroidgroup="widget_styles" type="astroidlist" name="btn_border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
                     <option value="">Rounded</option>
                     <option value="rounded-0">Square</option>
                     <option value="rounded-pill">Circle</option>

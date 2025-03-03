@@ -16,7 +16,7 @@ import Presets from './Presets.vue';
 import MultiSelect from './MultiSelect.vue';
 import SubForm from './SubForm.vue';
 import Icons from './Icons.vue';
-import Editor from './Editor.vue';
+import AstroidEditor from './AstroidEditor.vue';
 import Categories from './Categories.vue';
 import Assignment from './Assignment.vue';
 import Border from './Border.vue';
@@ -121,7 +121,7 @@ function updateSubLayouts() {
         <Typography v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroideditor`" class="astroid-editor">
-        <Editor v-model="props.scope[props.field.name]" :field="props.field" />
+        <AstroidEditor v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtextarea`" class="astroid-textarea">
         <TextArea v-model="props.scope[props.field.name]" :field="props.field" />

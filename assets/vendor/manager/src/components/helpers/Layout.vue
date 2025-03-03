@@ -20,10 +20,7 @@ onBeforeMount(()=>{
     layout.value    =   props.field.input.value;
     form_template.value = constant.form_template;
     Object.keys(constant.form_template).forEach(key => {
-        if (constant.form_template[key].info.element_type === 'system' && !constant.form_template[key].info.multiple && props.source !== 'article_layouts') {
-            system.value[constant.form_template[key].info.type] = true;
-        }
-        if (constant.form_template[key].info.element_type === 'article' && !constant.form_template[key].info.multiple && props.source === 'article_layouts') {
+        if (!constant.form_template[key].info.multiple) {
             system.value[constant.form_template[key].info.type] = true;
         }
     })
@@ -482,7 +479,7 @@ function saveSublayout() {
     </div>
     <input
         :id="props.field.input.id"
-        :name="props.field.input.name"
+        :name="props.source === 'joomla_module' ? 'astroid_module_layout' : props.field.input.name"
         :value="modelValue"
         type="hidden"
     />

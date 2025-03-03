@@ -91,7 +91,7 @@ img {
 			max-width: 1140px;
 			margin: 0 auto;
 			box-shadow: 0 0 5px rgba(0, 0, 0, .2);
-			background-color: $white;
+			background-color: var(--bs-body-bg);
 		}
 	}
 }
@@ -121,34 +121,7 @@ img {
 	}
 
 	&.has-sidebar {
-		//height: 100vh;
-		//overflow-y: inherit;
-
-		&.sidebar-dir-left {
-
-			@media(max-width: 1600px) {
-				// padding-left: $sidebar-header-mini-width;
-			}
-
-			@media(max-width: 1599px) {
-				// padding-left: 0;
-			}
-		}
-
-		&.sidebar-dir-right {
-
-			@media(max-width: 1600px) {
-				// padding-right: $sidebar-header-mini-width;
-			}
-
-			@media(max-width: 1599px) {
-				// padding-right: 0;
-			}
-		}
-
-		@include media-breakpoint-down(xl) {
-			height: auto;
-		}
+		min-width: 1%;
 	}
 }
 

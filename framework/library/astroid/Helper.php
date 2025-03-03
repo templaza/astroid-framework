@@ -9,6 +9,7 @@
 
 namespace Astroid;
 use Astroid\Element\Layout;
+use Astroid\Helper\Constants;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Event\Cache\AfterPurgeEvent;
 use Joomla\CMS\Factory;
@@ -144,7 +145,7 @@ class Helper
 
     public static function joomlaMediaVersion()
     {
-        return Factory::getDocument()->getMediaVersion();
+        return Factory::getApplication()->getDocument()->getMediaVersion();
     }
 
     public static function refreshVersion()
@@ -648,8 +649,7 @@ class Helper
     public static function frameworkVersion()
     {
         Framework::getDebugger()->log('Getting Framework Version');
-        $xml = self::getXML(JPATH_ADMINISTRATOR . '/manifests/libraries/astroid.xml');
-        $version = (string) $xml->version;
+        $version = Constants::$astroid_version;
         Framework::getDebugger()->log('Getting Framework Version');
         return $version;
     }

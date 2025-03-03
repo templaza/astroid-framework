@@ -4,7 +4,6 @@ import Article from './Article.vue'
 import Module from './Module.vue';
 import "vue-search-select/dist/VueSearchSelect.css"
 import 'vue-color-kit/dist/vue-color-kit.css'
-import 'quill/dist/quill.snow.css'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 let astroid_app = document.getElementById('astroid-app');
 let as_widgets = document.querySelectorAll('.as-article-widget-data');
@@ -45,3 +44,8 @@ else if (typeof(as_module) !== 'undefined' && as_module !== null)
     });
     app.mount('#astroid-layout-module')
 }
+document.addEventListener('focusin', (e) => {
+    if (e.target.closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+        e.stopImmediatePropagation();
+    }
+});

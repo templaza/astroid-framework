@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, onBeforeUnmount, ref } from 'vue';
 import Fields from './Fields.vue';
 const emit = defineEmits(['update:closeElement', 'update:saveElement']);
 const props = defineProps(['element', 'form', 'constant']);
@@ -15,6 +15,18 @@ onBeforeMount(()=>{
         });
     }
 })
+
+const handleEscKey = (event) => {
+    if (event.key === 'Escape') {
+        emit('update:closeElement');
+    }
+};
+onMounted(() => {
+    document.addEventListener('keydown', handleEscKey);
+});
+onBeforeUnmount(() => {
+    document.removeEventListener('keydown', handleEscKey);
+});
 function checkShow(field) {
     if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
         const expression = field.ngShow.replace(/\[(\S+?)\]/g, "params.value\['$1'\]");
