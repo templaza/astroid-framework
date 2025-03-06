@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelogs>
+    <changelog>
+        <element>astroidpro</element>
+        <type>plugin</type>
+        <version>1.0.4</version>
+        <addition>
+            <item><![CDATA[Improve UI/UX when update Astroid Pro using Joomla Update System.]]></item>
+        </addition>
+    </changelog>
+</changelogs>
