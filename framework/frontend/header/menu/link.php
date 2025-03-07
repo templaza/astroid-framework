@@ -87,6 +87,10 @@ if ($item->type == "heading" || $item->type == 'separator') {
     $item->flink = '#';
 }
 
+if (!empty($item->menu_icon) && empty($options->icon)) {
+   $options->icon = $item->menu_icon;
+}
+
 $attr = [];
 foreach ($attributes as $key => $attribute) {
    $attr[] = $key . '="' . $attribute . '"';
