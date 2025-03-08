@@ -24,10 +24,12 @@ $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
 $block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('header_block_1_custom', '');
+$block_1_jcontent = $params->get('process_block_1_jcontent', '');
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
 $block_2_style = $params->get('header_block_2_style', 'none');
 $block_2_custom = $params->get('header_block_2_custom', '');
+$block_2_jcontent = $params->get('process_block_2_jcontent', '');
 $header_menu_method = $params->get('header_menu_method', 'default');
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
@@ -70,7 +72,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   }
                   if ($block_2_type == 'custom') {
                       echo '<div class="header-block-item d-flex justify-content-start align-items-center">';
-                      echo $block_2_custom;
+                      echo $block_2_jcontent ? JHtml::_('content.prepare', $block_2_custom) : $block_2_custom;
                       echo '</div>';
                   }
                   ?>
@@ -127,7 +129,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   }
                   if ($block_1_type == 'custom') {
                      echo '<div class="header-block-item d-flex justify-content-end align-items-center">';
-                     echo $block_1_custom;
+                     echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                      echo '</div>';
                   }
                   ?>
