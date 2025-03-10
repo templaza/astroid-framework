@@ -953,7 +953,7 @@ class Document
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelector(\''.$selector.'\').classList.remove("as-loading"); });');
+            $wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelectorAll(\''.$selector.'\').forEach(element => element.classList.remove("as-loading")); });');
         }
     }
 
