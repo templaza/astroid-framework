@@ -30,6 +30,9 @@ class Element extends BaseElement
 
     public function render()
     {
+        if (empty($this->state)) {
+            return '';
+        }
         $this->_decorateSection();
         if ($this->type == 'sublayout') {
             $this->content = Layout::renderSublayout($this->params->get('source', ''));
