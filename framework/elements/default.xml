@@ -13,6 +13,7 @@
             <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
             <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
+            <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
                <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
                <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>
@@ -186,15 +187,17 @@
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
             <field astroidgroup="custom_settings" name="custom_css" type="astroidgetpro" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
-         </fieldset>
-         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
+
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_SMALL_DEVICES_DESC" name="hideonxs" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_SMALL_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_SMALL_DEVICES_DESC" name="hideonsm" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_SMALL_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_MEDIUM_DEVICES_DESC" name="hideonmd" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_MEDIUM_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_LARGE_DEVICES_DESC" name="hideonlg" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_LARGE_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
+         </fieldset>
+         <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+            <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroidgetpro" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
          </fieldset>
       </fields>
    </form>
