@@ -267,6 +267,92 @@ class Constants
         ]
     ];
 
+    public static $dynamic_sources = [
+        'none' => 'None',
+        'content' => 'Articles',
+        'categories' => 'Categories',
+    ];
+
+    public static $dynamic_source_fields = [
+        [
+            'value' => 'content',
+            'name' => 'Articles',
+            'fields' => [
+                'title' => 'Title',
+                'introtext' => 'Teaser',
+                'text' => 'Content',
+                'created' => 'Created Date',
+                'modified' => 'Modified Date',
+                'publish_up' => 'Published',
+                'created_by' => 'Created By',
+                'modified_by' => 'Modified By',
+                'images.image_intro' => 'Intro Image',
+                'images.image_intro_alt' => 'Intro Image Alt',
+                'images.image_intro_caption' => 'Intro Image Caption',
+                'images.image_fulltext' => 'Full Image',
+                'images.image_fulltext_alt' => 'Full Image Alt',
+                'images.image_fulltext_caption' => 'Full Image Caption',
+                'link' => 'Link',
+                'urls.urla' => 'Link A',
+                'urls.urlatext' => 'Link A Text',
+                'urls.urlb' => 'Link B',
+                'urls.urlbtext' => 'Link B Text',
+                'urls.urlc' => 'Link C',
+                'urls.urlctext' => 'Link C Text',
+                'rating' => 'Rating',
+                'votes' => 'Votes',
+                'hits' => 'Hits',
+                'event_after_display_title' => 'Event After Display Title',
+                'event_before_display_content' => 'Event Before Display Content',
+                'event_after_display_content' => 'Event After Display Content',
+                'id' => 'ID',
+                'alias' => 'Alias',
+            ],
+            'filters' => [
+                'content',
+            ]
+        ],
+        [
+            'value' => 'categories',
+            'name' => 'Categories',
+            'fields' => [
+                'title' => 'Title',
+                'description' => 'Description',
+                'created_time' => 'Created Date',
+                'modified_time' => 'Modified Date',
+                'publish_up' => 'Published',
+                'created_user_id' => 'Created By',
+                'modified_user_id' => 'Modified By',
+                'image' => 'Image',
+                'image_alt' => 'Image Alt',
+                'link' => 'Link',
+                'article_count' => 'Article Count',
+                'id' => 'ID',
+                'alias' => 'Alias',
+            ],
+            'filters' => [
+                'content','categories'
+            ]
+        ],
+        [
+            'value' => 'users',
+            'name' => 'Users',
+            'fields' => [
+                'name' => 'Name',
+                'username' => 'Username',
+                'email' => 'Email',
+                'registerDate' => 'Register Date',
+                'lastvisitDate' => 'Last Visit Date',
+                'link' => 'Link',
+                'user_groups' => 'User Groups',
+                'id' => 'ID',
+            ],
+            'filters' => [
+                'content','categories'
+            ]
+        ],
+    ];
+
     public static $preloder_animations = [
         [
             'audio' => ['label' => 'Audio', 'image' => 'preloader/audio.svg'],

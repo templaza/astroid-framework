@@ -8,12 +8,13 @@
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
          </fieldset>
-         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field type="astroidgroup" name="general"/>
             <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
+            <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
             <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
-            <field name="device_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
+
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
                <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
                <option value="currentPage">ASTROID_BANNER_VISIBILITY_OPTIONS_CURRENT_PAGE</option>

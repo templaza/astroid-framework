@@ -14,6 +14,7 @@ use \Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Form\Form;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -70,6 +71,9 @@ class Template
 
     public static function setTemplateDefaults($template, $id, $parent_id = 0)
     {
+        if (!self::isAstroidTemplate(Path::clean(JPATH_SITE . "/templates/{$template}/templateDetails.xml"))) {
+            return;
+        }
         $params_path = JPATH_SITE . "/media/templates/site/{$template}/params/{$id}.json";
         if (!file_exists($params_path)) {
             if (!empty($parent_id) && file_exists(JPATH_SITE . "/media/templates/site/{$template}/params/" . $parent_id . '.json')) {
@@ -83,11 +87,19 @@ class Template
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }
             $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $object = new \stdClass();
-            $object->id = $id;
-            $object->params = \json_encode(["astroid" => $id]);
-            $db->updateObject('#__template_styles', $object, 'id');
-            self::uploadTemplateDefaults($template, $id);
+            $query = $db->getQuery(true);
+            $query->select('params');
+            $query->from('#__template_styles');
+            $query->where('id = ' . $id);
+            $db->setQuery($query);
+            $object = $db->loadObject();
+            if ($object) {
+                $params = new \Joomla\Registry\Registry($object->params);
+                $params->set('astroid', $id);
+                $object->params = $params->toString();
+                $db->updateObject('#__template_styles', $object, 'id');
+                self::uploadTemplateDefaults($template, $id);
+            }
         }
     }
 
