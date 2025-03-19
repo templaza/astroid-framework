@@ -274,7 +274,14 @@ class Constants
     ];
 
     public static $dynamic_source_fields = [
-        [
+        'none' => [
+            'value' => 'none',
+            'name' => 'None',
+            'fields' => [],
+            'order' => [],
+            'filters' => []
+        ],
+        'content' => [
             'value' => 'content',
             'name' => 'Articles',
             'fields' => [
@@ -308,11 +315,20 @@ class Constants
                 'id' => 'ID',
                 'alias' => 'Alias',
             ],
+            'order' => [
+                'title' => 'Title',
+                'created' => 'Created Date',
+                'modified' => 'Modified Date',
+                'publish_up' => 'Published',
+                'ordering' => 'Ordering',
+                'hits' => 'Hits',
+                'random' => 'Random',
+            ],
             'filters' => [
                 'content',
             ]
         ],
-        [
+        'categories' => [
             'value' => 'categories',
             'name' => 'Categories',
             'fields' => [
@@ -323,18 +339,25 @@ class Constants
                 'publish_up' => 'Published',
                 'created_user_id' => 'Created By',
                 'modified_user_id' => 'Modified By',
-                'image' => 'Image',
-                'image_alt' => 'Image Alt',
+                'params.image' => 'Image',
+                'params.image_alt' => 'Image Alt',
                 'link' => 'Link',
                 'article_count' => 'Article Count',
                 'id' => 'ID',
                 'alias' => 'Alias',
             ],
+            'order' => [
+                'title' => 'Title',
+                'created_time' => 'Created Date',
+                'modified_time' => 'Modified Date',
+                'hits' => 'Hits',
+                'random' => 'Random',
+            ],
             'filters' => [
                 'content','categories'
             ]
         ],
-        [
+        'users' => [
             'value' => 'users',
             'name' => 'Users',
             'fields' => [
@@ -346,6 +369,13 @@ class Constants
                 'link' => 'Link',
                 'user_groups' => 'User Groups',
                 'id' => 'ID',
+            ],
+            'order' => [
+                'name' => 'Name',
+                'username' => 'Username',
+                'email' => 'Email',
+                'registerDate' => 'Register Date',
+                'lastvisitDate' => 'Last Visit Date',
             ],
             'filters' => [
                 'content','categories'

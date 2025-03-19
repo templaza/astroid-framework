@@ -20,12 +20,6 @@ class Site extends Helper\Client
         if (!Framework::getTemplate()->isAstroid) {
             return;
         }
-        Helper::triggerEvent('onBeforeAstroidRender'); // at last process all astroid:include
-        Component\Utility::layout(); // site layout
-        Component\Utility::background(); // site background
-        Component\Utility::colors(); // site colors
-        Component\Utility::article(); // site article
-        Component\Utility::custom(); // site custom codes
         Component\Includer::run(); // at last process all astroid:include
         Framework::getDocument()->compress(); // compress the html
         Helper::triggerEvent('onAfterAstroidRender'); // at last process all astroid:include
@@ -36,6 +30,8 @@ class Site extends Helper\Client
         if (!Framework::getTemplate()->isAstroid) {
             return;
         }
+        Helper::triggerEvent('onBeforeAstroidRender'); // at last process all astroid:include
+        $document = Framework::getDocument();
         Component\Utility::meta(); // site meta
         Component\Utility::typography(); // site typography
         Helper\Head::styles(); // site Styles
@@ -43,6 +39,15 @@ class Site extends Helper\Client
         Component\Utility::cursorEffect(); // smooth scroll utility
         Component\Utility::smoothScroll(); // smooth scroll utility
         Helper\Head::scripts(); // site scripts
+
+        Component\Utility::layout(); // site layout
+        Component\Utility::background(); // site background
+        Component\Utility::colors(); // site colors
+        Component\Utility::article(); // site article
+        Component\Utility::custom(); // site custom codes
+        $document->astroidCustomCSS();
+        $document->getStylesheets();
+        $document->changeCoreStatus(false);
     }
 
     protected function rate()

@@ -13,6 +13,7 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Help\Help;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
@@ -31,7 +32,7 @@ class Utility
         $item = $menu->getItem($itemid);
 
         $template_params = Framework::getTemplate()->getParams();
-        $config = Factory::getConfig();
+        $config = Factory::getApplication()->getConfig();
 
         if (empty($item)) {
             return;
@@ -241,7 +242,6 @@ class Utility
                 }
             }
             $configs    =   implode(',', $options);
-            $wa         =   Factory::getApplication()->getDocument()->getWebAssetManager();
             $document   =   Framework::getDocument();
             $document->loadLenis();
             $script     =   'const initSmoothScrollingGSAP = () => {'
@@ -261,8 +261,8 @@ class Utility
                 .'requestAnimationFrame(raf);'
                 .'};'
                 .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
-            $wa->registerAndUseStyle('astroid.lenis', 'astroid/lenis.min.css');
-            $wa->addInlineScript($script.$prevent_script);
+            $document->getWA()->registerAndUseStyle('astroid.lenis', 'astroid/lenis.min.css');
+            $document->getWA()->addInlineScript($script.$prevent_script);
         }
     }
 
@@ -273,10 +273,10 @@ class Utility
         if ($enable_cursor_effect) {
             $cursor_effect = $params->get('cursor_effect', 0);
             if ($cursor_effect) {
-                Framework::getDocument()->loadGSAP();
-                $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-                $wa->registerAndUseStyle('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/css/base.min.css');
-                $wa->registerAndUseScript('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                $document = Framework::getDocument();
+                $document->loadGSAP();
+                $document->getWA()->registerAndUseStyle('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/css/base.min.css');
+                $document->getWA()->registerAndUseScript('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             }
         }
     }
@@ -644,7 +644,6 @@ class Utility
     public static function error(): void
     {
         $params = Framework::getTemplate()->getParams();
-        $document = Framework::getDocument();
 
         $bodyStyle = new Style('body');
         $bodyStyle_dark = new Style('body', 'dark');

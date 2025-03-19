@@ -12,6 +12,7 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -239,10 +240,25 @@ class Style
 
         if (!empty($css)) {
             $document = Framework::getDocument();
+            $cssContent = '';
             foreach ($css as $device => $styles) {
                 if (!empty($styles)) {
-                    $document->addStyleDeclaration($this->_selector . '{' . $styles . '}', $device);
+                    if (!$document->coreLoading()) {
+                        $cssContent .= match ($device) {
+                            'landscape_mobile' => '@media (min-width: 576px) {' . $this->_selector . '{' . $styles . '}' . '}',
+                            'tablet' => '@media (min-width: 768px) {' . $this->_selector . '{' . $styles . '}' . '}',
+                            'desktop' => '@media (min-width: 992px) {' . $this->_selector . '{' . $styles . '}' . '}',
+                            'large_desktop' => '@media (min-width: 1200px) {' . $this->_selector . '{' . $styles . '}' . '}',
+                            'larger_desktop' => '@media (min-width: 1400px) {' . $this->_selector . '{' . $styles . '}' . '}',
+                            default => $this->_selector . '{' . $styles . '}',
+                        };
+                    } else {
+                        $document->addStyleDeclaration($this->_selector . '{' . $styles . '}', $device);
+                    }
                 }
+            }
+            if (!empty($cssContent)) {
+                $document->getWA()->addInlineStyle($cssContent);
             }
         }
 

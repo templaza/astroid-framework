@@ -10,7 +10,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Language\Text;
 use Astroid\Helper\Constants;
 
 class JFormFieldDynamicContent extends FormField
@@ -30,8 +29,6 @@ class JFormFieldDynamicContent extends FormField
         } else {
             $value = (array) $this->value;
         }
-
-        $plugin_params  =   Astroid\Helper::getPluginParams();
 
         $defaults = [
             'source' => 'none',

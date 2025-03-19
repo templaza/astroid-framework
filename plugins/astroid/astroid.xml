@@ -23,10 +23,6 @@
                <option value="cdn">CDN</option>
                <option value="local">Local</option>
             </field>
-            <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
-               <option value="1">JYES</option>
-               <option value="0">JNO</option>
-            </field>
             <field name="astroid_shortcut_enable" type="radio" default="1" label="ASTROID_ENABLE_SHORTCUT_LABEL" description="ASTROID_ENABLE_SHORTCUT_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>

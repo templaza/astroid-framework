@@ -32,6 +32,9 @@ class Document
     protected $minify_css = false;
     protected $minify_js = false;
     protected $minify_html = false;
+    private $_app = null;
+    private $_document = null;
+    private $_wa = null;
     protected static bool $_fontawesome = false;
     protected static bool $_asicon = false;
     protected static bool $_fancybox = false;
@@ -48,6 +51,8 @@ class Document
     protected $type = null;
     protected $modules = null;
 
+    private $core_loaded = true;
+
     protected $scriptOptions = [];
 
     public function __construct()
@@ -58,8 +63,10 @@ class Document
         $this->minify_js = $params->get('minify_js', false);
         $this->minify_html = $params->get('minify_html', false);
 
-        $doc = Factory::getDocument();
-        $this->type = $doc->getType();
+        $this->_app = Factory::getApplication();
+        $this->_document = $this->_app->getDocument();
+        $this->_wa = $this->_document->getWebAssetManager();
+        $this->type = $this->_document->getType();
 
         $template = Framework::getTemplate();
         $this->addLayoutPath(JPATH_SITE . '/templates/' . $template->template . '/html/frontend/');
@@ -128,8 +135,7 @@ class Document
 
     public function compress(): void
     {
-        $app = Factory::getApplication();
-        $body = $app->getBody();
+        $body = $this->_app->getBody();
 
         // Stop Minification for RSSFeeds and other doc types.
         if ($this->type == 'feed') $this->minify_css = $this->minify_js = $this->minify_html = false;
@@ -140,7 +146,7 @@ class Document
 
         if ($this->minify_html) $body = $this->minifyHTML($body);
 
-        $app->setBody($body);
+        $this->_app->setBody($body);
     }
 
     public function isFrontendEditing(): bool
@@ -149,12 +155,11 @@ class Document
             return false;
         }
 
-        $app = Factory::getApplication();
-        $option = $app->input->get('option', '', 'STRING');
-        $view = $app->input->get('view', '', 'STRING');
-        $layout = $app->input->get('layout', 'default', 'STRING');
-        $task = $app->input->get('task', '', 'STRING');
-        $tmpl = $app->input->get('tmpl', '', 'STRING');
+        $option = $this->_app->input->get('option', '', 'STRING');
+        $view = $this->_app->input->get('view', '', 'STRING');
+        $layout = $this->_app->input->get('layout', 'default', 'STRING');
+        $task = $this->_app->input->get('task', '', 'STRING');
+        $tmpl = $this->_app->input->get('tmpl', '', 'STRING');
 
         if ($option == 'com_content' && $view == 'form' && $layout == 'edit') {
             return true;
@@ -501,6 +506,11 @@ class Document
         }
     }
 
+    public function getWA()
+    {
+        return $this->_wa;
+    }
+
     public function _minifyAssets($m)
     {
         if ($m[0] == '') {
@@ -541,7 +551,7 @@ class Document
         $assets[] = \json_encode($this->_customtags);
         $assets[] = \json_encode($this->_metas);
         $assets[] = self::$_fontawesome;
-        $assets[] = Factory::getDocument()->getHeadData();
+        $assets[] = $this->_document->getHeadData();
         return md5(serialize($assets));
     }
 
@@ -601,8 +611,7 @@ class Document
     private function _modulePosition($position): false|string
     {
         $this->modules[$position] = '';
-        $document = Factory::getDocument();
-        $renderer = $document->loadRenderer('module');
+        $renderer = $this->_document->loadRenderer('module');
         $modules = ModuleHelper::getModules($position);
         ob_start();
 
@@ -618,8 +627,7 @@ class Document
     private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
-        $document = Factory::getApplication()->getDocument();
-        $renderer = $document->loadRenderer('module');
+        $renderer = $this->_document->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
 
@@ -680,21 +688,11 @@ class Document
         return $return;
     }
 
-    protected function checkDev(): void
-    {
-        $params = Framework::getTemplate()->getParams();
-        if ($params->exists('developemnt_mode')) {
-            $dev = $params->get('developemnt_mode', 0);
-        } else {
-            $dev = $params->get('development_mode', 0);
-        }
-        $this->_dev = ($dev ? true : false);
-    }
-
     public function isDev(): bool
     {
         if ($this->_dev === null) {
-            $this->checkDev();
+            $params = Helper::getPluginParams();
+            $this->_dev = $params->get('astroid_debug', 0);
         }
         return $this->_dev;
     }
@@ -770,20 +768,28 @@ class Document
         return $url;
     }
 
-    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '', $version = false): void
+    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '', $version = false, $depend = []): void
     {
+        if (empty($url)) {
+            return;
+        }
         if (!is_array($url)) {
             $url = [$url];
         }
         foreach ($url as $u) {
             if (!empty(trim($u))) {
-                $script = [];
-                $script['url'] = $u;
-                $script['attribs'] = $attribs;
-                $script['options'] = $options;
-                $script['type'] = $type;
-                $script['version'] = $version;
-                $this->_javascripts[$position][md5(serialize($script))] = $script;
+                if ($position === 'head' && $this->coreLoading()) {
+                    $this->_wa->registerAndUseScript('astroid.js.'.md5($u), $this->_systemUrl($u, $version, false), ['relative' => true, 'version' => 'auto'], $attribs, $depend);
+                } else {
+                    $script = [];
+                    $script['url'] = $u;
+                    $script['attribs'] = $attribs;
+                    $script['options'] = $options;
+                    $script['type'] = $type;
+                    $script['version'] = $version;
+                    $script['depend'] = $depend;
+                    $this->_javascripts[$position][md5(serialize($script))] = $script;
+                }
             }
         }
     }
@@ -791,8 +797,12 @@ class Document
     public function getScripts($position = 'head'): string
     {
         $html = '';
-        foreach ($this->_javascripts[$position] as $javascript) {
-            $html .= '<script src="' . $this->_systemUrl($javascript['url'], $javascript['version']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
+        foreach ($this->_javascripts[$position] as $key => $javascript) {
+            if ($position === 'head' && $this->coreLoading()) {
+                $this->_wa->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], $javascript['version'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
+            } else {
+                $html .= '<script src="' . $this->_systemUrl($javascript['url'], $javascript['version']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
+            }
         }
         foreach ($this->_scripts[$position] as $script) {
             $html .= '<script type="' . $script['type'] . '">' . $script['content'] . '</script>';
@@ -833,7 +843,7 @@ class Document
         return $this->scriptOptions;
     }
 
-    protected function _systemUrl($url, $version = false): string
+    protected function _systemUrl($url, $version = false, $addRoot = true): string
     {
         $config = Factory::getApplication()->getConfig();
         $template = Framework::getTemplate();
@@ -842,7 +852,7 @@ class Document
         } else {
             $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
         }
-        $root = Uri::root(true). '/';
+        $root = $addRoot ? Uri::root(true). '/' : '';
 
         if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
             if (JDEBUG) {
@@ -875,10 +885,14 @@ class Document
         if (empty($content)) {
             return;
         }
-        $script = [];
-        $script['content'] = $content;
-        $script['type'] = $type;
-        $this->_scripts[$position][] = $script;
+        if ($position === 'head' && $this->coreLoading()) {
+            $this->_wa->addInlineScript($content, [], ['type' => $type]);
+        } else {
+            $script = [];
+            $script['content'] = $content;
+            $script['type'] = $type;
+            $this->_scripts[$position][] = $script;
+        }
     }
 
     public function addStyleDeclaration($content, $device = 'mobile'): void
@@ -939,56 +953,51 @@ class Document
         if (self::$_fancybox) {
             return;
         }
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
-        $wa->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
+        $this->_wa->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
+        $this->_wa->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
         self::$_fancybox = true;
     }
 
     public function loadMasonry($selector = ''): void
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_masonry) {
-            $wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelectorAll(\''.$selector.'\').forEach(element => element.classList.remove("as-loading")); });');
+            $this->_wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelectorAll(\''.$selector.'\').forEach(element => element.classList.remove("as-loading")); });');
         }
     }
 
     public function loadSlick($obj = '', $config = ''): void
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_slick) {
-            $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-            $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $this->_wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
+            $this->_wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_slick = true;
         }
         if (!empty($obj) && !empty($config)) {
-            $wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+            $this->_wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
         }
     }
 
     public function loadSwiper($obj = '', $config = ''): void
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_swiper) {
-            $wa->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
-            $wa->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
+            $this->_wa->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_swiper = true;
         }
         if (!empty($obj) && !empty($config)) {
             $this->loadImagesLoaded();
-            $wa->addInlineScript('jQuery(window).on("load", function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading");});');
+            $this->_wa->addInlineScript('jQuery(window).on("load", function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading");});');
         }
     }
 
     public function loadImagesLoaded(): void
     {
         if (!self::$_imagesloaded) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_imagesloaded = true;
         }
     }
@@ -996,22 +1005,20 @@ class Document
     public function loadAnimation(): void
     {
         if (!self::$_animation) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
-            $wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
+            $this->_wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_animation = true;
         }
     }
 
     public function loadGSAP($plugin = ''): void
     {
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         if (!self::$_gsap) {
-            $wa->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_gsap = true;
         }
         if (!empty($plugin) && !in_array($plugin, self::$_gsap_plugins)) {
-            $wa->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_gsap_plugins[] = $plugin;
         }
     }
@@ -1019,8 +1026,7 @@ class Document
     public function loadVideoBG(): void
     {
         if (!self::$_videojs) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $this->_wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_videojs = true;
         }
     }
@@ -1028,23 +1034,20 @@ class Document
     public function loadLenis(): void
     {
         if (!self::$_lenis) {
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->_wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_lenis = true;
         }
     }
 
     public function loadGoogleReCaptcha($onload = [], $render = ''): void
     {
-        $app = Factory::getApplication();
-        $wa = $app->getDocument()->getWebAssetManager();
         $query = array();
         $depends = [];
         if (empty($onload)) {
             $onload = ['url' => '', 'function' => ''];
         }
         if (!empty($onload['url'])) {
-            $wa->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
+            $this->_wa->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
             if (!empty($onload['function'])) {
                 $query[] = 'onload=' . $onload['function'];
             }
@@ -1053,22 +1056,20 @@ class Document
         if (!empty($render)) {
             $query[] = 'render=' . $render;
         }
-        $query[] = 'hl=' . $app->getLanguage()->getTag();
-        $wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
+        $query[] = 'hl=' . $this->_app->getLanguage()->getTag();
+        $this->_wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
             .implode('&',$query), [], ['defer' => true], $depends);
     }
 
     public function loadCloudFlareTurnstile($onload = [], $render = ''): void
     {
-        $app = Factory::getApplication();
-        $wa = $app->getDocument()->getWebAssetManager();
         $query = array();
         $depends = [];
         if (empty($onload)) {
             $onload = ['url' => '', 'function' => ''];
         }
         if (!empty($onload['url'])) {
-            $wa->registerAndUseScript('cloudflare.turnstile.onload', $onload['url'], [], ['defer' => true]);
+            $this->_wa->registerAndUseScript('cloudflare.turnstile.onload', $onload['url'], [], ['defer' => true]);
             if (!empty($onload['function'])) {
                 $query[] = 'onload=' . $onload['function'];
             }
@@ -1078,13 +1079,23 @@ class Document
             $query[] = 'render=' . $render;
         }
         $query = !empty($query) ? '?' . implode('&',$query) : '';
-        $wa->registerAndUseScript('cloudflare.turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js'.$query, [], ['defer' => true], $depends);
+        $this->_wa->registerAndUseScript('cloudflare.turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js'.$query, [], ['defer' => true], $depends);
     }
 
     public function moveFile(&$array, $a, $b): void
     {
         $out = array_splice($array, $a, 1);
         array_splice($array, $b, 0, $out);
+    }
+
+    public function changeCoreStatus($status): void
+    {
+        $this->core_loaded = $status;
+    }
+
+    public function coreLoading(): bool
+    {
+        return $this->core_loaded;
     }
 
     public function getStylesheets(): string
@@ -1099,11 +1110,15 @@ class Document
         $content = '';
         foreach ($keys as $key) {
             $stylesheet = $this->_stylesheets[$key];
-            $content .= '<link href="' . $this->_systemUrl($stylesheet['url'], $stylesheet['version']) . '"';
-            foreach ($stylesheet['attribs'] as $prop => $value) {
-                $content .= ' ' . $prop . '="' . $value . '"';
+            if (!$this->coreLoading()) {
+                $content .= '<link href="' . $this->_systemUrl($stylesheet['url'], $stylesheet['version']) . '"';
+                foreach ($stylesheet['attribs'] as $prop => $value) {
+                    $content .= ' ' . $prop . '="' . $value . '"';
+                }
+                $content .= ' />' . "\n";
+            } else {
+                $this->_wa->registerAndUseStyle('astroid.style.'.$key, $this->_systemUrl($stylesheet['url'], $stylesheet['version'], false), [], $stylesheet['attribs']);
             }
-            $content .= ' />' . "\n";
         }
         return $content;
     }
@@ -1244,14 +1259,17 @@ class Document
         } */
         $cssScript = '';
         foreach ($this->_styles as $device => $css) {
-            $cssScript .= match ($device) {
-                'landscape_mobile' => '@media (min-width: 576px) {' . implode('', $this->_styles[$device]) . '}',
-                'tablet' => '@media (min-width: 768px) {' . implode('', $this->_styles[$device]) . '}',
-                'desktop' => '@media (min-width: 992px) {' . implode('', $this->_styles[$device]) . '}',
-                'large_desktop' => '@media (min-width: 1200px) {' . implode('', $this->_styles[$device]) . '}',
-                'larger_desktop' => '@media (min-width: 1400px) {' . implode('', $this->_styles[$device]) . '}',
-                default => implode('', $this->_styles[$device]),
-            };
+            $cssContent = implode('', $this->_styles[$device]);
+            if (!empty($cssContent)) {
+                $cssScript .= match ($device) {
+                    'landscape_mobile' => '@media (min-width: 576px) {' . $cssContent . '}',
+                    'tablet' => '@media (min-width: 768px) {' . $cssContent . '}',
+                    'desktop' => '@media (min-width: 992px) {' . $cssContent . '}',
+                    'large_desktop' => '@media (min-width: 1200px) {' . $cssContent . '}',
+                    'larger_desktop' => '@media (min-width: 1400px) {' . $cssContent . '}',
+                    default => $cssContent,
+                };
+            }
         }
         return $cssScript;
     }
@@ -1261,20 +1279,19 @@ class Document
         $template = Framework::getTemplate();
 
         $params = $template->getParams();
-        $app = Factory::getApplication();
-        $menu = $app->getMenu()->getActive();
+        $menu = $this->_app->getMenu()->getActive();
 
         $class = [];
         $class[] = "site";
         $class[] = "astroid-framework";
 
-        $option = $app->input->get('option', '', 'STRING');
-        $view = $app->input->get('view', '', 'STRING');
-        $layout = $app->input->get('layout', 'default', 'ALNUM');
-        $task = $app->input->get('task', '', 'ALNUM');
+        $option = $this->_app->input->get('option', '', 'STRING');
+        $view = $this->_app->input->get('view', '', 'STRING');
+        $layout = $this->_app->input->get('layout', 'default', 'ALNUM');
+        $task = $this->_app->input->get('task', '', 'ALNUM');
         $header = $params->get('header', TRUE);
         $headerMode = $params->get('header_mode', 'horizontal', 'STRING');
-        $Itemid = $app->input->get('Itemid', '', 'INT');
+        $Itemid = $this->_app->input->get('Itemid', '', 'INT');
 
         if (!empty($option)) {
             $class[] = htmlspecialchars(str_replace('_', '-', $option));
@@ -1407,24 +1424,20 @@ class Document
     public function astroidCSS(): void
     {
         $getPluginParams = Helper::getPluginParams();
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         // Scss
         if (Framework::isSite()) {
             $template = Framework::getTemplate();
 
             // scss compile version
             $scssVersion = md5(serialize($template->getThemeVariables())  . self::scssHash());
-
             // css file to be generated in template folder
             $cssFile = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' .  $scssVersion . '.css';
-
-            // $scssFile = ASTROID_CACHE . '/compiled/' . $template->id . '-' . $scssVersion . '.css';
 
             if (!file_exists($cssFile)) {
                 // rendering scss
                 Framework::getReporter('Logs')->add('Rendering Scss');
                 // clearing previous versions
-                Helper::clearCache($template->template, ['compiled-' . $scssVersion]);
+                Helper::clearCache($template->template, ['compiled-' . $scssVersion, 'template']);
                 // adding compiled scss in css file
                 $this->renderScss($cssFile);
                 if ($template->isDefault()) {
@@ -1436,55 +1449,29 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
-
-//            $wa->registerAndUseStyle('astroid.template.'.$template->template, 'media/templates/site/'.$template->template.'/css/compiled-' . $scssVersion . '.css');
             $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0, true);
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
-            $wa->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
+            $this->_wa->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
         }
     }
     public function astroidCustomCSS() {
         // css on page
-        $template = Framework::getTemplate();
-        $getPluginParams = Helper::getPluginParams();
-        $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-
         if (Framework::isSite()) {
+            $template = Framework::getTemplate();
             $css = $this->renderCss();
-            if (!$astroid_inline_css) {
-                // page css
-                $pageCSSHash = md5($css);
-                $pageCSS = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' . $pageCSSHash . '.css';
-                if (!file_exists($pageCSS)) {
-                    Helper::putContents($pageCSS, $css);
-                }
-                $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
-                // custom css
-                if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
-                    $this->addStyleSheet('css/custom.css');
-                }
-                return '';
-            } else {
-                // custom css
-                if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
-                    $this->addStyleSheet('css/custom.css');
-                }
-                return '<style>'.$css.'</style>';
+            // page css();
+            $pageCSSHash = md5($css);
+            $pageCSS = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' . $pageCSSHash . '.css';
+            if (!file_exists($pageCSS)) {
+                Helper::putContents($pageCSS, $css);
+            }
+            $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
+            // custom css
+            if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
+                $this->addStyleSheet('css/custom.css');
             }
         }
-    }
-
-    public function astroidInlineCSS(): string
-    {
-        // css on page
-        $getPluginParams = Helper::getPluginParams();
-        $astroid_inline_css    =   $getPluginParams->get('astroid_inline_css', 0);
-        if (Framework::isSite() && $astroid_inline_css) {
-            $css = $this->renderCss();
-            return '<style>'.$css.'</style>';
-        }
-        return '';
     }
 }
