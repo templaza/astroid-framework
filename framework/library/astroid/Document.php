@@ -63,18 +63,37 @@ class Document
         $this->minify_js = $params->get('minify_js', false);
         $this->minify_html = $params->get('minify_html', false);
 
-        $this->_app = Factory::getApplication();
-        $this->_document = $this->_app->getDocument();
-        $this->_wa = $this->_document->getWebAssetManager();
-        $this->type = $this->_document->getType();
-
         $template = Framework::getTemplate();
         $this->addLayoutPath(JPATH_SITE . '/templates/' . $template->template . '/html/frontend/');
     }
 
+    public function getApp()
+    {
+        if (!$this->_app) {
+            $this->_app = Factory::getApplication();
+        }
+        return $this->_app;
+    }
+
+    public function getDocument()
+    {
+        if (!$this->_document) {
+            $this->_document = $this->getApp()->getDocument();
+        }
+        return $this->_document;
+    }
+
+    public function getWA()
+    {
+        if (!$this->_wa) {
+            $this->_wa = $this->getDocument()->getWebAssetManager();
+        }
+        return $this->_wa;
+    }
+
     public function getType()
     {
-        return $this->type;
+        return $this->getDocument()->getType();
     }
 
     public function addLayoutPath($path): void
@@ -135,10 +154,9 @@ class Document
 
     public function compress(): void
     {
-        $body = $this->_app->getBody();
-
+        $body = $this->getApp()->getBody();
         // Stop Minification for RSSFeeds and other doc types.
-        if ($this->type == 'feed') $this->minify_css = $this->minify_js = $this->minify_html = false;
+        if ($this->getType() == 'feed') $this->minify_css = $this->minify_js = $this->minify_html = false;
 
         if ($this->minify_css) $body = $this->minifyCSS($body);
 
@@ -146,7 +164,7 @@ class Document
 
         if ($this->minify_html) $body = $this->minifyHTML($body);
 
-        $this->_app->setBody($body);
+        $this->getApp()->setBody($body);
     }
 
     public function isFrontendEditing(): bool
@@ -155,11 +173,11 @@ class Document
             return false;
         }
 
-        $option = $this->_app->input->get('option', '', 'STRING');
-        $view = $this->_app->input->get('view', '', 'STRING');
-        $layout = $this->_app->input->get('layout', 'default', 'STRING');
-        $task = $this->_app->input->get('task', '', 'STRING');
-        $tmpl = $this->_app->input->get('tmpl', '', 'STRING');
+        $option = $this->getApp()->input->get('option', '', 'STRING');
+        $view = $this->getApp()->input->get('view', '', 'STRING');
+        $layout = $this->getApp()->input->get('layout', 'default', 'STRING');
+        $task = $this->getApp()->input->get('task', '', 'STRING');
+        $tmpl = $this->getApp()->input->get('tmpl', '', 'STRING');
 
         if ($option == 'com_content' && $view == 'form' && $layout == 'edit') {
             return true;
@@ -240,8 +258,7 @@ class Document
         $stylesheets = [];
         $stylesheetLinks = [];
         $stylesheetsUrls = [];
-
-        $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*\/>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
+        $html = preg_replace_callback('/(<link\s[^>]*href=")([^"]*)("[^>][^>]*rel=")([^"]*)("[^>]*>)/siU', function ($matches) use (&$stylesheetLinks, &$stylesheetsUrls) {
             if (isset($matches[4]) && $matches[4] === 'stylesheet') {
                 if (strpos($matches[2], 'fonts.googleapis.com') > 0 || strpos($matches[2], 'use.fontawesome.com') > 0) {
                     return $matches[0];
@@ -506,11 +523,6 @@ class Document
         }
     }
 
-    public function getWA()
-    {
-        return $this->_wa;
-    }
-
     public function _minifyAssets($m)
     {
         if ($m[0] == '') {
@@ -551,7 +563,7 @@ class Document
         $assets[] = \json_encode($this->_customtags);
         $assets[] = \json_encode($this->_metas);
         $assets[] = self::$_fontawesome;
-        $assets[] = $this->_document->getHeadData();
+        $assets[] = $this->getDocument()->getHeadData();
         return md5(serialize($assets));
     }
 
@@ -611,7 +623,7 @@ class Document
     private function _modulePosition($position): false|string
     {
         $this->modules[$position] = '';
-        $renderer = $this->_document->loadRenderer('module');
+        $renderer = $this->getDocument()->loadRenderer('module');
         $modules = ModuleHelper::getModules($position);
         ob_start();
 
@@ -627,7 +639,7 @@ class Document
     private function _moduleId($id): false|string
     {
         $this->modules[$id] = '';
-        $renderer = $this->_document->loadRenderer('module');
+        $renderer = $this->getDocument()->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
 
@@ -779,7 +791,7 @@ class Document
         foreach ($url as $u) {
             if (!empty(trim($u))) {
                 if ($position === 'head' && $this->coreLoading()) {
-                    $this->_wa->registerAndUseScript('astroid.js.'.md5($u), $this->_systemUrl($u, $version, false), ['relative' => true, 'version' => 'auto'], $attribs, $depend);
+                    $this->getWA()->registerAndUseScript('astroid.js.'.md5($u), $this->_systemUrl($u, $version, false), ['relative' => true, 'version' => 'auto'], $attribs, $depend);
                 } else {
                     $script = [];
                     $script['url'] = $u;
@@ -799,7 +811,7 @@ class Document
         $html = '';
         foreach ($this->_javascripts[$position] as $key => $javascript) {
             if ($position === 'head' && $this->coreLoading()) {
-                $this->_wa->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], $javascript['version'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
+                $this->getWA()->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], $javascript['version'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
             } else {
                 $html .= '<script src="' . $this->_systemUrl($javascript['url'], $javascript['version']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
             }
@@ -886,7 +898,7 @@ class Document
             return;
         }
         if ($position === 'head' && $this->coreLoading()) {
-            $this->_wa->addInlineScript($content, [], ['type' => $type]);
+            $this->getWA()->addInlineScript($content, [], ['type' => $type]);
         } else {
             $script = [];
             $script['content'] = $content;
@@ -953,51 +965,51 @@ class Document
         if (self::$_fancybox) {
             return;
         }
-        $this->_wa->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
-        $this->_wa->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
+        $this->getWA()->registerAndUseStyle('fancybox', "https://cdn.jsdelivr.net/npm/@fancyapps/ui@".Constants::$fancybox_version."/dist/fancybox/fancybox.css");
+        $this->getWA()->registerAndUseScript('fancybox', 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@'.Constants::$fancybox_version.'/dist/fancybox/fancybox.umd.js');
         self::$_fancybox = true;
     }
 
     public function loadMasonry($selector = ''): void
     {
         if (!self::$_masonry) {
-            $this->_wa->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseScript('masonry', 'astroid/masonry.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_masonry = true;
         }
         if (!empty($selector)) {
-            $this->_wa->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelectorAll(\''.$selector.'\').forEach(element => element.classList.remove("as-loading")); });');
+            $this->getWA()->addInlineScript('window.addEventListener(\'load\', () => {new Masonry( \''.$selector.'\', {itemSelector: \''.$selector.' > div\',percentPosition: true}); document.querySelectorAll(\''.$selector.'\').forEach(element => element.classList.remove("as-loading")); });');
         }
     }
 
     public function loadSlick($obj = '', $config = ''): void
     {
         if (!self::$_slick) {
-            $this->_wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-            $this->_wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $this->getWA()->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
+            $this->getWA()->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_slick = true;
         }
         if (!empty($obj) && !empty($config)) {
-            $this->_wa->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
+            $this->getWA()->addInlineScript('jQuery(document).ready(function(){jQuery(\''.$obj.'\').slick({'.$config.'})});');
         }
     }
 
     public function loadSwiper($obj = '', $config = ''): void
     {
         if (!self::$_swiper) {
-            $this->_wa->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
-            $this->_wa->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseStyle('swiper.css', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.css');
+            $this->getWA()->registerAndUseScript('swiper.js', 'media/astroid/assets/vendor/swiper/swiper-bundle.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_swiper = true;
         }
         if (!empty($obj) && !empty($config)) {
             $this->loadImagesLoaded();
-            $this->_wa->addInlineScript('jQuery(window).on("load", function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading");});');
+            $this->getWA()->addInlineScript('jQuery(window).on("load", function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); jQuery(\''.$obj.'\').removeClass("as-loading");});');
         }
     }
 
     public function loadImagesLoaded(): void
     {
         if (!self::$_imagesloaded) {
-            $this->_wa->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseScript('astroid.imagesloaded', 'astroid/imagesloaded.pkgd.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_imagesloaded = true;
         }
     }
@@ -1005,8 +1017,8 @@ class Document
     public function loadAnimation(): void
     {
         if (!self::$_animation) {
-            $this->_wa->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
-            $this->_wa->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseStyle('astroid.animate', 'astroid/animate.min.css');
+            $this->getWA()->registerAndUseScript('astroid.animation', 'astroid/animate.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_animation = true;
         }
     }
@@ -1014,11 +1026,11 @@ class Document
     public function loadGSAP($plugin = ''): void
     {
         if (!self::$_gsap) {
-            $this->_wa->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseScript('astroid.gsap', 'media/astroid/assets/vendor/gsap/gsap.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_gsap = true;
         }
         if (!empty($plugin) && !in_array($plugin, self::$_gsap_plugins)) {
-            $this->_wa->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_gsap_plugins[] = $plugin;
         }
     }
@@ -1026,7 +1038,7 @@ class Document
     public function loadVideoBG(): void
     {
         if (!self::$_videojs) {
-            $this->_wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $this->getWA()->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
             self::$_videojs = true;
         }
     }
@@ -1034,7 +1046,7 @@ class Document
     public function loadLenis(): void
     {
         if (!self::$_lenis) {
-            $this->_wa->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
             self::$_lenis = true;
         }
     }
@@ -1047,7 +1059,7 @@ class Document
             $onload = ['url' => '', 'function' => ''];
         }
         if (!empty($onload['url'])) {
-            $this->_wa->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
+            $this->getWA()->registerAndUseScript('google.recaptcha.onload', $onload['url'], [], ['defer' => true]);
             if (!empty($onload['function'])) {
                 $query[] = 'onload=' . $onload['function'];
             }
@@ -1056,8 +1068,8 @@ class Document
         if (!empty($render)) {
             $query[] = 'render=' . $render;
         }
-        $query[] = 'hl=' . $this->_app->getLanguage()->getTag();
-        $this->_wa->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
+        $query[] = 'hl=' . $this->getApp()->getLanguage()->getTag();
+        $this->getWA()->registerAndUseScript('google.recaptcha', '//www.google.com/recaptcha/api.js?'
             .implode('&',$query), [], ['defer' => true], $depends);
     }
 
@@ -1069,7 +1081,7 @@ class Document
             $onload = ['url' => '', 'function' => ''];
         }
         if (!empty($onload['url'])) {
-            $this->_wa->registerAndUseScript('cloudflare.turnstile.onload', $onload['url'], [], ['defer' => true]);
+            $this->getWA()->registerAndUseScript('cloudflare.turnstile.onload', $onload['url'], [], ['defer' => true]);
             if (!empty($onload['function'])) {
                 $query[] = 'onload=' . $onload['function'];
             }
@@ -1079,7 +1091,7 @@ class Document
             $query[] = 'render=' . $render;
         }
         $query = !empty($query) ? '?' . implode('&',$query) : '';
-        $this->_wa->registerAndUseScript('cloudflare.turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js'.$query, [], ['defer' => true], $depends);
+        $this->getWA()->registerAndUseScript('cloudflare.turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js'.$query, [], ['defer' => true], $depends);
     }
 
     public function moveFile(&$array, $a, $b): void
@@ -1117,7 +1129,7 @@ class Document
                 }
                 $content .= ' />' . "\n";
             } else {
-                $this->_wa->registerAndUseStyle('astroid.style.'.$key, $this->_systemUrl($stylesheet['url'], $stylesheet['version'], false), [], $stylesheet['attribs']);
+                $this->getWA()->registerAndUseStyle('astroid.style.'.$key, $this->_systemUrl($stylesheet['url'], $stylesheet['version'], false), [], $stylesheet['attribs']);
             }
         }
         return $content;
@@ -1279,19 +1291,19 @@ class Document
         $template = Framework::getTemplate();
 
         $params = $template->getParams();
-        $menu = $this->_app->getMenu()->getActive();
+        $menu = $this->getApp()->getMenu()->getActive();
 
         $class = [];
         $class[] = "site";
         $class[] = "astroid-framework";
 
-        $option = $this->_app->input->get('option', '', 'STRING');
-        $view = $this->_app->input->get('view', '', 'STRING');
-        $layout = $this->_app->input->get('layout', 'default', 'ALNUM');
-        $task = $this->_app->input->get('task', '', 'ALNUM');
+        $option = $this->getApp()->input->get('option', '', 'STRING');
+        $view = $this->getApp()->input->get('view', '', 'STRING');
+        $layout = $this->getApp()->input->get('layout', 'default', 'ALNUM');
+        $task = $this->getApp()->input->get('task', '', 'ALNUM');
         $header = $params->get('header', TRUE);
         $headerMode = $params->get('header_mode', 'horizontal', 'STRING');
-        $Itemid = $this->_app->input->get('Itemid', '', 'INT');
+        $Itemid = $this->getApp()->input->get('Itemid', '', 'INT');
 
         if (!empty($option)) {
             $class[] = htmlspecialchars(str_replace('_', '-', $option));
@@ -1453,7 +1465,7 @@ class Document
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
-            $this->_wa->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
+            $this->getWA()->registerAndUseStyle('astroid.debug', 'astroid/debug.css');
         }
     }
     public function astroidCustomCSS() {

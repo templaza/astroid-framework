@@ -19,7 +19,6 @@ Astroid\Component\Utility::custom(); // custom code
 Astroid\Helper\Head::scripts(); // site scripts
 Astroid\Helper\Head::favicon(); // site favicon
 Astroid\Component\Utility::error(); // error page styling
-Astroid\Component\Utility::typography();
 
 /** @var JDocumentError $this */
 
