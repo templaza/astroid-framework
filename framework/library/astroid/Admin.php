@@ -259,7 +259,7 @@ class Admin extends Helper\Client
         $document->addScript('media/system/js/keepalive.min.js');
         $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
         $document->addScript('vendor/tinymce/tinymce.min.js', 'body');
-        $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module', true);
+        $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
 
@@ -364,7 +364,7 @@ class Admin extends Helper\Client
 
         // styles
         $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css', 'media/astroid/assets/vendor/linearicons/font.min.css'];
-        $document->addStyleSheet($stylesheets, ['rel' => 'stylesheet', 'type' => 'text/css'], 0, true);
+        $document->addStyleSheet($stylesheets, ['rel' => 'stylesheet', 'type' => 'text/css'], 0);
         $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);

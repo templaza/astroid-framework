@@ -780,7 +780,7 @@ class Document
         return $url;
     }
 
-    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '', $version = false, $depend = []): void
+    public function addScript($url, $position = 'head', $options = [], $attribs = [], $type = '', $depend = []): void
     {
         if (empty($url)) {
             return;
@@ -791,14 +791,13 @@ class Document
         foreach ($url as $u) {
             if (!empty(trim($u))) {
                 if ($position === 'head' && $this->coreLoading()) {
-                    $this->getWA()->registerAndUseScript('astroid.js.'.md5($u), $this->_systemUrl($u, $version, false), ['relative' => true, 'version' => 'auto'], $attribs, $depend);
+                    $this->getWA()->registerAndUseScript('astroid.js.'.md5($u), $this->_systemUrl($u, false), ['relative' => true, 'version' => 'auto'], $attribs, $depend);
                 } else {
                     $script = [];
                     $script['url'] = $u;
                     $script['attribs'] = $attribs;
                     $script['options'] = $options;
                     $script['type'] = $type;
-                    $script['version'] = $version;
                     $script['depend'] = $depend;
                     $this->_javascripts[$position][md5(serialize($script))] = $script;
                 }
@@ -811,9 +810,9 @@ class Document
         $html = '';
         foreach ($this->_javascripts[$position] as $key => $javascript) {
             if ($position === 'head' && $this->coreLoading()) {
-                $this->getWA()->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], $javascript['version'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
+                $this->getWA()->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
             } else {
-                $html .= '<script src="' . $this->_systemUrl($javascript['url'], $javascript['version']) . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
+                $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '?' . Helper::joomlaMediaVersion() . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
             }
         }
         foreach ($this->_scripts[$position] as $script) {
@@ -855,15 +854,9 @@ class Document
         return $this->scriptOptions;
     }
 
-    protected function _systemUrl($url, $version = false, $addRoot = true): string
+    protected function _systemUrl($url, $addRoot = true): string
     {
-        $config = Factory::getApplication()->getConfig();
         $template = Framework::getTemplate();
-        if (Framework::isSite() && ($config->get('debug', 0) || Framework::getDebugger()->debug)) {
-            $postfix = $version ? '?' . Helper::joomlaMediaVersion() : '';
-        } else {
-            $postfix = $version ? '?v=' . Helper::frameworkVersion() : '';
-        }
         $root = $addRoot ? Uri::root(true). '/' : '';
 
         if (file_exists(JPATH_SITE . '/media/astroid/assets' . '/' . $url)) {
@@ -886,10 +879,8 @@ class Document
                 $url = Helper::getNonMinifiedPath(JPATH_SITE . '/', $url);
             }
             $url = $root . $url;
-        } else {
-            $postfix = '';
         }
-        return $url.$postfix ;
+        return $url ;
     }
 
     public function addScriptDeclaration($content, $position = 'head', $type = 'text/javascript'): void
@@ -915,7 +906,7 @@ class Document
         $this->_styles[$device][] = trim($content);
     }
 
-    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0, $version = false): void
+    public function addStyleSheet($url, $attribs = ['rel' => 'stylesheet', 'type' => 'text/css'], $shifted = 0): void
     {
         if (!is_array($url)) {
             $url = [$url];
@@ -928,7 +919,7 @@ class Document
         }
         foreach ($url as $u) {
             if (!empty(trim($u))) {
-                $stylesheet = ['url' => $u, 'attribs' => $attribs, 'shifted' => $shifted, 'version' => $version];
+                $stylesheet = ['url' => $u, 'attribs' => $attribs, 'shifted' => $shifted];
                 $this->_stylesheets[md5($u)] = $stylesheet;
             }
         }
@@ -1123,13 +1114,13 @@ class Document
         foreach ($keys as $key) {
             $stylesheet = $this->_stylesheets[$key];
             if (!$this->coreLoading()) {
-                $content .= '<link href="' . $this->_systemUrl($stylesheet['url'], $stylesheet['version']) . '"';
+                $content .= '<link href="' . $this->_systemUrl($stylesheet['url']) . '?' . Helper::joomlaMediaVersion() . '"';
                 foreach ($stylesheet['attribs'] as $prop => $value) {
                     $content .= ' ' . $prop . '="' . $value . '"';
                 }
                 $content .= ' />' . "\n";
             } else {
-                $this->getWA()->registerAndUseStyle('astroid.style.'.$key, $this->_systemUrl($stylesheet['url'], $stylesheet['version'], false), [], $stylesheet['attribs']);
+                $this->getWA()->registerAndUseStyle('astroid.style.'.$key, $this->_systemUrl($stylesheet['url'], false), [], $stylesheet['attribs']);
             }
         }
         return $content;
