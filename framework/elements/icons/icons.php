@@ -49,12 +49,10 @@ foreach ($icons as $icon) {
 echo '</div>';
 
 // Set styles for widget
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 $style->child('.astroid-icon-item')->addCss('font-size', $icon_size.'px');
 $style->child('.astroid-icon-item > a')->addCss('color', $color['light']);
 $style_dark->child('.astroid-icon-item > a')->addCss('color', $color['dark']);
 $style->child('.astroid-icon-item > a')->hover()->addCss('color', $color_hover['light']);
 $style_dark->child('.astroid-icon-item > a')->hover()->addCss('color', $color_hover['dark']);
-$style->render();
-$style_dark->render();

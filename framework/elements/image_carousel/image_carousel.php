@@ -176,5 +176,5 @@ if ($overlay_padding == 'custom') {
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }

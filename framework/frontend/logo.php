@@ -93,7 +93,8 @@ $position = $position ?? '';
                 $default_logo_style     =   $default_logo_style != '' ? $default_logo_style : ' width="250px" height="250px"';
 
                 // Set style for image logo default
-                $style = new Style('.astroid-logo');
+                $style = new Style('.astroid-logo', '', true);
+
                 if (!empty($default_logo_width)) {
                     $style->child('> .astroid-logo-default')->addCss('max-width', $default_logo_width);
                 }
@@ -132,7 +133,7 @@ $position = $position ?? '';
                 $sticky_logo_style      =   $sticky_logo_style != '' ? $sticky_logo_style : ' width="200px" height="200px"';
 
                 // Set style for image logo
-                $style = new Style('.astroid-logo > .astroid-logo-sticky');
+                $style = new Style('.astroid-logo > .astroid-logo-sticky', '', true);
                 if (!empty($sticky_logo_width)) {
                     $style->addCss('max-width', $sticky_logo_width);
                 }
@@ -170,7 +171,7 @@ $position = $position ?? '';
             $mobile_logo_style      =   $mobile_logo_style != '' ? $mobile_logo_style : ' width="200px" height="200px"';
 
             // Set style for image logo mobile
-            $style = new Style('.astroid-logo');
+            $style = new Style('.astroid-logo', '', true);
             if (!empty($mobile_logo_width)) {
                 $style->child('> .astroid-logo-mobile')->addCss('max-width', $mobile_logo_width);
             }

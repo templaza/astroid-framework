@@ -20,19 +20,19 @@ defined('_JEXEC') or die;
 class Element extends BaseElement
 {
     public $section, $row, $column;
-    public function __construct($data, $section, $row, $column)
+    public function __construct($data, $section, $row, $column, $role = '')
     {
         $this->section = $section;
         $this->row = $row;
         $this->column = $column;
-        parent::__construct($data, $section->devices, $section->options);
+        parent::__construct($data, $section->devices, $section->options, $role);
     }
 
     public function render()
     {
         $this->_decorateSection();
         if ($this->type == 'sublayout') {
-            $this->content = Layout::renderSublayout($this->params->get('source', ''));
+            $this->content = Layout::renderSublayout($this->params->get('source', ''), '', 'layouts', [], $this->role);
         } else {
             $this->content = $this->_content();
         }

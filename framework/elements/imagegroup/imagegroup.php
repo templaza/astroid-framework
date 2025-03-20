@@ -171,7 +171,7 @@ $display_title      =   $params->get('display_title', 0);
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($display_title) && !empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }
 
 $overlay_type       =   $params->get('overlay_type', '');

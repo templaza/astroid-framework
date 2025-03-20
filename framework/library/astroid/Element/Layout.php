@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Layout
 {
-    public static function render()
+    public static function render($role = '')
     {
         Framework::getDebugger()->log('Render Layout');
         $template = Framework::getTemplate();
@@ -33,14 +33,14 @@ class Layout
         ];
         $content = '';
         foreach ($layout['sections'] as $section) {
-            $section = new Section($section, $devices);
+            $section = new Section($section, $devices, [], $role);
             $content .= $section->render();
         }
         Framework::getDebugger()->log('Render Layout');
         return $content;
     }
 
-    public static function renderSublayout($source, $template = '', $type = 'layouts', $options = array())
+    public static function renderSublayout($source, $template = '', $type = 'layouts', $options = array(), $role = '')
     {
         Framework::getDebugger()->log('Render '.$source.' Layout');
         $sublayout  = self::getDataLayout($source, $template, $type);
@@ -59,7 +59,7 @@ class Layout
         $options['source'] = $source;
         $content = '';
         foreach ($layout['sections'] as $section) {
-            $section = new Section($section, $devices, $options);
+            $section = new Section($section, $devices, $options, $role);
             $content .= $section->render();
         }
         Framework::getDebugger()->log('Render '.$source.' Layout');

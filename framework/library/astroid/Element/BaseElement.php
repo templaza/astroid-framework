@@ -2,14 +2,8 @@
 
 /**
  * @package   Astroid Framework
- * @author    TemPlaza https://www.templaza.com
- * @copyright Copyright (C) 2011 - 2021 TemPlaza.
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
- */
-/**
- * @package   Astroid Framework
  * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @copyright Copyright (C) 2025 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -33,11 +27,14 @@ class BaseElement
     public int $state = 1;
     public array $devices = [];
     public array $options = [];
-    public function __construct($data, $devices, $options = array())
+    public string $role = '';
+    public bool $isRoot = false;
+    public function __construct($data, $devices, $options = array(), $role = '')
     {
         $this->_data    = $data;
         $this->devices  = $devices;
         $this->options  = $options;
+        $this->role     = $role;
         $this->id       = $data['id'];
         $this->unqid    = $data['id'];
         $this->type     = isset($data['type']) ? $data['type'] : 'element';
@@ -55,8 +52,9 @@ class BaseElement
 
         $this->_id();
         $this->_tag         =   $this->params->get('astroid_element_tag', 'div');
-        $this->style        =   new Style('#' . $this->getAttribute('id'));
-        $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark');
+        $this->isRoot       =   $this->role === 'root';
+        $this->style        =   new Style('#' . $this->getAttribute('id'), '', $this->isRoot);
+        $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark', $this->isRoot);
     }
 
     protected function wrap(): string
@@ -242,7 +240,7 @@ class BaseElement
     {
         $border = json_decode($this->params->get('border_style', ''), true);
         if (!empty($border)) {
-            $this->style->addBorder($border);
+            $this->style->addBorder($border, 'mobile', $this->isRoot);
         }
         $border_radius = $this->params->get('border_radius', '');
         $this->style->addResponsiveCSS('border-radius', $border_radius, 'px');
@@ -306,11 +304,11 @@ class BaseElement
                 case 'color':
                     $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_color)) {
-                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
                         $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
                         $overlay_style->render();
 
-                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark');
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark', $this->isRoot);
                         $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
                         $overlay_style->render();
                     }
@@ -318,7 +316,7 @@ class BaseElement
                 case 'gradient':
                     $background_image_overlay_gradient  =   $this->params->get('background_image_overlay_gradient', '');
                     if (!empty($background_image_overlay_gradient)) {
-                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
                         $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
                         $overlay_style->render();
                     }
@@ -327,9 +325,9 @@ class BaseElement
                     $background_image_overlay_pattern   =   $this->params->get('background_image_overlay_pattern', '');
                     $background_image_overlay_color     =   Style::getColor($this->params->get('background_image_overlay_color', ''));
                     if (!empty($background_image_overlay_pattern)) {
-                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before');
+                        $overlay_style   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', '', $this->isRoot);
                         if ($background_image_overlay_color) {
-                            $overlay_style_dark   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark');
+                            $overlay_style_dark   =   new Style('#' . $this->getAttribute('id') . $overlay_style_cls . ':before', 'dark', $this->isRoot);
                             $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
                             $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
                             $overlay_style_dark->render();

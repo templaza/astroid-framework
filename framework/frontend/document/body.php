@@ -94,7 +94,7 @@ if (!empty($overlay_type)) {
             <div class="astroid-wrapper">
                 <?php $document->include('wrapperStart'); // Wrapper Start 
                 ?>
-                <?php echo Astroid\Element\Layout::render(); ?>
+                <?php echo Astroid\Element\Layout::render('root'); ?>
                 <?php $document->include('wrapperEnd'); // Wrapper End 
                 ?>
             </div>

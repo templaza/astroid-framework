@@ -172,13 +172,13 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-name', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .as-author-name', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $designation_font_style    =   $params->get('designation_font_style');
 if (!empty($designation_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-designation', $designation_font_style);
+    Style::renderTypography('#'.$element->id.' .as-author-designation', $designation_font_style, null, $element->isRoot);
 }
 
 $designation_heading_margin=   $params->get('designation_heading_margin', '');
@@ -187,7 +187,7 @@ $designation_position      =   $params->get('designation_position', 'after');
 $content_margin     =   $params->get('content_margin', '');
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-author-message', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .as-author-message', $content_font_style, null, $element->isRoot);
 }
 
 $image_max_width        =   $params->get('image_max_width', '200');

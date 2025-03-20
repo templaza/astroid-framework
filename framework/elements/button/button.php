@@ -103,6 +103,6 @@ if (trim($button_size) == 'custom') {
     }
     $button_font_style =   $params->get('button_font_style');
     if (!empty($button_font_style)) {
-        Style::renderTypography('#'.$element->id.' .btn', $button_font_style);
+        Style::renderTypography('#'.$element->id.' .btn', $button_font_style, null, $element->isRoot);
     }
 }

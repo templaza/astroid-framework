@@ -73,12 +73,12 @@ echo '</ul>';
 echo '</nav>';
 
 // Set styles for widget
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 
 // Font style
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$element->id.' .nav-link', $font_style);
+    Style::renderTypography('#'.$element->id.' .nav-link', $font_style, null, $element->isRoot);
 }
 // Color style
 $style->child('.nav-link')->addCss('color', $color['light']);
@@ -104,6 +104,3 @@ if (!empty($item_margin)) {
 if (!empty($item_padding)) {
     Style::setSpacingStyle($element->style->child('.nav-link'), $item_padding);
 }
-
-$style->render();
-$style_dark->render();

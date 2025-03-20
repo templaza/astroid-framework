@@ -16,14 +16,14 @@ defined('_JEXEC') or die;
 class Row extends BaseElement
 {
     public $section;
-    public function __construct($data, $section)
+    public function __construct($data, $section, $role = '')
     {
         $this->section = $section;
         if (empty($this->options)) {
             $this->options = $section->options;
         }
         $data['fill'] = $data['fill'] ?? true;
-        parent::__construct($data, $section->devices, $section->options);
+        parent::__construct($data, $section->devices, $section->options, $role);
     }
 
     public function render()
@@ -41,7 +41,7 @@ class Row extends BaseElement
         $prevColIndex = null;
 
         foreach ($this->_data['cols'] as $colIndex => $col) {
-            $column = new Column($col, $this->section, $this);
+            $column = new Column($col, $this->section, $this, $this->role);
             $columns[$colIndex] = $column;
             $column->render();
             if ($column->component) {

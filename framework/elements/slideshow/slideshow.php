@@ -31,8 +31,8 @@ foreach ($slides as $key => &$slide) {
     $slide->params  =   Style::getSubFormParams($slide->params);
 }
 
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 
 $card_size          =   $params->get('overlay_padding', '');
 $card_size          =   $card_size ? ' card-size-' . $card_size : '';
@@ -66,20 +66,20 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
 if (!empty($meta_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style, null, $element->isRoot);
 }
 $meta_position      =   $params->get('meta_position', 'before');
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style, null, $element->isRoot);
 }
 
 $button_size        =   $params->get('button_size', '');
@@ -158,5 +158,3 @@ switch ($overlay_type) {
         }
         break;
 }
-$style->render();
-$style_dark->render();

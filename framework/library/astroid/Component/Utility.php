@@ -13,7 +13,6 @@ use Astroid\Framework;
 use Astroid\Helper;
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Help\Help;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
@@ -114,7 +113,7 @@ class Utility
         if ($template_layout == 'boxed') {
             $layout_background_image = $params->get('layout_background_image', '');
             if (!empty($layout_background_image)) {
-                $style = new Style('body');
+                $style = new Style('body', '', true);
                 $style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $layout_background_image . ')');
                 $style->addCss('background-repeat', $params->get('layout_background_repeat', 'inherit'));
                 $style->addCss('background-size', $params->get('layout_background_size', 'inherit'));
@@ -123,97 +122,7 @@ class Utility
                 $style->render();
             }
         }
-        self::addBackgroundCSS('.astroid-layout', $params, 'container_');
-    }
-
-    public static function addBackgroundCSS ($obj, $obj_params, $prefix = ''): void
-    {
-        $background = $obj_params->get($prefix . 'background_setting', '');
-        if (!empty($background)) {
-            $style = new Style($obj);
-            $style_dark = new Style($obj, 'dark');
-            switch ($background) {
-                case 'color': // if color background
-                    $background_color   =   Style::getColor($obj_params->get($prefix . 'background_color', ''));
-                    $style->addCss('background-color', $background_color['light']);
-                    $style_dark->addCss('background-color', $background_color['dark']);
-                    break;
-                case 'image': // if image background
-                    $background_color   =   Style::getColor($obj_params->get($prefix . 'img_background_color', ''));
-                    $style->addCss('background-color', $background_color['light']);
-                    $style_dark->addCss('background-color', $background_color['dark']);
-                    $image = $obj_params->get($prefix . 'background_image', '');
-                    if (!empty($image)) {
-                        $style->addCss('background-image', 'url(' . Uri::base(true) . '/' . Helper\Media::getPath() . '/' . $image . ')');
-                        $style->addCss('background-repeat', $obj_params->get($prefix . 'background_repeat', ''));
-                        $style->addCss('background-size', $obj_params->get($prefix . 'background_size', ''));
-                        $style->addCss('background-attachment', $obj_params->get($prefix . 'background_attchment', ''));
-                        $style->addCss('background-position', $obj_params->get($prefix . 'background_position', ''));
-                        self::addOverlayColor($obj, $obj_params, $prefix);
-                    }
-                    break;
-                case 'video': // if video background
-                    $video = $obj_params->get($prefix . 'background_video', '');
-                    if (!empty($video)) {
-                        self::addOverlayColor($obj, $obj_params, $prefix);
-                    }
-                    break;
-                case 'gradient': // if gradient background
-                    $style->addCss('background-image', Style::getGradientValue($obj_params->get($prefix . 'background_gradient', '')));
-                    break;
-            }
-            $style->render();
-            $style_dark->render();
-        }
-    }
-
-    public static function addOverlayColor($obj, $obj_params, $prefix = '') {
-        $overlay_type   =   $obj_params->get($prefix . 'background_image_overlay', '');
-        if (!empty($overlay_type)) {
-            $background = $obj_params->get($prefix . 'background_setting', '');
-            $overlay_style_cls      =   '.astroid-element-overlay';
-            if ($background == 'video') {
-                $overlay_style_cls  =   ' > ' . $overlay_style_cls;
-            }
-
-            switch ($overlay_type) {
-                case 'color':
-                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
-                    if (!empty($background_image_overlay_color)) {
-                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
-                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
-                        $overlay_style->render();
-
-                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before', 'dark');
-                        $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
-                        $overlay_style->render();
-                    }
-                    break;
-                case 'gradient':
-                    $background_image_overlay_gradient  =   $obj_params->get($prefix . 'background_image_overlay_gradient', '');
-                    if (!empty($background_image_overlay_gradient)) {
-                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
-                        $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
-                        $overlay_style->render();
-                    }
-                    break;
-                case 'pattern':
-                    $background_image_overlay_pattern   =   $obj_params->get($prefix . 'background_image_overlay_pattern', '');
-                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
-                    if (!empty($background_image_overlay_pattern)) {
-                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
-                        if ($background_image_overlay_color) {
-                            $overlay_style_dark   =   new Style($obj . $overlay_style_cls . ':before', 'dark');
-                            $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
-                            $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
-                            $overlay_style_dark->render();
-                        }
-                        $overlay_style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $background_image_overlay_pattern . ')');
-                        $overlay_style->render();
-                    }
-                    break;
-            }
-        }
+        Style::addBackgroundCSS('.astroid-layout', $params, 'container_', true);
     }
 
     public static function smoothScroll(): void
@@ -375,15 +284,15 @@ class Utility
             if ($type == 'body') {
                 $bodyTypography = $typography;
             }
-            Helper\Style::renderTypography($selector, $typography, $bodyTypography);
+            Helper\Style::renderTypography($selector, $typography, $bodyTypography, true);
         }
     }
 
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
-        $root = new Style(':root, [data-bs-theme="light"]');
-        $root_dark = new Style('[data-bs-theme="dark"]');
+        $root = new Style(':root, [data-bs-theme="light"]', '', true);
+        $root_dark = new Style('[data-bs-theme="dark"]', '', true);
         // Body
         $body_background_color  =   Style::getColor($params->get('body_background_color', ''));
         $body_text_color        =   Style::getColor($params->get('body_text_color', ''));
@@ -568,13 +477,13 @@ class Utility
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
         $intro_heading_fontsize =   $params->get('article_listing_intro_heading_fontsize', '');
         if (!empty($lead_heading_fontsize)) {
-            $article    =   new Style('.items-leading .article-title .page-header h2');
+            $article    =   new Style('.items-leading .article-title .page-header h2', '', true);
             $article->addResponsiveCSS('font-size', $lead_heading_fontsize,'px');
             $article->render();
         }
 
         if (!empty($intro_heading_fontsize)) {
-            $article    =   new Style('.items-row .article-title .page-header h2');
+            $article    =   new Style('.items-row .article-title .page-header h2', '', true);
             $article->addResponsiveCSS('font-size', $intro_heading_fontsize,'px');
             $article->render();
         }
@@ -609,11 +518,10 @@ class Utility
         $document->addCustomTag($params->get('beforebody', ''), 'body');
 
         // Page level custom code
-        $app = Factory::getApplication();
-        $itemid = $app->input->get('Itemid', '', 'INT');
+        $itemid = $document->getApp()->input->get('Itemid', '', 'INT');
         if (empty($itemid)) return false;
 
-        $menu = $app->getMenu();
+        $menu = $document->getApp()->getMenu();
         $item = $menu->getItem($itemid);
         $params = !empty($item)?$item->getParams(): (new \Joomla\Registry\Registry());
 
@@ -645,8 +553,8 @@ class Utility
     {
         $params = Framework::getTemplate()->getParams();
 
-        $bodyStyle = new Style('body');
-        $bodyStyle_dark = new Style('body', 'dark');
+        $bodyStyle = new Style('body', '', true);
+        $bodyStyle_dark = new Style('body', 'dark', true);
         $background_setting_404 = $params->get('background_setting_404');
         if ($background_setting_404) {
             switch ($background_setting_404) {

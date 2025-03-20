@@ -29,13 +29,13 @@ if (!count($list_items)) {
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-title', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->isRoot);
 }
 
 $item_margin    =   $params->get('item_margin', '');

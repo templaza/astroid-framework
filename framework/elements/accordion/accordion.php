@@ -53,12 +53,12 @@ echo '</div>';
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style, null, $element->isRoot);
 }
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style, null, $element->isRoot);
 }
 
 $color          = Style::getColor($params->get('color', ''));

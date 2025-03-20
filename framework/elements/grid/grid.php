@@ -30,8 +30,8 @@ if (!count($grids)) {
 }
 
 $document = Framework::getDocument();
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 $row_column_cls     =   '';
 
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
@@ -121,13 +121,13 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
 if (!empty($meta_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style, null, $element->isRoot);
 }
 
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
@@ -135,7 +135,7 @@ $meta_position      =   $params->get('meta_position', 'before');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style, null, $element->isRoot);
 }
 
 $button_style       =   $params->get('button_style', 'primary');
@@ -282,7 +282,7 @@ if ($params->get('card_style', '') == 'custom') {
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border);
+        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'mobile', $element->isRoot);
     }
 }
 switch ($overlay_type) {
@@ -298,5 +298,3 @@ switch ($overlay_type) {
         }
         break;
 }
-$style->render();
-$style_dark->render();

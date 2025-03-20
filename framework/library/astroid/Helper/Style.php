@@ -12,7 +12,6 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -21,7 +20,9 @@ class Style
     public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_child = [];
 
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
-    public function __construct($selectors, $mode = '')
+    public bool $_onFile = false;
+    public string $_mode = '';
+    public function __construct($selectors, $mode = '', $onFile = false)
     {
         if (is_array($selectors)) {
             for ($key = 0; $key < count($selectors); $key ++) {
@@ -31,6 +32,8 @@ class Style
         } else {
             $this->_selector    =   $mode ? '[data-bs-theme='.$mode.'] '. $selectors : $selectors;
         }
+        $this->_mode = $mode;
+        $this->_onFile = $onFile;
     }
 
     protected function _selectorize($postfix = null, $prefix = null)
@@ -59,7 +62,7 @@ class Style
     public function hover($class = '')
     {
         if ($this->_hover === null) {
-            $this->_hover = new Style($this->_selectorize(':hover' . (empty($class) ? '' : ',' . $class)));
+            $this->_hover = new Style($this->_selectorize(':hover' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
         }
         return $this->_hover;
     }
@@ -67,7 +70,7 @@ class Style
     public function focus($class = '')
     {
         if ($this->_focus === null) {
-            $this->_focus = new Style($this->_selectorize(':focus' . (empty($class) ? '' : ',' . $class)));
+            $this->_focus = new Style($this->_selectorize(':focus' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
         }
         return $this->_focus;
     }
@@ -75,7 +78,7 @@ class Style
     public function active($class = '')
     {
         if ($this->_active === null) {
-            $this->_active = new Style($this->_selectorize(':active' . (empty($class) ? '' : ',' . $class)));
+            $this->_active = new Style($this->_selectorize(':active' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
         }
         return $this->_active;
     }
@@ -84,11 +87,11 @@ class Style
     {
         if ($this->_link === null) {
             if ($ref == 'child') {
-                $this->_link = new Style($this->_selectorize(' a'. $subfix));
+                $this->_link = new Style($this->_selectorize(' a'. $subfix), '', $this->_onFile);
             } else if ($ref == 'self') {
-                $this->_link = new Style($this->_selectorize(null, 'a'. $subfix));
+                $this->_link = new Style($this->_selectorize(null, 'a'. $subfix), '', $this->_onFile);
             } else {
-                $this->_link = new Style($this->_selectorize(null, 'a'.$subfix.' '));
+                $this->_link = new Style($this->_selectorize(null, 'a'.$subfix.' '), '', $this->_onFile);
             }
         }
         return $this->_link;
@@ -160,16 +163,8 @@ class Style
         return $this;
     }
 
-    public function addBorder($value) {
-        self::addBorderStyle($this->_selector, $value);
-    }
-
-    public static function addCssBySelector($selector, $property, $value, $device = 'mobile')
-    {
-        $style = new Style($selector);
-        $style->addCss($property, $value, $device);
-        $style->render();
-        return $style;
+    public function addBorder($value, $device = 'mobile', $onFile = false) {
+        self::addBorderStyle($this->_selector, $value, $device, $onFile);
     }
 
     public function addStyle($css, $device = 'mobile')
@@ -183,7 +178,7 @@ class Style
     public function addChild($selector)
     {
         $selector = $this->_childSelector($selector);
-        $this->_child[Helper::slugify($selector)] = new Style($selector);
+        $this->_child[Helper::slugify($selector)] = new Style($selector, '', $this->_onFile);
         return $this->_child[Helper::slugify($selector)];
     }
 
@@ -200,27 +195,6 @@ class Style
 
         $selector = implode(', ', $selector);
         return $selector;
-    }
-
-    public static function addBorderStyle($selector, $border, $device = 'mobile') {
-        $style      = new Style($selector);
-        $style_dark = new Style($selector, 'dark');
-        if (isset($border['border_width'])) {
-            $style->addCss('border-width', $border['border_width']. 'px', $device);
-        }
-        if (isset($border['border_style'])) {
-            $style->addCss('border-style', $border['border_style'], $device);
-        }
-        if (isset($border['border_color'])) {
-            if (isset($border['border_color']['light'])) {
-                $style->addCss('border-color', $border['border_color']['light'], $device);
-            }
-            if (isset($border['border_color']['dark'])) {
-                $style_dark->addCss('border-color', $border['border_color']['dark'], $device);
-            }
-        }
-        $style->render();
-        $style_dark->render();
     }
 
     public function render()
@@ -243,17 +217,10 @@ class Style
             $cssContent = '';
             foreach ($css as $device => $styles) {
                 if (!empty($styles)) {
-                    if (!$document->coreLoading()) {
-                        $cssContent .= match ($device) {
-                            'landscape_mobile' => '@media (min-width: 576px) {' . $this->_selector . '{' . $styles . '}' . '}',
-                            'tablet' => '@media (min-width: 768px) {' . $this->_selector . '{' . $styles . '}' . '}',
-                            'desktop' => '@media (min-width: 992px) {' . $this->_selector . '{' . $styles . '}' . '}',
-                            'large_desktop' => '@media (min-width: 1200px) {' . $this->_selector . '{' . $styles . '}' . '}',
-                            'larger_desktop' => '@media (min-width: 1400px) {' . $this->_selector . '{' . $styles . '}' . '}',
-                            default => $this->_selector . '{' . $styles . '}',
-                        };
-                    } else {
+                    if ($document->coreLoading() && $this->_onFile) {
                         $document->addStyleDeclaration($this->_selector . '{' . $styles . '}', $device);
+                    } else {
+                        $cssContent .= self::getCss($this->_selector . '{' . $styles . '}', $device);
                     }
                 }
             }
@@ -286,14 +253,55 @@ class Style
         }
     }
 
-    public static function renderTypography($selector, $object, $defaultObject = null)
+    public static function getCss($content, $device = 'mobile', $devices = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px'])
+    {
+        return match ($device) {
+            'landscape_mobile' => '@media (min-width: '.$devices['landscape_mobile'].') {' . $content . '}',
+            'tablet' => '@media (min-width: '.$devices['tablet'].') {' . $content . '}',
+            'desktop' => '@media (min-width: '.$devices['desktop'].') {' . $content . '}',
+            'large_desktop' => '@media (min-width: '.$devices['large_desktop'].') {' . $content . '}',
+            'larger_desktop' => '@media (min-width: '.$devices['larger_desktop'].') {' . $content . '}',
+            default => $content,
+        };
+    }
+
+    public static function addBorderStyle($selector, $border, $device = 'mobile', $onFile = false) {
+        $style      = new Style($selector, '', $onFile);
+        $style_dark = new Style($selector, 'dark', $onFile);
+        if (isset($border['border_width'])) {
+            $style->addCss('border-width', $border['border_width']. 'px', $device);
+        }
+        if (isset($border['border_style'])) {
+            $style->addCss('border-style', $border['border_style'], $device);
+        }
+        if (isset($border['border_color'])) {
+            if (isset($border['border_color']['light'])) {
+                $style->addCss('border-color', $border['border_color']['light'], $device);
+            }
+            if (isset($border['border_color']['dark'])) {
+                $style_dark->addCss('border-color', $border['border_color']['dark'], $device);
+            }
+        }
+        $style->render();
+        $style_dark->render();
+    }
+
+    public static function addCssBySelector($selector, $property, $value, $device = 'mobile', $mode = '', $onFile = false)
+    {
+        $style = new Style($selector, $mode, $onFile);
+        $style->addCss($property, $value, $device);
+        $style->render();
+        return $style;
+    }
+
+    public static function renderTypography($selector, $object, $defaultObject = null, $onFile = false)
     {
         $typography = new Registry();
         $typography->loadObject($object);
 
         $globalParams = Helper::getPluginParams();
-        $style = new Style($selector);
-        $style_dark = new Style($selector, 'dark');
+        $style = new Style($selector, '', $onFile);
+        $style_dark = new Style($selector, 'dark', $onFile);
 
         // font color, weight and transfrom
         $font_color = Style::getColor($typography->get('font_color', ''));
@@ -402,6 +410,97 @@ class Style
         $style->addCss('font-family', self::getFontFamilyValue($font_face, $alt_font_face));
         $style->render();
         $style_dark->render();
+    }
+
+    public static function addBackgroundCSS ($obj, $obj_params, $prefix = '', $onFile = false): void
+    {
+        $background = $obj_params->get($prefix . 'background_setting', '');
+        if (!empty($background)) {
+            $style = new Style($obj, '', $onFile);
+            $style_dark = new Style($obj, 'dark', $onFile);
+            switch ($background) {
+                case 'color': // if color background
+                    $background_color   =   Style::getColor($obj_params->get($prefix . 'background_color', ''));
+                    $style->addCss('background-color', $background_color['light']);
+                    $style_dark->addCss('background-color', $background_color['dark']);
+                    break;
+                case 'image': // if image background
+                    $background_color   =   Style::getColor($obj_params->get($prefix . 'img_background_color', ''));
+                    $style->addCss('background-color', $background_color['light']);
+                    $style_dark->addCss('background-color', $background_color['dark']);
+                    $image = $obj_params->get($prefix . 'background_image', '');
+                    if (!empty($image)) {
+                        $style->addCss('background-image', 'url(' . Uri::base(true) . '/' . Helper\Media::getPath() . '/' . $image . ')');
+                        $style->addCss('background-repeat', $obj_params->get($prefix . 'background_repeat', ''));
+                        $style->addCss('background-size', $obj_params->get($prefix . 'background_size', ''));
+                        $style->addCss('background-attachment', $obj_params->get($prefix . 'background_attchment', ''));
+                        $style->addCss('background-position', $obj_params->get($prefix . 'background_position', ''));
+                        self::addOverlayColor($obj, $obj_params, $prefix);
+                    }
+                    break;
+                case 'video': // if video background
+                    $video = $obj_params->get($prefix . 'background_video', '');
+                    if (!empty($video)) {
+                        self::addOverlayColor($obj, $obj_params, $prefix);
+                    }
+                    break;
+                case 'gradient': // if gradient background
+                    $style->addCss('background-image', Style::getGradientValue($obj_params->get($prefix . 'background_gradient', '')));
+                    break;
+            }
+            $style->render();
+            $style_dark->render();
+        }
+    }
+
+    public static function addOverlayColor($obj, $obj_params, $prefix = '', $onFile = false): void
+    {
+        $overlay_type   =   $obj_params->get($prefix . 'background_image_overlay', '');
+        if (!empty($overlay_type)) {
+            $background = $obj_params->get($prefix . 'background_setting', '');
+            $overlay_style_cls      =   '.astroid-element-overlay';
+            if ($background == 'video') {
+                $overlay_style_cls  =   ' > ' . $overlay_style_cls;
+            }
+
+            switch ($overlay_type) {
+                case 'color':
+                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_color)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before', '', $onFile);
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                        $overlay_style->render();
+
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before', 'dark', $onFile);
+                        $overlay_style->addCss('background-color', $background_image_overlay_color['dark']);
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'gradient':
+                    $background_image_overlay_gradient  =   $obj_params->get($prefix . 'background_image_overlay_gradient', '');
+                    if (!empty($background_image_overlay_gradient)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before');
+                        $overlay_style->addCss('background-image', Style::getGradientValue($background_image_overlay_gradient));
+                        $overlay_style->render();
+                    }
+                    break;
+                case 'pattern':
+                    $background_image_overlay_pattern   =   $obj_params->get($prefix . 'background_image_overlay_pattern', '');
+                    $background_image_overlay_color     =   Style::getColor($obj_params->get($prefix . 'background_image_overlay_color', ''));
+                    if (!empty($background_image_overlay_pattern)) {
+                        $overlay_style   =   new Style($obj . $overlay_style_cls . ':before', '', $onFile);
+                        if ($background_image_overlay_color) {
+                            $overlay_style_dark   =   new Style($obj . $overlay_style_cls . ':before', 'dark', $onFile);
+                            $overlay_style->addCss('background-color', $background_image_overlay_color['light']);
+                            $overlay_style_dark->addCss('background-color', $background_image_overlay_color['dark']);
+                            $overlay_style_dark->render();
+                        }
+                        $overlay_style->addCss('background-image', 'url(' . Uri::root() . Helper\Media::getPath() . '/' . $background_image_overlay_pattern . ')');
+                        $overlay_style->render();
+                    }
+                    break;
+            }
+        }
     }
 
     public static function getFontFamilyValue($value, $alt_font = '')
