@@ -47,7 +47,7 @@ class Site extends Helper\Client
         Component\Utility::custom(); // site custom codes
         $document->astroidCustomCSS();
         $document->getStylesheets();
-        $document->changeCoreStatus(false);
+        $document->updateAssetOnFile(false);
     }
 
     protected function rate()

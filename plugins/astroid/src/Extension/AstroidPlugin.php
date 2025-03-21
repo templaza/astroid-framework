@@ -38,6 +38,7 @@ final class AstroidPlugin extends CMSPlugin
         if ($option == 'com_ajax' && !empty($astroid)) {
             Framework::getClient()->execute($astroid);
         }
+        Framework::getDocument()->waLocked(false);
     }
 
     public function onContentPrepareForm($form, $data)
@@ -64,6 +65,7 @@ final class AstroidPlugin extends CMSPlugin
     public function onAfterRender()
     {
         if (defined('_ASTROID')) {
+            Framework::getDocument()->waLocked(true);
             Framework::getClient()->onAfterRender();
         }
     }

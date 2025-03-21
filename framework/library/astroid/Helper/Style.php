@@ -217,7 +217,7 @@ class Style
             $cssContent = '';
             foreach ($css as $device => $styles) {
                 if (!empty($styles)) {
-                    if ($document->coreLoading() && $this->_onFile) {
+                    if ($document->canWriteFile() && $this->_onFile) {
                         $document->addStyleDeclaration($this->_selector . '{' . $styles . '}', $device);
                     } else {
                         $cssContent .= self::getCss($this->_selector . '{' . $styles . '}', $device);
@@ -253,14 +253,14 @@ class Style
         }
     }
 
-    public static function getCss($content, $device = 'mobile', $devices = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px'])
+    public static function getCss($content, $device = 'mobile', $breakpoints = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px'])
     {
         return match ($device) {
-            'landscape_mobile' => '@media (min-width: '.$devices['landscape_mobile'].') {' . $content . '}',
-            'tablet' => '@media (min-width: '.$devices['tablet'].') {' . $content . '}',
-            'desktop' => '@media (min-width: '.$devices['desktop'].') {' . $content . '}',
-            'large_desktop' => '@media (min-width: '.$devices['large_desktop'].') {' . $content . '}',
-            'larger_desktop' => '@media (min-width: '.$devices['larger_desktop'].') {' . $content . '}',
+            'landscape_mobile' => '@media (min-width: '.$breakpoints['landscape_mobile'].') {' . $content . '}',
+            'tablet' => '@media (min-width: '.$breakpoints['tablet'].') {' . $content . '}',
+            'desktop' => '@media (min-width: '.$breakpoints['desktop'].') {' . $content . '}',
+            'large_desktop' => '@media (min-width: '.$breakpoints['large_desktop'].') {' . $content . '}',
+            'larger_desktop' => '@media (min-width: '.$breakpoints['larger_desktop'].') {' . $content . '}',
             default => $content,
         };
     }

@@ -234,7 +234,6 @@ class Admin extends Helper\Client
     {
         $this->format = 'html'; // Response Format
         $document = Framework::getDocument();
-        $document->changeCoreStatus(false);
         $template = Framework::getTemplate();
  
         Framework::getDebugger()->log('Loading Forms');
@@ -258,7 +257,7 @@ class Admin extends Helper\Client
         $document->addScript('media/system/js/core.min.js');
         $document->addScript('media/system/js/keepalive.min.js');
         $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
-        $document->addScript('vendor/tinymce/tinymce.min.js', 'body');
+        $document->addScript('vendor/tinymce/tinymce.min.js');
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
         $pluginParams   =   Helper::getPluginParams();
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
