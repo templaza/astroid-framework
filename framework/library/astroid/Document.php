@@ -15,6 +15,7 @@ use Astroid\Helper\Constants;
 use Astroid\Helper\Style;
 use Joomla\Filesystem\File;
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\ValueConverter;
 use MatthiasMullie\Minify;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -1087,7 +1088,7 @@ class Document
                     $value_light    =   $result->light;
                     $value_dark     =   $result->dark;
                     if (!empty($value_light)) {
-                        $variables[$key]    =  $value_light;
+                        $variables[$key]    =  ValueConverter::parseValue($value_light);
                     } else {
                         unset($variables[$key]);
                     }
@@ -1097,8 +1098,12 @@ class Document
                 } else {
                     if (strpos($key, '[light]')) {
                         $color_mode_light   .=  substr($key, 0, strpos($key, '[light]')). ':' . $variable . ';';
+                        unset($variables[$key]);
                     } elseif (strpos($key, '[dark]')) {
                         $color_mode_dark    .=  substr($key, 0, strpos($key, '[dark]')). ':' . $variable . ';';
+                        unset($variables[$key]);
+                    } else {
+                        $variables[$key]    =  ValueConverter::parseValue($variable);
                     }
                 }
             }
