@@ -815,7 +815,7 @@ class Document
             if ($position === 'head' && $this->canUseWA()) {
                 $this->getWA()->registerAndUseScript('astroid.js.' . $key, $this->_systemUrl($javascript['url'], false), ['relative' => true, 'version' => 'auto'], $javascript['attribs'], $javascript['depend']);
             } else {
-                $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '?' . Helper::joomlaMediaVersion() . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
+                $html .= '<script src="' . $this->_systemUrl($javascript['url']) . '?' . Helper::frameworkVersion() . '"'.(isset($javascript['type']) && $javascript['type'] ? ' type="'.$javascript['type'].'"' : '').'></script>';
             }
         }
         foreach ($this->_scripts[$position] as $script) {
@@ -978,7 +978,7 @@ class Document
         foreach ($keys as $key) {
             $stylesheet = $this->_stylesheets[$key];
             if (!$this->canUseWA()) {
-                $content .= '<link href="' . $this->_systemUrl($stylesheet['url']) . '?' . Helper::joomlaMediaVersion() . '"';
+                $content .= '<link href="' . $this->_systemUrl($stylesheet['url']) . '?' . Helper::frameworkVersion() . '"';
                 foreach ($stylesheet['attribs'] as $prop => $value) {
                     $content .= ' ' . $prop . '="' . $value . '"';
                 }
