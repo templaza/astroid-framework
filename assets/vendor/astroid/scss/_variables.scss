@@ -138,3 +138,46 @@ $form-check-input-gutter:               1.25rem !default;
 
 // Utilities
 $displays: none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex !default;
+
+// Initialising Astroid Variables
+:root {
+  --as-header-text-color: var(--bs-body-color);
+  --as-header-heading-color: var(--bs-heading-color);
+  --as-header-link-color: var(--bs-link-color);
+  --as-header-link-hover-color: var(--bs-link-hover-color);
+  --as-header-bg: var(--bs-body-bg);
+  --as-stick-header-bg-color: var(--bs-body-bg);
+  --as-stick-header-menu-link-color: var(--bs-link-color);
+  --as-stick-header-menu-link-hover-color: var(--bs-link-hover-color);
+  --as-stick-header-menu-link-active-color: var(--bs-link-hover-color);
+  --as-main-menu-link-color: var(--bs-link-color);
+  --as-main-menu-link-background: transparent;
+  --as-main-menu-link-hover-color: var(--bs-link-hover-color);
+  --as-main-menu-hover-background: transparent;
+  --as-main-menu-link-active-color: var(--bs-link-hover-color);
+  --as-main-menu-active-background: transparent;
+  --as-dropdown-bg-color: var(--bs-body-bg);
+  --as-dropdown-link-color: var(--bs-link-color);
+  --as-dropdown-menu-link-hover-color: var(--bs-link-hover-color);
+  --as-dropdown-menu-hover-bg-color: transparent;
+  --as-dropdown-menu-active-link-color: var(--bs-link-hover-color);
+  --as-dropdown-menu-active-bg-color: transparent;
+  --as-stick-header-mobile-menu-icon-color: var(--bs-link-color);
+  --as-mobile-menu-text-color: var(--bs-body-color);
+  --as-mobile-backgroundcolor: var(--bs-body-bg);
+  --as-mobile-menu-link-color: var(--bs-link-color);
+  --as-mobile-hover-background-color: transparent;
+  --as-mobile-menu-active-link-color: var(--bs-link-hover-color);
+  --as-mobile-menu-active-bg-color: transparent;
+  --as-mobile-menu-active-icon-color: var(--bs-link-hover-color);
+  --as-mobile-menu-icon-color: var(--bs-link-color);
+  --as-mobilemenu-backgroundcolor: var(--bs-body-bg);
+  --as-mobilemenu-menu-text-color: var(--bs-body-color);
+  --as-mobilemenu-menu-link-color: var(--bs-link-color);
+  --as-mobilemenu-hover-background-color: transparent;
+  --as-mobilemenu-menu-active-link-color: var(--bs-link-hover-color);
+  --as-mobilemenu-menu-active-bg-color: transparent;
+  --as-mobilemenu-menu-icon-color: var(--bs-link-color);
+  --as-mobilemenu-menu-active-icon-color: var(--bs-link-hover-color);
+  --as-contact-info-icon-color: var(--bs-link-color);
+}
