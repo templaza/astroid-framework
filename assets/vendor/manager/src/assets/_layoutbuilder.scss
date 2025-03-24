@@ -47,6 +47,14 @@
             background-color: var(--as-layout-block-bg);
         }
     }
+    .dynamic-conditions {
+        .card {
+            background-color: var(--as-layout-block-bg);
+        }
+        .item-move {
+            cursor: grab;
+        }
+    }
     .astroid-section, .astroid-rows, .astroid-cols {
         &:empty {
             &::after{

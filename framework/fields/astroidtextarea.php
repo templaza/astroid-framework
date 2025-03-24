@@ -150,6 +150,7 @@ class JFormFieldAstroidTextarea extends FormField {
            'maxlength' => $maxlength,
            'rows' => $rows,
            'columns' => $columns,
+           'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
            'code' => (string) $this->element['code'],
        ];
 

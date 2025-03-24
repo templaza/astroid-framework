@@ -53,6 +53,7 @@ class JFormFieldAstroidRadio extends ListField {
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $this->value,
+           'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
            'width'   =>  (string) $this->element['width'] == 'full' ? 'full' : '',
            'type'    =>  strtolower($this->type),
        ];

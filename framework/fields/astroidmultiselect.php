@@ -44,6 +44,7 @@ class JFormFieldAstroidMultiSelect extends FormField {
             'value'   =>  $this->value,
             'options' =>  $options,
             'hint'    =>  Text::_($this->hint),
+            'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
             'type'    =>  strtolower($this->type),
         ];
         return json_encode($json);

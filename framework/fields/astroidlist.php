@@ -86,6 +86,7 @@ class JFormFieldAstroidList extends FormField {
           'options' =>  $options,
           'astroid_content_layout'    =>  (string) $this->element['astroid-content-layout'],
           'astroid_content_layout_load'    =>  (string) $this->element['astroid-content-layout-load'],
+          'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
           'attr'    =>  trim($attr),
           'type'    =>  strtolower($this->type),
       ];

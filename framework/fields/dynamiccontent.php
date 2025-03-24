@@ -33,15 +33,11 @@ class JFormFieldDynamicContent extends FormField
         $defaults = [
             'source' => 'none',
             'start' => '1',
-            'quantity' => '',
+            'quantity' => '10',
             'conditions' => [],
             'order' => 'publish_up',
             'order_dir' => 'DESC',
-        ];
-
-        $options  =     [
-            'sources' => Constants::$dynamic_sources,
-            'fields' => Constants::$dynamic_source_fields,
+            'dynamic_content' => new stdClass(),
         ];
 
         $json     =   [
@@ -54,8 +50,8 @@ class JFormFieldDynamicContent extends FormField
                 'conditions'       =>  isset($value['conditions']) && is_array($value['conditions']) ? $value['conditions'] : $defaults['conditions'],
                 'order'            =>  isset($value['order']) && (string) $value['order'] != '' ? (string) $value['order'] : (string) $defaults['order'],
                 'order_dir'        =>  isset($value['order_dir']) && (string) $value['order_dir'] != '' ? (string) $value['order_dir'] : (string) $defaults['order_dir'],
+                'dynamic_content'  =>  isset($value['dynamic_content']) && (object) $value['dynamic_content'] != '' ? (object) $value['dynamic_content'] : $defaults['dynamic_content'],
             ],
-            'options'             =>  $options,
             'type'                =>  strtolower($this->type),
         ];
         return json_encode($json);

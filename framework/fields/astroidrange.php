@@ -27,6 +27,7 @@ class JFormFieldAstroidRange extends FormField {
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $this->value,
+           'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
            'min'     =>  (string)$this->element['min'],
            'max'     =>  (string)$this->element['max'],
            'step'    =>  (string)$this->element['step'],

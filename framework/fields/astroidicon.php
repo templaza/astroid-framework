@@ -37,6 +37,7 @@ class JFormFieldAstroidicon extends FormField {
            'id'      =>  $this->id,
            'name'    =>  $this->name,
            'value'   =>  $this->value,
+           'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
            'type'    =>  strtolower($this->type),
        ];
        return json_encode($json);

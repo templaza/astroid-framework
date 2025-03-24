@@ -9,7 +9,7 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
-                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_HEADING_LABEL" description="ASTROID_WIDGET_HEADING_CONTENT_DESC" name="heading"/>
+                <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_HEADING_LABEL" description="ASTROID_WIDGET_HEADING_CONTENT_DESC" name="heading" dynamic="true"/>
                 <field astroidgroup="general" ngShow="[heading]!==''" name="html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h2">
                     <option value="h1">h1</option>
                     <option value="h2">h2</option>
@@ -22,7 +22,7 @@
                 <field astroidgroup="general" ngShow="[heading]!==''" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="general" ngShow="[heading]!==''" name="heading_margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
 
-                <field astroidgroup="content_options" name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL"/>
+                <field astroidgroup="content_options" name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL" dynamic="true"/>
                 <field astroidgroup="content_options" ngShow="[content]!==''" name="text_column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>

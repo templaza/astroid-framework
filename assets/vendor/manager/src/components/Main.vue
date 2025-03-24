@@ -172,7 +172,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                   'col-sm-6 col-md-7' : (field.label || field.description) && field.input.type !== `astroidheading`,
                   'col-12': !(field.label || field.description) || field.input.type === `astroidheading`
                 }">
-                  <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
+                  <div v-if="typeof field.type !== 'undefined' && field.type === `json`" class="position-relative">
                     <Fields 
                       :field="field" 
                       :scope="$scope"

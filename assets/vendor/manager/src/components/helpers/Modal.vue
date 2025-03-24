@@ -111,7 +111,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                             <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
                                 <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing', 'astroidgetpro'].includes(field.input.type))" class="form-label fw-bold" v-html="(field.label + (field.input.type === `astroidgetpro` ? pro_badge : ``))"></div>
                                 <label v-else-if="field.input.type !== `astroidheading` && field.label" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
-                                <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
+                                <div v-if="typeof field.type !== 'undefined' && field.type === `json`" class="position-relative">
                                     <Fields 
                                         :field="field" 
                                         :scope="params"

@@ -69,6 +69,9 @@ class Constants
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
             'form_template'         => Helper::getFormTemplate($mode),
             'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
+            'is_pro'                => Helper::isPro(),
+            'dynamic_source'        => self::$dynamic_sources,
+            'dynamic_source_fields' => self::$dynamic_source_fields,
         ];
     }
 
