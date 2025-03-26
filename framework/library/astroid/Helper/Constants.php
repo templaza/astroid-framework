@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.2.0-rc1';
+    public static $astroid_version = '3.2.0-rc2';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -282,7 +282,8 @@ class Constants
             'name' => 'None',
             'fields' => [],
             'order' => [],
-            'filters' => []
+            'filters' => [],
+            'joins' => []
         ],
         'content' => [
             'value' => 'content',
@@ -296,6 +297,7 @@ class Constants
                 'publish_up' => 'Published',
                 'created_by' => 'Created By',
                 'modified_by' => 'Modified By',
+                'featured' => 'Featured',
                 'images.image_intro' => 'Intro Image',
                 'images.image_intro_alt' => 'Intro Image Alt',
                 'images.image_intro_caption' => 'Intro Image Caption',
@@ -329,7 +331,8 @@ class Constants
             ],
             'filters' => [
                 'content',
-            ]
+            ],
+            'joins' => []
         ],
         'categories' => [
             'value' => 'categories',
@@ -358,6 +361,12 @@ class Constants
             ],
             'filters' => [
                 'content','categories'
+            ],
+            'joins' => [
+                'content' => [
+                    'join' => 'INNER',
+                    'on' => 'content.catid = categories.id',
+                ]
             ]
         ],
         'users' => [
@@ -382,6 +391,16 @@ class Constants
             ],
             'filters' => [
                 'content','categories'
+            ],
+            'joins' => [
+                'content' => [
+                    'join' => 'INNER',
+                    'on' => 'content.created_by = users.id',
+                ],
+                'categories' => [
+                    'join' => 'INNER',
+                    'on' => 'categories.created_user_id = users.id',
+                ],
             ]
         ],
     ];

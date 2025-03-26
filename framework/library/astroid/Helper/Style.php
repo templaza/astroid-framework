@@ -12,6 +12,7 @@ namespace Astroid\Helper;
 use Astroid\Framework;
 use Astroid\Helper;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 

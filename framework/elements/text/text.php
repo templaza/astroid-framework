@@ -36,6 +36,11 @@ $text_column_cls        .=  $sm_column ? ' as-column-sm-' . $sm_column : '';
 $xs_column              =   $params->get('text_column_xs', '');
 $text_column_cls        .=  $xs_column ? ' as-column-' . $xs_column : '';
 
+//$dynamic_content = $params->get('dynamic_content_settings', '');
+//if (!empty($dynamic_content)) {
+//    var_dump($dynamic_content); die();
+//}
+
 if (!empty($title)) {
     echo '<'.$html_element.' class="astroid-content-heading">'. $title . '</'.$html_element.'>';
 }
