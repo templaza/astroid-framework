@@ -35,7 +35,7 @@ class JFormFieldDynamicContent extends FormField
             'start' => '1',
             'quantity' => '10',
             'conditions' => [],
-            'order' => 'publish_up',
+            'order' => '',
             'order_dir' => 'DESC',
             'dynamic_content' => new stdClass(),
         ];

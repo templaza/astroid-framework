@@ -46,9 +46,9 @@ if (!empty($image)) {
         echo '<figure class="m-0">';
     }
     echo '<div class="as-image-wrapper position-relative overflow-hidden'. $display . $border_radius . $box_shadow . $hover_effect . $transition . '">';
-    echo '<img class="as-image" src="'. Astroid\Helper\Media::getPath() . '/' . $image.'" alt="'.$title.'">';
+    echo '<img class="as-image" src="'. Astroid\Helper\Media::getMediaPath($image) .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
-        echo '<img class="as-image-dark d-none" src="'. Astroid\Helper\Media::getPath() . '/' . $image_dark.'" alt="'.$title.'">';
+        echo '<img class="as-image-dark d-none" src="'. Astroid\Helper\Media::getMediaPath($image_dark).'" alt="'.$title.'">';
         $element->style_dark->child('.as-image')->addCss('display', 'none !important');
         $element->style_dark->child('.as-image-dark')->addCss('display', 'inline-block !important');
     }
