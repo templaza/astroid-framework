@@ -87,19 +87,11 @@ class Template
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }
             $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
-            $query->select('params');
-            $query->from('#__template_styles');
-            $query->where('id = ' . $id);
-            $db->setQuery($query);
-            $object = $db->loadObject();
-            if ($object) {
-                $params = new \Joomla\Registry\Registry($object->params);
-                $params->set('astroid', $id);
-                $object->params = $params->toString();
-                $db->updateObject('#__template_styles', $object, 'id');
-                self::uploadTemplateDefaults($template, $id);
-            }
+            $object = new \stdClass();
+            $object->id = $id;
+            $object->params = \json_encode(["astroid" => $id]);
+            $db->updateObject('#__template_styles', $object, 'id');
+            self::uploadTemplateDefaults($template, $id);
         }
     }
 
