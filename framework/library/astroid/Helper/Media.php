@@ -388,7 +388,7 @@ class Media
 
     public static function getExt($filename): string
     {
-        if (\JVERSION > 4) {
+        if (version_compare(JVERSION, '5.0.0') >= 0) {
             return File::getExt($filename);
         } else {
             return \Joomla\CMS\Filesystem\File::getExt($filename);
