@@ -14,11 +14,33 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use \Astroid\Framework;
+use \Astroid\Helper;
 /** @var Joomla\CMS\Document\HtmlDocument $this */
 $app = Factory::getApplication();
 $document = Astroid\Framework::getDocument(); // Astroid Document
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.alert');
+$attributes = ['class' => 'comingsoon-wrap'];
+$params = Astroid\Framework::getTemplate()->getParams();
+Helper::coming_soon();
+$comingsoon_date = $params->get("coming_soon_countdown_date");
+if(isset($comingsoon_date)){
+    $date = new \DateTime($comingsoon_date, new \DateTimeZone($app->getConfig()->get('offset')));
+    $comingsoon_date = $date->format('Y/m/d H:i:s');
+}
+$background_setting = $params->get('background_setting');
+if ($background_setting == "video") {
+    $background_video = $params->get('background_video', '');
+    if (!empty($background_video)) {
+        $attributes['data-as-video-bg'] = Uri::root() . Astroid\Helper\Media::getPath() . '/' . $background_video;
+        $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+    }
+}
+$wrap_attrs = [];
+foreach ($attributes as $key => $value) {
+    $wrap_attrs[] = $key . '="' . $value . '"';
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -28,10 +50,10 @@ $wa->useScript('bootstrap.alert');
     <astroid:include type="head-styles" /> <!-- head styles -->
 </head>
 <body class="astroid-grid">
-    <div class="d-flex justify-content-center">
+    <div <?php echo implode(' ', $wrap_attrs); ?>>
         <div class="as-width-large my-5 px-3">
             <jdoc:include type="message" />
-            <div id="frame" class="card card-body">
+            <div id="frame" class="card card-body text-center">
                 <?php if ($app->get('offline_image')) : ?>
                     <img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>" />
                 <?php endif; ?>
@@ -47,15 +69,25 @@ $wa->useScript('bootstrap.alert');
                         <?php echo Text::_('JOFFLINE_MESSAGE'); ?>
                     </p>
                 <?php endif; ?>
+                <?php if ($comingsoon_date) {
+                    echo '<div id="comingsoon" class="mb-4 mt-1">';
+                    echo '<div class="as-countdown comingsoon-date text-center row row-cols-4" data-date="' . $comingsoon_date . '" data-offset="' . $app->getConfig()->get('offset') . '" data-expired="' . $params->get('coming_soon_countdown_finish_text', '') . '">';
+                    echo '<div class="days"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_DAYS') . '</span></div></div>';
+                    echo '<div class="hours"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_HOURS') . '</span></div></div>';
+                    echo '<div class="minutes"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_MINUTES') . '</span></div></div>';
+                    echo '<div class="seconds"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_SECONDS') . '</span></div></div>';
+                    echo '</div>';
+                    echo '</div>';
+                } ?>
                 <form action="<?php echo Route::_('index.php', true); ?>" method="post" id="form-login">
                     <fieldset class="input">
                         <p id="form-login-username" class="mb-3">
                             <label for="username" class="form-label"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
-                            <input name="username" id="username" type="text" class="inputbox form-control" alt="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" autocomplete="off" autocapitalize="none" />
+                            <input name="username" id="username" type="text" class="inputbox form-control text-center" alt="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" autocomplete="off" autocapitalize="none" />
                         </p>
                         <p id="form-login-password" class="mb-3">
                             <label for="passwd" class="form-label"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
-                            <input type="password" name="password" class="inputbox form-control" alt="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" id="passwd" />
+                            <input type="password" name="password" class="inputbox form-control text-center" alt="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" id="passwd" />
                         </p>
                         <p id="submit-button" class="mt-4">
                             <button type="submit" name="Submit" class="btn btn-primary btn-lg w-100"><?php echo Text::_('JLOGIN'); ?></button>
@@ -65,9 +97,20 @@ $wa->useScript('bootstrap.alert');
                         <input type="hidden" name="return" value="<?php echo base64_encode(Uri::base()); ?>" />
                         <?php echo HTMLHelper::_('form.token'); ?>
                     </fieldset>
+                    <?php
+                    if ($params->get('coming_soon_social', 1)) {
+                        echo '<div class="coming_soon_social d-flex justify-content-center mt-4">';
+                        $document->include('social', ['class' => 'd-inline-block']);
+                        echo '</div>';
+                    }
+                    ?>
                 </form>
             </div>
         </div>
     </div>
+    <?php
+    echo $document->getScripts('body');
+    echo $document->getCustomTags('body');
+    ?>
 </body>
 </html>

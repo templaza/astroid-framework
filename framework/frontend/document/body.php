@@ -23,10 +23,6 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 Astroid\Helper\Head::meta(); // site meta
 Astroid\Helper\Head::favicon(); // site favicon
 
-if ($document->isDev()) { // check is dev
-    $document->include('comingsoon'); // load coming soon and return
-    return;
-}
 $document->include('bodyStart'); // Body Start
 $document->include('preloader'); // load preloader
 $document->include('backtotop'); // load back to top

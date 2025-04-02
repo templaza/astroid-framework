@@ -333,7 +333,13 @@ class Constants
             'filters' => [
                 'content',
             ],
-            'joins' => []
+            'joins' => [],
+            'where' => [
+                'state' => '1',
+            ],
+            'depends' => [
+                'categories'
+            ],
         ],
         'categories' => [
             'value' => 'categories',
@@ -367,7 +373,11 @@ class Constants
                     'join' => 'INNER',
                     'on' => 'content.catid = categories.id',
                 ]
-            ]
+            ],
+            'where' => [
+                'published' => '1',
+            ],
+            'depends' => []
         ],
         'users' => [
             'value' => 'users',
@@ -401,7 +411,11 @@ class Constants
                     'join' => 'INNER',
                     'on' => 'categories.created_user_id = users.id',
                 ],
-            ]
+            ],
+            'where' => [
+                'block' => '0',
+            ],
+            'depends' => []
         ],
     ];
 

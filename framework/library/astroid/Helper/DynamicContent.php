@@ -64,11 +64,24 @@ class DynamicContent {
             }
         }
 
+        if (!empty(Constants::$dynamic_source_fields[$this->source]['where'])) {
+            foreach (Constants::$dynamic_source_fields[$this->source]['where'] as $field => $where) {
+                $query->where($this->source . '.' . $field . ' = ' . $this->_db->quote($where));
+            }
+        }
+
         if (!empty($joins)) {
             foreach ($joins as $join) {
                 if (isset(Constants::$dynamic_source_fields[$join]['joins'][$this->source])) {
                     $joinObj = Constants::$dynamic_source_fields[$join]['joins'][$this->source];
-                    $query->join($joinObj['join'], '#__' . $join . ' AS ' . $join . ' ON ' . $joinObj['on']);
+                    $whereJoin = [];
+                    $whereJoin[] = $joinObj['on'];
+                    if (!empty(Constants::$dynamic_source_fields[$join]['where'])) {
+                        foreach (Constants::$dynamic_source_fields[$join]['where'] as $field => $where) {
+                            $whereJoin[] = $join . '.' . $field . ' = ' . $this->_db->quote($where);
+                        }
+                    }
+                    $query->join($joinObj['join'], '#__' . $join . ' AS ' . $join . ' ON ' . implode(' AND ', $whereJoin));
                 }
             }
         }
