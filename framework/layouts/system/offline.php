@@ -53,12 +53,13 @@ foreach ($attributes as $key => $value) {
 <body>
     <div class="offline-page row g-0">
         <div class="col-lg-5 p-lg-5 p-4">
-            <jdoc:include type="message" />
+
             <div id="frame" class="d-flex flex-column justify-content-between h-100">
                 <?php if ($app->get('offline_image')) : ?>
                     <img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>" class="offline-image-logo" />
                 <?php endif; ?>
                 <div class="offline-form-login">
+                    <jdoc:include type="message" />
                     <h1><?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?></h1>
                     <?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) !== '') : ?>
                         <p>
