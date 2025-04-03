@@ -21,10 +21,11 @@ $app = Factory::getApplication();
 $document = Astroid\Framework::getDocument(); // Astroid Document
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.alert');
-$attributes = ['class' => 'comingsoon-wrap'];
+$attributes = ['class' => 'col-lg-7 comingsoon-wrap'];
 $params = Astroid\Framework::getTemplate()->getParams();
 Helper::coming_soon();
 $comingsoon_date = $params->get("coming_soon_countdown_date");
+$coming_soon_logo = $params->get("coming_soon_logo");
 if(isset($comingsoon_date)){
     $date = new \DateTime($comingsoon_date, new \DateTimeZone($app->getConfig()->get('offset')));
     $comingsoon_date = $date->format('Y/m/d H:i:s');
@@ -49,28 +50,68 @@ foreach ($attributes as $key => $value) {
     <jdoc:include type="head" />
     <astroid:include type="head-styles" /> <!-- head styles -->
 </head>
-<body class="astroid-grid">
-    <div <?php echo implode(' ', $wrap_attrs); ?>>
-        <div class="as-width-large my-5 px-3">
+<body>
+    <div class="offline-page row g-0">
+        <div class="col-lg-5 p-lg-5 p-4">
             <jdoc:include type="message" />
-            <div id="frame" class="card card-body text-center">
+            <div id="frame" class="d-flex flex-column justify-content-between h-100">
                 <?php if ($app->get('offline_image')) : ?>
-                    <img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>" />
+                    <img src="<?php echo $app->get('offline_image'); ?>" alt="<?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>" class="offline-image-logo" />
                 <?php endif; ?>
-                <h1>
-                    <?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?>
-                </h1>
-                <?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) !== '') : ?>
-                    <p>
-                        <?php echo $app->get('offline_message'); ?>
-                    </p>
-                <?php elseif ($app->get('display_offline_message', 1) == 2 && str_replace(' ', '', Text::_('JOFFLINE_MESSAGE')) !== '') : ?>
-                    <p>
-                        <?php echo Text::_('JOFFLINE_MESSAGE'); ?>
-                    </p>
-                <?php endif; ?>
-                <?php if ($comingsoon_date) {
-                    echo '<div id="comingsoon" class="mb-4 mt-1">';
+                <div class="offline-form-login">
+                    <h1><?php echo htmlspecialchars($app->get('sitename'), ENT_COMPAT, 'UTF-8'); ?></h1>
+                    <?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) !== '') : ?>
+                        <p>
+                            <?php echo $app->get('offline_message'); ?>
+                        </p>
+                    <?php elseif ($app->get('display_offline_message', 1) == 2 && str_replace(' ', '', Text::_('JOFFLINE_MESSAGE')) !== '') : ?>
+                        <p>
+                            <?php echo Text::_('JOFFLINE_MESSAGE'); ?>
+                        </p>
+                    <?php endif; ?>
+                    <form action="<?php echo Route::_('index.php', true); ?>" method="post" id="form-login">
+                        <fieldset class="input">
+                            <p id="form-login-username" class="mb-3">
+                                <label for="username" class="form-label"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
+                                <input name="username" id="username" type="text" class="inputbox form-control" alt="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" autocomplete="off" autocapitalize="none" />
+                            </p>
+                            <p id="form-login-password" class="mb-3">
+                                <label for="passwd" class="form-label"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
+                                <input type="password" name="password" class="inputbox form-control" alt="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" id="passwd" />
+                            </p>
+                            <p id="submit-button" class="mt-4">
+                                <button type="submit" name="Submit" class="btn btn-primary btn-lg w-100"><?php echo Text::_('JLOGIN'); ?></button>
+                            </p>
+                            <input type="hidden" name="option" value="com_users" />
+                            <input type="hidden" name="task" value="user.login" />
+                            <input type="hidden" name="return" value="<?php echo base64_encode(Uri::base()); ?>" />
+                            <?php echo HTMLHelper::_('form.token'); ?>
+                        </fieldset>
+                        <?php
+                        if ($params->get('coming_soon_social', 1)) {
+                            echo '<div class="coming_soon_social d-flex mt-4">';
+                            $document->include('social', ['class' => 'd-inline-block']);
+                            echo '</div>';
+                        } ?>
+                    </form>
+                </div>
+                <?php
+                echo '<div class="coming_soon_footer mt-4">';
+                $document->include('footer', ['class' => 'd-block']);
+                echo '</div>';
+                ?>
+            </div>
+        </div>
+        <div <?php echo implode(' ', $wrap_attrs); ?>>
+            <div class="px-lg-5 px-4 d-flex flex-column justify-content-center align-items-center h-100">
+                <?php
+                if ($coming_soon_logo) {
+                    echo '<img src="' . Astroid\Helper\Media::getPath() . '/' . $coming_soon_logo . '" alt="Coming Soon" class="comingsoon-image my-4">';
+                } else {
+                    echo '<img src="media/astroid/assets/images/comingsoon.png" alt="Coming Soon" class="comingsoon-image my-4">';
+                }
+                if ($comingsoon_date) {
+                    echo '<div id="comingsoon" class="w-100 my-4">';
                     echo '<div class="as-countdown comingsoon-date text-center row row-cols-4" data-date="' . $comingsoon_date . '" data-offset="' . $app->getConfig()->get('offset') . '" data-expired="' . $params->get('coming_soon_countdown_finish_text', '') . '">';
                     echo '<div class="days"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_DAYS') . '</span></div></div>';
                     echo '<div class="hours"><div class="counter-wrap bg-body-tertiary d-flex align-items-center justify-content-center flex-column"><span class="count">-</span><span class="label">' . Text::_('ASTROID_HOURS') . '</span></div></div>';
@@ -79,32 +120,6 @@ foreach ($attributes as $key => $value) {
                     echo '</div>';
                     echo '</div>';
                 } ?>
-                <form action="<?php echo Route::_('index.php', true); ?>" method="post" id="form-login">
-                    <fieldset class="input">
-                        <p id="form-login-username" class="mb-3">
-                            <label for="username" class="form-label"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
-                            <input name="username" id="username" type="text" class="inputbox form-control text-center" alt="<?php echo Text::_('JGLOBAL_USERNAME'); ?>" autocomplete="off" autocapitalize="none" />
-                        </p>
-                        <p id="form-login-password" class="mb-3">
-                            <label for="passwd" class="form-label"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
-                            <input type="password" name="password" class="inputbox form-control text-center" alt="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" id="passwd" />
-                        </p>
-                        <p id="submit-button" class="mt-4">
-                            <button type="submit" name="Submit" class="btn btn-primary btn-lg w-100"><?php echo Text::_('JLOGIN'); ?></button>
-                        </p>
-                        <input type="hidden" name="option" value="com_users" />
-                        <input type="hidden" name="task" value="user.login" />
-                        <input type="hidden" name="return" value="<?php echo base64_encode(Uri::base()); ?>" />
-                        <?php echo HTMLHelper::_('form.token'); ?>
-                    </fieldset>
-                    <?php
-                    if ($params->get('coming_soon_social', 1)) {
-                        echo '<div class="coming_soon_social d-flex justify-content-center mt-4">';
-                        $document->include('social', ['class' => 'd-inline-block']);
-                        echo '</div>';
-                    }
-                    ?>
-                </form>
             </div>
         </div>
     </div>

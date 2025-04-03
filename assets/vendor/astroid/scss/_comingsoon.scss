@@ -1,15 +1,13 @@
-.comingsoon-wrap{
-   box-sizing: border-box;
+.offline-page {
    min-height: 100vh;
-   display: flex;
-   align-items: center;
-   justify-content: center;
 }
-
+.offline-image-logo {
+   max-width: fit-content;
+}
 .comingsoon-date{
    > div{
       .counter-wrap {
-         padding: 18px 0;
+         padding: 25px 0;
          border-radius: 10px;
       }
       span{

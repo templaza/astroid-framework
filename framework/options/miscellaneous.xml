@@ -42,6 +42,9 @@
          <field astroidgroup="contact_info" ngShow="[contact_details]=='1' AND [contact_display]=='icons'" description="TPL_ASTROID_ICON_COLOR_DESC" name="icon_color" type="astroidcolor" large="true" label="TPL_ASTROID_ICON_COLOR_LABEL">
          </field>
 
+         <field astroidgroup="coming_soon" name="coming_soon_logo" type="astroidmedia" label="TPL_ASTROID_MISCELL_COMING_SOON_IMG_LABEL" description="TPL_ASTROID_MISCELL_COMING_SOON_IMG_DESC">
+         </field>
+
          <field astroidgroup="coming_soon" name="coming_soon_countdown_date" type="astroidcalendar" label="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_LABEL" description="TPL_ASTROID_MISCELL_COMING_COUNTDOWN_DATE_DESC">
          </field>
 
