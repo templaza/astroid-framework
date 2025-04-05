@@ -9,7 +9,6 @@
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -17,12 +16,12 @@ use Joomla\CMS\Uri\Uri;
 use \Astroid\Framework;
 use \Astroid\Helper;
 /** @var Joomla\CMS\Document\HtmlDocument $this */
-$app = Factory::getApplication();
-$document = Astroid\Framework::getDocument(); // Astroid Document
-$wa = $app->getDocument()->getWebAssetManager();
+$document = Framework::getDocument(); // Astroid Document
+$app = $document->getApp();
+$wa = $document->getWA();
 $wa->useScript('bootstrap.alert');
 $attributes = ['class' => 'col-lg-7 comingsoon-wrap'];
-$params = Astroid\Framework::getTemplate()->getParams();
+$params = Framework::getTemplate()->getParams();
 Helper::coming_soon();
 $comingsoon_date = $params->get("coming_soon_countdown_date");
 $coming_soon_logo = $params->get("coming_soon_logo");

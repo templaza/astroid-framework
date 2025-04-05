@@ -10,6 +10,7 @@
 namespace Astroid\Helper;
 
 use Astroid\Helper\Constants;
+use Astroid\Component\Article;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Router\Route;
@@ -20,6 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Event\Content;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Access\Access;
 
 defined('_JEXEC') or die;
 
@@ -31,12 +33,13 @@ class DynamicContent {
     public string $order;
     public string $order_dir;
     public mixed $dynamic_content;
+    public Registry $options;
     private object $_db;
     private object $_app;
     private mixed $_article;
     private array $_special = [];
 
-    public function __construct($source = '', $start = 1, $quantity = 10, $conditions = [], $order = '', $order_dir = '', $dynamic_content = null) {
+    public function __construct($source = '', $start = 1, $quantity = 10, $conditions = [], $order = '', $order_dir = '', $dynamic_content = null, $options = '') {
         $this->source = $source;
         $this->start = $start;
         $this->quantity = $quantity;
@@ -44,6 +47,12 @@ class DynamicContent {
         $this->order = $order;
         $this->order_dir = $order_dir;
         $this->dynamic_content = $dynamic_content;
+        $this->options = new Registry();
+        if (is_string($options)) {
+            $this->options->loadString($options);
+        } elseif (is_array($options)) {
+            $this->options->loadArray($options);
+        }
         $this->_db = Factory::getContainer()->get(DatabaseInterface::class);
         $this->_app = Factory::getApplication();
     }
@@ -52,38 +61,45 @@ class DynamicContent {
         if (empty($this->source) || empty($this->dynamic_content)) {
             return false;
         }
-
         $query = $this->_db->getQuery(true);
         $query->from('#__' . $this->source . ' AS ' . $this->source);
         $joins = [];
 
+        if (!empty(Constants::DynamicSourceFields()[$this->source]['depends'])) {
+            foreach (Constants::DynamicSourceFields()[$this->source]['depends'] as $depend) {
+                $joins[] = $depend;
+            }
+        }
         foreach ($this->dynamic_content as $key => $value) {
             $query->select($this->buildSelect($value, $key));
             if ($value->category->value !== $this->source && !in_array($value->category->value, $joins)) {
                 $joins[] = $value->category->value;
             }
         }
-
-        if (!empty(Constants::$dynamic_source_fields[$this->source]['where'])) {
-            foreach (Constants::$dynamic_source_fields[$this->source]['where'] as $field => $where) {
-                $query->where($this->source . '.' . $field . ' = ' . $this->_db->quote($where));
+        if (!empty(Constants::DynamicSourceFields()[$this->source]['where'])) {
+            foreach (Constants::DynamicSourceFields()[$this->source]['where'] as $where) {
+                $query->where($where);
             }
         }
 
         if (!empty($joins)) {
             foreach ($joins as $join) {
-                if (isset(Constants::$dynamic_source_fields[$join]['joins'][$this->source])) {
-                    $joinObj = Constants::$dynamic_source_fields[$join]['joins'][$this->source];
-                    $whereJoin = [];
-                    $whereJoin[] = $joinObj['on'];
-                    if (!empty(Constants::$dynamic_source_fields[$join]['where'])) {
-                        foreach (Constants::$dynamic_source_fields[$join]['where'] as $field => $where) {
-                            $whereJoin[] = $join . '.' . $field . ' = ' . $this->_db->quote($where);
+                if (isset(Constants::DynamicSourceFields()[$join]['joins'][$this->source])) {
+                    $joinObj = Constants::DynamicSourceFields()[$join]['joins'][$this->source];
+                    if (!empty(Constants::DynamicSourceFields()[$join]['where'])) {
+                        foreach (Constants::DynamicSourceFields()[$join]['where'] as $where) {
+                            $query->where($where);
                         }
                     }
-                    $query->join($joinObj['join'], '#__' . $join . ' AS ' . $join . ' ON ' . implode(' AND ', $whereJoin));
+                    $query->join($joinObj['join'], '#__' . $join . ' AS ' . $join . ' ON ' . $joinObj['on']);
                 }
             }
+        }
+
+        if ($this->source === 'content') {
+            $this->defaultContentQuery($query);
+        } elseif ($this->source === 'categories') {
+            $this->defaultCategoryQuery($query);
         }
 
         if (!empty($this->conditions)) {
@@ -148,6 +164,13 @@ class DynamicContent {
                         'value' => $value->value
                     ];
                     return 'CONCAT(categories.id,' . $this->_db->quote(':') . ', categories.language) AS ' . $key;
+                })(),
+                $value->value === 'article_count' => (function () use ($value, $key) {
+                    $this->_special[$key] = [
+                        'category' => $value->category->value,
+                        'value' => $value->value
+                    ];
+                    return 'categories.id AS ' . $key;
                 })(),
                 default => $value->category->value . '.' . $value->value . ' AS ' . $key
             },
@@ -263,6 +286,16 @@ class DynamicContent {
                     $link = explode(':', $value);
                     return Route::_(RouteHelper::getCategoryRoute($link[0], $link[1]));
                 })(),
+                $specialValue['value'] === 'article_count' => (function () use ($value) {
+                    $query = $this->_db->getQuery(true);
+                    $query->select('COUNT(*)')
+                        ->from('#__content AS content')
+                        ->where('content.catid = ' . (int) $value);
+                    $query->where('content.state = 1');
+                    $this->defaultContentQuery($query);
+                    $this->_db->setQuery($query);
+                    return $this->_db->loadResult();
+                })(),
                 default => $value
             },
             default => $value
@@ -285,5 +318,55 @@ class DynamicContent {
         $model          = $component->createModel('Article', 'Site');
         $this->_article = $model->getItem($id);
         return $this->_article;
+    }
+    private function defaultContentQuery($query) : void
+    {
+        $content_catids = $this->options->get('content_catids', []);
+        if (!empty($content_catids))
+        {
+            $include_subcategories = $this->options->get('content_include_subcategories', 'exclude');
+            $catids = [];
+            foreach ($content_catids as $category) {
+                $catids[] = $category->value;
+            }
+            $categories = Article::getCategories($catids, $include_subcategories === 'include');
+            $categories = array_filter(array_merge($categories, $catids));
+            $query->where($this->_db->quoteName('content.catid')." IN (" . implode( ',', $categories ) . ")");
+        }
+        // publishing
+        $nowDate = Factory::getDate()->toSql();
+        $query->extendWhere(
+            'AND',
+            [
+                'content.publish_up IS NULL',
+                'content.publish_up <= :publishUp',
+            ],
+            'OR'
+        )->extendWhere(
+            'AND',
+            [
+                'content.publish_down IS NULL',
+                'content.publish_down >= :publishDown',
+            ],
+            'OR'
+        )->bind([':publishUp', ':publishDown'], $nowDate);
+        // Language filter
+        if ($this->_app->isClient('site') && $this->_app->getLanguageFilter()) {
+            $query->where('content.language IN (' . $this->_db->Quote(Factory::getLanguage()->getTag()) . ',' . $this->_db->Quote('*') . ')');
+        }
+        $authorised = Access::getAuthorisedViewLevels($this->_app->getIdentity()->id);
+        $query->where($this->_db->quoteName('content.access')." IN (" . implode( ',', $authorised ) . ")");
+    }
+
+    private function defaultCategoryQuery($query) : void
+    {
+        $category_parent = $this->options->get('category_parent', 1);
+        if ($category_parent) {
+            $query->where($this->_db->quoteName('categories.parent_id') . ' = ' . (int) $category_parent);
+        }
+        $query->where($this->_db->quoteName('categories.access')." IN (" . implode( ',', Factory::getUser()->getAuthorisedViewLevels() ) . ")");
+        if ($this->_app->isClient('site') && $this->_app->getLanguageFilter()) {
+            $query->where('categories.language IN (' . $this->_db->Quote(Factory::getLanguage()->getTag()) . ',' . $this->_db->Quote('*') . ')');
+        }
     }
 }

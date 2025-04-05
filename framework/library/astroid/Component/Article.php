@@ -192,7 +192,6 @@ class Article
 
         if (!empty($catid))
         {
-
             $categories = self::getCategories($catid, $include_subcategories );
 
             $categories = array_filter(array_merge($categories, $catid));
@@ -325,9 +324,7 @@ class Article
     }
 
     public static function getCategories($parent_id = [1], $include_subcategories = true, $child = false, $cats = array()) {
-
-        $app = Factory::getApplication();
-        $db = Factory::getDbo();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $query
@@ -337,19 +334,15 @@ class Article
             ->where($db->quoteName('published') . ' = ' . $db->quote(1))
             ->where($db->quoteName('access')." IN (" . implode( ',', Factory::getUser()->getAuthorisedViewLevels() ) . ")")
             ->where($db->quoteName('language')." IN (" . $db->Quote(Factory::getLanguage()->getTag()).", ".$db->Quote('*') . ")");
-
         if (!empty(array_filter($parent_id)))
         {
             $query->where($db->quoteName('parent_id')." IN (" . implode( ',', $parent_id ) . ")");
         }
 
         $query->order($db->quoteName('lft') . ' ASC');
-
         $db->setQuery($query);
         $rows = $db->loadObjectList();
-
         foreach ($rows as $row) {
-
             if($include_subcategories) {
                 array_push($cats, $row->id);
                 if (self::hasChildren($row->id)) {
@@ -362,9 +355,7 @@ class Article
     }
 
     private static function hasChildren($parent_id = 1) {
-
-        $app = Factory::getApplication();
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $query
@@ -378,11 +369,7 @@ class Article
             ->order($db->quoteName('created_time') . ' DESC');
 
         $db->setQuery($query);
-
         $childrens = $db->loadObjectList();
-
-
-
         if(is_array($childrens) && count($childrens)) {
             return true;
         }

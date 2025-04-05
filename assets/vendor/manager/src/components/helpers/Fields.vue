@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeMount, onMounted, onUpdated, inject, ref, computed} from 'vue';
+import {onBeforeMount, onUpdated, inject, computed} from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -49,12 +49,6 @@ onBeforeMount(()=>{
     updateContentLayout();
 })
 
-onMounted(()=>{
-    if (constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && typeof props.scope['dynamic_content_settings']['dynamic_content'] !== 'undefined' && typeof props.scope['dynamic_content_settings']['dynamic_content'][props.field.name] !== 'undefined' && Object.keys(props.scope['dynamic_content_settings']['dynamic_content'][props.field.name]).length !== 0) {
-        dynamicContent.value = props.scope['dynamic_content_settings']['dynamic_content'][props.field.name];
-    }
-});
-
 onUpdated(()=>{
     updateContentLayout();
 })
@@ -79,7 +73,6 @@ function updateSubLayouts() {
 }
 
 // Get Dynamic Fields
-const dynamicContent = ref({});
 const dynamicFields = computed(() => {
     let fields = [];
     if (typeof props.scope['dynamic_content_settings'] === 'undefined') {
@@ -111,11 +104,9 @@ function selectDynamicField(field) {
         props.scope['dynamic_content_settings']['dynamic_content'] = {};
     }
     props.scope['dynamic_content_settings']['dynamic_content'][props.field.name] = field;
-    dynamicContent.value = field;
 }
 function removeDynamicField() {
-    props.scope['dynamic_content_settings']['dynamic_content'][props.field.name] = {};
-    dynamicContent.value = {};
+    delete props.scope['dynamic_content_settings']['dynamic_content'][props.field.name];
 }
 </script>
 <template>
@@ -129,9 +120,9 @@ function removeDynamicField() {
             </li>
         </ul>
     </div>
-    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length && Object.keys(dynamicContent).length !== 0" class="dynamic-content form-control">
+    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length && typeof props.scope.dynamic_content_settings.dynamic_content[props.field.name] !== `undefined` && Object.keys(props.scope.dynamic_content_settings.dynamic_content[props.field.name]).length !== 0" class="dynamic-content form-control">
         <div class="row g-0 align-items-center">
-            <div class="dynamic-field-label col px-2"><i class="fa-solid fa-database me-2"></i>{{ dynamicContent.category.name + ' - ' + dynamicContent.label }}</div>
+            <div class="dynamic-field-label col px-2"><i class="fa-solid fa-database me-2"></i>{{ props.scope.dynamic_content_settings.dynamic_content[props.field.name].category.name + ' - ' + props.scope.dynamic_content_settings.dynamic_content[props.field.name].label }}</div>
             <div class="dynamic-field-tools col-auto">
                 <nav class="nav">
                     <a class="nav-link" href="#" @click.prevent="removeDynamicField"><i class="fa-solid fa-trash-can"></i></a>

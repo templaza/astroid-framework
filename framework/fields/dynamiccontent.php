@@ -38,6 +38,7 @@ class JFormFieldDynamicContent extends FormField
             'order' => '',
             'order_dir' => 'DESC',
             'dynamic_content' => new stdClass(),
+            'options' => '{}'
         ];
 
         $json     =   [
@@ -51,6 +52,7 @@ class JFormFieldDynamicContent extends FormField
                 'order'            =>  isset($value['order']) && (string) $value['order'] != '' ? (string) $value['order'] : (string) $defaults['order'],
                 'order_dir'        =>  isset($value['order_dir']) && (string) $value['order_dir'] != '' ? (string) $value['order_dir'] : (string) $defaults['order_dir'],
                 'dynamic_content'  =>  isset($value['dynamic_content']) && (object) $value['dynamic_content'] != '' ? (object) $value['dynamic_content'] : $defaults['dynamic_content'],
+                'options'          =>  isset($value['options']) && (string)$value['options'] ? (string) $value['options'] : $defaults['options'],
             ],
             'type'                =>  strtolower($this->type),
         ];

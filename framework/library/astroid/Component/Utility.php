@@ -216,7 +216,7 @@ class Utility
         }
     }
 
-    public static function getCategories(): array
+    public static function getCategories($type = ''): array
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
@@ -233,19 +233,18 @@ class Utility
 
         $db->setQuery($query);
         $categories = $db->loadObjectList();
-
-        $article_cats = array( 0 => array('value' => '', 'label' => Text::_('ASTROID_WIDGET_ALL_CATEGORIES') ) );
-
-        $j = 1;
+        $article_cats = array();
+        if ($type === 'parent') {
+            $article_cats[] = ['value' => 1, 'label' => Text::_('ASTROID_ROOT_LABEL')];
+        } elseif ($type === '') {
+            $article_cats[] = ['value' => '', 'label' => Text::_('ASTROID_WIDGET_ALL_CATEGORIES')];
+        }
 
         if (count((array) $categories))
         {
             foreach ($categories as $category)
             {
-                $article_cats[$j]['value'] = $category->id;
-                $article_cats[$j]['label'] = str_repeat('- ', ($category->level - 1)) . $category->title;
-
-                $j = $j + 1;
+                $article_cats[] = ['value' => $category->id, 'label' => str_repeat('- ', ($category->level - 1)) . $category->title];
             }
         }
         return $article_cats;

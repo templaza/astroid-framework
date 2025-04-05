@@ -9,6 +9,7 @@
 
 namespace Astroid\Helper;
 
+use Astroid\Component\Utility;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Framework;
@@ -45,7 +46,6 @@ class Constants
         $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
         $tinyMceLicense =   $pluginParams->get('tinymce_license', '');
-
         return [
             'site_url'              =>  Uri::root(true). '/',
             'base_url'              =>  Uri::base(true),
@@ -71,7 +71,8 @@ class Constants
             'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
             'is_pro'                => Helper::isPro(),
             'dynamic_source'        => self::$dynamic_sources,
-            'dynamic_source_fields' => self::$dynamic_source_fields,
+            'dynamic_source_fields' => self::DynamicSourceFields(),
+            'dynamic_source_options'=> self::getDynamicOptions(),
         ];
     }
 
@@ -276,148 +277,161 @@ class Constants
         'categories' => 'Categories',
     ];
 
-    public static $dynamic_source_fields = [
-        'none' => [
-            'value' => 'none',
-            'name' => 'None',
-            'fields' => [],
-            'order' => [],
-            'filters' => [],
-            'joins' => []
-        ],
-        'content' => [
-            'value' => 'content',
-            'name' => 'Articles',
-            'fields' => [
-                'title' => 'Title',
-                'introtext' => 'Intro Text',
-                'text' => 'Content',
-                'created' => 'Created Date',
-                'modified' => 'Modified Date',
-                'publish_up' => 'Published',
-                'created_by' => 'Created By',
-                'modified_by' => 'Modified By',
-                'featured' => 'Featured',
-                'images.image_intro' => 'Intro Image',
-                'images.image_intro_alt' => 'Intro Image Alt',
-                'images.image_intro_caption' => 'Intro Image Caption',
-                'images.image_fulltext' => 'Full Image',
-                'images.image_fulltext_alt' => 'Full Image Alt',
-                'images.image_fulltext_caption' => 'Full Image Caption',
-                'link' => 'Link',
-                'urls.urla' => 'Link A',
-                'urls.urlatext' => 'Link A Text',
-                'urls.urlb' => 'Link B',
-                'urls.urlbtext' => 'Link B Text',
-                'urls.urlc' => 'Link C',
-                'urls.urlctext' => 'Link C Text',
-                'rating' => 'Rating',
-                'votes' => 'Votes',
-                'hits' => 'Hits',
-                'event.afterDisplayTitle' => 'Event After Display Title',
-                'event.beforeDisplayContent' => 'Event Before Display Content',
-                'event.afterDisplayContent' => 'Event After Display Content',
-                'state' => 'State',
-                'id' => 'ID',
-                'alias' => 'Alias',
+    public static function DynamicSourceFields(): array
+    {
+        return [
+            'none' => [
+                'value' => 'none',
+                'name' => 'None',
+                'fields' => [],
+                'order' => [],
+                'filters' => [],
+                'joins' => []
             ],
-            'order' => [
-                'title' => 'Title',
-                'created' => 'Created Date',
-                'modified' => 'Modified Date',
-                'publish_up' => 'Published',
-                'ordering' => 'Ordering',
-                'hits' => 'Hits',
-                'random' => 'Random',
-            ],
-            'filters' => [
-                'content',
-            ],
-            'joins' => [],
-            'where' => [
-                'state' => '1',
-            ],
-            'depends' => [
-                'categories'
-            ],
-        ],
-        'categories' => [
-            'value' => 'categories',
-            'name' => 'Categories',
-            'fields' => [
-                'title' => 'Title',
-                'description' => 'Description',
-                'created_time' => 'Created Date',
-                'modified_time' => 'Modified Date',
-                'created_user_id' => 'Created By',
-                'modified_user_id' => 'Modified By',
-                'params.image' => 'Image',
-                'params.image_alt' => 'Image Alt',
-                'link' => 'Link',
-                'article_count' => 'Article Count',
-                'id' => 'ID',
-                'alias' => 'Alias',
-            ],
-            'order' => [
-                'title' => 'Title',
-                'created_time' => 'Created Date',
-                'modified_time' => 'Modified Date',
-                'hits' => 'Hits',
-                'random' => 'Random',
-            ],
-            'filters' => [
-                'content','categories'
-            ],
-            'joins' => [
-                'content' => [
-                    'join' => 'INNER',
-                    'on' => 'content.catid = categories.id',
-                ]
-            ],
-            'where' => [
-                'published' => '1',
-            ],
-            'depends' => []
-        ],
-        'users' => [
-            'value' => 'users',
-            'name' => 'Users',
-            'fields' => [
-                'name' => 'Name',
-                'username' => 'Username',
-                'email' => 'Email',
-                'registerDate' => 'Register Date',
-                'lastvisitDate' => 'Last Visit Date',
-                'link' => 'Link',
-                'user_groups' => 'User Groups',
-                'id' => 'ID',
-            ],
-            'order' => [
-                'name' => 'Name',
-                'username' => 'Username',
-                'email' => 'Email',
-                'registerDate' => 'Register Date',
-                'lastvisitDate' => 'Last Visit Date',
-            ],
-            'filters' => [
-                'content','categories'
-            ],
-            'joins' => [
-                'content' => [
-                    'join' => 'INNER',
-                    'on' => 'content.created_by = users.id',
+            'content' => [
+                'value' => 'content',
+                'name' => 'Articles',
+                'fields' => [
+                    'title' => 'Title',
+                    'introtext' => 'Intro Text',
+                    'text' => 'Content',
+                    'created' => 'Created Date',
+                    'modified' => 'Modified Date',
+                    'publish_up' => 'Published',
+                    'created_by' => 'Created By',
+                    'modified_by' => 'Modified By',
+                    'featured' => 'Featured',
+                    'images.image_intro' => 'Intro Image',
+                    'images.image_intro_alt' => 'Intro Image Alt',
+                    'images.image_intro_caption' => 'Intro Image Caption',
+                    'images.image_fulltext' => 'Full Image',
+                    'images.image_fulltext_alt' => 'Full Image Alt',
+                    'images.image_fulltext_caption' => 'Full Image Caption',
+                    'link' => 'Link',
+                    'urls.urla' => 'Link A',
+                    'urls.urlatext' => 'Link A Text',
+                    'urls.urlb' => 'Link B',
+                    'urls.urlbtext' => 'Link B Text',
+                    'urls.urlc' => 'Link C',
+                    'urls.urlctext' => 'Link C Text',
+                    'rating' => 'Rating',
+                    'votes' => 'Votes',
+                    'hits' => 'Hits',
+                    'event.afterDisplayTitle' => 'Event After Display Title',
+                    'event.beforeDisplayContent' => 'Event Before Display Content',
+                    'event.afterDisplayContent' => 'Event After Display Content',
+                    'state' => 'State',
+                    'id' => 'ID',
+                    'alias' => 'Alias',
                 ],
-                'categories' => [
-                    'join' => 'INNER',
-                    'on' => 'categories.created_user_id = users.id',
+                'order' => [
+                    'title' => 'Title',
+                    'created' => 'Created Date',
+                    'modified' => 'Modified Date',
+                    'publish_up' => 'Published',
+                    'ordering' => 'Ordering',
+                    'hits' => 'Hits',
+                    'random' => 'Random',
+                ],
+                'filters' => [
+                    'content',
+                ],
+                'joins' => [],
+                'where' => [
+                    'content.state = 1',
+                ],
+                'depends' => [
+                    'categories'
                 ],
             ],
-            'where' => [
-                'block' => '0',
+            'categories' => [
+                'value' => 'categories',
+                'name' => 'Categories',
+                'fields' => [
+                    'title' => 'Title',
+                    'description' => 'Description',
+                    'created_time' => 'Created Date',
+                    'modified_time' => 'Modified Date',
+                    'created_user_id' => 'Created By',
+                    'modified_user_id' => 'Modified By',
+                    'params.image' => 'Image',
+                    'params.image_alt' => 'Image Alt',
+                    'link' => 'Link',
+                    'article_count' => 'Article Count',
+                    'id' => 'ID',
+                    'alias' => 'Alias',
+                    'extension' => 'Extension',
+                ],
+                'order' => [
+                    'title' => 'Title',
+                    'created_time' => 'Created Date',
+                    'modified_time' => 'Modified Date',
+                    'hits' => 'Hits',
+                    'random' => 'Random',
+                ],
+                'filters' => [
+                    'content','categories'
+                ],
+                'joins' => [
+                    'content' => [
+                        'join' => 'LEFT',
+                        'on' => 'content.catid = categories.id',
+                    ]
+                ],
+                'where' => [
+                    'categories.published = 1',
+                    'categories.extension = "com_content"',
+                ],
+                'depends' => []
             ],
-            'depends' => []
-        ],
-    ];
+            'users' => [
+                'value' => 'users',
+                'name' => 'Users',
+                'fields' => [
+                    'name' => 'Name',
+                    'username' => 'Username',
+                    'email' => 'Email',
+                    'registerDate' => 'Register Date',
+                    'lastvisitDate' => 'Last Visit Date',
+                    'link' => 'Link',
+                    'user_groups' => 'User Groups',
+                    'id' => 'ID',
+                ],
+                'order' => [
+                    'name' => 'Name',
+                    'username' => 'Username',
+                    'email' => 'Email',
+                    'registerDate' => 'Register Date',
+                    'lastvisitDate' => 'Last Visit Date',
+                ],
+                'filters' => [
+                    'content','categories'
+                ],
+                'joins' => [
+                    'content' => [
+                        'join' => 'LEFT',
+                        'on' => 'content.created_by = users.id',
+                    ],
+                    'categories' => [
+                        'join' => 'LEFT',
+                        'on' => 'categories.created_user_id = users.id',
+                    ],
+                ],
+                'where' => [
+                    'users.block = 0',
+                ],
+                'depends' => []
+            ],
+        ];
+    }
+
+    public static function getDynamicOptions(): array
+    {
+        return [
+            'categories' => Utility::getCategories('categories'),
+            'parent_category' => Utility::getCategories('parent')
+        ];
+    }
 
     public static $preloder_animations = [
         [

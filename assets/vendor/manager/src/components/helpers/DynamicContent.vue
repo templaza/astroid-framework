@@ -1,6 +1,8 @@
 <script setup>
-import { onMounted, onBeforeMount, computed, ref, inject } from 'vue';
+import {onMounted, onBeforeMount, computed, inject, ref, watch} from 'vue';
 import draggable from "vuedraggable";
+import { MultiListSelect } from "vue-search-select"
+import { ModelListSelect } from "vue-search-select"
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
 const constant = inject('constant', {});
@@ -15,21 +17,60 @@ onMounted(() => {
             props.modelValue[key] = props.field.input.value[key];
         }
     })
+    if (typeof props.modelValue['dynamic_content'] !== 'undefined' && Array.isArray(props.modelValue['dynamic_content'])) {
+        props.modelValue['dynamic_content'] = {};
+    }
+    let options = JSON.parse(props.modelValue['options']);
+
+    if (typeof options['content_catids'] === 'undefined') {
+        options['content_catids'] = [];
+    }
+    selectedCategories.value = options['content_catids'];
+
+    if (typeof options['content_include_subcategories'] === 'undefined') {
+        options['content_include_subcategories'] = 'exclude';
+    }
+    content_include_subcategories.value = options['content_include_subcategories'];
+
+    if (typeof options['category_parent'] === 'undefined') {
+        options['category_parent'] = '';
+    }
+    selectedCategory.value = options['category_parent'];
 });
-const fields = computed(() => {
+const selectedCategories = ref([]);
+const content_include_subcategories = ref('exclude');
+const selectedCategory = ref('');
+const dynamicFields = computed(() => {
     let fields = [];
     Object.keys(constant.dynamic_source_fields).forEach(key => {
         if (constant.dynamic_source_fields[key].filters.includes(props.modelValue['source'])) {
+            fields.push({
+                type: 'heading',
+                label: constant.dynamic_source_fields[key].name
+            })
             Object.keys(constant.dynamic_source_fields[key].fields).forEach(field => {
                 fields.push({
-                    value: key+'.'+field,
-                    label: constant.dynamic_source_fields[key].name + ' - ' + constant.dynamic_source_fields[key].fields[field]
+                    type: 'field',
+                    value: field,
+                    label: constant.dynamic_source_fields[key].fields[field],
+                    category: {
+                        value: constant.dynamic_source_fields[key].value,
+                        name: constant.dynamic_source_fields[key].name
+                    }
                 });
             });
         }
     })
     return fields;
 })
+function changeSource() {
+    props.modelValue['conditions'] = [];
+    props.modelValue['dynamic_content'] = {};
+    props.modelValue['order'] = '';
+}
+function selectDynamicField(element, field) {
+    element.field = field;
+}
 const conditions = [
     {value: '!', label: 'Is empty'},
     {value: '!!', label: 'Is not empty'},
@@ -48,43 +89,94 @@ function addCondition() {
     const sec = Date.now() * 1000 + Math.random() * 1000;
     props.modelValue['conditions'].push({
         operator: 'AND',
-        field : fields.value[0].value,
+        field : dynamicFields.value[1],
         condition : '!!',
         value : '',
         id: sec.toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000)
     });
+}
+function removeCondition(index) {
+    props.modelValue['conditions'].splice(index, 1);
 }
 function updateValue(condition) {
     if (['!', '!!'].includes(condition.condition)) {
         condition.value = '';
     }
 }
+function onSelectCategories(items, lastSelectItem) {
+    selectedCategories.value = items;
+    let options = JSON.parse(props.modelValue['options']);
+    options['content_catids'] = selectedCategories.value;
+    props.modelValue['options'] = JSON.stringify(options);
+}
+function onSelectIncludeSubcategories() {
+    let options = JSON.parse(props.modelValue['options']);
+    options['content_include_subcategories'] = content_include_subcategories.value;
+    props.modelValue['options'] = JSON.stringify(options);
+}
+watch(selectedCategory, (newText) => {
+    let options = JSON.parse(props.modelValue['options']);
+    options['category_parent'] = newText;
+    props.modelValue['options'] = JSON.stringify(options);
+})
 </script>
 <template>
     <label :for="props.field.input.id+`_source`" class="form-label">Source</label>
-    <select :id="props.field.input.id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="" class="form-select">
+    <select :id="props.field.input.id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="changeSource" class="form-select">
         <option v-for="(option, key) in constant.dynamic_source" :value="key" :key="key">{{ option }}</option>
     </select>
     <p class="form-text">Select a content source to make its fields available for mapping. Choose between sources of the current page or query a custom source.</p>
+    <div v-if="props.modelValue['source'] === `content`">
+        <label :for="props.field.input.id+`_option_categories`" class="form-label">Filter by Categories</label>
+        <multi-list-select
+            :list="constant.dynamic_source_options.categories"
+            option-value="value"
+            option-text="label"
+            :id="props.field.input.id+`_option_categories`"
+            :selected-items="selectedCategories"
+            placeholder="Filter by Categories"
+            @select="onSelectCategories"
+        >
+        </multi-list-select>
+        <select class="form-select mt-2" v-model="content_include_subcategories" @change="onSelectIncludeSubcategories">
+            <option value="exclude">Exclude child categories</option>
+            <option value="include">Include child categories</option>
+        </select>
+        <p class="form-text">Filter articles by categories.</p>
+    </div>
+    <div v-if="props.modelValue['source'] === `categories`">
+        <label :for="props.field.input.id+`_option_category`" class="form-label">Parent Category</label>
+        <model-list-select
+            :list="constant.dynamic_source_options.parent_category"
+            v-model="selectedCategory"
+            option-value="value"
+            option-text="label"
+            :id="props.field.input.id+`_option_category`"
+            placeholder="Parent Category"
+        >
+        </model-list-select>
+        <p class="form-text">Select a parent category to display its subcategories.</p>
+    </div>
     <div class="row" v-if="props.modelValue['source'] !== 'none'">
         <div class="col-6">
             <label :for="props.field.input.id+`_start`" class="form-label">Start</label>
-            <input :id="props.field.input.id+`_start`" :name="props.field.input.name+`[start]`" v-model="props.modelValue['start']" type="number" min="0" step="1" class="form-control">
+            <input :id="props.field.input.id+`_start`" :name="props.field.input.name+`[start]`" v-model="props.modelValue['start']" type="number" min="1" step="1" class="form-control">
         </div>
         <div class="col-6">
             <label :for="props.field.input.id+`_quantity`" class="form-label">Quantity</label>
-            <input :id="props.field.input.id+`_quantity`" :name="props.field.input.name+`[quantity]`" v-model="props.modelValue['quantity']" type="number" min="0" step="1" class="form-control">
+            <input :id="props.field.input.id+`_quantity`" :name="props.field.input.name+`[quantity]`" v-model="props.modelValue['quantity']" type="number" min="1" step="1" class="form-control">
         </div>
         <div class="col-12"><p class="form-text">Set the starting point and limit the number of articles.</p></div>
         <div class="col-6">
             <label :for="props.field.input.id+`_order`" class="form-label">Order</label>
             <select v-if="typeof props.modelValue['source'] !== 'undefined'"  :id="props.field.input.id+`_order`" :name="props.field.input.name+`[order]`" v-model="props.modelValue['order']" class="form-select">
+                <option value="">Select an order field</option>
                 <option v-for="(option, key) in constant.dynamic_source_fields[props.modelValue['source']].order" :value="key" :key="key">{{ option }}</option>
             </select>
         </div>
         <div class="col-6">
             <label :for="props.field.input.id+`_order_dir`" class="form-label">Direction</label>
-            <select :id="props.field.input.id+`_order_dir`" :name="props.field.input.name+`[order_dir]`" v-model="props.modelValue['order_dir']" class="form-select">
+            <select :id="props.field.input.id+`_order_dir`" :name="props.field.input.name+`[order_dir]`" v-model="props.modelValue['order_dir']" class="form-select" :disabled="props.modelValue['order'] === ``">
                 <option value="DESC">Descending</option>
                 <option value="ASC">Ascending</option>
             </select>
@@ -107,16 +199,23 @@ function updateValue(condition) {
                             </select>
                             <span class="input-group-text">
                                 <i class="item-move fa-solid fa-up-down me-3"></i>
-                                <a href="#" class="link-danger" @click.prevent=""><i class="fas fa-trash-alt"></i></a>
+                                <a href="#" class="link-danger" @click.prevent="removeCondition(index)"><i class="fas fa-trash-alt"></i></a>
                             </span>
                         </div>
                         <div class="card card-body">
                             <div class="row">
                                 <div class="col-12">
                                     <label :for="props.field.input.id+`_field_`+index" class="form-label">Field</label>
-                                    <select :id="props.field.input.id+`_field_`+index" v-model="element.field" class="form-select">
-                                        <option v-for="(field, key) in fields" :value="field.value" :key="key">{{ field.label }}</option>
-                                    </select>
+                                    <div class="dynamic-select">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-database me-2"></i>{{ element.field.category.name + ' - ' + element.field.label }}</button>
+                                        <ul class="dropdown-menu">
+                                            <li v-for="(field, key) in dynamicFields" :key="key">
+                                                <hr v-if="field.type === `heading` && key !== 0" class="dropdown-divider">
+                                                <h6 v-if="field.type === `heading`" class="dropdown-header">{{ field.label }}</h6>
+                                                <a v-else class="dropdown-item" href="#" @click.prevent="selectDynamicField(element, field)">{{ field.label }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <p class="form-text">Set a condition to display the element or its item depending on the content of a field.</p>
                                 </div>
                                 <div class="col-6">
