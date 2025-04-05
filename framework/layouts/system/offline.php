@@ -51,7 +51,7 @@ foreach ($attributes as $key => $value) {
 </head>
 <body>
     <div class="offline-page row g-0">
-        <div class="col-lg-5 p-lg-5 p-4">
+        <div class="col-lg-5 p-lg-5 p-4 bg-body-tertiary">
 
             <div id="frame" class="d-flex flex-column justify-content-between h-100">
                 <?php if ($app->get('offline_image')) : ?>
