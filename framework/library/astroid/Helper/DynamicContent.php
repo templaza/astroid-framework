@@ -104,10 +104,14 @@ class DynamicContent {
 
         if (!empty($this->conditions)) {
             foreach ($this->conditions as $idx => $condition) {
+                $condition_query = $this->buildCondition($condition);
+                if (empty($condition_query)) {
+                    continue;
+                }
                 if ($idx === 0 || $condition['operator'] === 'AND') {
-                    $query->where($this->buildCondition($condition));
+                    $query->where($condition_query);
                 } else {
-                    $query->orWhere($this->buildCondition($condition));
+                    $query->orWhere($condition_query);
                 }
             }
         }
@@ -127,7 +131,6 @@ class DynamicContent {
                 }
             }
         }
-
         return $result;
     }
     private function buildSelect($value, $key): string
@@ -166,11 +169,13 @@ class DynamicContent {
                     return 'CONCAT(categories.id,' . $this->_db->quote(':') . ', categories.language) AS ' . $key;
                 })(),
                 $value->value === 'article_count' => (function () use ($value, $key) {
-                    $this->_special[$key] = [
-                        'category' => $value->category->value,
-                        'value' => $value->value
-                    ];
-                    return 'categories.id AS ' . $key;
+                    $subquery = $this->_db->getQuery(true);
+                    $subquery->select('COUNT(*)')
+                        ->from('#__content AS content')
+                        ->where('content.catid = categories.id');
+                    $subquery->where('content.state = 1');
+                    $this->defaultContentQuery($subquery, true);
+                    return '('.$subquery->__toString().') AS ' . $key;
                 })(),
                 default => $value->category->value . '.' . $value->value . ' AS ' . $key
             },
@@ -286,16 +291,6 @@ class DynamicContent {
                     $link = explode(':', $value);
                     return Route::_(RouteHelper::getCategoryRoute($link[0], $link[1]));
                 })(),
-                $specialValue['value'] === 'article_count' => (function () use ($value) {
-                    $query = $this->_db->getQuery(true);
-                    $query->select('COUNT(*)')
-                        ->from('#__content AS content')
-                        ->where('content.catid = ' . (int) $value);
-                    $query->where('content.state = 1');
-                    $this->defaultContentQuery($query);
-                    $this->_db->setQuery($query);
-                    return $this->_db->loadResult();
-                })(),
                 default => $value
             },
             default => $value
@@ -303,11 +298,48 @@ class DynamicContent {
     }
     private function buildCondition($condition): string
     {
-        return match ($condition['condition']) {
-            '!' => $condition['field']['category']['value'] . '.' . $condition['field']['value'] . ' IS NULL OR ' . $condition['field']['category']['value'] . '.' . $condition['field']['value'] . ' = ""',
-            '!!' => $condition['field']['category']['value'] . '.' . $condition['field']['value'] . ' IS NOT NULL AND ' . $condition['field']['category']['value'] . '.' . $condition['field']['value'] . ' != ""',
-            default => $condition['field']['category']['value'] . '.' . $condition['field']['value'] . ' ' . $condition['condition'] . ' ' . $this->_db->quote($condition['value']),
+        $condition_field = match($condition['field']['category']['value']) {
+            'categories' =>  match (true) {
+                $condition['field']['value'] === 'article_count' => (function () use ($condition) {
+                    $subquery = $this->_db->getQuery(true);
+                    $subquery->select('COUNT(*)')
+                        ->from('#__content AS content')
+                        ->where('content.catid = categories.id');
+                    $subquery->where('content.state = 1');
+                    $this->defaultContentQuery($subquery, true);
+                    return '(' . $subquery->__toString() . ')';
+                })(),
+                str_starts_with($condition['field']['value'], 'params.') => (function () use ($condition) {
+                    return $condition['field']['category']['value'] . '.params';
+                })(),
+                $condition['field']['value'] === 'link' => '',
+                default => $condition['field']['category']['value'] . '.' . $condition['field']['value']
+            },
+            'content' => match (true) {
+                str_starts_with($condition['field']['value'], 'images.') => (function () use ($condition) {
+                   return $condition['field']['category']['value'] . '.images';
+                })(),
+                str_starts_with($condition['field']['value'], 'urls.') => (function () use ($condition) {
+                    return $condition['field']['category']['value'] . '.urls';
+                })(),
+                str_starts_with($condition['field']['value'], 'event.'),
+                $condition['field']['value'] === 'link',
+                ($condition['field']['value'] === 'rating' || $condition['field']['value'] === 'votes') => '',
+                default => $condition['field']['category']['value'] . '.' . $condition['field']['value']
+            },
+            default => $condition['field']['category']['value'] . '.' . $condition['field']['value']
         };
+        return !empty($condition_field) ? match ($condition['condition']) {
+            '!' => $condition_field . ' IS NULL OR ' . $condition_field . ' = ""',
+            '!!' => $condition_field . ' IS NOT NULL AND ' . $condition_field . ' != ""',
+            '~=' => $condition_field . ' LIKE ' . $this->_db->quote('%' . $condition['value'] . '%'),
+            '!~=' => $condition_field . ' NOT LIKE ' . $this->_db->quote('%' . $condition['value'] . '%'),
+            '^=' => $condition_field . ' LIKE ' . $this->_db->quote($condition['value'] . '%'),
+            '!^=' => $condition_field . ' NOT LIKE ' . $this->_db->quote($condition['value'] . '%'),
+            '$=' => $condition_field . ' LIKE ' . $this->_db->quote('%' . $condition['value']),
+            '!$=' => $condition_field . ' NOT LIKE ' . $this->_db->quote('%' . $condition['value']),
+            default => $condition_field . ' ' . $condition['condition'] . ' ' . $this->_db->quote($condition['value']),
+        } : '';
     }
     private function getArticle($id): object
     {
@@ -319,10 +351,10 @@ class DynamicContent {
         $this->_article = $model->getItem($id);
         return $this->_article;
     }
-    private function defaultContentQuery($query) : void
+    private function defaultContentQuery($query, $subquery = false) : void
     {
         $content_catids = $this->options->get('content_catids', []);
-        if (!empty($content_catids))
+        if (!empty($content_catids) && !$subquery)
         {
             $include_subcategories = $this->options->get('content_include_subcategories', 'exclude');
             $catids = [];
@@ -339,17 +371,17 @@ class DynamicContent {
             'AND',
             [
                 'content.publish_up IS NULL',
-                'content.publish_up <= :publishUp',
+                'content.publish_up <= ' . $this->_db->quote($nowDate),
             ],
             'OR'
         )->extendWhere(
             'AND',
             [
                 'content.publish_down IS NULL',
-                'content.publish_down >= :publishDown',
+                'content.publish_down >= ' . $this->_db->quote($nowDate),
             ],
             'OR'
-        )->bind([':publishUp', ':publishDown'], $nowDate);
+        );
         // Language filter
         if ($this->_app->isClient('site') && $this->_app->getLanguageFilter()) {
             $query->where('content.language IN (' . $this->_db->Quote(Factory::getLanguage()->getTag()) . ',' . $this->_db->Quote('*') . ')');
@@ -358,10 +390,10 @@ class DynamicContent {
         $query->where($this->_db->quoteName('content.access')." IN (" . implode( ',', $authorised ) . ")");
     }
 
-    private function defaultCategoryQuery($query) : void
+    private function defaultCategoryQuery($query, $subquery = false) : void
     {
         $category_parent = $this->options->get('category_parent', 1);
-        if ($category_parent) {
+        if ($category_parent && !$subquery) {
             $query->where($this->_db->quoteName('categories.parent_id') . ' = ' . (int) $category_parent);
         }
         $query->where($this->_db->quoteName('categories.access')." IN (" . implode( ',', Factory::getUser()->getAuthorisedViewLevels() ) . ")");

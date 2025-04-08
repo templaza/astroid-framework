@@ -360,7 +360,6 @@ class Constants
                     'article_count' => 'Article Count',
                     'id' => 'ID',
                     'alias' => 'Alias',
-                    'extension' => 'Extension',
                 ],
                 'order' => [
                     'title' => 'Title',
