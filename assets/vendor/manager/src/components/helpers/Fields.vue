@@ -120,7 +120,7 @@ function removeDynamicField() {
             </li>
         </ul>
     </div>
-    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length && typeof props.scope.dynamic_content_settings.dynamic_content[props.field.name] !== `undefined` && Object.keys(props.scope.dynamic_content_settings.dynamic_content[props.field.name]).length !== 0" class="dynamic-content form-control">
+    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length && typeof props.scope.dynamic_content_settings.dynamic_content[props.field.name] !== `undefined` && Object.keys(props.scope.dynamic_content_settings.dynamic_content[props.field.name]).length !== 0" class="dynamic-content form-control bg-body-tertiary">
         <div class="row g-0 align-items-center">
             <div class="dynamic-field-label col px-2"><i class="fa-solid fa-database me-2"></i>{{ props.scope.dynamic_content_settings.dynamic_content[props.field.name].category.name + ' - ' + props.scope.dynamic_content_settings.dynamic_content[props.field.name].label }}</div>
             <div class="dynamic-field-tools col-auto">
@@ -243,7 +243,7 @@ function removeDynamicField() {
     <div v-else-if="props.field.input.type === `dynamiccontent`" class="astroid-dynamic-content">
         <DynamicContent v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
-    <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card card-body">
+    <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card alert alert-warning mb-0">
         <h6 class="card-title">{{ props.field.input.title }}</h6>
         <div class="card-text form-text" v-html="props.field.input.desc"></div>
     </div>

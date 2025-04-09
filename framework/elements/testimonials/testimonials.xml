@@ -20,13 +20,17 @@
                     <form>
                         <fields>
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
-                                <field type="astroidtext" label="ASTROID_WIDGET_NAME_LABEL" name="title"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_TESTIMONIALS_DESIGNATION_LABEL" name="designation"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work"/>
-                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="astroidframe.work"/>
-                                <field name="avatar" type="astroidmedia" label="ASTROID_WIDGET_AVATAR_LABEL"/>
-                                <field type="astroideditor" label="ASTROID_WIDGET_MESSAGE_LABEL" name="message"/>
-                                <field name="rating" type="astroidrange" min="0" max="5" step="0.5" default="5" label="ASTROID_RATING" postfix="stars" />
+                                <field type="astroidtext" label="ASTROID_WIDGET_NAME_LABEL" name="title" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_TESTIMONIALS_DESIGNATION_LABEL" name="designation" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work" dynamic="true"/>
+                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="astroidframe.work" dynamic="true"/>
+                                <field name="avatar" type="astroidmedia" label="ASTROID_WIDGET_AVATAR_LABEL" dynamic="true"/>
+                                <field type="astroideditor" label="ASTROID_WIDGET_MESSAGE_LABEL" name="message" dynamic="true"/>
+                                <field name="rating" type="astroidrange" min="0" max="5" step="0.5" default="5" label="ASTROID_RATING" postfix="stars" dynamic="true"/>
+                            </fieldset>
+                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>

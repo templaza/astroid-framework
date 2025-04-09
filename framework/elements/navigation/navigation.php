@@ -14,17 +14,13 @@
 defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$menu_items     = $params->get('menu_items', '');
-if (empty($menu_items)) {
+$menu_items     = new SubForm($params->get('menu_items', ''));
+if (!count($menu_items->getData())) {
     return false;
 }
-$menu_items     = json_decode($menu_items);
-if (!count($menu_items)) {
-    return false;
-}
-
 $font_style     = $params->get('font_style', null);
 $item_margin    = $params->get('item_margin', '');
 $item_padding   = $params->get('item_padding', '');
@@ -60,14 +56,13 @@ $xs_column              =   $params->get('nav_column_xs', '');
 $nav_column_cls        .=  $xs_column ? ' as-column-' . $xs_column : '';
 echo '<nav id="'.$element->id.'-nav" class="'.$nav_column_cls.'" aria-label="'.$params->get('title', '').'">';
 echo '<ul class="nav' . $alignment . $list_style . '">';
-foreach ($menu_items as $item) {
-    $menu_params    =   Style::getSubFormParams($item->params);
-    $target         =   isset($menu_params['target']) && $menu_params['target'] ? ' target="'.$menu_params['target'].'"' : '';
-    $show_title     =   isset($menu_params['show_title']) && intval($menu_params['show_title']) ? ' title="'.$menu_params['title'].'"' : '';
-    $active         =   isset($menu_params['active']) && intval($menu_params['active']) ? ' active' : '';
-    $rel            =   isset($menu_params['rel']) && $menu_params['rel'] ? ' rel="'.$menu_params['rel'].'"' : '';
-    $icon           =   $menu_params['icon'] !== '' ? '<i class="me-2 '.$menu_params['icon'].'"></i>' : '';
-    echo '<li class="nav-item"><a id="item-'.$item->id.'"  class="nav-link'.$active.'" href="' .$menu_params['link']. '"'. $show_title . $target . $rel . '>'.$icon.$menu_params['title'].'</a></li>';
+foreach ($menu_items->getData() as $item) {
+    $target         =   $item->params->get('target') ? ' target="'.$item->params->get('target').'"' : '';
+    $show_title     =   $item->params->get('show_title', 0) ? ' title="'.$item->params->get('title', '').'"' : '';
+    $active         =   $item->params->get('active', 0) ? ' active' : '';
+    $rel            =   $item->params->get('rel', '') ? ' rel="'.$item->params->get('rel', '').'"' : '';
+    $icon           =   $item->params->get('icon', '') ? '<i class="me-2 '.$item->params->get('icon', '').'"></i>' : '';
+    echo '<li class="nav-item"><a id="item-'.$item->id.'"  class="nav-link'.$active.'" href="' .$item->params->get('link', ''). '"'. $show_title . $target . $rel . '>'.$icon.$item->params->get('title', '').'</a></li>';
 }
 echo '</ul>';
 echo '</nav>';

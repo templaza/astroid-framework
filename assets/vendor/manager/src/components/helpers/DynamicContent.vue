@@ -6,10 +6,12 @@ import { ModelListSelect } from "vue-search-select"
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
 const constant = inject('constant', {});
+const element_id = ref(props.field.input.id);
 onBeforeMount(() => {
     if (typeof props.modelValue !== 'object') {
         emit('update:modelValue', {});
     }
+    element_id.value += '-'+(Date.now() * 1000 + Math.random() * 1000).toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
 });
 onMounted(() => {
     Object.keys(props.field.input.value).forEach(key => {
@@ -121,37 +123,43 @@ watch(selectedCategory, (newText) => {
 })
 </script>
 <template>
-    <label :for="props.field.input.id+`_source`" class="form-label">Source</label>
-    <select :id="props.field.input.id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="changeSource" class="form-select">
+    <div v-if="!constant.is_pro" class="astroid-get-pro card alert alert-warning">
+        <h6 class="card-title">{{ props.field.input.pro_msg.title }}</h6>
+        <div class="card-text form-text" v-html="props.field.input.pro_msg.desc"></div>
+    </div>
+    <label :for="element_id+`_source`" class="form-label">Source</label>
+    <select :id="element_id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="changeSource" class="form-select" :disabled="!constant.is_pro">
         <option v-for="(option, key) in constant.dynamic_source" :value="key" :key="key">{{ option }}</option>
     </select>
     <p class="form-text">Select a content source to make its fields available for mapping. Choose between sources of the current page or query a custom source.</p>
     <div v-if="props.modelValue['source'] === `content`">
-        <label :for="props.field.input.id+`_option_categories`" class="form-label">Filter by Categories</label>
+        <label :for="element_id+`_option_categories`" class="form-label">Filter by Categories</label>
         <multi-list-select
             :list="constant.dynamic_source_options.categories"
             option-value="value"
             option-text="label"
-            :id="props.field.input.id+`_option_categories`"
+            :id="element_id+`_option_categories`"
             :selected-items="selectedCategories"
+            :isDisabled="!constant.is_pro"
             placeholder="Filter by Categories"
             @select="onSelectCategories"
         >
         </multi-list-select>
-        <select class="form-select mt-2" v-model="content_include_subcategories" @change="onSelectIncludeSubcategories">
+        <select class="form-select mt-2" v-model="content_include_subcategories" @change="onSelectIncludeSubcategories" :disabled="!constant.is_pro">
             <option value="exclude">Exclude child categories</option>
             <option value="include">Include child categories</option>
         </select>
         <p class="form-text">Filter articles by categories.</p>
     </div>
     <div v-if="props.modelValue['source'] === `categories`">
-        <label :for="props.field.input.id+`_option_category`" class="form-label">Parent Category</label>
+        <label :for="element_id+`_option_category`" class="form-label">Parent Category</label>
         <model-list-select
             :list="constant.dynamic_source_options.parent_category"
             v-model="selectedCategory"
             option-value="value"
             option-text="label"
-            :id="props.field.input.id+`_option_category`"
+            :id="element_id+`_option_category`"
+            :isDisabled="!constant.is_pro"
             placeholder="Parent Category"
         >
         </model-list-select>
@@ -159,24 +167,24 @@ watch(selectedCategory, (newText) => {
     </div>
     <div class="row" v-if="props.modelValue['source'] !== 'none'">
         <div class="col-6">
-            <label :for="props.field.input.id+`_start`" class="form-label">Start</label>
-            <input :id="props.field.input.id+`_start`" :name="props.field.input.name+`[start]`" v-model="props.modelValue['start']" type="number" min="1" step="1" class="form-control">
+            <label :for="element_id+`_start`" class="form-label">Start</label>
+            <input :id="element_id+`_start`" :name="props.field.input.name+`[start]`" v-model="props.modelValue['start']" type="number" min="1" step="1" class="form-control" :disabled="!constant.is_pro">
         </div>
         <div class="col-6">
-            <label :for="props.field.input.id+`_quantity`" class="form-label">Quantity</label>
-            <input :id="props.field.input.id+`_quantity`" :name="props.field.input.name+`[quantity]`" v-model="props.modelValue['quantity']" type="number" min="1" step="1" class="form-control">
+            <label :for="element_id+`_quantity`" class="form-label">Quantity</label>
+            <input :id="element_id+`_quantity`" :name="props.field.input.name+`[quantity]`" v-model="props.modelValue['quantity']" type="number" min="1" step="1" class="form-control" :disabled="!constant.is_pro">
         </div>
         <div class="col-12"><p class="form-text">Set the starting point and limit the number of articles.</p></div>
         <div class="col-6">
-            <label :for="props.field.input.id+`_order`" class="form-label">Order</label>
-            <select v-if="typeof props.modelValue['source'] !== 'undefined'"  :id="props.field.input.id+`_order`" :name="props.field.input.name+`[order]`" v-model="props.modelValue['order']" class="form-select">
+            <label :for="element_id+`_order`" class="form-label">Order</label>
+            <select v-if="typeof props.modelValue['source'] !== 'undefined'"  :id="element_id+`_order`" :name="props.field.input.name+`[order]`" v-model="props.modelValue['order']" class="form-select" :disabled="!constant.is_pro">
                 <option value="">Select an order field</option>
                 <option v-for="(option, key) in constant.dynamic_source_fields[props.modelValue['source']].order" :value="key" :key="key">{{ option }}</option>
             </select>
         </div>
         <div class="col-6">
-            <label :for="props.field.input.id+`_order_dir`" class="form-label">Direction</label>
-            <select :id="props.field.input.id+`_order_dir`" :name="props.field.input.name+`[order_dir]`" v-model="props.modelValue['order_dir']" class="form-select" :disabled="props.modelValue['order'] === ``">
+            <label :for="element_id+`_order_dir`" class="form-label">Direction</label>
+            <select :id="element_id+`_order_dir`" :name="props.field.input.name+`[order_dir]`" v-model="props.modelValue['order_dir']" class="form-select" :disabled="props.modelValue['order'] === `` || !constant.is_pro">
                 <option value="DESC">Descending</option>
                 <option value="ASC">Ascending</option>
             </select>
@@ -192,8 +200,8 @@ watch(selectedCategory, (newText) => {
                 <template #item="{element, index}">
                     <div class="col-12">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" :for="props.field.input.id+`_operator_`+index">Condition #{{index}}</label>
-                            <select :id="props.field.input.id+`_operator_`+index" v-model="element.operator" class="form-select" :disabled="index === 0">
+                            <label class="input-group-text" :for="element_id+`_operator_`+index">Condition #{{index}}</label>
+                            <select :id="element_id+`_operator_`+index" v-model="element.operator" class="form-select" :disabled="index === 0">
                                 <option value="AND">AND</option>
                                 <option value="OR">OR</option>
                             </select>
@@ -205,7 +213,7 @@ watch(selectedCategory, (newText) => {
                         <div class="card card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <label :for="props.field.input.id+`_field_`+index" class="form-label">Field</label>
+                                    <label :for="element_id+`_field_`+index" class="form-label">Field</label>
                                     <div class="dynamic-select">
                                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-database me-2"></i>{{ element.field.category.name + ' - ' + element.field.label }}</button>
                                         <ul class="dropdown-menu">
@@ -219,21 +227,21 @@ watch(selectedCategory, (newText) => {
                                     <p class="form-text">Set a condition to display the element or its item depending on the content of a field.</p>
                                 </div>
                                 <div class="col-6">
-                                    <label :for="props.field.input.id+`_condition_`+index" class="form-label">Condition</label>
-                                    <select :id="props.field.input.id+`_condition_`+index" v-model="element.condition" class="form-select" @change="updateValue(element)">
+                                    <label :for="element_id+`_condition_`+index" class="form-label">Condition</label>
+                                    <select :id="element_id+`_condition_`+index" v-model="element.condition" class="form-select" @change="updateValue(element)">
                                         <option v-for="(cond, key) in conditions" :value="cond.value" :key="key">{{ cond.label }}</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <label :for="props.field.input.id+`_value_`+index" class="form-label">Value</label>
-                                    <input :id="props.field.input.id+`_value_`+index" v-model="element.value" class="form-control" :disabled="['!', '!!'].includes(element.condition)">
+                                    <label :for="element_id+`_value_`+index" class="form-label">Value</label>
+                                    <input :id="element_id+`_value_`+index" v-model="element.value" class="form-control" :disabled="['!', '!!'].includes(element.condition)">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </template>
             </draggable>
-            <button class="btn btn-as-primary btn-as mt-4" @click.prevent="addCondition">Add Condition</button>
+            <button class="btn btn-as-primary btn-as mt-4" @click.prevent="addCondition" :disabled="!constant.is_pro">Add Condition</button>
         </div>
     </div>
 </template>

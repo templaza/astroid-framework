@@ -15,20 +15,12 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Joomla\CMS\Factory;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$slides         = $params->get('slides', '');
-if (empty($slides)) {
+$slides     = new SubForm($params->get('slides', ''));
+if (!count($slides->getData())) {
     return false;
-}
-$slides          = json_decode($slides);
-
-if (!count($slides)) {
-    return false;
-}
-
-foreach ($slides as $key => &$slide) {
-    $slide->params  =   Style::getSubFormParams($slide->params);
 }
 
 $style = $element->style;
@@ -91,31 +83,31 @@ $btn_radius         =   $btn_radius ? ' '. $btn_radius : '';
 echo '<div id="slide-'.$element->id.'" class="carousel slide overflow-hidden'. $overlay_text_color . $effect_type . $box_shadow . $box_shadow_hover .$bd_radius .'"'. (intval($autoplay) ? ' data-bs-ride="carousel"' : '') .'>';
 if (!empty($params->get('indicators', 1))) {
 echo '<div class="carousel-indicators">';
-for ($key = 0 ; $key < count($slides); $key ++) {
-    echo '<button type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide-to="'.$key.'" aria-label="'.$slides[$key]->params['title'].'"'.($key == 0 ? ' class="active" aria-current="true"' : '').'></button>';
+foreach ($slides->getData() as $key => $slide) {
+    echo '<button type="button" data-bs-target="#slide-'.$element->id.'" data-bs-slide-to="'.$key.'" aria-label="'.$slide->params->get('title').'"'.($key == 0 ? ' class="active" aria-current="true"' : '').'></button>';
 }
 echo '</div>';
 }
 echo '<div class="carousel-inner">';
-for ($key = 0 ; $key < count($slides); $key ++) {
-    echo '<div id="' . $slides[$key]->id . '" class="carousel-item'.($key == 0 ? ' active' : '').'" data-bs-interval="'.$interval.'">';
-    echo '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover"><img src="'. Astroid\Helper\Media::getPath() . '/' . $slides[$key]->params['image'].'" class="object-fit-cover w-100 h-100" alt="'.$slides[$key]->params['title'].'"></div>';
+foreach ($slides->getData() as $key => $slide) {
+    echo '<div id="' . $slide->id . '" class="carousel-item'.($key == 0 ? ' active' : '').'" data-bs-interval="'.$interval.'">';
+    echo '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover"><img src="'. Astroid\Helper\Media::getMediaPath($slide->params->get('image')) .'" class="object-fit-cover w-100 h-100" alt="'.$slide->params->get('title').'"></div>';
     echo '<div class="carousel-caption d-flex card-img-overlay'.$overlay_position.'"><div class="overlay-inner'.$overlay_max_width.'">';
-    if (!empty($slides[$key]->params['meta']) && $meta_position == 'before') {
-        echo '<div class="astroid-meta">' . $slides[$key]->params['meta'] . '</div>';
+    if (!empty($slide->params->get('meta')) && $meta_position == 'before') {
+        echo '<div class="astroid-meta">' . $slide->params->get('meta') . '</div>';
     }
-    if (!empty($slides[$key]->params['title'])) {
-        echo '<'.$title_html_element.' class="astroid-heading">'. $slides[$key]->params['title'] . '</'.$title_html_element.'>';
+    if (!empty($slide->params->get('title'))) {
+        echo '<'.$title_html_element.' class="astroid-heading">'. $slide->params->get('title') . '</'.$title_html_element.'>';
     }
-    if (!empty($slides[$key]->params['meta']) && $meta_position == 'after') {
-        echo '<div class="astroid-meta">' . $slides[$key]->params['meta'] . '</div>';
+    if (!empty($slide->params->get('meta')) && $meta_position == 'after') {
+        echo '<div class="astroid-meta">' . $slide->params->get('meta') . '</div>';
     }
-    if (!empty($slides[$key]->params['description'])) {
-        echo '<div class="astroid-text">' . $slides[$key]->params['description'] . '</div>';
+    if (!empty($slide->params->get('description'))) {
+        echo '<div class="astroid-text">' . $slide->params->get('description') . '</div>';
     }
-    $target = !empty($slides[$key]->params['link_target']) ? ' target="'.$slides[$key]->params['link_target'].'"' : '';
-    if (!empty($slides[$key]->params['link'])) {
-        echo '<div class="astroid-button mt-5"><a class="btn btn-' .(intval($params->get('button_outline', 0)) ? 'outline-' : ''). $params->get('button_style', '') . $button_size . $btn_radius . '" href="' . $slides[$key]->params['link'] . '"'.$target.'>' . $slides[$key]->params['link_title'] . '</a></div>';
+    $target = !empty($slide->params->get('link_target')) ? ' target="'.$slide->params->get('link_target').'"' : '';
+    if (!empty($slide->params->get('link'))) {
+        echo '<div class="astroid-button mt-5"><a class="btn btn-' .(intval($params->get('button_outline', 0)) ? 'outline-' : ''). $params->get('button_style', '') . $button_size . $btn_radius . '" href="' . $slide->params->get('link') . '"'.$target.'>' . $slide->params->get('link_title') . '</a></div>';
     }
     echo '</div></div>';
     echo '</div>';

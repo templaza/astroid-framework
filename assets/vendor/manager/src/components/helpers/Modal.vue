@@ -93,7 +93,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                 <div class="position-absolute top-0 end-0 p-3">
                     <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement')"></button>
                 </div>
-                <ul class="nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
+                <ul class="astroid-modal-tabs nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
                     <li v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="nav-item" role="presentation">
                         <button class="nav-link" :class="{'active' : idx === 0}" :id="fieldset.name+`-tab-`+props.element.id" data-bs-toggle="tab" :data-bs-target="`#`+fieldset.name+`-tab-pane-`+props.element.id" type="button" role="tab" aria-selected="true">{{ fieldset.label }}</button>
                     </li>

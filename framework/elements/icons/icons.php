@@ -14,14 +14,11 @@
 defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$icons        = $params->get('icons', '');
-if (empty($icons)) {
-    return false;
-}
-$icons        = json_decode($icons);
-if (!count($icons)) {
+$icons     = new SubForm($params->get('icons', ''));
+if (!count($icons->data)) {
     return false;
 }
 $icon_size      = $params->get('icon_size', '18');
@@ -39,11 +36,11 @@ if ($text_alignment) {
     $alignment              =   '';
 }
 echo '<div class="row row-cols-auto g-'.$icon_gutter.$alignment.'">';
-foreach ($icons as $icon) {
+foreach ($icons->data as $icon) {
     $icon_params    =   Style::getSubFormParams($icon->params);
-    $target         =   isset($icon_params['target']) && $icon_params['target'] ? ' target="'.$icon_params['target'].'"' : '';
+    $target         =   $icon->params->get('target', '') ? ' target="'.$icon->params->get('target', '').'"' : '';
     echo '<div class="astroid-icon-item">';
-    echo '<a id="btn-'.$icon->id.'" href="' .$icon_params['link']. '" title="'.$icon_params['title'].'"' . $target . '><i class="'.$icon_params['icon'].'"></i></a>';
+    echo '<a id="btn-'.$icon->id.'" href="' .$icon->params->get('link', ''). '" title="'.$icon->params->get('title', '').'"' . $target . '><i class="'.$icon->params->get('icon', '').'"></i></a>';
     echo '</div>';
 }
 echo '</div>';

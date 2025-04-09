@@ -17,11 +17,11 @@
                     <form>
                         <fields>
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
-                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
+                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_NAV_LINK_DESC" name="link" hint="https://astroidframe.work/" dynamic="true"/>
                                 <field description="ASTROID_WIDGET_SHOW_TITLE_DESC" name="show_title" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_SHOW_TITLE_LABEL"/>
                                 <field name="active" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ACTIVE"/>
-                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon"/>
+                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon" dynamic="true"/>
                                 <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
                                     <option value="_blank">New Window</option>
@@ -29,6 +29,10 @@
                                     <option value="_top">Full body of the window</option>
                                 </field>
                                 <field type="astroidtext" class="form-control" label="ASTROID_WIDGET_REL_ATTRIBUTE_LABEL" name="rel"/>
+                            </fieldset>
+                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>

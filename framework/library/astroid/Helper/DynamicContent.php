@@ -58,8 +58,8 @@ class DynamicContent {
     }
 
     public function getContent() {
-        if (empty($this->source) || empty($this->dynamic_content)) {
-            return false;
+        if (empty($this->source) || empty($this->dynamic_content) || $this->source === 'none' || (is_object($this->dynamic_content) && empty(get_object_vars($this->dynamic_content)))) {
+            return [];
         }
         $query = $this->_db->getQuery(true);
         $query->from('#__' . $this->source . ' AS ' . $this->source);
@@ -141,6 +141,7 @@ class DynamicContent {
                 $value->value === 'link' => $this->getContentQuery($value, $key, 'link'),
                 $value->value === 'rating' => $this->getContentQuery($value, $key, 'rating'),
                 $value->value === 'votes' => $this->getContentQuery($value, $key, 'votes'),
+                $value->value === 'publish_up', $value->value === 'created', $value->value === 'modified' => $this->getContentQuery($value, $key, $value->value),
                 str_starts_with($value->value, 'images.') => $this->getContentQuery( $value, $key, 'params', 'images'),
                 str_starts_with($value->value, 'urls.') => $this->getContentQuery($value, $key, 'params', 'urls'),
                 str_starts_with($value->value, 'event.') => $this->getContentQuery($value, $key, 'event'),
@@ -206,12 +207,26 @@ class DynamicContent {
                 ];
                 return 'content.'.$param.' AS ' . $key;
             })(),
+            'publish_up', 'modified', 'created' => (function () use ($value, $key) {
+                $this->_special[$key] = [
+                    'category' => $value->category->value,
+                    'value' => $value->value
+                ];
+                return $value->category->value . '.' . $value->value . ' AS ' . $key;
+            })(),
             default => ''
         };
     }
     private function getSpecialValue($value, $specialValue) {
         return match ($specialValue['category']) {
             'content' => match (true) {
+                $specialValue['value'] === 'publish_up', $specialValue['value'] === 'modified', $specialValue['value'] === 'created' => (function () use ($value, $specialValue) {
+                    return match ($specialValue['value']) {
+                        'publish_up' => Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3'))),
+                        'modified' => Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3'))),
+                        'created' => Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3')))
+                    };
+                })(),
                 $specialValue['value'] === 'link' => (function () use ($value) {
                     $link = explode(':', $value);
                     return Route::_(RouteHelper::getArticleRoute(($link[1] ? ($link[0] . ':' . $link[1]) : $link[0]), $link[2], $link[3]));
