@@ -9,7 +9,6 @@
 
 namespace Astroid\Helper;
 
-use Astroid\Helper\Constants;
 use Astroid\Component\Article;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
@@ -104,6 +103,9 @@ class DynamicContent {
 
         if (!empty($this->conditions)) {
             foreach ($this->conditions as $idx => $condition) {
+                if (is_object($condition)) {
+                    $condition = json_decode(json_encode($condition), true);
+                }
                 $condition_query = $this->buildCondition($condition);
                 if (empty($condition_query)) {
                     continue;

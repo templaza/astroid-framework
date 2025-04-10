@@ -9,7 +9,6 @@
 namespace Astroid\Helper;
 
 use Astroid\Helper;
-use Astroid\Helper\DynamicContent;
 use Joomla\Registry\Registry;
 
 class SubForm {

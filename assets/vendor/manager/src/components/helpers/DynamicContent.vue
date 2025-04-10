@@ -6,6 +6,7 @@ import { ModelListSelect } from "vue-search-select"
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
 const constant = inject('constant', {});
+const language = inject('language', []);
 const element_id = ref(props.field.input.id);
 onBeforeMount(() => {
     if (typeof props.modelValue !== 'object') {
@@ -127,13 +128,13 @@ watch(selectedCategory, (newText) => {
         <h6 class="card-title">{{ props.field.input.pro_msg.title }}</h6>
         <div class="card-text form-text" v-html="props.field.input.pro_msg.desc"></div>
     </div>
-    <label :for="element_id+`_source`" class="form-label">Source</label>
+    <label :for="element_id+`_source`" class="form-label">{{language.ASTROID_SOURCE_LABEL}}</label>
     <select :id="element_id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="changeSource" class="form-select" :disabled="!constant.is_pro">
         <option v-for="(option, key) in constant.dynamic_source" :value="key" :key="key">{{ option }}</option>
     </select>
-    <p class="form-text">Select a content source to make its fields available for mapping. Choose between sources of the current page or query a custom source.</p>
+    <p class="form-text">{{language.ASTROID_SOURCE_DESC}}</p>
     <div v-if="props.modelValue['source'] === `content`">
-        <label :for="element_id+`_option_categories`" class="form-label">Filter by Categories</label>
+        <label :for="element_id+`_option_categories`" class="form-label">{{ language.ASTROID_DYNAMIC_CONTENT_FILTER_BY_CATEGORIES_LABEL }}</label>
         <multi-list-select
             :list="constant.dynamic_source_options.categories"
             option-value="value"
@@ -146,13 +147,13 @@ watch(selectedCategory, (newText) => {
         >
         </multi-list-select>
         <select class="form-select mt-2" v-model="content_include_subcategories" @change="onSelectIncludeSubcategories" :disabled="!constant.is_pro">
-            <option value="exclude">Exclude child categories</option>
-            <option value="include">Include child categories</option>
+            <option value="exclude">{{ language.ASTROID_DYNAMIC_CONTENT_FILTER_EXCLUDE_CHILD_CATEGORIES }}</option>
+            <option value="include">{{ language.ASTROID_DYNAMIC_CONTENT_FILTER_INCLUDE_CHILD_CATEGORIES }}</option>
         </select>
-        <p class="form-text">Filter articles by categories.</p>
+        <p class="form-text">{{ language.ASTROID_DYNAMIC_CONTENT_FILTER_BY_CATEGORIES_DESC }}</p>
     </div>
     <div v-if="props.modelValue['source'] === `categories`">
-        <label :for="element_id+`_option_category`" class="form-label">Parent Category</label>
+        <label :for="element_id+`_option_category`" class="form-label">{{ language.ASTROID_DYNAMIC_CONTENT_PARENT_CATEGORY_LABEL }}</label>
         <model-list-select
             :list="constant.dynamic_source_options.parent_category"
             v-model="selectedCategory"
@@ -163,34 +164,34 @@ watch(selectedCategory, (newText) => {
             placeholder="Parent Category"
         >
         </model-list-select>
-        <p class="form-text">Select a parent category to display its subcategories.</p>
+        <p class="form-text">{{ language.ASTROID_DYNAMIC_CONTENT_PARENT_CATEGORY_DESC }}</p>
     </div>
     <div class="row" v-if="props.modelValue['source'] !== 'none'">
         <div class="col-6">
-            <label :for="element_id+`_start`" class="form-label">Start</label>
+            <label :for="element_id+`_start`" class="form-label">{{ language.ASTROID_START_LABEL }}</label>
             <input :id="element_id+`_start`" :name="props.field.input.name+`[start]`" v-model="props.modelValue['start']" type="number" min="1" step="1" class="form-control" :disabled="!constant.is_pro">
         </div>
         <div class="col-6">
-            <label :for="element_id+`_quantity`" class="form-label">Quantity</label>
+            <label :for="element_id+`_quantity`" class="form-label">{{ language.ASTROID_QUANTITY_LABEL }}</label>
             <input :id="element_id+`_quantity`" :name="props.field.input.name+`[quantity]`" v-model="props.modelValue['quantity']" type="number" min="1" step="1" class="form-control" :disabled="!constant.is_pro">
         </div>
-        <div class="col-12"><p class="form-text">Set the starting point and limit the number of articles.</p></div>
+        <div class="col-12"><p class="form-text">{{ language.ASTROID_QUANTITY_DESC }}</p></div>
         <div class="col-6">
-            <label :for="element_id+`_order`" class="form-label">Order</label>
+            <label :for="element_id+`_order`" class="form-label">{{ language.ASTROID_ORDER_BY_LABEL }}</label>
             <select v-if="typeof props.modelValue['source'] !== 'undefined'"  :id="element_id+`_order`" :name="props.field.input.name+`[order]`" v-model="props.modelValue['order']" class="form-select" :disabled="!constant.is_pro">
-                <option value="">Select an order field</option>
+                <option value="">{{ language.ASTROID_SELECT_ORDER_FIELD_LABEL }}</option>
                 <option v-for="(option, key) in constant.dynamic_source_fields[props.modelValue['source']].order" :value="key" :key="key">{{ option }}</option>
             </select>
         </div>
         <div class="col-6">
-            <label :for="element_id+`_order_dir`" class="form-label">Direction</label>
+            <label :for="element_id+`_order_dir`" class="form-label">{{ language.ASTROID_DIRECTION_LABEL }}</label>
             <select :id="element_id+`_order_dir`" :name="props.field.input.name+`[order_dir]`" v-model="props.modelValue['order_dir']" class="form-select" :disabled="props.modelValue['order'] === `` || !constant.is_pro">
                 <option value="DESC">Descending</option>
                 <option value="ASC">Ascending</option>
             </select>
         </div>
         <div class="col-12 mt-4">
-            <label class="form-label">Dynamic Conditions</label>
+            <label class="form-label">{{ language.ASTROID_DYNAMIC_CONDITIONS_LABEL }}</label>
             <draggable
                 v-model="props.modelValue['conditions']"
                 class="dynamic-conditions row row-cols-1 g-4"
@@ -200,7 +201,7 @@ watch(selectedCategory, (newText) => {
                 <template #item="{element, index}">
                     <div class="col-12">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" :for="element_id+`_operator_`+index">Condition #{{index}}</label>
+                            <label class="input-group-text" :for="element_id+`_operator_`+index">{{ language.ASTROID_CONDITION_LABEL }} #{{index}}</label>
                             <select :id="element_id+`_operator_`+index" v-model="element.operator" class="form-select" :disabled="index === 0">
                                 <option value="AND">AND</option>
                                 <option value="OR">OR</option>
@@ -213,7 +214,7 @@ watch(selectedCategory, (newText) => {
                         <div class="card card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <label :for="element_id+`_field_`+index" class="form-label">Field</label>
+                                    <label :for="element_id+`_field_`+index" class="form-label">{{ language.ASTROID_FIELD_LABEL }}</label>
                                     <div class="dynamic-select">
                                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-database me-2"></i>{{ element.field.category.name + ' - ' + element.field.label }}</button>
                                         <ul class="dropdown-menu">
@@ -224,16 +225,16 @@ watch(selectedCategory, (newText) => {
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="form-text">Set a condition to display the element or its item depending on the content of a field.</p>
+                                    <p class="form-text">{{ language.ASTROID_CONDITION_DESC }}</p>
                                 </div>
                                 <div class="col-6">
-                                    <label :for="element_id+`_condition_`+index" class="form-label">Condition</label>
+                                    <label :for="element_id+`_condition_`+index" class="form-label">{{ language.ASTROID_CONDITION_LABEL }}</label>
                                     <select :id="element_id+`_condition_`+index" v-model="element.condition" class="form-select" @change="updateValue(element)">
                                         <option v-for="(cond, key) in conditions" :value="cond.value" :key="key">{{ cond.label }}</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <label :for="element_id+`_value_`+index" class="form-label">Value</label>
+                                    <label :for="element_id+`_value_`+index" class="form-label">{{ language.ASTROID_VALUE_LABEL }}</label>
                                     <input :id="element_id+`_value_`+index" v-model="element.value" class="form-control" :disabled="['!', '!!'].includes(element.condition)">
                                 </div>
                             </div>
@@ -241,7 +242,7 @@ watch(selectedCategory, (newText) => {
                     </div>
                 </template>
             </draggable>
-            <button class="btn btn-as-primary btn-as mt-4" @click.prevent="addCondition" :disabled="!constant.is_pro">Add Condition</button>
+            <button class="btn btn-as-primary btn-as mt-4" @click.prevent="addCondition" :disabled="!constant.is_pro">{{ language.ASTROID_ADD_CONDITION_LABEL }}</button>
         </div>
     </div>
 </template>

@@ -129,7 +129,27 @@ class Constants
         'ASTROID_LARGE_DESKTOP',
         'ASTROID_LARGER_DESKTOP',
         'ASTROID_XL',
-        'ASTROID_XXL'
+        'ASTROID_XXL',
+        'ASTROID_SOURCE_LABEL',
+        'ASTROID_SOURCE_DESC',
+        'ASTROID_DYNAMIC_CONTENT_FILTER_BY_CATEGORIES_LABEL',
+        'ASTROID_DYNAMIC_CONTENT_FILTER_BY_CATEGORIES_DESC',
+        'ASTROID_DYNAMIC_CONTENT_FILTER_EXCLUDE_CHILD_CATEGORIES',
+        'ASTROID_DYNAMIC_CONTENT_FILTER_INCLUDE_CHILD_CATEGORIES',
+        'ASTROID_DYNAMIC_CONTENT_PARENT_CATEGORY_LABEL',
+        'ASTROID_DYNAMIC_CONTENT_PARENT_CATEGORY_DESC',
+        'ASTROID_START_LABEL',
+        'ASTROID_QUANTITY_LABEL',
+        'ASTROID_QUANTITY_DESC',
+        'ASTROID_ORDER_BY_LABEL',
+        'ASTROID_SELECT_ORDER_FIELD_LABEL',
+        'ASTROID_DIRECTION_LABEL',
+        'ASTROID_DYNAMIC_CONDITIONS_LABEL',
+        'ASTROID_CONDITION_LABEL',
+        'ASTROID_CONDITION_DESC',
+        'ASTROID_FIELD_LABEL',
+        'ASTROID_VALUE_LABEL',
+        'ASTROID_ADD_CONDITION_LABEL'
     ];
 
     public static $animations = [
@@ -275,6 +295,7 @@ class Constants
         'none' => 'None',
         'content' => 'Articles',
         'categories' => 'Categories',
+        'users' => 'Users',
     ];
 
     public static function DynamicSourceFields(): array
@@ -404,7 +425,7 @@ class Constants
                     'lastvisitDate' => 'Last Visit Date',
                 ],
                 'filters' => [
-                    'content','categories'
+                    'content','categories','users'
                 ],
                 'joins' => [
                     'content' => [
