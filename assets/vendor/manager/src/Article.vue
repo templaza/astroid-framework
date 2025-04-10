@@ -6,6 +6,7 @@ import Modal from "./components/helpers/Modal.vue";
 const props = defineProps(['widget_json_id']);
 const data = JSON.parse(document.getElementById(props.widget_json_id+'_json').innerHTML);
 provide('constant', data.constant);
+provide('language', data.language);
 const sections = ref();
 const save_disabled = ref(false);
 onBeforeMount(()=>{
