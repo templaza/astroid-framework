@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.2.0-rc4';
+    public static $astroid_version = '3.2.0-rc5';
     public static $fontawesome_version = '6.6.0';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
