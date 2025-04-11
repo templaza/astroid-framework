@@ -119,7 +119,11 @@ class DynamicContent {
         }
 
         if (!empty($this->order)) {
-            $query->order($this->source . '.' . $this->order . ' ' . $this->order_dir);
+            if ($this->order === 'random') {
+                $query->order('RAND()');
+            } else {
+                $query->order($this->source . '.' . $this->order . ' ' . $this->order_dir);
+            }
         }
         $query->setLimit($this->quantity, $this->start - 1);
         $this->_db->setQuery($query);
