@@ -10,6 +10,7 @@
 namespace Astroid\Helper;
 
 use Astroid\Component\Article;
+use Astroid\Helper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Router\Route;
@@ -54,12 +55,14 @@ class DynamicContent {
         }
         $this->_db = Factory::getContainer()->get(DatabaseInterface::class);
         $this->_app = Factory::getApplication();
+        Helper::loadLanguage('com_content');
     }
 
     public function getContent() {
         if (empty($this->source) || empty($this->dynamic_content) || $this->source === 'none' || (is_object($this->dynamic_content) && empty(get_object_vars($this->dynamic_content)))) {
             return [];
         }
+
         $query = $this->_db->getQuery(true);
         $query->from('#__' . $this->source . ' AS ' . $this->source);
         $joins = [];
@@ -147,14 +150,14 @@ class DynamicContent {
                 $value->value === 'link' => $this->getContentQuery($value, $key, 'link'),
                 $value->value === 'rating' => $this->getContentQuery($value, $key, 'rating'),
                 $value->value === 'votes' => $this->getContentQuery($value, $key, 'votes'),
-                $value->value === 'publish_up', $value->value === 'created', $value->value === 'modified' => $this->getContentQuery($value, $key, $value->value),
+                $value->value === 'publish_up', $value->value === 'created', $value->value === 'modified', $value->value === 'created_by', $value->value === 'modified_by' => $this->getContentQuery($value, $key, $value->value),
                 str_starts_with($value->value, 'images.') => $this->getContentQuery( $value, $key, 'params', 'images'),
                 str_starts_with($value->value, 'urls.') => $this->getContentQuery($value, $key, 'params', 'urls'),
                 str_starts_with($value->value, 'event.') => $this->getContentQuery($value, $key, 'event'),
                 default => $value->category->value . '.' . $value->value . ' AS ' . $key
             },
             'categories' => match (true) {
-                in_array($value->value, ['created_time', 'modified_time']) => (function () use ($value, $key) {
+                in_array($value->value, ['created_time', 'modified_time', 'created_user_id', 'modified_user_id']) => (function () use ($value, $key) {
                     $this->_special[$key] = [
                         'category' => $value->category->value,
                         'value' => $value->value
@@ -213,7 +216,7 @@ class DynamicContent {
                 ];
                 return 'content.'.$param.' AS ' . $key;
             })(),
-            'publish_up', 'modified', 'created' => (function () use ($value, $key) {
+            'publish_up', 'modified', 'created', 'created_by', 'modified_by' => (function () use ($value, $key) {
                 $this->_special[$key] = [
                     'category' => $value->category->value,
                     'value' => $value->value
@@ -232,6 +235,10 @@ class DynamicContent {
                         'modified' => Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3'))),
                         'created' => Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3')))
                     };
+                })(),
+                $specialValue['value'] === 'created_by', $specialValue['value'] === 'modified_by' => (function () use ($value, $specialValue) {
+                    $user = Factory::getUser($value);
+                    return $user->name;
                 })(),
                 $specialValue['value'] === 'link' => (function () use ($value) {
                     $link = explode(':', $value);
@@ -296,6 +303,10 @@ class DynamicContent {
                 })(),
                 $specialValue['value'] === 'modified_time' => (function () use ($value) {
                     return Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $value, Text::_('DATE_FORMAT_LC3')));
+                })(),
+                $specialValue['value'] === 'created_user_id', $specialValue['value'] === 'modified_user_id' => (function () use ($value) {
+                    $user = Factory::getUser($value);
+                    return $user->name;
                 })(),
                 str_starts_with($specialValue['value'], 'params.') => (function () use ($value, $specialValue) {
                     $attribs = new Registry();
