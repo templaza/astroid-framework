@@ -16,14 +16,11 @@ defined('_JEXEC') or die;
 use Astroid\Helper;
 use Joomla\CMS\Factory;
 use Astroid\Helper\Style;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$accordions     = $params->get('accordions', '');
-if (empty($accordions)) {
-    return false;
-}
-$accordions     = json_decode($accordions);
-if (!count($accordions)) {
+$accordions     = new SubForm($params->get('accordions', ''));
+if (!count($accordions->data)) {
     return false;
 }
 $style          = $params->get('style', '');
@@ -35,16 +32,15 @@ $always_open    = $params->get('always_open', 0);
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.collapse');
 echo '<div class="accordion'.$style.'" id="accordion-'.$element->id.'">';
-foreach ($accordions as $key => $accordions) {
-    $item_params = Helper::loadParams($accordions->params);
+foreach ($accordions->data as $key => $accordion) {
     echo '<div class="accordion-item">';
 
     echo '<h2 class="accordion-header">';
-    echo '<button class="accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$item_params->get('title', '').'</button>';
+    echo '<button class="accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').'</button>';
     echo '</h2>';
 
     echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 && $collapse === '' ? ' show' : '').'"'.(!$always_open ? ' data-bs-parent="#accordion-'.$element->id.'"' : '').'>';
-    echo '<div class="accordion-body">'. $item_params->get('content', '') . '</div>';
+    echo '<div class="accordion-body">'. $accordion->params->get('content', '') . '</div>';
     echo '</div>';
 
     echo '</div>';
@@ -53,12 +49,12 @@ echo '</div>';
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .accordion-button', $title_font_style, null, $element->isRoot);
 }
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .accordion-body', $content_font_style, null, $element->isRoot);
 }
 
 $color          = Style::getColor($params->get('color', ''));

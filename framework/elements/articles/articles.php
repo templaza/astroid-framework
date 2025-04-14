@@ -48,8 +48,8 @@ $interval           =   $params->get('interval', 3);
 $slide_settings     =   array();
 $slide_responsive   =   array();
 
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 $row_column_cls     =   'row';
 
 if ($use_masonry && !$enable_slider) {
@@ -221,7 +221,7 @@ $hue_rotate_hover   =   $params->get('hue_rotate_hover', '0');
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-article-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-article-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
@@ -231,7 +231,7 @@ $info_after_intro   =   json_decode($params->get('info_after_intro', '[]'), true
 
 $info_font_style    =   $params->get('info_font_style');
 if (!empty($info_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-article-info', $info_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-article-info', $info_font_style, null, $element->isRoot);
 }
 
 $info_margin                =   $params->get('info_margin', '');
@@ -242,7 +242,7 @@ $enable_intro_text  =   $params->get('enable_intro_text', 1);
 $content_font_style =   $params->get('content_font_style');
 $intro_limit        =   $params->get('intro_limit', 0);
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-article-introtext', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-article-introtext', $content_font_style, null, $element->isRoot);
 }
 
 $readmore           =   $params->get('enable_readmore', 0);
@@ -491,5 +491,3 @@ switch ($overlay_type) {
         }
         break;
 }
-$style->render();
-$style_dark->render();

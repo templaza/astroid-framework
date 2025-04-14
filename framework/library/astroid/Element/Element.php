@@ -14,33 +14,55 @@ use Astroid\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Filesystem\Path;
+use Astroid\Helper\DynamicContent;
 
 defined('_JEXEC') or die;
 
 class Element extends BaseElement
 {
     public $section, $row, $column;
-    public function __construct($data, $section, $row, $column)
+    public function __construct($data, $section, $row, $column, $role = '')
     {
         $this->section = $section;
         $this->row = $row;
         $this->column = $column;
-        parent::__construct($data, $section->devices, $section->options);
+        parent::__construct($data, $section->devices, $section->options, $role);
     }
 
     public function render()
     {
         $this->_decorateSection();
         if ($this->type == 'sublayout') {
-            $this->content = Layout::renderSublayout($this->params->get('source', ''));
+            $this->content = Layout::renderSublayout($this->params->get('source', ''), '', 'layouts', [], $this->role);
         } else {
-            $this->content = $this->_content();
+            $this->prepareContent();
+            if (empty($this->state)) {
+                return '';
+            }
+            $dynamic_data = $this->getDynamicContent();
+            if (!empty($dynamic_data)) {
+                foreach ($dynamic_data as $dynamic_data_item) {
+                    foreach ($dynamic_data_item as $key => $value) {
+                        $this->params->set($key, $value);
+                    }
+                    $this->content .= $this->_content();
+                }
+            } else {
+                $this->content = $this->_content();
+            }
         }
         return $this->wrap();
     }
 
     public function _content()
     {
+        $layout = Framework::getTemplate()->getElementLayout($this->type);
+        $pathinfo = pathinfo($layout);
+        $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
+        return $layout->render(['params' => $this->params, 'element' => $this, 'options' => $this->options]);
+    }
+
+    public function prepareContent() {
         $app            = Factory::getApplication();
         $option         = $app->input->get('option', '', 'RAW');
         $view           = $app->input->get('view', '', 'RAW');
@@ -59,10 +81,27 @@ class Element extends BaseElement
                 $this->params->merge($article_params);
             }
         }
-        $layout = Framework::getTemplate()->getElementLayout($this->type);
-        $pathinfo = pathinfo($layout);
-        $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
-        return $layout->render(['params' => $this->params, 'element' => $this, 'options' => $this->options]);
+    }
+
+    public function getDynamicContent() {
+        $dynamic_data = [];
+        if (Helper::isPro()) {
+            $dynamic_params = $this->params->get('dynamic_content_settings');
+            if (!empty($dynamic_params)) {
+                $dynamic_content = new DynamicContent(
+                    $dynamic_params->source,
+                    $dynamic_params->start,
+                    $dynamic_params->quantity,
+                    $dynamic_params->conditions,
+                    $dynamic_params->order,
+                    $dynamic_params->order_dir,
+                    $dynamic_params->dynamic_content,
+                    $dynamic_params->options
+                );
+                $dynamic_data = $dynamic_content->getContent();
+            }
+        }
+        return $dynamic_data;
     }
 
     public function _decorateSection()

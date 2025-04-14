@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 class Column extends BaseElement
 {
     public $section, $row, $size = 12, $component = false;
-    public function __construct($data, $section, $row)
+    public function __construct($data, $section, $row, $role = '')
     {
         $this->section = $section;
         $this->row = $row;
@@ -36,13 +36,13 @@ class Column extends BaseElement
         } else {
             $this->size = $data['size'];
         }
-        parent::__construct($data, $section->devices, $section->options);
+        parent::__construct($data, $section->devices, $section->options, $role);
     }
 
     public function render()
     {
         foreach ($this->_data['elements'] as $element) {
-            $element = new Element($element, $this->section, $this->row, $this);
+            $element = new Element($element, $this->section, $this->row, $this, $this->role);
             $element_content = $element->render();
             if (!empty($element->content)) {
                 $this->content .= $element_content;

@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onUpdated, inject } from 'vue';
+import {onBeforeMount, onUpdated, inject, computed} from 'vue';
 import BackToTopIcon from './BackToTopIcon.vue';
 import MediaManager from './MediaManager.vue';
 import Preloader from './Preloader.vue';
@@ -23,6 +23,8 @@ import Border from './Border.vue';
 import SubLayouts from './SubLayouts.vue';
 import Range from './Range.vue';
 import SwitchBox from "./SwitchBox.vue";
+import Text from "./Text.vue";
+import DynamicContent from "./DynamicContent.vue";
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState', 'update:presetState']);
 const props = defineProps({
@@ -69,9 +71,66 @@ function updateContentLayout() {
 function updateSubLayouts() {
     props.scope['sublayout'] = 'update';
 }
+
+// Get Dynamic Fields
+const dynamicFields = computed(() => {
+    let fields = [];
+    if (typeof props.scope['dynamic_content_settings'] === 'undefined') {
+        return fields;
+    }
+    Object.keys(constant.dynamic_source_fields).forEach(key => {
+        if (constant.dynamic_source_fields[key].filters.includes(props.scope['dynamic_content_settings']['source'])) {
+            fields.push({
+                type: 'heading',
+                label: constant.dynamic_source_fields[key].name
+            })
+            Object.keys(constant.dynamic_source_fields[key].fields).forEach(field => {
+                fields.push({
+                    type: 'field',
+                    value: field,
+                    label: constant.dynamic_source_fields[key].fields[field],
+                    category: {
+                        value: constant.dynamic_source_fields[key].value,
+                        name: constant.dynamic_source_fields[key].name
+                    }
+                });
+            });
+        }
+    })
+    return fields;
+})
+function selectDynamicField(field) {
+    if (typeof props.scope['dynamic_content_settings']['dynamic_content'] === 'undefined') {
+        props.scope['dynamic_content_settings']['dynamic_content'] = {};
+    }
+    props.scope['dynamic_content_settings']['dynamic_content'][props.field.name] = field;
+}
+function removeDynamicField() {
+    delete props.scope['dynamic_content_settings']['dynamic_content'][props.field.name];
+}
 </script>
 <template>
-    <input v-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" type="text" :id="props.field.input.id" :name="props.field.input.name" class="astroid-text form-control" @keydown.enter.prevent="" :aria-label="props.field.label" :placeholder="props.field.input.hint">
+    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length" class="dynamic-select dropdown position-absolute end-0 ">
+        <button type="button" class="btn btn-link dropdown-toggle link-body-emphasis px-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-database me-2"></i>Dynamic</button>
+        <ul class="dropdown-menu">
+            <li v-for="(field, key) in dynamicFields" :key="key">
+                <hr v-if="field.type === `heading` && key !== 0" class="dropdown-divider">
+                <h6 v-if="field.type === `heading`" class="dropdown-header">{{ field.label }}</h6>
+                <a v-else class="dropdown-item" href="#" @click.prevent="selectDynamicField(field)">{{ field.label }}</a>
+            </li>
+        </ul>
+    </div>
+    <div v-if="constant.is_pro && typeof props.field.input.dynamic !== `undefined` && props.field.input.dynamic && dynamicFields.length && typeof props.scope.dynamic_content_settings.dynamic_content[props.field.name] !== `undefined` && Object.keys(props.scope.dynamic_content_settings.dynamic_content[props.field.name]).length !== 0" class="dynamic-content form-control bg-body-tertiary">
+        <div class="row g-0 align-items-center">
+            <div class="dynamic-field-label col px-2"><i class="fa-solid fa-database me-2"></i>{{ props.scope.dynamic_content_settings.dynamic_content[props.field.name].category.name + ' - ' + props.scope.dynamic_content_settings.dynamic_content[props.field.name].label }}</div>
+            <div class="dynamic-field-tools col-auto">
+                <nav class="nav">
+                    <a class="nav-link" href="#" @click.prevent="removeDynamicField"><i class="fa-solid fa-trash-can"></i></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <Text v-else-if="props.field.input.type === `astroidtext`" v-model="props.scope[props.field.name]" :field="props.field" />
     <select v-else-if="props.field.input.type === `astroidlist`" v-model="props.scope[props.field.name]" :id="props.field.input.id" :name="props.field.input.name" class="astroid-list form-select" :aria-label="props.field.label">
         <option v-for="option in props.field.input.options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
@@ -181,7 +240,10 @@ function updateSubLayouts() {
     <div v-else-if="props.field.input.type === `articlelayouts`" class="astroid-article-layouts">
         <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" type="article_layouts" />
     </div>
-    <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card card-body">
+    <div v-else-if="props.field.input.type === `dynamiccontent`" class="astroid-dynamic-content">
+        <DynamicContent v-model="props.scope[props.field.name]" :field="props.field" />
+    </div>
+    <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card alert alert-warning mb-0">
         <h6 class="card-title">{{ props.field.input.title }}</h6>
         <div class="card-text form-text" v-html="props.field.input.desc"></div>
     </div>

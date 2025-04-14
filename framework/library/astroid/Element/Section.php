@@ -23,7 +23,7 @@ class Section extends BaseElement
     {
         $content = '';
         foreach ($this->_data['rows'] as $row) {
-            $row = new Row($row, $this);
+            $row = new Row($row, $this, $this->role);
             $content .= $row->render();
         }
         $container = $this->_container();

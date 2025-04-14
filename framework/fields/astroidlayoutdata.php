@@ -83,6 +83,11 @@ class JFormFieldAstroidLayoutData extends FormField {
                 }
                 $widgets    =   array();
                 $constant   =   Helper\Constants::manager_configs('article_data');
+                // Get Language
+                $language = array();
+                foreach (Helper\Constants::$translationStrings as $string) {
+                    $language[strtoupper($string)] = $app->getLanguage()->_($string);
+                }
                 $form_template  =   $constant['form_template'];
                 $layout     =   json_decode($sublayout['data'], true);
                 foreach ($layout['sections'] as $section) {
@@ -127,6 +132,7 @@ class JFormFieldAstroidLayoutData extends FormField {
                     'article_id' => $id,
                     'widgets' => $widgets,
                     'constant'   => $constant,
+                    'language'  =>  $language,
                     'template' => $article_layout->template
                 ];
                 $html   =   '<script type="application/json" id="'.$this->id.'_json">'.json_encode($json).'</script>';
@@ -134,6 +140,9 @@ class JFormFieldAstroidLayoutData extends FormField {
                 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
                 $wa->registerAndUseStyle('astroid.article.widget.data', "media/astroid/assets/vendor/manager/dist/index.css");
                 $wa->registerAndUseStyle('astroid.icons', "media/astroid/assets/vendor/linearicons/font.min.css");
+                if (version_compare(JVERSION, '5.0.0', '<')) {
+                    $wa->registerAndUseStyle('astroid.manager.fontawesome', "media/astroid/assets/vendor/fontawesome/css/all.min.css");
+                }
                 $wa->useScript('bootstrap.tab');
                 $wa->useScript('bootstrap.modal');
 

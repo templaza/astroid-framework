@@ -203,4 +203,4 @@ echo '<button type="button" class="as-form-builer-submit btn ' . $button_class .
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 
-Factory::getApplication()->getDocument()->getWebAssetManager()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto']);
+$document->getWA()->registerAndUseScript('astroid.formbuilder', "astroid/formbuilder.min.js", ['relative' => true, 'version' => 'auto']);

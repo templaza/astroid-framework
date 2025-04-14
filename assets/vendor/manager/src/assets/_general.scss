@@ -179,3 +179,15 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
 .loading {
     padding: 150px 0;
 }
+
+.dynamic-select {
+    top: -38px;
+    > button {
+        font-size: 0.895rem;
+        text-decoration: none;
+    }
+    > .dropdown-menu.show {
+        max-height: 450px;
+        overflow-y: auto;
+    }
+}

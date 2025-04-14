@@ -30,8 +30,8 @@ $document->addScript('vendor/astroid/js/countdown.min.js', 'body');
 // Background Image
 
 $background_setting = $params->get('background_setting');
-$comming_soon_style         =   new Style('.comingsoon-wrap');
-$comming_soon_style_dark    =   new Style('.comingsoon-wrap', 'dark');
+$comming_soon_style         =   new Style('.comingsoon-wrap', '', true);
+$comming_soon_style_dark    =   new Style('.comingsoon-wrap', 'dark', true);
 
 $styles = [];
 $video = [];

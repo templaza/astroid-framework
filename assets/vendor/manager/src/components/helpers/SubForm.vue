@@ -10,7 +10,9 @@ const edit  = ref(false);
 const params = ref(new Object());
 const itemLabel = ref('');
 const currentIdx = ref(-1);
+const element_id = ref(props.field.input.id);
 onBeforeMount(()=>{
+    element_id.value += '-'+(Date.now() * 1000 + Math.random() * 1000).toString(16).replace(/\./g, "").padEnd(14, "0")+Math.trunc(Math.random() * 100000000);
     if (props.modelValue) {
         items.value = JSON.parse(props.modelValue);
     }
@@ -134,34 +136,44 @@ function deleteItem(index) {
             </template>
         </draggable>
     </div>
-    <div v-else>
-        <div v-for="(fieldset, idx) in props.field.input.form.content" :key="fieldset.name" class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div>Add Item</div>
-                <button class="as-subform-apply btn btn-sm btn-primary btn-as-primary" @click.prevent="saveItem">Apply</button>
-            </div>
-            <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid" class="card-body">
-                <div v-if="group.title || group.description" class="heading-group mb-4">
-                    <h5 v-if="group.title" class="astroid-heading-line"><span>{{ group.title }}</span></h5>
-                    <p v-if="group.description" class="form-text">{{ group.description }}</p>
-                </div>
-                <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
-                    <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label fw-bold" v-html="field.label"></div>
-                    <label v-else-if="field.input.type !== `astroidheading`" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
-                    <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
-                        <Fields 
-                            :field="field" 
-                            :scope="params"
-                            />
+    <div v-else class="position-relative">
+        <div class="position-absolute top-0 end-0">
+            <button class="as-subform-apply btn btn-sm btn-link" @click.prevent="saveItem"><i class="fa-solid fa-arrow-right me-1"></i>Apply Changes</button>
+        </div>
+        <ul class="nav nav-tabs" :id="`modal-tab-`+element_id" role="tablist">
+            <li v-for="(fieldset, idx) in props.field.input.form.content" :key="fieldset.name" class="nav-item" role="presentation">
+                <button class="nav-link" :class="{'active' : idx === 0}" :id="fieldset.name+`-tab-`+element_id" data-bs-toggle="tab" :data-bs-target="`#`+fieldset.name+`-tab-pane-`+element_id" type="button" role="tab" aria-selected="true">{{ fieldset.label }}</button>
+            </li>
+        </ul>
+        <div class="tab-content modal-body border border-top-0 p-0" :id="`modal-tab-content-`+element_id">
+            <div v-for="(fieldset, idx) in props.field.input.form.content" :key="fieldset.name" class="tab-pane fade p-4" :class="{'show active' : idx === 0}" :id="fieldset.name+`-tab-pane-`+element_id" role="tabpanel" :aria-labelledby="fieldset.name+`-tab`" tabindex="0">
+                <div v-for="(group, gid) in fieldset.childs" :key="gid" :class="`group-`+gid" class="card-body">
+                    <div v-if="group.title || group.description" class="heading-group mb-4">
+                        <h5 v-if="group.title" class="astroid-heading-line"><span>{{ group.title }}</span></h5>
+                        <p v-if="group.description" class="form-text">{{ group.description }}</p>
                     </div>
-                    <div v-else v-html="field.input"></div>
-                    <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
+                    <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
+                        <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing'].includes(field.input.type))" class="form-label fw-bold" v-html="field.label"></div>
+                        <label v-else-if="field.input.type !== `astroidheading`" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
+                        <div v-if="typeof field.type !== 'undefined' && field.type === `json`" class="position-relative">
+                            <Fields
+                                :field="field"
+                                :scope="params"
+                            />
+                        </div>
+                        <div v-else v-html="field.input"></div>
+                        <p v-if="field.description !== ''" v-html="field.description" class="form-text"></p>
+                    </div>
                 </div>
+            </div>
+            <div class="border-top px-4 py-3 d-flex justify-content-between align-items-center">
+                <div class="opacity-50">Do you want to save these changes?</div>
+                <button class="as-subform-apply btn btn-as btn-sm btn-primary btn-as-primary" @click.prevent="saveItem">Apply Changes</button>
             </div>
         </div>
     </div>
     <input
-        :id="props.field.input.id"
+        :id="element_id"
         :name="props.field.input.name"
         :value="modelValue"
         type="hidden"

@@ -31,8 +31,8 @@ if (!empty($social_profiles)) {
 }
 $class              = $gutter ? 'gx-'.$gutter : '';
 $styles             = '';
-$social_style       =   new Style('.astroid-social-icons');
-$social_style_dark  =   new Style('.astroid-social-icons', 'dark');
+$social_style       =   new Style('.astroid-social-icons', '', true);
+$social_style_dark  =   new Style('.astroid-social-icons', 'dark', true);
 if (!empty($fontsize)) {
     $social_style->addCss('font-size', $fontsize);
 }

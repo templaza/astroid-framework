@@ -2,7 +2,7 @@
 <element>
    <form>
       <fields>
-         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_DESIGN_SEETINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_order_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_ORDER_LABEL" />
             <field astroidgroup="device_order_settings" name="column_order_xl" type="astroidlist" default="0" label="ASTROID_EXTRA_LARGE_COLUMN_ORDER_LABEL">
                <option value="0">JDEFAULT</option>

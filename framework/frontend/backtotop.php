@@ -15,7 +15,6 @@ extract($displayData);
 use Astroid\Helper\Style;
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
-
 $enable_backtotop = $params->get('backtotop', 1);
 if (!$enable_backtotop) {
    return;
@@ -32,10 +31,10 @@ $backtotop_icon_style   = $params->get('backtotop_icon_style', 'circle');
 $backtotop_on_mobile    = $params->get('backtotop_on_mobile', 1);
 $paddingpercent         = 10;
 $padding                = 15;
-$a_style        =   new Style('#astroid-backtotop');
-$a_style_dark   =   new Style('#astroid-backtotop', 'dark');
-$i_style        =   new Style('#astroid-backtotop > i');
-$i_style_dark   =   new Style('#astroid-backtotop > i', 'dark');
+$a_style        =   new Style('#astroid-backtotop', '', true);
+$a_style_dark   =   new Style('#astroid-backtotop', 'dark', true);
+$i_style        =   new Style('#astroid-backtotop > i', '', true);
+$i_style_dark   =   new Style('#astroid-backtotop > i', 'dark', true);
 $i_style->addResponsiveCSS('font-size', $backtotop_icon_size , 'px');
 $i_style->addCss('color', $backtotop_icon_color['light']);
 $i_style_dark->addCss('color', $backtotop_icon_color['dark']);

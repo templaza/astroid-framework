@@ -18,20 +18,24 @@
                     <form>
                         <fields>
                             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
-                                <field name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                                <field name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE" dynamic="true"/>
 
-                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta"/>
+                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta" dynamic="true"/>
 
-                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work"/>
-                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More"/>
+                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work" dynamic="true"/>
+                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More" dynamic="true"/>
                                 <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
                                     <option value="_blank">New Window</option>
                                     <option value="_parent">Parent Frame</option>
                                     <option value="_top">Full body of the window</option>
                                 </field>
+                            </fieldset>
+                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>

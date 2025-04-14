@@ -18,20 +18,16 @@ use Astroid\Helper\Style;
 use Astroid\Helper;
 use Astroid\Helper\Media;
 use Joomla\CMS\Uri\Uri;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$grids          = $params->get('grids', '');
-if (empty($grids)) {
+$grids     = new SubForm($params->get('grids', ''));
+if (!count($grids->data)) {
     return false;
 }
-$grids          = json_decode($grids);
-if (!count($grids)) {
-    return false;
-}
-
 $document = Framework::getDocument();
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 $row_column_cls     =   '';
 
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
@@ -121,13 +117,13 @@ $box_shadow_hover   =   $box_shadow_hover ? ' ' . $box_shadow_hover : '';
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $meta_font_style    =   $params->get('meta_font_style');
 if (!empty($meta_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-meta', $meta_font_style, null, $element->isRoot);
 }
 
 $meta_heading_margin=   $params->get('meta_heading_margin', '');
@@ -135,7 +131,7 @@ $meta_position      =   $params->get('meta_position', 'before');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-text', $content_font_style, null, $element->isRoot);
 }
 
 $button_style       =   $params->get('button_style', 'primary');
@@ -163,35 +159,34 @@ $button_margin_top  =   $params->get('button_margin_top', '');
 
 $use_masonry        =   $params->get('use_masonry', 0);
 echo '<div class="row'.($use_masonry ? ' as-masonry as-loading' : '').$row_column_cls.'">';
-foreach ($grids as $key => $grid) {
-    $grid_params    =   Helper::loadParams($grid->params);
-    $link_target    =   !empty($grid_params->get('link_target', '')) ? ' target="'.$grid_params->get('link_target', '').'"' : '';
+foreach ($grids->data as $key => $grid) {
+    $link_target    =   !empty($grid->params->get('link_target', '')) ? ' target="'.$grid->params->get('link_target', '').'"' : '';
 
     $media          =   '';
-    if ($grid_params->get('type', '') == 'image' && $grid_params->get('image', '')) {
+    if ($grid->params->get('type', '') == 'image' && $grid->params->get('image', '')) {
         $media      =   '<div class="as-image-cover position-relative overflow-hidden' . $image_border_radius . $hover_effect . $transition . ($media_position == 'bottom' ? ' order-2 ' : '') . '">';
         $media      .=  $layout == 'overlay' ? '<div class="as-image-cover astroid-image-overlay-cover">' : '';
-        $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getMediaPath($grid_params->get('image', '')) .'" alt="'.$grid_params->get('title', '').'">';
+        $media      .=  '<img class="' . ($image_fullwidth ? 'w-100' : '') . ($enable_image_cover || $media_position == 'left' || $media_position == 'right' ? ' object-fit-cover h-100' : '') . ($params->get('card_style', '') == 'none' ? '' : ' card-img-'. $media_position) .'" src="'. Astroid\Helper\Media::getMediaPath($grid->params->get('image', '')) .'" alt="'.$grid->params->get('title', '').'">';
         $media      .=  $layout == 'overlay' ? '</div>' : '';
         $media      .=  '</div>';
-        if ( !empty($grid_params->get('link', '')) ) {
-            $media      =   '<a href="'. $grid_params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
+        if ( !empty($grid->params->get('link', '')) ) {
+            $media      =   '<a href="'. $grid->params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
         }
-    } elseif ($grid_params->get('type', '') == 'icon') {
-        switch ($grid_params->get('icon_type', '')) {
+    } elseif ($grid->params->get('type', '') == 'icon') {
+        switch ($grid->params->get('icon_type', '')) {
             case 'fontawesome':
-                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('fa_icon', '').'"></i>';
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('fa_icon', '').'"></i>';
                 break;
             case 'astroid':
-                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('as_icon', '').'"></i>';
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('as_icon', '').'"></i>';
                 $document->loadASIcon();
                 break;
             default:
-                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid_params->get('custom_icon', '').'"></i>';
+                $media  =   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('custom_icon', '').'"></i>';
                 break;
         }
-        if ( !empty($grid_params->get('link', '')) && !empty($params->get('enable_icon_link', 0)) ) {
-            $media      =   '<a href="'. $grid_params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
+        if ( !empty($grid->params->get('link', '')) && !empty($params->get('enable_icon_link', 0)) ) {
+            $media      =   '<a href="'. $grid->params->get('link', '') . '"'.$link_target.' class="'.($media_position == 'bottom' ? 'order-2 ' : '').'">'. $media .'</a>';
         }
     }
 
@@ -213,22 +208,22 @@ foreach ($grids as $key => $grid) {
     if ($media_position == 'inside') {
         echo $media;
     }
-    if (!empty($grid_params->get('meta', '')) && $meta_position == 'before') {
-        echo '<div class="astroid-meta">' . $grid_params->get('meta', '') . '</div>';
+    if (!empty($grid->params->get('meta', '')) && $meta_position == 'before') {
+        echo '<div class="astroid-meta">' . $grid->params->get('meta', '') . '</div>';
     }
-    if (!empty($grid_params->get('title', ''))) {
-        echo '<'.$title_html_element.' class="astroid-heading">'. $grid_params->get('title', '') . '</'.$title_html_element.'>';
+    if (!empty($grid->params->get('title', ''))) {
+        echo '<'.$title_html_element.' class="astroid-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
     }
-    if (!empty($grid_params->get('meta', '')) && $meta_position == 'after') {
-        echo '<div class="astroid-meta">' . $grid_params->get('meta', '') . '</div>';
+    if (!empty($grid->params->get('meta', '')) && $meta_position == 'after') {
+        echo '<div class="astroid-meta">' . $grid->params->get('meta', '') . '</div>';
     }
-    if (!empty($grid_params->get('description', ''))) {
-        echo '<div class="astroid-text">' . $grid_params->get('description', '') . '</div>';
+    if (!empty($grid->params->get('description', ''))) {
+        echo '<div class="astroid-text">' . $grid->params->get('description', '') . '</div>';
     }
-    if (!empty($grid_params->get('link', '')) && !empty($grid_params->get('link_title', ''))) {
+    if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-        $btn_title      =   $button_style == 'text' ? '<small>'. $grid_params->get('link_title', '') . '</small>' : $grid_params->get('link_title', '');
-        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid_params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
+        $btn_title      =   $button_style == 'text' ? '<small>'. $grid->params->get('link_title', '') . '</small>' : $grid->params->get('link_title', '');
+        echo '<a class="'. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body
@@ -240,14 +235,14 @@ foreach ($grids as $key => $grid) {
 
     echo '</div></div>';
 
-    if ($grid_params->get('enable_background_image', 0)) {
-        $image = $grid_params->get('background_image', '');
+    if ($grid->params->get('enable_background_image', 0)) {
+        $image = $grid->params->get('background_image', '');
         if (!empty($image)) {
             $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-image', 'url(' . Uri::base(true) . '/' . Media::getPath() . '/' . $image . ')');
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-repeat', $grid_params->get('background_repeat', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-size', $grid_params->get('background_size', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-attachment', $grid_params->get('background_attchment', ''));
-            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-position', $grid_params->get('background_position', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-repeat', $grid->params->get('background_repeat', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-size', $grid->params->get('background_size', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-attachment', $grid->params->get('background_attchment', ''));
+            $element->style->child('#grid-' . $grid->id)->child('.card')->addCss('background-position', $grid->params->get('background_position', ''));
         }
     }
 }
@@ -282,7 +277,7 @@ if ($params->get('card_style', '') == 'custom') {
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border);
+        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'mobile', $element->isRoot);
     }
 }
 switch ($overlay_type) {
@@ -298,5 +293,3 @@ switch ($overlay_type) {
         }
         break;
 }
-$style->render();
-$style_dark->render();

@@ -218,6 +218,7 @@ class JFormFieldAstroidCalendar extends FormField {
           'maxYear' => $this->maxyear,
           'direction' => $direction,
           'fieldname' => $this->fieldname,
+          'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
           'ngShow' => $this->element['ngShow'],
           'ngHide' => $this->element['ngHide'],
           'ngRequired' => $this->element['ngRequired'],

@@ -10,6 +10,7 @@
 namespace Astroid;
 use Astroid\Element\Layout;
 use Astroid\Helper\Constants;
+use Astroid\Helper\Style;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Event\Cache\AfterPurgeEvent;
 use Joomla\CMS\Factory;
@@ -796,5 +797,84 @@ class Helper
             $presets[] = $preset;
         }
         return $presets;
+    }
+
+    public static function coming_soon() : void
+    {
+        $app = Factory::getApplication();
+        $document = Framework::getDocument();
+        $params = Framework::getTemplate()->getParams();
+        $wa = $app->getDocument()->getWebAssetManager();
+
+        $wa->registerAndUseScript('astroid.coundown.moment', 'astroid/moment/moment.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+        $wa->registerAndUseScript('astroid.coundown.timezone', 'astroid/moment/moment-timezone.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+        $wa->registerAndUseScript('astroid.coundown.timezone.10years', 'astroid/moment/moment-timezone-with-data-10-year-range.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+        $document->addScript('vendor/astroid/js/countdown.min.js', 'body');
+        $document->addScript('vendor/astroid/js/countdown_cls.min.js', 'body');
+
+        $background_setting = $params->get('background_setting');
+        $comming_soon_style         =   new Style('.comingsoon-wrap', '', true);
+        $comming_soon_style_dark    =   new Style('.comingsoon-wrap', 'dark', true);
+
+        $styles = [];
+        $video = [];
+        if ($background_setting) {
+            if ($background_setting == "color") {
+                $background_color = Style::getColor($params->get('background_color', ''));
+                $comming_soon_style->addCss('background-color', $background_color['light']);
+                $comming_soon_style_dark->addCss('background-color', $background_color['dark']);
+            }
+            if ($background_setting == "image") {
+
+                $img_background_color = Style::getColor($params->get('img_background_color', ''));
+                $comming_soon_style->addCss('background-color', $img_background_color['light']);
+                $comming_soon_style_dark->addCss('background-color', $img_background_color['dark']);
+
+                $background_image = $params->get('background_image', '');
+                if (!empty($background_image)) {
+                    $comming_soon_style->addCss('background-image', 'url(' . Uri::root() . \Astroid\Helper\Media::getPath() . '/' . $background_image . ')');
+                    $background_repeat = $params->get('background_repeat', '');
+                    $background_repeat = empty($background_repeat) ? 'inherit' : $background_repeat;
+                    $comming_soon_style->addCss('background_repeat', $background_repeat);
+
+                    $background_size = $params->get('background_size', '');
+                    $background_size = empty($background_size) ? 'inherit' : $background_size;
+                    $comming_soon_style->addCss('background-size', $background_size);
+
+                    $background_attchment = $params->get('background_attchment', '');
+                    $background_attchment = empty($background_attchment) ? 'inherit' : $background_attchment;
+                    $comming_soon_style->addCss('background-attachment', $background_attchment);
+
+                    $background_position = $params->get('background_position', '');
+                    $background_position = empty($background_position) ? 'inherit' : $background_position;
+                    $comming_soon_style->addCss('background-position', $background_position);
+                }
+            }
+
+            if ($background_setting == "gradient") {
+                $background_gradient = $params->get('background_gradient', '');
+                if (!empty($background_gradient)) {
+                    $comming_soon_style->addCss('background-image', $background_gradient->gradient_type . '-gradient(' . $background_gradient->start_color . ',' . $background_gradient->stop_color);
+                }
+            }
+
+            if ($background_setting == "video") {
+                $attributes = [];
+                $background_video = $params->get('background_video', '');
+                if (!empty($background_video)) {
+                    $attributes['data-as-video-bg'] = Uri::root() . \Astroid\Helper\Media::getPath() . '/' . $background_video;
+                    $wa->registerAndUseScript('astroid.videobg', 'astroid/videobg.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                }
+
+                $return = [];
+                foreach ($attributes as $key => $value) {
+                    $return[] = $key . '="' . $value . '"';
+                }
+                $video =  $return;
+            }
+        }
+
+        $comming_soon_style->render();
+        $comming_soon_style_dark->render();
     }
 }

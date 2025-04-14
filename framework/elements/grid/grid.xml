@@ -32,15 +32,15 @@
                                 </field>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='fontawesome'" type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="fa_icon"/>
                                 <field ngShow="[type]=='icon' AND [icon_type]=='astroid'" type="astroidicons" source="astroid" label="ASTROID_WIDGET_ICON_LABEL" name="as_icon"/>
-                                <field ngShow="[type]=='icon' AND [icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon"/>
-                                <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE"/>
+                                <field ngShow="[type]=='icon' AND [icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon" dynamic="true"/>
+                                <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE" dynamic="true"/>
 
-                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta"/>
+                                <field type="astroidtext" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta" dynamic="true"/>
 
-                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work"/>
-                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More"/>
+                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description" dynamic="true"/>
+                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" name="link" hint="https://astroidframe.work" dynamic="true"/>
+                                <field ngShow="[link]!=''" type="astroidtext" label="ASTROID_WIDGET_LINK_TEXT_LABEL" name="link_title" hint="View More" dynamic="true"/>
                                 <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
                                     <option value="">Default</option>
                                     <option value="_blank">New Window</option>
@@ -78,6 +78,10 @@
                                     <option value="center center">ASTROID_BACKGROUND_POSITION_CENTER_CENTER</option>
                                     <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
                                 </field>
+                            </fieldset>
+                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>

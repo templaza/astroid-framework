@@ -9,8 +9,6 @@
                <option value="center">ASTROID_MIDDLE</option>
                <option value="end">ASTROID_BOTTOM</option>
             </field>
-         </fieldset>
-         <fieldset name="responsive-settings" label="ASTROID_ELEMENT_HEAD_RESPONSIVE_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field name="device_gutter_settings" type="astroidgroup" title="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_LABEL" description="ASTROID_ELEMENT_HEAD_DEVICE_GUTTER_DESC" />
             <field astroidgroup="device_gutter_settings" name="gutter_xs" type="astroidlist" default="" label="ASTROID_ROW_GUTTER_XS_LABEL" description="ASTROID_ROW_GUTTER_XS_DESC">
                <option value="">JGLOBAL_INHERIT</option>

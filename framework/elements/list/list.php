@@ -15,27 +15,23 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Astroid\Helper;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$list_items     = $params->get('list_items', '');
-if (empty($list_items)) {
+$list_items     = new SubForm($params->get('list_items', ''));
+if (!count($list_items->getData())) {
     return false;
 }
-$list_items     = json_decode($list_items);
-if (!count($list_items)) {
-    return false;
-}
-
 $title_html_element =   $params->get('title_html_element', 'h3');
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-title', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .as-list-title', $title_font_style, null, $element->isRoot);
 }
 $title_heading_margin=  $params->get('title_heading_margin', '');
 
 $content_font_style =   $params->get('content_font_style');
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .as-list-desc', $content_font_style, null, $element->isRoot);
 }
 
 $item_margin    =   $params->get('item_margin', '');
@@ -68,16 +64,15 @@ $class_item_inner = match ($list_style) {
 };
 
 echo '<'.$tag.' class="' . $class . '">';
-foreach ($list_items as $item) {
-    $list_params    =   Helper::loadParams($item->params);
-    $icon_type      =   $list_params->get('icon_type', 'fontawesome');
+foreach ($list_items->getData() as $list) {
+    $icon_type      =   $list->params->get('icon_type', 'fontawesome');
     if ($icon_type === 'fontawesome') {
-        $icon       =   $list_params->get('fa_icon', '');
+        $icon       =   $list->params->get('fa_icon', '');
     } else {
-        $icon       =   $list_params->get('custom_icon', '');
+        $icon       =   $list->params->get('custom_icon', '');
     }
-    $title          =   ($icon ? '<i class="'.$icon.' me-2"></i>' : '').$list_params->get('title', '');
-    $description    =   $list_params->get('description', '');
+    $title          =   ($icon ? '<i class="'.$icon.' me-2"></i>' : '').$list->params->get('title', '');
+    $description    =   $list->params->get('description', '');
     if ($list_style === 'list-description') {
         echo '<dt class="as-list-title col-'.$title_width.'">'.$title.'</dt>';
         echo '<dd class="as-list-desc col-'.($title_width < 12 ? 12-$title_width : 12).'">'.$description.'</dd>';

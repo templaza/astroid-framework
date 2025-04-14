@@ -15,17 +15,13 @@ defined('_JEXEC') or die;
 
 use Astroid\Framework;
 use Astroid\Helper\Style;
+use Astroid\Helper\SubForm;
 
 extract($displayData);
-$images       = $params->get('images', '');
-if (empty($images)) {
+$images     = new SubForm($params->get('images', ''));
+if (!count($images->getData())) {
     return false;
 }
-$images       = json_decode($images);
-if (!count($images)) {
-    return false;
-}
-
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
 $height             =   $params->get('height', '');
@@ -109,21 +105,20 @@ $title_html_element =   $params->get('title_html_element', 'h3');
 
 echo '<div class="swiper as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
-foreach ($images as $image) {
-    $image_params   =   Style::getSubFormParams($image->params);
-    if (!empty($image_params['image'])) {
+foreach ($images->getData() as $image) {
+    if (!empty($image->params->get('image'))) {
         echo '<div class="swiper-slide">';
-        if ($image_params['use_link']) {
-            echo '<a href="'.$image_params['link'].'" title="'.$image_params['title'].'">';
+        if ($image->params->get('use_link')) {
+            echo '<a href="'.$image->params->get('link').'" title="'.$image->params->get('title').'">';
         }
         echo '<div class="astroid-image-overlay-cover position-relative overflow-hidden' . ($enable_image_cover ? ' as-image-cover' : '') . $border_radius . $box_shadow . $hover_effect . '">';
-        echo '<img src="'. Astroid\Helper\Media::getMediaPath($image_params['image']).'" alt="'.$image_params['title'].'" class="d-inline-block w-100'.($enable_image_cover ? ' object-fit-cover h-100' : '').'">';
+        echo '<img src="'. Astroid\Helper\Media::getMediaPath($image->params->get('image')).'" alt="'.$image->params->get('title').'" class="d-inline-block w-100'.($enable_image_cover ? ' object-fit-cover h-100' : '').'">';
         echo '</div>';
-        if ($image_params['use_link']) {
+        if ($image->params->get('use_link')) {
             echo '</a>';
         }
-        if ($image_params['title']) {
-            echo '<div class="position-absolute pe-none top-0 start-0 end-0 bottom-0 p-'.$overlay_padding.' d-flex '.$overlay_position.'"><'.$title_html_element.' class="astroid-heading mb-0">'.$image_params['title'].'</'.$title_html_element.'></div>';
+        if ($image->params->get('title')) {
+            echo '<div class="position-absolute pe-none top-0 start-0 end-0 bottom-0 p-'.$overlay_padding.' d-flex '.$overlay_position.'"><'.$title_html_element.' class="astroid-heading mb-0">'.$image->params->get('title').'</'.$title_html_element.'></div>';
         }
         echo '</div>';
     }
@@ -176,5 +171,5 @@ if ($overlay_padding == 'custom') {
 
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
 }

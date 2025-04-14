@@ -2,8 +2,8 @@
 <extension type="plugin" method="upgrade" group="system">
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
-   <creationDate>February 2025</creationDate>
-   <version>3.1.12</version>
+   <creationDate>April 2025</creationDate>
+   <version>3.2.0</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -22,10 +22,6 @@
                <option value="0">OFF</option>
                <option value="cdn">CDN</option>
                <option value="local">Local</option>
-            </field>
-            <field name="astroid_inline_css" type="radio" default="0" label="ASTROID_ENABLE_INLINE_CSS_LABEL" description="ASTROID_ENABLE_INLINE_CSS_DESC" class="btn-group btn-group-yesno">
-               <option value="1">JYES</option>
-               <option value="0">JNO</option>
             </field>
             <field name="astroid_shortcut_enable" type="radio" default="1" label="ASTROID_ENABLE_SHORTCUT_LABEL" description="ASTROID_ENABLE_SHORTCUT_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>

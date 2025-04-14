@@ -93,7 +93,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                 <div class="position-absolute top-0 end-0 p-3">
                     <button type="button" class="btn-close inverted" aria-label="Close" @click="emit('update:closeElement')"></button>
                 </div>
-                <ul class="nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
+                <ul class="astroid-modal-tabs nav nav-tabs" :id="`modal-tab-`+props.element.id" role="tablist">
                     <li v-for="(fieldset, idx) in form.content" :key="fieldset.name" class="nav-item" role="presentation">
                         <button class="nav-link" :class="{'active' : idx === 0}" :id="fieldset.name+`-tab-`+props.element.id" data-bs-toggle="tab" :data-bs-target="`#`+fieldset.name+`-tab-pane-`+props.element.id" type="button" role="tab" aria-selected="true">{{ fieldset.label }}</button>
                     </li>
@@ -111,7 +111,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                             <div v-for="field in group.fields" :key="field.id" class="mb-4" v-show="checkShow(field)">
                                 <div v-if="(field.input.type === `astroidradio` && field.input.role !== 'switch') || (['astroidpreloaders', 'astroidmedia', 'astroidcolor', 'astroidicon', 'astroidcalendar', 'astroidgradient', 'astroidspacing', 'astroidgetpro'].includes(field.input.type))" class="form-label fw-bold" v-html="(field.label + (field.input.type === `astroidgetpro` ? pro_badge : ``))"></div>
                                 <label v-else-if="field.input.type !== `astroidheading` && field.label" :for="field.input.id" class="form-label fw-bold" v-html="field.label"></label>
-                                <div v-if="typeof field.type !== 'undefined' && field.type === `json`">
+                                <div v-if="typeof field.type !== 'undefined' && field.type === `json`" class="position-relative">
                                     <Fields 
                                         :field="field" 
                                         :scope="params"

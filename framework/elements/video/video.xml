@@ -15,8 +15,8 @@
                     <option value="local">ASTROID_WIDGET_VIDEO_LOCAL</option>
                 </field>
                 <field astroidgroup="general" ngShow="[video_type]=='url'" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/watch?v=xxxxx"/>
-                <field astroidgroup="general" ngShow="[video_type]=='local'" name="mp4_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_MP4"/>
-                <field astroidgroup="general" ngShow="[video_type]=='local'" name="ogv_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_OGV"/>
+                <field astroidgroup="general" ngShow="[video_type]=='local'" name="mp4_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_MP4" dynamic="true"/>
+                <field astroidgroup="general" ngShow="[video_type]=='local'" name="ogv_video" type="astroidmedia" media="videos" label="ASTROID_WIDGET_VIDEO_OGV" dynamic="true"/>
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" type="astroidtext" label="ASTROID_WIDGET_VIDEO_TITLE" name="video_title"/>
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="show_rel_video" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SHOW_RELATED_VIDEOS"/>
                 <field astroidgroup="widget_styles" ngShow="[video_type]=='url'" name="no_cookie" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_NO_COOKIE"/>

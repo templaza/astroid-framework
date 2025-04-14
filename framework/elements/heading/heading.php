@@ -13,8 +13,8 @@ use Astroid\Helper\Style;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-$style = new Style('#'. $element->id);
-$style_dark = new Style('#'. $element->id, 'dark');
+$style = $element->style;
+$style_dark = $element->style_dark;
 $title          = $params->get('title', '');
 $html_element   = $params->get('html_element', 'h2');
 $font_style     = $params->get('font_style', null);
@@ -35,7 +35,5 @@ if (!empty($title)) {
     }
 }
 if (!empty($font_style)) {
-    Astroid\Helper\Style::renderTypography('#'.$element->id.' .heading', $font_style);
+    Astroid\Helper\Style::renderTypography('#'.$element->id.' .heading', $font_style, null, $element->isRoot);
 }
-$style->render();
-$style_dark->render();

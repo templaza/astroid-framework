@@ -75,18 +75,15 @@ class Includer
     public static function _headStyles()
     {
         $document = Framework::getDocument();
-        $customCSS= $document->astroidCustomCSS();
         $content  = $document->renderLinks();
-        $content .= $document->getStylesheets();
-        $content .= $customCSS;
         return $content;
     }
 
     public static function _headScripts()
     {
         $document = Framework::getDocument();
-        $content = $document->getScripts('head');
-        $content .= $document->getCustomTags('head');
+        $content = $document->getCustomTags('head');
+        $content .= $document->getScripts('head');
         return $content;
     }
 

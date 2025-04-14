@@ -44,15 +44,14 @@ if (!empty($content)) {
 }
 
 if (!empty($font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-content-heading', $font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-content-heading', $font_style, null, $element->isRoot);
 }
 if (!empty($heading_margin)) {
-    $heading_style = new Style('#'.$element->id.' .astroid-content-heading');
+    $heading_style = $element->style->child('.astroid-content-heading');
     Style::setSpacingStyle($heading_style, $heading_margin, 'margin');
-    $heading_style->render();
 }
 
 if (!empty($content_font_style)) {
-    Style::renderTypography('#'.$element->id.' .astroid-content-text', $content_font_style);
-    Style::renderTypography('#'.$element->id.' .astroid-content-text *', $content_font_style);
+    Style::renderTypography('#'.$element->id.' .astroid-content-text', $content_font_style, null, $element->isRoot);
+    Style::renderTypography('#'.$element->id.' .astroid-content-text *', $content_font_style, null, $element->isRoot);
 }

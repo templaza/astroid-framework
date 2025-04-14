@@ -55,7 +55,6 @@ class Template
 
         $this->params = $jtemplate->params;
         $this->title = '';
-
         if (!empty($this->params->get('astroid', 0))) {
             $this->isAstroid = true;
         }

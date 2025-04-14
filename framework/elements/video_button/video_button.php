@@ -34,8 +34,8 @@ if (!empty($url)) {
     $document = Framework::getDocument();
     $document->loadFancyBox();
     $document->addScriptDeclaration('document.addEventListener(\'DOMContentLoaded\', () => {Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');});', 'body');
-    $style = new Style('#'. $element->id);
-    $style_dark = new Style('#'. $element->id, 'dark');
+    $style = $element->style;
+    $style_dark = $element->style_dark;
 
     $style->child('.video-button')->addCss('font-size', $button_size . 'px');
     $style->child('.video-button i')->addCss('width', $button_size . 'px');
@@ -72,7 +72,4 @@ if (!empty($url)) {
         $style_dark->child('.video-button')->addCss('border-color', $border_color['dark']);
         $style->child('.video-button')->addCss('border-width', $border_width . 'px');
     }
-
-    $style->render();
-    $style_dark->render();
 }

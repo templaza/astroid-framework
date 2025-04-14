@@ -14,6 +14,7 @@ use \Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Form\Form;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -70,6 +71,9 @@ class Template
 
     public static function setTemplateDefaults($template, $id, $parent_id = 0)
     {
+        if (!self::isAstroidTemplate(Path::clean(JPATH_SITE . "/templates/{$template}/templateDetails.xml"))) {
+            return;
+        }
         $params_path = JPATH_SITE . "/media/templates/site/{$template}/params/{$id}.json";
         if (!file_exists($params_path)) {
             if (!empty($parent_id) && file_exists(JPATH_SITE . "/media/templates/site/{$template}/params/" . $parent_id . '.json')) {
