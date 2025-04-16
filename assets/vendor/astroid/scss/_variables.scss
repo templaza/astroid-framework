@@ -145,8 +145,8 @@ $displays: none, inline, inline-block, block, table, table-row, table-cell, flex
   --as-header-heading-color: var(--bs-heading-color);
   --as-header-link-color: var(--bs-link-color);
   --as-header-link-hover-color: var(--bs-link-hover-color);
-  --as-header-bg: var(--bs-body-bg);
-  --as-stick-header-bg-color: var(--bs-body-bg);
+  --as-header-bg: transparent;
+  --as-stick-header-bg-color: transparent;
   --as-stick-header-menu-link-color: var(--bs-link-color);
   --as-stick-header-menu-link-hover-color: var(--bs-link-hover-color);
   --as-stick-header-menu-link-active-color: var(--bs-link-hover-color);
