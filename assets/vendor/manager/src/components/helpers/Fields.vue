@@ -30,6 +30,7 @@ const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:g
 const props = defineProps({
     field: { type: Object, default: null },
     scope: { type: Object, default: null },
+    colorMode: { type: Number, default: 0 },
     presetUpdated: {type: Boolean, default: false},
     actSave: {type: Boolean, default: false}
 });
@@ -52,6 +53,10 @@ onBeforeMount(()=>{
 onUpdated(()=>{
     updateContentLayout();
 })
+
+function getColorMode() {
+    return typeof props.scope['astroid_color_mode_enable'] !== `undefined` ? parseInt(props.scope['astroid_color_mode_enable']) : props.colorMode;
+}
 
 // Update state for Astroid Content Layout
 function updateContentLayout() {
@@ -162,7 +167,7 @@ function removeDynamicField() {
         </div>
     </div>
     <div v-else-if="props.field.input.type === `astroidcolor`" class="astroid-color">
-        <Colors v-model="props.scope[props.field.name]" :field="props.field" />
+        <Colors v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" />
     </div>
     <div v-else-if="props.field.input.type === `astroidrange`">
         <Range v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
@@ -177,7 +182,7 @@ function removeDynamicField() {
         <Preloader v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidtypography`" class="astroid-typography">
-        <Typography v-model="props.scope[props.field.name]" :field="props.field" />
+        <Typography v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" />
     </div>
     <div v-else-if="props.field.input.type === `astroideditor`" class="astroid-editor">
         <AstroidEditor v-model="props.scope[props.field.name]" :field="props.field" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
@@ -189,7 +194,7 @@ function removeDynamicField() {
         <SocialProfiles v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `layout`" class="astroid-layout px-2">
-        <Layout v-model="props.scope[props.field.name]" :field="props.field" @update:subLayouts="updateSubLayouts" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
+        <Layout v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" @update:subLayouts="updateSubLayouts" :presetUpdated="props.presetUpdated" @update:Preset="state => (emit('update:presetState', state))" />
     </div>
     <div v-else-if="props.field.input.type === `astroidspacing`" class="astroid-spacing">
         <Spacing v-model="props.scope[props.field.name]" :field="props.field" />
@@ -210,7 +215,7 @@ function removeDynamicField() {
         <Presets :field="props.field" @update:loadPreset="(value) => {emit('update:loadPreset', value)}" @update:getPreset="(value) => {emit('update:getPreset', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidsubform`" class="astroid-subform">
-        <SubForm v-model="props.scope[props.field.name]" :field="props.field" :actSave="props.actSave" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
+        <SubForm v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" :actSave="props.actSave" @update:subFormState="(value) => {emit('update:subFormState', value)}" />
     </div>
     <div v-else-if="props.field.input.type === `astroidicons`" class="astroid-icons">
         <Icons v-model="props.scope[props.field.name]" :field="props.field" />
@@ -232,13 +237,13 @@ function removeDynamicField() {
         <Assignment v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidborder`" class="astroid-border">
-        <Border v-model="props.scope[props.field.name]" :field="props.field" />
+        <Border v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" />
     </div>
     <div v-else-if="props.field.input.type === `sublayouts`" class="astroid-sub-layouts">
-        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" />
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" />
     </div>
     <div v-else-if="props.field.input.type === `articlelayouts`" class="astroid-article-layouts">
-        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" type="article_layouts" />
+        <SubLayouts v-model="props.scope[props.field.name]" :field="props.field" :colorMode="getColorMode()" type="article_layouts" />
     </div>
     <div v-else-if="props.field.input.type === `dynamiccontent`" class="astroid-dynamic-content">
         <DynamicContent v-model="props.scope[props.field.name]" :field="props.field" />

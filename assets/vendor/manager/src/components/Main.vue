@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref, reactive, inject } from 'vue';
+import {onBeforeMount, ref, reactive, inject} from 'vue';
 import axios from "axios";
 import Fields from './helpers/Fields.vue'
 
@@ -14,7 +14,6 @@ const astroidcontentlayouts = ref(new Object());
 const constant  =   inject('constant', {});
 let action_link = '';
 const updatePreset = ref(new Object());
-
 onBeforeMount(() => {
   props.config.astroid_content.forEach((fieldSet, idx) => {
     Object.keys(fieldSet.childs).forEach(key => {
@@ -24,9 +23,8 @@ onBeforeMount(() => {
       });
     });
   });
-  action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&')
+  action_link = props.config.astroid_lib.astroid_action.replace(/\&amp\;/g, '&');
 })
-
 function checkShow(field) {
   if (field.ngShow !== '' && field.ngShow.match(/\[\S+?\]/)) {
     const expression = field.ngShow.replace(/\[(\S+?)\]/g, "$scope.value\['$1'\]");
@@ -176,6 +174,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                     <Fields 
                       :field="field" 
                       :scope="$scope"
+                      :colorMode="0"
                       :presetUpdated="updatePreset[field.name]"
                       @update:contentlayout="updateContentLayout"
                       @update:loadPreset="loadPreset"

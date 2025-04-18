@@ -7,6 +7,7 @@ const props = defineProps({
     modelValue: { type: String, default: '' },
     field: { type: Object, default: null },
     type: { type: String, default: 'layouts' },
+    colorMode: { type: Number, default: 0 },
 });
 const constant  =   inject('constant', {});
 const language  =   inject('language', []);
@@ -286,7 +287,7 @@ function checkAllList() {
             </div>
         </div>
         <div v-else class="astroid-layout px-2">
-            <Layout v-model="layout" :source="props.type" :presetUpdated="reloadLayout" @update:Preset="state => (reloadLayout = state)" :field="{
+            <Layout v-model="layout" :source="props.type" :presetUpdated="reloadLayout" :colorMode="props.colorMode" @update:Preset="state => (reloadLayout = state)" :field="{
                 id: props.field.id,
                 input: {
                     id: props.field.input.id,

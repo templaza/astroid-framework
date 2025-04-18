@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import {computed, onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps(['modelValue', 'field']);
@@ -24,29 +24,28 @@ onBeforeMount(()=>{
     }
 })
 onMounted(()=>{
-    document.addEventListener('click', function(event) {
-        const elem          = document.getElementById(props.field.input.id+'-colorpicker');
-        const circle_light  = document.getElementById(props.field.input.id+'-colorcircle-start');
-        const circle_dark   = document.getElementById(props.field.input.id+'-colorcircle-stop');
-        if (_showColorPicker.value === true) {
-            if (
-                elem 
-                && circle_light 
-                && !circle_light.contains(event.target) 
-                && !elem.contains(event.target)
-                && (
-                    (
-                        circle_dark
-                        && !circle_dark.contains(event.target)
-                    )
-                    || props.field.input.colormode === '0' 
-                )
-            ) {
-                _showColorPicker.value = false;
-            }
-        }    
-    });
+    document.addEventListener('click', handleClickOutside);
 })
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+const handleClickOutside = function(event) {
+    const elem          = document.getElementById(props.field.input.id+'-colorpicker');
+    const circle_start  = document.getElementById(props.field.input.id+'-colorcircle-start');
+    const circle_stop   = document.getElementById(props.field.input.id+'-colorcircle-stop');
+    if (_showColorPicker.value === true) {
+        if (
+            elem
+            && !elem.contains(event.target)
+            && (
+                (circle_start && !circle_start.contains(event.target) && _currentColorMode.value === 'start')
+                || (circle_stop && !circle_stop.contains(event.target) && _currentColorMode.value === 'stop')
+            )
+        ) {
+            _showColorPicker.value = false;
+        }
+    }
+};
 function showColorPicker(color) {
     _currentColorMode.value = color;
     _currentColor.value = gradient.value[_currentColorMode.value];
