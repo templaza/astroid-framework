@@ -345,6 +345,7 @@
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
                 </field>
                 <field astroidgroup="image_options" name="thumbnail_only" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_IMAGE_THUMBNAIL_ONLY"/>
+                <field astroidgroup="image_options" name="linked_image" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_LINKED_IMAGE"/>
                 <field astroidgroup="image_options" name="img_border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">ASTROID_NONE</option>
                     <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
@@ -451,7 +452,16 @@
                     <option value="dark">Dark</option>
                     <option value="link">Link</option>
                     <option value="text">Text</option>
+                    <option value="custom">Custom</option>					
                 </field>
+                <field astroidgroup="readmore_options" ngShow="[button_style]=='custom'" name="color_settings" type="astroidradio" width="full" default="color">
+                    <option value="btn_color">TPL_ASTROID_COLOR</option>
+                    <option value="btn_hover">TPL_ASTROID_COLOR_HOVER</option>
+                </field>
+                <field astroidgroup="readmore_options" ngShow="[button_style]=='custom' AND [color_settings]=='btn_color'" name="btn_color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="readmore_options" ngShow="[button_style]=='custom' AND [color_settings]=='btn_hover'" name="btn_color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+                <field astroidgroup="readmore_options" ngShow="[button_style]=='custom' AND [color_settings]=='btn_color'" name="btn_bgcolor" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+                <field astroidgroup="readmore_options" ngShow="[button_style]=='custom' AND [color_settings]=='btn_hover'" name="btn_bgcolor_hover" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>				
                 <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
                 <field astroidgroup="readmore_options" ngShow="[enable_readmore]==1" type="astroidlist" name="button_size" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="">
                     <option value="">Default</option>

@@ -190,6 +190,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 // Image Options
 $layout             =   $params->get('layout', 'classic');
 $thumbnail_only     =   $params->get('thumbnail_only', 0);
+$linked_image       =   $params->get('linked_image', 0);
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
 $height             =   $params->get('height', '');
@@ -252,6 +253,33 @@ $button_outline     =   $params->get('button_outline', 0);
 $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
+// Button Custom Style
+
+if ($button_style === 'custom') {
+$color          = Style::getColor($params->get('btn_color', ''));
+$color_hover    = Style::getColor($params->get('btn_color_hover', ''));
+$color_active   = Style::getColor($params->get('btn_color_active', ''));
+$bgcolor        = Style::getColor($params->get('btn_bgcolor', ''));
+$bgcolor_hover  = Style::getColor($params->get('btn_bgcolor_hover', ''));
+$bgcolor_active = Style::getColor($params->get('btn_bgcolor_active', ''));
+
+// Color style
+$element->style->child('.btn')->addCss('color', $color['light']);
+$element->style_dark->child('.btn')->addCss('color', $color['dark']);
+$element->style->child('.btn')->hover()->addCss('color', $color_hover['light']);
+$element->style_dark->child('.btn')->hover()->addCss('color', $color_hover['dark']);
+$element->style->child('.btn:not(.collapsed)')->addCss('color', $color_active['light']);
+$element->style_dark->child('.btn:not(.collapsed)')->addCss('color', $color_active['dark']);
+
+// Background color style
+$element->style->child('.btn')->addCss('background-color', $bgcolor['light']);
+$element->style_dark->child('.btn')->addCss('background-color', $bgcolor['dark']);
+$element->style->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['light']);
+$element->style_dark->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['dark']);
+$element->style->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
+$element->style_dark->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
+    }
+
 $has_gallery        =   false;
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($items as $key => $item) {
@@ -260,6 +288,7 @@ foreach ($items as $key => $item) {
     $media          =   '';
     if ($thumbnail_only && !empty($item->image_thumbnail)) {
         $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+            if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
     } else {
         switch ($item->post_format) {
             case 'gallery':
@@ -315,6 +344,7 @@ foreach ($items as $key => $item) {
             default:
                 if (!empty($item->image_thumbnail)) {
                     $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                        if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
                 }
                 break;
         }
