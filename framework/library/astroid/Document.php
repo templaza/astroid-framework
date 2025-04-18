@@ -1078,8 +1078,6 @@ class Document
 
         $variables = $template->getThemeVariables();
         if (!empty($variables)) {
-            $plugin_params  =   Helper::getPluginParams();
-            $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
             $color_mode_light   =   '';
             $color_mode_dark    =   '';
             foreach ($variables as $key => $variable) {
@@ -1108,10 +1106,10 @@ class Document
                 }
             }
             $scss->addVariables($variables);
-            if ($color_mode && $color_mode_light) {
+            if ($color_mode_light) {
                 $content    .=  '@include color-mode(light) {'. $color_mode_light .'}';
             }
-            if ($color_mode && $color_mode_dark) {
+            if ($color_mode_dark) {
                 $content    .=  '@include color-mode(dark) {'. $color_mode_dark .'}';
             }
         }

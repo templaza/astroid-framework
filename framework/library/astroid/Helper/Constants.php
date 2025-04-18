@@ -43,7 +43,6 @@ class Constants
     {
         $template = Framework::getTemplate();
         $pluginParams   =   Helper::getPluginParams();
-        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
         $tinyMceLicense =   $pluginParams->get('tinymce_license', '');
         return [
@@ -56,7 +55,6 @@ class Constants
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
-            'color_mode'            => $plg_color_mode,
             'astroid_version'       => self::$astroid_version,
             'astroid_link'          => self::$astroid_link,
             'document_link'         => self::$documentation_link,
