@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.2.1-rc1';
+    public static $astroid_version = '3.2.1';
     public static $fontawesome_version = '6.7.2';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -31,7 +31,7 @@ class Constants
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
-    public static $templates_link = 'https://astroidframe.work/partners';
+    public static $templates_link = 'https://astroidframe.work/';
     public static $jed_link = 'https://extensions.joomla.org/extension/astroid-framework/';
     public static $go_pro = 'https://astroidframe.work/pricing';
 
