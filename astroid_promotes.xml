@@ -8,13 +8,4 @@
         <validity>2023-10-01</validity>
         <expiration>2025-12-31</expiration>
     </promotion>
-    <promotion>
-        <title>Latest Event</title>
-        <description>Astroid Framework 3 is a powerful and flexible framework for building Joomla templates.</description>
-        <link>https://www.astroidframework.com/here</link>
-        <link_title>Visit Astroid Framework</link_title>
-        <image>https://www.astroidframework.com/images/logo.png</image>
-        <validity>2023-10-01</validity>
-        <expiration>2026-12-31</expiration>
-    </promotion>
 </promotions>
