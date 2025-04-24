@@ -43,6 +43,7 @@ $block_1_type = $params->get('stickey_block_1_type', 'left');
 $block_1_position = $params->get('stickey_block_1_position', '');
 $block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('stickey_block_1_custom', '');
+$block_1_jcontent = $params->get('process_block_1_jcontent', '');
 switch ($stickey_mode) {
    case 'left':
       $navWrapperClass[] = 'mr-auto';
@@ -124,7 +125,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                   }
                   if ($block_1_type == 'custom') {
                      echo '<div class="header-block-item d-flex">';
-                     echo $block_1_custom;
+                     echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                      echo '</div>';
                   }
                   ?>

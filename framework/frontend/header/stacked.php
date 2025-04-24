@@ -23,14 +23,17 @@ $block_1_type = $params->get('header_block_1_type', 'blank');
 $block_1_position = $params->get('header_block_1_position', '');
 $block_1_style = $params->get('header_block_1_style', 'none');
 $block_1_custom = $params->get('header_block_1_custom', '');
+$block_1_jcontent = $params->get('process_block_1_jcontent', '');
 $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
 $block_2_style = $params->get('header_block_2_style', 'none');
 $block_2_custom = $params->get('header_block_2_custom', '');
+$block_2_jcontent = $params->get('process_block_2_jcontent', '');
 $block_3_type = $params->get('header_block_3_type', 'blank');
 $block_3_position = $params->get('header_block_3_position', '');
 $block_3_style = $params->get('header_block_3_style', 'none');
 $block_3_custom = $params->get('header_block_3_custom', '');
+$block_3_jcontent = $params->get('process_block_3_jcontent', '');
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $header_menu = $params->get('header_menu', '');
 $header_menu_method = $params->get('header_menu_method', 'default');
@@ -111,7 +114,7 @@ if ($mode == 'divided-logo-left') {
                  if ($block_1_type == 'custom') {
                      echo '<div class="w-100 d-none d-'.$header_breakpoint.'-flex justify-content-start align-items-center">';
                      echo '<div class="w-100 header-block-item d-flex justify-content-start align-items-center">';
-                     echo $block_1_custom;
+                     echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                      echo '</div>';
                      echo '</div>';
                  }
@@ -135,7 +138,7 @@ if ($mode == 'divided-logo-left') {
                  }
                  if ($block_2_type == 'custom') {
                      echo '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
-                     echo $block_2_custom;
+                     echo $block_2_jcontent ? JHtml::_('content.prepare', $block_2_custom) : $block_2_custom;
                      echo '</div>';
                  }
                  // header block 2 ends
@@ -218,7 +221,7 @@ if ($mode == 'divided-logo-left') {
             }
             if ($block_1_type == 'custom') {
                echo '<div class="w-100 header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-center py-3">';
-               echo $block_1_custom;
+               echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                echo '</div>';
             }
 
@@ -250,7 +253,7 @@ if ($mode == 'divided-logo-left') {
                }
                if ($block_1_type == 'custom') {
                    echo '<div class="header-block-item header-block-1 d-none d-'.$header_breakpoint.'-flex justify-content-start">';
-                   echo $block_1_custom;
+                   echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                    echo '</div>';
                }
 
@@ -274,7 +277,7 @@ if ($mode == 'divided-logo-left') {
                }
                if ($block_2_type == 'custom') {
                    echo '<div class="header-block-item header-block-2 d-none d-'.$header_breakpoint.'-flex justify-content-end">';
-                   echo $block_2_custom;
+                   echo $block_2_jcontent ? JHtml::_('content.prepare', $block_2_custom) : $block_2_custom;
                    echo '</div>';
                }
                // header block ends
@@ -322,7 +325,7 @@ if ($mode == 'divided-logo-left') {
             if ($block_1_type == 'custom') {
                 echo '<div class="d-none d-'.$header_breakpoint.'-flex w-100 flex-grow-1 justify-content-end py-2 align-items-center">';
                 echo '<div class="d-flex w-100 justify-content-end header-block-item align-items-center">';
-                echo $block_1_custom;
+                echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                 echo '</div>';
                 echo '</div>';
             }
@@ -357,7 +360,7 @@ if ($mode == 'divided-logo-left') {
                     if ($block_2_type == 'custom') {
                         echo '<div class="d-flex col-auto">';
                         echo '<div class="d-flex align-items-center header-block-item">';
-                        echo $block_2_custom;
+                        echo $block_2_jcontent ? JHtml::_('content.prepare', $block_2_custom) : $block_2_custom;
                         echo '</div>';
                         echo '</div>';
                     }
@@ -407,7 +410,7 @@ if ($mode == 'divided-logo-left') {
                  }
                  if ($block_1_type == 'custom') {
                      echo '<div class="d-flex header-block-item justify-content-start align-items-center">';
-                     echo $block_1_custom;
+                     echo $block_1_jcontent ? JHtml::_('content.prepare', $block_1_custom) : $block_1_custom;
                      echo '</div>';
                  }
                  if ($block_2_type == 'position') {
@@ -417,7 +420,7 @@ if ($mode == 'divided-logo-left') {
                  }
                  if ($block_2_type == 'custom') {
                      echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
-                     echo $block_2_custom;
+                     echo $block_2_jcontent ? JHtml::_('content.prepare', $block_2_custom) : $block_2_custom;
                      echo '</div>';
                  }
                  // header block ends
@@ -450,7 +453,7 @@ if ($mode == 'divided-logo-left') {
                  }
                  if ($block_3_type == 'custom') {
                      echo '<div class="d-flex header-block-item justify-content-end align-items-center">';
-                     echo $block_3_custom;
+                     echo $block_3_jcontent ? JHtml::_('content.prepare', $block_3_custom) : $block_3_custom;
                      echo '</div>';
                  }
              }
