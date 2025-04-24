@@ -25,6 +25,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Menus\Administrator\Helper\MenusHelper;
 use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Http\HttpFactory;
 
 defined('_JEXEC') or die;
 
@@ -876,5 +877,92 @@ class Helper
 
         $comming_soon_style->render();
         $comming_soon_style_dark->render();
+    }
+
+    public static function fetchAstroidPromotions()
+    {
+        // Ensure this method runs only once per day.
+        $pluginParams = self::getPluginParams();
+        $lastRunDate = $pluginParams->get('last_get_promotion');
+        $today = date("Y-m-d");
+
+        // Check if the method has already run today
+        if (!empty($lastRunDate)) {
+            $info = json_decode($lastRunDate, true);
+            if (!empty($info['time']) && $info['time'] === $today) {
+                return $info['data'];
+            }
+        }
+
+        $url = 'https://raw.githubusercontent.com/templaza/astroid-framework/refs/heads/updates/astroid_promotes.xml';
+
+        try {
+            $http = HttpFactory::getHttp();
+            $response = $http->get($url);
+
+            if ($response->code !== 200) {
+                throw new Exception('Failed to fetch data. HTTP Code: ' . $response->code);
+            }
+
+            $xml = simplexml_load_string($response->body);
+            if ($xml === false) {
+                throw new Exception('Failed to parse XML data.');
+            }
+
+            // Convert XML to Array
+            $data = json_decode(json_encode($xml), true);
+
+            $json = json_encode(['time' => $today, 'data' => $data]);
+            if ($json === false) {
+                throw new Exception('Failed to convert XML to JSON.');
+            }
+
+            // Save the latest promotion data
+            $pluginParams->set('last_get_promotion', $json);
+
+            // Update the `params` field in the `extensions` table
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__extensions'))
+                ->set($db->quoteName('params') . ' = ' . $db->quote($pluginParams->toString()))
+                ->where($db->quoteName('element') . ' = ' . $db->quote('astroid'))
+                ->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
+
+            $db->setQuery($query);
+            $db->execute();
+
+            return $data;
+        } catch (Exception $e) {
+            Factory::getApplication()->enqueueMessage('Error: ' . $e->getMessage(), 'error');
+            return null;
+        }
+    }
+
+    public static function getPromotions(): array
+    {
+        $data = self::fetchAstroidPromotions();
+        $today = date("Y-m-d");
+        if (empty($data) || !isset($data['promotion'])) {
+            return [];
+        }
+        $return = [];
+        foreach ($data['promotion'] as $promotion) {
+            if (!is_array($promotion)) {
+                if ($data['promotion']['validity'] <= $today && $data['promotion']['expiration'] >= $today) {
+                    $return[] = $data['promotion'];
+                }
+                break;
+            } else {
+                if ($promotion['validity'] <= $today && $promotion['expiration'] >= $today) {
+                    $return[] = $promotion;
+                }
+            }
+        }
+
+        // Sort the promotions by expiration date
+        usort($return, function ($a, $b) {
+            return strtotime($a['expiration']) - strtotime($b['expiration']);
+        });
+        return $return;
     }
 }

@@ -13,6 +13,8 @@ extract($displayData);
 $app      = Factory::getApplication();
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
+$plugin_params = Astroid\Helper::getPluginParams();
+$color_mode =   $plugin_params->get('astroid_color_mode_enable', 0);
 $color_mode_theme  =   $app->input->cookie->get('astroid_colormode', 'light');
 ?>
 <!DOCTYPE html>
