@@ -1,9 +1,9 @@
 <script setup>
-import { onBeforeMount, ref, computed, onMounted, inject, watch } from 'vue';
+import {onBeforeMount, ref, computed, onMounted, inject, watch, onUnmounted} from 'vue';
 import { ColorPicker } from 'vue-color-kit'
 
 const emit = defineEmits(['update:modelValue']);
-const props = defineProps(['modelValue', 'field']);
+const props = defineProps(['modelValue', 'field', 'colorMode']);
 const constant = inject('constant', {});
 const theme = inject('theme', 'light');
 const data = ref({
@@ -25,29 +25,29 @@ onBeforeMount(()=>{
 })
 
 onMounted(()=>{
-    document.addEventListener('click', function(event) {
-        const elem          = document.getElementById(props.field.input.id+'-colorpicker');
-        const circle_light  = document.getElementById(props.field.input.id+'-colorcircle-light');
-        const circle_dark   = document.getElementById(props.field.input.id+'-colorcircle-dark');
-        if (_showColorPicker.value === true) {
-            if (
-                elem 
-                && circle_light 
-                && !circle_light.contains(event.target) 
-                && !elem.contains(event.target)
-                && (
-                    (
-                        circle_dark
-                        && !circle_dark.contains(event.target)
-                    )
-                    || parseInt(constant.color_mode) === 0 
-                )
-            ) {
-                _showColorPicker.value = false;
-            }
-        }    
-    });
+    _currentColorMode.value = props.colorMode === 2 ? 'dark' : 'light';
+    document.addEventListener('click', handleClickOutside);
 })
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+const handleClickOutside = function(event) {
+    const elem = document.getElementById(props.field.input.id + '-colorpicker');
+    const circle_light = document.getElementById(props.field.input.id + '-colorcircle-light');
+    const circle_dark = document.getElementById(props.field.input.id + '-colorcircle-dark');
+    if (_showColorPicker.value === true) {
+        if (
+            elem &&
+            !elem.contains(event.target) &&
+            (
+                (circle_light && !circle_light.contains(event.target) && _currentColorMode.value === 'light') ||
+                (circle_dark && !circle_dark.contains(event.target) && _currentColorMode.value === 'dark')
+            )
+        ) {
+            _showColorPicker.value = false;
+        }
+    }
+};
 const _showColorPicker = ref(false);
 const _currentColor = ref('');
 const _currentColorMode = ref('light');
@@ -65,7 +65,13 @@ function changeColor(color) {
         data.value.border_color[_currentColorMode.value] = `rgba(${r}, ${g}, ${b}, ${a})`;
     }
 }
-
+function copyColor(from) {
+    if (from === 'light') {
+        data.value.border_color.dark = data.value.border_color.light;
+    } else {
+        data.value.border_color.light = data.value.border_color.dark;
+    }
+}
 const border_text = computed(() => {
   return JSON.stringify(data.value);
 })
@@ -93,19 +99,24 @@ watch(border_text, (newText) => {
         </div>
         <div v-if="data.border_style !== `none`" class="col-6">
             <div class="row">
-                <div :class="{
-                    'col-4 text-center' : (constant.color_mode === '1'),
-                    'col-12': (constant.color_mode !== '1')
+                <div v-if="props.colorMode === 1 || props.colorMode === 0" :class="{
+                    'col-4 text-center' : (props.colorMode === 1),
+                    'col-12': (props.colorMode === 0)
                 }">
                     <i class="border astroid-color-picker fas fa-circle fa-3x" :id="props.field.input.id+`-colorcircle-light`" :style="{'color': data.border_color.light}" @click="showColorPicker('light')"></i>
-                    <div v-if="constant.color_mode === '1'">Light</div>
+                    <div v-if="props.colorMode === 1">Light</div>
                 </div>
-                <div v-if="constant.color_mode === '1'" class="col text-center py-3">
-                    <i class="fa-solid fa-arrows-left-right"></i>
+                <div v-if="props.colorMode === 1" class="col text-center py-3">
+                    <div class="btn-group" role="group" aria-label="Copy Color">
+                        <button class="btn btn-link p-1 link-body-emphasis" @click.prevent="copyColor('dark')"><i class="fa-solid fa-caret-left"></i></button><button class="btn btn-link p-1 link-body-emphasis" @click.prevent="copyColor('light')"><i class="fa-solid fa-caret-right"></i></button>
+                    </div>
                 </div>
-                <div v-if="constant.color_mode === '1'" class="col-4 text-center">
+                <div v-if="props.colorMode === 1 || props.colorMode === 2" :class="{
+                    'col-4 text-center' : (props.colorMode === 1),
+                    'col-12': (props.colorMode === 2)
+                }">
                     <i class="border astroid-color-picker fas fa-circle fa-3x" :id="props.field.input.id+`-colorcircle-dark`" :style="{'color': data.border_color.dark}" @click="showColorPicker('dark')"></i>
-                    <div>Dark</div>
+                    <div v-if="props.colorMode === 1">Dark</div>
                 </div>
             </div>
             <input type="hidden" :name="props.field.input.name+`[font_color]`" :id="props.field.input.id+`_font_color`" v-model="props.modelValue['font_color']" />

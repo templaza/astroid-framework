@@ -34,8 +34,6 @@ class JFormFieldAstroidColor extends FormField {
     * @since   11.3
     */
    protected function getInput() {
-       $plugin_params  =   Astroid\Helper::getPluginParams();
-       $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
        $value_light    =   $value_dark =   $value = $this->value;
        if (!empty($value)) {
            $result = json_decode($value);
@@ -48,7 +46,6 @@ class JFormFieldAstroidColor extends FormField {
            'name'    =>  $this->name,
            'value'   =>  $value,
            'type'    =>  strtolower($this->type),
-           'colormode'  =>  $color_mode,
        ];
        return json_encode($json);
    }

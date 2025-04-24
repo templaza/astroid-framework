@@ -9,10 +9,15 @@
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
 // No direct access.
+
 defined('_JEXEC') or die;
 extract($displayData);
 $template   = Astroid\Framework::getTemplate();
 $params = $template->getParams();
+$color_mode_type = $params->get('astroid_color_mode_enable', 0);
+if ($color_mode_type != 1) {
+    return;
+}
 $color_mode = $template->getColorMode();
 if ($color_mode) {
     $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);

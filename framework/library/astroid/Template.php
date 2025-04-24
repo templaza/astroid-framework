@@ -404,13 +404,13 @@ class Template
     }
 
     public function getColorMode() {
-        $pluginParams   =   Helper::getPluginParams();
-        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
-        $color_mode = $this->params->get('astroid_color_mode_enable', 1);
+        $color_mode     =   $this->params->get('astroid_color_mode_enable', 0);
+        if ($color_mode == 2) {
+            return 'dark';
+        }
         $color_mode_default = $this->params->get('astroid_color_mode_default', 'auto');
-
         $color_mode_theme = '';
-        if ($plg_color_mode && $color_mode) {
+        if ($color_mode == 1) {
             $enable_color_mode_transform    =   $this->params->get('enable_color_mode_transform', 0);
             if ($enable_color_mode_transform) {
                 $colormode_transform_type   =   $this->params->get('colormode_transform_type', 'light_dark');

@@ -4,7 +4,7 @@ import draggable from "vuedraggable";
 import Fields from './Fields.vue';
 
 const emit = defineEmits(['update:modelValue', 'update:subFormState']);
-const props = defineProps(['modelValue', 'field', 'actSave']);
+const props = defineProps(['modelValue', 'field', 'actSave', 'colorMode']);
 const items = ref([]);
 const edit  = ref(false);
 const params = ref(new Object());
@@ -159,6 +159,7 @@ function deleteItem(index) {
                             <Fields
                                 :field="field"
                                 :scope="params"
+                                :colorMode="props.colorMode"
                             />
                         </div>
                         <div v-else v-html="field.input"></div>

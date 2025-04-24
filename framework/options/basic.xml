@@ -193,7 +193,11 @@
          <field astroidgroup="page_setting" ngShow="([container_background_setting]=='image' OR [container_background_setting]=='video') AND [container_background_image_overlay]=='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="container_background_image_overlay_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL" />
          <field astroidgroup="page_setting" ngShow="([container_background_setting]=='image' OR [container_background_setting]=='video') AND [container_background_image_overlay]=='pattern'" name="container_background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
-         <field astroidgroup="colormode" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" />
+         <field astroidgroup="colormode" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" name="astroid_color_mode_enable" type="astroidradio" default="0" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL">
+            <option value="0">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHT</option>
+            <option value="1">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHTDARK</option>
+            <option value="2">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_DARK</option>
+         </field>
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1'" description="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_DESC" name="enable_color_mode_transform" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_TRANSFORM_LABEL" />
          <field astroidgroup="colormode" ngShow="[astroid_color_mode_enable]=='1' AND [enable_color_mode_transform]==0" description="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_DESC" name="astroid_color_mode_default" type="astroidradio" default="auto" label="TPL_ASTROID_BASIC_COLOR_MODE_DEFAULT_LABEL">
             <option value="auto">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_AUTO</option>

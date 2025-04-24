@@ -40,9 +40,6 @@ class JFormFieldAstroidTypography extends FormField
             }
         }
 
-        $plugin_params  =   Astroid\Helper::getPluginParams();
-        $color_mode     =   $plugin_params->get('astroid_color_mode_enable', 0);
-
         $defaults = [
             'font_face' => '',
             'alt_font_face' => '',
@@ -196,7 +193,6 @@ class JFormFieldAstroidTypography extends FormField
             $extraData['collapse'] = true;
         }
 
-        $extraData['colormode'] = $color_mode;
         $system_fonts = array();
         foreach (Astroid\Helper\Font::$system_fonts as $s_font_value => $s_font_title) {
             $system_fonts[]  =   [

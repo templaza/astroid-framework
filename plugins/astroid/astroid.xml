@@ -3,7 +3,7 @@
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>April 2025</creationDate>
-   <version>3.2.0</version>
+   <version>3.2.1</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -24,10 +24,6 @@
                <option value="local">Local</option>
             </field>
             <field name="astroid_shortcut_enable" type="radio" default="1" label="ASTROID_ENABLE_SHORTCUT_LABEL" description="ASTROID_ENABLE_SHORTCUT_DESC" class="btn-group btn-group-yesno">
-               <option value="1">JYES</option>
-               <option value="0">JNO</option>
-            </field>
-            <field name="astroid_color_mode_enable" type="radio" default="0" label="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" description="ASTROID_BASIC_ENABLE_COLOR_MODE_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>

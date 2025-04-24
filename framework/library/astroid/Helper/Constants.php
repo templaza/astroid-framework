@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.2.0';
+    public static $astroid_version = '3.2.1';
     public static $fontawesome_version = '6.7.2';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -31,7 +31,7 @@ class Constants
     public static $download_link = 'https://github.com/templaza/astroid-framework/releases/latest';
     public static $releases_link = 'https://github.com/templaza/astroid-framework/releases';
     public static $astroid_link = 'https://astroidframe.work/';
-    public static $templates_link = 'https://astroidframe.work/partners';
+    public static $templates_link = 'https://astroidframe.work/';
     public static $jed_link = 'https://extensions.joomla.org/extension/astroid-framework/';
     public static $go_pro = 'https://astroidframe.work/pricing';
 
@@ -43,7 +43,6 @@ class Constants
     {
         $template = Framework::getTemplate();
         $pluginParams   =   Helper::getPluginParams();
-        $plg_color_mode =   $pluginParams->get('astroid_color_mode_enable', 0);
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
         $tinyMceLicense =   $pluginParams->get('tinymce_license', '');
         return [
@@ -56,7 +55,6 @@ class Constants
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
-            'color_mode'            => $plg_color_mode,
             'astroid_version'       => self::$astroid_version,
             'astroid_link'          => self::$astroid_link,
             'document_link'         => self::$documentation_link,

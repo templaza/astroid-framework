@@ -41,6 +41,8 @@ if ($background_setting_404 == 'video' && !empty($background_video_404)) {
     <jdoc:include type="head" />
     <?php
     echo $document->renderMeta();
+    Astroid\Component\Utility::meta();
+    Astroid\Component\Utility::typography();
     echo Astroid\Helper\Head::styles();
     $customCSS= $document->astroidCustomCSS();
     echo $document->renderLinks();

@@ -2,7 +2,7 @@
 import { onBeforeMount, onMounted, onBeforeUnmount, ref } from 'vue';
 import Fields from './Fields.vue';
 const emit = defineEmits(['update:closeElement', 'update:saveElement']);
-const props = defineProps(['element', 'form', 'constant']);
+const props = defineProps(['element', 'form', 'colorMode']);
 const params = ref(new Object());
 const subFormOpen = ref({name: '', value: false});
 onBeforeMount(()=>{
@@ -115,6 +115,7 @@ const pro_badge = '<span class="badge text-bg-danger ms-2">PRO</span>';
                                     <Fields 
                                         :field="field" 
                                         :scope="params"
+                                        :colorMode="props.colorMode"
                                         :actSave="actSave"
                                         @update:subFormState="updateSubForm"
                                         />
