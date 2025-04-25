@@ -23,17 +23,17 @@ defined('_JEXEC') or die;
 
 class Admin extends Helper\Client
 {
-    public function onAfterRender()
+    public function onAfterRender(): void
     {
         $this->addTemplateLabels();
     }
 
-    public function onBeforeRender()
+    public function onBeforeRender(): void
     {
         Utility::showFreeTemplate();
     }
 
-    protected function save()
+    protected function save(): void
     {
         $this->checkAuth();
         $app = Factory::getApplication();
@@ -65,7 +65,7 @@ class Admin extends Helper\Client
         }
     }
 
-    protected function media()
+    protected function media(): void
     {
         $this->checkAuth();
         $action = Factory::getApplication()->input->get('action', '', 'RAW');
@@ -76,7 +76,7 @@ class Admin extends Helper\Client
         $this->response(Helper\Media::$func());
     }
 
-    protected function getLayouts()
+    protected function getLayouts(): void
     {
         $app = Factory::getApplication();
         $template_name  = $app->input->get('template', NULL, 'RAW');
@@ -84,7 +84,7 @@ class Admin extends Helper\Client
         $this->response(Layout::getDatalayouts($template_name, $type));
     }
 
-    protected function getLayout()
+    protected function getLayout(): true
     {
         try {
             // Check for request forgeries.
@@ -101,7 +101,8 @@ class Admin extends Helper\Client
         return true;
     }
 
-    protected function saveLayout() {
+    protected function saveLayout(): true
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
@@ -167,7 +168,7 @@ class Admin extends Helper\Client
         return true;
     }
 
-    protected function deleteLayouts()
+    protected function deleteLayouts(): true
     {
         try {
             // Check for request forgeries.
@@ -184,12 +185,12 @@ class Admin extends Helper\Client
         return true;
     }
 
-    protected function getcategories()
+    protected function getcategories(): void
     {
         $this->response(Utility::getCategories());
     }
 
-    protected function search()
+    protected function search(): void
     {
         $search = Factory::getApplication()->input->get('search', '', 'RAW');
         switch ($search) {
@@ -202,7 +203,7 @@ class Admin extends Helper\Client
         }
     }
 
-    protected function googleFonts()
+    protected function googleFonts(): void
     {
         $this->format = 'html'; // Response Format
         $this->response(Helper\Font::getAllFonts());
@@ -230,7 +231,7 @@ class Admin extends Helper\Client
         }
     }
 
-    protected function manager()
+    protected function manager(): void
     {
         $this->format = 'html'; // Response Format
         $document = Framework::getDocument();
@@ -367,7 +368,7 @@ class Admin extends Helper\Client
         $this->response($html);
     }
 
-    protected function getArticleFormTemplate()
+    protected function getArticleFormTemplate(): true
     {
         try {
             $app            = Factory::getApplication();
@@ -379,7 +380,16 @@ class Admin extends Helper\Client
         return true;
     }
 
-    protected function clearCache()
+    protected function getAstroidPromotion(): void
+    {
+        if (!Helper::isPro()) {
+            $this->response(Helper::getPromotions());
+        } else {
+            $this->response([]);
+        }
+    }
+
+    protected function clearCache(): void
     {
 	    $app = Factory::getApplication();
 	    $tpl = $app->input->get('template', '');
@@ -399,13 +409,13 @@ class Admin extends Helper\Client
         $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
     }
 
-    protected function clearJoomlaCache()
+    protected function clearJoomlaCache(): void
     {
         Helper::clearJoomlaCache();
         $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
     }
 
-    public function addTemplateLabels()
+    public function addTemplateLabels(): void
     {
         $app = Factory::getApplication();
         $option = $app->input->get('option', '');
@@ -431,7 +441,8 @@ class Admin extends Helper\Client
         $app->setBody($body);
     }
 
-    public function importpreset() {
+    public function importpreset(): true
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
@@ -500,7 +511,8 @@ class Admin extends Helper\Client
         return true;
     }
 
-    public function loadpreset() {
+    public function loadpreset(): true
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
@@ -523,7 +535,8 @@ class Admin extends Helper\Client
         return true;
     }
 
-    public function removepreset() {
+    public function removepreset(): true
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
@@ -543,7 +556,7 @@ class Admin extends Helper\Client
         return true;
     }
 
-    public function getFreeTemplates()
+    public function getFreeTemplates(): true
     {
         try {
             // Check for request forgeries.
@@ -560,7 +573,8 @@ class Admin extends Helper\Client
         return true;
     }
 
-    public function installTemplate() {
+    public function installTemplate(): true
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
