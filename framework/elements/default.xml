@@ -10,7 +10,7 @@
          </fieldset>
          <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field type="astroidgroup" name="general"/>
-            <field type="astroidgroup" name="animated_icons_settings" title="TPL_ASTROID_ANIMATED_ICONS_SETTINGS_LABEL"/>
+            <field type="astroidgroup" name="animation_background_settings" title="TPL_ASTROID_ANIMATION_BG_SETTINGS_LABEL"/>
             <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
             <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
@@ -186,7 +186,7 @@
                <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
             </field>
 
-            <field astroidgroup="animated_icons_settings" name="animated_icon_bg_type" type="astroidgetpro" label="ASTROID_WIDGET_ANIMATED_ICONS_LABEL"/>
+            <field astroidgroup="animation_background_settings" name="animation_background_type" type="astroidgetpro" label="ASTROID_WIDGET_ANIMATED_ICONS_LABEL"/>
 
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
