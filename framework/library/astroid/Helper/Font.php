@@ -338,6 +338,12 @@ class Font
             case 'local':
                 $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
                 break;
+            case 'local_js':
+                $wa->registerAndUseScript('fontawesome', 'media/astroid/assets/vendor/fontawesome/js/all.min.js');
+                break;
+            case 'cdn_js':
+                $wa->registerAndUseScript('fontawesome', "https://use.fontawesome.com/releases/v" . Helper\Constants::$fontawesome_version . "/js/all.js");
+                break;
             default:
                 if (Framework::isAdmin()) {
                     $wa->registerAndUseStyle('fontawesome', 'media/astroid/assets/vendor/fontawesome/css/all.min.css');
