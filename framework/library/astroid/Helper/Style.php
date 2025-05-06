@@ -225,7 +225,7 @@ class Style
                     }
                 }
             }
-            if (!empty($cssContent)) {
+            if (!empty($cssContent) && $document->canUseWA()) {
                 $document->getWA()->addInlineStyle($cssContent);
             }
         }
