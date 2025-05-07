@@ -290,8 +290,8 @@ class Utility
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
-        $root = new Style(':root, [data-bs-theme="light"]', '', true);
-        $root_dark = new Style('[data-bs-theme="dark"]', '', true);
+        $root = new Style(':root .astroid-framework, [data-bs-theme="light"] .astroid-framework', '', true);
+        $root_dark = new Style('[data-bs-theme="dark"] .astroid-framework', '', true);
         // Body
         $body_background_color  =   Style::getColor($params->get('body_background_color', ''));
         $body_text_color        =   Style::getColor($params->get('body_text_color', ''));
