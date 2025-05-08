@@ -315,13 +315,13 @@ class Utility
 
     public static function getRgbaValues(string $rgbaString): ?array
     {
-        // Match the rgba pattern
-        if (preg_match('/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/', $rgbaString, $matches)) {
+        // Match the rgba or rgb pattern
+        if (preg_match('/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/', $rgbaString, $matches)) {
             return [
                 'r' => (int)$matches[1],
                 'g' => (int)$matches[2],
                 'b' => (int)$matches[3],
-                'a' => (float)$matches[4],
+                'a' => isset($matches[4]) ? (float)$matches[4] : 1.0, // Default alpha to 1.0 if not provided
             ];
         }
 
