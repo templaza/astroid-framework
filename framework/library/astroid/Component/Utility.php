@@ -256,7 +256,31 @@ class Utility
         $customselector = $params->get('custom_typography_selectors', '');
         $logo_type = $params->get('logo_type', 'none');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > .as-menu-item, .astroid-sidebar-menu > li > .nav-item-inner > .as-menu-item, .astroid-mobile-menu > .nav-item > .as-menu-item', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item, .nav-item-submenu .as-menu-item', 'custom' => $customselector);
+        $types = array(
+            'body' => ['body.astroid-framework', '.body.astroid-framework'],
+            'h1' => ['h1', '.h1'],
+            'h2' => ['h2', '.h2'],
+            'h3' => ['h3', '.h3'],
+            'h4' => ['h4', '.h4'],
+            'h5' => ['h5', '.h5'],
+            'h6' => ['h6', '.h6'],
+            'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'],
+            'logo_tag_line' => '.astroid-logo-text > p.site-tagline',
+            'menu' => [
+                '.astroid-nav > li > .as-menu-item',
+                '.astroid-sidebar-menu > li > .nav-item-inner > .as-menu-item',
+                '.astroid-mobile-menu > .nav-item > .as-menu-item'
+            ],
+            'submenu' => [
+                '.nav-submenu-container .nav-submenu > li',
+                '.jddrop-content .megamenu-item .megamenu-menu li',
+                '.nav-submenu',
+                '.astroid-mobile-menu .nav-child .menu-go-back',
+                '.astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item',
+                '.nav-item-submenu .as-menu-item'
+            ],
+            'custom' => $customselector
+        );
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {
@@ -280,10 +304,12 @@ class Utility
             if (empty($typography)) {
                 continue;
             }
+            $parentClass = '.astroid-framework';
             if ($type == 'body') {
                 $bodyTypography = $typography;
+                $parentClass = '';
             }
-            Helper\Style::renderTypography($selector, $typography, $bodyTypography, true);
+            Helper\Style::renderTypography($selector, $typography, $bodyTypography, true, $parentClass);
         }
     }
 

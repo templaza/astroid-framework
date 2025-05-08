@@ -1058,7 +1058,6 @@ class Document
         }
         $content .= '@import "' . $bootstrapPath . '/bootstrap";';
 
-        $content .= '.astroid-framework {';
         $content .= '@import "' . $mediaPath . '/vendor/astroid/scss/astroid";';
 
         if (file_exists(__DIR__ . '/' . $templateMediaScssPath . '/style.scss') || file_exists(__DIR__ . '/' . $templateScssPath . '/style.scss')) {
@@ -1114,7 +1113,6 @@ class Document
                 $content    .=  '@include color-mode(dark) {'. $color_mode_dark .'}';
             }
         }
-        $content .= '}';
         $scss->setOutputStyle(\ScssPhp\ScssPhp\OutputStyle::COMPRESSED);
         $css = $scss->compileString($content);
         Framework::getDebugger()->log('Rendering Scss');

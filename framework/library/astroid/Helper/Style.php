@@ -23,21 +23,23 @@ class Style
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public bool $_onFile = false;
     public string $_mode = '';
-    public function __construct($selectors, $mode = '', $onFile = false)
+    public function __construct($selectors, $mode = '', $onFile = false, $parentElement = '')
     {
         if (is_array($selectors)) {
             for ($key = 0; $key < count($selectors); $key ++) {
-                $selectors[$key]    =   $mode ? '[data-bs-theme='.$mode.'] '. $selectors[$key] : $selectors[$key];
+                $selector = !empty($parentElement) ? $parentElement .' '. $selectors[$key] : $selectors[$key];
+                $selectors[$key]    =   $mode ? '[data-bs-theme='.$mode.'] '. $selector : $selector;
             }
             $this->_selector    =   implode(', ', $selectors);
         } else {
-            $this->_selector    =   $mode ? '[data-bs-theme='.$mode.'] '. $selectors : $selectors;
+            $selector = !empty($parentElement) ? $parentElement .' '. $selectors : $selectors;
+            $this->_selector    =   $mode ? '[data-bs-theme='.$mode.'] '. $selector : $selector;
         }
         $this->_mode = $mode;
         $this->_onFile = $onFile;
     }
 
-    protected function _selectorize($postfix = null, $prefix = null)
+    protected function _selectorize($postfix = null, $prefix = null): string
     {
         $return = [];
         $selectors = explode(',', $this->_selector);
@@ -60,7 +62,7 @@ class Style
         return implode(', ', $return);
     }
 
-    public function hover($class = '')
+    public function hover($class = ''): Style
     {
         if ($this->_hover === null) {
             $this->_hover = new Style($this->_selectorize(':hover' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
@@ -68,7 +70,7 @@ class Style
         return $this->_hover;
     }
 
-    public function focus($class = '')
+    public function focus($class = ''): Style
     {
         if ($this->_focus === null) {
             $this->_focus = new Style($this->_selectorize(':focus' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
@@ -76,7 +78,7 @@ class Style
         return $this->_focus;
     }
 
-    public function active($class = '')
+    public function active($class = ''): Style
     {
         if ($this->_active === null) {
             $this->_active = new Style($this->_selectorize(':active' . (empty($class) ? '' : ',' . $class)), '', $this->_onFile);
@@ -84,7 +86,7 @@ class Style
         return $this->_active;
     }
 
-    public function link($ref = 'child', $subfix = '')
+    public function link($ref = 'child', $subfix = ''): Style
     {
         if ($this->_link === null) {
             if ($ref == 'child') {
@@ -107,7 +109,7 @@ class Style
         }
     }
 
-    protected function _hasChild($selector)
+    protected function _hasChild($selector): bool
     {
         $selector = $this->_childSelector($selector);
         return isset($this->_child[Helper::slugify($selector)]);
@@ -123,7 +125,7 @@ class Style
         }
     }
 
-    public function addCss($property, $value, $device = 'mobile')
+    public function addCss($property, $value, $device = 'mobile'): static
     {
         if (empty($value)) {
             return $this;
@@ -132,7 +134,7 @@ class Style
         return $this;
     }
 
-    public function addResponsiveCSS($property, $value, $unit = '')
+    public function addResponsiveCSS($property, $value, $unit = ''): static
     {
         if (empty($value)) {
             return $this;
@@ -164,11 +166,12 @@ class Style
         return $this;
     }
 
-    public function addBorder($value, $device = 'mobile', $onFile = false) {
+    public function addBorder($value, $device = 'mobile', $onFile = false): void
+    {
         self::addBorderStyle($this->_selector, $value, $device, $onFile);
     }
 
-    public function addStyle($css, $device = 'mobile')
+    public function addStyle($css, $device = 'mobile'): void
     {
         if (empty($css)) {
             return;
@@ -176,14 +179,14 @@ class Style
         $this->_styles[$device][] = $css;
     }
 
-    public function addChild($selector)
+    public function addChild($selector): Style
     {
         $selector = $this->_childSelector($selector);
         $this->_child[Helper::slugify($selector)] = new Style($selector, '', $this->_onFile);
         return $this->_child[Helper::slugify($selector)];
     }
 
-    protected function _childSelector($selector)
+    protected function _childSelector($selector): string
     {
         $selector = explode(',', $selector);
         foreach ($selector as &$element) {
@@ -194,11 +197,10 @@ class Style
             }
         }
 
-        $selector = implode(', ', $selector);
-        return $selector;
+        return implode(', ', $selector);
     }
 
-    public function render()
+    public function render(): void
     {
         $css = ['mobile' => '', 'landscape_mobile' => '', 'tablet' => '', 'desktop' => '', 'large_desktop' => '', 'larger_desktop' => ''];
         foreach ($this->_css as $device => $styles) {
@@ -254,7 +256,7 @@ class Style
         }
     }
 
-    public static function getCss($content, $device = 'mobile', $breakpoints = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px'])
+    public static function getCss($content, $device = 'mobile', $breakpoints = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px']): string
     {
         return match ($device) {
             'landscape_mobile' => '@media (min-width: '.$breakpoints['landscape_mobile'].') {' . $content . '}',
@@ -266,7 +268,8 @@ class Style
         };
     }
 
-    public static function addBorderStyle($selector, $border, $device = 'mobile', $onFile = false) {
+    public static function addBorderStyle($selector, $border, $device = 'mobile', $onFile = false): void
+    {
         $style      = new Style($selector, '', $onFile);
         $style_dark = new Style($selector, 'dark', $onFile);
         if (isset($border['border_width'])) {
@@ -287,7 +290,7 @@ class Style
         $style_dark->render();
     }
 
-    public static function addCssBySelector($selector, $property, $value, $device = 'mobile', $mode = '', $onFile = false)
+    public static function addCssBySelector($selector, $property, $value, $device = 'mobile', $mode = '', $onFile = false): Style
     {
         $style = new Style($selector, $mode, $onFile);
         $style->addCss($property, $value, $device);
@@ -295,14 +298,14 @@ class Style
         return $style;
     }
 
-    public static function renderTypography($selector, $object, $defaultObject = null, $onFile = false)
+    public static function renderTypography($selector, $object, $defaultObject = null, $onFile = false, $parentClass = ''): void
     {
         $typography = new Registry();
         $typography->loadObject($object);
 
         $globalParams = Helper::getPluginParams();
-        $style = new Style($selector, '', $onFile);
-        $style_dark = new Style($selector, 'dark', $onFile);
+        $style = new Style($selector, '', $onFile, $parentClass);
+        $style_dark = new Style($selector, 'dark', $onFile, $parentClass);
 
         // font color, weight and transfrom
         $font_color = Style::getColor($typography->get('font_color', ''));
