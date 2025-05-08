@@ -313,6 +313,22 @@ class Utility
         }
     }
 
+    public static function getRgbaValues(string $rgbaString): ?array
+    {
+        // Match the rgba pattern
+        if (preg_match('/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/', $rgbaString, $matches)) {
+            return [
+                'r' => (int)$matches[1],
+                'g' => (int)$matches[2],
+                'b' => (int)$matches[3],
+                'a' => (float)$matches[4],
+            ];
+        }
+
+        // Return null if the string is not in the correct format
+        return null;
+    }
+
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
@@ -328,12 +344,22 @@ class Utility
         $root->addCss('--bs-body-bg', $body_background_color['light']);
         $root->addCss('--bs-body-color', $body_text_color['light']);
         $root->addCss('--bs-link-color', $body_link_color['light']);
+        $rgba = self::getRgbaValues($body_link_color['light']);
+        $root->addCss('--bs-link-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+        $root->addCss('--bs-link-opacity', $rgba['a']);
         $root->addCss('--bs-link-hover-color', $body_link_hover_color['light']);
+        $rgba = self::getRgbaValues($body_link_hover_color['light']);
+        $root->addCss('--bs-link-hover-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
 
         $root_dark->addCss('--bs-body-bg', $body_background_color['dark']);
         $root_dark->addCss('--bs-body-color', $body_text_color['dark']);
         $root_dark->addCss('--bs-link-color', $body_link_color['dark']);
+        $rgba = self::getRgbaValues($body_link_color['dark']);
+        $root_dark->addCss('--bs-link-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+        $root_dark->addCss('--bs-link-opacity', $rgba['a']);
         $root_dark->addCss('--bs-link-hover-color', $body_link_hover_color['dark']);
+        $rgba = self::getRgbaValues($body_link_hover_color['dark']);
+        $root_dark->addCss('--bs-link-hover-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
 
         $root->addCss('--bs-heading-color', $body_heading_color['light']);
         $root_dark->addCss('--bs-heading-color', $body_heading_color['dark']);
