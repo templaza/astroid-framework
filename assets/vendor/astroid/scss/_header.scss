@@ -82,9 +82,14 @@
          padding-bottom: $sticky-header-padding-y;
       }
 
-      &.d-flex {
+      &.sticky-loaded {
+         display: flex;
          -webkit-animation-name: slideInDown;
          animation-name: slideInDown;
+         &.inactive {
+            -webkit-animation-name: stickyOutUp;
+            animation-name: stickyOutUp;
+         }
       }
 
       .astroid-logo {

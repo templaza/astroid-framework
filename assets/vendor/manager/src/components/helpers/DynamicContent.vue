@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, onBeforeMount, computed, inject, ref, watch} from 'vue';
 import draggable from "vuedraggable";
+import axios from "axios";
 import { MultiListSelect } from "vue-search-select"
 import { ModelListSelect } from "vue-search-select"
 const emit = defineEmits(['update:modelValue']);
@@ -8,7 +9,27 @@ const props = defineProps(['modelValue', 'field']);
 const constant = inject('constant', {});
 const language = inject('language', []);
 const element_id = ref(props.field.input.id);
+const pro_msg = ref({
+    title: props.field.input.pro_msg.title,
+    desc: props.field.input.pro_msg.desc
+})
 onBeforeMount(() => {
+    if (!constant.is_pro) {
+        let url = constant.site_url+"administrator/index.php?option=com_ajax&astroid=get-astroid-promotion&ts="+Date.now();
+        if (process.env.NODE_ENV === 'development') {
+            url = "promo_ajax.txt?ts="+Date.now();
+        }
+        axios.get(url)
+            .then(response => {
+                if (response.data.status === 'success' && response.data.data.length > 0) {
+                    pro_msg.value.title = response.data.data[0].title;
+                    pro_msg.value.desc = '<p>' + response.data.data[0].description + '</p><a href="' +response.data.data[0].link + '" target="_blank" class="btn btn-sm btn-as btn-danger">' + response.data.data[0].link_title + '</a>';
+                }
+            })
+            .catch(error => {
+                console.error("There was an error fetching the data!", error);
+            });
+    }
     if (typeof props.modelValue !== 'object') {
         emit('update:modelValue', {});
     }
@@ -125,8 +146,8 @@ watch(selectedCategory, (newText) => {
 </script>
 <template>
     <div v-if="!constant.is_pro" class="astroid-get-pro card alert alert-warning">
-        <h6 class="card-title">{{ props.field.input.pro_msg.title }}</h6>
-        <div class="card-text form-text" v-html="props.field.input.pro_msg.desc"></div>
+        <h6 class="card-title">{{ pro_msg.title }}</h6>
+        <div class="card-text form-text" v-html="pro_msg.desc"></div>
     </div>
     <label :for="element_id+`_source`" class="form-label">{{language.ASTROID_SOURCE_LABEL}}</label>
     <select :id="element_id+`_source`" :name="props.field.input.name+`[source]`" v-model="props.modelValue['source']" @change="changeSource" class="form-select" :disabled="!constant.is_pro">

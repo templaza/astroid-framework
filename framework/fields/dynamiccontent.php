@@ -12,7 +12,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Form\FormField;
 use Astroid\Helper\Constants;
 use Joomla\CMS\Language\Text;
-use Astroid\Helper;
 
 class JFormFieldDynamicContent extends FormField
 {
@@ -43,18 +42,6 @@ class JFormFieldDynamicContent extends FormField
             'options' => '{}'
         ];
 
-        $title = Text::_('ASTROID_GET_PRO_TITLE');
-        $description = Text::sprintf('ASTROID_GET_PRO_DESCRIPTION', Text::_($this->getAttribute('label')), Constants::$go_pro . '?utm_source=feature_links&utm_medium=getpro_link&utm_campaign=go_pro&utm_id=astroid_signup');
-
-        if (!Helper::isPro()) {
-            $promotion_info = Helper::getPromotions();
-            if (!empty($promotion_info)) {
-                $promotion = $promotion_info[0];
-                $title = $promotion['title'];
-                $description = '<p>' . $promotion['description'] . '</p><a href="' . $promotion['link'] . '" target="_blank" class="btn btn-sm btn-as btn-danger">' . $promotion['link_title'] . '</a>';
-            }
-        }
-
         $json     =   [
             'id'                  =>  $this->id,
             'name'                =>  $this->name,
@@ -70,8 +57,8 @@ class JFormFieldDynamicContent extends FormField
             ],
             'type'                =>  strtolower($this->type),
             'pro_msg'             =>  [
-                'title'   =>  $title,
-                'desc'    =>  $description
+                'title'   =>  Text::_('ASTROID_GET_PRO_TITLE'),
+                'desc'    =>  Text::sprintf('ASTROID_GET_PRO_DESCRIPTION', Text::_($this->getAttribute('label')), Constants::$go_pro . '?utm_source=feature_links&utm_medium=getpro_link&utm_campaign=go_pro&utm_id=astroid_signup')
             ],
         ];
         return json_encode($json);

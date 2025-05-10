@@ -25,6 +25,7 @@ import Range from './Range.vue';
 import SwitchBox from "./SwitchBox.vue";
 import Text from "./Text.vue";
 import DynamicContent from "./DynamicContent.vue";
+import AstroidGetPro from "./AstroidGetPro.vue";
 
 const emit = defineEmits(['update:contentlayout', 'update:loadPreset', 'update:getPreset', 'update:subFormState', 'update:presetState']);
 const props = defineProps({
@@ -249,7 +250,6 @@ function removeDynamicField() {
         <DynamicContent v-model="props.scope[props.field.name]" :field="props.field" />
     </div>
     <div v-else-if="props.field.input.type === `astroidgetpro`" class="astroid-get-pro card alert alert-warning mb-0">
-        <h6 class="card-title">{{ props.field.input.title }}</h6>
-        <div class="card-text form-text" v-html="props.field.input.desc"></div>
+        <AstroidGetPro :field="props.field" />
     </div>
 </template>

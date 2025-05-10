@@ -27,7 +27,7 @@ abstract class Framework
     public static $isAstroid = false;
     public static $version = null;
 
-    public static function init()
+    public static function init(): void
     {
         define('_ASTROID', 1); // define astroid
         self::check(); // check for astroid redirection
@@ -117,7 +117,7 @@ abstract class Framework
 
     public static function check()
     {
-        if (self::isAdmin() && Factory::getUser()->id) {
+        if (self::isAdmin() && Factory::getApplication()->getIdentity()->id) {
             $app = Factory::getApplication();
             $redirect = $app->input->get->get('ast', '', 'RAW');
             if (!empty($redirect)) {

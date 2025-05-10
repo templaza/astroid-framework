@@ -3,13 +3,10 @@
    let lastScrollTop = 0;
    let windowloaded = false;
    let initLastScrollTop = function () {
-      var st = $(window).scrollTop();
-      lastScrollTop = st;
+      lastScrollTop = $(window).scrollTop();
    };
-   let isScrollDown = function () {
-      var st = $(window).scrollTop();
-      return (st > lastScrollTop);
-   };
+   let isScrollDown = () => $(window).scrollTop() > lastScrollTop;
+
    let initMobileMenu = function () {
       if (!$('.astroid-mobile-menu').length) {
          return;
@@ -74,61 +71,58 @@
 
       var _headerTop = _header.offset().top;
       var _headerHeight = _header.height();
-      var _headerBottom = _headerTop + _headerHeight;
+      var _headerBottom = _headerTop + _headerHeight + 30;
 
       if (!stickyHeader.length) {
          return;
       }
+
+      let toggleStickyHeader = function (stickyHeader, active) {
+         if (active) {
+            stickyHeader.addClass('sticky-loaded').removeClass('inactive').removeClass('d-none');
+         } else {
+            stickyHeader.addClass('inactive');
+         }
+      };
 
       var _winScroll = $(window).scrollTop();
       var _breakpoint = deviceBreakpoint(true);
 
       if (_breakpoint === 'xl' || _breakpoint === 'lg') {
          if (stickyHeader.hasClass('header-sticky-desktop') && (_winScroll > _headerBottom)) {
-            stickyHeader.removeClass('d-none');
-            stickyHeader.addClass('d-flex');
+            toggleStickyHeader(stickyHeader, true);
          } else if (stickyHeader.hasClass('header-stickyonscroll-desktop') && (_winScroll > _headerBottom) && !isScrollDown()) {
-            stickyHeader.removeClass('d-none');
-            stickyHeader.addClass('d-flex');
+            toggleStickyHeader(stickyHeader, true);
          } else {
-            stickyHeader.removeClass('d-flex');
-            stickyHeader.addClass('d-none');
+            toggleStickyHeader(stickyHeader, false);
          }
       } else if (_breakpoint === 'sm' || _breakpoint === 'md') {
          if (stickyHeader.hasClass('header-static-tablet')) {
             if (stickyHeader.hasClass('d-flex')) {
-               stickyHeader.addClass('d-none');
-               stickyHeader.removeClass('d-flex');
+               toggleStickyHeader(stickyHeader, false);
             }
             return;
          }
          if (stickyHeader.hasClass('header-sticky-tablet') && (_winScroll > _headerBottom)) {
-            stickyHeader.removeClass('d-none');
-            stickyHeader.addClass('d-flex');
+            toggleStickyHeader(stickyHeader, true);
          } else if (stickyHeader.hasClass('header-stickyonscroll-tablet') && (_winScroll > _headerBottom) && !isScrollDown()) {
-            stickyHeader.addClass('d-flex');
-            stickyHeader.removeClass('d-none');
+            toggleStickyHeader(stickyHeader, true);
          } else {
-            stickyHeader.addClass('d-none');
-            stickyHeader.removeClass('d-flex');
+            toggleStickyHeader(stickyHeader, false);
          }
       } else {
          if (stickyHeader.hasClass('header-static-mobile')) {
             if (stickyHeader.hasClass('d-flex')) {
-               stickyHeader.addClass('d-none');
-               stickyHeader.removeClass('d-flex');
+               toggleStickyHeader(stickyHeader,  false);
             }
             return;
          }
          if (stickyHeader.hasClass('header-sticky-mobile') && (_winScroll > _headerBottom)) {
-            stickyHeader.addClass('d-flex');
-            stickyHeader.removeClass('d-none');
+            toggleStickyHeader(stickyHeader, true);
          } else if (stickyHeader.hasClass('header-stickyonscroll-mobile') && (_winScroll > _headerBottom) && !isScrollDown()) {
-            stickyHeader.addClass('d-flex');
-            stickyHeader.removeClass('d-none');
+            toggleStickyHeader(stickyHeader, true);
          } else {
-            stickyHeader.addClass('d-none');
-            stickyHeader.removeClass('d-flex');
+            toggleStickyHeader(stickyHeader, false);
          }
       }
    };
@@ -283,7 +277,6 @@
       deviceBreakpoint(false);
       initHeader();
    };
-
    let winScroll = function () {
       initHeader();
       initLastScrollTop();
