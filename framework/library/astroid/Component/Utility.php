@@ -554,7 +554,7 @@ class Utility
         $document = Framework::getDocument();
 
         $document->addCustomTag($params->get('trackingcode', ''));
-        $document->addStyleDeclaration($params->get('customcss', ''));
+        $document->getWA()->addInlineStyle($params->get('customcss', ''));
 
         $paramcustomcssfiles = $params->get('customcssfiles');
         if (isset($paramcustomcssfiles) && $paramcustomcssfiles) {

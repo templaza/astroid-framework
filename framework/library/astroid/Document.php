@@ -1310,7 +1310,7 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
-            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0, true);
+            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0);
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
@@ -1332,7 +1332,7 @@ class Document
             $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             // custom css
             if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
-                $this->addStyleSheet('css/custom.css');
+                $this->addLink($this->_systemUrl('css/custom.css') . '?' . Helper::frameworkVersion());
             }
         }
     }
