@@ -3,7 +3,7 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
         <addition>
             <item><![CDATA[Add AstroidPro Hub Library.]]></item>
             <item><![CDATA[Move all Pro functions to Astroid Pro library]]></item>
