@@ -1080,18 +1080,14 @@ class Document
         if (!empty($variables)) {
             $color_mode_light   =   '';
             $color_mode_dark    =   '';
+            $colorMode =   $template->getColorMode();
             foreach ($variables as $key => $variable) {
                 $result = json_decode($variable);
                 if (json_last_error() === JSON_ERROR_NONE) {
-                    $value_light    =   $result->light;
-                    $value_dark     =   $result->dark;
-                    if (!empty($value_light)) {
-                        $variables[$key]    =  ValueConverter::parseValue($value_light);
+                    if (!empty($result->{$colorMode})) {
+                        $variables[$key]    =  ValueConverter::parseValue($result->{$colorMode});
                     } else {
                         unset($variables[$key]);
-                    }
-                    if (!empty($value_dark)) {
-                        $color_mode_dark    .=  '--bs-'.$key.':'.$value_dark.';';
                     }
                 } else {
                     if (strpos($key, '[light]')) {
