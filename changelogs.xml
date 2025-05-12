@@ -3,6 +3,15 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
+        <version>1.0.6</version>
+        <addition>
+            <item><![CDATA[Add AstroidPro Hub Library.]]></item>
+            <item><![CDATA[Move all Pro functions to Astroid Pro library]]></item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>astroidpro</element>
+        <type>plugin</type>
         <version>1.0.5</version>
         <addition>
             <item><![CDATA[Add Dynamic Content Field]]></item>
