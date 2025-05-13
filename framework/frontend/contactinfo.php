@@ -71,7 +71,7 @@ $contact_display = $params->get('contact_display', 'icons');
          <?php if ($contact_display == "text") : ?>
             <?php echo Text::_('JGLOBAL_EMAIL'); ?>:
          <?php endif; ?>
-         <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
+          <?php echo \Joomla\CMS\HTML\HTMLHelper::_('email.cloak', $email); ?>
       </span>
    <?php } ?>
 
