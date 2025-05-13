@@ -1,5 +1,5 @@
 $burger-layer-width: 30px !default;
-$burger-layer-height: 3px !default;
+$burger-layer-height: 1px !default;
 $burger-layer-spacing: 7px !default;
 $offcanvas-btn: 50px !default;
 
@@ -15,7 +15,35 @@ $offcanvas-btn: 50px !default;
 	&.burger-menu-button {
 		.inner, .inner:before, .inner:after{
 			background-color: var(--as-mobile-menu-icon-color);
+			animation-timing-function: cubic-bezier(.215, .61, .355, 1);
+			animation-duration: .8s;
 		}
+		.inner {
+			animation-delay: .1s;
+		}
+		.inner:before {
+			animation-delay: .2s;
+		}
+		.inner:after {
+			animation-delay: .3s;
+		}
+		&:hover {
+			.inner, .inner:before, .inner:after{
+				animation-name: canvasHoverAnimation;
+			}
+		}
+	}
+}
+
+@keyframes canvasHoverAnimation {
+	0% {
+		width: 100%;
+	}
+	50% {
+		width: 0;
+	}
+	100% {
+		width: 100%;
 	}
 }
 
@@ -108,20 +136,20 @@ $offcanvas-btn: 50px !default;
 	.burger-menu-button {
 		&.header-offcanvas-trigger {
 			.inner {
+				right: 0;
 				&::before {
 					width: $burger-layer-width - 10px;
-					margin-left: 10px;
+					right: 0;
 				}
 				&::after {
 					width: $burger-layer-width - 5px;
-					margin-left: 5px;
+					right: 0;
 				}
 			}
 			&.active .inner {
 				&::before,
 				&::after {
 					width: $burger-layer-width;
-					margin-left: 0;
 				}
 			}
 		}
@@ -132,20 +160,20 @@ $offcanvas-btn: 50px !default;
 	.burger-menu-button {
 		&.header-offcanvas-trigger {
 			.inner {
+				left: 0;
 				&::before {
 					width: $burger-layer-width - 10px;
-					margin-right: 10px;
+					left: 0;
 				}
 				&::after {
 					width: $burger-layer-width - 5px;
-					margin-right: 5px;
+					left: 0;
 				}
 			}
 			&.active .inner {
 				&::before,
 				&::after {
 					width: $burger-layer-width;
-					margin-right: 0;
 				}
 			}
 		}
