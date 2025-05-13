@@ -37,7 +37,8 @@ $bd_radius          =   $border_radius != '' ? ' rounded-' . $border_radius : ' 
 
 $overlay_text_color =   $params->get('overlay_text_color', '');
 $overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
-$min_height         =   $params->get('min_height', 0);
+$min_height         =   $params->get('min_height', 600);
+$slider_height      =   $params->get('slider_height', '');
 $overlay_max_width  =   $params->get('overlay_max_width', '');
 $overlay_max_width  =   $overlay_max_width !== '' ? ' as-width-'. $overlay_max_width : '';
 $autoplay           =   $params->get('autoplay', 0);
@@ -123,7 +124,14 @@ $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.carousel');
 
-$style->child('.carousel-item')->addCss('height', $min_height . 'px');
+$height_data = json_decode($slider_height, true);
+
+if (json_last_error() === JSON_ERROR_NONE && is_array($height_data)) {
+    $style->child('.carousel-item')->addResponsiveCSS('height', $height_data, $height_data['postfix']);
+    $style->child('.carousel-item')->addCss('min-height', $min_height . 'px');
+} else {
+    $style->child('.carousel-item')->addCss('height', $min_height . 'px');
+}
 
 if ($params->get('card_size', '') == 'custom') {
     $card_padding   =   $params->get('card_padding', '');

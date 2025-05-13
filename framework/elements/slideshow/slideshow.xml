@@ -40,7 +40,8 @@
                         </fields>
                     </form>
                 </field>
-                <field astroidgroup="slideshow_options" name="min_height" type="astroidrange" min="1" max="1200" step="1" default="200" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
+                <field astroidgroup="slideshow_options" name="slider_height" type="astroidrange" min="1" max="1200" step="1" default="80" label="ASTROID_WIDGET_HEIGHT_LABEL" responsive="true" postfix="vh|px" />
+                <field astroidgroup="slideshow_options" name="min_height" type="astroidrange" min="1" max="1200" step="1" default="600" label="ASTROID_WIDGET_MIN_HEIGHT" postfix="px" />
                 <field astroidgroup="slideshow_options" type="astroidlist" name="effect_type" label="ASTROID_WIDGET_EFFECT_TYPE" default="">
                     <option value="">ASTROID_WIDGET_EFFECT_TYPE_CAROUSEL</option>
                     <option value="carousel-fade">ASTROID_WIDGET_EFFECT_TYPE_FADE</option>
