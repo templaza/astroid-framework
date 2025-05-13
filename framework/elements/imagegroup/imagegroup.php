@@ -196,7 +196,7 @@ $document = Framework::getDocument();
 
 if ($use_lightbox) {
     $document->loadFancyBox();
-    $document->addScriptDeclaration('Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');', 'body');
+    $document->addScriptDeclaration('document.addEventListener(\'DOMContentLoaded\', function() {Fancybox.bind(\'[data-fancybox="astroid-'.$element->id.'"]\');});', 'body');
 }
 if ($enable_slider) {
     $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
