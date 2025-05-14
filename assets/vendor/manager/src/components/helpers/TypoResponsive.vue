@@ -72,6 +72,13 @@ onMounted(() => {
         updateRange(key);
     });
     updatePlaceholder();
+    devices.forEach(device => {
+        if (typeof props.modelValue[props.fieldname][device] !== 'undefined' && props.modelValue[props.fieldname][device] !== '') {
+            if (rangeConfig[props.currentDevice].priority < rangeConfig[device].priority) {
+                changeDevice(device);
+            }
+        }
+    })
 })
 onUpdated(() => {
     updateUnit();
@@ -85,9 +92,6 @@ function updateUnit() {
             props.modelValue[props.fieldname+`_unit`][device] = lastDevice;
         } else {
             lastDevice = props.modelValue[props.fieldname+`_unit`][device];
-            if (rangeConfig[props.currentDevice].priority < rangeConfig[device].priority) {
-                changeDevice(device);
-            }
         }
     })
 }
