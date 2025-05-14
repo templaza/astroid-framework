@@ -159,6 +159,7 @@
             <option value="lg">ASTROID_LARGE</option>
             <option value="xl">ASTROID_EXTRA_LARGE</option>
             <option value="xxl">ASTROID_EXTRA_EXTRA_LARGE</option>
+            <option value="always">ASTROID_HEADER_ALWAYS_DISPLAY_IN_MOBILE_MODE</option>
          </field>
 
          <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_element" name="dropdown_trigger" type="astroidradio" default="hover" label="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_LABEL" description="TPL_ASTROID_MENU_OPTIONS_SELECT_ACTION_DESC">
