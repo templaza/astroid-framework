@@ -103,6 +103,7 @@ onBeforeMount(()=>{
         };
     }
 })
+const fieldChanged = ref(false);
 onMounted(()=>{
     let lastDevice = null;
     positions.forEach(position => {
@@ -114,6 +115,14 @@ onMounted(()=>{
             }
         });
     });
+    devices.forEach(device => {
+        positions.forEach(position => {
+            if (data.value[device][position] && currentDevice.value !== device) {
+                fieldChanged.value = true;
+                currentDevice.value = device;
+            }
+        })
+    })
 })
 function updatePlaceholder(position) {
     let lastDevice = null;
@@ -175,7 +184,7 @@ function updateUnit() {
             </div>
         </div>
         <div class="col col-auto">
-            <ResponsiveToggle v-model="currentDevice" />
+            <ResponsiveToggle v-model="currentDevice" :fieldChanged="fieldChanged" @update:statusField="status => (fieldChanged = status)"/>
         </div>
     </div>
     <div v-for="device in devices" class="mt-2" v-show="currentDevice===device">

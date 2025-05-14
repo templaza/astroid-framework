@@ -9,27 +9,33 @@ const rangeConfig = reactive(
     {
         'larger_desktop' : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 5
         },
         'large_desktop' : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 4
         },
         'desktop' : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 3
         },
         'tablet'  : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 2
         },
         'landscape_mobile'  : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 1
         },
         'mobile'  : {
             'max' : 100,
-            'step': 1
+            'step': 1,
+            'priority': 0
         }
     }
 )
@@ -79,6 +85,9 @@ function updateUnit() {
             props.modelValue[props.fieldname+`_unit`][device] = lastDevice;
         } else {
             lastDevice = props.modelValue[props.fieldname+`_unit`][device];
+            if (rangeConfig[props.currentDevice].priority < rangeConfig[device].priority) {
+                changeDevice(device);
+            }
         }
     })
 }

@@ -77,6 +77,12 @@ onMounted(()=>{
         });
     }
     updatePlaceholder();
+    devices.forEach(device => {
+        if (data.value[device] && active.value !== device) {
+            fieldChanged.value = true;
+            active.value = device;
+        }
+    })
 })
 onUpdated(()=>{
     if (props.presetUpdated === true) {
@@ -85,7 +91,7 @@ onUpdated(()=>{
     }
     updatePlaceholder();
 })
-
+const fieldChanged = ref(false);
 function updatePlaceholder() {
     let lastDevice = '';
     devices.forEach(device => {
@@ -122,7 +128,7 @@ watch(data_text, (newText) => {
             </div>
         </div>
         <div v-if="props.field.input.responsive" class="col-auto d-flex align-items-center"><i class="fa-solid fa-ellipsis-vertical fa-sm opacity-50"></i></div>
-        <div v-if="props.field.input.responsive" class="col-auto"><ResponsiveToggle v-model="active" /></div>
+        <div v-if="props.field.input.responsive" class="col-auto"><ResponsiveToggle v-model="active" :fieldChanged="fieldChanged" @update:statusField="status => (fieldChanged = status)" /></div>
     </div>
     <input type="range" class="form-range" v-model="data[active]" :min="props.field.input.min" :max="props.field.input.max" :step="props.field.input.step" :id="props.field.input.id+'_'+active">
     <input
