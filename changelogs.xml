@@ -9,6 +9,7 @@
         </addition>
         <change>
             <item><![CDATA[Update GSAP library 3.13.0]]></item>
+            <item><![CDATA[Update Google Fonts Library]]></item>
             <item><![CDATA[Improve loading speed in Template Options]]></item>
             <item><![CDATA[Move all Pro features to Astroid Pro Library]]></item>
             <item><![CDATA[Improve Sticky style and effect]]></item>
