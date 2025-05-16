@@ -91,11 +91,8 @@ onMounted(()=>{
             if (options.local.length > 1) {
                 fonttypes.value.push('local');
             }
-            response.data[font_type.value].forEach(element => {
-                if (props.modelValue['font_face'] === element.value) {
-                    fontSelected.value = element;
-                }
-            });
+            const font_name = props.modelValue['font_face'].split(':')[0];
+            fontSelected.value = response.data[font_type.value].find(element => font_name === element.value.split(':')[0]) || {value: "", text: ""};
         }
     })
     .catch(function (error) {
@@ -124,7 +121,8 @@ onUnmounted(() => {
 onUpdated(()=>{
     if (fontSelected.value.value !== '' && fontSelected.value.value !== props.modelValue['font_face']) {
         getFontType(props.modelValue['font_face']);
-        fontSelected.value = options[font_type.value].find((option) => option.value === props.modelValue['font_face']);
+        const font_name = props.modelValue['font_face'].split(':')[0];
+        fontSelected.value = options[font_type.value].find((option) => option.value.split(':')[0] === font_name) || {value: "", text: ""};
     }
 })
 
