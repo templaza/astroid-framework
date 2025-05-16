@@ -3,8 +3,8 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
-   <creationDate>April 2025</creationDate>
-   <version>3.2.1</version>
+   <creationDate>May 2025</creationDate>
+   <version>3.2.2</version>
    <url>https://astroidframe.work/</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -27,6 +27,7 @@
       <language tag="en-GB">en-GB.astroid.ini</language>
       <language tag="en-GB">en-GB.astroid.sys.ini</language>
    </languages>
+   <changelogurl>https://raw.githubusercontent.com/templaza/astroid-framework/refs/heads/updates/changelogs.xml</changelogurl>
    <updateservers>
       <server type="extension" priority="1" name="Astroid Framework">https://raw.githubusercontent.com/templaza/astroid-framework/master/astroid_framework.xml</server>
    </updateservers>

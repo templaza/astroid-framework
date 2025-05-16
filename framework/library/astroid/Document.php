@@ -1080,18 +1080,14 @@ class Document
         if (!empty($variables)) {
             $color_mode_light   =   '';
             $color_mode_dark    =   '';
+            $colorMode =   $template->getColorMode();
             foreach ($variables as $key => $variable) {
                 $result = json_decode($variable);
                 if (json_last_error() === JSON_ERROR_NONE) {
-                    $value_light    =   $result->light;
-                    $value_dark     =   $result->dark;
-                    if (!empty($value_light)) {
-                        $variables[$key]    =  ValueConverter::parseValue($value_light);
+                    if (!empty($result->{$colorMode})) {
+                        $variables[$key]    =  ValueConverter::parseValue($result->{$colorMode});
                     } else {
                         unset($variables[$key]);
-                    }
-                    if (!empty($value_dark)) {
-                        $color_mode_dark    .=  '--bs-'.$key.':'.$value_dark.';';
                     }
                 } else {
                     if (strpos($key, '[light]')) {
@@ -1113,7 +1109,7 @@ class Document
                 $content    .=  '@include color-mode(dark) {'. $color_mode_dark .'}';
             }
         }
-
+        $scss->setOutputStyle(\ScssPhp\ScssPhp\OutputStyle::COMPRESSED);
         $css = $scss->compileString($content);
         Framework::getDebugger()->log('Rendering Scss');
         Helper::putContents($path, $css->getCss());
@@ -1310,7 +1306,7 @@ class Document
                 Framework::getReporter('Logs')->add('Getting SCSS Compiled CSS <code>' . str_replace(JPATH_SITE . '/', '', $cssFile) . '</code> from cache.');
             }
             // adding compiled scss
-            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0, true);
+            $this->addStyleSheet('css/compiled-' . $scssVersion . '.css', ['rel' => 'stylesheet', 'type' => 'text/css'], 0);
         }
 
         if ($getPluginParams->get('astroid_debug', 0)) {
@@ -1332,7 +1328,7 @@ class Document
             $this->addStyleSheet('css/compiled-' . $pageCSSHash . '.css');
             // custom css
             if (file_exists(JPATH_SITE . '/media/templates/site/' . $template->template . '/css/custom.css') || file_exists(JPATH_SITE . '/templates/' . $template->template . '/css/custom.css')) {
-                $this->addStyleSheet('css/custom.css');
+                $this->addLink($this->_systemUrl('css/custom.css') . '?' . Helper::frameworkVersion());
             }
         }
     }

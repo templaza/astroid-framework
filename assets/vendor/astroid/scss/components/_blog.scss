@@ -16,13 +16,9 @@ $article-posttype-spacing: 40px;
 }
 
 .article-info {
-	font-size: 14px;
+	font-size: 0.9rem;
 	margin-left: -10px;
-	a,
-	span,
-	i {
-		color: #6b6b6b;
-	}
+	opacity: 0.8;
 
 	>dd {
 		display: inline-block;

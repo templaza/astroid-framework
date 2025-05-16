@@ -236,6 +236,22 @@ class Article
             $query->order($db->quoteName('a.hits') . ' DESC');
         } elseif($ordering == 'featured') {
             $query->where($db->quoteName('a.featured') . ' = ' . $db->quote(1));
+            $query->innerJoin($db->quoteName('#__content_frontpage', 'fp') . ' ON (' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fp.content_id') . ')');
+            $query->extendWhere(
+                'AND',
+                [
+                    $db->quoteName('fp.featured_up') . ' IS NULL',
+                    $db->quoteName('fp.featured_up') . ' <= :featuredUp',
+                ],
+                'OR'
+            )->extendWhere(
+                'AND',
+                [
+                    $db->quoteName('fp.featured_down') . ' IS NULL',
+                    $db->quoteName('fp.featured_down') . ' >= :featuredDown',
+                ],
+                'OR'
+            )->bind([':featuredUp', ':featuredDown'], $nowDate);
             $query->order($db->quoteName('a.publish_up') . ' DESC');
         } elseif($ordering == 'oldest') {
             $query->order($db->quoteName('a.publish_up') . ' ASC');

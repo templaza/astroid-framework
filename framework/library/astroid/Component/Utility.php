@@ -256,7 +256,31 @@ class Utility
         $customselector = $params->get('custom_typography_selectors', '');
         $logo_type = $params->get('logo_type', 'none');
 
-        $types = array('body' => 'body, .body', 'h1' => 'h1, .h1', 'h2' => 'h2, .h2', 'h3' => 'h3, .h3', 'h4' => 'h4, .h4', 'h5' => 'h5, .h5', 'h6' => 'h6, .h6', 'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'], 'logo_tag_line' => '.astroid-logo-text > p.site-tagline', 'menu' => '.astroid-nav > li > .as-menu-item, .astroid-sidebar-menu > li > .nav-item-inner > .as-menu-item, .astroid-mobile-menu > .nav-item > .as-menu-item', 'submenu' => '.nav-submenu-container .nav-submenu > li, .jddrop-content .megamenu-item .megamenu-menu li, .nav-submenu, .astroid-mobile-menu .nav-child .menu-go-back, .astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item, .nav-item-submenu .as-menu-item', 'custom' => $customselector);
+        $types = array(
+            'body' => ['body.astroid-framework', '.body.astroid-framework'],
+            'h1' => ['h1', '.h1'],
+            'h2' => ['h2', '.h2'],
+            'h3' => ['h3', '.h3'],
+            'h4' => ['h4', '.h4'],
+            'h5' => ['h5', '.h5'],
+            'h6' => ['h6', '.h6'],
+            'logo' => ['.astroid-logo-text', '.astroid-logo-text > a.site-title'],
+            'logo_tag_line' => '.astroid-logo-text > p.site-tagline',
+            'menu' => [
+                '.astroid-nav > li > .as-menu-item',
+                '.astroid-sidebar-menu > li > .nav-item-inner > .as-menu-item',
+                '.astroid-mobile-menu > .nav-item > .as-menu-item'
+            ],
+            'submenu' => [
+                '.nav-submenu-container .nav-submenu > li',
+                '.jddrop-content .megamenu-item .megamenu-menu li',
+                '.nav-submenu',
+                '.astroid-mobile-menu .nav-child .menu-go-back',
+                '.astroid-mobile-menu .nav-child .nav-item-submenu > .as-menu-item',
+                '.nav-item-submenu .as-menu-item'
+            ],
+            'custom' => $customselector
+        );
 
         $bodyTypography = null;
         foreach ($types as $type => $selector) {
@@ -280,18 +304,36 @@ class Utility
             if (empty($typography)) {
                 continue;
             }
+            $parentClass = '.astroid-framework';
             if ($type == 'body') {
                 $bodyTypography = $typography;
+                $parentClass = '';
             }
-            Helper\Style::renderTypography($selector, $typography, $bodyTypography, true);
+            Helper\Style::renderTypography($selector, $typography, $bodyTypography, true, $parentClass);
         }
+    }
+
+    public static function getRgbaValues(string $rgbaString): ?array
+    {
+        // Match the rgba or rgb pattern
+        if (preg_match('/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/', $rgbaString, $matches)) {
+            return [
+                'r' => (int)$matches[1],
+                'g' => (int)$matches[2],
+                'b' => (int)$matches[3],
+                'a' => isset($matches[4]) ? (float)$matches[4] : 1.0, // Default alpha to 1.0 if not provided
+            ];
+        }
+
+        // Return null if the string is not in the correct format
+        return null;
     }
 
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
-        $root = new Style(':root, [data-bs-theme="light"]', '', true);
-        $root_dark = new Style('[data-bs-theme="dark"]', '', true);
+        $root = new Style(':root .astroid-framework, [data-bs-theme="light"] .astroid-framework', '', true);
+        $root_dark = new Style('[data-bs-theme="dark"] .astroid-framework', '', true);
         // Body
         $body_background_color  =   Style::getColor($params->get('body_background_color', ''));
         $body_text_color        =   Style::getColor($params->get('body_text_color', ''));
@@ -302,12 +344,30 @@ class Utility
         $root->addCss('--bs-body-bg', $body_background_color['light']);
         $root->addCss('--bs-body-color', $body_text_color['light']);
         $root->addCss('--bs-link-color', $body_link_color['light']);
+        $rgba = self::getRgbaValues($body_link_color['light']);
+        if (!empty($rgba)) {
+            $root->addCss('--bs-link-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+            $root->addCss('--bs-link-opacity', $rgba['a']);
+        }
         $root->addCss('--bs-link-hover-color', $body_link_hover_color['light']);
+        $rgba = self::getRgbaValues($body_link_hover_color['light']);
+        if (!empty($rgba)) {
+            $root->addCss('--bs-link-hover-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+        }
 
         $root_dark->addCss('--bs-body-bg', $body_background_color['dark']);
         $root_dark->addCss('--bs-body-color', $body_text_color['dark']);
         $root_dark->addCss('--bs-link-color', $body_link_color['dark']);
+        $rgba = self::getRgbaValues($body_link_color['dark']);
+        if (!empty($rgba)) {
+            $root_dark->addCss('--bs-link-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+            $root_dark->addCss('--bs-link-opacity', $rgba['a']);
+        }
         $root_dark->addCss('--bs-link-hover-color', $body_link_hover_color['dark']);
+        $rgba = self::getRgbaValues($body_link_hover_color['dark']);
+        if (!empty($rgba)) {
+            $root_dark->addCss('--bs-link-hover-color-rgb', $rgba['r'].','.$rgba['g'].','.$rgba['b']);
+        }
 
         $root->addCss('--bs-heading-color', $body_heading_color['light']);
         $root_dark->addCss('--bs-heading-color', $body_heading_color['dark']);
@@ -494,7 +554,10 @@ class Utility
         $document = Framework::getDocument();
 
         $document->addCustomTag($params->get('trackingcode', ''));
-        $document->addStyleDeclaration($params->get('customcss', ''));
+        $customcss = $params->get('customcss', '');
+        if (!empty($customcss)) {
+            $document->getWA()->addInlineStyle($customcss);
+        }
 
         $paramcustomcssfiles = $params->get('customcssfiles');
         if (isset($paramcustomcssfiles) && $paramcustomcssfiles) {

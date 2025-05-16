@@ -110,8 +110,5 @@ if (!empty($overlay_type)) {
 </div>
 <!-- end of astroid container -->
 <?php $document->include('bodyEnd'); // Body End ?>
-<?php
-//$document->astroidCustomCSS();
-?>
 <?php Astroid\Framework::getDebugger()->log('Render Body'); ?>
 <jdoc:include type="modules" name="debug" style="none" />

@@ -87,7 +87,7 @@
 		transform: translate3d(0, 0, 0);
 	}
 }
-
+@-webkit-keyframes stickyOutUp{0%{opacity:1}to{opacity:0;display:none;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}@keyframes stickyOutUp{0%{opacity:1}to{opacity:0;display:none;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}}
 @keyframes slide-down {
 	0% {
 		opacity: 0;

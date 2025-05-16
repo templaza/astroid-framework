@@ -16,7 +16,6 @@ use Astroid\Framework;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Uri\Uri;
-use ScssPhp\ScssPhp\Compiler;
 
 defined('_JEXEC') or die;
 
@@ -96,6 +95,7 @@ class BaseElement
         } else {
             $class_maxwidth         =   '';
         }
+        Helper::triggerEvent('onAstroidPrepareContent', [&$this, 'layout.element.content']);
         $content    =   '';
         if ($class_maxwidth) {
             if ($this->type === 'row') {
@@ -220,20 +220,8 @@ class BaseElement
         $this->_sticky();
         $this->_typography();
         $this->_animation();
-        $this->_custom_css();
         $this->style->render();
         $this->style_dark->render();
-    }
-
-    protected function _custom_css(): void
-    {
-        $custom_css = $this->params->get('custom_css', '');
-        if (!empty($custom_css)) {
-            $scss = new Compiler();
-            $css = $scss->compileString('#' . $this->getAttribute('id') .'{'.$custom_css.'}');
-            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->addInlineStyle($css->getCss());
-        }
     }
 
     protected function _border(): void

@@ -2,12 +2,12 @@
 <extension type="module" client="administrator" method="upgrade">
 	<name>Astroid Clear Cache</name>
 	<author>TemPlaza</author>
-	<creationDate>October 2024</creationDate>
+	<creationDate>May 2025</creationDate>
 	<copyright>(C) 2024 TemPlaza.com.</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>support@templaza.com</authorEmail>
 	<authorUrl>www.templaza.com</authorUrl>
-	<version>3.2.1</version>
+	<version>3.2.2</version>
 	<description>Astroid Clear Cache Module</description>
 	<files>
 		<filename module="mod_astroid_clear_cache">mod_astroid_clear_cache.php</filename>
