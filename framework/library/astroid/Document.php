@@ -1086,6 +1086,7 @@ class Document
                 if (json_last_error() === JSON_ERROR_NONE) {
                     if (!empty($result->{$colorMode})) {
                         $variables[$key]    =  ValueConverter::parseValue($result->{$colorMode});
+                        ${'color_mode_' . $colorMode} .= '--bs-'.$key.': ' . $result->{$colorMode} . ';';
                     } else {
                         unset($variables[$key]);
                     }
@@ -1098,6 +1099,7 @@ class Document
                         unset($variables[$key]);
                     } else {
                         $variables[$key]    =  ValueConverter::parseValue($variable);
+                        $color_mode_light   .=  '--bs-'.$key.': ' . $variable . ';';
                     }
                 }
             }
