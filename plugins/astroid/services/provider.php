@@ -8,9 +8,12 @@
  */
 
 \defined('_JEXEC') or die;
-if (file_exists(JPATH_LIBRARIES . '/astroid/framework/library/astroid')) {
-    JLoader::registerNamespace('Astroid', JPATH_LIBRARIES . '/astroid/framework/library/astroid', false, false, 'psr4');
-}
+require_once JPATH_ROOT . DIRECTORY_SEPARATOR .'libraries'
+    .DIRECTORY_SEPARATOR.'astroid'
+    .DIRECTORY_SEPARATOR.'framework'
+    .DIRECTORY_SEPARATOR.'library'
+    .DIRECTORY_SEPARATOR.'vendor'
+    .DIRECTORY_SEPARATOR.'autoload.php';
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
