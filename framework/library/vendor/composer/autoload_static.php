@@ -37,6 +37,10 @@ class ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70
         array (
             'FontLib\\' => 8,
         ),
+        'A' => 
+        array (
+            'Astroid\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -81,6 +85,10 @@ class ComposerStaticInita7f239344f0f7f935f9220eec1fb9c70
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'Astroid\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/astroid',
         ),
     );
 
