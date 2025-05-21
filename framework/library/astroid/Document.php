@@ -1080,7 +1080,7 @@ class Document
         if (!empty($variables)) {
             $color_mode_light   =   '';
             $color_mode_dark    =   '';
-            $colorMode =   $template->getColorMode();
+            $colorMode =   $template->getActualColorMode();
             foreach ($variables as $key => $variable) {
                 $result = json_decode($variable);
                 if (json_last_error() === JSON_ERROR_NONE) {

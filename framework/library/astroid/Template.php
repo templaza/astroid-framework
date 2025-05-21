@@ -424,4 +424,10 @@ class Template
 
         return 'light';
     }
+
+    public function getActualColorMode()
+    {
+        $colorMode = $this->getColorMode();
+        return ($colorMode == 'auto') ? 'light' : $colorMode;
+    }
 }
