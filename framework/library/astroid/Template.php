@@ -404,23 +404,30 @@ class Template
     }
 
     public function getColorMode() {
-        $color_mode     =   $this->params->get('astroid_color_mode_enable', 0);
-        if ($color_mode == 2) {
+        $colorMode = $this->params->get('astroid_color_mode_enable', 0);
+        if ($colorMode == 2) {
             return 'dark';
         }
-        $color_mode_default = $this->params->get('astroid_color_mode_default', 'auto');
-        $color_mode_theme = '';
-        if ($color_mode == 1) {
-            $enable_color_mode_transform    =   $this->params->get('enable_color_mode_transform', 0);
-            if ($enable_color_mode_transform) {
-                $colormode_transform_type   =   $this->params->get('colormode_transform_type', 'light_dark');
-                $color_mode_theme           =   $colormode_transform_type === 'light_dark' ? 'light' : 'dark';
-            } else {
-                $app               =   Factory::getApplication();
-                $client_color      =   $app->input->get('color_mode', '', 'ALNUM');
-                $color_mode_theme  =   !empty($client_color) ? $client_color : $app->input->cookie->get('astroid-color-mode-'.md5($this->template), $color_mode_default);
+
+        $colorModeDefault = $this->params->get('astroid_color_mode_default', 'auto');
+
+        if ($colorMode == 1) {
+            if ($this->params->get('enable_color_mode_transform', 0)) {
+                return $this->params->get('colormode_transform_type', 'light_dark') === 'light_dark' ? 'light' : 'dark';
             }
+            $app = Factory::getApplication();
+            $clientColor = $app->input->get('color_mode', '', 'ALNUM');
+            return !empty($clientColor)
+                ? $clientColor
+                : $app->input->cookie->get('astroid-color-mode-' . md5($this->template), $colorModeDefault);
         }
-        return $color_mode_theme;
+
+        return 'light';
+    }
+
+    public function getActualColorMode()
+    {
+        $colorMode = $this->getColorMode();
+        return ($colorMode == 'auto') ? 'light' : $colorMode;
     }
 }

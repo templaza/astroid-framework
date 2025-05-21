@@ -83,6 +83,10 @@ class Template
                 $params = file_get_contents(JPATH_SITE . '/media/templates/site/' . $template . '/astroid/default.json');
                 $params = str_replace('TEMPLATE_NAME', $template, $params);
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
+            } else if (file_exists(JPATH_SITE . '/templates/' . $template . '/astroid/default.json')) {
+                $params = file_get_contents(JPATH_SITE . '/templates/' . $template . '/astroid/default.json');
+                $params = str_replace('TEMPLATE_NAME', $template, $params);
+                Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', $params);
             } else {
                 Helper::putContents(JPATH_SITE . "/media/templates/site/{$template}/params" . '/' . $id . '.json', '');
             }

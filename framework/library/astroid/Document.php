@@ -1080,12 +1080,13 @@ class Document
         if (!empty($variables)) {
             $color_mode_light   =   '';
             $color_mode_dark    =   '';
-            $colorMode =   $template->getColorMode();
+            $colorMode =   $template->getActualColorMode();
             foreach ($variables as $key => $variable) {
                 $result = json_decode($variable);
                 if (json_last_error() === JSON_ERROR_NONE) {
                     if (!empty($result->{$colorMode})) {
                         $variables[$key]    =  ValueConverter::parseValue($result->{$colorMode});
+                        ${'color_mode_' . $colorMode} .= '--bs-'.$key.': ' . $result->{$colorMode} . ';';
                     } else {
                         unset($variables[$key]);
                     }

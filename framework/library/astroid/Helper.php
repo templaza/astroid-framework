@@ -29,8 +29,6 @@ use Joomla\CMS\Http\HttpFactory;
 
 defined('_JEXEC') or die;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 class Helper
 {
     public static function loadLanguage($extension, $client = 'site')
