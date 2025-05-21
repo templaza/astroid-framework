@@ -3,28 +3,14 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.2.2</version>
-        <addition>
-            <item><![CDATA[Add ThreeJS library]]></item>
-        </addition>
+        <version>3.2.3</version>
         <change>
-            <item><![CDATA[Update GSAP library 3.13.0]]></item>
-            <item><![CDATA[Update Google Fonts Library]]></item>
-            <item><![CDATA[Improve loading speed in Template Options]]></item>
-            <item><![CDATA[Move all Pro features to Astroid Pro Library]]></item>
-            <item><![CDATA[Improve Sticky style and effect]]></item>
-            <item><![CDATA[Add option always display header in Mobile Mode]]></item>
-            <item><![CDATA[Improve UX for Responsive settings]]></item>
-            <item><![CDATA[Improve style of Off Canvas button]]></item>
-            <item><![CDATA[Improve Slideshow Widget add set height follow viewport]]></item>
+            <item><![CDATA[Improved display of some CSS]]></item>
+            <item><![CDATA[Update Composer Autoload]]></item>
         </change>
         <fix>
-            <item><![CDATA[Fix issue call WA when WebAssetManager is locked]]></item>
-            <item><![CDATA[Fix issue Astroid style was overrides by extensions]]></item>
-            <item><![CDATA[Fix issue custom_css load in beginning]]></item>
-            <item><![CDATA[Fix issue Article Widget - Feature Only not working properly]]></item>
-            <item><![CDATA[Fix issue load FancyBox when MinifyJS is enabled]]></item>
-            <item><![CDATA[Fix issue email is not protected in Contact Info module]]></item>
+            <item><![CDATA[Fix issue colorMode return wrong value]]></item>
+            <item><![CDATA[Fix font not recognized error when updating Google Font]]></item>
         </fix>
         <note>
             <item><![CDATA[This version is compatible with PHP>=8.2 only]]></item>
