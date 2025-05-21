@@ -1099,7 +1099,6 @@ class Document
                         unset($variables[$key]);
                     } else {
                         $variables[$key]    =  ValueConverter::parseValue($variable);
-                        $color_mode_light   .=  '--bs-'.$key.': ' . $variable . ';';
                     }
                 }
             }
