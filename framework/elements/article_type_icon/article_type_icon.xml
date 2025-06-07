@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_ELEMENTS_ARTICLE_TYPE_ICON</title>
+    <description>ASTROID_ELEMENTS_ARTICLE_TYPE_ICON</description>
+    <icon>as-icon as-icon-film2</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_SYSTEM</category>
+    <element_type>article</element_type>
+    <multiple>false</multiple>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                <field astroidgroup="general" name="article_icon_size" type="astroidrange" responsive="true" min="1" max="300" step="1" postfix="px|rem" default="48" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
+            </fieldset>
+        </fields>
+    </form>
+</element>

@@ -147,7 +147,7 @@ class BaseElement
         }
     }
 
-    protected function addClass($class): void
+    public function addClass($class): void
     {
         if (!empty($class)) {
             $this->_classes[] = $class;

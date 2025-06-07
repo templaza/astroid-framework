@@ -32,7 +32,7 @@ class Video
         return $id;
     }
 
-    public static function _youtube($id, $meta = false)
+    public static function _youtube($id, $meta = false, $autoplay = 0)
     {
         $content = '';
         if ($meta) {
@@ -42,17 +42,20 @@ class Video
         return $content;
     }
 
-    public static function _vimeo($id, $meta = false)
+    public static function _vimeo($id, $meta = false, $autoplay = 0)
     {
         $content = '';
         if ($meta) {
             $content .= '<meta itemprop="thumbnailURL" content="http://i.vimeocdn.com/video/' . $id . '.jpg" /><meta itemprop="embedURL" content="https://vimeo.com/' . $id . '" />';
         }
+        if ($autoplay) {
+            $id .= '?autoplay=1&loop=1&muted=1&autopause=0';
+        }
         $content = '<iframe src="https://player.vimeo.com/video/' . $id . '" width="640" height="269" style="border:0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
         return $content;
     }
 
-    public static function getVideoByTypeUrl($type = '', $url = '', $meta = false)
+    public static function getVideoByTypeUrl($type = '', $url = '', $meta = false, $autoplay = 0)
     {
         $id = self::_id($type, $url);
         if (empty($id)) {
@@ -62,7 +65,7 @@ class Video
         if (!method_exists(self::class, $method)) {
             return;
         }
-        return self::$method($id, $meta);
+        return self::$method($id, $meta, $autoplay);
     }
 
     public static function getVideoThumbnailByTypeUrl($type = '', $url = '')
