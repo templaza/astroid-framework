@@ -56,6 +56,12 @@
     }
   }
 }
+.item-page {
+  .icons {
+    position: relative;
+    z-index: 1;
+  }
+}
 .astroid-article-full-image {
   figure {
     margin-bottom: 0;
