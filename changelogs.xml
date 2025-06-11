@@ -3,14 +3,16 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.2.3</version>
+        <version>3.2.4</version>
+        <addition>
+            <item><![CDATA[Add Article Type Icon element.]]></item>
+        </addition>
         <change>
-            <item><![CDATA[Improved display of some CSS]]></item>
-            <item><![CDATA[Update Composer Autoload]]></item>
+            <item><![CDATA[Move vue files to Astroid Vuejs to reduce production package]]></item>
         </change>
         <fix>
-            <item><![CDATA[Fix issue colorMode return wrong value]]></item>
-            <item><![CDATA[Fix font not recognized error when updating Google Font]]></item>
+            <item><![CDATA[Fix issue logo no center on Sticky menu]]></item>
+            <item><![CDATA[Fix issue can't edit article in detail page]]></item>
         </fix>
         <note>
             <item><![CDATA[This version is compatible with PHP>=8.2 only]]></item>
