@@ -52,7 +52,7 @@ if ($background_setting_404 == 'video' && !empty($background_video_404)) {
     echo $document->getCustomTags('head');
     ?>
 </head>
-<body class="error-page" <?php echo implode(' ', $bodyAttrs); ?>>
+<body class="astroid-framework error-page" <?php echo implode(' ', $bodyAttrs); ?>>
    <div class="container">
       <div class="row">
          <div class="col-12 text-center align-self-center">

@@ -18,9 +18,10 @@ $params = $article->params;
 $type = $params->get('astroid_article_video_type', 'youtube');
 $url = $params->get('astroid_article_video_url', '');
 $local_url = $params->get('astroid_article_video_local', '');
+$autoplay = $params->get('astroid_article_video_autoplay', 0);
 
 if ($type !== 'local') {
-    $content = Astroid\Helper\Video::getVideoByTypeUrl($type, $url, true);
+    $content = Astroid\Helper\Video::getVideoByTypeUrl($type, $url, true, $autoplay);
     $thumbnail = Astroid\Helper\Video::getVideoThumbnailByTypeUrl($type, $url);
     if (empty($content)) {
         return;

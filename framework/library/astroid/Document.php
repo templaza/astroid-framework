@@ -1118,10 +1118,6 @@ class Document
 
     public function renderCss(): string
     {
-        /* if (Framework::isSite()) {
-            $template = Framework::getTemplate();
-            Helper::clearCache($template->template, ['compiled-css']);
-        } */
         $cssScript = '';
         foreach ($this->_styles as $device => $css) {
             $cssContent = implode('', $this->_styles[$device]);

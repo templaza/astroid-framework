@@ -16,7 +16,6 @@ extract($displayData);
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $params = $template->getParams();
-$color_mode = $template->getColorMode();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_menu_method = $params->get('header_menu_method', 'default');
@@ -72,7 +71,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
               <?php echo '</div>'; ?>
           <?php } ?>
-         <?php $document->include('logo', ['position' => 'sticky']); ?>
+          <?php $document->include('logo', ['position' => 'sticky']); ?>
          <?php
          if ($stickey_mode == 'left') {
             // header nav starts
@@ -101,7 +100,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
          echo '</div>';
       }
       ?>
-      <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas || $color_mode) : ?>
+      <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
          <div class="header-right-section d-flex justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($stickey_mode == 'right') {
