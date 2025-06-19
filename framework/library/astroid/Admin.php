@@ -35,17 +35,29 @@ class Admin extends Helper\Client
 
     protected function save(): void
     {
+        // Get the application input object
+        $app = Factory::getApplication();
+        $input = $app->input;
+
+        // Get all query parameters as an associative array
+        $queryParams = $input->getArray();
+
+        // Find security token and remove it from the query parameters
+        foreach ($queryParams as $key => $value) {
+            if (!in_array($key, ['option', 'astroid', 'template'])) {
+                $input->post->set($key, $value, 'RAW');
+            }
+        }
         $this->checkAuth();
         $app = Factory::getApplication();
-        $params = $app->input->post->get('params', array(), 'RAW');
+        $params = file_get_contents('php://input');
         $export_settings = $app->input->post->get('export_settings', 0, 'INT');
 
         if ($export_settings) {
-            $this->response($params);
+            $this->response(\json_decode($params));
         }
 
         $template = Framework::getTemplate();
-        $params = \json_encode($params);
 
         $astroid_preset = $app->input->post->get('astroid-preset', 0, 'INT');
         if ($astroid_preset) {
