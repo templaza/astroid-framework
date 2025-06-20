@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-namespace Astroid;
+namespace astroid;
 use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -39,20 +39,18 @@ class Admin extends Helper\Client
         $app = Factory::getApplication();
         $input = $app->input;
 
-        // Get all query parameters as an associative array
-        $queryParams = $input->getArray();
-
-        // Find security token and remove it from the query parameters
-        foreach ($queryParams as $key => $value) {
-            if (!in_array($key, ['option', 'astroid', 'template'])) {
-                $input->post->set($key, $value, 'RAW');
-            }
-        }
+//        $excludeKeys = ['option', 'astroid', 'template'];
+//        $queryParams = $input->getArray();
+//
+//        // Filter out excluded keys
+//        foreach (array_diff_key($queryParams, array_flip($excludeKeys)) as $key => $value) {
+//            $input->post->set($key, $value, 'RAW');
+//        }
         $this->checkAuth();
-        $app = Factory::getApplication();
-        $params = file_get_contents('php://input');
-        $export_settings = $app->input->post->get('export_settings', 0, 'INT');
-
+        $params = $input->post->get('params', array(), 'RAW');
+//        $params = file_get_contents('php://input');
+        $export_settings = $input->post->get('export_settings', 0, 'INT');
+        $params = \json_encode($params);
         if ($export_settings) {
             $this->response(\json_decode($params));
         }
