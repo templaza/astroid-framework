@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-namespace astroid;
+namespace Astroid;
 use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
