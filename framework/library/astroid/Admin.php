@@ -39,34 +39,27 @@ class Admin extends Helper\Client
         $app = Factory::getApplication();
         $input = $app->input;
 
-//        $excludeKeys = ['option', 'astroid', 'template'];
-//        $queryParams = $input->getArray();
-//
-//        // Filter out excluded keys
-//        foreach (array_diff_key($queryParams, array_flip($excludeKeys)) as $key => $value) {
-//            $input->post->set($key, $value, 'RAW');
-//        }
+        $excludeKeys = ['option', 'astroid', 'template'];
+        $queryParams = $input->getArray();
+
+        // Filter out excluded keys
+        foreach (array_diff_key($queryParams, array_flip($excludeKeys)) as $key => $value) {
+            $input->post->set($key, $value, 'RAW');
+        }
         $this->checkAuth();
-        $params = $input->post->get('params', array(), 'RAW');
-//        $params = file_get_contents('php://input');
+        $params = file_get_contents('php://input');
         $export_settings = $input->post->get('export_settings', 0, 'INT');
-        $params = \json_encode($params);
+
         if ($export_settings) {
             $this->response(\json_decode($params));
         }
 
         $template = Framework::getTemplate();
 
-        $astroid_preset = $app->input->post->get('astroid-preset', 0, 'INT');
+        $astroid_preset = $input->get('preset', 0, 'INT');
         if ($astroid_preset) {
-            $preset = [
-                'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
-                'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
-                'thumbnail' => '', 'demo' => '',
-                'preset' => $params
-            ];
-            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
+            $preset_name = uniqid('preset-');
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', $params);
             $this->response($preset_name);
         } else {
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
