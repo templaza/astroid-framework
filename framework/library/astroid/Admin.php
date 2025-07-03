@@ -96,8 +96,11 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
-
-            $this->response(Layout::getDataLayout($filename, $template_name, $type));
+            $layout         = Layout::getDataLayout($filename, $template_name, $type);
+            if (!is_string($layout['data'])) {
+                $layout['data'] = \json_encode($layout['data']);
+            }
+            $this->response($layout);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -119,7 +122,7 @@ class Admin extends Helper\Client
                 'title' => $app->input->post->get('title', 'layout', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
                 'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
-                'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
+                'data' => \json_decode($app->input->post->get('data', '{"sections":[]}', 'RAW'), true),
             ];
             $default = $app->input->post->get('default', '', 'RAW');
 

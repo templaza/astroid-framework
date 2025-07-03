@@ -47,7 +47,11 @@ class Layout
         if (!isset($sublayout['data']) || !$sublayout['data']) {
             return '';
         }
-        $layout     = \json_decode($sublayout['data'], true);
+        if (is_string($sublayout['data'])) {
+            $layout     = \json_decode($sublayout['data'], true);
+        } else {
+            $layout     = $sublayout['data'];
+        }
         $devices    = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] : [
             [
                 'code'=> 'lg',
@@ -140,9 +144,7 @@ class Layout
             return [];
         }
         $json = file_get_contents($layout_path);
-        $data = \json_decode($json, true);
-
-        return $data;
+        return \json_decode($json, true);
     }
 
     public static function deleteDatalayouts($layouts = [], $template = '', $type = '')

@@ -372,7 +372,16 @@ class Template
             $value = \file_get_contents(ASTROID_MEDIA . '/json/layouts/default.json');
             $layout = \json_decode($value, true);
         } else {
-            $layout = \json_decode($layout, true);
+            if (Helper::isJsonString($layout)) {
+                $layout = \json_decode($layout, true);
+            } else {
+                $layout = Element\Layout::getDataLayout($layout, $this->template, 'main_layouts');
+                if (is_string($layout['data'])) {
+                    return \json_decode($layout['data'], true);
+                } else {
+                    return $layout['data'];
+                }
+            }
         }
         return $layout;
     }
