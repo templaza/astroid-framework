@@ -48,11 +48,6 @@ class Admin extends Helper\Client
         }
         $this->checkAuth();
         $params = file_get_contents('php://input');
-        $export_settings = $input->post->get('export_settings', 0, 'INT');
-
-        if ($export_settings) {
-            $this->response(\json_decode($params));
-        }
 
         $template = Framework::getTemplate();
 
