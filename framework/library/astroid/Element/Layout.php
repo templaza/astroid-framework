@@ -47,7 +47,11 @@ class Layout
         if (!isset($sublayout['data']) || !$sublayout['data']) {
             return '';
         }
-        $layout     = \json_decode($sublayout['data'], true);
+        if (is_string($sublayout['data'])) {
+            $layout     = \json_decode($sublayout['data'], true);
+        } else {
+            $layout     = $sublayout['data'];
+        }
         $devices    = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] : [
             [
                 'code'=> 'lg',
@@ -66,7 +70,7 @@ class Layout
         return $content;
     }
 
-    public static function getDatalayouts($template = '', $type = '')
+    public static function getDatalayouts($template = '', $type = ''): array
     {
         if (!$template) {
             $template = Framework::getTemplate()->template;
@@ -80,7 +84,7 @@ class Layout
         return self::mergeLayouts($layouts);
     }
 
-    public static function readLayoutsFromPath($path, $template, $type)
+    public static function readLayoutsFromPath($path, $template, $type): array
     {
         if (!file_exists($path)) {
             return [];
@@ -99,7 +103,7 @@ class Layout
         }, $files);
     }
 
-    private static function mergeLayouts($layouts)
+    private static function mergeLayouts($layouts): array
     {
         $merged = [];
         foreach ($layouts as $layout) {
@@ -140,9 +144,7 @@ class Layout
             return [];
         }
         $json = file_get_contents($layout_path);
-        $data = \json_decode($json, true);
-
-        return $data;
+        return \json_decode($json, true);
     }
 
     public static function deleteDatalayouts($layouts = [], $template = '', $type = '')

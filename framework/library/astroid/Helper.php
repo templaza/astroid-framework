@@ -963,4 +963,9 @@ class Helper
         });
         return $return;
     }
+
+    public static function isJsonString($string): bool
+    {
+        return preg_match('/^\s*(\{.*\}|\[.*\])\s*$/s', $string) === 1;
+    }
 }
