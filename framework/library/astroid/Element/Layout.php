@@ -70,7 +70,7 @@ class Layout
         return $content;
     }
 
-    public static function getDatalayouts($template = '', $type = '')
+    public static function getDatalayouts($template = '', $type = ''): array
     {
         if (!$template) {
             $template = Framework::getTemplate()->template;
@@ -84,7 +84,7 @@ class Layout
         return self::mergeLayouts($layouts);
     }
 
-    public static function readLayoutsFromPath($path, $template, $type)
+    public static function readLayoutsFromPath($path, $template, $type): array
     {
         if (!file_exists($path)) {
             return [];
@@ -103,7 +103,7 @@ class Layout
         }, $files);
     }
 
-    private static function mergeLayouts($layouts)
+    private static function mergeLayouts($layouts): array
     {
         $merged = [];
         foreach ($layouts as $layout) {

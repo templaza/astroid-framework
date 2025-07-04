@@ -11,6 +11,7 @@ namespace Astroid;
 use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
@@ -79,6 +80,22 @@ class Admin extends Helper\Client
         $app = Factory::getApplication();
         $template_name  = $app->input->get('template', NULL, 'RAW');
         $type           = $app->input->get('type', 'layouts', 'RAW');
+        $this->response(Layout::getDatalayouts($template_name, $type));
+    }
+
+    protected function getLayoutsById(): void
+    {
+        $app = Factory::getApplication();
+        $id  = $app->input->get('id');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db
+            ->getQuery(true)
+            ->select('s.template')
+            ->from('#__template_styles as s')
+            ->where('s.id = ' . $id);
+        $db->setQuery($query);
+        $template_name = $db->loadResult();
+        $type          = $app->input->get('type', 'layouts', 'RAW');
         $this->response(Layout::getDatalayouts($template_name, $type));
     }
 

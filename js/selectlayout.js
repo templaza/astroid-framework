@@ -1,0 +1,62 @@
+class AstroidSelectLayout {
+    constructor(el) {
+        this.el = el;
+        this.data = JSON.parse(el.innerHTML);
+        this.options = [];
+        this.currentstyle = document.getElementById('jform_template_style_id')?.value;
+        this.selectEl = null;
+        this.init();
+    }
+
+    async init() {
+        await this.fetchAndRender();
+        const styleEl = document.getElementById('jform_template_style_id');
+        if (styleEl) {
+            styleEl.addEventListener('change', async (e) => {
+                this.currentstyle = e.target.value;
+                await this.fetchAndRender();
+            });
+        }
+    }
+
+    async fetchAndRender() {
+        try {
+            const response = await fetch(
+                `index.php?option=com_ajax&astroid=getLayoutsById&id=${this.currentstyle}&type=main_layouts`,
+                { method: 'GET', headers: { 'Accept': 'application/json' } }
+            );
+            const data = await response.json();
+            if (data.status === 'success') {
+                this.options = data.data;
+                this.renderSelect();
+            }
+        } catch (error) {
+            console.error('Error fetching layouts:', error);
+        }
+    }
+
+    renderSelect() {
+        if (!this.selectEl) {
+            this.selectEl = document.createElement('select');
+            this.selectEl.className = 'form-select';
+            this.selectEl.name = this.data.name;
+            this.selectEl.id = this.data.id;
+            this.el.insertAdjacentElement('afterend', this.selectEl);
+        }
+        this.selectEl.innerHTML = this.getLayoutOptions();
+    }
+
+    getLayoutOptions() {
+        let options = `<option value="" ${this.data.value === '' ? 'selected' : ''}>${Joomla.JText._('JOPTION_USE_DEFAULT')}</option>`;
+        this.options.forEach((option) => {
+            options += `<option value="${option.name}" ${this.data.value === option.name ? 'selected' : ''}>${option.title}</option>`;
+        });
+        return options;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.astroid-select-layout').forEach(function(el) {
+        new AstroidSelectLayout(el);
+    });
+});
