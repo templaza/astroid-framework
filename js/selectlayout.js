@@ -34,7 +34,7 @@ class AstroidSelectLayout {
             console.error('Error fetching layouts:', error);
         }
     }
-
+    
     renderSelect() {
         if (!this.selectEl) {
             this.selectEl = document.createElement('select');

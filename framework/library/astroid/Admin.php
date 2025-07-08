@@ -195,7 +195,43 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $layouts        = $app->input->get('layouts', array(), 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
-
+            if ($type === 'main_layouts' && !empty($layouts)) {
+                $layout = $layouts[0];
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
+                $query = $db->getQuery(true);
+                $query->select('id, title')
+                    ->from('#__template_styles')
+                    ->where('template = ' . $db->quote($template_name))
+                    ->where('client_id = 0');
+                $db->setQuery($query);
+                $template_styles = $db->loadObjectList();
+                if ($template_styles) {
+                    foreach ($template_styles as $style) {
+                        if (file_exists(JPATH_SITE . "/media/templates/site/$template_name/params/{$style->id}.json")) {
+                            $params = \json_decode(file_get_contents(JPATH_SITE . "/media/templates/site/$template_name/params/{$style->id}.json"), true);
+                            if (isset($params['layout']) && $params['layout'] === $layout) {
+                                throw new \Exception(Text::sprintf('TPL_ASTROID_SYSTEM_DELETE_MESSAGES_LAYOUT_USE_IN_TEMPLATE', $style->title));
+                            }
+                        }
+                    }
+                }
+                $query = $db
+                    ->getQuery(true)
+                    ->select('title, params')
+                    ->from('#__menu')
+                    ->where('client_id = 0')
+                    ->where('parent_id <> 0');
+                $db->setQuery($query);
+                $menus = $db->loadObjectList();
+                if ($menus) {
+                    foreach ($menus as $menu) {
+                        $params = \json_decode($menu->params, true);
+                        if (isset($params['astroidlayout']) && $params['astroidlayout']) {
+                            throw new \Exception(Text::sprintf('TPL_ASTROID_SYSTEM_DELETE_MESSAGES_LAYOUT_USE_IN_MENU', $menu->title));
+                        }
+                    }
+                }
+            }
             $this->response(Layout::deleteDatalayouts($layouts, $template_name, $type));
         } catch (\Exception $e) {
             $this->errorResponse($e);
