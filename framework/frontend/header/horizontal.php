@@ -17,7 +17,6 @@ extract($displayData);
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $params = $template->getParams();
-$color_mode = $template->getColorMode();
 
 $mode = $params->get('header_horizontal_menu_mode', 'left');
 $block_1_type = $params->get('header_block_1_type', 'blank');
@@ -104,7 +103,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
          echo '</div>';
       }
       ?>
-      <?php if ($block_1_type != 'blank' || $mode == 'right' || $enable_offcanvas || $color_mode) : ?>
+      <?php if ($block_1_type != 'blank' || $mode == 'right' || $enable_offcanvas) : ?>
          <div class="header-right-section as-gutter-x-xl@lg d-flex justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($mode == 'right') {

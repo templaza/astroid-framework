@@ -16,7 +16,6 @@ extract($displayData);
 $document = Astroid\Framework::getDocument();
 $template = Astroid\Framework::getTemplate();
 $params = $template->getParams();
-$color_mode = $template->getColorMode();
 
 $mode = $params->get('header_stacked_menu_mode', 'center');
 $block_1_type = $params->get('header_block_1_type', 'blank');
