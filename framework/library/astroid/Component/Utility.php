@@ -106,7 +106,7 @@ class Utility
 
         $theme_width    =   $params->get('theme_width', '');
         if (!empty($theme_width)) {
-            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .container-fluid, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
+            $document->addStyleDeclaration('.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {max-width: '.$theme_width.';}');
         }
 
         $template_layout = $params->get('template_layout', 'wide');

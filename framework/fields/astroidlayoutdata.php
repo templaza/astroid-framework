@@ -89,7 +89,12 @@ class JFormFieldAstroidLayoutData extends FormField {
                     $language[strtoupper($string)] = $app->getLanguage()->_($string);
                 }
                 $form_template  =   $constant['form_template'];
-                $layout     =   json_decode($sublayout['data'], true);
+                if (is_string($sublayout['data'])) {
+                    $layout     =   json_decode($sublayout['data'], true);
+                } else {
+                    $layout     =   $sublayout['data'];
+                }
+
                 foreach ($layout['sections'] as $section) {
                     $section_widgets = array();
 

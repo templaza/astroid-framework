@@ -17,7 +17,6 @@ extract($displayData);
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $params = $template->getParams();
-$color_mode = $template->getColorMode();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
