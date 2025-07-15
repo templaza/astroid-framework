@@ -55,6 +55,20 @@ class Admin extends Helper\Client
         $astroid_preset = $input->get('preset', 0, 'INT');
         if ($astroid_preset) {
             $preset_name = uniqid('preset-');
+            $data = \json_decode($params, true);
+            if (is_string($data['preset'])) {
+                $data_preset = \json_decode($data['preset'], true);
+            } else {
+                $data_preset = $data['preset'];
+            }
+
+            if (!Helper::isJsonString($data_preset['layout'])) {
+                $layout = Layout::getDataLayout($data_preset['layout'], $template->template, 'main_layouts');
+                $data_preset['layout'] = \json_encode($layout['data']);
+                $data['preset'] = $data_preset;
+                $params = \json_encode($data);
+            }
+
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', $params);
             $this->response($preset_name);
         } else {
@@ -226,7 +240,7 @@ class Admin extends Helper\Client
                 if ($menus) {
                     foreach ($menus as $menu) {
                         $params = \json_decode($menu->params, true);
-                        if (isset($params['astroidlayout']) && $params['astroidlayout']) {
+                        if (isset($params['astroidlayout']) && $params['astroidlayout'] === $layout) {
                             throw new \Exception(Text::sprintf('TPL_ASTROID_SYSTEM_DELETE_MESSAGES_LAYOUT_USE_IN_MENU', $menu->title));
                         }
                     }
