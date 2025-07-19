@@ -46,7 +46,11 @@ class Section extends BaseElement
         $custom_class = $this->params->get('custom_container_class', '');
         switch ($container) {
             case '':
-                $container = 'container';
+                if ($this->isRoot) {
+                    $container = 'container';
+                } else {
+                    $container = '';
+                }
                 break;
             case 'no-container':
                 $container = '';

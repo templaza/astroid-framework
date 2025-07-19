@@ -33,10 +33,10 @@ class Element extends BaseElement
     {
         $this->_decorateSection();
         if ($this->type == 'sublayout') {
-            $this->content = Layout::renderSublayout($this->params->get('source', ''), '', 'layouts', [], $this->role);
+            $this->content = Layout::renderSublayout($this->params->get('source', ''), '', 'layouts', [], 'sublayout');
         } else {
             $this->prepareContent();
-            if (empty($this->state)) {
+            if (empty($this->state) || !$this->isAssigned) {
                 return '';
             }
             $dynamic_data = $this->getDynamicContent();
