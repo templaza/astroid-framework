@@ -88,7 +88,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
          ?>
       </div>
       <?php if (!$enable_offcanvas && ($mode == 'left' || $mode == 'center')) : ?>
-         <div style="width: 30px;"></div>
+         <div class="min-w-30"></div>
       <?php endif; ?>
       <?php
       if ($mode == 'center') {
@@ -104,7 +104,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
       }
       ?>
       <?php if ($block_1_type != 'blank' || $mode == 'right' || $enable_offcanvas) : ?>
-         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($mode == 'right') {
                // header nav starts

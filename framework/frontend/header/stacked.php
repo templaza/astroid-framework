@@ -190,10 +190,12 @@ if ($mode == 'divided-logo-left') {
             }
             if ($enable_offcanvas) {
             ?>
-                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                 <?php echo '</div>'; ?>
             <?php
+            } else {
+                echo '<div class="min-w-30"></div>';
             }
             echo '</div>';
             // header nav starts -->
@@ -280,10 +282,12 @@ if ($mode == 'divided-logo-left') {
 
                if ($enable_offcanvas) {
                ?>
-                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
+                   <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end offcanvas-button offcanvasRight">'; ?>
                    <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                    <?php echo '</div>'; ?>
                <?php
+               } else {
+                   echo '<div class="min-w-30"></div>';
                }
                ?>
             </div>
@@ -329,10 +333,12 @@ if ($mode == 'divided-logo-left') {
 
             if ($enable_offcanvas) {
             ?>
-                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-lg-4 offcanvas-button offcanvasRight">'; ?>
+                <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-lg-4 offcanvas-button offcanvasRight">'; ?>
                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                 <?php echo '</div>'; ?>
             <?php
+            } else {
+                echo '<div class="min-w-30"></div>';
             }
             echo '</div>';
             // header nav starts -->
@@ -456,10 +462,12 @@ if ($mode == 'divided-logo-left') {
              // header nav ends
              if ($enable_offcanvas) {
                  ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' min-w-30 justify-content-end ms-4 offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
                  <?php
+             } else {
+                 echo '<div class="min-w-30"></div>';
              }
              echo '</div>';
 
