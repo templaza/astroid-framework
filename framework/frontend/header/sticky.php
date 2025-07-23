@@ -85,7 +85,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
          ?>
       </div>
       <?php if (!$enable_offcanvas && ($stickey_mode == 'left' || $stickey_mode == 'center')) : ?>
-          <div class="min-w-30"></div>
+          <div class="min-w-30 d-<?php echo $header_breakpoint; ?>-none"></div>
       <?php endif; ?>
       <?php
       if ($stickey_mode == 'center') {

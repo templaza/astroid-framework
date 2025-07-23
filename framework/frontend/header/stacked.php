@@ -195,7 +195,7 @@ if ($mode == 'divided-logo-left') {
                 <?php echo '</div>'; ?>
             <?php
             } else {
-                echo '<div class="min-w-30"></div>';
+                echo '<div class="min-w-30 d-'.$header_breakpoint.'-none"></div>';
             }
             echo '</div>';
             // header nav starts -->
@@ -287,7 +287,7 @@ if ($mode == 'divided-logo-left') {
                    <?php echo '</div>'; ?>
                <?php
                } else {
-                   echo '<div class="min-w-30"></div>';
+                   echo '<div class="min-w-30 d-'.$header_breakpoint.'-none"></div>';
                }
                ?>
             </div>
@@ -338,7 +338,7 @@ if ($mode == 'divided-logo-left') {
                 <?php echo '</div>'; ?>
             <?php
             } else {
-                echo '<div class="min-w-30"></div>';
+                echo '<div class="min-w-30 d-'.$header_breakpoint.'-none"></div>';
             }
             echo '</div>';
             // header nav starts -->
@@ -395,6 +395,8 @@ if ($mode == 'divided-logo-left') {
                      <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  </div>
                  <?php
+             } else {
+                 echo '<div class="min-w-30 d-'.$header_breakpoint.'-none"></div>';
              }
              echo '</div>';
              echo '</div>';
@@ -466,8 +468,6 @@ if ($mode == 'divided-logo-left') {
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
                  <?php
-             } else {
-                 echo '<div class="min-w-30"></div>';
              }
              echo '</div>';
 
