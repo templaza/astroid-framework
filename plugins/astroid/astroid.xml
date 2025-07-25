@@ -3,7 +3,7 @@
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>May 2025</creationDate>
-   <version>3.2.4</version>
+   <version>3.3.0</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -35,7 +35,7 @@
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
-            <field name="astroid_safemode" type="radio" default="0" label="ASTROID_SAFEMODE" description="ASTROID_SAFE_MODE_DESC" class="btn-group btn-group-yesno">
+            <field name="astroid_legacy" type="radio" default="1" label="ASTROID_SAFEMODE" description="ASTROID_SAFE_MODE_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
