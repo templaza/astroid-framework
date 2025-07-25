@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.3.0-rc5';
+    public static $astroid_version = '3.3.0-rc6';
     public static $fontawesome_version = '6.7.2';
     public static $fancybox_version = '5.0';
     public static $animatecss_version = '3.7.0';
@@ -71,6 +71,7 @@ class Constants
             'dynamic_source'        => self::$dynamic_sources,
             'dynamic_source_fields' => self::DynamicSourceFields(),
             'dynamic_source_options'=> self::getDynamicOptions(),
+            'astroid_legacy'        => Helper::isLegacy(),
         ];
     }
 

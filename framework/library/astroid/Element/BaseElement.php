@@ -251,7 +251,7 @@ class BaseElement
     {
         $border = json_decode($this->params->get('border_style', ''), true);
         if (!empty($border)) {
-            $this->style->addBorder($border, 'mobile', $this->isRoot);
+            $this->style->addBorder($border, 'global', $this->isRoot);
         }
         $border_radius = $this->params->get('border_radius', '');
         $this->style->addResponsiveCSS('border-radius', $border_radius, 'px');

@@ -28,7 +28,7 @@ class Document
     protected $_javascripts = ['head' => [], 'body' => []];
     protected $_stylesheets = [];
     protected $_scripts = ['head' => [], 'body' => []];
-    protected $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
+    protected $_styles = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
     protected $_customtags = ['head' => [], 'body' => []];
     protected $_dev = null;
     protected $minify_css = false;
@@ -901,7 +901,7 @@ class Document
         }
     }
 
-    public function addStyleDeclaration($content, $device = 'mobile'): void
+    public function addStyleDeclaration($content, $device = 'global'): void
     {
         if (empty($content)) {
             return;
