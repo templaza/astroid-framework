@@ -149,16 +149,28 @@ class Style
                 $value = $json;
             }
         }
+        $globalParams = Helper::getPluginParams();
+        $default_value = '';
         if (is_array($value)) {
-            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop', 'global'] as $device) {
-                if (isset($value[$device]) && !empty($value[$device])) {
+            foreach (self::$_devices as $device) {
+                if (!empty($value[$device])) {
+                    if ($globalParams->get('astroid_legacy', 1)) {
+                        $default_value = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                    }
                     $this->_css[$device][$property] = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                } elseif ($device == 'global' && !empty($default_value)) {
+                    $this->_css['global'][$property] = $default_value;
                 }
             }
         } elseif (is_object($value)) {
-            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop', 'global'] as $device) {
-                if (isset($value->{$device}) && !empty($value->{$device})) {
+            foreach (self::$_devices as $device) {
+                if (!empty($value->{$device})) {
+                    if ($globalParams->get('astroid_legacy', 1)) {
+                        $default_value = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                    }
                     $this->_css[$device][$property] = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                } elseif ($device == 'global' && !empty($default_value)) {
+                    $this->_css['global'][$property] = $default_value;
                 }
             }
         } else {
@@ -330,7 +342,7 @@ class Style
                         if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $font_size->{$device} . $unit;
                         }
-                    } elseif ($device == 'global') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('font-size', $default_value, $device);
                     }
                 }
@@ -365,13 +377,13 @@ class Style
             if (is_object($letter_spacing)) {
                 $default_value = '';
                 foreach (Style::$_devices as $device) {
-                    if (isset($letter_spacing->{$device}) && !empty($letter_spacing->{$device})) {
+                    if (!empty($letter_spacing->{$device})) {
                         $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
                         $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
                         if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $letter_spacing->{$device} . $letter_spacing_unit_value;
                         }
-                    } elseif ($device == 'global') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('letter-spacing', $default_value, $device);
                     }
                 }
@@ -394,7 +406,7 @@ class Style
                         if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $line_height->{$device} . $line_height_unit_value;
                         }
-                    } elseif ($device == 'global') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('line-height', $default_value, $device);
                     }
                 }
