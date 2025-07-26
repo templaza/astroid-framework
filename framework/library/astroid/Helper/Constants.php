@@ -21,7 +21,7 @@ class Constants
 {
     public static $astroid_version = '3.3.0-rc6';
     public static $fontawesome_version = '7.0.0';
-    public static $fancybox_version = '5.0';
+    public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
