@@ -1431,7 +1431,8 @@ class Document
     public function loadLenis(): void
     {
         if (!self::$_lenis) {
-            $this->getWA()->registerAndUseScript('astroid.lenis', 'astroid/lenis.min.js', ['relative' => true, 'version' => 'auto']);
+            $this->getWA()->registerAndUseStyle('astroid.lenis', 'https://unpkg.com/lenis@' . Constants::$lenis_version . '/dist/lenis.css');
+            $this->getWA()->registerAndUseScript('astroid.lenis', 'https://unpkg.com/lenis@' . Constants::$lenis_version . '/dist/lenis.min.js');
             self::$_lenis = true;
         }
     }

@@ -170,7 +170,6 @@ class Utility
                 .'requestAnimationFrame(raf);'
                 .'};'
                 .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
-            $document->getWA()->registerAndUseStyle('astroid.lenis', 'astroid/lenis.min.css');
             $document->getWA()->addInlineScript($script.$prevent_script);
         }
     }
