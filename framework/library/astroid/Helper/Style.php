@@ -215,7 +215,7 @@ class Style
 
     public function render(): void
     {
-        $css = ['mobile' => '', 'landscape_mobile' => '', 'tablet' => '', 'desktop' => '', 'large_desktop' => '', 'larger_desktop' => '', 'global' => ''];
+        $css = ['global' => '', 'larger_desktop' => '', 'large_desktop' => '', 'desktop' => '', 'tablet' => '', 'landscape_mobile' => '', 'mobile' => ''];
         foreach ($this->_css as $device => $styles) {
             foreach ($styles as $property => $value) {
                 $css[$device] .= $property . ':' . $value . ';';
