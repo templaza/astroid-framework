@@ -367,12 +367,29 @@ class Template
 
     public function getLayout()
     {
-        $layout = $this->params->get("layout", NULL);
+        $active = Factory::getApplication()->getMenu()->getActive();
+        $layout = '';
+        if ($active) {
+            $params = $active->getParams();
+            $layout = $params->get('astroidlayout', '');
+        }
+        if (empty($layout)) {
+            $layout = $this->params->get('layout', NULL);
+        }
         if ($layout === NULL) {
             $value = \file_get_contents(ASTROID_MEDIA . '/json/layouts/default.json');
             $layout = \json_decode($value, true);
         } else {
-            $layout = \json_decode($layout, true);
+            if (Helper::isJsonString($layout)) {
+                $layout = \json_decode($layout, true);
+            } else {
+                $layout = Element\Layout::getDataLayout($layout, $this->template, 'main_layouts');
+                if (is_string($layout['data'])) {
+                    return \json_decode($layout['data'], true);
+                } else {
+                    return $layout['data'];
+                }
+            }
         }
         return $layout;
     }

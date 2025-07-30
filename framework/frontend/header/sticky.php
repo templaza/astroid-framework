@@ -84,8 +84,8 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
          }
          ?>
       </div>
-      <?php if (!$enable_offcanvas && ($stickey_mode == 'left' || $stickey_mode == 'center')) : ?>
-         <div></div>
+      <?php if (!$enable_offcanvas) : ?>
+          <div class="min-w-30 d-<?php echo $header_breakpoint; ?>-none"></div>
       <?php endif; ?>
       <?php
       if ($stickey_mode == 'center') {
@@ -101,7 +101,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
       }
       ?>
       <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
-         <div class="header-right-section d-flex justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($stickey_mode == 'right') {
                // header nav starts
@@ -130,7 +130,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                </div>
             <?php endif; ?>
              <?php if ($enable_offcanvas) { ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' ms-4 offcanvas-button offcanvasRight">'; ?>
+                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' offcanvas-button offcanvasRight">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
              <?php } ?>

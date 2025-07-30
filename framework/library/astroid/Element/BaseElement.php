@@ -24,6 +24,7 @@ class BaseElement
     protected $_data, $_tag = 'div', $_classes = [], $_attributes = [];
     public $id, $unqid, $params, $type, $style, $style_dark, $content = '';
     public int $state = 1;
+    public bool $isAssigned = true;
     public array $devices = [];
     public array $options = [];
     public string $role = '';
@@ -52,13 +53,14 @@ class BaseElement
         $this->_id();
         $this->_tag         =   $this->params->get('astroid_element_tag', 'div');
         $this->isRoot       =   $this->role === 'root';
+        $this->isAssigned   =   $this->_checkAssignments();
         $this->style        =   new Style('#' . $this->getAttribute('id'), '', $this->isRoot);
         $this->style_dark   =   new Style('#' . $this->getAttribute('id'), 'dark', $this->isRoot);
     }
 
     protected function wrap(): string
     {
-        if (empty($this->content) || !$this->state) {
+        if (empty($this->content) || !$this->state || !$this->isAssigned) {
             return '';
         }
         $assignment_type =   $this->params->get('assignment_type', 1);
@@ -115,6 +117,27 @@ class BaseElement
             $content                .=  "<{$this->_tag}{$this->_attrbs()}>" . $this->content . "</{$this->_tag}>";
         }
         return $content;
+    }
+
+    protected function _checkAssignments(): bool
+    {
+        $assignment_type =   $this->params->get('assignment_type', 1);
+        if ($assignment_type == 0) {
+            return false;
+        }
+        $app = Factory::getApplication();
+        $jinput = $app->input;
+        $menuId = $jinput->get('Itemid', 0, 'INT');
+
+        $assignment =   $this->params->get('assignment', "");
+        if ($assignment_type == 2 && $assignment) {
+            $assignment =   \json_decode($assignment, true);
+            if ((isset($assignment[$menuId]) && !$assignment[$menuId]) || !isset($assignment[$menuId])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     protected function _attrbs(): string
@@ -228,7 +251,7 @@ class BaseElement
     {
         $border = json_decode($this->params->get('border_style', ''), true);
         if (!empty($border)) {
-            $this->style->addBorder($border, 'mobile', $this->isRoot);
+            $this->style->addBorder($border, 'global', $this->isRoot);
         }
         $border_radius = $this->params->get('border_radius', '');
         $this->style->addResponsiveCSS('border-radius', $border_radius, 'px');

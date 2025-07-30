@@ -11,6 +11,7 @@ namespace Astroid;
 use Astroid\Element\Layout;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
@@ -35,28 +36,40 @@ class Admin extends Helper\Client
 
     protected function save(): void
     {
-        $this->checkAuth();
+        // Get the application input object
         $app = Factory::getApplication();
-        $params = $app->input->post->get('params', array(), 'RAW');
-        $export_settings = $app->input->post->get('export_settings', 0, 'INT');
+        $input = $app->input;
 
-        if ($export_settings) {
-            $this->response($params);
+        $excludeKeys = ['option', 'astroid', 'template'];
+        $queryParams = $input->getArray();
+
+        // Filter out excluded keys
+        foreach (array_diff_key($queryParams, array_flip($excludeKeys)) as $key => $value) {
+            $input->post->set($key, $value, 'RAW');
         }
+        $this->checkAuth();
+        $params = file_get_contents('php://input');
 
         $template = Framework::getTemplate();
-        $params = \json_encode($params);
 
-        $astroid_preset = $app->input->post->get('astroid-preset', 0, 'INT');
+        $astroid_preset = $input->get('preset', 0, 'INT');
         if ($astroid_preset) {
-            $preset = [
-                'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
-                'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
-                'thumbnail' => '', 'demo' => '',
-                'preset' => $params
-            ];
-            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
+            $preset_name = uniqid('preset-');
+            $data = \json_decode($params, true);
+            if (is_string($data['preset'])) {
+                $data_preset = \json_decode($data['preset'], true);
+            } else {
+                $data_preset = $data['preset'];
+            }
+
+            if (!Helper::isJsonString($data_preset['layout'])) {
+                $layout = Layout::getDataLayout($data_preset['layout'], $template->template, 'main_layouts');
+                $data_preset['layout'] = \json_encode($layout['data']);
+                $data['preset'] = $data_preset;
+                $params = \json_encode($data);
+            }
+
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', $params);
             $this->response($preset_name);
         } else {
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
@@ -84,6 +97,22 @@ class Admin extends Helper\Client
         $this->response(Layout::getDatalayouts($template_name, $type));
     }
 
+    protected function getLayoutsById(): void
+    {
+        $app = Factory::getApplication();
+        $id  = $app->input->get('id');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db
+            ->getQuery(true)
+            ->select('s.template')
+            ->from('#__template_styles as s')
+            ->where('s.id = ' . $id);
+        $db->setQuery($query);
+        $template_name = $db->loadResult();
+        $type          = $app->input->get('type', 'layouts', 'RAW');
+        $this->response(Layout::getDatalayouts($template_name, $type));
+    }
+
     protected function getLayout(): true
     {
         try {
@@ -93,8 +122,11 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
-
-            $this->response(Layout::getDataLayout($filename, $template_name, $type));
+            $layout         = Layout::getDataLayout($filename, $template_name, $type);
+            if (!is_string($layout['data'])) {
+                $layout['data'] = \json_encode($layout['data']);
+            }
+            $this->response($layout);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -116,7 +148,7 @@ class Admin extends Helper\Client
                 'title' => $app->input->post->get('title', 'layout', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
                 'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
-                'data' => $app->input->post->get('data', '{"sections":[]}', 'RAW'),
+                'data' => \json_decode($app->input->post->get('data', '{"sections":[]}', 'RAW'), true),
             ];
             $default = $app->input->post->get('default', '', 'RAW');
 
@@ -177,7 +209,43 @@ class Admin extends Helper\Client
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $layouts        = $app->input->get('layouts', array(), 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
-
+            if ($type === 'main_layouts' && !empty($layouts)) {
+                $layout = $layouts[0];
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
+                $query = $db->getQuery(true);
+                $query->select('id, title')
+                    ->from('#__template_styles')
+                    ->where('template = ' . $db->quote($template_name))
+                    ->where('client_id = 0');
+                $db->setQuery($query);
+                $template_styles = $db->loadObjectList();
+                if ($template_styles) {
+                    foreach ($template_styles as $style) {
+                        if (file_exists(JPATH_SITE . "/media/templates/site/$template_name/params/{$style->id}.json")) {
+                            $params = \json_decode(file_get_contents(JPATH_SITE . "/media/templates/site/$template_name/params/{$style->id}.json"), true);
+                            if (isset($params['layout']) && $params['layout'] === $layout) {
+                                throw new \Exception(Text::sprintf('TPL_ASTROID_SYSTEM_DELETE_MESSAGES_LAYOUT_USE_IN_TEMPLATE', $style->title));
+                            }
+                        }
+                    }
+                }
+                $query = $db
+                    ->getQuery(true)
+                    ->select('title, params')
+                    ->from('#__menu')
+                    ->where('client_id = 0')
+                    ->where('parent_id <> 0');
+                $db->setQuery($query);
+                $menus = $db->loadObjectList();
+                if ($menus) {
+                    foreach ($menus as $menu) {
+                        $params = \json_decode($menu->params, true);
+                        if (isset($params['astroidlayout']) && $params['astroidlayout'] === $layout) {
+                            throw new \Exception(Text::sprintf('TPL_ASTROID_SYSTEM_DELETE_MESSAGES_LAYOUT_USE_IN_MENU', $menu->title));
+                        }
+                    }
+                }
+            }
             $this->response(Layout::deleteDatalayouts($layouts, $template_name, $type));
         } catch (\Exception $e) {
             $this->errorResponse($e);

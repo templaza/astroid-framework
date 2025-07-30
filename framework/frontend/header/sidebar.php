@@ -17,7 +17,6 @@ extract($displayData);
 $template = Astroid\Framework::getTemplate();
 $document = Astroid\Framework::getDocument();
 $params = $template->getParams();
-$color_mode = $template->getColorMode();
 
 $header = $params->get('header', TRUE);
 $header_mode = $params->get('header_mode', 'horizontal');
@@ -78,6 +77,7 @@ $position_count = 0;
                 <div class="flex-grow-1">
                     <?php $document->include('logo'); ?>
                 </div>
+                <div class="d-lg-none d-block min-w-30"></div>
             </div>
             <?php
             $position_count ++;
@@ -117,6 +117,7 @@ $position_count = 0;
             <div class="flex-grow-1">
                 <?php $document->include('logo'); ?>
             </div>
+            <div class="d-lg-none d-block min-w-30"></div>
         </div>
         <?php endif; ?>
         <?php

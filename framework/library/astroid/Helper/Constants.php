@@ -19,10 +19,11 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.2.4';
-    public static $fontawesome_version = '6.7.2';
-    public static $fancybox_version = '5.0';
+    public static $astroid_version = '3.3.0';
+    public static $fontawesome_version = '7.0.0';
+    public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
+    public static $lenis_version = '1.3.8';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';
@@ -71,6 +72,7 @@ class Constants
             'dynamic_source'        => self::$dynamic_sources,
             'dynamic_source_fields' => self::DynamicSourceFields(),
             'dynamic_source_options'=> self::getDynamicOptions(),
+            'astroid_legacy'        => Helper::isLegacy(),
         ];
     }
 
@@ -119,6 +121,7 @@ class Constants
         'TPL_ASTROID_DELETE_LAYOUT',
         'TPL_ASTROID_OVERRIDE_DEFAULT_LAYOUT_WARNING',
         'TPL_ASTROID_SAVE_AS_DEFAULT',
+        'ASTROID_GLOBAL',
         'ASTROID_SM',
         'ASTROID_TABLET',
         'ASTROID_MOBILE',

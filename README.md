@@ -26,7 +26,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Enhanced User Experience
 * Import/Export Settings
 * Only Enable What You Need
-* Font Awesome 6
+* Font Awesome 7
 * Social Icons & Share
 * Sass ready
 * Responsive & Accessible Design
@@ -88,6 +88,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Text
 * Title
 * Toc
+* Article Type Icon
 
 ## Pro Widgets
 * Hover Motion Widget
@@ -95,6 +96,8 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Article Listing Widget
 * CodePen Widget
 * Countdown Widget
+* Art Slider
+* Image Motion Cursor
 
 ## Requirements
 * Joomla: 4.x, 5.x

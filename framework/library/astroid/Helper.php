@@ -253,6 +253,12 @@ class Helper
         }
     }
 
+    public static function isLegacy(): bool
+    {
+        $globalParams = Helper::getPluginParams();
+        return $globalParams->get('astroid_legacy', 1) ? true : false;
+    }
+
     public static function clearJoomlaCache()
     {
         $app = Factory::getApplication();
@@ -962,5 +968,10 @@ class Helper
             return strtotime($a['expiration']) - strtotime($b['expiration']);
         });
         return $return;
+    }
+
+    public static function isJsonString($string): bool
+    {
+        return preg_match('/^\s*(\{.*\}|\[.*\])\s*$/s', $string) === 1;
     }
 }

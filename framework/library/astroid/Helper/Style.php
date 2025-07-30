@@ -18,7 +18,8 @@ defined('_JEXEC') or die;
 
 class Style
 {
-    public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []], $_child = [];
+    public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []], $_child = [];
+    public static array $_devices = ['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop', 'global'];
 
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public bool $_onFile = false;
@@ -125,7 +126,7 @@ class Style
         }
     }
 
-    public function addCss($property, $value, $device = 'mobile'): static
+    public function addCss($property, $value, $device = 'global'): static
     {
         if (empty($value)) {
             return $this;
@@ -142,36 +143,48 @@ class Style
         if (is_string($value)) {
             $json = json_decode($value, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                $this->_css['mobile'][$property] = $value . $unit;
+                $this->_css['global'][$property] = $value . $unit;
                 return $this;
             } else {
                 $value = $json;
             }
         }
+        $globalParams = Helper::getPluginParams();
+        $default_value = '';
         if (is_array($value)) {
-            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
-                if (isset($value[$device]) && !empty($value[$device])) {
+            foreach (self::$_devices as $device) {
+                if (!empty($value[$device])) {
+                    if ($globalParams->get('astroid_legacy', 1)) {
+                        $default_value = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                    }
                     $this->_css[$device][$property] = $value[$device] . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                } elseif ($device == 'global' && !empty($default_value)) {
+                    $this->_css['global'][$property] = $default_value;
                 }
             }
         } elseif (is_object($value)) {
-            foreach (['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop'] as $device) {
-                if (isset($value->{$device}) && !empty($value->{$device})) {
+            foreach (self::$_devices as $device) {
+                if (!empty($value->{$device})) {
+                    if ($globalParams->get('astroid_legacy', 1)) {
+                        $default_value = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                    }
                     $this->_css[$device][$property] = $value->{$device} . (is_array($unit) && isset($unit[$device]) ? $unit[$device] : (is_string($unit) ? $unit : ''));
+                } elseif ($device == 'global' && !empty($default_value)) {
+                    $this->_css['global'][$property] = $default_value;
                 }
             }
         } else {
-            $this->_css['mobile'][$property] = $value . $unit;
+            $this->_css['global'][$property] = $value . $unit;
         }
         return $this;
     }
 
-    public function addBorder($value, $device = 'mobile', $onFile = false): void
+    public function addBorder($value, $device = 'global', $onFile = false): void
     {
         self::addBorderStyle($this->_selector, $value, $device, $onFile);
     }
 
-    public function addStyle($css, $device = 'mobile'): void
+    public function addStyle($css, $device = 'global'): void
     {
         if (empty($css)) {
             return;
@@ -202,7 +215,7 @@ class Style
 
     public function render(): void
     {
-        $css = ['mobile' => '', 'landscape_mobile' => '', 'tablet' => '', 'desktop' => '', 'large_desktop' => '', 'larger_desktop' => ''];
+        $css = ['global' => '', 'larger_desktop' => '', 'large_desktop' => '', 'desktop' => '', 'tablet' => '', 'landscape_mobile' => '', 'mobile' => ''];
         foreach ($this->_css as $device => $styles) {
             foreach ($styles as $property => $value) {
                 $css[$device] .= $property . ':' . $value . ';';
@@ -232,8 +245,8 @@ class Style
             }
         }
 
-        $this->_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
-        $this->_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => []];
+        $this->_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []];
+        $this->_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []];
 
         if ($this->_hover !== null) {
             $this->_hover->render();
@@ -256,19 +269,20 @@ class Style
         }
     }
 
-    public static function getCss($content, $device = 'mobile', $breakpoints = ['landscape_mobile' => '576px', 'tablet' => '768px', 'desktop' => '992px', 'large_desktop' => '1200px', 'larger_desktop' => '1400px']): string
+    public static function getCss($content, $device = 'global', $breakpoints = ['mobile' => '575.98px', 'landscape_mobile' => '767.98px', 'tablet' => '991.98px', 'desktop' => '1199.98px', 'large_desktop' => '1399.98px', 'larger_desktop' => '1600px']): string
     {
         return match ($device) {
-            'landscape_mobile' => '@media (min-width: '.$breakpoints['landscape_mobile'].') {' . $content . '}',
-            'tablet' => '@media (min-width: '.$breakpoints['tablet'].') {' . $content . '}',
-            'desktop' => '@media (min-width: '.$breakpoints['desktop'].') {' . $content . '}',
-            'large_desktop' => '@media (min-width: '.$breakpoints['large_desktop'].') {' . $content . '}',
-            'larger_desktop' => '@media (min-width: '.$breakpoints['larger_desktop'].') {' . $content . '}',
+            'mobile' => '@media (max-width: '.$breakpoints['mobile'].') {' . $content . '}',
+            'landscape_mobile' => '@media (max-width: '.$breakpoints['landscape_mobile'].') {' . $content . '}',
+            'tablet' => '@media (max-width: '.$breakpoints['tablet'].') {' . $content . '}',
+            'desktop' => '@media (max-width: '.$breakpoints['desktop'].') {' . $content . '}',
+            'large_desktop' => '@media (max-width: '.$breakpoints['large_desktop'].') {' . $content . '}',
+            'larger_desktop' => '@media (max-width: '.$breakpoints['larger_desktop'].') {' . $content . '}',
             default => $content,
         };
     }
 
-    public static function addBorderStyle($selector, $border, $device = 'mobile', $onFile = false): void
+    public static function addBorderStyle($selector, $border, $device = 'global', $onFile = false): void
     {
         $style      = new Style($selector, '', $onFile);
         $style_dark = new Style($selector, 'dark', $onFile);
@@ -290,7 +304,7 @@ class Style
         $style_dark->render();
     }
 
-    public static function addCssBySelector($selector, $property, $value, $device = 'mobile', $mode = '', $onFile = false): Style
+    public static function addCssBySelector($selector, $property, $value, $device = 'global', $mode = '', $onFile = false): Style
     {
         $style = new Style($selector, $mode, $onFile);
         $style->addCss($property, $value, $device);
@@ -321,14 +335,14 @@ class Style
         if (!empty($font_size)) {
             if (is_object($font_size)) {
                 $default_value = '';
-                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
+                foreach (Style::$_devices as $device) {
                     if (isset($font_size->{$device}) && $font_size->{$device}) {
                         $unit = $font_size_unit->{$device} ?? 'em';
                         $style->addCss('font-size', $font_size->{$device} . $unit, $device);
-                        if ($globalParams->get('astroid_safemode', 0)) {
+                        if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $font_size->{$device} . $unit;
                         }
-                    } elseif ($device == 'mobile') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('font-size', $default_value, $device);
                     }
                 }
@@ -362,14 +376,14 @@ class Style
         if (!empty($letter_spacing)) {
             if (is_object($letter_spacing)) {
                 $default_value = '';
-                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
-                    if (isset($letter_spacing->{$device}) && !empty($letter_spacing->{$device})) {
+                foreach (Style::$_devices as $device) {
+                    if (!empty($letter_spacing->{$device})) {
                         $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
                         $style->addCss('letter-spacing', $letter_spacing->{$device} . $letter_spacing_unit_value, $device);
-                        if ($globalParams->get('astroid_safemode', 0)) {
+                        if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $letter_spacing->{$device} . $letter_spacing_unit_value;
                         }
-                    } elseif ($device == 'mobile') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('letter-spacing', $default_value, $device);
                     }
                 }
@@ -385,14 +399,14 @@ class Style
         if (!empty($line_height)) {
             if (is_object($line_height)) {
                 $default_value = '';
-                foreach (['larger_desktop', 'large_desktop', 'desktop', 'tablet', 'landscape_mobile', 'mobile'] as $device) {
+                foreach (Style::$_devices as $device) {
                     if (isset($line_height->{$device}) && $line_height->{$device}) {
                         $line_height_unit_value = $line_height_unit->{$device} ?? 'em';
                         $style->addCss('line-height', $line_height->{$device} . $line_height_unit_value, $device);
-                        if ($globalParams->get('astroid_safemode', 0)) {
+                        if ($globalParams->get('astroid_legacy', 1)) {
                             $default_value = $line_height->{$device} . $line_height_unit_value;
                         }
-                    } elseif ($device == 'mobile') {
+                    } elseif ($device == 'global' && !empty($default_value)) {
                         $style->addCss('line-height', $default_value, $device);
                     }
                 }
@@ -559,9 +573,21 @@ class Style
             $globalParams = Helper::getPluginParams();
             $object = \json_decode($value, false);
             $default_value = ['top' => '', 'right' => '', 'bottom' => '', 'left' => '', 'unit' => 'Custom'];
-            foreach ($object as $device => $props) {
-                if ($globalParams->get('astroid_safemode', 0)) {
-                    $style->addStyle(Style::spacingValue($props, $type, ($device == 'mobile' ? $default_value : [])), $device);
+
+            foreach (self::$_devices as $device) {
+                if (!empty($object->{$device})) {
+                    $props = $object->{$device};
+                } else {
+                    $props = new \stdClass();
+                    $props->top = '';
+                    $props->right = '';
+                    $props->bottom = '';
+                    $props->left = '';
+                    $props->lock = false;
+                    $props->unit = 'px';
+                }
+                if ($globalParams->get('astroid_legacy', 1)) {
+                    $style->addStyle(Style::spacingValue($props, $type, ($device == 'global' ? $default_value : [])), $device);
                     Style::setDefaultSpace($props, $default_value);
                 } else {
                     $style->addStyle(Style::spacingValue($props, $type), $device);
