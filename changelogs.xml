@@ -3,16 +3,26 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.2.4</version>
+        <version>3.3.0</version>
         <addition>
-            <item><![CDATA[Add Article Type Icon element.]]></item>
+            <item><![CDATA[Add multi-layouts function.]]></item>
+            <item><![CDATA[Add Import/Export layout to Main Layouts]]></item>
+            <item><![CDATA[Add option select layout in Menu Item]]></item>
         </addition>
         <change>
-            <item><![CDATA[Move vue files to Astroid Vuejs to reduce production package]]></item>
+            <item><![CDATA[Rebuilt Responsive System]]></item>
+            <item><![CDATA[Update Fontawesome 7.0.0]]></item>
+            <item><![CDATA[Update Fancybox 6.0]]></item>
         </change>
         <fix>
-            <item><![CDATA[Fix issue logo no center on Sticky menu]]></item>
-            <item><![CDATA[Fix issue can't edit article in detail page]]></item>
+            <item><![CDATA[Fix issue lenis.min.js.map is not found]]></item>
+            <item><![CDATA[Fix issue conflict Color picker style with Font Awesome 7]]></item>
+            <item><![CDATA[Fix issue color display incorrect in Article Layout & Module - Layout Builder]]></item>
+            <item><![CDATA[Fix issue show undefined in Typography field]]></item>
+            <item><![CDATA[Fix issue Logo alignment in sticky right mode]]></item>
+            <item><![CDATA[Fix issue Logo alignment in Mobile View]]></item>
+            <item><![CDATA[Fix issue can't save data in some Servers with mod_security]]></item>
+            <item><![CDATA[Fix issue show undefined in Typography field]]></item>
         </fix>
         <note>
             <item><![CDATA[This version is compatible with PHP>=8.2 only]]></item>
