@@ -213,7 +213,17 @@
       if ($('.astroid-color-mode').length) {
          var switcher   =  $('.astroid-color-mode .switcher'),
              color_mode =  'light';
-         if (ASTROID_COLOR_MODE === 'auto') {
+         const cmCookieName = 'astroid-color-mode-' + TEMPLATE_HASH;
+         const acm = ('; ' + document.cookie).split(`; ` + cmCookieName + `=`).pop().split(';')[0];
+         if (acm === 'light') {
+            switcher.prop('checked', false);
+            color_mode  =  'light';
+         }
+         else if (acm === 'dark') {
+            switcher.prop('checked', true);
+            color_mode  =  'dark';
+         }
+         else if (ASTROID_COLOR_MODE === 'auto') {
             var cur_hour   =  new Date().getHours();
             if ( (24 - cur_hour < 7) || (cur_hour < 6) ) {
                color_mode  =  'dark';
