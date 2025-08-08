@@ -3,8 +3,8 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
-   <creationDate>July 2025</creationDate>
-   <version>3.3.0</version>
+   <creationDate>August 2025</creationDate>
+   <version>3.3.1-rc1</version>
    <url>https://astroidframe.work/</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
