@@ -41,7 +41,7 @@ class Admin extends Helper\Client
         $input = $app->input;
 
         $this->checkAuth();
-        $params = $input->post->get('params', '', 'RAW');
+        $params = $input->post->get('params', array(), 'RAW');
         $template = Framework::getTemplate();
 
         $astroid_preset = $input->post->get('astroid-preset', 0, 'INT');
