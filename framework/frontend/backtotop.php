@@ -29,8 +29,7 @@ $backtotop_icon_color   = Style::getColor($params->get('backtotop_icon_color', '
 $backtotop_icon_bgcolor = Style::getColor($params->get('backtotop_icon_bgcolor', ''));
 $backtotop_icon_style   = $params->get('backtotop_icon_style', 'circle');
 $backtotop_on_mobile    = $params->get('backtotop_on_mobile', 1);
-$paddingpercent         = 10;
-$padding                = 15;
+
 $a_style        =   new Style('#astroid-backtotop', '', true);
 $a_style_dark   =   new Style('#astroid-backtotop', 'dark', true);
 $i_style        =   new Style('#astroid-backtotop > i', '', true);
@@ -39,21 +38,15 @@ $i_style->addResponsiveCSS('font-size', $backtotop_icon_size , 'px');
 $i_style->addCss('color', $backtotop_icon_color['light']);
 $i_style_dark->addCss('color', $backtotop_icon_color['dark']);
 
-switch ($backtotop_icon_style) {
-   case 'rounded':
-       $a_style->addCss('border-radius', round($padding) . 'px !important');
-      break;
-   case 'square':
-       $i_style->addResponsiveCSS('line-height', $backtotop_icon_size , 'px');
-       $i_style->addCss('padding', round($padding) . 'px');
-      break;
-   default:
-       $i_style->addResponsiveCSS('width', $backtotop_icon_size , 'px');
-       $i_style->addResponsiveCSS('height', $backtotop_icon_size , 'px');
-       $i_style->addResponsiveCSS('line-height', $backtotop_icon_size , 'px');
-       $i_style->addCss('text-align', 'center');
-      break;
+if ($backtotop_icon_style == 'rounded') {
+    $border_radius          = ($backtotop_icon_padding * 2 + $backtotop_icon_size) * 0.1;
+    $a_style->addCss('border-radius', round($border_radius) . 'px !important');
 }
+
+$i_style->addResponsiveCSS('width', $backtotop_icon_size , 'px');
+$i_style->addResponsiveCSS('height', $backtotop_icon_size , 'px');
+$i_style->addResponsiveCSS('line-height', $backtotop_icon_size , 'px');
+$i_style->addCss('text-align', 'center');
 
 $a_style->addCss('background', $backtotop_icon_bgcolor['light']);
 $a_style_dark->addCss('background', $backtotop_icon_bgcolor['dark']);
