@@ -46,26 +46,24 @@ class Admin extends Helper\Client
 
         $astroid_preset = $input->post->get('astroid-preset', 0, 'INT');
         if ($astroid_preset) {
-            $data_preset = \json_decode($params, true);
-
             $preset = [
                 'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
                 'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
                 'thumbnail' => '',
-                'preset' => $data_preset
+                'preset' => $params
             ];
             $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
 
-            if (!Helper::isJsonString($data_preset['layout'])) {
-                $layout = Layout::getDataLayout($data_preset['layout'], $template->template, 'main_layouts');
-                $data_preset['layout'] = \json_encode($layout['data']);
-                $preset['preset'] = $data_preset;
+            if (!Helper::isJsonString($params['layout'])) {
+                $layout = Layout::getDataLayout($params['layout'], $template->template, 'main_layouts');
+                $params['layout'] = \json_encode($layout['data']);
+                $preset['preset'] = $params;
             }
 
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
             $this->response($preset_name);
         } else {
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', \json_encode($params));
             Helper::refreshVersion();
             $this->response("saved");
         }
