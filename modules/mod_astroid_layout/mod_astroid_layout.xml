@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>Astroid Layout Module</name>
 	<author>Astroid Framework</author>
-	<creationDate>May 2025</creationDate>
+	<creationDate>August 2025</creationDate>
 	<copyright>(C) 2025 Astroid Framework</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>sonlv@templaza.com</authorEmail>
 	<authorUrl>astroidframe.work</authorUrl>
-	<version>3.2.4</version>
+	<version>3.3.1</version>
 	<description>MOD_ASTROID_LAYOUT_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_astroid_layout">mod_astroid_layout.php</filename>

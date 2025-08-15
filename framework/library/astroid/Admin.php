@@ -40,39 +40,30 @@ class Admin extends Helper\Client
         $app = Factory::getApplication();
         $input = $app->input;
 
-        $excludeKeys = ['option', 'astroid', 'template'];
-        $queryParams = $input->getArray();
-
-        // Filter out excluded keys
-        foreach (array_diff_key($queryParams, array_flip($excludeKeys)) as $key => $value) {
-            $input->post->set($key, $value, 'RAW');
-        }
         $this->checkAuth();
-        $params = file_get_contents('php://input');
-
+        $params = $input->post->get('params', array(), 'RAW');
         $template = Framework::getTemplate();
 
-        $astroid_preset = $input->get('preset', 0, 'INT');
+        $astroid_preset = $input->post->get('astroid-preset', 0, 'INT');
         if ($astroid_preset) {
-            $preset_name = uniqid('preset-');
-            $data = \json_decode($params, true);
-            if (is_string($data['preset'])) {
-                $data_preset = \json_decode($data['preset'], true);
-            } else {
-                $data_preset = $data['preset'];
+            $preset = [
+                'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
+                'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
+                'thumbnail' => '',
+                'preset' => $params
+            ];
+            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
+
+            if (!Helper::isJsonString($params['layout'])) {
+                $layout = Layout::getDataLayout($params['layout'], $template->template, 'main_layouts');
+                $params['layout'] = \json_encode($layout['data']);
+                $preset['preset'] = $params;
             }
 
-            if (!Helper::isJsonString($data_preset['layout'])) {
-                $layout = Layout::getDataLayout($data_preset['layout'], $template->template, 'main_layouts');
-                $data_preset['layout'] = \json_encode($layout['data']);
-                $data['preset'] = $data_preset;
-                $params = \json_encode($data);
-            }
-
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', $params);
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
             $this->response($preset_name);
         } else {
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', \json_encode($params));
             Helper::refreshVersion();
             $this->response("saved");
         }
