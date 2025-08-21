@@ -19,10 +19,9 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.7</version>
-        <addition>
-            <item><![CDATA[Add AstroidPro Hub Library.]]></item>
-            <item><![CDATA[Move all Pro functions to Astroid Pro library]]></item>
-        </addition>
+        <version>1.0.10</version>
+        <fix>
+            <item><![CDATA[Fix issue border_radius style conflict in Hover Motion Gallery]]></item>
+        </fix>
     </changelog>
 </changelogs>
