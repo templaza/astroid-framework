@@ -416,8 +416,8 @@ class Template
         if (file_exists(Path::clean(ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php'))) {
             return Path::clean(ASTROID_ELEMENTS . '/' . $type . '/' . $type . '.php');
         }
-
-        throw new \Exception("Astroid can not found layout for `" . $type . "` element.");
+        Factory::getApplication()->enqueueMessage("Astroid cannot find layout for `{$type}` element.", 'warning');
+        return '';
     }
 
     public function getColorMode() {
