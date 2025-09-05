@@ -114,6 +114,7 @@ return new class () implements ServiceProviderInterface {
                     $plugin_name = str_replace($plugin_dir, '', $plugin);
 
                     $installer = new Installer;
+                    $installer->setDatabase($db); // Set the database
                     if ($installer->install($plugin)) {
                         $this->app->enqueueMessage(Text::_(strtoupper($plugin_name)) . ' Plugin has been successfully installed.');
                     } else {
@@ -136,6 +137,7 @@ return new class () implements ServiceProviderInterface {
                     $module_name = str_replace($module_dir, '', $module);
 
                     $installer = new Installer;
+                    $installer->setDatabase($db); // Set the database
                     if ($installer->install($module)) {
                         $this->app->enqueueMessage(Text::_(strtoupper($module_name)) . ' Module has been successfully installed.');
                     } else {
