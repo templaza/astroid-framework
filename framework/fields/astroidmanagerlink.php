@@ -6,7 +6,7 @@
  * @copyright Copyright (C) 2023 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Router\Route;
@@ -30,12 +30,7 @@ class JFormFieldAstroidManagerLink extends FormField
     * @var    string
     * @since  11.1
     */
-   protected $type = 'AstroidManagerLink';
-
-   protected function getLabel()
-   {
-      return FALSE;
-   }
+   protected $type = 'astroidmanagerlink';
 
    /**
     * Method to get the field input markup.

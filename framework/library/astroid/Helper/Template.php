@@ -57,10 +57,10 @@ class Template
         $version = (string) $xml->version;
         $form = new Form('template');
         $form->loadFile($template_xml_path, false, '//config');
-        $fields = $form->getFieldset('basic');
+        $fields = $form->getXml()->xpath('//field[@name="astroid" and not(ancestor::field/form/*)]');
         $return = false;
         foreach ($fields as $field) {
-            if (strtolower($field->type) === 'astroidmanagerlink') {
+            if ((string) $field['type'] === 'astroidmanagerlink') {
                 $item['version'] = $version;
                 $return = $item;
                 break;

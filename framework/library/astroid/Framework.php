@@ -31,11 +31,9 @@ abstract class Framework
     {
         define('_ASTROID', 1); // define astroid
         self::check(); // check for astroid redirection
-
         self::$debugger = new Debugger(); // Debuuger
         self::$template = new Template(); // Template
         self::$document = new Document(); // Document
-
         self::constants();
         PluginHelper::importPlugin('astroid');
         Helper::triggerEvent('onAstroidAfterInitialise', [&self::$template]);
