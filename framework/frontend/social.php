@@ -51,15 +51,12 @@ $social_style_dark->render();
 <div class="astroid-social-icons row<?php echo !empty($class) ? ' ' . $class : ''; ?>">
     <?php
     foreach ($social_profiles as $social_profile) {
-        switch ($social_profile->id) {
-            case 'whatsapp':
+        switch ($social_profile->title) {
+            case 'WhatsApp':
                 $social_profile_link = 'https://wa.me/' . $social_profile->link;
                 break;
-            case 'telegram':
+            case 'Telegram':
                 $social_profile_link = 'https://t.me/' . $social_profile->link;
-                break;
-            case 'skype':
-                $social_profile_link = 'skype:' . $social_profile->link . '?chat';
                 break;
             default:
                 $social_profile_link = $social_profile->link;
