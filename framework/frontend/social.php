@@ -53,7 +53,7 @@ $social_style_dark->render();
     foreach ($social_profiles as $social_profile) {
         switch ($social_profile->title) {
             case 'WhatsApp':
-                $social_profile_link = 'https://wa.me/' . $social_profile->link;
+                $social_profile_link = 'https://wa.me/' . \Joomla\CMS\Application\ApplicationHelper::stringURLSafe($social_profile->link);
                 break;
             case 'Telegram':
                 $social_profile_link = 'https://t.me/' . $social_profile->link;
@@ -62,7 +62,6 @@ $social_style_dark->render();
                 $social_profile_link = $social_profile->link;
                 break;
         }
-        $sid = md5($social_profile->color . $social_profile_link . $social_profile->icon);
         echo '<div class="col"><a title="' . ($social_profile->title ? $social_profile->title : 'Social Icon') . '" ' . ($style != 1 ? ' aria-label="' . $social_profile->title . '" style="color:' . $social_profile->color . '"' : '') . ' href="' . $social_profile_link . '" target="_blank" rel="noopener"><i class="' . $social_profile->icon . '"></i></a></div>';
     }
     ?>
