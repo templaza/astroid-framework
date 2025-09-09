@@ -3,7 +3,7 @@
 /**
  * @package   Astroid Framework
  * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @copyright Copyright (C) 2025 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  * 	DO NOT MODIFY THIS FILE DIRECTLY AS IT WILL BE OVERWRITTEN IN THE NEXT UPDATE
  *  You can easily override all files under /frontend/ folder.
@@ -27,9 +27,11 @@ $block_2_type = $params->get('header_block_2_type', 'blank');
 $block_2_position = $params->get('header_block_2_position', '');
 $block_2_style = $params->get('header_block_2_style', 'none');
 $block_2_custom = $params->get('header_block_2_custom', '');
-$header_menu_method = $params->get('header_menu_method', 'default');
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_menu_method = $params->get('header_menu_method', 'default');
+$mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
+$mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
@@ -45,13 +47,13 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
 <!-- header starts -->
 <header id="astroid-header" class="<?php echo implode(' ', $class); ?>"<?php echo $headAttrs; ?>>
    <div class="d-flex flex-row justify-content-between">
-      <?php if (!empty($header_mobile_menu)) { ?>
-         <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-            <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-               <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-            </div>
-         </div>
-      <?php } ?>
+      <?php if (!empty($header_mobile_menu)) {
+          if ($mobile_menu_method == 'module_position') {
+              echo $document->position($mobile_menu_module_position);
+          } else {
+              echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+          }
+      } ?>
       <div class="header-left-section as-gutter-x-xl@lg d-flex justify-content-start<?php echo $mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
           <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
               <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>

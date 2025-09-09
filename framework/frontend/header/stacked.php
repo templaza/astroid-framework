@@ -33,7 +33,9 @@ $block_3_custom = $params->get('header_block_3_custom', '');
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $header_menu = $params->get('header_menu', '');
 $header_menu_method = $params->get('header_menu_method', 'default');
+$mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
+$mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $odd_menu_items = $params->get('odd_menu_items', 'left');
 $divided_logo_width = $params->get('divided_logo_width', 200);
@@ -76,7 +78,6 @@ if ($mode == 'divided-logo-left') {
         }
     }
 }
-
 ?>
 <header id="astroid-header" class="<?php echo implode(' ', $class); ?>">
    <div class="d-flex">
@@ -85,14 +86,13 @@ if ($mode == 'divided-logo-left') {
          //Center Balance
          if ($mode == 'center-balance') {
              echo '<div class="astroid-header-center-balance w-100 d-flex justify-content-center">';
-             ?>
-             <?php if (!empty($header_mobile_menu)) { ?>
-                 <div class="w-100 d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                     </div>
-                 </div>
-             <?php }
+             if (!empty($header_mobile_menu)) {
+                 if ($mobile_menu_method == 'module_position') {
+                     echo $document->position($mobile_menu_module_position);
+                 } else {
+                     echo $document->include('burger', ['containerClass' => 'w-100 d-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                 }
+             }
              if (($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') || $block_1_type == 'position' || $block_1_type == 'custom') {
                  if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') {
                      echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">';
@@ -170,19 +170,18 @@ if ($mode == 'divided-logo-left') {
          // Center Mode
          if ($mode == 'center') {
             echo '<div class="w-100 d-flex justify-content-center">';
-         ?>
-            <?php if (!empty($header_mobile_menu)) { ?>
-               <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-                  <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                  </div>
-               </div>
-            <?php } ?>
-             <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+            if (!empty($header_mobile_menu)) {
+                 if ($mobile_menu_method == 'module_position') {
+                     echo $document->position($mobile_menu_module_position);
+                 } else {
+                     echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                 }
+            }
+            if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
                  <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                  <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
                  <?php echo '</div>'; ?>
-             <?php } ?>
+            <?php } ?>
             <?php
             $logo = $document->include('logo', [], true);
             if (!empty($logo)) {
@@ -229,13 +228,12 @@ if ($mode == 'divided-logo-left') {
             // header nav starts   
             ?>
             <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="astroid-stacked-<?php echo $mode; ?>-menu header-stacked-inner w-100 d-flex justify-content-center">
-               <?php if (!empty($header_mobile_menu)) { ?>
-                  <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                        <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                     </div>
-                  </div>
-               <?php
+               <?php if (!empty($header_mobile_menu)) {
+                   if ($mobile_menu_method == 'module_position') {
+                       echo $document->position($mobile_menu_module_position);
+                   } else {
+                       echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                   }
                }
                if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
                    <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex justify-content-start offcanvas-button '.$offcanvas_position.'">'; ?>
@@ -296,14 +294,12 @@ if ($mode == 'divided-logo-left') {
          }
          if ($mode == 'divided') {
             echo '<div class="w-100 d-flex justify-content-center py-3">';
-            ?>
-            <?php if (!empty($header_mobile_menu)) { ?>
-               <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-                  <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                     <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                  </div>
-               </div>
-            <?php
+            if (!empty($header_mobile_menu)) {
+                 if ($mobile_menu_method == 'module_position') {
+                     echo $document->position($mobile_menu_module_position);
+                 } else {
+                     echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                 }
             }
              echo '<div class="d-flex flex-md-shrink-0 flex-grow-1 justify-content-center justify-content-'.$header_breakpoint.'-start">';
              if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
@@ -376,14 +372,12 @@ if ($mode == 'divided-logo-left') {
              echo '<div class="row g-0 divided-logo-left">';
              echo '<div class="col-12 col-divided-logo">';
              echo '<div class="w-100 h-100 d-flex justify-content-center">';
-             ?>
-             <?php if (!empty($header_mobile_menu)) { ?>
-                 <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-                     <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                         <button class="button" aria-label="Mobile Menu Toggle" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                     </div>
-                 </div>
-                 <?php
+             if (!empty($header_mobile_menu)) {
+                 if ($mobile_menu_method == 'module_position') {
+                     echo $document->position($mobile_menu_module_position);
+                 } else {
+                     echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                 }
              }
              echo '<div class="d-flex w-100 w-auto@'.$header_breakpoint.' justify-content-center justify-content-'.$header_breakpoint.'-start">';
              $document->include('logo');
