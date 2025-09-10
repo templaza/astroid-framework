@@ -2,11 +2,11 @@
 <form>
    <fields name="params">
       <fieldset icon="as-icon as-icon-cog" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
-         <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#contact-information" />
-         <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_OFFLINE_TITLE_LABEL" />
-         <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#error-page" />
+         <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/contact-information" />
+         <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_OFFLINE_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/offline-page" />
+         <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/error-page" />
          <field type="astroidgroup" name="lazyloadgroup" title="TPL_ASTROID_LAZYLOAD_TITLE_LABEL" />
-         <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" />
+         <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/minify-js-css-html" />
 
          <field astroidgroup="contact_info" name="contact_details" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_CONTACT_DEATILS_LABEL" description="TPL_ASTROID_CONTACT_DEATILS_DESC">
          </field>

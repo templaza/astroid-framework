@@ -2,13 +2,13 @@
 <form>
    <fields name="params">
       <fieldset label="ASTROID_OPTIONS_BASIC" icon="as-icon as-icon-equalizer" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
-         <field type="astroidgroup" name="bootstrap" title="TPL_BOOTSTRAP_TITLE"/>
-         <field type="astroidgroup" name="page_setting" title="TPL_ASTROID_PAGE_SETTING_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#layout-settings"/>
-         <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#preloader"/>
-         <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/10.-Miscellaneous#favicon" />
-         <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#back-to-top"/>
+         <field type="astroidgroup" name="bootstrap" title="TPL_BOOTSTRAP_TITLE" help="https://docs.astroidframe.work/basic-settings/add-bootstrap-plugins"/>
+         <field type="astroidgroup" name="page_setting" title="TPL_ASTROID_PAGE_SETTING_MAIN_TITLE_LABEL" help="https://docs.astroidframe.work/basic-settings/wide-vs-box-layout"/>
+         <field type="astroidgroup" name="preloader_options" title="TPL_ASTROID_PRELOADER_MAIN_TITLE_LABEL" help="https://docs.astroidframe.work/basic-settings/preloader"/>
+         <field type="astroidgroup" name="favicongroup" title="TPL_ASTROID_FAVICON_TITLE_LABEL" help="https://docs.astroidframe.work/basic-settings/favicon" />
+         <field type="astroidgroup" name="enable_back_to_top" title="TPL_ASTROID_ENABLE_TO_TOP_MAIN_TITLE_LABEL" help="https://docs.astroidframe.work/basic-settings/back-to-top"/>
          <field type="astroidgroup" name="colormode" title="TPL_ASTROID_BASIC_ENABLE_COLOR_MODE_LABEL" help="https://docs.astroidframe.work/basic-settings/color-mode"/>
-         <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://github.com/templaza/astroid-framework/wiki/2.-Basic-Settings#smooth-scroll"/>
+         <field type="astroidgroup" name="smooth_scroll" title="TPL_SMOOTH_SCROLL_TITLE" help="https://docs.astroidframe.work/basic-settings/smooth-scroll"/>
          <field type="astroidgroup" name="cursor_options" title="ASTROID_CURSOR_EFFECT_TITLE"/>
 
          <field astroidgroup="bootstrap" name="bootstrap_js" type="astroidmultiselect" label="TPL_ASTROID_BOOTSTRAP_JS_LABEL" default="[]" description="TPL_ASTROID_BOOTSTRAP_JS_DESC" hint="TPL_ASTROID_BOOTSTRAP_JS_HINT_LABEL">
