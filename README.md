@@ -11,7 +11,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 
 ## Features
 * Bootstrap 5 Compatible
-* Built for Joomla 4 and Joomla 5
+* Built for Joomla 4, Joomla 5 & Joomla 6
 * Drag and Drop Layout Builder
 * Article Layout Builder
 * Sub-layouts Builder
@@ -100,7 +100,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Image Motion Cursor
 
 ## Requirements
-* Joomla: 4.x, 5.x
+* Joomla: 4.x, 5.x, 6.x
 * PHP : 8.2+
 
 ## Browser Support

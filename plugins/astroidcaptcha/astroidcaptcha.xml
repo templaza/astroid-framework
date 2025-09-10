@@ -2,10 +2,10 @@
 <extension type="plugin" group="captcha" method="upgrade">
    <name>Captcha - AstroidCaptcha</name>
    <author>Astroid Framework Team</author>
-   <creationDate>August 2025</creationDate>
-   <version>3.3.1</version>
+   <creationDate>September 2025</creationDate>
+   <version>3.3.2</version>
    <url>https://www.astroidframe.work</url>
-   <copyright>Copyright (C) 2024 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
