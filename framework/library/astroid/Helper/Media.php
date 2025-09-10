@@ -33,6 +33,11 @@ class Media
         }
     }
 
+    public static function getFullPath($pathonly = false, $path = ''): string
+    {
+        return Uri::root($pathonly) . '/' . self::getPath() . ($path ? '/' . $path : '');
+    }
+
     public static function getMediaPath($link): string
     {
         if(strpos($link, "http://") !== false || strpos($link, "https://") !== false){

@@ -49,7 +49,9 @@ $block_3_custom = $params->get('header_block_3_custom', '');
 
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_menu_method = $params->get('header_menu_method', 'default');
+$mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
+$mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
@@ -67,13 +69,13 @@ $position_count = 0;
     <div class="astroid-header astroid-sidebar-header astroid-sidebar-header-topbar">
         <div class="astroid-sidebar-header-inner row">
             <div class="astroid-sidebar-logo col-12 col-lg-auto d-flex align-items-center">
-                <?php if (!empty($header_mobile_menu)) { ?>
-                    <div class="justify-content-start astroid-sidebar-mobile-menu">
-                        <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                            <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                        </div>
-                    </div>
-                <?php } ?>
+                <?php if (!empty($header_mobile_menu)) {
+                    if ($mobile_menu_method == 'module_position') {
+                        echo $document->position($mobile_menu_module_position);
+                    } else {
+                        echo $document->include('burger', ['containerClass' => 'justify-content-start astroid-sidebar-mobile-menu']);
+                    }
+                } ?>
                 <div class="flex-grow-1">
                     <?php $document->include('logo'); ?>
                 </div>
@@ -107,13 +109,13 @@ $position_count = 0;
         </div>
         <?php if ($mode != 'topbar') : ?>
         <div class="astroid-sidebar-logo mb-xl-4">
-            <?php if (!empty($header_mobile_menu)) { ?>
-                <div class="justify-content-start astroid-sidebar-mobile-menu">
-                    <div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-                        <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-                    </div>
-                </div>
-            <?php } ?>
+            <?php if (!empty($header_mobile_menu)) {
+                if ($mobile_menu_method == 'module_position') {
+                    echo $document->position($mobile_menu_module_position);
+                } else {
+                    echo $document->include('burger', ['containerClass' => 'justify-content-start astroid-sidebar-mobile-menu']);
+                }
+            } ?>
             <div class="flex-grow-1">
                 <?php $document->include('logo'); ?>
             </div>

@@ -34,9 +34,11 @@
          $('body').addClass(_dir);
          var _reset = function () {
             _container.removeClass(_class + '-open');
+            _container.removeClass('astroid-mobile-menu-open');
             _trigger.removeClass('active');
             setTimeout(function () {
                $('body').removeClass(_class + '-opened');
+               $('body').removeClass('astroid-mobile-menu-opened');
             }, 500);
          };
 
@@ -69,8 +71,10 @@
             _container.removeClass().addClass('astroid-container row g-0').addClass(_effect);
             setTimeout(function () {
                _container.addClass(_class + '-open');
+               _container.addClass('astroid-mobile-menu-open');
             }, 25);
             $('body').addClass(_class + '-opened');
+            $('body').addClass('astroid-mobile-menu-opened');
             $(document).bind(_eventtype, _bodyClick);
             $(_close).bind(_eventtype, _bodyClick);
          });

@@ -34,10 +34,9 @@ class Head
         $document = Factory::getApplication()->getDocument();
         $wa = $document->getWebAssetManager();
         $favicon = $params->get('favicon', '');
-
         if (!empty($favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon)) {
             $image_type =   getimagesize(JPATH_ROOT.'/'. Media::getPath() . '/' . $favicon);
-            $wa->registerAndUseStyle('astroid.favicon', Media::getPath() . '/' . $favicon, ['version' => 'auto'], ['rel' => 'shortcut icon', 'type' => $image_type['mime'], 'sizes' => 'any']);
+            $wa->registerAndUseStyle('astroid.favicon', Media::getFullPath(true, $favicon), ['version' => 'auto'], ['rel' => 'shortcut icon', 'type' => $image_type['mime'], 'sizes' => 'any']);
         }
         $apple_touch_icon = $params->get('apple_touch_icon', '');
         if (!empty($apple_touch_icon) && ($apple_touch_icon != $favicon) && file_exists(JPATH_ROOT.'/'. Media::getPath() . '/' . $apple_touch_icon)) {

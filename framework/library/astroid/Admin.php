@@ -41,11 +41,12 @@ class Admin extends Helper\Client
         $input = $app->input;
 
         $this->checkAuth();
-        $params = $input->post->get('params', array(), 'RAW');
+        $params = $input->post->get('params', '', 'RAW');
         $template = Framework::getTemplate();
 
         $astroid_preset = $input->post->get('astroid-preset', 0, 'INT');
         if ($astroid_preset) {
+            $params = \json_decode($params, true);
             $preset = [
                 'title' => $app->input->post->get('astroid-preset-name', '', 'RAW'),
                 'desc' => $app->input->post->get('astroid-preset-desc', '', 'RAW'),
@@ -63,7 +64,7 @@ class Admin extends Helper\Client
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
             $this->response($preset_name);
         } else {
-            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', \json_encode($params));
+            Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
             Helper::refreshVersion();
             $this->response("saved");
         }

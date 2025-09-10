@@ -2,9 +2,9 @@
 <form>
 	<fields name="params">
 		<fieldset label="ASTROID_OPTIONS_ARTICLE_BLOG" icon="as-icon as-icon-news" name="articles" addfieldpath="/libraries/astroid/framework/fields" order="6">
-			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS" option-type="tab"/>
-			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" option-type="tab" />
-			<field type="astroidgroup" name="article_layouts_options" title="ASTROID_ARTICLE_LAYOUT_OPTIONS" description="ASTROID_ARTICLE_LAYOUT_OPTIONS_DESC" option-type="tab" preset="none" />
+			<field type="astroidgroup" name="article_listing_options" title="ASTROID_ARTICLES_LISTING_OPTIONS" option-type="tab" help="https://docs.astroidframe.work/article-blog/article-listing-options"/>
+			<field type="astroidgroup" name="article_single_options" title="ASTROID_ARTICLE_OPTIONS_ADVANCE" option-type="tab" help="https://docs.astroidframe.work/article-blog/single-article-options" />
+			<field type="astroidgroup" name="article_layouts_options" title="ASTROID_ARTICLE_LAYOUT_OPTIONS" description="ASTROID_ARTICLE_LAYOUT_OPTIONS_DESC" option-type="tab" preset="none" help="https://docs.astroidframe.work/layout-builder/article-layout-builder" />
 
 			<field astroidgroup="article_listing_options" name="article_listing_lead_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="32" responsive="true" label="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_LEAD_HEADING_FONTSIZE_DESC" />
 			<field astroidgroup="article_listing_options" name="article_listing_intro_heading_fontsize" type="astroidrange" min="10" max="200" step="1" postfix="px" default="26" responsive="true" label="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_LABEL" description="ASTROID_ARTICLE_INTRO_HEADING_FONTSIZE_DESC" />

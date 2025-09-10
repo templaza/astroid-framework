@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>Astroid Menu Module</name>
 	<author>Astroid Framework</author>
-	<creationDate>August 2025</creationDate>
+	<creationDate>September 2025</creationDate>
 	<copyright>(C) 2025 Astroid Framework</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>sonlv@templaza.com</authorEmail>
 	<authorUrl>astroidframe.work</authorUrl>
-	<version>3.3.1</version>
+	<version>3.3.2</version>
 	<description>MOD_ASTROID_MENU_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_astroid_menu">mod_astroid_menu.php</filename>
@@ -174,6 +174,14 @@
 					<option value="lg">MOD_ASTROID_LARGE</option>
 					<option value="xl">MOD_ASTROID_EXTRA_LARGE</option>
 					<option value="xxl">MOD_ASTROID_EXTRA_EXTRA_LARGE</option>
+				</field>
+				<field name="mobilemenu_visibility" type="list" label="TPL_ASTROID_VISIBILITY_LABEL" description="MOD_ASTROID_HEADER_BREAKPOINT_DESC" default="lg" showon="menu_mode:mobile">
+					<option value="sm">ASTROID_BREAKPOINT_SM</option>
+					<option value="md">ASTROID_BREAKPOINT_MD</option>
+					<option value="lg">ASTROID_BREAKPOINT_LG</option>
+					<option value="xl">ASTROID_BREAKPOINT_XL</option>
+					<option value="xxl">ASTROID_BREAKPOINT_XXL</option>
+					<option value="always">TPL_ASTROID_TOGGLE_VISIBILITY_OPTIONS_ALWAYS</option>
 				</field>
 			</fieldset>
 

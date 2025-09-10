@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.3.1';
+    public static $astroid_version = '3.3.2';
     public static $fontawesome_version = '7.0.0';
     public static $fancybox_version = '6.0';
     public static $animatecss_version = '3.7.0';
@@ -474,6 +474,7 @@ class Constants
         ['title' => 'Behance', 'link' => '', 'icons' => ['fab fa-behance', 'fab fa-behance-square'], 'color' => '#2252FF', 'enabled' => false, 'icon' => 'fab fa-behance'],
         ['title' => 'Dribbble', 'link' => '', 'icons' => ['fab fa-dribbble', 'fab fa-dribbble-square'], 'color' => '#F10A77', 'enabled' => false, 'icon' => 'fab fa-dribbble'],
         ['title' => 'Facebook', 'link' => '', 'icons' => ['fab fa-facebook-f', 'fab fa-facebook', 'fab fa-facebook-square'], 'color' => '#39539E', 'enabled' => false, 'icon' => 'fab fa-facebook-f'],
+        ['title' => 'TikTok', 'link' => '', 'icons' => ['fa-brands fa-tiktok'], 'color' => '#000000', 'enabled' => false, 'icon' => 'fa-brands fa-tiktok'],
         ['title' => 'Flickr', 'link' => '', 'icons' => ['fab fa-flickr'], 'color' => '#0054E3', 'enabled' => false, 'icon' => 'fab fa-flickr'],
         ['title' => 'GitHub', 'link' => '', 'icons' => ['fab fa-github', 'fab fa-github-square', 'fab fa-github-alt'], 'color' => '#171515', 'enabled' => false, 'icon' => 'fab fa-github'],
         ['title' => 'Instagram', 'link' => '', 'icons' => ['fab fa-instagram'], 'color' => '#467FAA', 'enabled' => false, 'icon' => 'fab fa-instagram'],
@@ -481,7 +482,6 @@ class Constants
         ['title' => 'Messenger', 'link' => '', 'icons' => ['fab fa-facebook-messenger'], 'color' => '#3876C4', 'enabled' => false, 'icon' => 'fab fa-facebook-messenger'],
         ['title' => 'Pinterest', 'link' => '', 'icons' => ['fab fa-pinterest', 'fab fa-pinterest-square', 'fab fa-pinterest-p'], 'color' => '#DB0000', 'enabled' => false, 'icon' => 'fab fa-pinterest'],
         ['title' => 'reddit', 'link' => '', 'icons' => ['fab fa-reddit', 'fab fa-reddit-square', 'fab fa-reddit-alien'], 'color' => '#FF2400', 'enabled' => false, 'icon' => 'fab fa-reddit'],
-        ['title' => 'Skype', 'link' => '', 'icons' => ['fab fa-skype'], 'color' => '#00A6F7', 'enabled' => false, 'icon' => 'fab fa-skype'],
         ['title' => 'Slack', 'link' => '', 'icons' => ['fab fa-slack', 'fab fa-slack-hash'], 'color' => '#50364C', 'enabled' => false, 'icon' => 'fab fa-slack'],
         ['title' => 'SoundCloud', 'link' => '', 'icons' => ['fab fa-soundcloud'], 'color' => '#FF0000', 'enabled' => false, 'icon' => 'fab fa-soundcloud'],
         ['title' => 'Spotify', 'link' => '', 'icons' => ['fab fa-spotify'], 'color' => '#00E155', 'enabled' => false, 'icon' => 'fab fa-spotify'],
@@ -492,6 +492,10 @@ class Constants
         ['title' => 'VK', 'link' => '', 'icons' => ['fab fa-vk'], 'color' => '#4273AD', 'enabled' => false, 'icon' => 'fab fa-vk'],
         ['title' => 'WhatsApp', 'link' => '', 'icons' => ['fab fa-whatsapp', 'fab fa-whatsapp-square'], 'color' => '#00C033', 'enabled' => false, 'icon' => 'fab fa-whatsapp'],
         ['title' => 'YouTube', 'link' => '', 'icons' => ['fab fa-youtube', 'fab fa-youtube-square'], 'color' => '#DE0000', 'enabled' => false, 'icon' => 'fab fa-youtube'],
+        ['title' => 'Discord', 'link' => '', 'icons' => ['fa-brands fa-discord'], 'color' => '#5d69f2', 'enabled' => false, 'icon' => 'fa-brands fa-discord'],
+        ['title' => 'WeChat', 'link' => '', 'icons' => ['fa-brands fa-weixin'], 'color' => '#33c206', 'enabled' => false, 'icon' => 'fa-brands fa-weixin'],
+        ['title' => 'Weibo', 'link' => '', 'icons' => ['fa-brands fa-weibo'], 'color' => '#e60e29', 'enabled' => false, 'icon' => 'fa-brands fa-weibo'],
+        ['title' => 'Snapchat', 'link' => '', 'icons' => ['fa-brands fa-snapchat', 'fa-brands fa-square-snapchat'], 'color' => '#FFE500', 'enabled' => false, 'icon' => 'fa-brands fa-snapchat'],
     ];
 
     public static $easing = [

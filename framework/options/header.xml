@@ -3,11 +3,11 @@
    <fields name="params">
       <fieldset icon="as-icon as-icon-menu3" label="ASTROID_OPTIONS_HEADER" name="astroid_header" addfieldpath="/libraries/astroid/framework/fields" order="2">
 
-         <field type="astroidgroup" name="header_element" title="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_LABEL" description="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_DESC" help="https://github.com/templaza/astroid-framework/wiki/7.-Header"/>
-         <field type="astroidgroup" name="header_logo_options_element" title="TPL_ASTROID_HEADER_LOGO_OPTION" description="TPL_ASTROID_HEADER_LOGO_OPTION_DESC" help="https://github.com/templaza/astroid-framework/wiki/7.-Header#logo-options"/>
-         <field type="astroidgroup" name="header_sticky_options_element" title="TPL_ASTROID_HEADER_STICKY_HEADER_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_DESC" help="https://github.com/templaza/astroid-framework/wiki/7.-Header#sticky-header"/>
-         <field type="astroidgroup" name="header_offcanvas_options_element" title="TPL_ASTROID_HEADER_OFF_CANVAS_MENU" description="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_DESC" help="https://github.com/templaza/astroid-framework/wiki/7.-Header#off-canvas-menu"/>
-         <field type="astroidgroup" name="header_animation_options_element" title="TPL_ASTROID_HEADER_MENU_ANIMATION" description="TPL_ASTROID_HEADER_MENU_ANIMATION_DESC" help="https://github.com/templaza/astroid-framework/wiki/7.-Header#animation"/>
+         <field type="astroidgroup" name="header_element" title="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_LABEL" description="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_DESC" help="https://docs.astroidframe.work/header/header-modes"/>
+         <field type="astroidgroup" name="header_logo_options_element" title="TPL_ASTROID_HEADER_LOGO_OPTION" description="TPL_ASTROID_HEADER_LOGO_OPTION_DESC" help="https://docs.astroidframe.work/header/logo-options"/>
+         <field type="astroidgroup" name="header_sticky_options_element" title="TPL_ASTROID_HEADER_STICKY_HEADER_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_DESC" help="https://docs.astroidframe.work/header/sticky-header"/>
+         <field type="astroidgroup" name="header_offcanvas_options_element" title="TPL_ASTROID_HEADER_OFF_CANVAS_MENU" description="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_DESC" help="https://docs.astroidframe.work/header/off-canvas-menu"/>
+         <field type="astroidgroup" name="header_animation_options_element" title="TPL_ASTROID_HEADER_MENU_ANIMATION" description="TPL_ASTROID_HEADER_MENU_ANIMATION_DESC"/>
 
          <field astroidgroup="header_element" class="astroid-header-switch" name="header" type="astroidradio" astroid-switch="true" default="1" label="TPL_ASTROID_HEADER_ENABLE_HEADER_LABEL" description="TPL_ASTROID_HEADER_ENABLE_HEADER_DESC"/>
 

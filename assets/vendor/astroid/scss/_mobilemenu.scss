@@ -198,7 +198,6 @@ $menu-indicator-width: 60px !default;
 }
 
 .astroid-mobilemenu-open {
-
    .close-offcanvas,
    .close-offcanvas:hover {
       color: $black;
@@ -218,7 +217,7 @@ $menu-indicator-width: 60px !default;
    }
 }
 
-body.astroid-mobilemenu-opened {
+body.astroid-mobile-menu-opened {
    max-height: 100vh;
    overflow: hidden;
 

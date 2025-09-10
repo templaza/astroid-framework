@@ -20,19 +20,8 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 $header = $params->get('header', TRUE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
-if (!$header) {
-   return;
-}
-if (empty($header_mobile_menu)) {
-   return;
-}
-
-$mobile_menu_method = $params->get('mobile_menu_method', 'default');
-
-if ($mobile_menu_method == 'module_position') :
-    $mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
-    echo $document->position($mobile_menu_module_position);
-else :
+echo '<div id="astroid-mobilemenu-wrap">';
+if ($header && !empty($header_mobile_menu)) :
     $dir = 'left';
     $header = $params->get('header', TRUE);
     $header_mode = $params->get('header_mode', 'horizontal');
@@ -63,4 +52,5 @@ else :
     $style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
     $document->addStyledeclaration($style);
 endif;
+echo '</div>';
 ?>

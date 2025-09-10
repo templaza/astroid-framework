@@ -57,6 +57,9 @@ class Element extends BaseElement
     public function _content()
     {
         $layout = Framework::getTemplate()->getElementLayout($this->type);
+        if (empty($layout) || !file_exists($layout)) {
+            return '';
+        }
         $pathinfo = pathinfo($layout);
         $layout = new FileLayout($pathinfo['filename'], $pathinfo['dirname']);
         return $layout->render(['params' => $this->params, 'element' => $this, 'options' => $this->options]);

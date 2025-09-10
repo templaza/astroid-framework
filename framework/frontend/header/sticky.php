@@ -19,7 +19,9 @@ $params = $template->getParams();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
 $header_menu_method = $params->get('header_menu_method', 'default');
+$mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
+$mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
@@ -58,13 +60,13 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
 <!-- header starts -->
 <header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none"<?php echo $headAttrs; ?>>
    <div class="container d-flex flex-row justify-content-between">
-      <?php if (!empty($header_mobile_menu)) { ?>
-         <div class="d-flex d-<?php echo $header_breakpoint; ?>-none justify-content-start">
-            <div class="header-mobilemenu-trigger d-<?php echo $header_breakpoint; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide">
-               <button class="button" type="button" aria-label="Mobile Menu Toggle"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
-            </div>
-         </div>
-      <?php } ?>
+      <?php if (!empty($header_mobile_menu)) {
+          if ($mobile_menu_method == 'module_position') {
+              echo $document->position($mobile_menu_module_position);
+          } else {
+              echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+          }
+      } ?>
       <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
           <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
               <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
