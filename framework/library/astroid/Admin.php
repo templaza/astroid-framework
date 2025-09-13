@@ -370,7 +370,7 @@ class Admin extends Helper\Client
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {
-                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'preset' => $field->getAttribute('preset', ''), 'option-type' => $field->getAttribute('option-type', '')];
+                    $groups[$field->fieldname] = ['title' => Text::_($field->getAttribute('title', '')), 'icon' => $field->getAttribute('icon', ''), 'description' => Text::_($field->getAttribute('description', '')), 'fields' => [], 'help' => $field->getAttribute('help', ''), 'option-type' => $field->getAttribute('option-type', '')];
                 }
             }
 
@@ -397,6 +397,7 @@ class Admin extends Helper\Client
                     'type'          =>  'string',
                     'group'         =>  $fieldset->name,
                     'ngShow'        =>  Helper::replaceRelationshipOperators($field->getAttribute('ngShow')),
+                    'help'          =>  $field->getAttribute('help', ''),
                 ];
 
                 if (json_last_error() === JSON_ERROR_NONE) {
