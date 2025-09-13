@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 use Joomla\CMS\Form\Field\SqlField;
-use Joomla\Database\DatabaseInterface;
-use Joomla\CMS\Factory;
 /**
  * Color Form Field class for the Joomla Platform.
  * This implementation is designed to be compatible with HTML5's `<input type="color">`
