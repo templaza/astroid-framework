@@ -7,7 +7,7 @@
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 defined('_JEXEC') or die;
-use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Form\Field\SqlField;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Factory;
 /**
@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
  * @link   https://www.w3.org/TR/html-markup/input.color.html
  * @since  11.3
  */
-class JFormFieldAstroidSQL extends FormField
+class JFormFieldAstroidSQL extends SqlField
 {
 
     /**
@@ -26,7 +26,7 @@ class JFormFieldAstroidSQL extends FormField
      * @var    string
      * @since  11.3
      */
-    protected $type = 'AstroidSQL';
+    public $type = 'AstroidSQL';
 
     /**
      * Method to get the field input markup.
@@ -37,24 +37,7 @@ class JFormFieldAstroidSQL extends FormField
      */
     protected function getInput()
     {
-        $sql = isset($this->element['query']) ? (string) $this->element['query'] : '';
-        $key_field = isset($this->element['key_field']) ? (string) $this->element['key_field'] : 'value';
-        $value_field = isset($this->element['value_field']) ? (string) $this->element['value_field'] : 'text';
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $db->setQuery($sql);
-        $list = $db->loadObjectList();
-        $options = [];
-        if (!empty($list)) {
-            foreach ($list as $item) {
-                if (!isset($item->$key_field) || !isset($item->$value_field)) {
-                    continue;
-                }
-                $options[] = [
-                    'value' => $item->$key_field,
-                    'text'  => $item->$value_field
-                ];
-            }
-        }
+        $options = $this->getOptions();
         $json =   [
             'id'      =>  $this->id,
             'name'    =>  $this->name,
