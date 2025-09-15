@@ -4,7 +4,7 @@
       <fieldset icon="as-icon as-icon-layers" label="ASTROID_OPTIONS_LAYOUT" name="astroid_layout" addfieldpath="/libraries/astroid/framework/fields" astroidtype="layout" order="3">
          <field type="astroidgroup" name="layout_group" title="TPL_ASTROID_LAYOUT_LABEL" description="TPL_ASTROID_LAYOUT_DESC" preset="layout:layout" help="https://docs.astroidframe.work/layout-builder" option-type="tab" />
          <field type="astroidgroup" name="sub_layout_group" title="TPL_ASTROID_SUB_LAYOUTS_LABEL" description="TPL_ASTROID_SUB_LAYOUTS_DESC" preset="none" help="https://docs.astroidframe.work/layout-builder/sub-layouts" option-type="tab" />
-         <field astroidgroup="layout_group" type="mainlayouts" name="layout" />
+         <field astroidgroup="layout_group" type="mainlayouts" name="layout" help="https://docs.astroidframe.work/layout-builder/multi-layouts" />
          <field astroidgroup="layout_group" type="astroidhidden" name="astroidcontentlayouts" class="astroidcontentlayouts" />
          <field astroidgroup="sub_layout_group" type="layouts" name="sublayout" category="layouts" />
       </fieldset>
