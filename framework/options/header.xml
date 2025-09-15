@@ -86,7 +86,7 @@
             <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
             <option value="module_position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
          </field>
-         <field ngShow="[header]==true AND [header_menu_method]=='default'" astroidgroup="header_element" name="header_menu" type="sql" query="SELECT * FROM #__menu_types" default="mainmenu" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MENU_LABEL" description="TPL_ASTROID_HEADER_MENU_DESC" />
+         <field ngShow="[header]==true AND [header_menu_method]=='default'" astroidgroup="header_element" name="header_menu" type="astroidsql" query="SELECT * FROM #__menu_types" default="mainmenu" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MENU_LABEL" description="TPL_ASTROID_HEADER_MENU_DESC" />
 
          <field name="header_startLevel" type="astroidlist" label="TPL_ASTROID_HEADER_MENU_STARTLEVEL_LABEL" description="TPL_ASTROID_HEADER_MENU_STARTLEVEL_DESC" default="1" filter="integer" ngShow="[header]==true AND [header_menu_method]=='default'" astroidgroup="header_element">
             <option value="1">J1</option>
@@ -120,7 +120,7 @@
             <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
             <option value="module_position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
          </field>
-         <field ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_element" name="header_mobile_menu" type="sql" query="SELECT * FROM #__menu_types" default="" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MOBILE_MENU_LABEL">
+         <field ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_element" name="header_mobile_menu" type="astroidsql" query="SELECT * FROM #__menu_types" default="" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MOBILE_MENU_LABEL">
             <option value="">ASTROID_NONE</option>
          </field>
 
