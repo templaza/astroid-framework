@@ -79,9 +79,9 @@ if (Helper::isPro()) {
     }
 } else {
     if ((int) $this->params->get('num_columns') > 1) {
-        $intro_row_cls[] = 'row-cols-lg-' . $num_columns;
+        $intro_row_cls[] = 'row-cols-lg-' . $num_columns . ' row-cols-md-' . round ($num_columns/2);
     }
-    $intro_row_cls[] = 'gy-5';
+    $intro_row_cls[] = 'gy-5 gx-xl-5';
 }
 
 $blog_class_leading = $this->params->get('blog_class_leading', '');
@@ -93,12 +93,7 @@ if (!empty($blog_class)) {
     $intro_row_cls[] = $blog_class;
 }
 
-if (!empty($use_masonry)) {
-    $document = Framework::getDocument();
-    $document->loadMasonry('.as-masonry');
-    $lead_row_cls[] = 'as-masonry as-loading';
-    $intro_row_cls[] = 'as-masonry as-loading';
-}
+$document = Framework::getDocument();
 
 $blog_layout = $this->params->get('as_blog_layout', '');
 // Overlay Color
@@ -178,7 +173,11 @@ $blog_style->render();
     <?php endif; ?>
     <?php endif; ?>
 
-    <?php if (!empty($this->lead_items)) : ?>
+    <?php if (!empty($this->lead_items)) :
+        if (!empty($use_masonry)) {
+            $document->loadMasonry('.as-masonry-lead');
+            $lead_row_cls[] = 'as-masonry-lead as-loading';
+        } ?>
     <div class="com-content-category-blog__items blog-items items-leading">
         <div class="<?php echo implode(' ', $lead_row_cls); ?>">
         <?php foreach ($this->lead_items as $key => &$item) : ?>
@@ -195,7 +194,11 @@ $blog_style->render();
     </div>
     <?php endif; ?>
 
-    <?php if (!empty($this->intro_items)) : ?>
+    <?php if (!empty($this->intro_items)) :
+        if (!empty($use_masonry)) {
+            $document->loadMasonry('.as-masonry-intro');
+            $intro_row_cls[] = 'as-masonry-intro as-loading';
+        } ?>
     <div class="com-content-category-blog__items blog-items items-row">
         <div class="<?php echo implode(' ', $intro_row_cls); ?>">
             <?php foreach ($this->intro_items as $key => &$item) : ?>
