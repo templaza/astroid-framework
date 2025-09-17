@@ -83,7 +83,7 @@ if (Helper::isPro()) {
     }
     $intro_row_cls[] = 'gy-5 gx-xl-5';
 }
-
+$lead_row_cls[] = 'gy-5';
 $blog_class_leading = $this->params->get('blog_class_leading', '');
 if (!empty($blog_class_leading)) {
     $lead_row_cls[] = $blog_class_leading;

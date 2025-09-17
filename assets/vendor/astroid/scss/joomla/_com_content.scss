@@ -9,7 +9,7 @@
   }
   .items-leading {
     .blog-item + .blog-item {
-      margin-top: var(--bs-gutter-x);
+      margin-top: var(--bs-gutter-y);
     }
   }
   .items-more {
