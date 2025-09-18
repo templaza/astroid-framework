@@ -109,6 +109,14 @@
     height: 100%;
   }
 }
+.border-top .astroid-article-content:not(.has-image) {
+  @include media-breakpoint-up('xs') {
+    padding: 25px 0;
+  }
+  @include media-breakpoint-up('xl') {
+    padding: 30px 0;
+  }
+}
 .astroid-content-media-left {
   .article-icon {
     left: 20px;
