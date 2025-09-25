@@ -13,7 +13,7 @@
          var _container = $('<div/>');
          _container.addClass('astroid-element-overlay');
          _container.addClass('position-' + _position);
-         _container.addClass('top-0 left-0 w-100 h-100 overflow-hidden z-0 pe-none');
+         _container.addClass('top-0 start-0 w-100 h-100 overflow-hidden z-0 pe-none');
 
          var _video = $('<video />', {
             playsinline: true,
