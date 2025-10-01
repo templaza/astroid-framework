@@ -28,7 +28,7 @@
             const openSubMenu = (subMenuItem) => {
                subMenuItem.addClass('open');
                let _submenu = subMenuItem.children(settings.submenuClass);
-               _submenu.removeClass('right');
+               _submenu.css('left', '100%');
 
                let _animations = {
                   duration: settings.transition,
@@ -49,15 +49,15 @@
 
                if ($('body').hasClass('rtl')) {
                   if (_submenu.offset().left < 0) {
-                     _submenu.addClass('right');
+                      _submenu.css('left', _submenu.outerWidth() * -1 );
                   } else {
-                     _submenu.removeClass('right');
+                      _submenu.css('left', '100%');
                   }
                } else {
                   if (_submenu.offset().left + _submenu.outerWidth() > $(window).innerWidth()) {
-                     _submenu.addClass('right');
+                     _submenu.css('left', _submenu.outerWidth() * -1 );
                   } else {
-                     _submenu.removeClass('right');
+                      _submenu.css('left', '100%');
                   }
                }
             }
