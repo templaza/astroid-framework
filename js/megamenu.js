@@ -25,6 +25,7 @@
             if (!_navbar.is(':visible')) {
                return false;
             }
+             const allowedKeys = [9, 37, 38, 39, 40]; // Tab and arrow keys
             const openSubMenu = (subMenuItem) => {
                subMenuItem.addClass('open');
                let _submenu = subMenuItem.children(settings.submenuClass);
@@ -116,6 +117,22 @@
                      }
                   }
                }
+
+                // SubMenu accessible dropdowns
+                if (_thisSubMenu.hasClass('nav-item-dropdown')) {
+                    const $sub_toggle = _thisSubMenu.children('.as-menu-item');
+                    $sub_toggle.on('keydown', function (e) {
+                        if (!allowedKeys.includes(e.keyCode)) {
+                            e.preventDefault();
+                            _submenus.children('li').each(function (i, el) {
+                                if (_thisSubMenu.hasClass('nav-item-level-2') && $(el) !== _thisSubMenu) {
+                                    closeSubMenu($(el));
+                                }
+                            });
+                            openSubMenu(_thisSubMenu);
+                        }
+                    });
+                }
             });
 
             _megamenu.each(function () {
@@ -189,6 +206,24 @@
                } else {
                   _content.css('left', offsetleft - $(this).offset().left);
                }
+
+               // accessible dropdowns
+                if ($(this).hasClass('nav-item-dropdown') || $(this).hasClass('nav-item-megamenu')) {
+                    const $megamenuItem = $(this);
+                    const $toggle = $megamenuItem.children('.as-menu-item');
+
+                    $toggle.on('keydown', function (e) {
+                        if (!allowedKeys.includes(e.keyCode)) {
+                            e.preventDefault();
+                            _megamenu.each(function (i, el) {
+                                if (el !== $megamenuItem[0]) {
+                                    closeMe($(el));
+                                }
+                            });
+                            openMe($megamenuItem);
+                        }
+                    });
+                }
             });
          };
 
