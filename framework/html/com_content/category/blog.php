@@ -79,11 +79,11 @@ if (Helper::isPro()) {
     }
 } else {
     if ((int) $this->params->get('num_columns') > 1) {
-        $intro_row_cls[] = 'row-cols-lg-' . $num_columns;
+        $intro_row_cls[] = 'row-cols-lg-' . (int)$num_columns . ' row-cols-md-' . (int)round($num_columns / 2);
     }
-    $intro_row_cls[] = 'gy-5';
+    $intro_row_cls[] = 'gy-5 gx-xl-5';
 }
-
+$lead_row_cls[] = 'gy-5';
 $blog_class_leading = $this->params->get('blog_class_leading', '');
 if (!empty($blog_class_leading)) {
     $lead_row_cls[] = $blog_class_leading;
@@ -93,12 +93,7 @@ if (!empty($blog_class)) {
     $intro_row_cls[] = $blog_class;
 }
 
-if (!empty($use_masonry)) {
-    $document = Framework::getDocument();
-    $document->loadMasonry('.as-masonry');
-    $lead_row_cls[] = 'as-masonry as-loading';
-    $intro_row_cls[] = 'as-masonry as-loading';
-}
+$document = Framework::getDocument();
 
 $blog_layout = $this->params->get('as_blog_layout', '');
 // Overlay Color
@@ -107,7 +102,7 @@ if ($blog_layout == 'overlay') {
 
     if ($as_overlay_color_type == 'color') {
         $as_overlay_color = $this->params->get('as_overlay_color', '');
-        $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-color', $as_overlay_color);
+        $blog_style->child('.as-blog-overlay .card-img-overlay')->addCss('background-color', $as_overlay_color);
     } elseif ($as_overlay_color_type == 'gradient') {
         $gradient = [];
         $gradient['start'] = $this->params->get('as_overlay_color_start', '');
@@ -117,7 +112,7 @@ if ($blog_layout == 'overlay') {
         $gradient['type'] = $this->params->get('as_gradient_type', 'linear');
         $gradient['angle'] = $this->params->get('as_gradient_angle', '0');
         $gradient['position'] = $this->params->get('as_gradient_position', 'center center');
-        $blog_style->child('.as-blog-overlay > .item-image:after')->addCss('background-image', Style::getGradientValue(json_encode($gradient)));
+        $blog_style->child('.as-blog-overlay .card-img-overlay')->addCss('background-image', Style::getGradientValue(json_encode($gradient)));
     }
 }
 $blog_style->render();
@@ -178,7 +173,11 @@ $blog_style->render();
     <?php endif; ?>
     <?php endif; ?>
 
-    <?php if (!empty($this->lead_items)) : ?>
+    <?php if (!empty($this->lead_items)) :
+        if (!empty($use_masonry)) {
+            $document->loadMasonry('.as-masonry-lead');
+            $lead_row_cls[] = 'as-masonry-lead as-loading';
+        } ?>
     <div class="com-content-category-blog__items blog-items items-leading">
         <div class="<?php echo implode(' ', $lead_row_cls); ?>">
         <?php foreach ($this->lead_items as $key => &$item) : ?>
@@ -195,7 +194,11 @@ $blog_style->render();
     </div>
     <?php endif; ?>
 
-    <?php if (!empty($this->intro_items)) : ?>
+    <?php if (!empty($this->intro_items)) :
+        if (!empty($use_masonry)) {
+            $document->loadMasonry('.as-masonry-intro');
+            $intro_row_cls[] = 'as-masonry-intro as-loading';
+        } ?>
     <div class="com-content-category-blog__items blog-items items-row">
         <div class="<?php echo implode(' ', $intro_row_cls); ?>">
             <?php foreach ($this->intro_items as $key => &$item) : ?>

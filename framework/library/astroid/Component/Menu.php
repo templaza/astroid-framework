@@ -116,11 +116,11 @@ class Menu
                 $document->include('header.menu.link', ['item' => $item, 'options' => $options, 'mobilemenu' => false, 'active' => in_array('nav-item-active', $class), 'header' => $headerType]);
 
                 if ($item->level == 1 && $item->parent) {
-                    echo '<div style="width:' . $options->width . '" class="megamenu-container nav-submenu-container nav-item-level-' . $item->level . '">';
+                    echo '<div class="megamenu-container nav-submenu-container nav-item-level-' . $item->level . '">';
                 }
                 // The next item is deeper.
                 if ($item->deeper) {
-                    echo '<ul class="nav-submenu">';
+                    echo '<ul class="nav-submenu" style="width:' . $options->width . '">';
                 }
                 // The next item is shallower.
                 elseif ($item->shallower) {

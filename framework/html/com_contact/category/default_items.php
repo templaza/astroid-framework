@@ -79,7 +79,7 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
                 </div>
             <?php endif; ?>
         <?php else : ?>
-            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3">
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-5 gx-lg-5">
                 <?php foreach ($this->items as $i => $item) : ?>
                 <div>
                     <div class="card card-default<?php echo ($this->items[$i]->published == 0)? ' system-unpublished' : ''; ?>">
@@ -90,7 +90,7 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
                                         'joomla.html.image',
                                         [
                                             'src'   => $item->image,
-                                            'alt'   => '',
+                                            'alt'   => $this->escape($item->name),
                                             'class' => 'contact-thumbnail card-img-top',
                                         ]
                                     ); ?>

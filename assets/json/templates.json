@@ -1,6 +1,13 @@
 {
   "templates": [
     {
+      "name": "Three",
+      "description": "The Astroid Three is a modern, responsive and highly customizable Joomla template framework. It is built with the latest web technologies and follows the best practices in web design and development.",
+      "thumbnail": "../media/astroid/assets/images/three_thumbnail.jpg",
+      "preview": "https://three.astroidframe.work/",
+      "download": "https://github.com/templaza/astroid_three/archive/refs/heads/main.zip"
+    },
+    {
       "name": "Two",
       "description": "The Two is a stylish and easy-to-use Joomla Template best suited for a contemporary web design studio and creative agency, web designer's portfolio, graphic design, website building.",
       "thumbnail": "../media/astroid/assets/images/two_thumbnail.jpg",
