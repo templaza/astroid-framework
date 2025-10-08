@@ -50,10 +50,12 @@ foreach ($responsive_key as $key => $min_width) {
     if (!empty($column)) {
         if (!count($slide_settings)) {
             $slide_settings[]       =   'slidesPerView: ' . $column;
-            $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
+            if ($slidesPerGroup == '') {
+                $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
+            }
             $slide_settings[]       =   'spaceBetween: ' . $gutter;
         } elseif (!empty($min_width)) {
-            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.',slidesPerGroup: '.$slidesPerGroup.',spaceBetween: '.$gutter.'}';
+            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.($slidesPerGroup ? ',slidesPerGroup: '.$slidesPerGroup : '').',spaceBetween: '.$gutter.'}';
         }
     }
 }

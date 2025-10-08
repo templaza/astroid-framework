@@ -88,6 +88,10 @@ foreach ($buttons->data as $key => $button) {
     $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button->params->get('button_outline', '')) ? 'outline-' : '') . $button_style . $btn_element_size. $bd_radius : 'as-btn-text text-uppercase text-reset';
     $btn_title      =   $button_style == 'text' ? '<small>'. $title . '</small>' : $title;
     echo '<a id="btn-'.$button->id.'" href="' .$button->params->get('link', ''). '" class="' .$button_class . '"'.$link_target.'>'.$btn_title.'</a>';
+    $btn_font_style =   $button->params->get('btn_font_style');
+    if (!empty($btn_font_style)) {
+        Style::renderTypography('#'.$element->id.' #btn-' . $button->id , $btn_font_style, null, $element->isRoot);
+    }
 }
 echo '</div>';
 
