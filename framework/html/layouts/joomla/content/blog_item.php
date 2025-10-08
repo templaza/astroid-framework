@@ -86,7 +86,7 @@ $clsItemContainer .= ($image_position == 'left' || $image_position == 'right') ?
 $clsItemBody .= $tpl_params->get('show_post_format') ? ' has-post-format' : '';
 $clsItemBody .= $blog_layout == 'overlay' ? ' card-img-overlay as-light ' . $overlay_content_position : '';
 ?>
-<div class="item-content post-<?php echo $astroid_article_type; ?> position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : '') . ($image_position == 'bottom' ? ' d-flex flex-column-reverse' : ''); ?>">
+<div class="item-content item-media-<?php echo $image_position; ?> post-<?php echo $astroid_article_type; ?> position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : '') . ($image_position == 'bottom' ? ' d-flex flex-column-reverse' : ''); ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
         <?php endif; ?>
