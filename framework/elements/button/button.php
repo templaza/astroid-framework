@@ -33,7 +33,7 @@ foreach ($buttons->data as $key => $button) {
     if ($button_group && $border_radius === 'rounded-pill') {
         if ($key === 0) {
             $bd_radius = ' rounded-start-pill';
-        } elseif ($key === count($buttons) - 1) {
+        } elseif ($key === count($buttons->data) - 1) {
             $bd_radius = ' rounded-end-pill';
         } else {
             $bd_radius = '';
