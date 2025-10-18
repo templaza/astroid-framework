@@ -974,4 +974,26 @@ class Helper
     {
         return preg_match('/^\s*(\{.*\}|\[.*\])\s*$/s', $string) === 1;
     }
+
+    public static function getLanguageStrings() : array
+    {
+        $lang = Factory::getApplication()->getLanguage();
+        $tag  = $lang->getTag();
+        $paths = [
+            JPATH_SITE . '/language/' . $tag . '/en-GB.astroid.ini',
+        ];
+
+        $strings = [];
+
+        foreach ($paths as $path) {
+            if (file_exists($path) && is_readable($path)) {
+                $parsed = parse_ini_file($path, false, INI_SCANNER_RAW);
+                if (is_array($parsed)) {
+                    $strings = array_merge($strings, $parsed);
+                }
+            }
+        }
+
+        return $strings;
+    }
 }
