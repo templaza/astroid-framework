@@ -201,7 +201,7 @@
          </fieldset>
          <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
             <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
-            <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
+            <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
          </fieldset>
       </fields>
    </form>

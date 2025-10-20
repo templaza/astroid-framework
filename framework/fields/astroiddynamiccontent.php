@@ -13,10 +13,10 @@ use Joomla\CMS\Form\FormField;
 use Astroid\Helper\Constants;
 use Joomla\CMS\Language\Text;
 
-class JFormFieldDynamicContent extends FormField
+class JFormFieldAstroidDynamicContent extends FormField
 {
     //The field class must know its own type through the variable $type.
-    protected $type = 'DynamicContent';
+    protected $type = 'AstroidDynamicContent';
 
     public function getLabel()
     {

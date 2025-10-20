@@ -9,9 +9,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\FormField;
 
-class JFormFieldMainlayouts extends FormField
+class JFormFieldAstroidMainlayouts extends FormField
 {
-    protected $type = 'mainlayouts';
+    protected $type = 'astroidmainlayouts';
 
     protected function getInput()
     {

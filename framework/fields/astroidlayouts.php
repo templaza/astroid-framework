@@ -11,10 +11,10 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\FormField;
 
-class JFormFieldLayouts extends FormField
+class JFormFieldAstroidLayouts extends FormField
 {
 
-    protected $type = 'layouts';
+    protected $type = 'astroidlayouts';
 
     public function getInput()
     {

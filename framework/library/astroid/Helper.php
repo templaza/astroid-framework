@@ -980,6 +980,7 @@ class Helper
         $lang = Factory::getApplication()->getLanguage();
         $tag  = $lang->getTag();
         $paths = [
+            JPATH_SITE . '/language/' . $tag . '/joomla.ini',
             JPATH_SITE . '/language/' . $tag . '/' . $tag . '.astroid.ini',
         ];
 

@@ -72,7 +72,7 @@
 			<field ngShow="[article_comments]=='hyper'" astroidgroup="article_single_options" name="article_comments_hyper_id" type="astroidtext" filter="raw" class="form-control" label="ASTROID_HYPER__WIDGETID_LBL" />
 
 			<field ngShow="[article_comments]=='intense'" astroidgroup="article_single_options" name="article_comments_intense_id" type="astroidtext" filter="raw" class="form-control" label="ASTROID_INTENSE_ID_LBL" />
-			<field astroidgroup="article_layouts_options" type="layouts" category="article_layouts" name="articlelayouts" />
+			<field astroidgroup="article_layouts_options" type="astroidlayouts" category="article_layouts" name="articlelayouts" />
 		</fieldset>
 	</fields>
 </form>
