@@ -980,7 +980,7 @@ class Helper
         $lang = Factory::getApplication()->getLanguage();
         $tag  = $lang->getTag();
         $paths = [
-            JPATH_SITE . '/language/' . $tag . '/en-GB.astroid.ini',
+            JPATH_SITE . '/language/' . $tag . '/' . $tag . '.astroid.ini',
         ];
 
         $strings = [];
