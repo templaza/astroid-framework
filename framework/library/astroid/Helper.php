@@ -977,11 +977,9 @@ class Helper
 
     public static function getLanguageStrings() : array
     {
-        $lang = Factory::getApplication()->getLanguage();
-        $tag  = $lang->getTag();
         $paths = [
-            JPATH_SITE . '/language/' . $tag . '/joomla.ini',
-            JPATH_SITE . '/language/' . $tag . '/' . $tag . '.astroid.ini',
+            JPATH_SITE . '/language/en-GB/joomla.ini',
+            JPATH_SITE . '/language/en-GB/en-GB.astroid.ini',
         ];
 
         $strings = [];
@@ -993,6 +991,10 @@ class Helper
                     $strings = array_merge($strings, $parsed);
                 }
             }
+        }
+
+        foreach ($strings as $key => $value) {
+            $strings[$key] = Text::_($key);
         }
 
         return $strings;
