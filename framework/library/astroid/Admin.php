@@ -324,19 +324,13 @@ class Admin extends Helper\Client
         $config = Helper\Constants::manager_configs();
         $document->addScriptOptions('astroid_lib', $config);
 
-        // Get Language
-        $lang = array();
-        foreach (Helper\Constants::$translationStrings as $string) {
-            $lang[strtoupper($string)] = Factory::getApplication()->getLanguage()->_($string);
-        }
-        $document->addScriptOptions('astroid_lang', $lang);
+        $document->addScriptOptions('astroid_lang', Helper::getLanguageStrings());
 
         // Prepare content
         $form_content = array();
         $form = Framework::getForm();
         foreach ($form->getFieldsets() as $key => $fieldset) {
             $fields = $form->getFields($key);
-
             // Ordering
             $fieldsArr = [];
             $order = 1;
@@ -356,7 +350,6 @@ class Admin extends Helper\Client
 
                     } else {
                         $reorders[] = $field;
-
                     }
                 }
             }
@@ -366,7 +359,6 @@ class Admin extends Helper\Client
                 $reorder->ordering = $orders[$ordering];
                 $fieldsArr[] = $reorder;
             }
-
             $groups = [];
             foreach ($fieldsArr as $key => $field) {
                 if ($field->type == 'astroidgroup') {

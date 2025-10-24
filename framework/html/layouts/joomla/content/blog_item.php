@@ -86,7 +86,7 @@ $clsItemContainer .= ($image_position == 'left' || $image_position == 'right') ?
 $clsItemBody .= $tpl_params->get('show_post_format') ? ' has-post-format' : '';
 $clsItemBody .= $blog_layout == 'overlay' ? ' card-img-overlay as-light ' . $overlay_content_position : '';
 ?>
-<div class="item-content post-<?php echo $astroid_article_type; ?> position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : ''); ?>">
+<div class="item-content item-media-<?php echo $image_position; ?> post-<?php echo $astroid_article_type; ?> position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : '') . ($image_position == 'bottom' ? ' d-flex flex-column-reverse' : ''); ?>">
     <?php if ($isUnpublished) : ?>
     <div class="system-unpublished">
         <?php endif; ?>
@@ -103,7 +103,7 @@ $clsItemBody .= $blog_layout == 'overlay' ? ' card-img-overlay as-light ' . $ove
                     echo '<div class="row g-0 position-relative">';
                     echo '<div class="astroid-media-'.$image_position. ' astroid-img-cover position-relative' .$image_width_cls.'">';
                 } else {
-                    echo '<div class="astroid-media-'.$image_position.' mt-4 order-1">';
+                    echo '<div class="astroid-media-'.$image_position.' mt-4">';
                 }
             }
         }

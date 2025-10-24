@@ -50,10 +50,12 @@ foreach ($responsive_key as $key => $min_width) {
     if (!empty($column)) {
         if (!count($slide_settings)) {
             $slide_settings[]       =   'slidesPerView: ' . $column;
-            $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
+            if ($slidesPerGroup == '') {
+                $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
+            }
             $slide_settings[]       =   'spaceBetween: ' . $gutter;
         } elseif (!empty($min_width)) {
-            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.',slidesPerGroup: '.$slidesPerGroup.',spaceBetween: '.$gutter.'}';
+            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.($slidesPerGroup ? ',slidesPerGroup: '.$slidesPerGroup : '').',spaceBetween: '.$gutter.'}';
         }
     }
 }
@@ -102,6 +104,7 @@ $overlay_padding    = $params->get('overlay_padding', '3');
 $overlay_position   = $params->get('overlay_position', 'justify-content-center align-items-center');
 
 $title_html_element =   $params->get('title_html_element', 'h3');
+$enable_title = $params->get('enable_title', 1);
 
 echo '<div class="swiper as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
@@ -117,7 +120,7 @@ foreach ($images->getData() as $image) {
         if ($image->params->get('use_link')) {
             echo '</a>';
         }
-        if ($image->params->get('title')) {
+        if ($enable_title && $image->params->get('title')) {
             echo '<div class="position-absolute pe-none top-0 start-0 end-0 bottom-0 p-'.$overlay_padding.' d-flex '.$overlay_position.'"><'.$title_html_element.' class="astroid-heading mb-0">'.$image->params->get('title').'</'.$title_html_element.'></div>';
         }
         echo '</div>';

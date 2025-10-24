@@ -24,7 +24,7 @@
                             </fieldset>
                             <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
                                 <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
-                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="dynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
+                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
                         </fields>
                     </form>
@@ -214,7 +214,8 @@
                     <option value="flash">ASTROID_WIDGET_EFFECT_FLASH</option>
                     <option value="unveil">ASTROID_WIDGET_EFFECT_UNVEIL</option>
                 </field>
-                <field astroidgroup="title_options" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
+                <field astroidgroup="title_options" name="enable_title" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_SHOW_TITLE_LABEL"/>
+                <field astroidgroup="title_options" ngShow="[enable_title]==1" name="title_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h3">
                     <option value="h1">h1</option>
                     <option value="h2">h2</option>
                     <option value="h3">h3</option>
@@ -223,7 +224,7 @@
                     <option value="h6">h6</option>
                     <option value="div">div</option>
                 </field>
-                <field astroidgroup="title_options" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="title_options" ngShow="[enable_title]==1" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
                 <field astroidgroup="overlay_options" name="overlay_position" type="astroidlist" label="ASTROID_WIDGET_OVERLAY_POSITION_LABEL" default="justify-content-center align-items-center">
                     <option value="justify-content-start align-items-start">ASTROID_WIDGET_TOP_LEFT</option>
                     <option value="justify-content-center align-items-start">ASTROID_WIDGET_TOP_CENTER</option>

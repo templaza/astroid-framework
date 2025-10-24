@@ -974,4 +974,29 @@ class Helper
     {
         return preg_match('/^\s*(\{.*\}|\[.*\])\s*$/s', $string) === 1;
     }
+
+    public static function getLanguageStrings() : array
+    {
+        $paths = [
+            JPATH_SITE . '/language/en-GB/joomla.ini',
+            JPATH_SITE . '/language/en-GB/en-GB.astroid.ini',
+        ];
+
+        $strings = [];
+
+        foreach ($paths as $path) {
+            if (file_exists($path) && is_readable($path)) {
+                $parsed = parse_ini_file($path, false, INI_SCANNER_RAW);
+                if (is_array($parsed)) {
+                    $strings = array_merge($strings, $parsed);
+                }
+            }
+        }
+
+        foreach ($strings as $key => $value) {
+            $strings[$key] = Text::_($key);
+        }
+
+        return $strings;
+    }
 }

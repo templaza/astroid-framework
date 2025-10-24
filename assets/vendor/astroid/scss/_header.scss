@@ -70,7 +70,6 @@
       top: 0;
       left: 0;
       width: 100%;
-      background-color: var(--as-stick-header-bg-color);
       -webkit-animation-fill-mode: both;
       animation-fill-mode: both;
       z-index: $sticky-header-zindex;
@@ -124,6 +123,18 @@
          }
       }
    }
+}
+
+.astroid-layout-wide {
+  .astroid-header-sticky {
+    background-color: var(--as-stick-header-bg-color);
+  }
+}
+
+.astroid-layout-boxed {
+  .astroid-header-sticky > div {
+    background-color: var(--as-stick-header-bg-color);
+  }
 }
 
 header .logo-wrapper {

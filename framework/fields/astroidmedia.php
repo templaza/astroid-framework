@@ -29,12 +29,7 @@ class JFormFieldAstroidMedia extends FormField {
            'dynamic' => isset($this->element['dynamic']) && (bool)$this->element['dynamic'],
            'mediaPath'  =>  Media::getPath(),
            'ajax'       =>  Uri::root('base').'/administrator/index.php?option=com_ajax&astroid=media',
-           'type'       =>  strtolower($this->type),
-           'lang'       =>  [
-               'select_media'   =>  Text::_('TPL_ASTROID_SELECT_'.strtoupper($mediaType)),
-               'change_media'   =>  Text::_('TPL_ASTROID_CHANGE_'.strtoupper($mediaType)),
-               'clear'          =>  Text::_('ASTROID_CLEAR')
-           ]
+           'type'       =>  strtolower($this->type)
        ];
        return json_encode($json);
    }

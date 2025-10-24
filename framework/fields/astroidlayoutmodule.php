@@ -35,10 +35,7 @@ class JFormFieldAstroidLayoutModule extends FormField {
         $layout =   Layout::loadModuleLayout($id);
         $constant   =   Helper\Constants::manager_configs('joomla_module');
         // Get Language
-        $language = array();
-        foreach (Helper\Constants::$translationStrings as $string) {
-            $language[strtoupper($string)] = $app->getLanguage()->_($string);
-        }
+        $language = Helper::getLanguageStrings();
         $json = [
             'id'      =>  $this->id,
             'name' => $this->name,
