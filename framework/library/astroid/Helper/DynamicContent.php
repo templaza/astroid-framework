@@ -41,8 +41,8 @@ class DynamicContent {
 
     public function __construct($source = '', $start = 1, $quantity = 10, $conditions = [], $order = '', $order_dir = '', $dynamic_content = null, $options = '') {
         $this->source = $source;
-        $this->start = $start;
-        $this->quantity = $quantity;
+        $this->start = (int) $start;
+        $this->quantity = (int) $quantity;
         $this->conditions = $conditions;
         $this->order = $order;
         $this->order_dir = $order_dir;
