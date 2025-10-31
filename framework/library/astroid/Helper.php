@@ -907,12 +907,10 @@ class Helper
             if ($response->code !== 200) {
                 throw new Exception('Failed to fetch data. HTTP Code: ' . $response->code);
             }
-
-            $xml = simplexml_load_string($response->body);
+            $xml = simplexml_load_string($response->body, 'SimpleXMLElement', LIBXML_NOCDATA);
             if ($xml === false) {
                 throw new Exception('Failed to parse XML data.');
             }
-
             // Convert XML to Array
             $data = json_decode(json_encode($xml), true);
 
