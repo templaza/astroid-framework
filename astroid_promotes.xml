@@ -1,11 +1,11 @@
 <promotions>
     <promotion>
-        <title>Extended Mid-Year, Full Power – Get 50% Off Astroid Subscriptions!</title>
-        <description>From July 14 to July 20, 2025, enjoy half-price discounts on all Astroid subscription plans. Whether you’re building for clients or crafting your own site, this is your chance to unlock Astroid’s full potential for a fraction of the cost.</description>
+        <title>Halloween Sale: Scarily Good Deals on Astroid Framework!</title>
+        <description><![CDATA[Up to 30% OFF Astroid Pro<br />🕒 Oct 30 – Nov 9<br />💥 3 Lucky Buyers → 100% Refund!]]></description>
         <link>https://astroidframe.work/pricing</link>
-        <link_title>Upgrade Now - Save 50%</link_title>
+        <link_title>Grab the Deal Now</link_title>
         <image>https://www.astroidframework.com/images/logo.png</image>
-        <validity>20225-07-14</validity>
-        <expiration>2025-07-20</expiration>
+        <validity>20225-10-29</validity>
+        <expiration>2025-11-10</expiration>
     </promotion>
 </promotions>
