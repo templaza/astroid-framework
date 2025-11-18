@@ -196,7 +196,35 @@
    };
 
    let initPreloader = function () {
-      $("#astroid-preloader").removeClass('d-flex').addClass('d-none');
+       const preloader = document.getElementById('astroid-preloader');
+       if (!preloader) return;
+       // ensure visible and reset any previous inline styles
+       preloader.classList.remove('d-none');
+       preloader.classList.add('d-flex');
+       preloader.style.opacity = '1';
+       preloader.style.transition = 'opacity 800ms ease';
+
+       // trigger fade out on next frame
+       requestAnimationFrame(function() {
+           preloader.style.opacity = '0';
+       });
+
+       // when transition ends, fully hide and clean up
+       const onEnd = function() {
+           preloader.classList.remove('d-flex');
+           preloader.classList.add('d-none');
+           preloader.style.opacity = '';
+           preloader.style.transition = '';
+           preloader.removeEventListener('transitionend', onEnd);
+       };
+       preloader.addEventListener('transitionend', onEnd);
+
+       // fallback: ensure it's hidden even if transitionend doesn't fire
+       setTimeout(function() {
+           if (preloader && getComputedStyle(preloader).opacity === '0') {
+               onEnd();
+           }
+       }, 700);
    };
 
    let setCookie = function (name, value, days) {
