@@ -277,7 +277,7 @@ if ($params->get('card_style', '') == 'custom') {
 
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
-        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'mobile', $element->isRoot);
+        Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'global', $element->isRoot);
     }
 }
 switch ($overlay_type) {
