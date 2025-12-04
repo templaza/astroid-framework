@@ -287,7 +287,11 @@ class Style
         $style      = new Style($selector, '', $onFile);
         $style_dark = new Style($selector, 'dark', $onFile);
         if (isset($border['border_width'])) {
-            $style->addCss('border-width', $border['border_width']. 'px', $device);
+            if (Helper::isJsonString($border['border_width'])) {
+                self::setSpacingStyle($style, $border['border_width'], 'border');
+            } else {
+                $style->addCss('border-width', $border['border_width']. 'px', $device);
+            }
         }
         if (isset($border['border_style'])) {
             $style->addCss('border-style', $border['border_style'], $device);
@@ -605,7 +609,7 @@ class Style
         }
     }
 
-    public static function spacingValue($value = null, $property = "padding", $default = [])
+    public static function spacingValue($value = null, $property = "padding", $default = []): string
     {
         $return = [];
         $values = [];
@@ -647,6 +651,8 @@ class Style
         if (count(array_keys($values)) === 4) {
             $return = [];
             $return[] = self::getPropertySet($property) . ':' . implode(' ', $values);
+        } elseif (count(array_keys($values)) && $property == 'border') {
+            array_unshift($return, 'border-width:0');
         }
 
         return implode(";", $return);
