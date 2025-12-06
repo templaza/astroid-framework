@@ -464,7 +464,7 @@ class Helper
                 return false;
             }
             $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
-            $layout     = \json_decode($sublayout['data'], true);
+            $layout     = is_array($sublayout['data']) ? $sublayout['data'] : \json_decode($sublayout['data'], true);
         } else {
             $layout =   $template->getLayout();
         }
