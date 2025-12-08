@@ -457,9 +457,8 @@ class Helper
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
-        $layout_type    =   'templates';
-        if (isset($options['source']) && !empty($options['source']) && $options['source'] != 'template') {
-            $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
+        $layout_type = !empty($options['layout_type']) ? $options['layout_type'] : 'template';
+        if (!empty($options['source']) && $layout_type != 'template') {
             if ($layout_type == 'module_layouts') {
                 $layout = Layout::loadModuleLayout($options['module_id']);
             } else {
