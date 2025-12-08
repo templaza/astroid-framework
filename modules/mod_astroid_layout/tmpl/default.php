@@ -11,6 +11,9 @@ defined('_JEXEC') or die;
 use Astroid\Element\Layout;
 use Astroid\Element\Section;
 $layout = Layout::loadModuleLayout($module->id);
+$options['source'] = 'module_layouts';
+$options['layout_type'] = 'module_layouts';
+$options['module_id'] = $module->id;
 $devices = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] : [
     [
         'code'=> 'lg',
@@ -20,7 +23,7 @@ $devices = isset($layout['devices']) && $layout['devices'] ? $layout['devices'] 
 ];
 $content = '';
 foreach ($layout['sections'] as $section) {
-    $section = new Section($section, $devices);
+    $section = new Section($section, $devices, $options);
     $content .= $section->render();
 }
 echo $content;

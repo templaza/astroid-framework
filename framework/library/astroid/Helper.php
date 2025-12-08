@@ -458,13 +458,17 @@ class Helper
             $template   =   Framework::getTemplate();
         }
         $layout_type    =   'templates';
-        if (isset($options['source']) && !empty($options['source'])) {
-            $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
-            if (!isset($sublayout['data']) || !$sublayout['data']) {
-                return false;
-            }
+        if (isset($options['source']) && !empty($options['source']) && $options['source'] != 'template') {
             $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
-            $layout     = is_array($sublayout['data']) ? $sublayout['data'] : \json_decode($sublayout['data'], true);
+            if ($layout_type == 'module_layouts') {
+                $layout = Layout::loadModuleLayout($options['module_id']);
+            } else {
+                $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
+                if (!isset($sublayout['data']) || !$sublayout['data']) {
+                    return false;
+                }
+                $layout     = is_array($sublayout['data']) ? $sublayout['data'] : \json_decode($sublayout['data'], true);
+            }
         } else {
             $layout =   $template->getLayout();
         }

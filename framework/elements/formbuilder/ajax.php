@@ -22,15 +22,21 @@ use Astroid\Framework;
 $mainframe      =   Factory::getApplication();
 $asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
 $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
-$source         =   $mainframe->input->post->get('source', '', 'string');
+$source         =   $mainframe->input->post->get('source', 'template', 'string');
 $template_id    =   $mainframe->input->post->get('template', '', 'ALNUM');
 $template       =   Framework::getTemplate(intval($template_id));
 $layout_type    =   $mainframe->input->post->get('layout_type', '', 'string');
 $article_id     =   0;
+$options = ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type];
 if ($layout_type == 'article_layouts') {
     $article_id     =   $mainframe->input->post->get('id', 0, 'int');
+    $options['article_id'] = $article_id;
 }
-$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type, 'article_id' => $article_id]);
+if ($layout_type == 'module_layouts') {
+    $module_id     =   $mainframe->input->post->get('module_id', 0, 'int');
+    $options['module_id'] = $module_id;
+}
+$element        =   Helper::getElement($unqid, '', $options);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 $return = array();
@@ -70,7 +76,7 @@ try {
             if (empty($token) || !Helper\Captcha::verifyCloudFlareTurnstile($token)) {
                 throw new \Exception($invalidCaptchaMessage);
             }
-        } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha')) {
+        } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha-' . $source)) {
             throw new \Exception($invalidCaptchaMessage);
         }
     }
