@@ -356,7 +356,11 @@ class Template
     public function getFonts()
     {
         if (self::$fonts === null) {
+            self::$fonts = Helper\Font::getCachedLocalFonts($this->template);
+        }
+        if (self::$fonts === null) {
             self::$fonts = Helper\Font::getUploadedFonts($this->template);
+            Helper\Font::updateCachedLocalFonts($this->template, self::$fonts);
         }
         return self::$fonts;
     }

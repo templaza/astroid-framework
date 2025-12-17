@@ -98,7 +98,8 @@ class Font
             ];
         }
 
-        $uploadedFonts = self::getUploadedFonts(Framework::getTemplate()->template);
+        $template = Framework::getTemplate()->template;
+        $uploadedFonts = self::getUploadedFonts($template);
 
         if (!empty($uploadedFonts)) {
             foreach ($uploadedFonts as $uploaded_font) {
@@ -106,6 +107,15 @@ class Font
                     'value' => $uploaded_font['id'],
                     'text'  => $uploaded_font['name']
                 ];
+            }
+
+            // Method is only used in admin, so we use the un-cached function 'getUploadedFonts'
+            // above, and check here if we need to update the fontcache.
+            $cachedFonts = self::getCachedLocalFonts($template);
+            $font_ids = array_keys($uploadedFonts);
+            $cached_font_ids = $cachedFonts == null ? [] : array_keys($cachedFonts);
+            if ($cached_font_ids != $font_ids) {
+                self::updateCachedLocalFonts($template, $uploadedFonts);
             }
         }
 
@@ -118,6 +128,37 @@ class Font
             }
         }
         return \json_encode($rt_fonts);
+    }
+
+    /**
+     * Loads the cached font-info for local fonts from `/media/templates/site/$template/fonts.cache.json`.
+     * 
+     * @param string $template template name
+     * @return null|array font-info
+     */
+    public static function getCachedLocalFonts($template)
+    {
+        if (empty($template)) {
+            return null;
+        }
+
+        $template_font_cache = JPATH_SITE . '/media/templates/site/' . $template . '/fonts.cache.json';
+        $ret = json_decode(@file_get_contents($template_font_cache), true);
+        return $ret;
+    }
+
+    /**
+     * Updates the cached font-info for local fonts in `/media/templates/site/$template/fonts.cache.json`.
+     * 
+     * @param string $template template name
+     * @param array $fonts font-info
+     */
+    public static function updateCachedLocalFonts($template, $fonts) {
+        if (empty($template) || empty($fonts)) {
+            return;
+        }
+        $template_font_cache = JPATH_SITE . '/media/templates/site/' . $template . '/fonts.cache.json';
+        file_put_contents($template_font_cache, json_encode($fonts, JSON_THROW_ON_ERROR));
     }
 
     public static function getUploadedFonts($template)
