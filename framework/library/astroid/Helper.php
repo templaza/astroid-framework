@@ -208,6 +208,11 @@ class Helper
         } else {
             self::clearCSS($template_dir, $prefix);
         }
+
+        $template_font_cache = JPATH_SITE . '/media/templates/site/' . $template . '/fonts.cache.json';
+        if (file_exists($template_font_cache)) {
+            unlink($template_font_cache);
+        }
         return true;
     }
 
