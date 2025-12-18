@@ -1146,6 +1146,7 @@ class Document
         $header = $params->get('header', TRUE);
         $headerMode = $params->get('header_mode', 'horizontal', 'STRING');
         $Itemid = $this->getApp()->input->get('Itemid', '', 'INT');
+        $user = Factory::getApplication()->getIdentity();
 
         if (!empty($option)) {
             $class[] = htmlspecialchars(str_replace('_', '-', $option));
@@ -1161,6 +1162,12 @@ class Document
         }
         if (!empty($Itemid)) {
             $class[] = 'itemid-' . $Itemid;
+        }
+
+        if ($user->id > 0) {
+            $class[] = 'user-logged-in';
+        } else {
+            $class[] = 'guest-user';
         }
 
         if ($header && !empty($headerMode)) {
