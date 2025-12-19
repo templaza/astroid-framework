@@ -25,12 +25,18 @@ $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
 $source         =   $mainframe->input->post->get('source', '', 'string');
 $template_id    =   $mainframe->input->post->get('template', '', 'ALNUM');
 $template       =   Framework::getTemplate(intval($template_id));
-$layout_type    =   $mainframe->input->post->get('layout_type', '', 'string');
+$layout_type    =   $mainframe->input->post->get('layout_type', 'template', 'string');
 $article_id     =   0;
+$options = ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type];
 if ($layout_type == 'article_layouts') {
     $article_id     =   $mainframe->input->post->get('id', 0, 'int');
+    $options['article_id'] = $article_id;
 }
-$element        =   Helper::getElement($unqid, '', ['source' => $source, 'template' => $template->template, 'layout_type' => $layout_type, 'article_id' => $article_id]);
+if ($layout_type == 'module_layouts') {
+    $module_id     =   $mainframe->input->post->get('module_id', 0, 'int');
+    $options['module_id'] = $module_id;
+}
+$element        =   Helper::getElement($unqid, '', $options);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 $return = array();
@@ -56,7 +62,6 @@ try {
         $email_headers  =   str_replace('{{'.$field.'}}', $value, $email_headers);
     }
     $replyToMail = $replyToName = '';
-
     if (intval($params->get('enable_captcha', 0))) {
         $captcha_type   =   $pluginParams->get('captcha_type', 'default');
         $invalidCaptchaMessage = Text::_('ASTROID_AJAX_ERROR_INVALID_CAPTCHA');
@@ -70,7 +75,7 @@ try {
             if (empty($token) || !Helper\Captcha::verifyCloudFlareTurnstile($token)) {
                 throw new \Exception($invalidCaptchaMessage);
             }
-        } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha')) {
+        } elseif (!Helper\Captcha::getCaptcha('as-formbuilder-captcha-' . $source . '-' . $unqid)) {
             throw new \Exception($invalidCaptchaMessage);
         }
     }

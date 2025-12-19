@@ -184,8 +184,9 @@ class Admin extends Helper\Client
                 Helper::putContents(JPATH_SITE . "/media/templates/site/$template_name/images/$type/".$layout['thumbnail'], $thumbnail);
                 File::delete($fileTemp);
             }
+            $layout['name'] = $layout_name;
             Helper::putContents($layout_path . $layout_name . '.json', \json_encode($layout));
-            $this->response($layout_name);
+            $this->response($layout);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }

@@ -129,7 +129,11 @@ class JFormFieldAstroidSubForm extends FormField
         if (empty($value)) {
             $options = [];
         } else {
-            $options = \json_decode($value, true);
+            if (\is_string($value)) {
+                $options = \json_decode($value, true);
+            } else {
+                $options = (array) $value;
+            }
         }
         $json =   [
             'id'      =>  $this->id,

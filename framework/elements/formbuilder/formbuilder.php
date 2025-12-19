@@ -162,13 +162,18 @@ echo '</div>';
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
 echo '<input type="hidden" name="template" value="'.Framework::getTemplate()->id.'">';
 echo '<input type="hidden" name="widget" value="formbuilder">';
+$source = 'template';
 if (isset($options['source']) && $options['source']) {
-    echo '<input type="hidden" name="source" value="'.$options['source'].'">';
+    $source = $options['source'];
 }
+echo '<input type="hidden" name="source" value="'. $source .'">';
 if (isset($options['layout_type']) && $options['layout_type']) {
     echo '<input type="hidden" name="layout_type" value="'.$options['layout_type'].'">';
     if ($options['layout_type'] == 'article_layouts') {
         echo '<input type="hidden" name="id" value="'.$mainframe->input->get('id', 0, 'INT').'">';
+    }
+    if ($options['layout_type'] == 'module_layouts') {
+        echo '<input type="hidden" name="module_id" value="'.$options['module_id'].'">';
     }
 }
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
@@ -195,7 +200,7 @@ if ($params->get('enable_captcha', 0) == 1) {
     } else if ($captcha_type == 'turnstile') {
         echo '<div class="cloudflare-turnstile"></div>';
     } else {
-        echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha');
+        echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha-' . $source . '-' . $element->unqid);
     }
     echo '</div>';
 }

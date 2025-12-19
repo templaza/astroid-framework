@@ -462,14 +462,17 @@ class Helper
         if (empty($template)) {
             $template   =   Framework::getTemplate();
         }
-        $layout_type    =   'templates';
-        if (isset($options['source']) && !empty($options['source'])) {
-            $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
-            if (!isset($sublayout['data']) || !$sublayout['data']) {
-                return false;
+        $layout_type = !empty($options['layout_type']) ? $options['layout_type'] : 'template';
+        if (!empty($options['source']) && $layout_type != 'template') {
+            if ($layout_type == 'module_layouts') {
+                $layout = Layout::loadModuleLayout($options['module_id']);
+            } else {
+                $sublayout =   Layout::getDataLayout($options['source'], (isset($options['template']) && !empty($options['template']) ? $options['template'] : ''), (isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts'));
+                if (!isset($sublayout['data']) || !$sublayout['data']) {
+                    return false;
+                }
+                $layout     = is_array($sublayout['data']) ? $sublayout['data'] : \json_decode($sublayout['data'], true);
             }
-            $layout_type = isset($options['layout_type']) && !empty($options['layout_type']) ? $options['layout_type'] : 'layouts';
-            $layout     = \json_decode($sublayout['data'], true);
         } else {
             $layout =   $template->getLayout();
         }
@@ -912,12 +915,10 @@ class Helper
             if ($response->code !== 200) {
                 throw new Exception('Failed to fetch data. HTTP Code: ' . $response->code);
             }
-
-            $xml = simplexml_load_string($response->body);
+            $xml = simplexml_load_string($response->body, 'SimpleXMLElement', LIBXML_NOCDATA);
             if ($xml === false) {
                 throw new Exception('Failed to parse XML data.');
             }
-
             // Convert XML to Array
             $data = json_decode(json_encode($xml), true);
 

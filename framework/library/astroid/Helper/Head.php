@@ -77,7 +77,7 @@ class Head
         $color_mode = $template->getColorMode();
         if ($color_mode) {
             $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);
-            if ($enable_color_mode_transform) {
+            if ($enable_color_mode_transform && $params->get('astroid_color_mode_enable', 0) == 1) {
                 $colormode_transform_type               =   $params->get('colormode_transform_type', 'light_dark');
                 $astroid_colormode_transform_offset     =   $params->get('astroid_colormode_transform_offset', 50);
                 if ($colormode_transform_type === 'light_dark') {
