@@ -66,7 +66,7 @@ $position = $position ?? '';
     $mr = ($header_mode == 'stacked' && ($header_stacked_menu_mode == 'seperated' || $header_stacked_menu_mode == 'center')) ? '' : ' mr-0 mr-lg-4';
     ?>
     <div class="logo-wrapper <?php echo implode(' ', $class); ?> flex-column<?php echo $mr; ?>">
-        <?php if ($logo_link_type != 'none') : ?><a target="<?php echo $logo_link_target; ?>" class="site-title" href="<?php echo $logo_link; ?>"><?php endif; ?><?php echo $logo_text; ?><?php if ($logo_link_type != 'none') : ?></a><?php endif; ?>
+        <?php if ($logo_link_type != 'none') : ?><a target="<?php echo $logo_link_target; ?>" class="site-title" href="<?php echo $logo_link; ?>" aria-label="<?php echo $sitename; ?>"><?php endif; ?><?php echo $logo_text; ?><?php if ($logo_link_type != 'none') : ?></a><?php endif; ?>
         <?php
         if ($tag_line) {
             echo '<p class="site-tagline">'. $tag_line .'</p>';
@@ -82,7 +82,7 @@ $position = $position ?? '';
     ?>
     <div class="logo-wrapper astroid-logo">
         <?php if ($logo_link_type != 'none') : ?>
-        <a target="<?php echo $logo_link_target; ?>" class="<?php echo implode(' ', $class); ?><?php echo $mr; ?>" href="<?php echo $logo_link; ?>">
+        <a target="<?php echo $logo_link_target; ?>" class="<?php echo implode(' ', $class); ?><?php echo $mr; ?>" href="<?php echo $logo_link; ?>" aria-label="<?php echo $sitename; ?>">
         <?php endif; ?>
             <?php if ($position != 'sticky') : // start main logo
                 // Default logo
