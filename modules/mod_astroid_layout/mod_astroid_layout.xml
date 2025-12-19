@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>sonlv@templaza.com</authorEmail>
 	<authorUrl>astroidframe.work</authorUrl>
-	<version>3.3.5</version>
+	<version>3.3.6</version>
 	<description>MOD_ASTROID_LAYOUT_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_astroid_layout">mod_astroid_layout.php</filename>
