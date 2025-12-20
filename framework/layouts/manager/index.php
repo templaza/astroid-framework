@@ -25,7 +25,7 @@ $color_mode_theme  =   $app->input->cookie->get('astroid_colormode', 'light');
     <title><?php echo $template->title; ?></title>
     <link href="<?php echo ASTROID_MEDIA_URL . 'images/favicon.png'; ?>" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type="application/json" id="astroid-script-options"><?php echo json_encode($document->getScriptOptions()) ?></script>
+    <script type="application/json" id="astroid-script-options"><?php echo json_encode($document->getScriptOptions(),JSON_PRETTY_PRINT); ?></script>
     <?php echo $document->getStylesheets(); ?>
     <?php echo $document->getScripts('head'); ?>
 </head>
