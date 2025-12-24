@@ -63,7 +63,9 @@ class JFormFieldAstroidLayoutData extends FormField {
             $db->setQuery($query);
             $result = $db->loadObject();
             if (!empty($result)) {
-                $params->loadString($result->params, 'JSON');
+                if (!empty($result->params)) {
+                    $params->loadString($result->params, 'JSON');
+                }
                 $article_layout = json_decode($params->get('astroid_article_layout', '{"template":"","layout":""}'));
                 if (!$article_layout->template) {
                     $query = $db->getQuery(true);
