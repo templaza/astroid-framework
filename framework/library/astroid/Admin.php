@@ -13,7 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Component\Includer;
 use Joomla\CMS\Layout\FileLayout;
@@ -135,13 +135,23 @@ class Admin extends Helper\Client
             $filename       = $app->input->get('name', NULL, 'RAW');
             $type           = $app->input->get('type', 'layouts', 'RAW');
             $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/$type/";
+            $layoutData     = $app->input->post->get('data', '', 'RAW');
+            if (!Helper::isJsonString($layoutData)) {
+                throw new \Exception('Invalid JSON string', 400);
+            }
 
             $layout = [
                 'title' => $app->input->post->get('title', 'layout', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
                 'thumbnail' => $app->input->post->get('thumbnail_old', '', 'RAW'),
-                'data' => \json_decode($app->input->post->get('data', '{"sections":[]}', 'RAW'), true),
+                'data' => \json_decode($layoutData, true),
             ];
+
+            // Validate layout data
+            if (empty($layout['data']['devices']) || empty($layout['data']['sections'])) {
+                throw new \Exception('Invalid layout data. Sections or Devices is empty', 400);
+            }
+            
             $default = $app->input->post->get('default', '', 'RAW');
 
             if ($default === 'true') {
