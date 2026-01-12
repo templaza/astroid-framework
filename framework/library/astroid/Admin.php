@@ -151,7 +151,7 @@ class Admin extends Helper\Client
             if (empty($layout['data']['devices']) || empty($layout['data']['sections'])) {
                 throw new \Exception('Invalid layout data. Sections or Devices is empty', 400);
             }
-            
+
             $default = $app->input->post->get('default', '', 'RAW');
 
             if ($default === 'true') {
@@ -609,7 +609,6 @@ class Admin extends Helper\Client
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.$file.'.json';
-            jimport('joomla.filesystem.file');
             if (File::exists($file_name)) {
                 File::delete($file_name);
             }
