@@ -135,10 +135,31 @@ class JFormFieldAstroidRadio extends ListField {
       }
 
       // Only order if it's set
-      if ($order) {
-         jimport('joomla.utilities.arrayhelper');
-         FOFUtilsArray::sortObjects($sortOptions, $order, $order_dir == 'asc' ? 1 : -1, $order_case_sensitive, false);
-      }
+       if ($order) {
+           usort($sortOptions, function($a, $b) use ($order, $order_dir, $order_case_sensitive) {
+               $valA = $a->{$order} ?? null;
+               $valB = $b->{$order} ?? null;
+
+               // Normalize strings if case-insensitive
+               if (!$order_case_sensitive) {
+                   if (is_string($valA)) {
+                       $valA = mb_strtolower($valA);
+                   }
+                   if (is_string($valB)) {
+                       $valB = mb_strtolower($valB);
+                   }
+               }
+
+               // Compare numerically when both are numbers, otherwise lexicographically
+               if (is_numeric($valA) && is_numeric($valB)) {
+                   $cmp = $valA <=> $valB;
+               } else {
+                   $cmp = strcmp((string) $valA, (string) $valB);
+               }
+
+               return ($order_dir === 'asc') ? $cmp : -$cmp;
+           });
+       }
 
       // Initialise the options
       $options = array();
