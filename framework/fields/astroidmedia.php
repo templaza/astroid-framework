@@ -33,5 +33,4 @@ class JFormFieldAstroidMedia extends FormField {
        ];
        return json_encode($json);
    }
-
 }
