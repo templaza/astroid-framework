@@ -533,16 +533,22 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         // Article listing
         $lead_heading_fontsize  =   $params->get('article_listing_lead_heading_fontsize', '');
+        if (Helper::isJsonString($lead_heading_fontsize)) {
+            $lead_heading_fontsize = json_decode($lead_heading_fontsize, true);
+        }
         $intro_heading_fontsize =   $params->get('article_listing_intro_heading_fontsize', '');
+        if (Helper::isJsonString($intro_heading_fontsize)) {
+            $intro_heading_fontsize = json_decode($intro_heading_fontsize, true);
+        }
         if (!empty($lead_heading_fontsize)) {
             $article    =   new Style('.items-leading .article-title .page-header h2', '', true);
-            $article->addResponsiveCSS('font-size', $lead_heading_fontsize,'px');
+            $article->addResponsiveCSS('font-size', $lead_heading_fontsize,!empty($lead_heading_fontsize['postfix']) ? $lead_heading_fontsize['postfix'] : 'px');
             $article->render();
         }
 
         if (!empty($intro_heading_fontsize)) {
             $article    =   new Style('.items-row .article-title .page-header h2', '', true);
-            $article->addResponsiveCSS('font-size', $intro_heading_fontsize,'px');
+            $article->addResponsiveCSS('font-size', $intro_heading_fontsize,!empty($intro_heading_fontsize['postfix']) ? $intro_heading_fontsize['postfix'] : 'px');
             $article->render();
         }
     }

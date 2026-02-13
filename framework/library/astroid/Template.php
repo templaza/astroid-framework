@@ -292,7 +292,7 @@ class Template
             }
             if (isset($data['preset'])) {
                 $properties =   [];
-                $preset_data=   \json_decode($data['preset'], true);
+                $preset_data=   \is_string($data['preset']) ? \json_decode($data['preset'], true) : $data['preset'];
                 foreach ($preset_data as $prop => $value) {
                     if (is_array($value)) {
                         foreach ($value as $subprop => $value2) {
