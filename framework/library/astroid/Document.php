@@ -11,6 +11,7 @@ namespace Astroid;
 
 defined('_JEXEC') or die;
 
+use Astroid\Component\Utility;
 use Astroid\Helper\Constants;
 use Astroid\Helper\Style;
 use Joomla\Filesystem\File;
@@ -24,16 +25,17 @@ use Joomla\CMS\Layout\FileLayout;
 
 class Document
 {
-    protected $_metas = [], $_links = [];
-    protected $_javascripts = ['head' => [], 'body' => []];
-    protected $_stylesheets = [];
-    protected $_scripts = ['head' => [], 'body' => []];
-    protected $_styles = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
-    protected $_customtags = ['head' => [], 'body' => []];
+    protected array $_links = [];
+    protected array $_metas = [];
+    protected array $_javascripts = ['head' => [], 'body' => []];
+    protected array $_stylesheets = [];
+    protected array $_scripts = ['head' => [], 'body' => []];
+    protected array $_styles = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
+    protected array $_customtags = ['head' => [], 'body' => []];
     protected $_dev = null;
-    protected $minify_css = false;
-    protected $minify_js = false;
-    protected $minify_html = false;
+    protected bool $minify_css = false;
+    protected bool $minify_js = false;
+    protected bool $minify_html = false;
     private $_app = null;
     private $_document = null;
     private $_wa = null;
@@ -97,6 +99,11 @@ class Document
     public function getType()
     {
         return $this->getDocument()->getType();
+    }
+
+    public function getStyles()
+    {
+        return $this->_styles;
     }
 
     public function addLayoutPath($path): void
@@ -1110,6 +1117,10 @@ class Document
                 $content    .=  '@include color-mode(dark) {'. $color_mode_dark .'}';
             }
         }
+
+        // Button Overrides Function
+        $content .= Utility::buttons_in_scss();
+
         $scss->setOutputStyle(\ScssPhp\ScssPhp\OutputStyle::COMPRESSED);
         $css = $scss->compileString($content);
         Framework::getDebugger()->log('Rendering Scss');
@@ -1290,7 +1301,7 @@ class Document
             $template = Framework::getTemplate();
 
             // scss compile version
-            $scssVersion = md5(serialize($template->getThemeVariables())  . self::scssHash());
+            $scssVersion = md5(serialize($template->getThemeVariables()) . serialize($template->getCustomButtons())  . self::scssHash());
             // css file to be generated in template folder
             $cssFile = JPATH_SITE . '/media/templates/site/' . $template->template . '/css/compiled-' .  $scssVersion . '.css';
 

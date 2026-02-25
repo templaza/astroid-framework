@@ -41,6 +41,17 @@ $backtotop-padding: 10px !default;
 $backtotop-zindex: $zindex-sticky !default;
 $backtotop-rounded-radius: 4px !default;
 
+// Astroid Breakpoints
+$as-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1400px,
+        xxxl: 1600px
+) !default;
+
 // Astroid Width ranges
 $as-width-ranges: (
         xxsmall: 150px,

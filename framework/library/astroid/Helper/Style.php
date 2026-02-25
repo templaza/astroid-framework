@@ -21,6 +21,7 @@ class Style
     public $_selector, $_css = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []], $_styles = ['mobile' => [], 'landscape_mobile' => [], 'tablet' => [], 'desktop' => [], 'large_desktop' => [], 'larger_desktop' => [], 'global' => []], $_child = [];
     public static array $_devices = ['mobile', 'landscape_mobile', 'tablet', 'desktop', 'large_desktop', 'larger_desktop', 'global'];
 
+    public static array $_breakpoints = ['mobile' => '575.98px', 'landscape_mobile' => '767.98px', 'tablet' => '991.98px', 'desktop' => '1199.98px', 'large_desktop' => '1399.98px', 'larger_desktop' => '1600px'];
     protected $_hover = null, $_focus = null, $_active = null, $_link = null;
     public bool $_onFile = false;
     public string $_mode = '';
@@ -269,16 +270,14 @@ class Style
         }
     }
 
-    public static function getCss($content, $device = 'global', $breakpoints = ['mobile' => '575.98px', 'landscape_mobile' => '767.98px', 'tablet' => '991.98px', 'desktop' => '1199.98px', 'large_desktop' => '1399.98px', 'larger_desktop' => '1600px']): string
+    public static function getCss($content, $device = 'global', $breakpoints = []): string
     {
+        if (empty($breakpoints)) {
+            $breakpoints = self::$_breakpoints;
+        }
         return match ($device) {
-            'mobile' => '@media (max-width: '.$breakpoints['mobile'].') {' . $content . '}',
-            'landscape_mobile' => '@media (max-width: '.$breakpoints['landscape_mobile'].') {' . $content . '}',
-            'tablet' => '@media (max-width: '.$breakpoints['tablet'].') {' . $content . '}',
-            'desktop' => '@media (max-width: '.$breakpoints['desktop'].') {' . $content . '}',
-            'large_desktop' => '@media (max-width: '.$breakpoints['large_desktop'].') {' . $content . '}',
-            'larger_desktop' => '@media (max-width: '.$breakpoints['larger_desktop'].') {' . $content . '}',
-            default => $content,
+            'global' => $content,
+            default => '@media (max-width: '.$breakpoints[$device].') {' . $content . '}',
         };
     }
 
@@ -609,13 +608,43 @@ class Style
         }
     }
 
+    public static function getSpacingStyle($value, $property = 'padding'): string
+    {
+        $style = '';
+        if (!empty($value)) {
+            $object = \json_decode($value, false);
+            $document = Framework::getDocument();
+            foreach ($document->getStyles() as $device => $styles) {
+                if (!empty($object->{$device})) {
+                    $props = $object->{$device};
+                } else {
+                    $props = new \stdClass();
+                    $props->top = '';
+                    $props->right = '';
+                    $props->bottom = '';
+                    $props->left = '';
+                    $props->lock = false;
+                    $props->unit = 'px';
+                }
+                $spacing_value = self::spacingValue($props, $property);
+                if (!empty($spacing_value)) {
+                    $style .= match ($device) {
+                        'global' => $spacing_value. ';',
+                        default => '@media (max-width: '.self::$_breakpoints[$device].') {' . $spacing_value . '}',
+                    };
+                }
+            }
+        }
+        return $style;
+    }
+
     public static function spacingValue($value = null, $property = "padding", $default = []): string
     {
         $return = [];
         $values = [];
         if (!empty($value) && isset($value->unit)) {
             $unit = $value->unit == 'Custom' ? '' : $value->unit;
-            if ( $value->lock && (($value->unit == 'Custom' && isset($value->top)) || is_numeric($value->top)) ) {
+            if ($value->lock && (($value->unit == 'Custom' && isset($value->top)) || is_numeric($value->top))) {
                 foreach (['top', 'right', 'bottom', 'left'] as $position) {
                     $return[$position] = self::getPropertySubset($property, $position) . ":{$value->top}{$unit}";
                     $values[$position] = "{$value->top}{$unit}";
@@ -675,16 +704,16 @@ class Style
             case "radius":
                 switch ($position) {
                     case "top":
-                        return 'border-top-left-radius';
+                        return 'border-start-start-radius';
                         break;
                     case "left":
-                        return 'border-bottom-left-radius';
+                        return 'border-end-start-radius';
                         break;
                     case "right":
-                        return 'border-top-right-radius';
+                        return 'border-start-end-radius';
                         break;
                     case "bottom":
-                        return 'border-bottom-right-radius';
+                        return 'border-end-end-radius';
                         break;
                 }
                 break;

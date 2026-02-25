@@ -17,6 +17,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
@@ -526,6 +527,186 @@ class Utility
 
         $root->render();
         $root_dark->render();
+    }
+
+    public static function buttons_in_scss(): string
+    {
+        $params = Framework::getTemplate()->getParams();
+        $document = Framework::getDocument();
+        $buttons = new Helper\SubForm($params->get('button_overrides', ''));
+        $content = '';
+        foreach ($buttons->getData() as $button) {
+            $style = $button->params->get('style', '');
+            if ($style !== 'custom') {
+                $css_light = $css_dark = $css_not_size = '';
+                // Typography
+                $typography = new Registry();
+                $typography->loadObject($button->params->get('typography'));
+                // font family
+                $font_face = $typography->get('font_face', '');
+                $alt_font_face = $typography->get('alt_font_face', '');
+                $font_family = Style::getFontFamilyValue($font_face, $alt_font_face);
+                $css_light .= !empty($font_family) ? '--bs-btn-font-family: ' . $font_family . ';' : '';
+
+                // font size
+                $font_size = $typography->get('font_size', '');
+                $font_size_unit = $typography->get('font_size_unit', '');
+
+                if (!empty($font_size)) {
+                    if (is_object($font_size)) {
+                        foreach ($document->getStyles() as $device => $styles) {
+                            if (isset($font_size->{$device}) && $font_size->{$device}) {
+                                $unit = $font_size_unit->{$device} ?? 'em';
+                                if (!empty($font_size->{$device} . $unit)) {
+                                    $font_size_value = '--bs-btn-font-size: ' . $font_size->{$device} . $unit;
+                                    $css_not_size .= match ($device) {
+                                        'global' => $font_size_value. ';',
+                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $font_size_value . '}',
+                                    };
+                                }
+                            }
+                        }
+                    } else {
+                        $css_not_size .= '--bs-btn-font-size: ' . $font_size . $font_size_unit .';';
+                    }
+                }
+
+                // font color, weight and transfrom
+                $font_weight = $typography->get('font_weight', '');
+                $text_transform = $typography->get('text_transform', '');
+                $css_light .= !empty($font_weight) ? '--bs-btn-font-weight: ' . $font_weight . ';' : '';
+                $css_light .= !empty($text_transform) ? 'text-transform: ' . $text_transform . ';' : '';
+
+                // font styles
+                $font_styles = $typography->get('font_style', []);
+                if (is_array($font_styles) && count($font_styles)) {
+                    foreach ($font_styles as $font_style) {
+                        switch ($font_style) {
+                            case 'bold':
+                                if (empty($font_weight)) {
+                                    $css_light .= '--bs-btn-font-weight: ' . $font_style . ';';
+                                }
+                                break;
+                            case 'italic':
+                                $css_light .= 'font-style: ' . $font_style . ';';
+                                break;
+                            case 'underline':
+                                $css_light .= 'text-decoration: ' . $font_style . ';';
+                                break;
+                        }
+                    }
+                }
+
+                // letter spacing
+                $letter_spacing = $typography->get('letter_spacing', '');
+                $letter_spacing_unit = $typography->get('letter_spacing_unit', '');
+
+                if (!empty($letter_spacing)) {
+                    if (is_object($letter_spacing)) {
+                        foreach ($document->getStyles() as $device => $styles) {
+                            if (!empty($letter_spacing->{$device})) {
+                                $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
+                                if (!empty($letter_spacing->{$device} . $letter_spacing_unit_value)) {
+                                    $letter_spacing_value = 'letter-spacing: ' . $letter_spacing->{$device} . $letter_spacing_unit_value;
+                                    $css_not_size .= match ($device) {
+                                        'global' => $letter_spacing_value. ';',
+                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $letter_spacing_value . '}',
+                                    };
+                                }
+                            }
+                        }
+                    } else {
+                        $css_not_size .= 'letter-spacing: ' . $letter_spacing . $letter_spacing_unit .';';
+                    }
+                }
+
+                // line height
+                $line_height = $typography->get('line_height', '');
+                $line_height_unit = $typography->get('line_height_unit', '');
+
+                if (!empty($line_height)) {
+                    if (is_object($line_height)) {
+                        foreach ($document->getStyles() as $device => $styles) {
+                            if (isset($line_height->{$device}) && $line_height->{$device}) {
+                                $line_height_unit_value = $line_height_unit->{$device} ?? 'em';
+                                if (!empty($line_height->{$device} . $line_height_unit_value)) {
+                                    $line_height_value = '--bs-btn-line-height: ' . $line_height->{$device} . $line_height_unit_value;
+                                    $css_not_size .= match ($device) {
+                                        'global' => $line_height_value. ';',
+                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $line_height_value . '}',
+                                    };
+                                }
+                            }
+                        }
+                    } else {
+                        $css_not_size .= '--bs-btn-line-height: ' . $line_height . $line_height_unit .';';
+                    }
+                }
+
+                // Color Overrides for default button styles
+                $color = Style::getColor($button->params->get('color', $typography->get('font_color', '')));
+                $bgcolor = Style::getColor($button->params->get('bgcolor', ''));
+                $border_color = Style::getColor($button->params->get('border_color', ''));
+                // Button in Light Mode
+                $css_light .= !empty($color['light']) ? '--bs-btn-color: '.$color['light'].';' : '';
+                $css_light .= !empty($bgcolor['light']) ? '--bs-btn-bg: '.$bgcolor['light'].';' : '';
+                $css_light .= !empty($border_color['light']) ? '--bs-btn-border-color: '.$border_color['light'].';' : '';
+                // Button in Dark Mode
+                $css_dark .= !empty($color['dark']) ? '--bs-btn-color: '.$color['dark'].';' : '';
+                $css_dark .= !empty($bgcolor['dark']) ? '--bs-btn-bg: '.$bgcolor['dark'].';' : '';
+                $css_dark .= !empty($border_color['dark']) ? '--bs-btn-border-color: '.$border_color['dark'].';' : '';
+
+                $color_hover = Style::getColor($button->params->get('color_hover', ''));
+                $bgcolor_hover = Style::getColor($button->params->get('bgcolor_hover', ''));
+                $border_color_hover = Style::getColor($button->params->get('border_color_hover', ''));
+                // Button Hover in Light Mode
+                $css_light .= !empty($color_hover['light']) ? '--bs-btn-hover-color: '.$color_hover['light'].';' : '';
+                $css_light .= !empty($bgcolor_hover['light']) ? '--bs-btn-hover-bg: '.$bgcolor_hover['light'].';' : '';
+                $css_light .= !empty($border_color_hover['light']) ? '--bs-btn-hover-border-color: '.$border_color_hover['light'].';' : '';
+                // Button Hover in Dark Mode
+                $css_dark .= !empty($color_hover['dark']) ? '--bs-btn-hover-color: '.$color_hover['dark'].';' : '';
+                $css_dark .= !empty($bgcolor_hover['dark']) ? '--bs-btn-hover-bg: '.$bgcolor_hover['dark'].';' : '';
+                $css_dark .= !empty($border_color_hover['dark']) ? '--bs-btn-hover-border-color: '.$border_color_hover['dark'].';' : '';
+
+                // Padding settings
+                $css_not_size .= Style::getSpacingStyle($button->params->get('padding', ''));
+
+                // Border settings
+                $border_style = $button->params->get('border_style', '');
+                if (!empty($border_style)) {
+                    if ($border_style === 'none') {
+                        $css_light .= 'border: none;';
+                    } else {
+                        $css_not_size .= 'border-style: ' . $border_style . ';';
+                        $css_not_size .= Style::getSpacingStyle($button->params->get('border_width', ''), 'border-width');
+                    }
+                }
+                $css_not_size .= Style::getSpacingStyle($button->params->get('border_radius', ''), 'radius');
+
+                // Button override
+                if (!empty($css_light)) {
+                    $content .= '.btn-'. $style .' {';
+                    $content .= $css_light;
+                    $content .= '}';
+                }
+
+                if (!empty($css_dark)) {
+                    $content .= '@include color-mode(dark) {';
+                    $content .= '.btn-'. $style .' {';
+                    $content .= $css_dark;
+                    $content .= '}';
+                    $content .= '}';
+                }
+
+                if (!empty($css_not_size)) {
+                    $content .= '.btn-'. $style .':not(.btn-sm):not(.btn-lg) {';
+                    $content .= $css_not_size;
+                    $content .= '}';
+                }
+            }
+        }
+
+        return $content;
     }
 
     public static function article(): void

@@ -15,6 +15,7 @@ use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
+use Astroid\Helper\Style;
 
 defined('_JEXEC') or die;
 
@@ -29,6 +30,7 @@ class Template
     public $params = null;
     public $title = '';
     public $version = null;
+    public array $variables = [];
     protected static $presets = null;
     protected static $fonts = null;
 
@@ -135,6 +137,9 @@ class Template
 
     public function getThemeVariables()
     {
+        if (!empty($this->variables)) {
+            return $this->variables;
+        }
         $variables = [];
         $variables['blue'] = $this->params->get('theme_blue', '#007bff');
         $variables['indigo'] = $this->params->get('theme_indigo', '#6610f2');
@@ -191,9 +196,9 @@ class Template
             $variables['dark'] = ($dark == 'custom' ? $this->params->get('theme_dark_custom', $variables['gray800']) : $variables[$dark]);
         }
 
-        $variables = $this->_variableOverrides($variables);
+        $this->variables = $this->_variableOverrides($variables);
 
-        return $variables;
+        return $this->variables;
     }
 
     public function isDefault($id = 0)
@@ -234,6 +239,73 @@ class Template
             }
         }
         return $variables;
+    }
+
+    public function getCustomButtons(): array
+    {
+        $params     = $this->getParams();
+        $buttons    = new Helper\SubForm($params->get('button_overrides', ''));
+        $buttons_scss = [];
+        foreach ($buttons->getData() as $button) {
+            $style = $button->params->get('style', '');
+            if ($style === 'custom') {
+                $class = $button->params->get('class', '');
+
+                $btn = new Style($class, '', true);
+                $btn_dark = new Style($class, 'dark', true);
+                $typography = $button->params->get('typography');
+                if (!empty($typography)) {
+                    Style::renderTypography($class, $typography, null, true);
+                }
+                Style::setSpacingStyle($btn, $button->params->get('padding', ''));
+
+                // Border settings
+                $border_style = $button->params->get('border_style', '');
+                if (!empty($border_style)) {
+                    if ($border_style === 'none') {
+                        $btn->addCss('border-style', 'none');
+                    } else {
+                        $btn->addCss('border-style', $border_style);
+                        Style::setSpacingStyle($btn, $button->params->get('border_width', ''), 'border-width');
+                    }
+                }
+
+                Style::setSpacingStyle($btn, $button->params->get('border_radius', ''), 'radius');
+
+                // Color Overrides for default button styles
+                $color = Style::getColor($button->params->get('color', ''));
+                $bgcolor = Style::getColor($button->params->get('bgcolor', ''));
+                $border_color = Style::getColor($button->params->get('border_color', ''));
+                $btn->addCss('color', $color['light']);
+                $btn->addCss('background-color', $bgcolor['light']);
+                $btn->addCss('border-color', $border_color['light']);
+                $btn_dark->addCss('color', $color['dark']);
+                $btn_dark->addCss('background-color', $bgcolor['dark']);
+                $btn_dark->addCss('border-color', $border_color['dark']);
+
+                $color_hover = Style::getColor($button->params->get('color_hover', ''));
+                $bgcolor_hover = Style::getColor($button->params->get('bgcolor_hover', ''));
+                $border_color_hover = Style::getColor($button->params->get('border_color_hover', ''));
+                $btn->hover()->addCss('color', $color_hover['light']);
+                $btn->hover()->addCss('background-color', $bgcolor_hover['light']);
+                $btn->hover()->addCss('border-color', $border_color_hover['light']);
+                $btn_dark->hover()->addCss('color', $color_hover['dark']);
+                $btn_dark->hover()->addCss('background-color', $bgcolor_hover['dark']);
+                $btn_dark->hover()->addCss('border-color', $border_color_hover['dark']);
+
+                $btn->render();
+                $btn_dark->render();
+            } else {
+                $typography = new Registry();
+                $typography->loadObject($button->params->get('typography'));
+                // font family
+                $font_face = $typography->get('font_face', '');
+                $alt_font_face = $typography->get('alt_font_face', '');
+                Style::getFontFamilyValue($font_face, $alt_font_face);
+                $buttons_scss[] = $button;
+            }
+        }
+        return $buttons_scss;
     }
 
     private function _getById($id)
