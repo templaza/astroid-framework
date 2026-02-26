@@ -22,7 +22,7 @@
                         <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                      </field>
                      <field ngShow="[style]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CLASS" name="class"/>
-                     <field name="typography" type="astroidtypography" font-style-picker="false" font-face="Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" alt-font-face="Arial, Helvetica, sans-serif" font-color="#000" font-size="1" font-size-unit="em" letter-spacing="0" line-height="1" font-weight="400" text-transform="none" color-picker="false" collapse="false"/>
+                     <field name="typography" type="astroidtypography" font-style-picker="false" color-picker="false" collapse="false"/>
                      <field name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                      <field name="border_style" type="astroidlist" label="ASTROID_BORDER_STYLE_LABEL" default="">
                         <option value="">JGLOBAL_INHERIT</option>
