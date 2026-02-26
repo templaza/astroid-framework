@@ -539,112 +539,115 @@ class Utility
             $style = $button->params->get('style', '');
             if ($style !== 'custom') {
                 $css_light = $css_dark = $css_not_size = '';
-                // Typography
-                $typography = new Registry();
-                $typography->loadObject($button->params->get('typography'));
-                // font family
-                $font_face = $typography->get('font_face', '');
-                $alt_font_face = $typography->get('alt_font_face', '');
-                $font_family = Style::getFontFamilyValue($font_face, $alt_font_face);
-                $css_light .= !empty($font_family) ? '--bs-btn-font-family: ' . $font_family . ';' : '';
+                $enable_typography = $button->params->get('enable_typography', '');
+                if (!empty($enable_typography) && trim($enable_typography) == 'custom') {
+                    // Typography
+                    $typography = new Registry();
+                    $typography->loadObject($button->params->get('typography'));
+                    // font family
+                    $font_face = $typography->get('font_face', '');
+                    $alt_font_face = $typography->get('alt_font_face', '');
+                    $font_family = Style::getFontFamilyValue($font_face, $alt_font_face);
+                    $css_light .= !empty($font_family) ? '--bs-btn-font-family: ' . $font_family . ';' : '';
 
-                // font size
-                $font_size = $typography->get('font_size', '');
-                $font_size_unit = $typography->get('font_size_unit', '');
+                    // font size
+                    $font_size = $typography->get('font_size', '');
+                    $font_size_unit = $typography->get('font_size_unit', '');
 
-                if (!empty($font_size)) {
-                    if (is_object($font_size)) {
-                        foreach ($document->getStyles() as $device => $styles) {
-                            if (isset($font_size->{$device}) && $font_size->{$device}) {
-                                $unit = $font_size_unit->{$device} ?? 'em';
-                                if (!empty($font_size->{$device} . $unit)) {
-                                    $font_size_value = '--bs-btn-font-size: ' . $font_size->{$device} . $unit;
-                                    $css_not_size .= match ($device) {
-                                        'global' => $font_size_value. ';',
-                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $font_size_value . '}',
-                                    };
+                    if (!empty($font_size)) {
+                        if (is_object($font_size)) {
+                            foreach ($document->getStyles() as $device => $styles) {
+                                if (isset($font_size->{$device}) && $font_size->{$device}) {
+                                    $unit = $font_size_unit->{$device} ?? 'em';
+                                    if (!empty($font_size->{$device} . $unit)) {
+                                        $font_size_value = '--bs-btn-font-size: ' . $font_size->{$device} . $unit;
+                                        $css_not_size .= match ($device) {
+                                            'global' => $font_size_value. ';',
+                                            default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $font_size_value . '}',
+                                        };
+                                    }
                                 }
                             }
-                        }
-                    } else {
-                        $css_not_size .= '--bs-btn-font-size: ' . $font_size . $font_size_unit .';';
-                    }
-                }
-
-                // font color, weight and transfrom
-                $font_weight = $typography->get('font_weight', '');
-                $text_transform = $typography->get('text_transform', '');
-                $css_light .= !empty($font_weight) ? '--bs-btn-font-weight: ' . $font_weight . ';' : '';
-                $css_light .= !empty($text_transform) ? 'text-transform: ' . $text_transform . ';' : '';
-
-                // font styles
-                $font_styles = $typography->get('font_style', []);
-                if (is_array($font_styles) && count($font_styles)) {
-                    foreach ($font_styles as $font_style) {
-                        switch ($font_style) {
-                            case 'bold':
-                                if (empty($font_weight)) {
-                                    $css_light .= '--bs-btn-font-weight: ' . $font_style . ';';
-                                }
-                                break;
-                            case 'italic':
-                                $css_light .= 'font-style: ' . $font_style . ';';
-                                break;
-                            case 'underline':
-                                $css_light .= 'text-decoration: ' . $font_style . ';';
-                                break;
+                        } else {
+                            $css_not_size .= '--bs-btn-font-size: ' . $font_size . $font_size_unit .';';
                         }
                     }
-                }
 
-                // letter spacing
-                $letter_spacing = $typography->get('letter_spacing', '');
-                $letter_spacing_unit = $typography->get('letter_spacing_unit', '');
+                    // font color, weight and transfrom
+                    $font_weight = $typography->get('font_weight', '');
+                    $text_transform = $typography->get('text_transform', '');
+                    $css_light .= !empty($font_weight) ? '--bs-btn-font-weight: ' . $font_weight . ';' : '';
+                    $css_light .= !empty($text_transform) ? 'text-transform: ' . $text_transform . ';' : '';
 
-                if (!empty($letter_spacing)) {
-                    if (is_object($letter_spacing)) {
-                        foreach ($document->getStyles() as $device => $styles) {
-                            if (!empty($letter_spacing->{$device})) {
-                                $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
-                                if (!empty($letter_spacing->{$device} . $letter_spacing_unit_value)) {
-                                    $letter_spacing_value = 'letter-spacing: ' . $letter_spacing->{$device} . $letter_spacing_unit_value;
-                                    $css_not_size .= match ($device) {
-                                        'global' => $letter_spacing_value. ';',
-                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $letter_spacing_value . '}',
-                                    };
-                                }
+                    // font styles
+                    $font_styles = $typography->get('font_style', []);
+                    if (is_array($font_styles) && count($font_styles)) {
+                        foreach ($font_styles as $font_style) {
+                            switch ($font_style) {
+                                case 'bold':
+                                    if (empty($font_weight)) {
+                                        $css_light .= '--bs-btn-font-weight: ' . $font_style . ';';
+                                    }
+                                    break;
+                                case 'italic':
+                                    $css_light .= 'font-style: ' . $font_style . ';';
+                                    break;
+                                case 'underline':
+                                    $css_light .= 'text-decoration: ' . $font_style . ';';
+                                    break;
                             }
                         }
-                    } else {
-                        $css_not_size .= 'letter-spacing: ' . $letter_spacing . $letter_spacing_unit .';';
                     }
-                }
 
-                // line height
-                $line_height = $typography->get('line_height', '');
-                $line_height_unit = $typography->get('line_height_unit', '');
+                    // letter spacing
+                    $letter_spacing = $typography->get('letter_spacing', '');
+                    $letter_spacing_unit = $typography->get('letter_spacing_unit', '');
 
-                if (!empty($line_height)) {
-                    if (is_object($line_height)) {
-                        foreach ($document->getStyles() as $device => $styles) {
-                            if (isset($line_height->{$device}) && $line_height->{$device}) {
-                                $line_height_unit_value = $line_height_unit->{$device} ?? 'em';
-                                if (!empty($line_height->{$device} . $line_height_unit_value)) {
-                                    $line_height_value = '--bs-btn-line-height: ' . $line_height->{$device} . $line_height_unit_value;
-                                    $css_not_size .= match ($device) {
-                                        'global' => $line_height_value. ';',
-                                        default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $line_height_value . '}',
-                                    };
+                    if (!empty($letter_spacing)) {
+                        if (is_object($letter_spacing)) {
+                            foreach ($document->getStyles() as $device => $styles) {
+                                if (!empty($letter_spacing->{$device})) {
+                                    $letter_spacing_unit_value = $letter_spacing_unit->{$device} ?? 'em';
+                                    if (!empty($letter_spacing->{$device} . $letter_spacing_unit_value)) {
+                                        $letter_spacing_value = 'letter-spacing: ' . $letter_spacing->{$device} . $letter_spacing_unit_value;
+                                        $css_not_size .= match ($device) {
+                                            'global' => $letter_spacing_value. ';',
+                                            default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $letter_spacing_value . '}',
+                                        };
+                                    }
                                 }
                             }
+                        } else {
+                            $css_not_size .= 'letter-spacing: ' . $letter_spacing . $letter_spacing_unit .';';
                         }
-                    } else {
-                        $css_not_size .= '--bs-btn-line-height: ' . $line_height . $line_height_unit .';';
+                    }
+
+                    // line height
+                    $line_height = $typography->get('line_height', '');
+                    $line_height_unit = $typography->get('line_height_unit', '');
+
+                    if (!empty($line_height)) {
+                        if (is_object($line_height)) {
+                            foreach ($document->getStyles() as $device => $styles) {
+                                if (isset($line_height->{$device}) && $line_height->{$device}) {
+                                    $line_height_unit_value = $line_height_unit->{$device} ?? 'em';
+                                    if (!empty($line_height->{$device} . $line_height_unit_value)) {
+                                        $line_height_value = '--bs-btn-line-height: ' . $line_height->{$device} . $line_height_unit_value;
+                                        $css_not_size .= match ($device) {
+                                            'global' => $line_height_value. ';',
+                                            default => '@media (max-width: '.Style::$_breakpoints[$device].') {' . $line_height_value . '}',
+                                        };
+                                    }
+                                }
+                            }
+                        } else {
+                            $css_not_size .= '--bs-btn-line-height: ' . $line_height . $line_height_unit .';';
+                        }
                     }
                 }
 
                 // Color Overrides for default button styles
-                $color = Style::getColor($button->params->get('color', $typography->get('font_color', '')));
+                $color = Style::getColor($button->params->get('color', ''));
                 $bgcolor = Style::getColor($button->params->get('bgcolor', ''));
                 $border_color = Style::getColor($button->params->get('border_color', ''));
                 // Button in Light Mode

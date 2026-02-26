@@ -250,13 +250,17 @@ class Template
             $style = $button->params->get('style', '');
             if ($style === 'custom') {
                 $class = $button->params->get('class', '');
-
                 $btn = new Style($class, '', true);
                 $btn_dark = new Style($class, 'dark', true);
-                $typography = $button->params->get('typography');
-                if (!empty($typography)) {
-                    Style::renderTypography($class, $typography, null, true);
+
+                $enable_typography = $button->params->get('enable_typography', '');
+                if (!empty($enable_typography) && trim($enable_typography) == 'custom') {
+                    $typography = $button->params->get('typography');
+                    if (!empty($typography)) {
+                        Style::renderTypography($class, $typography, null, true);
+                    }
                 }
+
                 Style::setSpacingStyle($btn, $button->params->get('padding', ''));
 
                 // Border settings
@@ -296,12 +300,15 @@ class Template
                 $btn->render();
                 $btn_dark->render();
             } else {
-                $typography = new Registry();
-                $typography->loadObject($button->params->get('typography'));
-                // font family
-                $font_face = $typography->get('font_face', '');
-                $alt_font_face = $typography->get('alt_font_face', '');
-                Style::getFontFamilyValue($font_face, $alt_font_face);
+                $enable_typography = $button->params->get('enable_typography', '');
+                if (!empty($enable_typography) && trim($enable_typography) == 'custom') {
+                    $typography = new Registry();
+                    $typography->loadObject($button->params->get('typography'));
+                    // font family
+                    $font_face = $typography->get('font_face', '');
+                    $alt_font_face = $typography->get('alt_font_face', '');
+                    Style::getFontFamilyValue($font_face, $alt_font_face);
+                }
                 $buttons_scss[] = $button;
             }
         }

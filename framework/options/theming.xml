@@ -22,7 +22,11 @@
                         <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                      </field>
                      <field ngShow="[style]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CLASS" name="class"/>
-                     <field name="typography" type="astroidtypography" font-style-picker="false" color-picker="false" collapse="false"/>
+                     <field description="TPL_ASTROID_BODY_TYPOGRAPHY_OPTION_DESC" name="enable_typography" type="astroidradio" default="default" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
+                        <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
+                        <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+                     </field>
+                     <field ngShow="[enable_typography]=='custom'" name="typography" type="astroidtypography" font-style-picker="false" color-picker="false" collapse="false"/>
                      <field name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                      <field name="border_style" type="astroidlist" label="ASTROID_BORDER_STYLE_LABEL" default="">
                         <option value="">JGLOBAL_INHERIT</option>
