@@ -183,9 +183,8 @@ class Utility
             $cursor_effect = $params->get('cursor_effect', 0);
             if ($cursor_effect) {
                 $document = Framework::getDocument();
-                $document->loadGSAP();
                 $document->getWA()->registerAndUseStyle('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/css/base.min.css');
-                $document->getWA()->registerAndUseScript('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                $document->getWA()->registerAndUseScript('astroid.cursor', 'media/astroidpro/assets/cursors/'.$cursor_effect.'/js/index.min.js', ['relative' => true, 'version' => 'auto'], [], ['astroid.gsap', 'jquery']);
             }
         }
     }

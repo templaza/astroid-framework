@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "astroid",
+  "version": "3.3.11",
+  "description": "Astroid Framework Assets",
+  "license": "GPL-3.0-or-later",
+  "assets": [
+    {
+      "name": "astroid.megamenu",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/megamenu.min.js"
+    },
+    {
+      "name": "astroid.jquery.hoverIntent",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/jquery.hoverIntent.min.js"
+    },
+    {
+      "name": "astroid.jquery.easing",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/jquery.easing.min.js"
+    },
+    {
+      "name": "astroid.offcanvas",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/offcanvas.min.js"
+    },
+    {
+      "name": "astroid.mobilemenu",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/mobilemenu.min.js"
+    },
+    {
+      "name": "astroid.script",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/script.min.js"
+    },
+    {
+      "name": "astroid.debug",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/debug.min.js"
+    },
+    {
+      "name": "astroid.colortransform",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/colortransform.min.js"
+    },
+    {
+      "name": "astroid.gsap",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/gsap/gsap.min.js"
+    },
+    {
+      "name": "astroid.animation.css",
+      "type": "style",
+      "uri": "astroid/animate.min.css"
+    },
+    {
+      "name": "astroid.animation.js",
+      "type": "script",
+      "uri": "astroid/animate.min.js"
+    },
+    {
+      "name": "astroid.swiper.css",
+      "type": "style",
+      "uri": "media/astroid/assets/vendor/swiper/swiper-bundle.min.css"
+    },
+    {
+      "name": "astroid.swiper.js",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/swiper/swiper-bundle.min.js"
+    },
+    {
+      "name": "astroid.slick.css",
+      "type": "style",
+      "uri": "astroid/slick.min.css"
+    },
+    {
+      "name": "astroid.slick.js",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "astroid/slick.min.js"
+    },
+    {
+      "name": "astroid.masonry",
+      "type": "script",
+      "uri": "astroid/masonry.pkgd.min.js"
+    },
+    {
+      "name": "astroid.imagesloaded",
+      "type": "script",
+      "uri": "astroid/imagesloaded.pkgd.min.js"
+    },
+    {
+      "name": "astroid.videobg",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "'astroid/videobg.min.js'"
+    }
+  ]
+}
