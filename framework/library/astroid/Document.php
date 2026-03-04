@@ -40,7 +40,6 @@ class Document
     private $_app = null;
     private $_document = null;
     private $_wa = null;
-    protected static array $_gsap_plugins = [];
     protected static array $_layout_paths = [];
     protected $type = null;
     protected $modules = null;
@@ -1403,10 +1402,11 @@ class Document
 
     public function loadGSAP($plugin = ''): void
     {
-        $this->getWA()->useScript('astroid.gsap');
-        if (!empty($plugin) && !in_array($plugin, self::$_gsap_plugins)) {
+        if (!empty($this->_is_loaded['gsap.'.$plugin])) {
             $this->getWA()->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto'], [], ['astroid.gsap']);
-            self::$_gsap_plugins[] = $plugin;
+            $this->_is_loaded['gsap.'.$plugin] = true;
+        } else {
+            $this->getWA()->useScript('astroid.gsap');
         }
     }
 

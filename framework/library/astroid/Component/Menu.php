@@ -33,7 +33,6 @@ class Menu
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
         $document->getWA()->useScript('astroid.megamenu');
-        $document->getWA()->useScript('astroid.jquery.hoverIntent');
 
         $header_endLevel = $params->get('header_endLevel', 0);
         if ($endLevel !== null) {

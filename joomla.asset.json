@@ -6,28 +6,17 @@
   "license": "GPL-3.0-or-later",
   "assets": [
     {
+      "name": "astroid.gsap",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/gsap/gsap.min.js"
+    },
+    {
       "name": "astroid.megamenu",
       "type": "script",
       "dependencies": [
-        "jquery"
+        "astroid.gsap"
       ],
       "uri": "astroid/megamenu.min.js"
-    },
-    {
-      "name": "astroid.jquery.hoverIntent",
-      "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
-      "uri": "astroid/jquery.hoverIntent.min.js"
-    },
-    {
-      "name": "astroid.jquery.easing",
-      "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
-      "uri": "astroid/jquery.easing.min.js"
     },
     {
       "name": "astroid.offcanvas",
@@ -68,11 +57,6 @@
         "jquery"
       ],
       "uri": "astroid/colortransform.min.js"
-    },
-    {
-      "name": "astroid.gsap",
-      "type": "script",
-      "uri": "media/astroid/assets/vendor/gsap/gsap.min.js"
     },
     {
       "name": "astroid.animation.css",
