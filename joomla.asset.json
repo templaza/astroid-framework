@@ -104,7 +104,7 @@
       "dependencies": [
         "jquery"
       ],
-      "uri": "'astroid/videobg.min.js'"
+      "uri": "astroid/videobg.min.js"
     }
   ]
 }
