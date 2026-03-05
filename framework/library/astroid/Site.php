@@ -81,14 +81,14 @@ class Site extends Helper\Client
             require_once \JPATH_ROOT.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template->template.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php';
         }
         elseif (file_exists(\JPATH_LIBRARIES.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php')) {
-
             require_once \JPATH_LIBRARIES.DIRECTORY_SEPARATOR.'astroid'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'elements'.DIRECTORY_SEPARATOR.$widget.DIRECTORY_SEPARATOR.'ajax.php';
         }
-        die();
+        $app->close();
     }
 
     protected function clearCache()
     {
+        $this->checkAdminAuth();
         $template = Framework::getTemplate()->template;
         Helper::clearCacheByTemplate($template);
         $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_CACHE')]);
@@ -96,6 +96,7 @@ class Site extends Helper\Client
 
     protected function clearJoomlaCache()
     {
+        $this->checkAdminAuth();
         Helper::clearJoomlaCache();
         $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
     }

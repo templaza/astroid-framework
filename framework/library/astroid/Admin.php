@@ -26,12 +26,20 @@ class Admin extends Helper\Client
 {
     public function onAfterRender(): void
     {
-        $this->addTemplateLabels();
+        // Only run template-admin specific logic when we are inside com_templates (styles view)
+        if ($this->isAdminTemplates()) {
+            $this->checkAdminAuth();
+            $this->addTemplateLabels();
+        }
     }
 
     public function onBeforeRender(): void
     {
-        Utility::showFreeTemplate();
+        // Only run template-admin specific logic when we are inside com_templates (styles view)
+        if ($this->isAdminTemplates()) {
+            $this->checkAdminAuth();
+            Utility::showFreeTemplate();
+        }
     }
 
     protected function save(): void
@@ -41,6 +49,7 @@ class Admin extends Helper\Client
         $input = $app->input;
 
         $this->checkAuth();
+        $this->checkAdminAuth();
         $params = $input->post->get('params', '', 'RAW');
         $template = Framework::getTemplate();
 
@@ -73,6 +82,7 @@ class Admin extends Helper\Client
     protected function media(): void
     {
         $this->checkAuth();
+        $this->checkAdminAuth();
         $action = Factory::getApplication()->input->get('action', '', 'RAW');
         $func = Helper::classify($action);
         if (!method_exists(Helper\Media::class, $func)) {
@@ -83,6 +93,7 @@ class Admin extends Helper\Client
 
     protected function getLayouts(): void
     {
+        $this->checkAdminAuth();
         $app = Factory::getApplication();
         $template_name  = $app->input->get('template', NULL, 'RAW');
         $type           = $app->input->get('type', 'layouts', 'RAW');
@@ -91,6 +102,7 @@ class Admin extends Helper\Client
 
     protected function getLayoutsById(): void
     {
+        $this->checkAdminAuth();
         $app = Factory::getApplication();
         $id  = $app->input->get('id');
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -110,6 +122,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
@@ -130,6 +143,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $filename       = $app->input->get('name', NULL, 'RAW');
@@ -208,6 +222,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app            = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $layouts        = $app->input->get('layouts', array(), 'RAW');
@@ -258,11 +273,13 @@ class Admin extends Helper\Client
 
     protected function getcategories(): void
     {
+        $this->checkAdminAuth();
         $this->response(Utility::getCategories());
     }
 
     protected function search(): void
     {
+        $this->checkAdminAuth();
         $search = Factory::getApplication()->input->get('search', '', 'RAW');
         switch ($search) {
             case 'icon':
@@ -276,12 +293,14 @@ class Admin extends Helper\Client
 
     protected function googleFonts(): void
     {
+        $this->checkAdminAuth();
         $this->format = 'html'; // Response Format
         $this->response(Helper\Font::getAllFonts());
     }
 
     protected function icons() : void
     {
+        $this->checkAdminAuth();
         $source = Factory::getApplication()->input->get('source', '', 'ALNUM');
         if ($this->format == 'html') {
             $this->format = 'json';
@@ -304,6 +323,7 @@ class Admin extends Helper\Client
 
     protected function manager(): void
     {
+        $this->checkAdminAuth();
         $this->format = 'html'; // Response Format
         $document = Framework::getDocument();
         $template = Framework::getTemplate();
@@ -435,6 +455,7 @@ class Admin extends Helper\Client
     protected function getArticleFormTemplate(): true
     {
         try {
+            $this->checkAdminAuth();
             $app            = Factory::getApplication();
             $template_id    = $app->input->get('id', NULL, 'RAW');
             $this->response(Helper::getFormTemplate('article', $template_id));
@@ -446,6 +467,7 @@ class Admin extends Helper\Client
 
     protected function getAstroidPromotion(): void
     {
+        $this->checkAdminAuth();
         if (!Helper::isPro()) {
             $this->response(Helper::getPromotions());
         } else {
@@ -455,6 +477,7 @@ class Admin extends Helper\Client
 
     protected function clearCache(): void
     {
+        $this->checkAdminAuth();
 	    $app = Factory::getApplication();
 	    $tpl = $app->input->get('template', '');
 		if (empty($tpl)) {
@@ -475,12 +498,14 @@ class Admin extends Helper\Client
 
     protected function clearJoomlaCache(): void
     {
+        $this->checkAdminAuth();
         Helper::clearJoomlaCache();
         $this->response(['message' => Text::_('TPL_ASTROID_SYSTEM_MESSAGES_JCACHE')]);
     }
 
     public function addTemplateLabels(): void
     {
+        $this->checkAdminAuth();
         $app = Factory::getApplication();
         $option = $app->input->get('option', '');
         $view = $app->input->get('view', '');
@@ -510,6 +535,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -580,6 +606,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -604,6 +631,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
@@ -622,6 +650,7 @@ class Admin extends Helper\Client
     public function getFreeTemplates(): true
     {
         try {
+            $this->checkAdminAuth();
             // Check for request forgeries.
             $json_file   = JPATH_SITE . "/media/astroid/assets/json/templates.json";
             if (file_exists($json_file)) {
@@ -641,6 +670,7 @@ class Admin extends Helper\Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_url  = $app->input->get('url', '', 'RAW');
             $result = Helper\Install::InstallUrl($template_url);
@@ -657,5 +687,25 @@ class Admin extends Helper\Client
             $this->errorResponse($e);
         }
         return true;
+    }
+
+    /**
+     * Check if current request is in administrator and in com_templates (styles or default view)
+     *
+     * @return  bool
+     */
+    protected function isAdminTemplates(): bool
+    {
+        $app = Factory::getApplication();
+
+        // Ensure we are in the administrator application
+        if (!$app->isClient('administrator')) {
+            return false;
+        }
+
+        $option = $app->input->get('option', '');
+        $view   = $app->input->get('view', '');
+
+        return ($option === 'com_templates' && ($view === 'styles' || $view === ''));
     }
 }

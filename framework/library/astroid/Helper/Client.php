@@ -156,6 +156,14 @@ class Client
         }
     }
 
+    protected function checkAdminAuth()
+    {
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->authorise('core.manage', 'com_templates')) {
+            throw new \Exception('You are not authorized to access this page.', 403);
+        }
+    }
+
     protected function checkAndRedirect()
     {
         $user = Factory::getApplication()->getIdentity();
@@ -309,6 +317,7 @@ class Client
         try {
             // Check for request forgeries.
             $this->checkAuth();
+            $this->checkAdminAuth();
             $app            = Factory::getApplication();
             $data           = $app->input->post->get('data', '', 'RAW');
             $article_id     = $app->input->post->get('article_id', 0, 'RAW');
