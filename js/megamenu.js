@@ -322,7 +322,6 @@ class AstroidMegaMenuPro {
         // Reset first
         content.style.left = '';
         content.style.right = '';
-        content.style.width = '';
 
         const header = this.navbar.closest(this.settings.headerSelector) || this.navbar;
         const headerRect = header.getBoundingClientRect();
