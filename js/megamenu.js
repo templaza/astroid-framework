@@ -18,7 +18,7 @@ class AstroidMegaMenuPro {
             trigger: navbar.dataset.astroidTrigger || 'hover', // 'hover' or 'click'
             duration: (navbar.dataset.transitionSpeed/1000) || 0.6,
             ease: navbar.dataset.easing || 'expo.out',
-            backdrop: true,
+            backdrop: navbar.dataset.megamenuBackdrop === 'true' || false,
             headerSelector: '#astroid-header',
             rtl: document.body.classList.contains('rtl')
         }, options);
