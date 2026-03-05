@@ -3,18 +3,18 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.3.1</version>
-        <fix>
-            <item><![CDATA[Fixed Color Style issue in Sass Override tab]]></item>
-            <item><![CDATA[Fixed issues with Load/Save Preset]]></item>
-            <item><![CDATA[Fixed Max-width being overridden by Bootstrap]]></item>
-            <item><![CDATA[Resolved incorrect Color Mode display with server cache]]></item>
-            <item><![CDATA[Fixed: “Back to Top” button alignment issue]]></item>
-            <item><![CDATA[Fixed: Header menu can't save in template options]]></item>
-        </fix>
-        <note>
-            <item><![CDATA[This version is compatible with PHP>=8.2 only]]></item>
-        </note>
+        <version>3.3.11</version>
+        <security>
+            <item><![CDATA[Fixing security vulnerabilities at the AJAX endpoint.]]></item>
+        </security>
+        <change>
+            <item><![CDATA[Update GSAP from 3.13.0 to 3.14.2]]></item>
+            <item><![CDATA[Rewrite the Mega Menu code]]></item>
+            <item><![CDATA[Rewrite the Color Transform code]]></item>
+        </change>
+        <addition>
+            <item><![CDATA[Add a centralized place to define/name button styles]]></item>
+        </addition>
     </changelog>
     <changelog>
         <element>astroidpro</element>
