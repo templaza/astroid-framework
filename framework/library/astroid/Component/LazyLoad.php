@@ -35,7 +35,6 @@ class LazyLoad
         if (!$run) return;
 
         Helper::createDir(ASTROID_CACHE . '/lazy-load/' . $template->id);
-//        $document->addScript('vendor/astroid/js/lazyload.min.js');
         $wa->registerAndUseScript('astroid.lazyload', 'astroid/lazyload.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
 
         if ($params->get('lazyload_components', '')) {

@@ -47,9 +47,6 @@ if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
     array_push($container_class, 'row', 'g-0');
     $astroid_content_class[] = 'col';
 }
-if ($header && !empty($header_mode) && $header_mode != 'sidebar') {
-    $wa->registerAndUseScript('astroid.jquery.easing', 'astroid/jquery.easing.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-}
 
 // Astroid Layout Background
 $background         =   $params->get('container_background_setting', '');

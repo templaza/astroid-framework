@@ -303,41 +303,48 @@
             <option value="slide">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SILDE</option>
          </field>
 
-         <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_speed" type="astroidrange" min="100" max="4000" step="1" postfix="ms" default="300" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" />
+         <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_speed" type="astroidrange" min="100" max="4000" step="1" postfix="ms" default="600" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" />
 
          <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_ease" type="astroidlist" class="form-select" label="TPL_ASTROID_HEADER_ANIMATION_EASE_LABEL" default="linear">
+            <!-- GSAP 3 easing options -->
+            <option value="none">none</option>
             <option value="linear">linear</option>
-            <option value="swing">swing</option>
-            <option value="easeInQuad">easeInQuad</option>
-            <option value="easeOutQuad">easeOutQuad</option>
-            <option value="easeInOutQuad">easeInOutQuad</option>
-            <option value="easeInCubic">easeInCubic</option>
-            <option value="easeOutCubic">easeOutCubic</option>
-            <option value="easeInOutCubic">easeInOutCubic</option>
-            <option value="easeInQuart">easeInQuart</option>
-            <option value="easeOutQuart">easeOutQuart</option>
-            <option value="easeInOutQuart">easeInOutQuart</option>
-            <option value="easeInQuint">easeInQuint</option>
-            <option value="easeOutQuint">easeOutQuint</option>
-            <option value="easeInOutQuint">easeInOutQuint</option>
-            <option value="easeInSine">easeInSine</option>
-            <option value="easeOutSine">easeOutSine</option>
-            <option value="easeInOutSine">easeInOutSine</option>
-            <option value="easeInExpo">easeInExpo</option>
-            <option value="easeOutExpo">easeOutExpo</option>
-            <option value="easeInOutExpo">easeInOutExpo</option>
-            <option value="easeInCirc">easeInCirc</option>
-            <option value="easeOutCirc">easeOutCirc</option>
-            <option value="easeInOutCirc">easeInOutCirc</option>
-            <option value="easeInElastic">easeInElastic</option>
-            <option value="easeOutElastic">easeOutElastic</option>
-            <option value="easeInOutElastic">easeInOutElastic</option>
-            <option value="easeInBack">easeInBack</option>
-            <option value="easeOutBack">easeOutBack</option>
-            <option value="easeInOutBack">easeInOutBack</option>
-            <option value="easeInBounce">easeInBounce</option>
-            <option value="easeOutBounce">easeOutBounce</option>
-            <option value="easeInOutBounce">easeInOutBounce</option>
+
+            <!-- Power eases -->
+            <option value="power1.in">power1.in</option>
+            <option value="power1.out">power1.out</option>
+            <option value="power1.inOut">power1.inOut</option>
+            <option value="power2.in">power2.in</option>
+            <option value="power2.out">power2.out</option>
+            <option value="power2.inOut">power2.inOut</option>
+            <option value="power3.in">power3.in</option>
+            <option value="power3.out">power3.out</option>
+            <option value="power3.inOut">power3.inOut</option>
+            <option value="power4.in">power4.in</option>
+            <option value="power4.out">power4.out</option>
+            <option value="power4.inOut">power4.inOut</option>
+
+            <!-- Classic eases -->
+            <option value="back.in">back.in</option>
+            <option value="back.out">back.out</option>
+            <option value="back.inOut">back.inOut</option>
+            <option value="elastic.in">elastic.in</option>
+            <option value="elastic.out">elastic.out</option>
+            <option value="elastic.inOut">elastic.inOut</option>
+            <option value="bounce.in">bounce.in</option>
+            <option value="bounce.out">bounce.out</option>
+            <option value="bounce.inOut">bounce.inOut</option>
+
+            <!-- Trigonometric / expo / circ -->
+            <option value="sine.in">sine.in</option>
+            <option value="sine.out">sine.out</option>
+            <option value="sine.inOut">sine.inOut</option>
+            <option value="circ.in">circ.in</option>
+            <option value="circ.out">circ.out</option>
+            <option value="circ.inOut">circ.inOut</option>
+            <option value="expo.in">expo.in</option>
+            <option value="expo.out">expo.out</option>
+            <option value="expo.inOut">expo.inOut</option>
          </field>
       </fieldset>
    </fields>

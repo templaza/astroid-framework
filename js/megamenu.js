@@ -1,349 +1,525 @@
-(function ($) {
-   $.fn.JDMegaMenu = function (options) {
-      const settings = $.extend({
-         contentClass: $(this).data('megamenu-content-class'),
-         submenuClass: $(this).data('megamenu-submenu-class'),
-         megamenuClass: $(this).data('megamenu-class'),
-         dropdownArrows: $(this).data('dropdown-arrow'),
-         headerOffset: $(this).data('header-offset'),
-         transition: parseInt($(this).data('transition-speed')),
-         easing: $(this).data('easing'),
-         animation: $(this).data('megamenu-animation'),
-         trigger: $(this).data('astroid-trigger')
-      }, options);
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2026 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+class AstroidMegaMenuPro {
 
-      return this.each(function () {
-         const _navbar = $(this);
-         let _container = _navbar;
-         if (_navbar.children('.container').length) {
-            _container = _navbar.children('.container');
-         }
-         const _megamenu = _navbar.find(settings.megamenuClass);
-         const _submenus = _megamenu.find(settings.submenuClass);
+    constructor(navbar, options = {}) {
 
-         const init = function () {
-            if (!_navbar.is(':visible')) {
-               return false;
+        this.navbar = navbar;
+
+        this.settings = Object.assign({
+            megamenuSelector: navbar.dataset.megamenuClass || '.has-megamenu',
+            dropdownSelector: '.nav-item-caret',
+            contentSelector: navbar.dataset.megamenuContentClass || '.megamenu-container',
+            submenuSelector: navbar.dataset.megamenuSubmenuClass || '.nav-submenu',
+            trigger: navbar.dataset.astroidTrigger || 'hover', // 'hover' or 'click'
+            duration: (navbar.dataset.transitionSpeed/1000) || 0.6,
+            ease: navbar.dataset.easing || 'expo.out',
+            backdrop: true,
+            headerSelector: '#astroid-header',
+            rtl: document.body.classList.contains('rtl')
+        }, options);
+        this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        this.init();
+    }
+
+    init() {
+        this.items = this.navbar.querySelectorAll(
+            `${this.settings.megamenuSelector}`
+        );
+
+        this.createBackdrop();
+        this.injectARIA();
+        this.bindEvents();
+        this.observeMutations();
+        this.handleResize();
+    }
+
+    /* =============================
+       BACKDROP
+    ============================= */
+
+    createBackdrop() {
+        if (!this.settings.backdrop) return;
+
+        this.backdrop = document.createElement('div');
+        this.backdrop.className = 'astroid-menu-backdrop';
+        document.body.appendChild(this.backdrop);
+
+        gsap.set(this.backdrop, {
+            position: 'fixed',
+            inset: 0,
+            backdropFilter: 'blur(6px)',
+            background: 'rgba(0,0,0,0.25)',
+            opacity: 0,
+            pointerEvents: 'none',
+            zIndex: 90
+        });
+    }
+
+    showBackdrop() {
+        if (!this.backdrop) return;
+        gsap.to(this.backdrop, {
+            opacity: 1,
+            duration: 0.3
+        });
+        this.backdrop.style.pointerEvents = 'auto';
+    }
+
+    hideBackdrop() {
+        if (!this.backdrop) return;
+        gsap.to(this.backdrop, {
+            opacity: 0,
+            duration: 0.3
+        });
+        this.backdrop.style.pointerEvents = 'none';
+    }
+
+    /* =============================
+       EVENT BINDING
+    ============================= */
+
+    bindEvents() {
+
+        this.items.forEach(item => {
+
+            const trigger = item.querySelector('.as-menu-item');
+            if (!trigger) return;
+
+            if (this.isTouch) {
+                trigger.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.toggle(item);
+                });
             }
-             const allowedKeys = [9, 37, 38, 39, 40]; // Tab and arrow keys
-            const openSubMenu = (subMenuItem) => {
-               subMenuItem.addClass('open');
-               let _submenu = subMenuItem.children(settings.submenuClass);
-
-               let _animations = {
-                  duration: settings.transition,
-                  easing: settings.easing
-               };
-
-               switch (settings.animation) {
-                  case 'none':
-                     _submenu.stop(true, true).show();
-                     break;
-                  case 'fade':
-                     _submenu.stop(true, true).fadeIn(_animations);
-                     break;
-                  default:
-                     _submenu.stop(true, true).slideDown(_animations);
-                     break;
-               }
-
-               if ($('body').hasClass('rtl')) {
-                  if (_submenu.offset().left < 0) {
-                      _submenu.css('right', _submenu.outerWidth() * -1 );
-                  } else {
-                      _submenu.css('right', '100%');
-                  }
-               } else {
-                  if (_submenu.offset().left + _submenu.outerWidth() > $(window).innerWidth()) {
-                     _submenu.css('left', _submenu.outerWidth() * -1 );
-                  } else {
-                      _submenu.css('left', '100%');
-                  }
-               }
+            else if (this.settings.trigger === 'hover') {
+                item.addEventListener('mouseenter', () => this.open(item));
+                item.addEventListener('mouseleave', () => this.close(item));
             }
-            const closeSubMenu = (subMenuItem) => {
-               let _submenu = subMenuItem.children(settings.submenuClass);
-               _submenu.stop(true, true).slideUp();
-
-               let _animations = {
-                  duration: settings.transition,
-                  easing: settings.easing
-               };
-               switch (settings.animation) {
-                  case 'none':
-                     _submenu.stop(true, true).hide();
-                     break;
-                  case 'fade':
-                     _submenu.stop(true, true).fadeOut(_animations);
-                     break;
-                  default:
-                     _submenu.stop(true, true).slideUp(_animations);
-                     break;
-               }
-               setTimeout(function () {
-                  subMenuItem.removeClass('open');
-               }, settings.transition);
+            else {
+                trigger.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.toggle(item);
+                });
             }
-            _submenus.children('li').each(function () {
-               const _thisSubMenu = $(this);
-               if (_thisSubMenu.children(settings.submenuClass).length) {
-                  if (!_thisSubMenu.children(settings.submenuClass).hasClass('d-block')) {
-                     if (settings.trigger === 'hover') {
-                        _thisSubMenu.unbind('mouseenter mouseleave').hoverIntent(function () {
-                           openSubMenu($(this));
-                        }, function () {
-                           closeSubMenu($(this));
-                        });
-                     } else {
-                        _thisSubMenu.find('.megamenu-item-link').unbind('click').click(function (e) {
-                           e.preventDefault();
-                           e.stopPropagation();
-                           if ($(this).parent('.nav-item-submenu').hasClass('open')) {
-                              closeSubMenu($(this).parent('.nav-item-submenu'));
-                           } else {
-                              openSubMenu($(this).parent('.nav-item-submenu'));
-                              $(this).parent('.nav-item-submenu').siblings('.nav-item-submenu').each(function () {
-                                 closeSubMenu($(this));
-                              });
-                           }
-                        });
+            this.handleSubmenus(item);
+            this.keyboardSupport(trigger, item);
+        });
 
-                        $(document).click(function (event) {
-                           const $trigger = _thisSubMenu.children(settings.submenuClass);
-                           if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                              closeSubMenu(_thisSubMenu);
-                           }
-                        });
-                     }
-                  }
-               }
+        document.addEventListener('click', e => {
+            if (!this.navbar.contains(e.target)) this.closeAll();
+        });
+    }
 
-                // SubMenu accessible dropdowns
-                if (_thisSubMenu.hasClass('nav-item-dropdown')) {
-                    const $sub_toggle = _thisSubMenu.children('.as-menu-item');
-                    $sub_toggle.on('keydown', function (e) {
-                        if (!allowedKeys.includes(e.keyCode)) {
-                            e.preventDefault();
-                            _submenus.children('li').each(function (i, el) {
-                                if (_thisSubMenu.hasClass('nav-item-level-2') && $(el) !== _thisSubMenu) {
-                                    closeSubMenu($(el));
-                                }
-                            });
-                            openSubMenu(_thisSubMenu);
-                        }
-                    });
+    /* =============================
+       MAIN OPEN
+    ============================= */
+
+    toggle(item) {
+        item.classList.contains('open')
+            ? this.close(item)
+            : this.open(item);
+    }
+    open(item) {
+
+        this.closeSiblings(item);
+
+        const content = this.getContent(item);
+        if (!content) return;
+        // If closing animation is running, kill it
+        gsap.killTweensOf(content);
+        const subs = item.querySelectorAll('.nav-item-submenu');
+        if (subs) subs.forEach(sub => this.closeSub(sub));
+
+        this.positionContent(item, content);
+
+        item.classList.add('open');
+
+        // Kill previous animation if exists
+        if (content._tl) content._tl.kill();
+
+        // Always force visible before animating (fix fast hover issue)
+        content.style.display = 'block';
+        content.style.pointerEvents = 'auto';
+        gsap.set(content, { autoAlpha: 1 });
+
+        content._tl = gsap.timeline();
+        content._tl.fromTo(content,
+            { autoAlpha: 0, y: 25, scale: 0.97 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: this.settings.duration, ease: this.settings.ease }
+        );
+
+        this.staggerItems(content);
+
+        this.showBackdrop();
+        this.rotateArrow(item, true);
+    }
+
+    close(item) {
+
+        const content = this.getContent(item);
+        if (!content) return;
+
+        if (content._tl) content._tl.kill();
+
+        // Kill any running tweens on content
+        gsap.killTweensOf(content);
+
+        item.classList.remove('open');
+        gsap.to(content, {
+            autoAlpha: 0,
+            y: 15,
+            scale: 0.98,
+            duration: this.settings.duration * 0.6,
+            ease: 'power2.inOut',
+            overwrite: 'auto',
+            onComplete: () => {
+
+                // Only hide if item is still closed
+                if (!item.classList.contains('open')) {
+                    content.style.display = 'none';
+                    content.style.pointerEvents = 'none';
+                }
+            }
+        });
+
+        this.rotateArrow(item, false);
+
+        this.hideBackdrop();
+    }
+
+    closeAll() {
+        this.items.forEach(item => this.close(item));
+    }
+
+    closeSiblings(current) {
+        this.items.forEach(item => {
+            if (item !== current) this.close(item);
+        });
+    }
+
+    getContent(item) {
+        return item.querySelector(this.settings.contentSelector) ||
+            item.querySelector(this.settings.submenuSelector);
+    }
+
+    /* =============================
+       SUBMENUS
+    ============================= */
+
+    handleSubmenus(parent) {
+
+        const subs = parent.querySelectorAll('.nav-item-submenu');
+        const parentContent = this.getContent(parent);
+
+        subs.forEach(sub => {
+
+            const link = sub.querySelector('.as-menu-item');
+            const submenu = sub.querySelector(this.settings.submenuSelector);
+            if (!submenu || !link) return;
+
+            sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
+            sub.addEventListener('mouseleave', () => this.closeSub(sub));
+
+            link.addEventListener('keydown', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                }
+
+                if (e.key === 'Escape') {
+                    this.closeSub(sub);
+                    link.focus();
                 }
             });
+        });
+    }
 
-            _megamenu.each(function () {
-               $(this).find('a.item-link-heading').each(function (){
-                  $(this).on('click', function (e){
-                     e.preventDefault();
-                  });
-               });
-               $(this).find('a.item-link-separator').each(function (){
-                  $(this).on('click', function (e){
-                     e.preventDefault();
-                  });
-               });
+    openSub(sub, parentContent) {
 
-               const _content = $(this).find(settings.contentClass);
-               let _leftoverflow, _rightoverflow;
-               if ($(this).data('position') === 'edge') {
-                  _leftoverflow = 0;
-                  _rightoverflow = $(window).innerWidth();
-                  _content.css('max-width', '100vw');
-               } else {
-                  _leftoverflow = _container.offset().left;
-                  _rightoverflow = _container.offset().left + _container.outerWidth();
-                  _content.css('max-width', _container.outerWidth());
-               }
+        const submenu = sub.querySelector(this.settings.submenuSelector);
+        if (!submenu) return;
 
-               let _top = 0;
-               if ($(this).height() * 2 > _container.height()) {
-                  _top = _container.outerHeight() - $(this).outerHeight();
-               }
+        const tl = parentContent._staggerTl;
+        const waitMs = 150; // extra wait time in milliseconds
 
-               const _arrow = $(this).children('.arrow');
-               _content.css('left', '0px');
+        const proceed = () => {
+            if (submenu._tl) submenu._tl.kill();
+            sub.classList.add('open');
+            submenu.style.display = 'block';
+            submenu.style.pointerEvents = 'auto';
 
-               if (settings.headerOffset) {
-                  _arrow.css('margin-bottom', -(_top / 2));
-                  _content.css('top', (_top / 2) + $(this).outerHeight());
-               } else {
-                  _content.css('top', '100%');
-               }
+            this.smartSubPosition(sub, submenu);
 
-               let offsetleft = 0;
-               switch ($(this).data('position')) {
-                  case 'left':
-                     offsetleft = $(this).offset().left;
-                     break;
-                  case 'right':
-                     offsetleft = $(this).offset().left - (_content.outerWidth() - $(this).outerWidth());
-                     break;
-                  case 'center':
-                  case 'edge':
-                  case 'full':
-                     offsetleft = $(this).offset().left - (_content.outerWidth() / 2 - $(this).outerWidth() / 2);
-                     break;
-               }
+            submenu._tl = gsap.timeline();
 
-               if ((offsetleft + _content.outerWidth()) > _rightoverflow) {
-                  let _left = _content.outerWidth() - (_rightoverflow - offsetleft);
-                  if ($(this).data('position') === 'center' || $(this).data('position') === 'edge' || $(this).data('position') === 'full') {
-                     _left = _left + ((_content.outerWidth() / 2) - ($(this).outerWidth() / 2));
-                  }
-                  _content.css('left', -(_left));
-                  _content.css('right', 'inherit');
-               } else if (offsetleft < _leftoverflow) {
-                  let _right = (offsetleft - _leftoverflow);
-                  if ($(this).data('position') === 'center' || $(this).data('position') === 'edge' || $(this).data('position') === 'full') {
-                     _right = _right - ((_content.outerWidth() / 2) - ($(this).outerWidth() / 2));
-                  }
-                  _content.css('right', _right);
-                  _content.css('left', 'inherit');
-               } else {
-                  _content.css('left', offsetleft - $(this).offset().left);
-               }
+            submenu._tl.fromTo(submenu,
+                { autoAlpha: 0, x: this.settings.rtl ? -15 : 15 },
+                { autoAlpha: 1, x: 0, duration: 0.35, ease: 'power2.out' }
+            );
+        };
 
-               // accessible dropdowns
-                if ($(this).hasClass('nav-item-dropdown') || $(this).hasClass('nav-item-megamenu')) {
-                    const $megamenuItem = $(this);
-                    const $toggle = $megamenuItem.children('.as-menu-item');
+        if (tl && typeof tl.totalProgress === 'function' && tl.totalProgress() < 1) {
+            // If we're already waiting, don't attach another handler
+            if (parentContent._waitingForStagger) return;
+            parentContent._waitingForStagger = true;
 
-                    $toggle.on('keydown', function (e) {
-                        if (!allowedKeys.includes(e.keyCode)) {
-                            e.preventDefault();
-                            _megamenu.each(function (i, el) {
-                                if (el !== $megamenuItem[0]) {
-                                    closeMe($(el));
-                                }
-                            });
-                            openMe($megamenuItem);
-                        }
-                    });
+            const prevOnComplete = typeof tl.eventCallback === 'function' ? tl.eventCallback('onComplete') : null;
+
+            tl.eventCallback('onComplete', function() {
+                // call previous onComplete if present
+                if (typeof prevOnComplete === 'function') {
+                    try { prevOnComplete.call(this); } catch (e) {}
                 }
+
+                setTimeout(() => {
+                    parentContent._waitingForStagger = false;
+                    // ensure the submenu/parent still exists in DOM
+                    if (!document.contains(sub)) return;
+                    proceed();
+                }, waitMs);
             });
-         };
 
-         init();
+            return;
+        }
 
-         const observering = function (_this) {
-            const callback = function (mutationsList) {
-               mutationsList.forEach(function (mutation) {
-                  if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                     init();
-                  }
-               });
-            };
-            const observer = new MutationObserver(callback);
-            observer.observe(_this, {
-               attributes: true
+        proceed();
+    }
+
+    closeSub(sub) {
+
+        const submenu = sub.querySelector(this.settings.submenuSelector);
+        if (!submenu) return;
+
+        if (submenu._tl) submenu._tl.kill();
+
+        gsap.to(submenu, {
+            autoAlpha: 0,
+            x: this.settings.rtl ? -10 : 10,
+            duration: 0.25,
+            ease: 'power2.in',
+            onComplete: () => {
+                submenu.style.display = 'none';
+                submenu.style.pointerEvents = 'none';
+                sub.classList.remove('open');
+            }
+        });
+    }
+
+    /* =============================
+       SMART POSITIONING
+    ============================= */
+
+    positionContent(item, content) {
+
+        const positionType = item.dataset.position;
+
+        // Reset first
+        content.style.left = '';
+        content.style.right = '';
+        content.style.width = '';
+
+        const header = this.navbar.closest(this.settings.headerSelector) || this.navbar;
+        const headerRect = header.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+
+        // Set top based on available space below or above the item
+        content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
+
+        // ===== FULL WIDTH (container width & centered) =====
+        if (positionType === 'full') {
+            content.style.width = headerRect.width + 'px';
+            content.style.left = (headerRect.left - itemRect.left) + 'px';
+            content.style.right = 'auto';
+            return;
+        }
+
+        // ===== EDGE (100vw & stick to viewport edges) =====
+        if (positionType === 'edge') {
+
+            content.style.width = window.innerWidth + 'px';
+
+            // Align to viewport left
+            content.style.left = (0 - itemRect.left) + 'px';
+            content.style.right = 'auto';
+
+            return;
+        }
+
+        // ===== DEFAULT SMART POSITION =====
+
+        const rect = content.getBoundingClientRect();
+        const overflowRight = rect.right > window.innerWidth;
+        const overflowLeft = rect.left < 0;
+
+        if (overflowRight) {
+            content.style.left = 'auto';
+            content.style.right = '0';
+        }
+
+        if (overflowLeft) {
+            content.style.left = '0';
+            content.style.right = 'auto';
+        }
+    }
+
+    smartSubPosition(parent, submenu) {
+
+        const rect = submenu.getBoundingClientRect();
+        const overflowRight = rect.right > window.innerWidth;
+
+        if (overflowRight) {
+            submenu.style.left = 'auto';
+            submenu.style.right = '100%';
+        } else {
+            submenu.style.left = '100%';
+            submenu.style.right = 'auto';
+        }
+    }
+
+    /* =============================
+       ANIMATION HELPERS
+    ============================= */
+
+    staggerItems(container) {
+
+        const el = container instanceof Element ? container : null;
+        if (!el) return;
+        const items = el.querySelectorAll('li.nav-item-submenu');
+        if (!items.length) return;
+
+        // Kill previous stagger timeline if exists
+        if (el._staggerTl) {
+            el._staggerTl.kill();
+            el._staggerTl = null;
+        }
+
+        // Clear inline styles to avoid broken states
+        gsap.set(items, { clearProps: 'all' });
+
+        el._staggerTl = gsap.timeline({
+            defaults: {
+                ease: 'power2.out',
+                overwrite: 'auto'
+            }
+        });
+
+        el._staggerTl.from(items, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.05,
+            duration: 0.4,
+            onComplete: () => {
+                // Clear inline styles after animation to prevent broken states
+                gsap.set(items, { clearProps: 'all' });
+            }
+        });
+    }
+
+    rotateArrow(item, open) {
+
+        const arrow = item.querySelector('.nav-item-caret');
+        if (!arrow) return;
+
+        gsap.to(arrow, {
+            rotate: open ? 180 : 0,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+    }
+
+    /* =============================
+       ACCESSIBILITY
+    ============================= */
+
+    injectARIA() {
+        this.items.forEach(item => {
+            const trigger = item.querySelector('.as-menu-item');
+            const content = this.getContent(item);
+
+            if (!trigger || !content) return;
+
+            trigger.setAttribute('aria-haspopup', 'true');
+            trigger.setAttribute('aria-expanded', 'false');
+
+            // Ensure the content has an id so we can set aria-controls
+            if (!content.id) {
+                content.id = 'megamenu-content-' + Math.random().toString(36).substr(2, 9);
+            }
+            trigger.setAttribute('aria-controls', content.id);
+
+            // Set roles for accessibility
+            trigger.setAttribute('role', 'button');
+            content.setAttribute('role', 'menu');
+
+            // Also inject ARIA for submenu items inside this item
+            const subs = item.querySelectorAll('.nav-item-submenu');
+            subs.forEach(sub => {
+                const subTrigger = sub.querySelector('.as-menu-item');
+                const subMenu = sub.querySelector(this.settings.submenuSelector);
+
+                if (!subTrigger || !subMenu) return;
+
+                subTrigger.setAttribute('aria-haspopup', 'true');
+                subTrigger.setAttribute('aria-expanded', 'false');
+
+                if (!subMenu.id) {
+                    subMenu.id = 'megamenu-sub-' + Math.random().toString(36).substr(2, 9);
+                }
+                subTrigger.setAttribute('aria-controls', subMenu.id);
+
+                subTrigger.setAttribute('role', 'button');
+                subMenu.setAttribute('role', 'menu');
             });
-         }
+        });
+    }
 
-         observering($(this)[0]);
+    keyboardSupport(trigger, item) {
 
-         const openMe = function (_this) {
-            _this.addClass('open');
-            const _content = _this.find(settings.contentClass);
-            if (_content.is(':empty')) {
-               return false;
+        trigger.addEventListener('keydown', e => {
+
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.toggle(item);
             }
 
-            const _animations = {
-               duration: settings.transition,
-               easing: settings.easing
-            };
-
-            switch (settings.animation) {
-               case 'none':
-                  _content.stop(true, true).show();
-                  if (settings.dropdownArrows) {
-                     _this.find('.arrow').show();
-                  }
-                  break;
-               case 'fade':
-                  _content.stop(true, true).fadeIn(_animations);
-                  if (settings.dropdownArrows) {
-                     _this.find('.arrow').stop(true, true).fadeIn(_animations);
-                  }
-                  break;
-               default:
-                  _content.stop(true, true).slideDown(_animations);
-                  if (settings.dropdownArrows) {
-                     _this.find('.arrow').show();
-                  }
-                  break;
+            if (e.key === 'Escape') {
+                this.close(item);
+                trigger.focus();
             }
-         };
+        });
+    }
 
-         const closeMe = function (_this) {
-            const _content = _this.find(settings.contentClass);
-            const _animations = {
-               duration: settings.transition,
-               easing: settings.easing
-            };
-            switch (settings.animation) {
-               case 'none':
-                  _content.stop(true, true).hide();
-                  if (settings.dropdownArrows) {
-                     _this.find('.arrow').hide();
-                  }
-                  break;
-               case 'fade':
-                  _content.stop(true, true).fadeOut(_animations);
-                  if (settings.dropdownArrows) {
-                     _this.find('.arrow').stop(true, true).fadeOut(_animations);
-                  }
-                  break;
-               default:
-                  _content.stop(true, true).slideUp(_animations);
-                  if (settings.dropdownArrows) {
-                     setTimeout(function () {
-                        _this.find('.arrow').hide();
-                     }, settings.transition);
-                  }
-                  break;
-            }
-            setTimeout(function () {
-               _this.removeClass('open');
-            }, settings.transition);
-         };
 
-         if (settings.trigger === 'hover') {
-            _megamenu.unbind('mouseenter mouseleave').hoverIntent(function () {
-               openMe($(this));
-            }, function () {
-               closeMe($(this));
-            });
-         } else {
-            _megamenu.find('.megamenu-item-link.item-level-1').unbind('click').click(function (e) {
-               e.preventDefault();
-               e.stopPropagation();
-               if ($(this).parent(settings.megamenuClass).hasClass('open')) {
-                  closeMe($(this).parent(settings.megamenuClass));
-               } else {
-                  openMe($(this).parent(settings.megamenuClass));
-                  $(this).parent(settings.megamenuClass).siblings(settings.megamenuClass).each(function () {
-                     closeMe($(this));
-                  });
-               }
-            });
+    /* =============================
+       OBSERVERS
+    ============================= */
 
-            $(document).click(function (event) {
-               const $trigger = _megamenu;
-               if ($trigger !== event.target && !$trigger.has(event.target).length) {
-                  closeMe($trigger);
-               }
-            });
-         }
-      });
-   };
-   $(window).on('load', function() {
-      $('[data-megamenu]').each(function() {
-         $(this).JDMegaMenu();
-      });
-   });
-})(jQuery);
+    observeMutations() {
+
+        const observer = new MutationObserver(() => {
+            this.items = this.navbar.querySelectorAll(
+                `${this.settings.megamenuSelector}`
+            );
+        });
+
+        observer.observe(this.navbar, { childList: true, subtree: true });
+    }
+
+    handleResize() {
+        window.addEventListener('resize', () => {
+            this.closeAll();
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-megamenu]').forEach(nav => {
+        new AstroidMegaMenuPro(nav, {});
+    });
+});

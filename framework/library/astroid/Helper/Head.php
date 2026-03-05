@@ -60,7 +60,7 @@ class Head
         $app = Factory::getApplication();
         $template = Framework::getTemplate();
         $params = $template->getParams();
-        $wa = $app->getDocument()->getWebAssetManager();
+        $wa = Framework::getDocument()->getWA();
         if (Framework::isSite()) {
             $bootstrap_js = json_decode($params->get('bootstrap_js', '[]'), true);
             if (count($bootstrap_js)) {
@@ -68,11 +68,11 @@ class Head
                     $wa->useScript('bootstrap.'.$bootstrap['value']);
                 }
             }
-            $wa->registerAndUseScript('astroid.script', 'astroid/script.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->useScript('astroid.script');
         }
         if (Helper::getPluginParams()->get('astroid_debug', 0)) {
             $wa->useScript('bootstrap.tab');
-            $wa->registerAndUseScript('astroid.debug', 'astroid/debug.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+            $wa->useScript('astroid.debug');
         }
         $color_mode = $template->getColorMode();
         if ($color_mode) {
@@ -87,7 +87,7 @@ class Head
                     $from   =   'dark';
                     $to     =   'light';
                 }
-                $wa->registerAndUseScript('astroid.colortransform', 'astroid/colortransform.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+                $wa->useScript('astroid.colortransform');
                 $wa->addInlineScript('var ASTROID_COLOR_TRANSFORM = {from:"'.$from.'", to:"'.$to.'", offset:'.$astroid_colormode_transform_offset.'};');
             } else {
                 $wa->addInlineScript('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');

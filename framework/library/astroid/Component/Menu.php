@@ -32,9 +32,7 @@ class Menu
 
         $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseScript('astroid.megamenu', 'astroid/megamenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-        $wa->registerAndUseScript('astroid.jquery.hoverIntent', 'astroid/jquery.hoverIntent.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+        $document->getWA()->useScript('astroid.megamenu');
 
         $header_endLevel = $params->get('header_endLevel', 0);
         if ($endLevel !== null) {
@@ -264,7 +262,7 @@ class Menu
 
         // Get active menu item
         $base = self::getBase();
-        $user = Factory::getUser();
+        $user = Factory::getApplication()->getIdentity();
         $levels = $user->getAuthorisedViewLevels();
         asort($levels);
 
@@ -367,8 +365,6 @@ class Menu
     {
         $menu = Factory::getApplication()->getMenu();
         $active = $menu->getActive();
-
-
         if ($active) {
             return $active;
         }
@@ -385,7 +381,7 @@ class Menu
     public static function getDefault()
     {
         $menu = Factory::getApplication()->getMenu();
-        $lang = Factory::getLanguage();
+        $lang = Factory::getApplication()->getLanguage();
 
         // Look for the home menu
         if (Multilanguage::isEnabled()) {

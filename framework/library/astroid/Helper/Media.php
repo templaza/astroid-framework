@@ -241,6 +241,11 @@ class Media
 
     public static function upload(): array
     {
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->authorise('core.manage', 'com_media')) {
+            throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
+
         $input = Factory::getApplication()->input;
         $dir = $input->get('dir', '', 'RAW');
         $media = $input->get('media', '', 'images');
@@ -317,6 +322,11 @@ class Media
 
     public static function createFolder(): array
     {
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->authorise('core.manage', 'com_media')) {
+            throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
+
         $input = Factory::getApplication()->input;
         $directory = $input->get('dir', '', 'RAW');
         $name = $input->get('name', '', 'RAW');
@@ -338,6 +348,11 @@ class Media
 
     public static function remove(): array
     {
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->authorise('core.manage', 'com_media')) {
+            throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
+
         $input = Factory::getApplication()->input;
         $directory = $input->get('dir', '', 'RAW');
         $name = $input->get('name', '', 'RAW');
@@ -365,6 +380,11 @@ class Media
 
     public static function rename(): array
     {
+        $user = Factory::getApplication()->getIdentity();
+        if (!$user->authorise('core.manage', 'com_media')) {
+            throw new \JAccessExceptionNotallowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
+
         $input      = Factory::getApplication()->input;
         $directory  = $input->get('dir', '', 'RAW');
         $name       = $input->get('name', '', 'RAW');
