@@ -266,7 +266,10 @@
          </field>
 
          <!--Off Canvas Options-->
-         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" class="astroid-offcanvas-switch" name="enable_offcanvas" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_ENABLE_LABEL" description="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_ENABLE_DESC"></field>
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element"
+                class="astroid-offcanvas-switch" name="enable_offcanvas" type="astroidradio" astroid-switch="true"
+                default="0" label="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_ENABLE_LABEL"
+                description="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_ENABLE_DESC"/>
 
          <field ngShow="[header] AND [enable_offcanvas] AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" name="offcanvas_togglevisibility" type="astroidlist" class="form-select" label="TPL_ASTROID_TOGGLE_VISIBILITY_LABEL" description="TPL_ASTROID_TOGGLE_VISIBILITY_DESC" default="d-block">
             <option value="d-block">TPL_ASTROID_TOGGLE_VISIBILITY_OPTIONS_ALWAYS</option>
@@ -297,11 +300,22 @@
          </field>
 
          <!--Animation Options-->
-         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidradio" default="fade" label="TPL_ASTROID_HEADER_MENU_ANIMATION">
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidlist" default="slide-scale" label="TPL_ASTROID_HEADER_MENU_ANIMATION">
             <option class="btn-danger" value="none">ASTROID_NONE</option>
             <option value="fade">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FADE</option>
             <option value="slide">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SILDE</option>
+            <option value="slide-scale">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SLIDE_SCALE</option>
+            <option value="zoom">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_ZOOM</option>
+            <option value="drop">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_DROP</option>
+            <option value="flip">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FLIP</option>
+            <option value="scaleY">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SCALEY</option>
+            <option value="blur-in">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_BLURIN</option>
          </field>
+
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element"
+                name="enable_backdrop" type="astroidradio" astroid-switch="true"
+                default="0" label="TPL_ASTROID_HEADER_ANIMATION_ENABLE_BACKDROP_LABEL"
+                description="TPL_ASTROID_HEADER_ANIMATION_ENABLE_BACKDROP_DESC"/>
 
          <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_speed" type="astroidrange" min="100" max="4000" step="1" postfix="ms" default="600" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" />
 
