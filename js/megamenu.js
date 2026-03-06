@@ -197,8 +197,10 @@ class AstroidMegaMenuPro {
             gsap.set(content, { autoAlpha: 1, y: 0, scale: 1 });
         }
 
-        this.staggerItems(content);
-
+        if (effect !== 'none') {
+            this.staggerItems(content);
+        }
+        
         this.showBackdrop();
         this.rotateArrow(item, true);
     }
