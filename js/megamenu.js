@@ -23,7 +23,8 @@ class AstroidMegaMenuPro {
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
         }, options);
-        this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        // Detect interaction capability instead of just touch devices
+        this.canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         this.init();
     }
 
@@ -90,15 +91,15 @@ class AstroidMegaMenuPro {
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
 
-            if (this.settings.trigger === 'hover') {
-                item.addEventListener('mouseenter', () => this.open(item));
-                item.addEventListener('mouseleave', () => this.close(item));
-            }
-            else {
+            // Use capability detection instead of simple touch detection
+            if (!this.canHover || this.settings.trigger === 'click') {
                 trigger.addEventListener('click', e => {
                     e.preventDefault();
                     this.toggle(item);
                 });
+            } else {
+                item.addEventListener('mouseenter', () => this.open(item));
+                item.addEventListener('mouseleave', () => this.close(item));
             }
             this.handleSubmenus(item);
             this.keyboardSupport(trigger, item);
