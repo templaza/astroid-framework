@@ -300,10 +300,16 @@
          </field>
 
          <!--Animation Options-->
-         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidradio" default="fade" label="TPL_ASTROID_HEADER_MENU_ANIMATION">
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidlist" default="slide-scale" label="TPL_ASTROID_HEADER_MENU_ANIMATION">
             <option class="btn-danger" value="none">ASTROID_NONE</option>
             <option value="fade">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FADE</option>
             <option value="slide">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SILDE</option>
+            <option value="slide-scale">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SLIDE_SCALE</option>
+            <option value="zoom">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_ZOOM</option>
+            <option value="drop">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_DROP</option>
+            <option value="flip">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FLIP</option>
+            <option value="scaleY">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_SCALEY</option>
+            <option value="blur-in">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_BLURIN</option>
          </field>
 
          <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element"

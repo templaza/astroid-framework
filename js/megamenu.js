@@ -20,7 +20,8 @@ class AstroidMegaMenuPro {
             ease: navbar.dataset.easing || 'expo.out',
             backdrop: navbar.dataset.megamenuBackdrop === 'true' || false,
             headerSelector: '#astroid-header',
-            rtl: document.body.classList.contains('rtl')
+            rtl: document.body.classList.contains('rtl'),
+            effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
         }, options);
         this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         this.init();
@@ -146,11 +147,60 @@ class AstroidMegaMenuPro {
         content.style.pointerEvents = 'auto';
         gsap.set(content, { autoAlpha: 1 });
 
+        const effect = this.settings.effect;
         content._tl = gsap.timeline();
-        content._tl.fromTo(content,
-            { autoAlpha: 0, y: 25, scale: 0.97 },
-            { autoAlpha: 1, y: 0, scale: 1, duration: this.settings.duration, ease: this.settings.ease }
-        );
+
+        if (effect === 'slide-scale') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, y: 25, scale: 0.97 },
+                { autoAlpha: 1, y: 0, scale: 1, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'fade') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0 },
+                { autoAlpha: 1, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'zoom') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, scale: 0.95 },
+                { autoAlpha: 1, scale: 1, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'slide') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, y: 20 },
+                { autoAlpha: 1, y: 0, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'drop') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, y: -20 },
+                { autoAlpha: 1, y: 0, duration: this.settings.duration * 0.9, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'flip') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, rotateX: -15, transformPerspective: 800, transformOrigin: 'top center' },
+                { autoAlpha: 1, rotateX: 0, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'scaleY') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, scaleY: 0.9, transformOrigin: 'top center' },
+                { autoAlpha: 1, scaleY: 1, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else if (effect === 'blur-in') {
+            content._tl.fromTo(content,
+                { autoAlpha: 0, filter: 'blur(10px)', y: 10 },
+                { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: this.settings.duration, ease: this.settings.ease }
+            );
+        }
+        else { // none (default)
+            gsap.set(content, { autoAlpha: 1, y: 0, scale: 1 });
+        }
 
         this.staggerItems(content);
 
@@ -169,22 +219,38 @@ class AstroidMegaMenuPro {
         gsap.killTweensOf(content);
 
         item.classList.remove('open');
-        gsap.to(content, {
+
+        const effect = this.settings.effect;
+
+        let vars = {
             autoAlpha: 0,
-            y: 15,
-            scale: 0.98,
             duration: this.settings.duration * 0.6,
             ease: 'power2.inOut',
             overwrite: 'auto',
             onComplete: () => {
-
-                // Only hide if item is still closed
                 if (!item.classList.contains('open')) {
                     content.style.display = 'none';
                     content.style.pointerEvents = 'none';
                 }
             }
-        });
+        };
+
+        if (effect === 'slide') vars.y = 15;
+        else if (effect === 'zoom') vars.scale = 0.96;
+        else if (effect === 'drop') vars.y = -15;
+        else if (effect === 'flip') vars.rotateX = -10;
+        else if (effect === 'scaleY') vars.scaleY = 0.9;
+        else if (effect === 'blur-in') vars.filter = 'blur(8px)';
+        else if (effect === 'slide-scale') {
+            vars.y = 15;
+            vars.scale = 0.98;
+        }
+        else if (effect === 'fade') vars.scale = 1;
+        else {
+            vars.scale = 1;
+        }
+
+        gsap.to(content, vars);
 
         this.rotateArrow(item, false);
 
