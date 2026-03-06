@@ -90,13 +90,7 @@ class AstroidMegaMenuPro {
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
 
-            if (this.isTouch) {
-                trigger.addEventListener('click', e => {
-                    e.preventDefault();
-                    this.toggle(item);
-                });
-            }
-            else if (this.settings.trigger === 'hover') {
+            if (this.settings.trigger === 'hover') {
                 item.addEventListener('mouseenter', () => this.open(item));
                 item.addEventListener('mouseleave', () => this.close(item));
             }
