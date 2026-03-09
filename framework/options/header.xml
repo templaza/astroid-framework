@@ -317,6 +317,11 @@
                 default="0" label="TPL_ASTROID_HEADER_ANIMATION_ENABLE_BACKDROP_LABEL"
                 description="TPL_ASTROID_HEADER_ANIMATION_ENABLE_BACKDROP_DESC"/>
 
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element"
+                name="enable_stagger_effect" type="astroidradio" astroid-switch="true"
+                default="0" label="TPL_ASTROID_HEADER_ANIMATION_ENABLE_STAGGER_LABEL"
+                description="TPL_ASTROID_HEADER_ANIMATION_ENABLE_STAGGER_DESC"/>
+
          <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_speed" type="astroidrange" min="100" max="4000" step="1" postfix="ms" default="600" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" />
 
          <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_ease" type="astroidlist" class="form-select" label="TPL_ASTROID_HEADER_ANIMATION_EASE_LABEL" default="linear">

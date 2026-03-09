@@ -22,6 +22,7 @@ class AstroidMegaMenuPro {
             headerSelector: '#astroid-header',
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
+            stagger: navbar.dataset.megamenuStagger === 'true' || false,
         }, options);
         // Detect interaction capability instead of just touch devices
         this.canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -127,6 +128,7 @@ class AstroidMegaMenuPro {
         if (!content) return;
         // If closing animation is running, kill it
         gsap.killTweensOf(content);
+
         const subs = item.querySelectorAll('.nav-item-submenu');
         if (subs) subs.forEach(sub => this.closeSub(sub));
 
@@ -197,10 +199,10 @@ class AstroidMegaMenuPro {
             gsap.set(content, { autoAlpha: 1, y: 0, scale: 1 });
         }
 
-        if (effect !== 'none') {
-            this.staggerItems(content);
+        if (effect !== 'none' && this.settings.stagger) {
+            this.staggerItems(content, item);
         }
-        
+
         this.showBackdrop();
         this.rotateArrow(item, true);
     }
@@ -448,11 +450,17 @@ class AstroidMegaMenuPro {
        ANIMATION HELPERS
     ============================= */
 
-    staggerItems(container) {
+    staggerItems(container, parentItem) {
 
         const el = container instanceof Element ? container : null;
         if (!el) return;
-        const items = el.querySelectorAll('li.nav-item-submenu');
+
+        let items;
+        if (parentItem.classList.contains('nav-item-megamenu')) {
+            items = el.querySelectorAll('li.nav-item-submenu.nav-item-level-2, li.nav-item-submenu.nav-item-level-3');
+        } else {
+            items = el.querySelectorAll('li.nav-item-submenu.nav-item-level-2');
+        }
         if (!items.length) return;
 
         // Kill previous stagger timeline if exists
