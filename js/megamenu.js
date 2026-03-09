@@ -281,8 +281,8 @@ class AstroidMegaMenuPro {
         const parentContent = this.getContent(parent);
 
         subs.forEach(sub => {
-
             const link = sub.querySelector('.as-menu-item');
+
             const submenu = sub.querySelector(this.settings.submenuSelector);
             if (!submenu || !link) return;
 
@@ -307,10 +307,10 @@ class AstroidMegaMenuPro {
 
     openSub(sub, parentContent) {
 
-        const submenu = sub.querySelector(this.settings.submenuSelector);
+        const submenu = sub.querySelector(':scope > '+this.settings.submenuSelector);
         if (!submenu) return;
 
-        const tl = parentContent._staggerTl;
+        // reference the parent's stagger timeline directly
         const waitMs = 150; // extra wait time in milliseconds
 
         const proceed = () => {
@@ -318,7 +318,6 @@ class AstroidMegaMenuPro {
             sub.classList.add('open');
             submenu.style.display = 'block';
             submenu.style.pointerEvents = 'auto';
-
             this.smartSubPosition(sub, submenu);
 
             submenu._tl = gsap.timeline();
@@ -329,14 +328,14 @@ class AstroidMegaMenuPro {
             );
         };
 
-        if (tl && typeof tl.totalProgress === 'function' && tl.totalProgress() < 1) {
+        if (parentContent._staggerTl && typeof parentContent._staggerTl.totalProgress === 'function' && parentContent._staggerTl.totalProgress() < 1) {
             // If we're already waiting, don't attach another handler
             if (parentContent._waitingForStagger) return;
             parentContent._waitingForStagger = true;
 
-            const prevOnComplete = typeof tl.eventCallback === 'function' ? tl.eventCallback('onComplete') : null;
+            const prevOnComplete = typeof parentContent._staggerTl.eventCallback === 'function' ? parentContent._staggerTl.eventCallback('onComplete') : null;
 
-            tl.eventCallback('onComplete', function() {
+            parentContent._staggerTl.eventCallback('onComplete', function() {
                 // call previous onComplete if present
                 if (typeof prevOnComplete === 'function') {
                     try { prevOnComplete.call(this); } catch (e) {}
@@ -346,6 +345,21 @@ class AstroidMegaMenuPro {
                     parentContent._waitingForStagger = false;
                     // ensure the submenu/parent still exists in DOM
                     if (!document.contains(sub)) return;
+
+                    // Re-check that the stagger timeline is actually finished.
+                    // It's possible another stagger was created or restarted; if it's not complete, bail.
+                    if (parentContent._staggerTl && typeof parentContent._staggerTl.totalProgress === 'function' && parentContent._staggerTl.totalProgress() < 1) {
+                        return;
+                    }
+
+                    // Use the nearest trigger to this sub for hover detection
+                    const subTrigger = sub.querySelector(':scope > .as-menu-item')
+                        || sub.querySelector('.as-menu-item')
+                        || (sub.closest('.nav-item') && sub.closest('.nav-item').querySelector('.as-menu-item'));
+
+                    const isHovered = sub.matches(':hover') || (subTrigger && subTrigger.matches(':hover'));
+                    if (!isHovered) return;
+
                     proceed();
                 }, waitMs);
             });
