@@ -94,10 +94,18 @@ class AstroidMegaMenuPro {
 
             // Use capability detection instead of simple touch detection
             if (!this.canHover || this.settings.trigger === 'click') {
-                trigger.addEventListener('click', e => {
-                    e.preventDefault();
-                    this.toggle(item);
-                });
+                if (this.settings.trigger === 'hover') {
+                    const arrow = item.querySelector('.nav-item-caret');
+                    arrow.addEventListener('click', e => {
+                        e.preventDefault();
+                        this.toggle(item);
+                    });
+                } else {
+                    trigger.addEventListener('click', e => {
+                        e.preventDefault();
+                        this.toggle(item);
+                    });
+                }
             } else {
                 item.addEventListener('mouseenter', () => this.open(item));
                 item.addEventListener('mouseleave', () => this.close(item));
