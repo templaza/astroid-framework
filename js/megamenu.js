@@ -87,53 +87,35 @@ class AstroidMegaMenuPro {
 
     bindEvents() {
         this.items.forEach(item => {
-
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
 
-            // Use capability detection instead of simple touch detection
-            // Three cases:
-            // 1) trigger === 'click'  => always use click to toggle
-            // 2) cannot hover (touch-first devices) and trigger === 'hover' => support long-press to open, short tap toggles
-            // 3) normal hover-capable devices with hover trigger => use mouseenter/mouseleave
             if (this.settings.trigger === 'click') {
                 trigger.addEventListener('click', e => {
                     e.preventDefault();
                     this.toggle(item);
                 });
             } else if (!this.canHover) {
-                // Touch-first devices: support tap to navigate and long-press to open submenu
-                let pressTimer = null;
-                let longPressTriggered = false;
-                const longPressDelay = 450;
-
-                trigger.addEventListener('pointerdown', (e) => {
-                    longPressTriggered = false;
-
-                    pressTimer = setTimeout(() => {
-                        longPressTriggered = true;
-                        e.preventDefault();
-                        this.open(item);
-                    }, longPressDelay);
-                });
-
-                const cancelPress = () => {
-                    if (pressTimer) {
-                        clearTimeout(pressTimer);
-                        pressTimer = null;
+                const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
+                if (!arrow) {
+                    // Create caret element and append it if .nav-title exists
+                    const navTitle = trigger.querySelector('.nav-title');
+                    if (navTitle) {
+                        item.classList.remove('no-dropdown-icon');
+                        const i = document.createElement('i');
+                        i.classList.add('nav-item-caret', 'fas', 'fa-chevron-down');
+                        navTitle.appendChild(i);
+                        i.addEventListener('click', e => {
+                            e.preventDefault();
+                            this.toggle(item);
+                        });
                     }
-                };
-
-                trigger.addEventListener('pointerup', cancelPress);
-                trigger.addEventListener('pointerleave', cancelPress);
-                trigger.addEventListener('pointercancel', cancelPress);
-
-                // If long press opened the menu, prevent navigation
-                trigger.addEventListener('click', (e) => {
-                    if (longPressTriggered) {
+                } else {
+                    arrow.addEventListener('click', e => {
                         e.preventDefault();
-                    }
-                });
+                        this.toggle(item);
+                    });
+                }
             } else {
                 // Hover-capable devices
                 item.addEventListener('mouseenter', () => this.open(item));
@@ -323,8 +305,26 @@ class AstroidMegaMenuPro {
             const submenu = sub.querySelector(this.settings.submenuSelector);
             if (!submenu || !link) return;
 
-            sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
-            sub.addEventListener('mouseleave', () => this.closeSub(sub));
+            if (this.settings.trigger === 'click') {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                })
+            } else if (!this.canHover) {
+                const arrow = sub.querySelector('.nav-item-caret');
+                arrow.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                });
+            } else {
+                sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
+                sub.addEventListener('mouseleave', () => this.closeSub(sub));
+            }
+
 
             link.addEventListener('keydown', e => {
                 if (e.key === 'Enter') {
@@ -544,7 +544,7 @@ class AstroidMegaMenuPro {
 
     rotateArrow(item, open) {
 
-        const arrow = item.querySelector('.nav-item-caret');
+        const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
         if (!arrow) return;
 
         gsap.to(arrow, {
