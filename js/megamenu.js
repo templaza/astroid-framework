@@ -151,8 +151,6 @@ class AstroidMegaMenuPro {
         const subs = item.querySelectorAll('.nav-item-submenu');
         if (subs) subs.forEach(sub => this.closeSub(sub));
 
-        this.positionContent(item, content);
-
         item.classList.add('open');
 
         // Kill previous animation if exists
@@ -161,6 +159,9 @@ class AstroidMegaMenuPro {
         // Always force visible before animating (fix fast hover issue)
         content.style.display = 'block';
         content.style.pointerEvents = 'auto';
+        content.style.visibility = 'hidden';
+        this.positionContent(item, content);
+
         gsap.set(content, { autoAlpha: 1 });
 
         const effect = this.settings.effect;
@@ -484,9 +485,9 @@ class AstroidMegaMenuPro {
     }
 
     smartSubPosition(parent, submenu) {
-
+        const parentRect = parent.getBoundingClientRect();
         const rect = submenu.getBoundingClientRect();
-        const overflowRight = rect.right > window.innerWidth;
+        const overflowRight = parentRect.right + rect.width > window.innerWidth;
 
         if (overflowRight) {
             submenu.style.left = 'auto';
