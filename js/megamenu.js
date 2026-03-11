@@ -86,27 +86,56 @@ class AstroidMegaMenuPro {
     ============================= */
 
     bindEvents() {
-
         this.items.forEach(item => {
 
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
 
             // Use capability detection instead of simple touch detection
-            if (!this.canHover || this.settings.trigger === 'click') {
-                if (this.settings.trigger === 'hover') {
-                    const arrow = item.querySelector('.nav-item-caret');
-                    arrow.addEventListener('click', e => {
+            // Three cases:
+            // 1) trigger === 'click'  => always use click to toggle
+            // 2) cannot hover (touch-first devices) and trigger === 'hover' => support long-press to open, short tap toggles
+            // 3) normal hover-capable devices with hover trigger => use mouseenter/mouseleave
+            if (this.settings.trigger === 'click') {
+                trigger.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.toggle(item);
+                });
+            } else if (!this.canHover) {
+                // Touch-first devices: support tap to navigate and long-press to open submenu
+                let pressTimer = null;
+                let longPressTriggered = false;
+                const longPressDelay = 450;
+
+                trigger.addEventListener('pointerdown', (e) => {
+                    longPressTriggered = false;
+
+                    pressTimer = setTimeout(() => {
+                        longPressTriggered = true;
                         e.preventDefault();
-                        this.toggle(item);
-                    });
-                } else {
-                    trigger.addEventListener('click', e => {
+                        this.open(item);
+                    }, longPressDelay);
+                });
+
+                const cancelPress = () => {
+                    if (pressTimer) {
+                        clearTimeout(pressTimer);
+                        pressTimer = null;
+                    }
+                };
+
+                trigger.addEventListener('pointerup', cancelPress);
+                trigger.addEventListener('pointerleave', cancelPress);
+                trigger.addEventListener('pointercancel', cancelPress);
+
+                // If long press opened the menu, prevent navigation
+                trigger.addEventListener('click', (e) => {
+                    if (longPressTriggered) {
                         e.preventDefault();
-                        this.toggle(item);
-                    });
-                }
+                    }
+                });
             } else {
+                // Hover-capable devices
                 item.addEventListener('mouseenter', () => this.open(item));
                 item.addEventListener('mouseleave', () => this.close(item));
             }
