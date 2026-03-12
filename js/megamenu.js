@@ -561,7 +561,7 @@ class AstroidMegaMenuPro {
 
     injectARIA() {
         this.items.forEach(item => {
-            const trigger = item.querySelector('.as-menu-item');
+            const trigger = item.querySelector(':scope > .as-menu-item');
             const content = this.getContent(item);
 
             if (!trigger || !content) return;
@@ -575,18 +575,13 @@ class AstroidMegaMenuPro {
             }
             trigger.setAttribute('aria-controls', content.id);
 
-            // Set roles for accessibility
-            trigger.setAttribute('role', 'button');
-            content.setAttribute('role', 'menu');
-
             // Also inject ARIA for submenu items inside this item
             const subs = item.querySelectorAll('.nav-item-submenu');
             subs.forEach(sub => {
-                const subTrigger = sub.querySelector('.as-menu-item');
-                const subMenu = sub.querySelector(this.settings.submenuSelector);
+                const subTrigger = sub.querySelector(':scope > .as-menu-item');
+                const subMenu = sub.querySelector(':scope > .nav-submenu, :scope > .nav-submenu-static');
 
                 if (!subTrigger || !subMenu) return;
-
                 subTrigger.setAttribute('aria-haspopup', 'true');
                 subTrigger.setAttribute('aria-expanded', 'false');
 
@@ -594,9 +589,6 @@ class AstroidMegaMenuPro {
                     subMenu.id = 'megamenu-sub-' + Math.random().toString(36).substr(2, 9);
                 }
                 subTrigger.setAttribute('aria-controls', subMenu.id);
-
-                subTrigger.setAttribute('role', 'button');
-                subMenu.setAttribute('role', 'menu');
             });
         });
     }
