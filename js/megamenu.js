@@ -89,6 +89,8 @@ class AstroidMegaMenuPro {
         this.items.forEach(item => {
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
+            const content = this.getContent(item);
+            if (!content) return;
 
             if (this.settings.trigger === 'click') {
                 trigger.addEventListener('click', e => {
