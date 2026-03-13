@@ -28,6 +28,7 @@ class Row extends BaseElement
 
     public function render()
     {
+        $this->_setColumnHeight();
         $columns = $this->_data['cols'];
         $bufferSize = [
             'xxl' => 0,
@@ -148,5 +149,22 @@ class Row extends BaseElement
             $this->addClass('align-items-' . $astroid_element_vertical_alignment);
         }
         parent::_getclasses();
+    }
+
+    protected function _setColumnHeight(): void
+    {
+        $astroid_column_height_type = $this->params->get('astroid_column_height_type', '');
+        if ($astroid_column_height_type == 'basic') {
+            $astroid_element_column_height =  $this->params->get('astroid_element_column_height','');
+            if (!empty($astroid_element_column_height)) {
+                $astroid_element_column_height   =   json_decode($astroid_element_column_height, true);
+                $this->style->child('.astroid-column')->addResponsiveCSS('min-height', $astroid_element_column_height, $astroid_element_column_height['postfix']);
+            }
+        } elseif ($astroid_column_height_type == 'custom') {
+            $astroid_element_column_custom_height =  $this->params->get('astroid_element_column_custom_height','');
+            if (!empty($astroid_element_column_custom_height)) {
+                $this->style->child('.astroid-column')->addCss('min-height', $astroid_element_column_custom_height);
+            }
+        }
     }
 }
