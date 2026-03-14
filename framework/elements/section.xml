@@ -27,6 +27,13 @@
                <option value="hgroup">hgroup</option>
                <option value="main">main</option>
             </field>
+            <field astroidgroup="general" name="astroid_column_height_type" type="astroidlist" label="ASTROID_ELEMENT_COLUMN_HEIGHT" description="ASTROID_ELEMENT_COLUMN_HEIGHT_DESC" default="">
+               <option value="">JGLOBAL_INHERIT</option>
+               <option value="basic">ASTROID_OPTIONS_BASIC</option>
+               <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+            </field>
+            <field astroidgroup="general" ngShow="[astroid_column_height_type]=='basic'" name="astroid_element_column_height" type="astroidrange" min="0" max="2000" step="1" postfix="px|vh" responsive="true" label="ASTROID_ELEMENT_COLUMN_HEIGHT_VALUE" description="ASTROID_ELEMENT_COLUMN_HEIGHT_VALUE_DESC" />
+            <field astroidgroup="general" ngShow="[astroid_column_height_type]=='custom'" type="astroidtext" label="ASTROID_ELEMENT_COLUMN_HEIGHT_VALUE" description="ASTROID_ELEMENT_COLUMN_HEIGHT_VALUE_CUSTOM_DESC" name="astroid_element_column_custom_height"/>
          </fieldset>
       </fields>
    </form>

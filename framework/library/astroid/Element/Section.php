@@ -21,6 +21,7 @@ class Section extends BaseElement
 
     public function render()
     {
+        $this->_setColumnHeight('> .container');
         $content = '';
         foreach ($this->_data['rows'] as $row) {
             $row = new Row($row, $this, $this->role);
