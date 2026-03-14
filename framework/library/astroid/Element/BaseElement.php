@@ -418,17 +418,17 @@ class BaseElement
         if (empty($object)) {
             return;
         }
-        $astroid_column_height_type = $this->params->get('astroid_column_height_type', '');
-        if ($astroid_column_height_type == 'basic') {
-            $astroid_element_column_height =  $this->params->get('astroid_element_column_height','');
-            if (!empty($astroid_element_column_height)) {
-                $astroid_element_column_height   =   json_decode($astroid_element_column_height, true);
-                $this->style->child($object)->addResponsiveCSS('min-height', $astroid_element_column_height, $astroid_element_column_height['postfix']);
+        $astroid_element_height_type = $this->params->get('astroid_element_height_type', '');
+        if ($astroid_element_height_type == 'basic') {
+            $astroid_element_height =  $this->params->get('astroid_element_height','');
+            if (!empty($astroid_element_height)) {
+                $astroid_element_height   =   json_decode($astroid_element_height, true);
+                $this->style->child($object)->addResponsiveCSS('min-height', $astroid_element_height, $astroid_element_height['postfix']);
             }
-        } elseif ($astroid_column_height_type == 'custom') {
-            $astroid_element_column_custom_height =  $this->params->get('astroid_element_column_custom_height','');
-            if (!empty($astroid_element_column_custom_height)) {
-                $this->style->child($object)->addCss('min-height', $astroid_element_column_custom_height);
+        } elseif ($astroid_element_height_type == 'custom') {
+            $astroid_element_custom_height =  $this->params->get('astroid_element_custom_height','');
+            if (!empty($astroid_element_custom_height)) {
+                $this->style->child($object)->addCss('min-height', $astroid_element_custom_height);
             }
         }
     }
