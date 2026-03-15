@@ -28,6 +28,7 @@ class Row extends BaseElement
 
     public function render()
     {
+        $this->_setColumnHeight('> .astroid-column');
         $columns = $this->_data['cols'];
         $bufferSize = [
             'xxl' => 0,
@@ -71,7 +72,7 @@ class Row extends BaseElement
                             'xs' => 0,
                         ];
                     } else {
-                        if (isset($columns[$prevColIndex])) {
+                        if (!empty($prevColIndex) && !empty($columns[$prevColIndex])) {
                             foreach ($columns[$prevColIndex]->size as $key => $size) {
                                 $columns[$prevColIndex]->size[$key] += $bufferSize[$key];
                                 if ($columns[$prevColIndex]->size[$key] > 12) $columns[$prevColIndex]->size[$key] = 12;

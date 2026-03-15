@@ -1402,7 +1402,7 @@ class Document
 
     public function loadGSAP($plugin = ''): void
     {
-        if (!empty($this->_is_loaded['gsap.'.$plugin])) {
+        if (!empty($plugin) && empty($this->_is_loaded['gsap.'.$plugin])) {
             $this->getWA()->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto'], [], ['astroid.gsap']);
             $this->_is_loaded['gsap.'.$plugin] = true;
         } else {

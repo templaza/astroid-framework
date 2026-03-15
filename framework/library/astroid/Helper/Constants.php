@@ -19,11 +19,11 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.3.12';
-    public static $fontawesome_version = '7.0.0';
-    public static $fancybox_version = '6.0';
+    public static $astroid_version = '3.3.13';
+    public static $fontawesome_version = '7.2.0';
+    public static $fancybox_version = '6.1';
     public static $animatecss_version = '3.7.0';
-    public static $lenis_version = '1.3.8';
+    public static $lenis_version = '1.3.18';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';
     public static $documentation_link = 'https://docs.astroidframe.work/';
     public static $video_tutorial_link = 'https://www.youtube.com/channel/UCUHl1uU0Ofkyo-1ke-K4_xg';

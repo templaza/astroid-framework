@@ -34,10 +34,8 @@ if (isset($props)) {
       $attributes[$prop] = $val;
    }
 }
-if ($item->anchor_title) {
-   $attributes['title'] = $item->anchor_title;
-} else {
-   $attributes['title'] = $item->title;
+if ($options->icononly) {
+   $attributes['title'] = !empty($item->anchor_title) ? $item->anchor_title : $item->title;
 }
 
 $attributes['class'] = 'as-menu-item';

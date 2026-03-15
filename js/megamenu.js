@@ -22,6 +22,7 @@ class AstroidMegaMenuPro {
             headerSelector: '#astroid-header',
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
+            stagger: navbar.dataset.megamenuStagger === 'true' || false,
         }, options);
         // Detect interaction capability instead of just touch devices
         this.canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -85,19 +86,40 @@ class AstroidMegaMenuPro {
     ============================= */
 
     bindEvents() {
-
         this.items.forEach(item => {
-
             const trigger = item.querySelector('.as-menu-item');
             if (!trigger) return;
+            const content = this.getContent(item);
+            if (!content) return;
 
-            // Use capability detection instead of simple touch detection
-            if (!this.canHover || this.settings.trigger === 'click') {
+            if (this.settings.trigger === 'click') {
                 trigger.addEventListener('click', e => {
                     e.preventDefault();
                     this.toggle(item);
                 });
+            } else if (!this.canHover) {
+                const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
+                if (!arrow) {
+                    // Create caret element and append it if .nav-title exists
+                    const navTitle = trigger.querySelector('.nav-title');
+                    if (navTitle) {
+                        item.classList.remove('no-dropdown-icon');
+                        const i = document.createElement('i');
+                        i.classList.add('nav-item-caret', 'fas', 'fa-chevron-down');
+                        navTitle.appendChild(i);
+                        i.addEventListener('click', e => {
+                            e.preventDefault();
+                            this.toggle(item);
+                        });
+                    }
+                } else {
+                    arrow.addEventListener('click', e => {
+                        e.preventDefault();
+                        this.toggle(item);
+                    });
+                }
             } else {
+                // Hover-capable devices
                 item.addEventListener('mouseenter', () => this.open(item));
                 item.addEventListener('mouseleave', () => this.close(item));
             }
@@ -127,10 +149,9 @@ class AstroidMegaMenuPro {
         if (!content) return;
         // If closing animation is running, kill it
         gsap.killTweensOf(content);
+
         const subs = item.querySelectorAll('.nav-item-submenu');
         if (subs) subs.forEach(sub => this.closeSub(sub));
-
-        this.positionContent(item, content);
 
         item.classList.add('open');
 
@@ -140,6 +161,9 @@ class AstroidMegaMenuPro {
         // Always force visible before animating (fix fast hover issue)
         content.style.display = 'block';
         content.style.pointerEvents = 'auto';
+        content.style.visibility = 'hidden';
+        this.positionContent(item, content);
+
         gsap.set(content, { autoAlpha: 1 });
 
         const effect = this.settings.effect;
@@ -197,10 +221,10 @@ class AstroidMegaMenuPro {
             gsap.set(content, { autoAlpha: 1, y: 0, scale: 1 });
         }
 
-        if (effect !== 'none') {
-            this.staggerItems(content);
+        if (effect !== 'none' && this.settings.stagger) {
+            this.staggerItems(content, item);
         }
-        
+
         this.showBackdrop();
         this.rotateArrow(item, true);
     }
@@ -279,13 +303,31 @@ class AstroidMegaMenuPro {
         const parentContent = this.getContent(parent);
 
         subs.forEach(sub => {
-
             const link = sub.querySelector('.as-menu-item');
+
             const submenu = sub.querySelector(this.settings.submenuSelector);
             if (!submenu || !link) return;
 
-            sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
-            sub.addEventListener('mouseleave', () => this.closeSub(sub));
+            if (this.settings.trigger === 'click') {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                })
+            } else if (!this.canHover) {
+                const arrow = sub.querySelector('.nav-item-caret');
+                arrow.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                });
+            } else {
+                sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
+                sub.addEventListener('mouseleave', () => this.closeSub(sub));
+            }
+
 
             link.addEventListener('keydown', e => {
                 if (e.key === 'Enter') {
@@ -305,10 +347,10 @@ class AstroidMegaMenuPro {
 
     openSub(sub, parentContent) {
 
-        const submenu = sub.querySelector(this.settings.submenuSelector);
+        const submenu = sub.querySelector(':scope > '+this.settings.submenuSelector);
         if (!submenu) return;
 
-        const tl = parentContent._staggerTl;
+        // reference the parent's stagger timeline directly
         const waitMs = 150; // extra wait time in milliseconds
 
         const proceed = () => {
@@ -316,7 +358,6 @@ class AstroidMegaMenuPro {
             sub.classList.add('open');
             submenu.style.display = 'block';
             submenu.style.pointerEvents = 'auto';
-
             this.smartSubPosition(sub, submenu);
 
             submenu._tl = gsap.timeline();
@@ -327,14 +368,14 @@ class AstroidMegaMenuPro {
             );
         };
 
-        if (tl && typeof tl.totalProgress === 'function' && tl.totalProgress() < 1) {
+        if (parentContent._staggerTl && typeof parentContent._staggerTl.totalProgress === 'function' && parentContent._staggerTl.totalProgress() < 1) {
             // If we're already waiting, don't attach another handler
             if (parentContent._waitingForStagger) return;
             parentContent._waitingForStagger = true;
 
-            const prevOnComplete = typeof tl.eventCallback === 'function' ? tl.eventCallback('onComplete') : null;
+            const prevOnComplete = typeof parentContent._staggerTl.eventCallback === 'function' ? parentContent._staggerTl.eventCallback('onComplete') : null;
 
-            tl.eventCallback('onComplete', function() {
+            parentContent._staggerTl.eventCallback('onComplete', function() {
                 // call previous onComplete if present
                 if (typeof prevOnComplete === 'function') {
                     try { prevOnComplete.call(this); } catch (e) {}
@@ -344,6 +385,21 @@ class AstroidMegaMenuPro {
                     parentContent._waitingForStagger = false;
                     // ensure the submenu/parent still exists in DOM
                     if (!document.contains(sub)) return;
+
+                    // Re-check that the stagger timeline is actually finished.
+                    // It's possible another stagger was created or restarted; if it's not complete, bail.
+                    if (parentContent._staggerTl && typeof parentContent._staggerTl.totalProgress === 'function' && parentContent._staggerTl.totalProgress() < 1) {
+                        return;
+                    }
+
+                    // Use the nearest trigger to this sub for hover detection
+                    const subTrigger = sub.querySelector(':scope > .as-menu-item')
+                        || sub.querySelector('.as-menu-item')
+                        || (sub.closest('.nav-item') && sub.closest('.nav-item').querySelector('.as-menu-item'));
+
+                    const isHovered = sub.matches(':hover') || (subTrigger && subTrigger.matches(':hover'));
+                    if (!isHovered) return;
+
                     proceed();
                 }, waitMs);
             });
@@ -431,9 +487,9 @@ class AstroidMegaMenuPro {
     }
 
     smartSubPosition(parent, submenu) {
-
+        const parentRect = parent.getBoundingClientRect();
         const rect = submenu.getBoundingClientRect();
-        const overflowRight = rect.right > window.innerWidth;
+        const overflowRight = parentRect.right + rect.width > window.innerWidth;
 
         if (overflowRight) {
             submenu.style.left = 'auto';
@@ -448,11 +504,17 @@ class AstroidMegaMenuPro {
        ANIMATION HELPERS
     ============================= */
 
-    staggerItems(container) {
+    staggerItems(container, parentItem) {
 
         const el = container instanceof Element ? container : null;
         if (!el) return;
-        const items = el.querySelectorAll('li.nav-item-submenu');
+
+        let items;
+        if (parentItem.classList.contains('nav-item-megamenu')) {
+            items = el.querySelectorAll('li.nav-item-submenu.nav-item-level-2, li.nav-item-submenu.nav-item-level-3');
+        } else {
+            items = el.querySelectorAll('li.nav-item-submenu.nav-item-level-2');
+        }
         if (!items.length) return;
 
         // Kill previous stagger timeline if exists
@@ -485,7 +547,7 @@ class AstroidMegaMenuPro {
 
     rotateArrow(item, open) {
 
-        const arrow = item.querySelector('.nav-item-caret');
+        const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
         if (!arrow) return;
 
         gsap.to(arrow, {
@@ -501,7 +563,7 @@ class AstroidMegaMenuPro {
 
     injectARIA() {
         this.items.forEach(item => {
-            const trigger = item.querySelector('.as-menu-item');
+            const trigger = item.querySelector(':scope > .as-menu-item');
             const content = this.getContent(item);
 
             if (!trigger || !content) return;
@@ -515,18 +577,13 @@ class AstroidMegaMenuPro {
             }
             trigger.setAttribute('aria-controls', content.id);
 
-            // Set roles for accessibility
-            trigger.setAttribute('role', 'button');
-            content.setAttribute('role', 'menu');
-
             // Also inject ARIA for submenu items inside this item
             const subs = item.querySelectorAll('.nav-item-submenu');
             subs.forEach(sub => {
-                const subTrigger = sub.querySelector('.as-menu-item');
-                const subMenu = sub.querySelector(this.settings.submenuSelector);
+                const subTrigger = sub.querySelector(':scope > .as-menu-item');
+                const subMenu = sub.querySelector(':scope > .nav-submenu, :scope > .nav-submenu-static');
 
                 if (!subTrigger || !subMenu) return;
-
                 subTrigger.setAttribute('aria-haspopup', 'true');
                 subTrigger.setAttribute('aria-expanded', 'false');
 
@@ -534,9 +591,6 @@ class AstroidMegaMenuPro {
                     subMenu.id = 'megamenu-sub-' + Math.random().toString(36).substr(2, 9);
                 }
                 subTrigger.setAttribute('aria-controls', subMenu.id);
-
-                subTrigger.setAttribute('role', 'button');
-                subMenu.setAttribute('role', 'menu');
             });
         });
     }

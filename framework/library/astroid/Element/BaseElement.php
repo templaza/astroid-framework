@@ -412,4 +412,24 @@ class BaseElement
         }
         $document->loadAnimation();
     }
+
+    protected function _setColumnHeight($object = ''): void
+    {
+        if (empty($object)) {
+            return;
+        }
+        $astroid_element_height_type = $this->params->get('astroid_element_height_type', '');
+        if ($astroid_element_height_type == 'basic') {
+            $astroid_element_height =  $this->params->get('astroid_element_height','');
+            if (!empty($astroid_element_height)) {
+                $astroid_element_height   =   json_decode($astroid_element_height, true);
+                $this->style->child($object)->addResponsiveCSS('min-height', $astroid_element_height, $astroid_element_height['postfix']);
+            }
+        } elseif ($astroid_element_height_type == 'custom') {
+            $astroid_element_custom_height =  $this->params->get('astroid_element_custom_height','');
+            if (!empty($astroid_element_custom_height)) {
+                $this->style->child($object)->addCss('min-height', $astroid_element_custom_height);
+            }
+        }
+    }
 }
