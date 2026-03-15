@@ -3,18 +3,25 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.3.11</version>
-        <security>
-            <item><![CDATA[Fixing security vulnerabilities at the AJAX endpoint.]]></item>
-        </security>
-        <change>
-            <item><![CDATA[Update GSAP from 3.13.0 to 3.14.2]]></item>
-            <item><![CDATA[Rewrite the Mega Menu code]]></item>
-            <item><![CDATA[Rewrite the Color Transform code]]></item>
-        </change>
+        <version>3.3.13</version>
         <addition>
-            <item><![CDATA[Add a centralized place to define/name button styles]]></item>
+            <item><![CDATA[Improve Mega Menu UX on touch devices]]></item>
+            <item><![CDATA[Add option to enable/disable Stagger animation effect]]></item>
+            <item><![CDATA[New Section Height & Column Height feature]]></item>
         </addition>
+        <fix>
+            <item><![CDATA[Fix issue where GSAP plugins could not load]]></item>
+            <item><![CDATA[Fix issue can not click to top menu link in touch devices]]></item>
+            <item><![CDATA[Fix broken ARIA attributes for better accessibility]]></item>
+            <item><![CDATA[Fix issue can’t select submenu]]></item>
+            <item><![CDATA[Fix Deprecated notice null index in array (Row Class)]]></item>
+            <item><![CDATA[Fix issue select wrong logo in Dark mode]]></item>
+        </fix>
+        <change>
+            <item><![CDATA[Font Awesome: 7.0.0 → 7.2.0]]></item>
+            <item><![CDATA[LenisJS: 1.3.8 → 1.3.18]]></item>
+            <item><![CDATA[Fancybox: 6.0 → 6.1]]></item>
+        </change>
     </changelog>
     <changelog>
         <element>astroidpro</element>
