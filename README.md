@@ -26,6 +26,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Enhanced User Experience
 * Import/Export Settings
 * Only Enable What You Need
+* Centralized Button Style Definitions
 * Font Awesome 7
 * Social Icons & Share
 * Sass ready
