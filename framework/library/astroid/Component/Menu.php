@@ -105,7 +105,8 @@ class Menu
                 $document->include('header.menu.link', ['item' => $item, 'options' => $options, 'mobilemenu' => false, 'active' => in_array('nav-item-active', $class), 'header' => $headerType]);
 
                 if ((!$header_endLevel && $header_endLevel == 0) || isset($header_endLevel) && $header_endLevel > 1) {
-                    echo self::getMegaMenu($item, $options, $list);
+                    echo '<div class="submenu-dropdown-mask"></div>';
+                    self::getMegaMenu($item, $options, $list);
                 }
 
                 echo '</li>';
@@ -114,6 +115,7 @@ class Menu
                 $document->include('header.menu.link', ['item' => $item, 'options' => $options, 'mobilemenu' => false, 'active' => in_array('nav-item-active', $class), 'header' => $headerType]);
 
                 if ($item->level == 1 && $item->parent) {
+                    echo '<div class="submenu-dropdown-mask"></div>';
                     echo '<div class="megamenu-container nav-submenu-container nav-item-level-' . $item->level . '">';
                 }
                 // The next item is deeper.

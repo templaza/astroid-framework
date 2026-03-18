@@ -445,8 +445,10 @@ class AstroidMegaMenuPro {
         const header = this.navbar.closest(this.settings.headerSelector) || this.navbar;
         const headerRect = header.getBoundingClientRect();
         const itemRect = item.getBoundingClientRect();
+        const mark = item.querySelector('.submenu-dropdown-mask');
 
         // Set top based on available space below or above the item
+        mark.style.height = (this.navbar.getBoundingClientRect().bottom - itemRect.bottom) + 'px';
         content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
 
         // ===== FULL WIDTH (container width & centered) =====
