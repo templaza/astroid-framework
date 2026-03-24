@@ -177,7 +177,7 @@ class BaseElement
         }
     }
 
-    protected function addAttribute($prop, $value): void
+    public function addAttribute($prop, $value): void
     {
         $this->_attributes[$prop] = $value;
     }

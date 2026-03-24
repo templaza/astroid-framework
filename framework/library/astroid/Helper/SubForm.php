@@ -14,6 +14,9 @@ use Joomla\Registry\Registry;
 class SubForm {
     public array $data = [];
     public function __construct($data = '{}') {
+        if (empty($data)) {
+            return;
+        }
         $data = json_decode($data);
         if (!empty($data)) {
             foreach ($data as $value) {
