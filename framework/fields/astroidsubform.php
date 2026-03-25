@@ -125,6 +125,7 @@ class JFormFieldAstroidSubForm extends FormField
         $subform_data   = new Element('subform', ['formsource' => $this->formsource, 'formtype' => $this->formtype]);
         $form_template  = $subform_data->renderJson('subform');
         $form_template['index'] =   isset($this->element['as-index']) ? (string) ($this->element['as-index']) : '';
+        $form_template['countLabel'] =   isset($this->element['count-label']) ? \Joomla\CMS\Language\Text::_((string) ($this->element['count-label'])) : '';
         $value = $this->value;
         if (empty($value)) {
             $options = [];
