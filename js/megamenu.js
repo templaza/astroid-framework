@@ -19,6 +19,7 @@ class AstroidMegaMenuPro {
             duration: (navbar.dataset.transitionSpeed/1000) || 0.6,
             ease: navbar.dataset.easing || 'expo.out',
             backdrop: navbar.dataset.megamenuBackdrop === 'true' || false,
+            spacing: navbar.dataset.megamenuSpacing === 'true' || false,
             headerSelector: '#astroid-header',
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
@@ -449,7 +450,9 @@ class AstroidMegaMenuPro {
 
         // Set top based on available space below or above the item
         mark.style.height = (this.navbar.getBoundingClientRect().bottom - itemRect.bottom) + 'px';
-        content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
+        if (this.settings.spacing) {
+            content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
+        }
 
         // ===== FULL WIDTH (container width & centered) =====
         if (positionType === 'full') {

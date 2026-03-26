@@ -25,6 +25,7 @@ $mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astr
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
 $enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
 $enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
+$enable_header_spacing = $params->get('enable_header_spacing', 1) ? 'true' : 'false';
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
@@ -57,7 +58,7 @@ switch ($stickey_mode) {
       $navWrapperClass[] = 'mx-auto';
       break;
 }
-$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'"' : '';
+$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'" data-megamenu-spacing="'.$enable_header_spacing.'"' : '';
 ?>
 <!-- header starts -->
 <header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none">
