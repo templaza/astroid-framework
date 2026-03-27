@@ -19,7 +19,7 @@
 	</languages>
 	<config>
 		<fields name="params">
-			<fieldset name="basic" addfieldpath="/libraries/astroid/framework/fields">
+			<fieldset name="basic" addfieldprefix="Astroid\Field">
 				<field type="astroidlayoutmodule" name="astroid_module_layout" data-fieldset="astroid_layout" filter="raw" />
 			</fieldset>
 			<fieldset name="advanced">

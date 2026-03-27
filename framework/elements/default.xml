@@ -2,13 +2,13 @@
 <element>
    <form>
       <fields>
-         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="general" title="ASTROID_WIDGET_GENERAL_LABEL"/>
             <field astroidgroup="general" type="astroidtext" class="form-control" label="ASTROID_ELEMENT_TITLE_LABEL" name="title"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
          </fieldset>
-         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="general"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
             <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
@@ -201,7 +201,7 @@
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
          </fieldset>
-         <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
             <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
          </fieldset>

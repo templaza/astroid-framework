@@ -7,7 +7,7 @@
     <element_type>widget</element_type>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="column_options" title="ASTROID_WIDGET_COLUMN_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="slider_options" title="ASTROID_WIDGET_SLIDER_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
@@ -21,7 +21,7 @@
                                 <field description="ASTROID_WIDGET_IMAGE_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
                                 <field ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_IMAGE_LINK_DESC" name="link" hint="https://astroidframe.work/" dynamic="true"/>
                             </fieldset>
-                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                                 <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
                                 <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
                             </fieldset>
@@ -301,7 +301,7 @@
                 </field>
                 <field astroidgroup="title_options" ngShow="[display_title]==1" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
-            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
                     <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
                     <option value="0">ASTROID_WIDGET_NO_PAGES</option>

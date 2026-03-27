@@ -7,7 +7,7 @@
     <element_type>widget</element_type>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
                 <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_VIDEO_BUTTON_URL_LABEL" name="url" hint="https://www.youtube.com/watch?v=xxxxx"/>
                 <field astroidgroup="widget_styles" name="button_size" type="astroidrange" min="1" max="300" step="1" postfix="px" default="24" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" />
@@ -28,7 +28,7 @@
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_width" type="astroidrange" min="1" max="50" step="1" postfix="px" default="1" label="ASTROID_WIDGET_BORDER_WIDTH" />
                 <field astroidgroup="widget_styles" ngShow="[use_border]==1" name="border_color" type="astroidcolor" label="ASTROID_WIDGET_BORDER_COLOR"/>
             </fieldset>
-            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
                     <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
                     <option value="0">ASTROID_WIDGET_NO_PAGES</option>

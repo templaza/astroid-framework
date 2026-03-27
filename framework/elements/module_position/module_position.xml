@@ -8,7 +8,7 @@
    <element_type>system</element_type>
    <form>
       <fields>
-         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field astroidgroup="general" type="astroidlist" name="type" label="TPL_ASTROID_PRELOADER_TYPE" default="">
                <option value="">ASTROID_POSITION</option>
                <option value="module">ASTROID_MODULE</option>

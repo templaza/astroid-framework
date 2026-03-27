@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
     <fields name="attribs">
-        <fieldset label="ASTROID_ARTICLE_TYPE_OPTIONS_TITLE_LABEL" name="articletypeoptions" addfieldpath="/libraries/astroid/framework/fields">
+        <fieldset label="ASTROID_ARTICLE_TYPE_OPTIONS_TITLE_LABEL" name="articletypeoptions" addfieldprefix="Astroid\Field">
             <field type="radio" name="astroid_article_type" label="ASTROID_ARTICLE_OPTIONS_TYPE" description="ASTROID_ARTICLE_OPTIONS_TYPE_DESC" class="form-check-inline" default="regular">
                 <option value="regular">ASTROID_ARTICLE_OPTIONS_TYPE_REGULAR</option>
                 <option value="video">ASTROID_ARTICLE_OPTIONS_TYPE_VIDEO</option>

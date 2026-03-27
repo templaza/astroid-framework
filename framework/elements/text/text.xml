@@ -7,7 +7,7 @@
     <element_type>widget</element_type>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
                 <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_HEADING_LABEL" description="ASTROID_WIDGET_HEADING_CONTENT_DESC" name="heading" dynamic="true"/>
                 <field astroidgroup="general" ngShow="[heading]!==''" name="html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h2">
@@ -82,7 +82,7 @@
                 <field astroidgroup="content_options" type="astroiddivider" name="content_divider" />
                 <field astroidgroup="content_options" ngShow="[content]!==''" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
-            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
                     <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
                     <option value="0">ASTROID_WIDGET_NO_PAGES</option>
