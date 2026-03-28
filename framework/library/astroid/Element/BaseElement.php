@@ -29,6 +29,7 @@ class BaseElement
     public array $options = [];
     public string $role = '';
     public bool $isRoot = false;
+    public array $is_loaded = [];
     public function __construct($data, $devices, $options = array(), $role = '')
     {
         $this->_data    = $data;
@@ -242,6 +243,7 @@ class BaseElement
         $this->_marginPadding();
         $this->_sticky();
         $this->_typography();
+        $this->_transform();
         $this->_animation();
         $this->style->render();
         $this->style_dark->render();
@@ -381,10 +383,16 @@ class BaseElement
         $linkHover_dark->addCss('color', $link_hover_color['dark']);
     }
 
+    protected function _transform(): void
+    {
+        $transform = new Helper\Transform($this);
+        $this->is_loaded['transform'] =   $transform->isLoaded();
+    }
+
     protected function _animation(): void
     {
         $animation = $this->params->get('animation', '');
-        if (empty($animation)) {
+        if (empty($animation) && empty($this->is_loaded['transform'])) {
             return;
         }
         $document = Framework::getDocument();
