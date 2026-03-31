@@ -11,8 +11,8 @@
          <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="general"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
-            <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
             <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
+            <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
 
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
                <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
@@ -31,8 +31,6 @@
                <option value="hgroup">hgroup</option>
                <option value="main">main</option>
             </field>
-
-
 
             <field astroidgroup="general" name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
@@ -156,6 +154,9 @@
             <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
             <field astroidgroup="general" ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting]=='image' OR [background_setting]=='video'" name="enable_background_parallax" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_LABEL" description="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_DESC"/>
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1" name="background_parallax_speed" type="astroidrange" min="0" max="1" step="0.01" postfix="seconds" label="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_SPEED" description="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_SPEED_DESC" />
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1" name="background_parallax_scrub" type="astroidrange" min="0.1" max="10" step="0.1" postfix="seconds" default="2" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_DESC" />
             <field astroidgroup="general" name="border_style" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
             <field astroidgroup="general" name="border_radius" type="astroidrange" min="0" max="300" step="1" postfix="px" responsive="true" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" />
             <field astroidgroup="general" name="custom_colors" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
