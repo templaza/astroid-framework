@@ -25,7 +25,7 @@
 
             // build container
             const container = document.createElement('div');
-            container.classList.add('moon-element-overlay', 'position-' + position,
+            container.classList.add('astroid-element-overlay', 'position-' + position,
                 'top-0', 'start-0', 'w-100', 'h-100', 'overflow-hidden', 'z-0', 'pe-none');
 
             if (typeof poster !== 'undefined' && poster) {
@@ -64,7 +64,7 @@
             }
 
             // Parallax
-            if (el.dataset.parallax && typeof gsap !== 'undefined') {
+            if (el.dataset.parallax && parallax.type === 'video' && typeof gsap !== 'undefined') {
                 // parse options from data-parallax (already parsed into `parallax` object)
                 const speed = Number(parallax.speed) || 0.3;
                 const startPercent = -20-50;

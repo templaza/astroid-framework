@@ -8,7 +8,6 @@
 class Parallax {
     config = {};
     element = null;
-    bgElement = null;
     type = null;
     speed = 0.3;
     startPercent = -20-50;
@@ -31,29 +30,26 @@ class Parallax {
     }
 
     init() {
-        let bgElement;
-
         // create pseudo background layer for image
         const bgUrl = getComputedStyle(this.element).backgroundImage;
 
         if (!bgUrl || bgUrl === "none") return;
 
-        const div = document.createElement("div");
-        div.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover', 'pe-none', 'z-0');
+        const bgElement = document.createElement("div");
+        bgElement.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover', 'pe-none', 'z-0');
 
-        div.style.backgroundImage = bgUrl;
-        div.style.backgroundSize = "cover";
-        div.style.backgroundPosition = "center";
-        div.style.minWidth = '100%';
-        div.style.minHeight = '120%';
-        div.style.transform = 'translate(-50%, -50%)';
+        bgElement.style.backgroundImage = bgUrl;
+        bgElement.style.backgroundSize = "cover";
+        bgElement.style.backgroundPosition = "center";
+        bgElement.style.minWidth = '100%';
+        bgElement.style.minHeight = '120%';
+        bgElement.style.transform = 'translate(-50%, -50%)';
 
         this.element.style.backgroundImage = "none";
         this.element.style.position = "relative";
         this.element.style.overflow = "hidden";
 
-        this.element.prepend(div);
-        bgElement = div;
+        this.element.prepend(bgElement);
 
         if (!bgElement) return;
 
@@ -104,7 +100,9 @@ class Parallax {
             }
 
             const parallax = new Parallax(el, config);
-            parallax.init();
+            if (parallax.type === 'image') {
+                parallax.init();
+            }
         });
     });
 })();
