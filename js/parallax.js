@@ -10,28 +10,28 @@ class Parallax {
     element = null;
     type = null;
     speed = 0.3;
-    startPercent = -20-50;
+    startPercent = -70;
     endPercent = (20 * this.speed)-50;
     startTrigger = 'top bottom';
     endTrigger = 'bottom top';
     scrub = true;
-    _scrollTriggerRegistered = false;
 
     constructor(element, config = {}) {
         this.element = element;
         this.config = config;
         this.type = this.config.type || 'image';
         this.speed = Number(this.config.speed) || 0.3;
-        this.startPercent = -20-50;
+        this.startPercent = -70;
         this.endPercent = (20 * this.speed)-50;
         this.startTrigger = this.config.start || 'top bottom';
         this.endTrigger = this.config.end || 'bottom top';
-        this.scrub = this.config.scrub || true;
+        this.scrub = this.config.scrub;
     }
 
     init() {
         // create pseudo background layer for image
-        const bgUrl = getComputedStyle(this.element).backgroundImage;
+        const _this = this;
+        const bgUrl = getComputedStyle(_this.element).backgroundImage;
 
         if (!bgUrl || bgUrl === "none") return;
 
@@ -42,54 +42,47 @@ class Parallax {
         bgElement.style.backgroundSize = "cover";
         bgElement.style.backgroundPosition = "center";
         bgElement.style.minWidth = '100%';
-        bgElement.style.minHeight = '120%';
-        bgElement.style.transform = 'translate(-50%, -50%)';
+        // bgElement.style.minHeight = '125%';
+        bgElement.style.minHeight = `${120 + (this.speed * 50)}%`;
 
-        this.element.style.backgroundImage = "none";
-        this.element.style.position = "relative";
-        this.element.style.overflow = "hidden";
+        _this.element.style.backgroundImage = "none";
+        _this.element.style.position = "relative";
+        _this.element.style.overflow = "hidden";
 
-        this.element.prepend(bgElement);
+        _this.element.prepend(bgElement);
 
         if (!bgElement) return;
 
         // determine scrub: allow boolean or numeric value
         let scrub = true;
-        if (typeof this.config.scrub !== 'undefined') {
-            if (this.config.scrub === false || this.config.scrub === 'false') scrub = false;
-            else if (this.config.scrub === true || this.config.scrub === 'true') scrub = true;
-            else scrub = Number(this.config.scrub) || true;
+        if (typeof _this.config.scrub !== 'undefined') {
+            if (_this.config.scrub === false || _this.config.scrub === 'false') scrub = false;
+            else if (_this.config.scrub === true || _this.config.scrub === 'true') scrub = true;
+            else scrub = Number(_this.config.scrub) || true;
         }
 
-        // Only proceed if ScrollTrigger is available
-        if (typeof ScrollTrigger !== 'undefined') {
-            // register plugin once
-            if (!this._scrollTriggerRegistered) {
-                gsap.registerPlugin(ScrollTrigger);
-                this._scrollTriggerRegistered = true;
+        // Use will-change for smoother animations
+        gsap.set(bgElement, { xPercent: -50, yPercent: _this.startPercent, y: 0, willChange: 'transform' });
+
+        gsap.to(bgElement, {
+            yPercent: _this.endPercent,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: _this.element,
+                start: _this.startTrigger,
+                end: _this.endTrigger,
+                scrub: scrub,
+                invalidateOnRefresh: true
             }
-
-            // Use will-change for smoother animations
-            gsap.set(bgElement, { yPercent: this.startPercent, willChange: 'transform' });
-
-            gsap.to(bgElement, {
-                yPercent: this.endPercent,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: this.element,
-                    start: this.startTrigger,
-                    end: this.endTrigger,
-                    scrub: scrub,
-                    invalidateOnRefresh: true
-                }
-            });
-        }
+        });
     }
 }
 
 (function () {
     document.addEventListener('DOMContentLoaded', () => {
         const elements = document.querySelectorAll("[data-parallax]");
+        if (!elements.length) return;
+        gsap.registerPlugin(ScrollTrigger);
         elements.forEach((el) => {
             let config = {};
 

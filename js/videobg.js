@@ -41,7 +41,7 @@
             video.loop = true;
             video.src = url;
             video.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover');
-            //
+            
             video.style.minWidth = '100%';
             video.style.minHeight = '120%';
             video.style.transform = 'translate(-50%, -50%)';
@@ -67,7 +67,7 @@
             if (el.dataset.parallax && parallax.type === 'video' && typeof gsap !== 'undefined') {
                 // parse options from data-parallax (already parsed into `parallax` object)
                 const speed = Number(parallax.speed) || 0.3;
-                const startPercent = -20-50;
+                const startPercent = -70;
                 const endPercent = (20 * speed)-50;
                 const startTrigger = parallax.start || 'top bottom';
                 const endTrigger = parallax.end || 'bottom top';
@@ -87,9 +87,9 @@
                         gsap.registerPlugin(ScrollTrigger);
                         initASVideoBG._scrollTriggerRegistered = true;
                     }
-
+                    video.style.minHeight = `${120 + (speed * 50)}%`;
                     // Use will-change for smoother animations
-                    gsap.set(video, { yPercent: startPercent, willChange: 'transform' });
+                    gsap.set(video, { xPercent: -50, yPercent: startPercent, y: 0, willChange: 'transform' });
 
                     gsap.to(video, {
                         yPercent: endPercent,
