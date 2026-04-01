@@ -133,8 +133,11 @@ class AstroidlayoutdataField extends FormField {
                         ];
                     }
                 }
+                $globalConfig = $app->getConfig();
+                $editor = $globalConfig->get('editor');
                 $json = [
                     'article_id' => $id,
+                    'editor' => $editor,
                     'widgets' => $widgets,
                     'constant'   => $constant,
                     'language'  =>  $language,
@@ -152,12 +155,7 @@ class AstroidlayoutdataField extends FormField {
                 $wa->useScript('bootstrap.modal');
 
                 // Check if Joomla tinyMCE is not loaded then load from Astroid
-                try {
-                    $isLoaded = $wa->isAssetActive('script', 'plg_editors_tinymce');
-                } catch (Exception $e) {
-                    $isLoaded = false; // or handle the error as needed
-                }
-                if (!$isLoaded) {
+                if (!in_array($editor, ['tinymce', 'jce'])) {
                     $wa->registerAndUseScript('astroid.tinymce', 'media/astroid/assets/vendor/tinymce/tinymce.min.js', ['relative' => true, 'version' => 'auto']);
                 }
                 $wa->registerAndUseScript('astroid.article.widget.data', 'media/astroid/assets/vendor/manager/dist/index.js', ['relative' => true, 'version' => 'auto'], ['type' => 'module']);
