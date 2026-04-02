@@ -135,9 +135,9 @@ class AstroidlayoutdataField extends FormField {
                 }
                 $globalConfig = $app->getConfig();
                 $editor = $globalConfig->get('editor');
+                $constant['editor'] = $editor;
                 $json = [
                     'article_id' => $id,
-                    'editor' => $editor,
                     'widgets' => $widgets,
                     'constant'   => $constant,
                     'language'  =>  $language,
