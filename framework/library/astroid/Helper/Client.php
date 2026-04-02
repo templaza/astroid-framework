@@ -180,6 +180,7 @@ class Client
         $astroid_dir = 'libraries/astroid';
         Helper::loadLanguage('astroid');
         $frontendVisibility = $pluginParams->get('frontend_tabs_visibility', 1);
+        $article_tabs_visibility = $pluginParams->get('article_tabs_visibility', ['article', 'blog', 'article_layout', 'opengraph']);
 
         Form::addFormPath(JPATH_SITE . '/' . $astroid_dir . '/framework/forms');
 
@@ -197,10 +198,9 @@ class Client
             if (Framework::isSite() && isset($data->attribs) && isset($data->params)) {
                 $data->attribs = $data->params;
             }
-            $form->loadFile('article', false);
-            $form->loadFile('blog', false);
-            $form->loadFile('article_layout', false);
-            $form->loadFile('opengraph', false);
+            foreach ($article_tabs_visibility as $tab) {
+                $form->loadFile($tab, false);
+            }
             $loaded = true;
         }
 

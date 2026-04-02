@@ -53,6 +53,18 @@
                <option value="1">ASTROID_VISIBLE</option>
                <option value="0">ASTROID_HIDDEN</option>
             </field>
+            <field
+                    name="article_tabs_visibility"
+                    type="list"
+                    default="[&quot;article&quot;,&quot;blog&quot;,&quot;article_layout&quot;,&quot;opengraph&quot;]"
+                    label="ASTROID_ARTICLE_TABS_VISIBILTY"
+                    multiple="true"
+                    description="ASTROID_ARTICLE_TABS_VISIBILTY_DESC">
+               <option value="article">ASTROID_ARTICLE_TAB_ARTICLE_TYPE_LABEL</option>
+               <option value="blog">ASTROID_ARTICLE_TAB_BLOG_LABEL</option>
+               <option value="article_layout">ASTROID_ARTICLE_TAB_WIDGETS_LABEL</option>
+               <option value="opengraph">ASTROID_ARTICLE_TAB_OPENGRAPH_LABEL</option>
+            </field>
          </fieldset>
       </fields>
    </config>

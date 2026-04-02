@@ -308,7 +308,7 @@ class BaseElement
         }
     }
 
-    protected function addParallax($type)
+    protected function addParallax($type): void
     {
         $parallax_speed = $this->params->get('background_parallax_speed', 0.3);
         $parallax_scrub = $this->params->get('background_parallax_scrub', 2);
