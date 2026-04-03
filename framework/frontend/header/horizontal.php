@@ -39,16 +39,12 @@ $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
-$enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
-$enable_header_spacing = $params->get('enable_header_spacing', 1) ? 'true' : 'false';
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
 $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
-$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'" data-megamenu-spacing="'.$enable_header_spacing.'"' : '';
 ?>
 <!-- header starts -->
-<header id="astroid-header" class="<?php echo implode(' ', $class); ?>"<?php echo $headAttrs; ?>>
+<header id="astroid-header" class="<?php echo implode(' ', $class); ?>">
    <div class="d-flex flex-row justify-content-between">
       <?php if (!empty($header_mobile_menu)) {
           if ($mobile_menu_method == 'module_position') {
@@ -86,7 +82,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
              if ($header_menu_method == 'module_position') {
                  echo $document->position($header_menu_module_position);
              } else {
-                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
              }
             // header nav ends
          }
@@ -102,7 +98,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
           if ($header_menu_method == 'module_position') {
               echo $document->position($header_menu_module_position);
           } else {
-              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
           }
          // header nav ends
          echo '</div>';
@@ -116,7 +112,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
                 if ($header_menu_method == 'module_position') {
                     echo $document->position($header_menu_module_position);
                 } else {
-                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
                 }
                // header nav ends
             }

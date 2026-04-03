@@ -20,7 +20,7 @@ class AstroidMegaMenuPro {
             ease: navbar.dataset.easing || 'expo.out',
             backdrop: navbar.dataset.megamenuBackdrop === 'true' || false,
             spacing: navbar.dataset.megamenuSpacing === 'true' || false,
-            headerSelector: '#astroid-header',
+            headerSelector: '.astroid-header',
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
             stagger: navbar.dataset.megamenuStagger === 'true' || false,
@@ -449,9 +449,9 @@ class AstroidMegaMenuPro {
         const mark = item.querySelector('.submenu-dropdown-mask');
 
         // Set top based on available space below or above the item
-        mark.style.height = (this.navbar.getBoundingClientRect().bottom - itemRect.bottom) + 'px';
+        mark.style.height = ( headerRect.bottom - itemRect.bottom + 10 ) + 'px';
         if (this.settings.spacing) {
-            content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
+            content.style.top = 'calc(100% + '+( headerRect.bottom - itemRect.bottom )+'px)';
         }
 
         // ===== FULL WIDTH (container width & centered) =====

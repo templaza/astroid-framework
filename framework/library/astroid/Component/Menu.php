@@ -24,21 +24,21 @@ class Menu
 
     public static $parentlist = [];
 
-    public static function getMenu($menutype = '', $nav_class = [], $logo = null, $logoOdd = 'left', $headerType = 'horizontal', $nav_wrapper_class = [], $startLevel = null, $endLevel = null, $base=null)
+    public static function getMenu($menutype = '', $nav_class = [], $logo = null, $logoOdd = 'left', $headerType = 'horizontal', $nav_wrapper_class = [], $params = null, $startLevel = null, $endLevel = null, $base=null)
     {
         if (empty($menutype)) {
             return '';
         }
 
-        $params = Framework::getTemplate()->getParams();
+//        $params = Framework::getTemplate()->getParams();
         $document = Framework::getDocument();
         $document->getWA()->useScript('astroid.megamenu');
 
-        $header_endLevel = $params->get('header_endLevel', 0);
+        $header_endLevel = $params->get('header_endLevel', $params->get('endLevel', 0));
         if ($endLevel !== null) {
             $header_endLevel = $endLevel;
         }
-        $header_startLevel = $params->get('header_startLevel', 1);
+        $header_startLevel = $params->get('header_startLevel', $params->get('startLevel', 1));
         if ($startLevel !== null) {
             $header_startLevel = $startLevel;
         }
@@ -57,9 +57,15 @@ class Menu
         $path = $base->tree;
         $showAll = 1;
 
+        $enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
+        $enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
+        $enable_header_spacing = $params->get('enable_header_spacing', 1) ? 'true' : 'false';
+
         $return = [];
         // Menu Wrapper
-        echo '<nav class="' . (!empty($nav_wrapper_class) ? ' ' . implode(' ', $nav_wrapper_class) : '') . '" aria-label="'.$headerType.' menu">'
+        echo '<nav class="' . (!empty($nav_wrapper_class) ? implode(' ', $nav_wrapper_class) .'"' : '')
+            . ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'" data-megamenu-spacing="'.$enable_header_spacing.'"'
+            . ' aria-label="'.$headerType.' menu">'
             . '<ul class="' . implode(' ', $nav_class) . '">';
 
 
