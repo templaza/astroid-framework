@@ -40,7 +40,7 @@ $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+$navClass = ['astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
 $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
 ?>
 <!-- header starts -->

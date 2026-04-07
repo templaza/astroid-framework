@@ -46,9 +46,8 @@ $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 
-$navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
-$navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
-$navClassDivided = ['nav', 'astroid-nav'];
+$navClass = ['astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
+$navClassLeft = ['astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
 if ($mode == 'divided-logo-left') {
     $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
 } else {

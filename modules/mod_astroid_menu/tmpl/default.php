@@ -17,7 +17,7 @@ $endLevel           =   $params->get('endLevel');
 $showAllChildren    =   $params->get('showAllChildren', 1);
 $logo_between       =   $params->get('logo_between', 0);
 $menu_breakpoint    =   $params->get('menu_breakpoint');
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$menu_breakpoint.'-flex'];
+$navClass = ['astroid-nav', 'd-none', 'd-'.$menu_breakpoint.'-flex'];
 $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$menu_breakpoint.'-block'];
 
 $id = '';

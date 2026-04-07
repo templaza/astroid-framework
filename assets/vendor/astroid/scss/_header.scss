@@ -76,7 +76,7 @@
       -webkit-animation-duration: $sticky-header-animation-duration;
       animation-duration: $sticky-header-animation-duration;
 
-      >div {
+      .astroid-header {
          padding-top: $sticky-header-padding-y;
          padding-bottom: $sticky-header-padding-y;
       }

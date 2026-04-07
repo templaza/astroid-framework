@@ -119,6 +119,7 @@
 }
 
 .astroid-nav {
+	@extend .nav;
 	.nav-link {
 		color: var(--as-main-menu-link-color);
 		background-color: var(--as-main-menu-link-background);
