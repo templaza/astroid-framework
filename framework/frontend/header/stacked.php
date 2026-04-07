@@ -156,7 +156,7 @@ if ($mode == 'divided-logo-left') {
                  echo $document->position($header_menu_module_position);
              } else {
                  $navWrapperClass[] = 'astroid-stacked-'.$mode.'-menu pt-3';
-                 Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass, $params);
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'stacked', $navWrapperClass, $params);
              }
              // header nav ends
          }
@@ -196,7 +196,7 @@ if ($mode == 'divided-logo-left') {
                  echo $document->position($header_menu_module_position);
              } else {
                  $navWrapperClass[] = 'astroid-stacked-'.$mode.'-menu pt-3';
-                 Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass, $params);
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'stacked', $navWrapperClass, $params);
              }
             // header nav ends
             // header block starts
