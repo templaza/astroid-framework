@@ -14,8 +14,12 @@ use Joomla\CMS\Language\Text;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $app->getDocument()->getWebAssetManager();
-$wa->getRegistry()->addExtensionRegistryFile('mod_menu');
-$wa->usePreset('mod_menu.menu');
+if (version_compare(JVERSION, '6.0.0', '>=')) {
+    $wa->getRegistry()->addExtensionRegistryFile('mod_menu');
+    $wa->usePreset('mod_menu.menu');
+} else {
+    $wa->registerAndUseScript('mod_menu', 'mod_menu/menu.min.js', [], ['type' => 'module']);
+}
 
 $tagId      = $params->get('tag_id', '') ?: 'mod-menu' . $module->id;
 $id         = ' id="' . htmlspecialchars($tagId, ENT_QUOTES, 'UTF-8') . '"';
