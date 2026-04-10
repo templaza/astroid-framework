@@ -67,7 +67,7 @@ switch ($stickey_mode) {
                     echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
                 }
             } ?>
-            <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+            <div class="header-left-section d-flex justify-content-start align-items-center<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
                 <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
                     <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
                     <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
@@ -91,7 +91,7 @@ switch ($stickey_mode) {
             <?php endif; ?>
             <?php
             if ($stickey_mode == 'center') {
-                echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
+                echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center align-items-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
                 // header nav starts
                 if ($header_menu_method == 'module_position') {
                     echo $document->position($header_menu_module_position);
@@ -103,7 +103,7 @@ switch ($stickey_mode) {
             }
             ?>
             <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
-                <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+                <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end align-items-center<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
                     <?php
                     if ($stickey_mode == 'right') {
                         // header nav starts
