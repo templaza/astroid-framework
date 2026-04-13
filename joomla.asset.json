@@ -43,6 +43,26 @@
       "uri": "astroid/script.min.js"
     },
     {
+      "name": "astroid.uikit",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/uikit/js/uikit.min.js"
+    },
+    {
+      "name": "astroid.uikit-icons",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/uikit/js/uikit-icons.min.js"
+    },
+    {
+      "name": "astroid.uikit",
+      "type": "style",
+      "uri": "media/astroid/assets/vendor/uikit/css/uikit.min.css"
+    },
+    {
+      "name": "astroid.uikit.rtl",
+      "type": "style",
+      "uri": "media/astroid/assets/vendor/uikit/css/uikit.rtl.min.css"
+    },
+    {
       "name": "astroid.debug",
       "type": "script",
       "dependencies": [

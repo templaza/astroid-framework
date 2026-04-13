@@ -1410,6 +1410,30 @@ class Document
         }
     }
 
+    public function loadUIKit(): void
+    {
+        if (!isset($this->_is_loaded['uikit'])) {
+            if (Factory::getApplication()->getLanguage()->isRtl()) {
+                $this->getWA()->useStyle('astroid.uikit.rtl');
+            } else {
+                $this->getWA()->useStyle('astroid.uikit');
+            }
+            $this->getWA()->useScript('astroid.uikit');
+            $this->getWA()->useScript('astroid.uikit-icons');
+
+            // Override default uikit colors
+            $heading = new Style('.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, .uk-heading-2xlarge, .uk-heading-3xlarge, .uk-heading-large, .uk-heading-medium, .uk-heading-small, .uk-heading-xlarge, h1, h2, h3, h4, h5, h6');
+            $heading->addCss('color', 'var(--bs-heading-color)');
+            $heading->render();
+            $link = new Style('.uk-link, a');
+            $link->addCss('color', 'rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1))');
+            $link->hover()->addCss('color', 'var(--bs-link-hover-color)');
+            $link->render();
+
+            $this->_is_loaded['uikit'] = true;
+        }
+    }
+
     public function loadVideoBG(): void
     {
         $this->getWA()->useScript('astroid.videobg');
