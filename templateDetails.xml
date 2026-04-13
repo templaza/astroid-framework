@@ -67,8 +67,8 @@
    </languages>
    <config>
       <fields name="params">
-         <fieldset name="basic" addfieldpath="/libraries/astroid/framework/fields">
-            <field name="astroid" type="astroidmanagerlink"></field>
+         <fieldset name="basic" addfieldprefix="Astroid\Field">
+            <field name="astroid" type="astroidmanagerlink"/>
          </fieldset>
       </fields>
    </config>
