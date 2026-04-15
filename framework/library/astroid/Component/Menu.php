@@ -187,6 +187,7 @@ class Menu
                                         echo '<div class="megamenu-item megamenu-module">';
                                         echo ModuleHelper::renderModule($module, ['style' => $style]);
                                         echo "</div>";
+                                        break;
                                     }
                                 }
                             } else if ($item->parent) {
