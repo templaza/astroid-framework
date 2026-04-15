@@ -3,32 +3,42 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.3.13</version>
+        <version>3.4.0</version>
         <addition>
-            <item><![CDATA[Improve Mega Menu UX on touch devices]]></item>
-            <item><![CDATA[Add option to enable/disable Stagger animation effect]]></item>
-            <item><![CDATA[New Section Height & Column Height feature]]></item>
+            <item><![CDATA[Animation - Transform settings - New era animation]]></item>
+            <item><![CDATA[Parallax background effect for background images and videos]]></item>
+            <item><![CDATA[Option enable/disable Menu Spacing]]></item>
+            <item><![CDATA[Add feature Tab visibility for individual tabs]]></item>
+            <item><![CDATA[Add UIKit library]]></item>
+            <item><![CDATA[Add Cookie Consent feature]]></item>
         </addition>
         <fix>
-            <item><![CDATA[Fix issue where GSAP plugins could not load]]></item>
-            <item><![CDATA[Fix issue can not click to top menu link in touch devices]]></item>
-            <item><![CDATA[Fix broken ARIA attributes for better accessibility]]></item>
-            <item><![CDATA[Fix issue can’t select submenu]]></item>
-            <item><![CDATA[Fix Deprecated notice null index in array (Row Class)]]></item>
-            <item><![CDATA[Fix issue select wrong logo in Dark mode]]></item>
+            <item><![CDATA[Fixes the issue where submenus cannot be selected in some cases.]]></item>
+            <item><![CDATA[Fixes issue conflict js with JCE Editor]]></item>
+            <item><![CDATA[Fixes issue First Menu-item not reaction when clicking on it]]></item>
+            <item><![CDATA[Fixes issue old data is not valid]]></item>
+            <item><![CDATA[Fixes the issue of aligning items when displaying menus in the module.]]></item>
+            <item><![CDATA[Fixes issue Astroid Mega Menu: Joomla Module page exceptions display multi time]]></item>
         </fix>
         <change>
-            <item><![CDATA[Font Awesome: 7.0.0 → 7.2.0]]></item>
-            <item><![CDATA[LenisJS: 1.3.8 → 1.3.18]]></item>
-            <item><![CDATA[Fancybox: 6.0 → 6.1]]></item>
+            <item><![CDATA[Update the Field structure to conform to Joomla 6 standards]]></item>
+            <item><![CDATA[Improve Sticky HTML structure]]></item>
+            <item><![CDATA[Disable safemode in first install]]></item>
+            <item><![CDATA[Update style of article edit layout in Dark mode]]></item>
+            <item><![CDATA[Update Megamenu HTML structure]]></item>
+            <item><![CDATA[Update Menu Module to compatible with J6]]></item>
         </change>
     </changelog>
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.10</version>
-        <fix>
-            <item><![CDATA[Fix issue border_radius style conflict in Hover Motion Gallery]]></item>
-        </fix>
+        <version>1.0.12</version>
+        <addition>
+            <item><![CDATA[Add Transform feature]]></item>
+        </addition>
+        <change>
+            <item><![CDATA[Improve load Asset documents]]></item>
+            <item><![CDATA[Update the Field structure to conform to Joomla 6 standards.]]></item>
+        </change>
     </changelog>
 </changelogs>
