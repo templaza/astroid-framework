@@ -43,7 +43,7 @@
             btn.addEventListener('click', function(evt){
                 evt.preventDefault();
                 // set cookie same as original (30 days)
-                setCookie('astroid_cookie', 'ok', 2592e6);
+                setCookie('astroid_cookie_' + TEMPLATE_HASH, 'ok', 2592e6);
 
                 const consent = btn.closest && btn.closest('#astroid-cookie-consent');
                 if (consent) {

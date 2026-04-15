@@ -831,7 +831,8 @@ class Document
 
     public function getCookieConsent(): string
     {
-        $params = Framework::getTemplate()->getParams();
+        $template = Framework::getTemplate();
+        $params = $template->getParams();
         $enable_cookie_consent = $params->get('enable_cookie_consent', 0);
         if (empty($enable_cookie_consent) || Framework::isAdmin()) {
             return '';
@@ -839,7 +840,7 @@ class Document
         $app = Factory::getApplication();
         $cookie = $app->input->cookie;
         $html = '';
-        if($cookie->get('astroid_cookie') != 'ok')
+        if($cookie->get('astroid_cookie_' . md5($template->template)) != 'ok')
         {
             $cookie_content = $params->get('cookie_content', '');
             $button_text = $params->get('cookie_button_text', 'I accept');
