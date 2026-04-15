@@ -17,8 +17,8 @@ $endLevel           =   $params->get('endLevel');
 $showAllChildren    =   $params->get('showAllChildren', 1);
 $logo_between       =   $params->get('logo_between', 0);
 $menu_breakpoint    =   $params->get('menu_breakpoint');
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$menu_breakpoint.'-flex'];
-$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-3', 'd-none', 'd-'.$menu_breakpoint.'-block'];
+$navClass = ['astroid-nav', 'd-none', 'd-'.$menu_breakpoint.'-flex', 'align-items-center'];
+$navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$menu_breakpoint.'-block'];
 
 $id = '';
 
@@ -27,10 +27,10 @@ if ($tagId = $params->get('tag_id', '')) {
 }
 ?>
 <?php if ($menu_mode == 'site') : ?>
-<div<?php echo $id; ?> data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" class="mod-astroid-menu <?php echo $class_sfx; ?>">
+<div<?php echo $id; ?> class="mod-astroid-menu <?php echo $class_sfx; ?>">
     <?php
     // header nav starts
-    Astroid\Component\Menu::getMenu($menu, $navClass, (bool)$logo_between, 'left', 'module', $navWrapperClass, $startLevel, $endLevel, $base);
+    Astroid\Component\Menu::getMenu($menu, $navClass, (bool)$logo_between, 'left', 'module', $navWrapperClass, $params, $startLevel, $endLevel, $base);
     // header nav ends
     ?>
 </div>

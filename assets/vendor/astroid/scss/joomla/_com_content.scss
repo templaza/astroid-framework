@@ -1,3 +1,11 @@
+joomla-tab > joomla-tab-element {
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-border-color);
+  .choices__inner, .choices__list--dropdown, .choices__list[aria-expanded], .choices[data-type*="select-one"] .choices__input, .choices__input {
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-border-color);
+  }
+}
 .blog {
   .cat-children + .blog-items, .blog-items + .blog-items {
     margin-top: 3rem;

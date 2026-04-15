@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="as-icon as-icon-menu3" label="ASTROID_OPTIONS_HEADER" name="astroid_header" addfieldpath="/libraries/astroid/framework/fields" order="2">
+      <fieldset icon="as-icon as-icon-menu3" label="ASTROID_OPTIONS_HEADER" name="astroid_header" addfieldprefix="Astroid\Field" order="2">
 
          <field type="astroidgroup" name="header_element" title="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_LABEL" description="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_DESC" help="https://docs.astroidframe.work/header/header-modes"/>
          <field type="astroidgroup" name="header_logo_options_element" title="TPL_ASTROID_HEADER_LOGO_OPTION" description="TPL_ASTROID_HEADER_LOGO_OPTION_DESC" help="https://docs.astroidframe.work/header/logo-options"/>
@@ -321,6 +321,11 @@
                 name="enable_stagger_effect" type="astroidradio" astroid-switch="true"
                 default="0" label="TPL_ASTROID_HEADER_ANIMATION_ENABLE_STAGGER_LABEL"
                 description="TPL_ASTROID_HEADER_ANIMATION_ENABLE_STAGGER_DESC"/>
+
+         <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element"
+                name="enable_header_spacing" type="astroidradio" astroid-switch="true"
+                default="1" label="TPL_ASTROID_HEADER_ANIMATION_ENABLE_HEADER_SPACING_LABEL"
+                description="TPL_ASTROID_HEADER_ANIMATION_ENABLE_HEADER_SPACING_DESC"/>
 
          <field ngShow="[header]==true AND [dropdown_animation_type]!='none' AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_speed" type="astroidrange" min="100" max="4000" step="1" postfix="ms" default="600" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" description="" />
 

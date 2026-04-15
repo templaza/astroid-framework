@@ -860,4 +860,21 @@ class Utility
             }
         }
     }
+
+    public static function cookieConsent(): void
+    {
+        $template = Framework::getTemplate();
+        $params = $template->getParams();
+        $enable_cookie_consent = $params->get('enable_cookie_consent', 0);
+        if (empty($enable_cookie_consent)) {
+            return;
+        }
+        $app    =   Factory::getApplication();
+        $cookie = $app->input->cookie;
+        if($cookie->get('astroid_cookie_' . md5($template->template)) != 'ok')
+        {
+            $document = Framework::getDocument();
+            $document->getWA()->useScript('astroid.cookieconsent');
+        }
+    }
 }

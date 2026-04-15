@@ -34,6 +34,7 @@ class Site extends Helper\Client
         $document = Framework::getDocument();
         Component\Utility::meta(); // site meta
         Component\Utility::typography(); // site typography
+        Component\Utility::cookieConsent(); // site cookie consent
         Helper\Head::styles(); // site Styles
         Component\LazyLoad::run(); // to execute lazy load
         Component\Utility::smoothScroll(); // smooth scroll utility

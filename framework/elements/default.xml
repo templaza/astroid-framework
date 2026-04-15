@@ -2,19 +2,17 @@
 <element>
    <form>
       <fields>
-         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="general" title="ASTROID_WIDGET_GENERAL_LABEL"/>
             <field astroidgroup="general" type="astroidtext" class="form-control" label="ASTROID_ELEMENT_TITLE_LABEL" name="title"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_CLASS" description="ASTROID_CUSTOM_CLASS_DESC" name="customclass"/>
             <field type="astroidtext" class="form-control" label="ASTROID_CUSTOM_ID" description="ASTROID_CUSTOM_ID_DESC" name="customid"/>
          </fieldset>
-         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="design-settings" label="ASTROID_ELEMENT_HEAD_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="general"/>
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
-            <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
-            <field type="astroidgroup" name="animation_background_settings" title="TPL_ASTROID_ANIMATION_BG_SETTINGS_LABEL"/>
-            <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
             <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
+            <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
 
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
                <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
@@ -33,13 +31,6 @@
                <option value="hgroup">hgroup</option>
                <option value="main">main</option>
             </field>
-
-            <field astroidgroup="animation_settings" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
-            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
-            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
-            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_loop" type="astroidgetpro" label="ASTROID_ANIMATION_LOOP" description="ASTROID_ANIMATION_LOOP_DESC"/>
-            <field astroidgroup="animation_settings" ngShow="[animation]!=''" type="astroidgetpro" name="animation_stagger" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
-            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidgetpro" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
 
             <field astroidgroup="general" name="max_width" type="astroidlist" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" default="">
                <option value="">JGLOBAL_INHERIT</option>
@@ -163,6 +154,9 @@
             <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [background_image_overlay]=='pattern'" name="background_image_overlay_pattern" type="astroidmedia" label="TPL_ASTROID_BACKGROUND_PATTERN_IMAGE_LABEL"/>
 
             <field astroidgroup="general" ngShow="[background_setting] =='gradient'" description="ASTROID_SELECT_BACKGROUND_COLOR_DESC" name="background_gradient" type="astroidgradient" label="TPL_ASTROID_BG_GREDIENT_LABEL"/>
+            <field astroidgroup="general" ngShow="[background_setting]=='image' OR [background_setting]=='video'" name="enable_background_parallax" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_LABEL" description="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_DESC"/>
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1" name="background_parallax_speed" type="astroidrange" min="0" max="1" step="0.01" postfix="seconds" label="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_SPEED" description="ASTROID_ELEMENT_ENABLE_BACKGROUND_PARALLAX_SPEED_DESC" />
+            <field astroidgroup="general" ngShow="([background_setting]=='image' OR [background_setting]=='video') AND [enable_background_parallax]==1" name="background_parallax_scrub" type="astroidrange" min="0.1" max="10" step="0.1" postfix="seconds" default="2" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_DESC" />
             <field astroidgroup="general" name="border_style" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
             <field astroidgroup="general" name="border_radius" type="astroidrange" min="0" max="300" step="1" postfix="px" responsive="true" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" />
             <field astroidgroup="general" name="custom_colors" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CUSTOM_COLORS_LABEL" />
@@ -186,8 +180,6 @@
                <option value="xxl">ASTROID_BREAKPOINT_XXL</option>
             </field>
 
-            <field astroidgroup="animation_background_settings" name="animation_background_type" type="astroidgetpro" label="ASTROID_WIDGET_ANIMATED_ICONS_LABEL"/>
-
             <field astroidgroup="spacing_settings" name="margin" type="astroidspacing" label="ASTROID_WIDGET_MARGIN_LABEL" />
             <field astroidgroup="spacing_settings" name="padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
             <field astroidgroup="custom_settings" name="custom_css" type="astroidgetpro" label="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL" description="TPL_ASTROID_CUSTOM_CUSTOM_SCSS_DESC"/>
@@ -199,7 +191,61 @@
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_LARGE_DEVICES_DESC" name="hideonxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_LARGE_DEVICES_LABEL" />
             <field astroidgroup="device_settings" description="TPL_ASTROID_ELEMENT_EXTRA_EXTRA_LARGE_DEVICES_DESC" name="hideonxxl" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_EXTRA_EXTRA_LARGE_DEVICES_LABEL" />
          </fieldset>
-         <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+         <fieldset name="animation-settings" label="ASTROID_ANIMATION" addfieldprefix="Astroid\Field">
+            <field type="astroidgroup" name="animation_settings" title="ASTROID_ELEMENT_ANIMATION_SETTINGS_LABEL"/>
+            <field type="astroidgroup" name="transform_settings" title="ASTROID_ELEMENT_TRANSFORM_SETTINGS_LABEL"/>
+            <field type="astroidgroup" name="animation_background_settings" title="TPL_ASTROID_ANIMATION_BG_SETTINGS_LABEL"/>
+            <field astroidgroup="animation_settings" name="animation" type="astroidanimations" label="ASTROID_ANIMATION"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_delay" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DELAY" description="ASTROID_ANIMATION_DELAY_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_duration" class="form-control" type="astroidtext" hint="500" default="500" label="ASTROID_ANIMATION_DURATION" description="ASTROID_ANIMATION_DURATION_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_loop" type="astroidgetpro" label="ASTROID_ANIMATION_LOOP" description="ASTROID_ANIMATION_LOOP_DESC"/>
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" type="astroidgetpro" name="animation_stagger" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
+            <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidgetpro" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
+
+            <field astroidgroup="transform_settings" name="transform_scenes" type="astroidgetpro" label="ASTROID_WIDGET_TRANSFORM_SCENES_LABEL" description="ASTROID_WIDGET_TRANSFORM_SCENES_DESC"/>
+            <field astroidgroup="transform_settings" name="transform_scenes" type="astroidsubform" label="ASTROID_WIDGET_TRANSFORM_SCENES_LABEL" description="ASTROID_WIDGET_TRANSFORM_SCENES_DESC" count-label="ASTROID_ELEMENT_TRANSFORM_SCENE_LABEL">
+               <form>
+                  <fields>
+                     <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                        <field type="astroidgroup" name="move_settings" title="ASTROID_ELEMENT_TRANSFORM_MOVE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_MOVE_DESC"/>
+                        <field type="astroidgroup" name="opacity_settings" title="ASTROID_ELEMENT_TRANSFORM_OPACITY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_OPACITY_DESC"/>
+                        <field type="astroidgroup" name="rotate_settings" title="ASTROID_ELEMENT_TRANSFORM_ROTATE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_ROTATE_DESC"/>
+                        <field type="astroidgroup" name="scale_settings" title="ASTROID_ELEMENT_TRANSFORM_SCALE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCALE_DESC"/>
+                        <field type="astroidgroup" name="skew_settings" title="ASTROID_ELEMENT_TRANSFORM_SKEW_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEW_DESC"/>
+                        <field type="astroidgroup" name="timeline_settings" title="ASTROID_ELEMENT_TRANSFORM_TWEEN_SETTINGS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TWEEN_SETTINGS_DESC"/>
+                        <field astroidgroup="move_settings" name="translate_x" type="astroidfromto" label="ASTROID_ELEMENT_TRANSFORM_TRANSLATEX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TRANSLATEX_DESC" unit="px" />
+                        <field astroidgroup="move_settings" name="translate_y" type="astroidfromto" label="ASTROID_ELEMENT_TRANSFORM_TRANSLATEY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TRANSLATEY_DESC" unit="px" />
+                        <field astroidgroup="opacity_settings" name="opacity" type="astroidfromto" label="ASTROID_ELEMENT_TRANSFORM_OPACITY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_OPACITY_DESC" />
+                        <field astroidgroup="rotate_settings" name="rotate_x" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_ROTATEX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_ROTATEX_DESC" unit="deg" />
+                        <field astroidgroup="rotate_settings" name="rotate_y" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_ROTATEY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_ROTATEY_DESC" unit="deg" />
+                        <field astroidgroup="rotate_settings" name="rotate_z" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_ROTATEZ_LABEL" description="ASTROID_ELEMENT_TRANSFORM_ROTATEZ_DESC" unit="deg" />
+                        <field astroidgroup="scale_settings" name="scale_x" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SCALEX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCALEX_DESC" />
+                        <field astroidgroup="scale_settings" name="scale_y" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SCALEY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCALEY_DESC" />
+                        <field astroidgroup="skew_settings" name="skew_x" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SKEWX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEWX_DESC" unit="deg" />
+                        <field astroidgroup="skew_settings" name="skew_y" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SKEWY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEWY_DESC" unit="deg" />
+                        <field astroidgroup="timeline_settings" name="duration" type="astroidrange" min="0" max="10" step="0.1" postfix="seconds" default="0.5" label="ASTROID_ELEMENT_TRANSFORM_DURATION_LABEL" description="ASTROID_ELEMENT_TRANSFORM_DURATION_DESC" />
+                        <field astroidgroup="timeline_settings" name="stagger" type="astroidrange" min="0" max="10" step="0.01" postfix="seconds" default="0" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
+                     </fieldset>
+                  </fields>
+               </form>
+            </field>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroiddivider" name="transform_timeline_settings_divider"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroidheading" title="ASTROID_ELEMENT_TRANSFORM_TIMELINE_SETTINGS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TIMELINE_SETTINGS_DESC" name="transform_timeline_settings"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" name="transform_element" type="astroidtext" default="" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" name="transform_repeat" type="astroidrange" min="-1" max="10" step="1" postfix="times" default="0" label="ASTROID_ELEMENT_TRANSFORM_REPEAT_LABEL" description="ASTROID_ELEMENT_TRANSFORM_REPEAT_DESC"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroiddivider" name="transform_scroll_settings_divider"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroidheading" title="ASTROID_ELEMENT_TRANSFORM_SCROLL_SETTINGS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_SETTINGS_DESC" name="transform_scroll_settings"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroidtext" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_START_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_START_DESC" name="transform_start"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroidtext" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_END_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_END_DESC" name="transform_end"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" name="transform_scrub" type="astroidrange" min="0" max="20" step="0.1" postfix="seconds" default="2" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_SCRUB_DESC" />
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" name="transform_pin" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_PIN_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_PIN_DESC"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]' AND [transform_pin]==1" name="transform_pin_spacing" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_PIN_SPACING_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_PIN_SPACING_DESC"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" name="transform_markers" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_MARKERS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_MARKERS_DESC"/>
+            <field astroidgroup="transform_settings" ngShow="[transform_scenes]!='' AND [transform_scenes]!='[]'" type="astroidtext" label="ASTROID_ELEMENT_TRANSFORM_SCROLL_TOGGER_ACTIONS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCROLL_TOGGER_ACTIONS_DESC" name="transform_toggle_actions"/>
+
+            <field astroidgroup="animation_background_settings" name="animation_background_type" type="astroidgetpro" label="ASTROID_WIDGET_ANIMATED_ICONS_LABEL"/>
+         </fieldset>
+         <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
             <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
             <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
          </fieldset>

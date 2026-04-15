@@ -8,7 +8,7 @@
     <multiple>true</multiple>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field astroidgroup="general" type="astroidlist" name="position" label="ASTROID_POSITION" default="above-title">
                     <option value="above-title">ASTROID_ARTICLE_POSTION_ABOVE_TITLE</option>
                     <option value="before-content">ASTROID_ARTICLE_POSTION_BEFORE_CONTENT</option>

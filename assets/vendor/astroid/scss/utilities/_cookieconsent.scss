@@ -1,0 +1,72 @@
+#astroid-cookie-consent {
+  position: fixed;
+  bottom: 0;
+  z-index: 10001;
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .astroid-cookie-allow {
+    text-decoration: none;
+    font-weight: bolder;
+    &:active {
+      text-decoration: none;
+    }
+    &:focus {
+      text-decoration: none;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+#astroid-cookie-consent.position-bottom_left {
+  width: 400px;
+  max-width: 100%;
+  bottom: 20px;
+  left: 20px;
+  .astroid-cookie-allow {
+    margin-top: 15px;
+  }
+}
+#astroid-cookie-consent.position-bottom_right {
+  width: 400px;
+  max-width: 100%;
+  bottom: 20px;
+  right: 20px;
+  .astroid-cookie-allow {
+    margin-top: 15px;
+  }
+}
+#astroid-cookie-consent.position-bottom {
+  left: 0;
+  width: 100%;
+  display: table;
+  border-radius: 0;
+  >div {
+    align-items: center !important;
+    display: flex;
+    flex-wrap: wrap;
+    >.astroid-cookie-consent-action {
+      margin-top: 15px;
+    }
+  }
+}
+@media (min-width:992px) {
+  #astroid-cookie-consent.position-bottom {
+    >div {
+      >.astroid-cookie-consent-content {
+        flex: 0 0 75%;
+        max-width: 75%;
+      }
+      >.astroid-cookie-consent-action {
+        flex: 0 0 25%;
+        max-width: 25%;
+        margin-top: 0;
+        text-align: right;
+      }
+    }
+  }
+}

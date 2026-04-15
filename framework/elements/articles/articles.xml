@@ -7,7 +7,7 @@
     <element_type>widget</element_type>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="grid_options" title="ASTROID_WIDGET_GRID_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="card_options" title="ASTROID_WIDGET_CARD_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="image_options" title="ASTROID_WIDGET_IMAGE_OPTIONS_LABEL"/>
@@ -474,7 +474,7 @@
                     <option value="rounded-pill">Circle</option>
                 </field>
             </fieldset>
-            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields" articleData="false">
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
                     <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
                     <option value="0">ASTROID_WIDGET_NO_PAGES</option>

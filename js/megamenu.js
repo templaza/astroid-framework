@@ -19,7 +19,8 @@ class AstroidMegaMenuPro {
             duration: (navbar.dataset.transitionSpeed/1000) || 0.6,
             ease: navbar.dataset.easing || 'expo.out',
             backdrop: navbar.dataset.megamenuBackdrop === 'true' || false,
-            headerSelector: '#astroid-header',
+            spacing: navbar.dataset.megamenuSpacing === 'true' || false,
+            headerSelector: '.astroid-header',
             rtl: document.body.classList.contains('rtl'),
             effect: navbar.dataset.megamenuAnimation || 'slide-scale', // slide-scale | fade | zoom | slide | drop | flip | scaleY | none
             stagger: navbar.dataset.megamenuStagger === 'true' || false,
@@ -445,9 +446,13 @@ class AstroidMegaMenuPro {
         const header = this.navbar.closest(this.settings.headerSelector) || this.navbar;
         const headerRect = header.getBoundingClientRect();
         const itemRect = item.getBoundingClientRect();
+        const mark = item.querySelector('.submenu-dropdown-mask');
 
         // Set top based on available space below or above the item
-        content.style.top = 'calc(100% + '+(this.navbar.getBoundingClientRect().bottom - itemRect.bottom)+'px)';
+        mark.style.height = ( headerRect.bottom - itemRect.bottom + 10 ) + 'px';
+        if (this.settings.spacing) {
+            content.style.top = 'calc(100% + '+( headerRect.bottom - itemRect.bottom )+'px)';
+        }
 
         // ===== FULL WIDTH (container width & centered) =====
         if (positionType === 'full') {

@@ -45,12 +45,9 @@ $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
-$enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
 
-$navClass = ['nav', 'astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
-$navClassLeft = ['nav', 'astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
-$navClassDivided = ['nav', 'astroid-nav'];
+$navClass = ['astroid-nav', 'justify-content-center', 'd-flex', 'align-items-center'];
+$navClassLeft = ['astroid-nav', 'justify-content-left', 'd-flex', 'align-items-left'];
 if ($mode == 'divided-logo-left') {
     $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block', 'w-100'];
 } else {
@@ -158,13 +155,8 @@ if ($mode == 'divided-logo-left') {
              if ($header_menu_method == 'module_position') {
                  echo $document->position($header_menu_module_position);
              } else {
-                 ?>
-                 <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="<?php echo $enable_backdrop; ?>" data-megamenu-stagger="<?php echo $enable_stagger_effect; ?>" class="astroid-header-center-balance-menu w-100 d-none d-<?php echo $header_breakpoint; ?>-flex justify-content-center pt-3">
-                     <?php
-                     Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass);
-                     ?>
-                 </div>
-                 <?php
+                 $navWrapperClass[] = 'astroid-stacked-'.$mode.'-menu pt-3';
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'stacked', $navWrapperClass, $params);
              }
              // header nav ends
          }
@@ -203,13 +195,8 @@ if ($mode == 'divided-logo-left') {
              if ($header_menu_method == 'module_position') {
                  echo $document->position($header_menu_module_position);
              } else {
-                 ?>
-                 <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="<?php echo $enable_backdrop; ?>" data-megamenu-stagger="<?php echo $enable_stagger_effect; ?>" class="astroid-stacked-<?php echo $mode; ?>-menu w-100 d-none d-<?php echo $header_breakpoint; ?>-flex justify-content-center pt-3">
-                     <?php
-                     Astroid\Component\Menu::getMenu($header_menu, array_merge($navClass), null, 'left', 'stacked', $navWrapperClass);
-                     ?>
-                 </div>
-                 <?php
+                 $navWrapperClass[] = 'astroid-stacked-'.$mode.'-menu pt-3';
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'stacked', $navWrapperClass, $params);
              }
             // header nav ends
             // header block starts
@@ -229,7 +216,7 @@ if ($mode == 'divided-logo-left') {
          if ($mode == 'seperated') {
             // header nav starts   
             ?>
-            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="<?php echo $enable_backdrop; ?>" data-megamenu-stagger="<?php echo $enable_stagger_effect; ?>" class="astroid-stacked-<?php echo $mode; ?>-menu header-stacked-inner w-100 d-flex justify-content-center">
+            <div class="astroid-stacked-<?php echo $mode; ?>-menu header-stacked-inner w-100 d-flex justify-content-center">
                <?php if (!empty($header_mobile_menu)) {
                    if ($mobile_menu_method == 'module_position') {
                        echo $document->position($mobile_menu_module_position);
@@ -263,7 +250,7 @@ if ($mode == 'divided-logo-left') {
                if ($header_menu_method == 'module_position') {
                    echo $document->position($header_menu_module_position);
                } else {
-                   Astroid\Component\Menu::getMenu($header_menu, $navClass, true, $odd_menu_items, 'stacked', $navWrapperClass);
+                   Astroid\Component\Menu::getMenu($header_menu, $navClass, true, $odd_menu_items, 'stacked', $navWrapperClass, $params);
                }
                echo '</div>';
 
@@ -341,13 +328,13 @@ if ($mode == 'divided-logo-left') {
             echo '</div>';
             // header nav starts -->
             ?>
-            <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="<?php echo $enable_backdrop; ?>" data-megamenu-stagger="<?php echo $enable_stagger_effect; ?>" class="astroid-stacked-<?php echo $mode; ?>-menu as-megamenu-section d-none d-<?php echo $header_breakpoint; ?>-block py-2">
+            <div class="astroid-stacked-<?php echo $mode; ?>-menu as-megamenu-section d-none d-<?php echo $header_breakpoint; ?>-block py-2">
                 <div class="row">
                     <?php
                     if ($header_menu_method == 'module_position') {
                         echo '<div class="col">' . $document->position($header_menu_module_position) . '</div>';
                     } else {
-                        Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', ['astroid-nav-wraper', 'col']);
+                        Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', ['astroid-nav-wraper', 'col'], $params);
                     }
                     // header block starts
                     if ($block_2_type == 'position') {
@@ -437,13 +424,8 @@ if ($mode == 'divided-logo-left') {
              if ($header_menu_method == 'module_position') {
                  echo $document->position($header_menu_module_position);
              } else {
-                 ?>
-                 <div data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="<?php echo $params->get('dropdown_arrow', 0) ? 'true' : 'false'; ?>" data-header-offset="true" data-transition-speed="<?php echo $params->get('dropdown_animation_speed', 300); ?>" data-megamenu-animation="<?php echo $params->get('dropdown_animation_type', 'fade'); ?>" data-easing="<?php echo $params->get('dropdown_animation_ease', 'linear'); ?>" data-astroid-trigger="<?php echo $params->get('dropdown_trigger', 'hover'); ?>" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="<?php echo $enable_backdrop; ?>" data-megamenu-stagger="<?php echo $enable_stagger_effect; ?>" class="astroid-stacked-<?php echo $mode; ?>-menu d-flex justify-content-start flex-<?php echo $header_breakpoint; ?>-grow-1">
-                     <?php
-                     Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', $navWrapperClass);
-                     ?>
-                 </div>
-                 <?php
+                 $navWrapperClass[] = 'astroid-stacked-'.$mode.'-menu';
+                 Astroid\Component\Menu::getMenu($header_menu, $navClassLeft, null, 'left', 'stacked', $navWrapperClass, $params);
              }
              if ($block_3_type != '') {
                  if ($block_3_type == 'position') {

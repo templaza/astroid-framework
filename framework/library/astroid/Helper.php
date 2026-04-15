@@ -992,7 +992,7 @@ class Helper
 
         foreach ($paths as $path) {
             if (file_exists($path) && is_readable($path)) {
-                $parsed = parse_ini_file($path, false, INI_SCANNER_RAW);
+                $parsed = \parse_ini_file($path, false, INI_SCANNER_RAW);
                 if (is_array($parsed)) {
                     $strings = array_merge($strings, $parsed);
                 }

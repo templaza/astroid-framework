@@ -57,7 +57,6 @@ class Head
 
     public static function scripts()
     {
-        $app = Factory::getApplication();
         $template = Framework::getTemplate();
         $params = $template->getParams();
         $wa = Framework::getDocument()->getWA();
@@ -75,6 +74,7 @@ class Head
             $wa->useScript('astroid.debug');
         }
         $color_mode = $template->getColorMode();
+        $inlineScript = ['TEMPLATE_HASH = "'. md5($template->template) .'"'];
         if ($color_mode) {
             $enable_color_mode_transform    =   $params->get('enable_color_mode_transform', 0);
             if ($enable_color_mode_transform && $params->get('astroid_color_mode_enable', 0) == 1) {
@@ -88,11 +88,12 @@ class Head
                     $to     =   'light';
                 }
                 $wa->useScript('astroid.colortransform');
-                $wa->addInlineScript('var ASTROID_COLOR_TRANSFORM = {from:"'.$from.'", to:"'.$to.'", offset:'.$astroid_colormode_transform_offset.'};');
+                $inlineScript[] = 'ASTROID_COLOR_TRANSFORM = {from:"'.$from.'", to:"'.$to.'", offset:'.$astroid_colormode_transform_offset.'}';
             } else {
-                $wa->addInlineScript('var TEMPLATE_HASH = "'. md5($template->template).'", ASTROID_COLOR_MODE ="'.$color_mode.'";');
+                $inlineScript[] = 'ASTROID_COLOR_MODE ="'.$color_mode.'"';
             }
         }
+        $wa->addInlineScript('const '. implode(', ', $inlineScript). ';');
     }
 
     public static function styles()

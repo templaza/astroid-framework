@@ -8,7 +8,7 @@
     <multiple>false</multiple>
     <form>
         <fields>
-            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldpath="/libraries/astroid/framework/fields">
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="misc_options" title="ASTROID_WIDGET_MISC_OPTIONS_LABEL"/>
                 <field astroidgroup="misc_options" name="text_column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>

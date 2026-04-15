@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="as-icon as-icon-cog" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldpath="/libraries/astroid/framework/fields" order="9">
+      <fieldset icon="as-icon as-icon-cog" label="ASTROID_OPTIONS_MISCELLANEOUS" name="astroid_mscellaneous" addfieldprefix="Astroid\Field" order="9">
          <field type="astroidgroup" name="contact_info" title="TPL_ASTROID_MISCELL_MAIN_CONTACT_US_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/contact-information" />
          <field type="astroidgroup" name="coming_soon" title="TPL_ASTROID_MISCELL_MAIN_OFFLINE_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/offline-page" />
          <field type="astroidgroup" name="error_404" title="TPL_ASTROID_MISCELL_MAIN_ERROE_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/error-page" />
+         <field type="astroidgroup" name="cookie_consent" title="TPL_ASTROID_MISCELL_COOKIE_CONSENT_LABEL" />
          <field type="astroidgroup" name="lazyloadgroup" title="TPL_ASTROID_LAZYLOAD_TITLE_LABEL" />
          <field type="astroidgroup" name="minifygroup" title="TPL_ASTROID_MINIFY_TITLE_LABEL" help="https://docs.astroidframe.work/miscellaneous/minify-js-css-html" />
 
@@ -145,6 +146,35 @@
             <option value="center bottom">ASTROID_BACKGROUND_POSITION_CENTER_BOTTOM</option>
          </field>
          <field astroidgroup="error_404" ngShow="[background_setting_404] =='video'" name="background_video_404" type="astroidmedia" media="videos" label="TPL_ASTROID_BACKGROUND_VIDEO_LABEL" description="TPL_ASTROID_BACKGROUND_VIDEO_DESC"/>
+
+         <field astroidgroup="cookie_consent" name="enable_cookie_consent" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ENABLE_COOKIE_CONSENT_LABEL" description="ASTROID_ENABLE_COOKIE_CONSENT_DESC"/>
+         <field astroidgroup="cookie_consent" ngShow="[enable_cookie_consent]==1" name="cookie_content" type="astroideditor" default="We use cookies to enhance your experience and for traffic analysis. By continuing to visit this site you agree to our use of cookies." label="ASTROID_COOKIE_CONSENT_CONTENT" description="ASTROID_COOKIE_CONSENT_CONTENT_DESC" />
+         <field astroidgroup="cookie_consent" ngShow="[enable_cookie_consent]==1" name="cookie_button_text" type="astroidtext" default="I accept" label="ASTROID_BANNER_CTA_BUTTON_TEXT_LABEL" description="ASTROID_WIDGET_CTA_BUTTON_TEXT_DESC" />
+         <field astroidgroup="cookie_consent" ngShow="[enable_cookie_consent]==1" name="cookie_card_style" type="astroidlist" default="primary" label="ASTROID_WIDGET_CARD_STYLE_LABEL" description="ASTROID_WIDGET_COOKIE_CONSENT_CARD_STYLE_DESC">
+            <option value="primary">ASTROID_PRIMARY</option>
+            <option value="secondary">ASTROID_SECONDARY</option>
+            <option value="success">ASTROID_SUCCESS</option>
+            <option value="danger">ASTROID_DANGER</option>
+            <option value="warning">ASTROID_WARNING</option>
+            <option value="info">ASTROID_INFO</option>
+            <option value="light">ASTROID_LIGHT</option>
+            <option value="dark">ASTROID_DARK</option>
+         </field>
+         <field astroidgroup="cookie_consent" ngShow="[enable_cookie_consent]==1" name="cookie_button_style" type="astroidlist" default="light" label="ASTROID_WIDGET_BUTTON_STYLE_LABEL" description="ASTROID_WIDGET_COOKIE_CONSENT_BUTTON_STYLE_DESC">
+            <option value="primary">ASTROID_PRIMARY</option>
+            <option value="secondary">ASTROID_SECONDARY</option>
+            <option value="success">ASTROID_SUCCESS</option>
+            <option value="danger">ASTROID_DANGER</option>
+            <option value="warning">ASTROID_WARNING</option>
+            <option value="info">ASTROID_INFO</option>
+            <option value="light">ASTROID_LIGHT</option>
+            <option value="dark">ASTROID_DARK</option>
+         </field>
+         <field astroidgroup="cookie_consent" ngShow="[enable_cookie_consent]==1" name="cookie_display_position" type="astroidlist" default="bottom_left" label="ASTROID_WIDGET_DISPLAY_POSITION">
+            <option value="bottom_left">ASTROID_WIDGET_BOTTOM_LEFT</option>
+            <option value="bottom_right">ASTROID_WIDGET_BOTTOM_RIGHT</option>
+            <option value="bottom">ASTROID_BOTTOM</option>
+         </field>
 
          <field astroidgroup="lazyloadgroup" name="lazyload" type="astroidradio" astroid-switch="true" default="0" label="Enable Lazy Load" description="">
          </field>

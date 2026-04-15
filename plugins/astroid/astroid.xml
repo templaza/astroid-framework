@@ -35,7 +35,7 @@
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
-            <field name="astroid_legacy" type="radio" default="1" label="ASTROID_SAFEMODE" description="ASTROID_SAFE_MODE_DESC" class="btn-group btn-group-yesno">
+            <field name="astroid_legacy" type="radio" default="0" label="ASTROID_SAFEMODE" description="ASTROID_SAFE_MODE_DESC" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>
@@ -52,6 +52,18 @@
             <field name="frontend_tabs_visibility" type="radio" default="1" label="ASTROID_TABS_FRONTEND_VISIBILTY" description="" class="btn-group btn-group-yesno">
                <option value="1">ASTROID_VISIBLE</option>
                <option value="0">ASTROID_HIDDEN</option>
+            </field>
+            <field
+                    name="article_tabs_visibility"
+                    type="list"
+                    default="[&quot;article&quot;,&quot;blog&quot;,&quot;article_layout&quot;,&quot;opengraph&quot;]"
+                    label="ASTROID_ARTICLE_TABS_VISIBILTY"
+                    multiple="true"
+                    description="ASTROID_ARTICLE_TABS_VISIBILTY_DESC">
+               <option value="article">ASTROID_ARTICLE_TAB_ARTICLE_TYPE_LABEL</option>
+               <option value="blog">ASTROID_ARTICLE_TAB_BLOG_LABEL</option>
+               <option value="article_layout">ASTROID_ARTICLE_TAB_WIDGETS_LABEL</option>
+               <option value="opengraph">ASTROID_ARTICLE_TAB_OPENGRAPH_LABEL</option>
             </field>
          </fieldset>
       </fields>

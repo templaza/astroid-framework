@@ -39,15 +39,12 @@ $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
-$enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
 $class = ['astroid-header', 'astroid-horizontal-header', 'astroid-horizontal-' . $mode . '-header'];
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+$navClass = ['astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
 $navWrapperClass = ['align-self-center', 'd-none', 'd-'.$header_breakpoint.'-block'];
-$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'"' : '';
 ?>
 <!-- header starts -->
-<header id="astroid-header" class="<?php echo implode(' ', $class); ?>"<?php echo $headAttrs; ?>>
+<header id="astroid-header" class="<?php echo implode(' ', $class); ?>">
    <div class="d-flex flex-row justify-content-between">
       <?php if (!empty($header_mobile_menu)) {
           if ($mobile_menu_method == 'module_position') {
@@ -56,7 +53,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
               echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
           }
       } ?>
-      <div class="header-left-section as-gutter-x-xl@lg d-flex justify-content-start<?php echo $mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+      <div class="header-left-section as-gutter-x-xl@lg d-flex align-items-center justify-content-start<?php echo $mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
           <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
               <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
               <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
@@ -85,7 +82,7 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
              if ($header_menu_method == 'module_position') {
                  echo $document->position($header_menu_module_position);
              } else {
-                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
              }
             // header nav ends
          }
@@ -96,26 +93,26 @@ $headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-cl
       <?php endif; ?>
       <?php
       if ($mode == 'center') {
-         echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
+         echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex align-items-center justify-content-center' . ($mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
          // header nav starts
           if ($header_menu_method == 'module_position') {
               echo $document->position($header_menu_module_position);
           } else {
-              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
           }
          // header nav ends
          echo '</div>';
       }
       ?>
       <?php if ($block_1_type != 'blank' || $mode == 'right' || $enable_offcanvas) : ?>
-         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> align-items-center justify-content-end<?php echo $mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
             <?php
             if ($mode == 'right') {
                // header nav starts
                 if ($header_menu_method == 'module_position') {
                     echo $document->position($header_menu_module_position);
                 } else {
-                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass);
+                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'horizontal', $navWrapperClass, $params);
                 }
                // header nav ends
             }

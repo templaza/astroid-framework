@@ -23,14 +23,12 @@ $mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
 $mobile_menu_module_position = $params->get('mobile_menu_module_position', 'astroid-header-mobilemenu');
 $header_breakpoint = $params->get('header_breakpoint', 'lg');
-$enable_backdrop = $params->get('enable_backdrop', 0) ? 'true' : 'false';
-$enable_stagger_effect = $params->get('enable_stagger_effect', 0) ? 'true' : 'false';
 $enable_offcanvas = $params->get('enable_offcanvas', FALSE);
 $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_direction = $params->get('offcanvas_direction', 'offcanvasDirLeft');
 $offcanvas_position = $params->get('offcanvas_position', 'offcanvasRight');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
-$class = ['astroid-header', 'astroid-header-sticky'];
+$class = ['astroid-header-sticky'];
 $stickyheader = $params->get('stickyheader', 'static');
 $header_mobile_menu = $params->get('header_mobile_menu', '');
 $class[] = 'header-' . $stickyheader . '-desktop';
@@ -38,7 +36,7 @@ $stickyheadermobile = $params->get('stickyheadermobile', 'static');
 $class[] = 'header-' . $stickyheadermobile . '-mobile';
 $stickyheadertablet = $params->get('stickyheadertablet', 'static');
 $class[] = 'header-' . $stickyheadertablet . '-tablet';
-$navClass = ['nav', 'astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
+$navClass = ['astroid-nav', 'd-none', 'd-'.$header_breakpoint.'-flex'];
 $navWrapperClass = ['astroid-nav-wraper', 'align-self-center', 'px-3', 'd-none', 'd-'.$header_breakpoint.'-block'];
 $mode = $params->get('header_horizontal_menu_mode', 'left');
 $stickey_mode = $params->get('stickey_horizontal_menu_mode', 'left');
@@ -57,89 +55,90 @@ switch ($stickey_mode) {
       $navWrapperClass[] = 'mx-auto';
       break;
 }
-$headAttrs = $header_menu_method == 'default' ? ' data-megamenu data-megamenu-class=".has-megamenu" data-megamenu-content-class=".megamenu-container" data-dropdown-arrow="'.($params->get('dropdown_arrow', 0) ? 'true' : 'false').'" data-header-offset="true" data-transition-speed="'.$params->get('dropdown_animation_speed', 300).'" data-megamenu-animation="'.$params->get('dropdown_animation_type', 'fade').'" data-easing="'.$params->get('dropdown_animation_ease', 'linear').'" data-astroid-trigger="'.$params->get('dropdown_trigger', 'hover').'" data-megamenu-submenu-class=".nav-submenu" data-megamenu-backdrop="'.$enable_backdrop.'" data-megamenu-stagger="'.$enable_stagger_effect.'"' : '';
 ?>
 <!-- header starts -->
-<header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none"<?php echo $headAttrs; ?>>
-   <div class="container d-flex flex-row justify-content-between">
-      <?php if (!empty($header_mobile_menu)) {
-          if ($mobile_menu_method == 'module_position') {
-              echo $document->position($mobile_menu_module_position);
-          } else {
-              echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
-          }
-      } ?>
-      <div class="header-left-section d-flex justify-content-start<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
-          <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
-              <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
-              <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-              <?php echo '</div>'; ?>
-          <?php } ?>
-          <?php $document->include('logo', ['position' => 'sticky']); ?>
-         <?php
-         if ($stickey_mode == 'left') {
-            // header nav starts
-             if ($header_menu_method == 'module_position') {
-                 echo $document->position($header_menu_module_position);
-             } else {
-                 Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
-             }
-            // header nav ends
-         }
-         ?>
-      </div>
-      <?php if (!$enable_offcanvas) : ?>
-          <div class="min-w-30 d-<?php echo $header_breakpoint; ?>-none"></div>
-      <?php endif; ?>
-      <?php
-      if ($stickey_mode == 'center') {
-         echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
-         // header nav starts
-          if ($header_menu_method == 'module_position') {
-              echo $document->position($header_menu_module_position);
-          } else {
-              Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
-          }
-         // header nav ends
-         echo '</div>';
-      }
-      ?>
-      <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
-         <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+<header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none">
+    <div class="container">
+        <div class="astroid-header d-flex flex-row justify-content-between">
+            <?php if (!empty($header_mobile_menu)) {
+                if ($mobile_menu_method == 'module_position') {
+                    echo $document->position($mobile_menu_module_position);
+                } else {
+                    echo $document->include('burger', ['containerClass' => 'd-flex d-'.$header_breakpoint.'-none justify-content-start']);
+                }
+            } ?>
+            <div class="header-left-section d-flex justify-content-start align-items-center<?php echo $stickey_mode == 'left' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+                <?php if ($enable_offcanvas && $offcanvas_position === 'offcanvasLeft') { ?>
+                    <?php echo '<div class="d-none d-'.$header_breakpoint.'-flex me-4 offcanvas-button '.$offcanvas_position.'">'; ?>
+                    <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                    <?php echo '</div>'; ?>
+                <?php } ?>
+                <?php $document->include('logo', ['position' => 'sticky']); ?>
+                <?php
+                if ($stickey_mode == 'left') {
+                    // header nav starts
+                    if ($header_menu_method == 'module_position') {
+                        echo $document->position($header_menu_module_position);
+                    } else {
+                        Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass, $params);
+                    }
+                    // header nav ends
+                }
+                ?>
+            </div>
+            <?php if (!$enable_offcanvas) : ?>
+                <div class="min-w-30 d-<?php echo $header_breakpoint; ?>-none"></div>
+            <?php endif; ?>
             <?php
-            if ($stickey_mode == 'right') {
-               // header nav starts
+            if ($stickey_mode == 'center') {
+                echo '<div class="header-center-section d-none d-'.$header_breakpoint.'-flex justify-content-center align-items-center' . ($stickey_mode == 'center' ? ' flex-'.$header_breakpoint.'-grow-1' : '') . '">';
+                // header nav starts
                 if ($header_menu_method == 'module_position') {
                     echo $document->position($header_menu_module_position);
                 } else {
-                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass);
+                    Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass, $params);
                 }
-               // header nav ends
+                // header nav ends
+                echo '</div>';
             }
             ?>
-            <?php if ($block_1_type != 'blank') : ?>
-               <div class="header-right-block d-none d-<?php echo $header_breakpoint; ?>-block align-self-center">
-                  <?php
-                  if ($block_1_type == 'position') {
-                     echo '<div class="header-block-item d-flex">';
-                     echo $document->position($block_1_position, $block_1_style);
-                     echo '</div>';
-                  }
-                  if ($block_1_type == 'custom') {
-                     echo '<div class="header-block-item d-flex">';
-                     echo $block_1_custom;
-                     echo '</div>';
-                  }
-                  ?>
-               </div>
+            <?php if ($block_1_type != 'blank' || $stickey_mode == 'right' || $enable_offcanvas) : ?>
+                <div class="header-right-section as-gutter-x-xl@lg <?php echo ($enable_offcanvas ? 'd-flex min-w-30' : 'd-'.$header_breakpoint.'-flex d-none'); ?> justify-content-end align-items-center<?php echo $stickey_mode == 'right' ? ' flex-'.$header_breakpoint.'-grow-1' : ''; ?>">
+                    <?php
+                    if ($stickey_mode == 'right') {
+                        // header nav starts
+                        if ($header_menu_method == 'module_position') {
+                            echo $document->position($header_menu_module_position);
+                        } else {
+                            Astroid\Component\Menu::getMenu($header_menu, $navClass, null, 'left', 'sticky', $navWrapperClass, $params);
+                        }
+                        // header nav ends
+                    }
+                    ?>
+                    <?php if ($block_1_type != 'blank') : ?>
+                        <div class="header-right-block d-none d-<?php echo $header_breakpoint; ?>-block align-self-center">
+                            <?php
+                            if ($block_1_type == 'position') {
+                                echo '<div class="header-block-item d-flex">';
+                                echo $document->position($block_1_position, $block_1_style);
+                                echo '</div>';
+                            }
+                            if ($block_1_type == 'custom') {
+                                echo '<div class="header-block-item d-flex">';
+                                echo $block_1_custom;
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($enable_offcanvas) { ?>
+                        <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' offcanvas-button offcanvasRight">'; ?>
+                        <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
+                        <?php echo '</div>'; ?>
+                    <?php } ?>
+                </div>
             <?php endif; ?>
-             <?php if ($enable_offcanvas) { ?>
-                 <?php echo '<div class="'.($offcanvas_position === 'offcanvasRight' ? 'd-flex' : 'd-'.$header_breakpoint.'-none d-flex').' offcanvas-button offcanvasRight">'; ?>
-                 <?php $document->include('offcanvas.trigger', ['offcanvas' => '#astroid-offcanvas', 'visibility' => $offcanvas_togglevisibility, 'effect' => $offcanvas_animation, 'direction' => $offcanvas_direction]); ?>
-                 <?php echo '</div>'; ?>
-             <?php } ?>
-         </div>
-      <?php endif; ?>
-   </div>
+        </div>
+    </div>
 </header>
 <!-- header ends -->

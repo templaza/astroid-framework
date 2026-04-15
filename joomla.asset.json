@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "astroid",
-  "version": "3.3.11",
+  "version": "3.4.0",
   "description": "Astroid Framework Assets",
   "license": "GPL-3.0-or-later",
   "assets": [
@@ -41,6 +41,26 @@
         "jquery"
       ],
       "uri": "astroid/script.min.js"
+    },
+    {
+      "name": "astroid.uikit",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/uikit/js/uikit.min.js"
+    },
+    {
+      "name": "astroid.uikit-icons",
+      "type": "script",
+      "uri": "media/astroid/assets/vendor/uikit/js/uikit-icons.min.js"
+    },
+    {
+      "name": "astroid.uikit",
+      "type": "style",
+      "uri": "media/astroid/assets/vendor/uikit/css/uikit.min.css"
+    },
+    {
+      "name": "astroid.uikit.rtl",
+      "type": "style",
+      "uri": "media/astroid/assets/vendor/uikit/css/uikit.rtl.min.css"
     },
     {
       "name": "astroid.debug",
@@ -102,9 +122,25 @@
       "name": "astroid.videobg",
       "type": "script",
       "dependencies": [
-        "jquery"
+        "astroid.gsap"
       ],
       "uri": "astroid/videobg.min.js"
+    },
+    {
+      "name": "astroid.parallax",
+      "type": "script",
+      "dependencies": [
+        "astroid.gsap"
+      ],
+      "uri": "astroid/parallax.min.js"
+    },
+    {
+      "name": "astroid.cookieconsent",
+      "type": "script",
+      "dependencies": [
+        "astroid.gsap"
+      ],
+      "uri": "astroid/cookieconsent.min.js"
     }
   ]
 }

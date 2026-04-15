@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
 	<fields name="params">
-		<fieldset label="ASTROID_BANNER_MIAN_TITLE_LABEL" id="astroid_banner" name="astroid_banner" addfieldpath="/libraries/astroid/framework/fields">
+		<fieldset label="ASTROID_BANNER_MIAN_TITLE_LABEL" id="astroid_banner" name="astroid_banner" addfieldprefix="Astroid\Field">
 			<field name="banner_note" type="note" class="alert alert-info" description="ASTROID_BANNER_MIAN_TITLE_DESC" />
 			<field name="astroid_banner_enabled" type="radio" default="0" label="ASTROID_BANNER_ENABLE_LABEL" description="ASTROID_BANNER_ENABLE_BANNNER_DESC" class="form-check-inline">
 				<option value="1">JYES</option>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form>
    <fields name="params">
-      <fieldset icon="as-icon as-icon-pencil-ruler2" label="AF_THEMING" name="astroid_theming" addfieldpath="/libraries/astroid/framework/fields" order="11">
+      <fieldset icon="as-icon as-icon-pencil-ruler2" label="AF_THEMING" name="astroid_theming" addfieldprefix="Astroid\Field" order="11">
          <field type="astroidgroup" name="buttons" title="ASTROID_BUTTONS" />
          <field type="astroidgroup" name="colors" title="ASTROID_OPTIONS_COLOURS" help="https://docs.astroidframe.work/styling/theming" />
          <field type="astroidgroup" name="sassoverrides" title="ASTROID_OPTIONS_OVERRIDES" preset="sass_overrides:astroidsassoverrides" help="https://docs.astroidframe.work/styling/theming#-custom-colors" />
