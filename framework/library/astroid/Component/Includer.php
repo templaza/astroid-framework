@@ -90,7 +90,8 @@ class Includer
     public static function _bodyScripts()
     {
         $document = Framework::getDocument();
-        $content = $document->getScripts('body');
+        $content = $document->getCookieConsent();
+        $content .= $document->getScripts('body');
         $content .= $document->getCustomTags('body');
         return $content;
     }

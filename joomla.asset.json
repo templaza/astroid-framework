@@ -133,6 +133,14 @@
         "astroid.gsap"
       ],
       "uri": "astroid/parallax.min.js"
+    },
+    {
+      "name": "astroid.cookieconsent",
+      "type": "script",
+      "dependencies": [
+        "astroid.gsap"
+      ],
+      "uri": "astroid/cookieconsent.min.js"
     }
   ]
 }

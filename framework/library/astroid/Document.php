@@ -829,6 +829,32 @@ class Document
         return $content;
     }
 
+    public function getCookieConsent(): string
+    {
+        $params = Framework::getTemplate()->getParams();
+        $enable_cookie_consent = $params->get('enable_cookie_consent', 0);
+        if (empty($enable_cookie_consent) || Framework::isAdmin()) {
+            return '';
+        }
+        $app = Factory::getApplication();
+        $cookie = $app->input->cookie;
+        $html = '';
+        if($cookie->get('astroid_cookie') != 'ok')
+        {
+            $cookie_content = $params->get('cookie_content', '');
+            $button_text = $params->get('cookie_button_text', 'I accept');
+            $position = $params->get('cookie_display_position', 'bottom_left');
+            $cookie_card_style = $params->get('cookie_card_style', 'primary');
+            $cookie_button_style = $params->get('cookie_button_style', 'light');
+
+            $html = '<div id="astroid-cookie-consent" class="position-' . $position . ' card text-bg-'.$cookie_card_style.'"><div class="card-body">';
+            $html .= '<div class="astroid-cookie-consent-content">' . nl2br($cookie_content) . '</div>';
+            $html .= '<div class="astroid-cookie-consent-action"><a class="astroid-cookie-allow btn btn-'.$cookie_button_style.'" href="#" role="button">' . $button_text . '</a></div>';
+            $html .= '</div></div>';
+        }
+        return $html;
+    }
+
     public function addScriptOptions($key, $options, $merge = true): static
     {
         if (empty($this->scriptOptions[$key])) {
