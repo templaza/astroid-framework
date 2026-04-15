@@ -24,6 +24,8 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Unlimited Custom Code
 * Logo and Header Options
 * Enhanced User Experience
+* Parallax Background Support
+* Advanced Animation Transformations
 * Import/Export Settings
 * Only Enable What You Need
 * Centralized Button Style Definitions
@@ -34,6 +36,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Refactored Codebase
 * RTL Support
 * Light & Dark Color Mode
+* Cookie Consent Support
 * Transform Color Mode (Light to Dark or Dark to Light)
 * SVG Logo Support
 * Customize Breakpoint
