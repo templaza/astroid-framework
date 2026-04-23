@@ -151,6 +151,11 @@
       "name": "astroid.lenis",
       "type": "script",
       "uri": "media/astroid/assets/vendor/lenis/lenis.min.js"
+    },
+    {
+      "name": "astroid.smoothscroll",
+      "type": "script",
+      "uri": "astroid/smooth-scroll.polyfills.min.js"
     }
   ]
 }
