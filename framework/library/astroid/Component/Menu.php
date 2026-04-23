@@ -30,7 +30,9 @@ class Menu
             return '';
         }
 
-//        $params = Framework::getTemplate()->getParams();
+        if (empty($params)) {
+            $params = Framework::getTemplate()->getParams();
+        }
         $document = Framework::getDocument();
         $document->getWA()->useScript('astroid.megamenu');
 

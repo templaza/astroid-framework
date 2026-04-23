@@ -131,47 +131,68 @@ class Utility
         $params = Framework::getTemplate()->getParams();
         $enable_smooth_scroll = $params->get('enable_smooth_scroll', '');
         if ($enable_smooth_scroll == '1') {
-            $options    =   [];
-            $options[]  =   'duration: '. (float)($params->get('smooth_scroll_speed', '1200')/1000);
+            $smooth_scroll_engine = $params->get('smooth_scroll_engine', 'lenis');
+            $speed = $params->get('smooth_scroll_speed', '1200');
             $easing     =   $params->get('smooth_scroll_easing', '');
-            if (!empty($easing)) {
-                $options[]  =   'easing: '. Helper\Constants::$easing[$easing];
-            }
-            $prevent    =   $params->get('smooth_scroll_prevent', '');
-            $prevent_script     =   '';
-            if (!empty($prevent)) {
-                $prevent_arr    =   explode(',', $prevent);
-                if (count($prevent_arr)) {
-                    $prevent_script .= 'jQuery(document).ready(function($){';
-                    foreach ($prevent_arr as $key => $value) {
-                        if (!empty(trim($value))) {
-                            $prevent_script .= '$("'.trim($value).'").attr("data-lenis-prevent", "");';
-                        }
-                    }
-                    $prevent_script .= '});';
-                }
-            }
-            $configs    =   implode(',', $options);
+            $options    =   [];
             $document   =   Framework::getDocument();
-            $document->loadLenis();
-            $script     =   'const initSmoothScrollingGSAP = () => {'
-                .'const lenis = new Lenis({' . $configs . '});'
-                .'lenis.on(\'scroll\', ScrollTrigger.update);'
-                .'gsap.ticker.add((time)=>{'
+            if ($smooth_scroll_engine == 'gsap') {
+                $document->loadGSAP('ScrollTrigger');
+                $document->loadGSAP('ScrollSmoother');
+            } elseif ($smooth_scroll_engine == 'smooth_scroll') {
+                $document->getWA()->useScript('astroid.smoothscroll');
+                $header = $params->get('header', TRUE);
+                $mode = $params->get('header_mode', 'horizontal');
+                $sidebar = ($header && $mode == 'sidebar');
+                $options[] = 'speed: ' . $speed;
+                if (!$sidebar) {
+                    $options[] = 'header: ".astroid-header"';
+                }
+                if (!empty($easing)) {
+                    $options[] = 'easing: "' . $easing . '"';
+                }
+                $script = 'var scroll = new SmoothScroll(\'a[href*="#"]\', {' . implode(',', $options) . '});';
+                $document->addScriptDeclaration($script, 'body');
+            } else {
+                $options[]  =   'duration: '. (float)($speed/1000);
+                if (!empty($easing)) {
+                    $options[]  =   'easing: '. Helper\Constants::$easing[$easing];
+                }
+                $prevent    =   $params->get('smooth_scroll_prevent', '');
+                $prevent_script     =   '';
+                if (!empty($prevent)) {
+                    $prevent_arr    =   explode(',', $prevent);
+                    if (count($prevent_arr)) {
+                        $prevent_script .= 'jQuery(document).ready(function($){';
+                        foreach ($prevent_arr as $key => $value) {
+                            if (!empty(trim($value))) {
+                                $prevent_script .= '$("'.trim($value).'").attr("data-lenis-prevent", "");';
+                            }
+                        }
+                        $prevent_script .= '});';
+                    }
+                }
+                $configs    =   implode(',', $options);
+                $document->loadLenis();
+                $script     =   'const initSmoothScrollingGSAP = () => {'
+                    .'const lenis = new Lenis({' . $configs . '});'
+                    .'lenis.on(\'scroll\', ScrollTrigger.update);'
+                    .'gsap.ticker.add((time)=>{'
                     .'lenis.raf(time * 1000)'
-                .'});'
-                .'gsap.ticker.lagSmoothing(0);'.
-                '};'
-                .'const initSmoothScrolling = () => {'
-                .'const lenis = new Lenis({' . $configs . '});'
-                .'function raf(time) {'
-                . 'lenis.raf(time);'
-                . 'requestAnimationFrame(raf);'
-                .'}'
-                .'requestAnimationFrame(raf);'
-                .'};'
-                .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
-            $document->getWA()->addInlineScript($script.$prevent_script);
+                    .'});'
+                    .'gsap.ticker.lagSmoothing(0);'.
+                    '};'
+                    .'const initSmoothScrolling = () => {'
+                    .'const lenis = new Lenis({' . $configs . '});'
+                    .'function raf(time) {'
+                    . 'lenis.raf(time);'
+                    . 'requestAnimationFrame(raf);'
+                    .'}'
+                    .'requestAnimationFrame(raf);'
+                    .'};'
+                    .'if (typeof ScrollTrigger !== \'undefined\') {initSmoothScrollingGSAP()} else {initSmoothScrolling()}';
+                $document->getWA()->addInlineScript($script.$prevent_script);
+            }
         }
     }
 
