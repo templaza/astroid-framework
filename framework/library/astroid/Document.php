@@ -1468,11 +1468,8 @@ class Document
 
     public function loadLenis(): void
     {
-        if (empty($this->_is_loaded['lenis'])) {
-            $this->getWA()->registerAndUseStyle('astroid.lenis', 'https://unpkg.com/lenis@' . Constants::$lenis_version . '/dist/lenis.css');
-            $this->getWA()->registerAndUseScript('astroid.lenis', 'https://unpkg.com/lenis@' . Constants::$lenis_version . '/dist/lenis.min.js');
-            $this->_is_loaded['lenis'] = true;
-        }
+        $this->getWA()->useStyle('astroid.lenis');
+        $this->getWA()->useScript('astroid.lenis');
     }
 
     public function loadGoogleReCaptcha($onload = [], $render = ''): void
