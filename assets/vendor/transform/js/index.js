@@ -42,7 +42,7 @@ class AstroidTransform {
 
                 if (typeof scene[type].blur !== 'undefined') {
                     const v = scene[type].blur;
-                    filters.push(`blur(${typeof v === 'number' ? v + 'px' : v})`);
+                    filters.push(`blur(${v + 'px'})`);
                     delete scene[type].blur;
                 }
 
