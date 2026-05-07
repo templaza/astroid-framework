@@ -34,9 +34,10 @@ class Parallax {
         const bgUrl = getComputedStyle(_this.element).backgroundImage;
 
         if (!bgUrl || bgUrl === "none") return;
-
+        const bgContainer = document.createElement("div");
+        bgContainer.classList.add('position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'overflow-hidden', 'z-0', 'pe-none');
         const bgElement = document.createElement("div");
-        bgElement.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover', 'pe-none', 'z-0');
+        bgElement.classList.add('position-absolute', 'top-50', 'start-50', 'object-fit-cover');
 
         bgElement.style.backgroundImage = bgUrl;
         bgElement.style.backgroundSize = "cover";
@@ -47,9 +48,8 @@ class Parallax {
 
         _this.element.style.backgroundImage = "none";
         _this.element.style.position = "relative";
-        _this.element.style.overflow = "hidden";
-
-        _this.element.prepend(bgElement);
+        bgContainer.appendChild(bgElement);
+        _this.element.prepend(bgContainer);
 
         if (!bgElement) return;
 
