@@ -219,7 +219,6 @@
          <field astroidgroup="smooth_scroll" description="TPL_SMOOTH_SCROLL_ENABLE_DESC" name="enable_smooth_scroll" type="astroidradio" astroid-switch="true" default="0" label="TPL_SMOOTH_SCROLL_ENABLE_LBL"/>
          <field astroidgroup="smooth_scroll" ngShow="[enable_smooth_scroll]=='1'" name="smooth_scroll_engine" type="astroidlist" label="ASTROID_SMOOTH_SCROLL_ENGINE" description="ASTROID_SMOOTH_SCROLL_ENGINE_DESC" default="lenis">
             <option value="lenis">Lenis</option>
-            <option value="gsap">GSAP ScrollSmoother</option>
             <option value="smooth_scroll">SmoothScroll (Legacy)</option>
          </field>
          <field ngShow="[enable_smooth_scroll]=='1'" astroidgroup="smooth_scroll" name="smooth_scroll_speed" type="astroidrange" min="1" max="10000" step="1" default="1200" label="TPL_SMOOTH_SCROLL_SPEED_LBL" description="TPL_SMOOTH_SCROLL_SPEED_DESC" postfix="ms" />
