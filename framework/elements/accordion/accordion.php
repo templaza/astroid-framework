@@ -25,7 +25,6 @@ if (!count($accordions->data)) {
     return false;
 }
 $document = Framework::getDocument();
-$document->loadUIKit();
 $style          = $params->get('style', '');
 $style          = $params->get('style', '');
 $style          = $style !== '' ? ' '. $style : '';
@@ -51,7 +50,7 @@ foreach ($accordions->data as $key => $accordion) {
     echo '<div class="accordion-item">';
 
     echo '<h2 class="accordion-header">';
-    echo '<button class="uk-flex uk-flex-between accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').' '.$icon.'</button>';
+    echo '<button class="d-flex justify-content-between accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').' '.$icon.'</button>';
     echo '</h2>';
 
     echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 && $collapse === '' ? ' show' : '').'"'.(!$always_open ? ' data-bs-parent="#accordion-'.$element->id.'"' : '').'>';
