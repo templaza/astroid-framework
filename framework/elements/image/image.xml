@@ -9,6 +9,7 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field type="astroidgroup" name="mask_styles" title="ASTROID_WIDGET_MASK_STYLES_LABEL"/>
                 <field astroidgroup="general" name="image_color_mode" type="astroidradio" width="full" default="light">
                     <option value="light">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_LIGHT</option>
                     <option value="dark">TPL_ASTROID_BASIC_COLOR_MODE_OPTION_DARK</option>
@@ -32,12 +33,17 @@
                     <option value="d-flex">Flex</option>
                     <option value="d-inline-flex">Inline Flex</option>
                 </field>
+                <field astroidgroup="widget_styles" name="image_width" type="astroidrange" min="1" max="2000" step="1" responsive="true" label="ASTROID_WIDGET_WIDTH_LABEL"  postfix="px|%" />
+                <field astroidgroup="widget_styles" name="image_height" type="astroidrange" min="1" max="2000" step="1" responsive="true" label="ASTROID_WIDGET_HEIGHT_LABEL"  postfix="px|%" />
+                <field astroidgroup="widget_styles" name="image_border" label="ASTROID_WIDGET_BORDER_LABEL" type="astroidborder" />
                 <field astroidgroup="widget_styles" name="img_border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">
                     <option value="">ASTROID_NONE</option>
                     <option value="rounded">TPL_ASTROID_ICON_STYLE_ROUNDED</option>
                     <option value="rounded-circle">TPL_ASTROID_ICON_STYLE_CIRCLE</option>
                     <option value="rounded-pill">TPL_ASTROID_ICON_STYLE_PILL</option>
+                    <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
                 </field>
+                <field astroidgroup="widget_styles" name="image_radius" ngShow="[img_border_radius]=='custom'"  label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" type="astroidspacing" />
                 <field astroidgroup="widget_styles" ngShow="[img_border_radius]=='rounded'" type="astroidlist" name="image_rounded_size" label="ASTROID_WIDGET_ROUNDED_SIZE_LABEL" default="3">
                     <option value="1">X-Small</option>
                     <option value="2">Small</option>
@@ -87,6 +93,30 @@
                     <option value="wobble-skew">ASTROID_WIDGET_TRANSITION_WOBBLE_SKEW</option>
                     <option value="buzz">ASTROID_WIDGET_TRANSITION_BUZZ</option>
                     <option value="buzz-out">ASTROID_WIDGET_TRANSITION_BUZZ_OUT</option>
+                </field>
+                <field astroidgroup="mask_styles" name="img_mask" type="astroidlist" label="ASTROID_WIDGET_IMAGE_MASK" default="">
+                    <option value="">ASTROID_NONE</option>
+                    <option value="style1">ASTROID_WIDGET_IMAGE_MASK_STYLE1</option>
+                    <option value="custom">TPL_ASTROID_OPTIONS_CUSTOM</option>
+                </field>
+                <field astroidgroup="mask_styles" name="mask_scale" type="astroidrange" min="1" max="200" step="1" label="ASTROID_WIDGET_IMAGE_MASK_SCALE" default="100"  postfix="%" />
+                <field astroidgroup="mask_styles" name="mask_position" type="astroidlist" label="ASTROID_POSITION" default="">
+                    <option value="">TPL_ASTROID_DEFAULT</option>
+                    <option value="top left">ASTROID_WIDGET_TOP_LEFT</option>
+                    <option value="top center">ASTROID_WIDGET_TOP_CENTER</option>
+                    <option value="top left">ASTROID_WIDGET_TOP_RIGHT</option>
+                    <option value="center left">ASTROID_WIDGET_CENTER_LEFT</option>
+                    <option value="center center">ASTROID_WIDGET_CENTER_CENTER</option>
+                    <option value="center right">ASTROID_WIDGET_CENTER_RIGHT</option>
+                    <option value="bottom left">ASTROID_WIDGET_BOTTOM_LEFT</option>
+                    <option value="bottom center">ASTROID_WIDGET_BOTTOM_CENTER</option>
+                    <option value="bottom right">ASTROID_WIDGET_BOTTOM_RIGHT</option>
+                </field>
+                <field astroidgroup="mask_styles" name="mask_repeat" type="astroidlist" label="ASTROID_BACKGROUND_REPEAT_LABEL" default="">
+                    <option value="no-repeat">ASTROID_BACKGROUND_NO_REPEAT</option>
+                    <option value="repeat">ASTROID_BACKGROUND_REPEAT_ALL</option>
+                    <option value="repeat-x">ASTROID_BACKGROUND_REPEAT_X</option>
+                    <option value="repeat-Y">ASTROID_BACKGROUND_REPEAT_Y</option>
                 </field>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
