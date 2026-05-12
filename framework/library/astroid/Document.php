@@ -33,6 +33,7 @@ class Document
     protected array $_styles = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
     protected array $_customtags = ['head' => [], 'body' => []];
     protected array $_is_loaded = [];
+    protected array $_gsap_plugins = [];
     protected $_dev = null;
     protected bool $minify_css = false;
     protected bool $minify_js = false;
@@ -1431,10 +1432,16 @@ class Document
     {
         if (!empty($plugin) && empty($this->_is_loaded['gsap.'.$plugin])) {
             $this->getWA()->registerAndUseScript('astroid.gsap.' . $plugin, 'media/astroid/assets/vendor/gsap/'.$plugin.'.min.js', ['relative' => true, 'version' => 'auto'], [], ['astroid.gsap']);
+            $this->_gsap_plugins[] = $plugin;
             $this->_is_loaded['gsap.'.$plugin] = true;
         } else {
             $this->getWA()->useScript('astroid.gsap');
         }
+    }
+
+    public function getGsapPlugins(): array
+    {
+        return $this->_gsap_plugins;
     }
 
     public function loadUIKit(): void
@@ -1470,6 +1477,11 @@ class Document
     {
         $this->getWA()->useStyle('astroid.lenis');
         $this->getWA()->useScript('astroid.lenis');
+    }
+
+    public function loadScrollEffect(): void
+    {
+        $this->getWA()->useScript('astroid.scroll.effects');
     }
 
     public function loadGoogleReCaptcha($onload = [], $render = ''): void
