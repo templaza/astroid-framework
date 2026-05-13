@@ -346,8 +346,15 @@ if ($params->get('card_style', '') == 'custom') {
     $text_color     =   Style::getColor($params->get('text_color', ''));
     $style->child('.as-grid > .card')->addCss('color', $text_color['light']);
     $style_dark->child('.as-grid > .card')->addCss('color', $text_color['dark']);
-
+    $bg_color['light'] = 'transparent';
     $bg_color       =   Style::getColor($params->get('bg_color', ''));
+
+    if($bg_color['light']==''){
+        $bg_color['light'] = 'transparent';
+    }
+    if($bg_color['dark']==''){
+        $bg_color['dark'] = 'transparent';
+    }
     $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
     $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
 
