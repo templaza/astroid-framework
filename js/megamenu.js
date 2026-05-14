@@ -94,18 +94,10 @@ class AstroidMegaMenuPro {
             if (!content) return;
 
             if (this.settings.trigger === 'click') {
-                const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
-                if (arrow) {
-                    arrow.addEventListener('click', e => {
-                        e.preventDefault();
-                        this.toggle(item);
-                    })
-                } else {
-                    trigger.addEventListener('click', e => {
-                        e.preventDefault();
-                        this.toggle(item);
-                    });
-                }
+                trigger.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.toggle(item);
+                });
             } else if (!this.canHover) {
                 const arrow = item.querySelector('.fa-chevron-down.nav-item-caret');
                 if (!arrow) {
@@ -317,23 +309,21 @@ class AstroidMegaMenuPro {
             const submenu = sub.querySelector(this.settings.submenuSelector);
             if (!submenu || !link) return;
 
-            if (this.settings.trigger === 'click' || !this.canHover) {
+            if (this.settings.trigger === 'click') {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                })
+            } else if (!this.canHover) {
                 const arrow = sub.querySelector('.nav-item-caret');
-                if (arrow) {
-                    arrow.addEventListener('click', e => {
-                        e.preventDefault();
-                        sub.classList.contains('open')
-                            ? this.closeSub(sub)
-                            : this.openSub(sub, parentContent);
-                    });
-                } else {
-                    link.addEventListener('click', e => {
-                        e.preventDefault();
-                        sub.classList.contains('open')
-                            ? this.closeSub(sub)
-                            : this.openSub(sub, parentContent);
-                    })
-                }
+                arrow.addEventListener('click', e => {
+                    e.preventDefault();
+                    sub.classList.contains('open')
+                        ? this.closeSub(sub)
+                        : this.openSub(sub, parentContent);
+                });
             } else {
                 sub.addEventListener('mouseenter', () => this.openSub(sub, parentContent));
                 sub.addEventListener('mouseleave', () => this.closeSub(sub));
