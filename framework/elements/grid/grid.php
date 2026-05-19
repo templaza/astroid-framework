@@ -432,5 +432,5 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.grid-media')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 if (!empty($dot_margin)) {
-    Style::setSpacingStyle($this->style->child('.uk-dotnav'), $dot_margin, 'margin');
+    Style::setSpacingStyle($element->style->child('.uk-dotnav'), $dot_margin, 'margin');
 }
