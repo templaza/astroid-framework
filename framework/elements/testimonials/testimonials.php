@@ -216,7 +216,7 @@ $text_alignment_fallback    =   $params->get('text_alignment_fallback','');
 $card_vertical_align    =   $params->get('card_vertical_align','');
 
 $slider_nav_position    =   $params->get('slider_nav_position','');
-$testimonial_icon    =   $params->get('testimonial_icon','');
+$testimonial_icon    =   $params->get('fa_icon','');
 
 if ($text_alignment) {
     $alignment              =   ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
