@@ -31,7 +31,7 @@ if ($border_radius == 'rounded') {
 }elseif($border_radius =='custom') {
     $image_radius=  $params->get('image_radius', '');
     if (!empty($image_radius)) {
-        Style::setSpacingStyle($element->style->child('.moon-image-element img'), $image_radius, 'radius');
+        Style::setSpacingStyle($element->style->child('.astroid-image-element img'), $image_radius, 'radius');
     }
 } else {
     $border_radius  =   $border_radius !== '' ? ' ' . $border_radius : '';
@@ -43,10 +43,10 @@ $image_height_data = json_decode($image_height, true);
 $image_width_data = json_decode($image_width, true);
 $style = $element->style;
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
-    $style->child('.moon-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
+    $style->child('.astroid-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
 }
 if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
-    $style->child('.moon-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
+    $style->child('.astroid-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
 if(isset($image_height) && isset($image_width)){
@@ -73,7 +73,7 @@ if (!empty($image)) {
     if (!empty($figure_caption)) {
         echo '<figure class="m-0">';
     }
-    echo '<div class="as-image-wrapper position-relative moon-image-element overflow-hidden'. $display .$cus_cl. $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<div class="as-image-wrapper position-relative astroid-image-element overflow-hidden'. $display .$cus_cl. $border_radius . $box_shadow . $hover_effect . $transition . '">';
     echo '<img class="as-image" src="'. Astroid\Helper\Media::getMediaPath($image) .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
         echo '<img class="as-image-dark d-none" src="'. Astroid\Helper\Media::getMediaPath($image_dark).'" alt="'.$title.'">';

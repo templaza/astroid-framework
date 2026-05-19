@@ -217,7 +217,7 @@ foreach ($grids->data as $key => $grid) {
         }
 
     } elseif ($grid->params->get('type', '') == 'icon') {
-        $media = '<div class="moon-icon-wrapper">';
+        $media = '<div class="astroid-icon-wrapper">';
         switch ($grid->params->get('icon_type', '')) {
             case 'fontawesome':
                 $media  .=   '<i class="astroid-icon '. ($media_position == 'bottom' ? 'order-2 ' : '') .$grid->params->get('fa_icon', '').'"></i>';
@@ -329,15 +329,15 @@ if (!empty($meta_heading_margin)) {
     Style::setSpacingStyle($element->style->child('.astroid-meta'), $meta_heading_margin, 'margin');
 }
 if (!empty($meta_heading_padding)) {
-    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_padding);
+    Style::setSpacingStyle($element->style->child('.astroid-meta'), $meta_heading_padding);
 }
 if (!empty($meta_heading_radius)) {
-    Style::setSpacingStyle($element->style->child('.moon-meta'), $meta_heading_radius,'radius');
+    Style::setSpacingStyle($element->style->child('.astroid-meta'), $meta_heading_radius,'radius');
 }
 
 $meta_bg       =   Style::getColor($params->get('meta_heading_bg', ''));
-$style->child('.moon-meta')->addCss('background-color', $meta_bg['light']);
-$style_dark->child('.moon-meta')->addCss('background-color', $meta_bg['dark']);
+$style->child('.astroid-meta')->addCss('background-color', $meta_bg['light']);
+$style_dark->child('.astroid-meta')->addCss('background-color', $meta_bg['dark']);
 
 if ($enable_image_cover) {
     $style->child('.as-image-cover')->addCss('height', $min_height . 'px');
