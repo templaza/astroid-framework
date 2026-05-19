@@ -23,7 +23,7 @@ $link           = $params->get('link', '');
 $target         = $params->get('target', '');
 $target         = $target !== '' ? ' target="'.$target.'"' : '';
 
-$shape          = $params->get('img_shape', '');
+$shape          = $params->get('img_mask', '');
 $border_radius      =   $params->get('img_border_radius', '');
 $rounded_size       =   $params->get('image_rounded_size', '3');
 if ($border_radius == 'rounded') {
