@@ -26,7 +26,6 @@ if (!count($accordions->data)) {
 }
 $document = Framework::getDocument();
 $style          = $params->get('style', '');
-$style          = $params->get('style', '');
 $style          = $style !== '' ? ' '. $style : '';
 
 $icon_type = $params->get('icon_type', '');

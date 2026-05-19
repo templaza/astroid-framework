@@ -81,6 +81,6 @@ if (!empty($title_clone_margin)) {
 }
 
 $clone_font_style     = $params->get('title_clone_font_style', null);
-if (!empty($font_style)) {
+if (!empty($clone_font_style)) {
     Style::renderTypography('#'.$element->id.' .heading-clone', $clone_font_style, null, $element->isRoot);
 }

@@ -304,9 +304,9 @@
                     <option value="cover">ASTROID_COVER</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_position]=='cover'" name="content_position" type="astroidlist" label="ASTROID_ARTICLE_OVERLAY_CONTENT_POSITION" default="">
-                    <option value="uk-position-top">ASTROID_WIDGET_XXL_ICON</option>
-                    <option value="uk-position-center">ASTROID_WIDGET_XL_ICON</option>
-                    <option value="uk-position-bottom">ASTROID_WIDGET_LG_ICON</option>
+                    <option value="uk-position-top">ASTROID_WIDGET_TOP_CENTER</option>
+                    <option value="uk-position-center">ASTROID_WIDGET_CENTER_CENTER</option>
+                    <option value="uk-position-bottom">ASTROID_WIDGET_BOTTOM_CENTER</option>
                 </field>
                 <field astroidgroup="card_options" ngShow="[media_position]=='cover'" name="media_hover_transition" type="astroidlist" label="ASTROID_WIDGET_HOVER_TRANSITION_LABEL" default="">
                     <option value="uk-transition-fade">TPL_ASTROID_HEADER_MENU_ANIMATION_OPTION_FADE</option>
