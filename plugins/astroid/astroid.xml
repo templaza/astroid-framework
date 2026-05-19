@@ -3,7 +3,7 @@
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
    <creationDate>March 2026</creationDate>
-   <version>3.3.13</version>
+   <version>3.4.1</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -49,11 +49,12 @@
             <field name="tinymce_license" type="text" default="" label="ASTROID_WIDGET_TINY_LICENSE" description="ASTROID_WIDGET_TINY_LICENSE"/>
          </fieldset>
          <fieldset name="astroid-tabs-visibility">
-            <field name="frontend_tabs_visibility" type="radio" default="1" label="ASTROID_TABS_FRONTEND_VISIBILTY" description="" class="btn-group btn-group-yesno">
+            <field name="tabs_visibility" type="radio" default="1" label="ASTROID_ARTICLE_TABS_VISIBILTY" description="" class="btn-group btn-group-yesno">
                <option value="1">ASTROID_VISIBLE</option>
                <option value="0">ASTROID_HIDDEN</option>
             </field>
             <field
+                    showon="tabs_visibility:1"
                     name="article_tabs_visibility"
                     type="list"
                     default="[&quot;article&quot;,&quot;blog&quot;,&quot;article_layout&quot;,&quot;opengraph&quot;]"
@@ -64,6 +65,10 @@
                <option value="blog">ASTROID_ARTICLE_TAB_BLOG_LABEL</option>
                <option value="article_layout">ASTROID_ARTICLE_TAB_WIDGETS_LABEL</option>
                <option value="opengraph">ASTROID_ARTICLE_TAB_OPENGRAPH_LABEL</option>
+            </field>
+            <field showon="tabs_visibility:1" name="frontend_tabs_visibility" type="radio" default="1" label="ASTROID_TABS_FRONTEND_VISIBILTY" description="" class="btn-group btn-group-yesno">
+               <option value="1">ASTROID_VISIBLE</option>
+               <option value="0">ASTROID_HIDDEN</option>
             </field>
          </fieldset>
       </fields>

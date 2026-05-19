@@ -17,26 +17,39 @@ use Astroid\Helper;
 use Joomla\CMS\Factory;
 use Astroid\Helper\Style;
 use Astroid\Helper\SubForm;
+use Astroid\Framework;
 
 extract($displayData);
 $accordions     = new SubForm($params->get('accordions', ''));
 if (!count($accordions->data)) {
     return false;
 }
-$style          = $params->get('style', '');
+$document = Framework::getDocument();
 $style          = $params->get('style', '');
 $style          = $style !== '' ? ' '. $style : '';
+
+$icon_type = $params->get('icon_type', '');
+$fa_icon = $params->get('fa_icon', '');
+$icon =$icon_cl= '';
+
+if($icon_type){
+    if($fa_icon){
+        $icon = '<i class="'.$fa_icon.'"></i>';
+        $icon_cl = 'custom_icon';
+        $element->style->child('.accordion-button:after')->addCss('display', 'none');
+    }
+}
 
 $collapse       = $params->get('collapse', '');
 $always_open    = $params->get('always_open', 0);
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('bootstrap.collapse');
-echo '<div class="accordion'.$style.'" id="accordion-'.$element->id.'">';
+echo '<div class="accordion'.$style.' '.$icon_cl.'" id="accordion-'.$element->id.'">';
 foreach ($accordions->data as $key => $accordion) {
     echo '<div class="accordion-item">';
 
     echo '<h2 class="accordion-header">';
-    echo '<button class="accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').'</button>';
+    echo '<button class="d-flex justify-content-between accordion-button'.($key != 0 || $collapse === 'close-all' ? ' collapsed' : '').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$element->id.$key.'" aria-expanded="true" aria-controls="collapse'.$element->id.$key.'">'.$accordion->params->get('title', '').' '.$icon.'</button>';
     echo '</h2>';
 
     echo '<div id="collapse'.$element->id.$key.'" class="accordion-collapse collapse'.($key == 0 && $collapse === '' ? ' show' : '').'"'.(!$always_open ? ' data-bs-parent="#accordion-'.$element->id.'"' : '').'>';
@@ -79,3 +92,33 @@ $element->style->child('.accordion-button')->hover()->addCss('background-color',
 $element->style_dark->child('.accordion-button')->hover()->addCss('background-color', $bgcolor_hover['dark']);
 $element->style->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
 $element->style_dark->child('.accordion-button:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
+
+$bgcolor_content        = Style::getColor($params->get('bgcolor_content', ''));
+
+$title_padding   =   $params->get('title_padding', '');
+if (!empty($title_padding)) {
+    Style::setSpacingStyle($element->style->child('.accordion-button'), $title_padding);
+}
+$title_border    =   json_decode($params->get('title_border', ''), true);
+if (!empty($title_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .accordion-button', $title_border, 'global', $element->isRoot);
+}
+$title_radius  =   $params->get('title_radius', '');
+if (!empty($title_radius)) {
+    Style::setSpacingStyle($element->style->child('.accordion-button'), $title_radius,'radius');
+}
+$item_radius  =   $params->get('item_radius', '');
+if (!empty($item_radius)) {
+    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_radius,'radius');
+}
+$item_margin=  $params->get('item_margin', '');
+if (!empty($item_margin)) {
+    Style::setSpacingStyle($element->style->child('.accordion-item'), $item_margin, 'margin');
+}
+
+$content_padding   =   $params->get('content_padding', '');
+if (!empty($content_padding)) {
+    Style::setSpacingStyle($element->style->child('.accordion-body'), $content_padding);
+}
+$element->style->child('.accordion-body')->addCss('background-color', $bgcolor_content['light']);
+$element->style_dark->child('.accordion-body')->addCss('background-color', $bgcolor_content['dark']);

@@ -1,0 +1,24 @@
+.astroid-testimonials{
+  .swiper-button-next, .swiper-button-prev{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background:$primary;
+    color:#ffffff;
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+    margin-top: -130px;
+    &:after{
+      font-size:16px;
+    }
+    &:hover{
+      background:$primary;
+      color:#ffffff;
+    }
+    &.swiper-button-disabled{
+      background:$border-color;
+      color:#555555;
+      opacity:1;
+    }
+  }
+}

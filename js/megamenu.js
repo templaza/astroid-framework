@@ -51,7 +51,6 @@ class AstroidMegaMenuPro {
 
         this.backdrop = document.createElement('div');
         this.backdrop.className = 'astroid-menu-backdrop';
-        document.body.appendChild(this.backdrop);
 
         gsap.set(this.backdrop, {
             position: 'fixed',
@@ -62,6 +61,7 @@ class AstroidMegaMenuPro {
             pointerEvents: 'none',
             zIndex: 90
         });
+        document.body.appendChild(this.backdrop);
     }
 
     showBackdrop() {

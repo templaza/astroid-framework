@@ -9,6 +9,8 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="widget_styles" title="ASTROID_WIDGET_STYLES_LABEL"/>
+                <field type="astroidgroup" name="meta_options" title="ASTROID_WIDGET_META_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="clone_options" title="ASTROID_ELEMENT_CLONE_LABEL"/>
                 <field astroidgroup="general" type="astroidtext" class="form-control" label="ASTROID_ELEMENT_TITLE_LABEL" name="title" dynamic="true"/>
                 <field astroidgroup="general" description="ASTROID_WIDGET_HEADING_USE_LINK_DESC" name="use_link" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_USE_LINK_LABEL"/>
                 <field astroidgroup="general" ngShow="[use_link]==1" type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_HEADING_LINK_DESC" name="link" hint="https://astroidframe.work/"/>
@@ -25,6 +27,20 @@
                     <option value="div">div</option>
                 </field>
                 <field astroidgroup="widget_styles" name="font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="widget_styles" name="title_heading_margin" label="ASTROID_WIDGET_MARGIN_LABEL" type="astroidspacing" />
+                <field astroidgroup="meta_options" type="astroidtext" class="form-control" label="ASTROID_ELEMENT_META_LABEL" name="meta_text" dynamic="true"/>
+                <field astroidgroup="meta_options" name="meta_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+                <field astroidgroup="meta_options" name="meta_heading_margin" label="ASTROID_WIDGET_MARGIN_LABEL" type="astroidspacing" />
+                <field astroidgroup="meta_options" name="meta_border" label="ASTROID_WIDGET_BORDER_LABEL" type="astroidborder" />
+                <field astroidgroup="meta_options" name="meta_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" type="astroidspacing" />
+                <field astroidgroup="meta_options" name="meta_position" type="astroidlist" label="ASTROID_POSITION" default="before">
+                    <option value="before">ASTROID_WIDGET_ICON_POSITION_FIRST_LABEL</option>
+                    <option value="after">ASTROID_WIDGET_ICON_POSITION_LAST_LABEL</option>
+                </field>
+                <field astroidgroup="clone_options" name="title_clone" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ELEMENT_CLONE_LABEL"/>
+                <field astroidgroup="clone_options" type="astroidtext" class="form-control" ngShow="[title_clone] =='1'"  label="ASTROID_ELEMENT_CLONE_TEXT" name="title_clone_txt" dynamic="true"/>
+                <field astroidgroup="clone_options" name="title_clone_margin" ngShow="[title_clone] =='1'" label="ASTROID_WIDGET_MARGIN_LABEL" type="astroidspacing" />
+                <field astroidgroup="clone_options" name="title_clone_font_style" ngShow="[title_clone] =='1'" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
                 <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">

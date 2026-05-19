@@ -415,7 +415,7 @@ class BaseElement
     protected function _animation(): void
     {
         $animation = $this->params->get('animation', '');
-        if (empty($animation) && empty($this->is_loaded['transform'])) {
+        if (empty($animation) || !empty($this->is_loaded['transform'])) {
             return;
         }
         $document = Framework::getDocument();

@@ -1,0 +1,11 @@
+.astroid-heading{
+  position: relative;
+  .heading{
+    position:relative;
+    z-index: 2;
+  }
+  .heading-clone{
+    position:absolute;
+    z-index: 1;
+  }
+}

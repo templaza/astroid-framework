@@ -1,0 +1,22 @@
+.astroid-accordion{
+  .accordion-item{
+    border:none;
+    margin-bottom:20px;
+    border-radius: 10px;
+    overflow: hidden;
+    .accordion-button{
+      border:none;
+      padding:25px;
+      &:not(.collapsed){
+      box-shadow: none;
+      }
+      &.collapsed{
+
+      }
+    }
+    .accordion-body{
+      background:#fff;
+      padding-top:10px;
+    }
+  }
+}

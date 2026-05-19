@@ -179,6 +179,7 @@ class Client
         $pluginParams = Helper::getPluginParams();
         $astroid_dir = 'libraries/astroid';
         Helper::loadLanguage('astroid');
+        $tabs_visibility = $pluginParams->get('tabs_visibility', 1);
         $frontendVisibility = $pluginParams->get('frontend_tabs_visibility', 1);
         $article_tabs_visibility = $pluginParams->get('article_tabs_visibility', ['article', 'blog', 'article_layout', 'opengraph']);
 
@@ -194,7 +195,7 @@ class Client
             $loaded = true;
         }
 
-        if ($form->getName() == 'com_content.article' && ((Framework::isSite() && $frontendVisibility) || Framework::isAdmin())) {
+        if ($form->getName() == 'com_content.article' && $tabs_visibility && ((Framework::isSite() && $frontendVisibility) || Framework::isAdmin())) {
             if (Framework::isSite() && isset($data->attribs) && isset($data->params)) {
                 $data->attribs = $data->params;
             }

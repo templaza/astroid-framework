@@ -212,6 +212,7 @@
                         <field type="astroidgroup" name="rotate_settings" title="ASTROID_ELEMENT_TRANSFORM_ROTATE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_ROTATE_DESC"/>
                         <field type="astroidgroup" name="scale_settings" title="ASTROID_ELEMENT_TRANSFORM_SCALE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCALE_DESC"/>
                         <field type="astroidgroup" name="skew_settings" title="ASTROID_ELEMENT_TRANSFORM_SKEW_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEW_DESC"/>
+                        <field type="astroidgroup" name="filter_settings" title="ASTROID_ELEMENT_TRANSFORM_FILTER_LABEL" description="ASTROID_ELEMENT_TRANSFORM_FILTER_DESC"/>
                         <field type="astroidgroup" name="timeline_settings" title="ASTROID_ELEMENT_TRANSFORM_TWEEN_SETTINGS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TWEEN_SETTINGS_DESC"/>
                         <field astroidgroup="move_settings" name="translate_x" type="astroidfromto" label="ASTROID_ELEMENT_TRANSFORM_TRANSLATEX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TRANSLATEX_DESC" unit="px" />
                         <field astroidgroup="move_settings" name="translate_y" type="astroidfromto" label="ASTROID_ELEMENT_TRANSFORM_TRANSLATEY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_TRANSLATEY_DESC" unit="px" />
@@ -223,6 +224,10 @@
                         <field astroidgroup="scale_settings" name="scale_y" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SCALEY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SCALEY_DESC" />
                         <field astroidgroup="skew_settings" name="skew_x" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SKEWX_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEWX_DESC" unit="deg" />
                         <field astroidgroup="skew_settings" name="skew_y" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_SKEWY_LABEL" description="ASTROID_ELEMENT_TRANSFORM_SKEWY_DESC" unit="deg" />
+                        <field astroidgroup="filter_settings" name="blur" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_BLUR_LABEL" description="ASTROID_ELEMENT_TRANSFORM_BLUR_DESC" />
+                        <field astroidgroup="filter_settings" name="brightness" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_BRIGHTNESS_LABEL" description="ASTROID_ELEMENT_TRANSFORM_BRIGHTNESS_DESC" />
+                        <field astroidgroup="filter_settings" name="contrast" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_CONTRAST_LABEL" description="ASTROID_ELEMENT_TRANSFORM_CONTRAST_DESC" />
+                        <field astroidgroup="filter_settings" name="grayscale" type="astroidgetpro" label="ASTROID_ELEMENT_TRANSFORM_GRAYSCALE_LABEL" description="ASTROID_ELEMENT_TRANSFORM_GRAYSCALE_DESC" />
                         <field astroidgroup="timeline_settings" name="duration" type="astroidrange" min="0" max="10" step="0.1" postfix="seconds" default="0.5" label="ASTROID_ELEMENT_TRANSFORM_DURATION_LABEL" description="ASTROID_ELEMENT_TRANSFORM_DURATION_DESC" />
                         <field astroidgroup="timeline_settings" name="stagger" type="astroidrange" min="0" max="10" step="0.01" postfix="seconds" default="0" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
                      </fieldset>
