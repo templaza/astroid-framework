@@ -136,10 +136,7 @@ class Utility
             $easing     =   $params->get('smooth_scroll_easing', '');
             $options    =   [];
             $document   =   Framework::getDocument();
-            if ($smooth_scroll_engine == 'gsap') {
-                $document->loadGSAP('ScrollTrigger');
-                $document->loadGSAP('ScrollSmoother');
-            } elseif ($smooth_scroll_engine == 'smooth_scroll') {
+            if ($smooth_scroll_engine == 'smooth_scroll') {
                 $document->getWA()->useScript('astroid.smoothscroll');
                 $header = $params->get('header', TRUE);
                 $mode = $params->get('header_mode', 'horizontal');
