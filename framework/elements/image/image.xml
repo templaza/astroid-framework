@@ -116,7 +116,7 @@
                     <option value="no-repeat">ASTROID_BACKGROUND_NO_REPEAT</option>
                     <option value="repeat">ASTROID_BACKGROUND_REPEAT_ALL</option>
                     <option value="repeat-x">ASTROID_BACKGROUND_REPEAT_X</option>
-                    <option value="repeat-Y">ASTROID_BACKGROUND_REPEAT_Y</option>
+                    <option value="repeat-y">ASTROID_BACKGROUND_REPEAT_Y</option>
                 </field>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
