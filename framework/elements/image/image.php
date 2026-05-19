@@ -13,6 +13,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 use Astroid\Helper\Style;
+use Joomla\CMS\Uri\Uri;
 extract($displayData);
 $title          = $params->get('title', '');
 $image          = $params->get('image', '');
@@ -49,10 +50,9 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.astroid-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
-if(isset($image_height) && isset($image_width)){
+if($image_height_data["global"] && $image_width_data["global"]){
     $cus_cl = ' custom-size ';
 }
-
 $image_border    =   json_decode($params->get('image_border', ''), true);
 if (!empty($image_border)) {
     Style::addBorderStyle('#'. $element->id . ' .as-image', $image_border, 'global', $element->isRoot);
@@ -93,12 +93,9 @@ $mask_scale         = $params->get('mask_scale', '');
 $mask_repeat         = $params->get('mask_repeat', '');
 $mask_position         = $params->get('mask_position', '');
 if($shape=='style1'){
-    $shape_style = '/local/moon/assets/images/shapes/style1.svg';
+    $shape_style = ''. Uri::root() . 'media/astroid/assets/images/style1.svg';
     $style->child('.as-image-wrapper img')->addCss('-webkit-mask-image', 'url('.$shape_style.')');
     $style->child('.as-image-wrapper img')->addCss('-webkit-mask-repeat', $mask_repeat);
     $style->child('.as-image-wrapper img')->addCss('-webkit-mask-position', $mask_position);
-}
-$mask_scale_size = json_decode($mask_scale, true);
-if (json_last_error() === JSON_ERROR_NONE && is_array($mask_scale_size)) {
-    $element->style->child('.as-image-wrapper img')->addResponsiveCSS('-webkit-mask-size', $mask_scale_size, $mask_scale_size['postfix']);
+    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-size', $mask_scale.'%');
 }
