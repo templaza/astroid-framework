@@ -242,7 +242,7 @@ foreach ($grids->data as $key => $grid) {
         echo '<div class="row g-0'.($vertical_middle ? ' align-items-center' : '').'">';
         echo '<div class="'.$media_width_cls.'">';
     }
-    if ($media_position != 'inside' || $media_position == 'cover') {
+    if ($media_position != 'inside') {
         echo $media;
     }
     if ($media_position == 'left' || $media_position == 'right') {
