@@ -419,7 +419,7 @@
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="nav_bg_color_hover" type="astroidcolor" label="ASTROID_WIDGET_BACKGROUND_COLOR_HOVER"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="slider_nav_border_hover" type="astroidborder" label="ASTROID_WIDGET_BORDER_HOVER"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
-                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SROLLBAR"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SCROLLBAR"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_dotnav]==1" type="astroidlist" name="dot_alignment" label="ASTROID_WIDGET_DOT_ALIGNMENT" default="">
                     <option value="">JGLOBAL_INHERIT</option>
                     <option value="left">JGLOBAL_LEFT</option>
