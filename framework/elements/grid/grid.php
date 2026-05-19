@@ -259,7 +259,7 @@ foreach ($grids->data as $key => $grid) {
     if ($media_position == 'inside') {
         echo $media;
     }
-    if (!empty($grid->params->get('meta', '')) && $meta_position == 'before'|| $meta_position !='after') {
+    if (!empty($grid->params->get('meta', '')) && $meta_position !='after') {
         echo '<div class="astroid-meta '.$meta_position.'">' . $grid->params->get('meta', '') . '</div>';
     }
     if (!empty($grid->params->get('title', ''))) {
