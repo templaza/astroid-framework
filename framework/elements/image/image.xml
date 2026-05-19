@@ -104,7 +104,7 @@
                     <option value="">TPL_ASTROID_DEFAULT</option>
                     <option value="top left">ASTROID_WIDGET_TOP_LEFT</option>
                     <option value="top center">ASTROID_WIDGET_TOP_CENTER</option>
-                    <option value="top left">ASTROID_WIDGET_TOP_RIGHT</option>
+                    <option value="top right">ASTROID_WIDGET_TOP_RIGHT</option>
                     <option value="center left">ASTROID_WIDGET_CENTER_LEFT</option>
                     <option value="center center">ASTROID_WIDGET_CENTER_CENTER</option>
                     <option value="center right">ASTROID_WIDGET_CENTER_RIGHT</option>
