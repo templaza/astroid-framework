@@ -3,30 +3,24 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.4.0</version>
+        <version>3.4.2</version>
         <addition>
-            <item><![CDATA[Animation - Transform settings - New era animation]]></item>
-            <item><![CDATA[Parallax background effect for background images and videos]]></item>
-            <item><![CDATA[Option enable/disable Menu Spacing]]></item>
-            <item><![CDATA[Add feature Tab visibility for individual tabs]]></item>
-            <item><![CDATA[Add UIKit library]]></item>
-            <item><![CDATA[Add Cookie Consent feature]]></item>
+            <item><![CDATA[Smooth Scroll (Legacy) Library Returns]]></item>
+            <item><![CDATA[New Astroid Scroll Effects Library]]></item>
+            <item><![CDATA[New Transform “Filter” Group]]></item>
+            <item><![CDATA[Add UK Image, UK Grid, UK Testimonials]]></item>
         </addition>
         <fix>
-            <item><![CDATA[Fixes the issue where submenus cannot be selected in some cases.]]></item>
-            <item><![CDATA[Fixes issue conflict js with JCE Editor]]></item>
-            <item><![CDATA[Fixes issue First Menu-item not reaction when clicking on it]]></item>
-            <item><![CDATA[Fixes issue old data is not valid]]></item>
-            <item><![CDATA[Fixes the issue of aligning items when displaying menus in the module.]]></item>
-            <item><![CDATA[Fixes issue Astroid Mega Menu: Joomla Module page exceptions display multi time]]></item>
+            <item><![CDATA[Fixed issue when $params is null in Mega Menu]]></item>
+            <item><![CDATA[Fixed conflict between Basic and Advanced animation]]></item>
+            <item><![CDATA[Fixed overflow hidden issue in Parallax container]]></item>
+            <item><![CDATA[Fixed issue where Menu Backdrop setting could cause FOUC (Flash of Unstyled Content)]]></item>
         </fix>
         <change>
-            <item><![CDATA[Update the Field structure to conform to Joomla 6 standards]]></item>
-            <item><![CDATA[Improve Sticky HTML structure]]></item>
-            <item><![CDATA[Disable safemode in first install]]></item>
-            <item><![CDATA[Update style of article edit layout in Dark mode]]></item>
-            <item><![CDATA[Update Megamenu HTML structure]]></item>
-            <item><![CDATA[Update Menu Module to compatible with J6]]></item>
+            <item><![CDATA[Enable/Disable Astroid Tabs in Blog]]></item>
+            <item><![CDATA[Lenis JS Included in Astroid Package]]></item>
+            <item><![CDATA[Updated Accordion, Heading Element]]></item>
+            <item><![CDATA[Improved Media Manager Experience]]></item>
         </change>
     </changelog>
     <changelog>
