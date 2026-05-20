@@ -52,7 +52,10 @@ if ($image_height_decode_error === JSON_ERROR_NONE && is_array($image_height_dat
     $style->child('.astroid-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
-if($image_height_data["global"] && $image_width_data["global"]){
+if (
+    is_array($image_height_data) && isset($image_height_data['global']) && $image_height_data['global'] &&
+    is_array($image_width_data) && isset($image_width_data['global']) && $image_width_data['global']
+) {
     $cus_cl = ' custom-size ';
 }
 $image_border    =   json_decode($params->get('image_border', ''), true);
