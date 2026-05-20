@@ -41,12 +41,14 @@ $image_height      =   $params->get('image_height', '');
 $image_width      =   $params->get('image_width', '');
 
 $image_height_data = json_decode($image_height, true);
+$image_height_decode_error = json_last_error();
 $image_width_data = json_decode($image_width, true);
+$image_width_decode_error = json_last_error();
 $style = $element->style;
-if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
+if ($image_width_decode_error === JSON_ERROR_NONE && is_array($image_width_data)) {
     $style->child('.astroid-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
 }
-if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
+if ($image_height_decode_error === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.astroid-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
