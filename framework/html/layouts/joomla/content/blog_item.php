@@ -78,6 +78,7 @@ $clsItemBody        = $astroidArticle->getStyle('body');
 $blog_layout = $params->get('as_blog_layout', '');
 $as_overlay_hover = $params->get('as_overlay_hover', 0);
 $overlay_content_position = $params->get('as_overlay_content_position', 'justify-content-end');
+$info_block_above_position = $params->get('info_block_above_position', 'below_title');
 $category_show_intro = $params->get('category_show_intro', 1);
 $category_hide_extrafields = $params->get('category_hide_extrafields', 0);
 $clsItemContainer .= $blog_layout == 'overlay' ? ' as-blog-overlay ' . $overlay_content_position . ($as_overlay_hover == 1 ? ' as-overlay-hover' : '') : '';
@@ -143,10 +144,13 @@ $clsItemBody .= $blog_layout == 'overlay' ? ' card-img-overlay as-light ' . $ove
             <?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
                 || $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category') || $params->get('show_author') || $assocParam); ?>
 
+            <?php if ($useDefList && ($info == 0 || $info == 2) && $info_block_above_position == 'above_title') : ?>
+                <?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
+            <?php endif; ?>
             <div class="article-title item-title">
                 <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
             </div>
-            <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
+            <?php if ($useDefList && ($info == 0 || $info == 2) && $info_block_above_position == 'below_title') : ?>
                 <?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'astroidArticle' => $astroidArticle, 'position' => 'above')); ?>
             <?php endif; ?>
             <?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
