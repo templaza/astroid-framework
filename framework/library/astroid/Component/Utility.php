@@ -719,7 +719,7 @@ class Utility
                 }
 
                 if (!empty($css_not_size)) {
-                    $content .= '.btn-'. $style .':not(.btn-sm):not(.btn-lg) {';
+                    $content .= '.btn-'. $style .':not(.btn-sm):not(.btn-lg):not(.input-password-toggle) {';
                     $content .= $css_not_size;
                     $content .= '}';
                 }
