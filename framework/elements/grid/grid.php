@@ -211,8 +211,24 @@ foreach ($grids->data as $key => $grid) {
     if (!empty($grid->params->get('meta', '')) && $meta_position == 'before') {
         echo '<div class="astroid-meta">' . $grid->params->get('meta', '') . '</div>';
     }
-    if (!empty($grid->params->get('title', ''))) {
-        echo '<'.$title_html_element.' class="astroid-heading">'. $grid->params->get('title', '') . '</'.$title_html_element.'>';
+    $title = $grid->params->get('title', '');
+    if (!empty($title)) {
+        $enable_animation = $grid->params->get('enable_animation', 0);
+        if (!empty($enable_animation)) {
+            $document->loadAnimationCounter();
+            $animation_duration = $grid->params->get('animation_duration', 3);
+            $title = '<span class="as-animation-counter" data-as-animation-counter="'. $title .'" data-as-animation-duration="'.$animation_duration.'">0</span>';
+            $prefix = $grid->params->get('prefix', '');
+            if (!empty($prefix)) {
+                $prefix_position = $grid->params->get('prefix_position', 'after');
+                if ($prefix_position == 'before') {
+                    $title = $prefix . $title;
+                } else {
+                    $title = $title . $prefix;
+                }
+            }
+        }
+        echo '<'.$title_html_element.' class="astroid-heading">'. $title . '</'.$title_html_element.'>';
     }
     if (!empty($grid->params->get('meta', '')) && $meta_position == 'after') {
         echo '<div class="astroid-meta">' . $grid->params->get('meta', '') . '</div>';

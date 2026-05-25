@@ -36,6 +36,14 @@
                                 <field ngShow="[type]=='image'" name="image" type="astroidmedia" label="TPL_ASTROID_SELECT_IMAGE" dynamic="true"/>
 
                                 <field type="astroidtext" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+                                <field ngShow="[title]!=''" name="enable_animation" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ENABLE_ANIMATION_LABEL"/>
+                                <field ngShow="[title]!='' AND [enable_animation]==1" type="astroidtext" label="ASTROID_WIDGET_PREFIX" name="prefix" hint="$,+,K"/>
+                                <field ngShow="[title]!='' AND [enable_animation]==1" type="astroidradio" name="prefix_position" label="ASTROID_WIDGET_PREFIX_POSITION_LABEL" default="after">
+                                    <option value="before">ASTROID_WIDGET_PREFIX_POSITION_BEFORE_LABEL</option>
+                                    <option value="after">ASTROID_WIDGET_PREFIX_POSITION_AFTER_LABEL</option>
+                                </field>
+                                <field ngShow="[title]!='' AND [enable_animation]==1" name="animation_duration" type="astroidrange" min="1" max="10" step="0.1" default="5" label="TPL_ASTROID_HEADER_ANIMATION_SPEED_LABEL" postfix="s" />
+
                                 <field type="astroidtext" label="ASTROID_WIDGET_META" name="meta" dynamic="true"/>
 
                                 <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description" dynamic="true"/>

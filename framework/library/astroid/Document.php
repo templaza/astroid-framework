@@ -1484,6 +1484,12 @@ class Document
         $this->getWA()->useScript('astroid.scroll.effects');
     }
 
+    public function loadAnimationCounter(): void
+    {
+        $this->loadGSAP('ScrollTrigger');
+        $this->getWA()->useScript('astroid.animation.counter');
+    }
+
     public function loadGoogleReCaptcha($onload = [], $render = ''): void
     {
         $query = array();
