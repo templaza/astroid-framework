@@ -1,6 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 document.addEventListener('DOMContentLoaded', function () {
-    gsap.utils.toArray('.as-animation-counter').forEach(counter => {
+    gsap.utils.toArray('[data-as-animation-counter]').forEach(counter => {
         const target = Number.parseInt(counter.dataset.asAnimationCounter, 10);
 
         if (Number.isNaN(target)) {
