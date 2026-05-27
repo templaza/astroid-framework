@@ -155,6 +155,7 @@ $image_rounded_size     =   $params->get('image_rounded_size', '3');
 $image_border_radius    =   $params->get('image_border_radius', '0');
 $image_border_radius    =   $image_border_radius != 'rounded' ? ' rounded-' . $image_border_radius : ' rounded-' . $image_rounded_size;
 $image_radius      =   $params->get('image_radius', '');
+$hover_tog_class = $hover_effect2 = $img_tog_class = $img_eff = $img_transition ='';
 
 $hover_effect   = $params->get('hover_effect', '');
 if (str_contains($hover_effect, 'uk-transition')==false) {
@@ -164,28 +165,28 @@ $img_transition = '';
 $transition     = $params->get('hover_transition', '');
 $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 
-if($transition == ' as-transition-scale-up'){
-    $img_transition = ' uk-transition-scale-up ';
-}
-if($transition == ' as-transition-scale-down'){
-    $img_transition = ' uk-transition-scale-down ';
-}
+
 $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
 $button_margin_top  =   $params->get('button_margin_top', '');
 
 $use_masonry        =   $params->get('use_masonry', 0);
-$hover_tog_class = $img_tog_class =$img_eff='';
+
 if (str_contains($content_hover_transition, 'uk-transition')) {
     $hover_tog_class = ' uk-transition-toggle ';
     $img_tog_class = ' uk-transition-opaque ';
 }
-if (str_contains($hover_effect, 'uk-transition')) {
+$img_eff = ' '.$hover_effect.' ';
+if($transition == ' as-transition-scale-up'){
+    $img_transition = ' uk-transition-scale-up ';
     $hover_tog_class = ' uk-transition-toggle ';
     $img_tog_class = ' uk-transition-opaque ';
-}else{
-    $img_eff = ' '.$hover_effect.' ';
+}
+if($transition == ' as-transition-scale-down'){
+    $img_transition = ' uk-transition-scale-down ';
+    $hover_tog_class = ' uk-transition-toggle ';
+    $img_tog_class = ' uk-transition-opaque ';
 }
 
 $autoplay       = $params->get('autoplay', 0);
