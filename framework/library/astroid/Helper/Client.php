@@ -182,6 +182,13 @@ class Client
         $tabs_visibility = $pluginParams->get('tabs_visibility', 1);
         $frontendVisibility = $pluginParams->get('frontend_tabs_visibility', 1);
         $article_tabs_visibility = $pluginParams->get('article_tabs_visibility', ['article', 'blog', 'article_layout', 'opengraph']);
+        if (is_string($article_tabs_visibility)) {
+            if (Helper::isJsonString($article_tabs_visibility)) {
+                $article_tabs_visibility = \json_decode($article_tabs_visibility, true);
+            } else {
+                $article_tabs_visibility = [];
+            }
+        }
 
         Form::addFormPath(JPATH_SITE . '/' . $astroid_dir . '/framework/forms');
 
