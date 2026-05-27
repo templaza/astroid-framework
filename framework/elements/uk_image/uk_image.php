@@ -41,21 +41,16 @@ $image_height      =   $params->get('image_height', '');
 $image_width      =   $params->get('image_width', '');
 
 $image_height_data = json_decode($image_height, true);
-$image_height_decode_error = json_last_error();
 $image_width_data = json_decode($image_width, true);
-$image_width_decode_error = json_last_error();
 $style = $element->style;
-if ($image_width_decode_error === JSON_ERROR_NONE && is_array($image_width_data)) {
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_width_data)) {
     $style->child('.astroid-image-element')->addResponsiveCSS('width', $image_width_data, $image_width_data['postfix']);
 }
-if ($image_height_decode_error === JSON_ERROR_NONE && is_array($image_height_data)) {
+if (json_last_error() === JSON_ERROR_NONE && is_array($image_height_data)) {
     $style->child('.astroid-image-element')->addResponsiveCSS('height', $image_height_data, $image_height_data['postfix']);
 }
 $cus_cl = '';
-if (
-    is_array($image_height_data) && isset($image_height_data['global']) && $image_height_data['global'] &&
-    is_array($image_width_data) && isset($image_width_data['global']) && $image_width_data['global']
-) {
+if($image_height_data["global"] || $image_width_data["global"]){
     $cus_cl = ' custom-size ';
 }
 $image_border    =   json_decode($params->get('image_border', ''), true);
@@ -78,7 +73,7 @@ if (!empty($image)) {
     if (!empty($figure_caption)) {
         echo '<figure class="m-0">';
     }
-    echo '<div class="as-image-wrapper position-relative astroid-image-element overflow-hidden'. $display .$cus_cl. $border_radius . $box_shadow . $hover_effect . $transition . '">';
+    echo '<div class="uk-image-wrapper d-inline-flex position-relative astroid-image-element overflow-hidden '. $display .$cus_cl. $border_radius . $box_shadow . $hover_effect . $transition . '">';
     echo '<img class="as-image" src="'. Astroid\Helper\Media::getMediaPath($image) .'" alt="'.$title.'">';
     if (!empty($image_dark)) {
         echo '<img class="as-image-dark d-none" src="'. Astroid\Helper\Media::getMediaPath($image_dark).'" alt="'.$title.'">';
