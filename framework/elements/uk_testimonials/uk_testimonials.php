@@ -26,78 +26,45 @@ $enable_slider      =   $params->get('enable_slider', 0);
 $slider_autoplay    =   $params->get('slider_autoplay', 0);
 $slider_nav         =   $params->get('slider_nav', 1);
 $slider_scrollbar   =   $params->get('slider_scrollbar', 0);
-$nav_position       =   $params->get('nav_position', '');
-$nav_position       =   $nav_position !== '' ? ' ' . $nav_position : $nav_position;
+
 $slider_dotnav      =   $params->get('slider_dotnav', 0);
 $dot_alignment      =   $params->get('dot_alignment', '');
 $interval           =   $params->get('interval', 3);
-$slider_type        =   $params->get('slider_type', '');
+
 $slide_settings     =   array();
 $slide_responsive   =   array();
 
 $row_column_cls     =   'row';
-
-$xxl_column         =   $params->get('xxl_column', '');
-if ($xxl_column) {
-    $slide_settings[]=  'slidesToShow: ' . $xxl_column;
-    $row_column_cls .=  ' row-cols-xxl-' . $xxl_column;
-}
-
-$xl_column          =   $params->get('xl_column', '');
-if ($xl_column) {
-    $row_column_cls .=  ' row-cols-xl-' . $xl_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $xl_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 1400,settings: {slidesToShow: ' . $xl_column.'}}';
-    }
-}
-
-$lg_column          =   $params->get('lg_column', 3);
-if ($lg_column) {
-    $row_column_cls .=  ' row-cols-lg-' . $lg_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $lg_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 1200,settings: {slidesToShow: ' . $lg_column.'}}';
-    }
-}
-
-$md_column          =   $params->get('md_column', 1);
-if ($md_column) {
-    $row_column_cls .=  ' row-cols-md-' . $md_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $md_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 992,settings: {slidesToShow: ' . $md_column.'}}';
-    }
-}
-
-$sm_column          =   $params->get('sm_column', 1);
-if ($sm_column) {
-    $row_column_cls .=  ' row-cols-sm-' . $sm_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $sm_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 768,settings: {slidesToShow: ' . $sm_column.'}}';
-    }
-}
-
-$xs_column          =   $params->get('xs_column', 1);
-if ($xs_column) {
-    $row_column_cls .=  ' row-cols-' . $xs_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $xs_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 576,settings: {slidesToShow: ' . $xs_column.'}}';
+$responsive_key     =   [
+    'xs'    => '',
+    'sm'    => '576',
+    'md'    => '768',
+    'lg'    => '992',
+    'xl'    => '1200',
+    'xxl'   => '1400',
+];
+foreach ($responsive_key as $key => $min_width) {
+    $column         =   $params->get($key . '_column', '');
+    $slidesPerGroup =   $params->get($key . '_slidesPerGroup', '');
+    $gutter         =   $params->get('gutter_' . $key, '10');
+    $row_column         =   $params->get($key.'_column', '');
+    $row_column_cls .=  ' row-cols-xxl-' . $row_column;
+    if (!empty($column)) {
+        if (!count($slide_settings)) {
+            $slide_settings[]       =   'slidesPerView: ' . $column;
+            if ($slidesPerGroup == '') {
+                $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
+            }
+            $slide_settings[]       =   'spaceBetween: ' . $gutter;
+        } elseif (!empty($min_width)) {
+            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.($slidesPerGroup ? ',slidesPerGroup: '.$slidesPerGroup : '').',spaceBetween: '.$gutter.'}';
+        }
     }
 }
 
 if ($slider_autoplay) {
-    $slide_settings[]       =   'autoplay: true';
-    $slide_settings[]       =   'autoplaySpeed: '. ($interval * 1000);
+    $slide_settings[]       =   'autoplay: {delay: '.($interval * 1000).'}';
 }
-
 
 if ($slider_dotnav) {
     $slide_settings[]       =   'pagination: {el: ".swiper-pagination",clickable: true,}';
@@ -106,9 +73,22 @@ if ($slider_dotnav) {
 if ($slider_nav) {
     $slide_settings[]       =   'navigation: {nextEl: ".swiper-button-next",prevEl: ".swiper-button-prev",}';
 }
-
+$speed              =   $params->get('speed', 0);
+if (!empty($speed)) {
+    $slide_settings[]   =   'speed:' . ($speed * 1000);
+}
+$loop               =   $params->get('loop', 0);
+if (!empty($loop)) {
+    $slide_settings[]   =   'loop:true';
+}
+$freemode           =   $params->get('freemode', 0);
+if (!empty($freemode)) {
+    $slide_settings[]   =   'freeMode: true';
+}
+$dir                =   $params->get('direction', '');
+//$slide_settings[]   =   'autoHeight: true';
 if (count($slide_responsive)) {
-    $slide_settings[]       =  'responsive: ['.implode(',', $slide_responsive).']';
+    $slide_settings[]       =   'breakpoints: {'.implode(',', $slide_responsive).'}';
 }
 
 $responsive_key     =   ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
@@ -204,9 +184,6 @@ $transition     = $transition !== '' ? ' as-transition-' . $transition : '';
 $card_hover_transition     = $params->get('card_hover_transition', '');
 $card_hover_transition     = $card_hover_transition !== '' ? ' as-transition-' . $card_hover_transition : '';
 
-$overlay_text_color =   $params->get('overlay_text_color', '');
-$overlay_text_color =   $overlay_text_color !== '' ? ' ' . $overlay_text_color : '';
-
 $enable_rating      =   $params->get('enable_rating', 0);
 
 // Alignment
@@ -225,18 +202,12 @@ if ($text_alignment) {
 }
 $swiper_cl = '';
 $use_masonry        =   $params->get('use_masonry', 0);
-$item_cl = ' testimonial-item';
 if ($enable_slider) {
-    if($slider_type=='swiper'){
         echo '<div class="swiper"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
-        $item_cl = 'swiper-slide';
         $swiper_cl = ' swiper-wrapper ';
-    }else{
-        $swiper_cl= ' astroid-slick opacity-0 ';
-    }
 }
 
-echo '<div class="astroid-grid '.$swiper_cl.' '.($enable_slider ? '' . $nav_position : $row_column_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$gutter_cls.$overlay_text_color.'">';
+echo '<div class="astroid-grid '.$swiper_cl.' '.($enable_slider ? ''  : $row_column_cls . ($use_masonry ? ' as-masonry as-loading' : '')).$gutter_cls.'">';
 foreach ($testimonials->getData() as $key => $testimonial) {
     $avatar =   $testimonial->params->get('avatar', '');
     $rating =   $testimonial->params->get('rating', 5);
@@ -247,7 +218,7 @@ foreach ($testimonials->getData() as $key => $testimonial) {
         $media      .=  '</div>';
     }
 
-    echo '<div id="testimonial-'. $testimonial -> id .'" class="'.$item_cl.'"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div id="testimonial-'. $testimonial -> id .'" class="swiper-slide"><div class="card' . $card_style . $box_shadow . $box_shadow_hover .$bd_radius . $card_hover_transition . ($enable_grid_match ? ' h-100' : '') . '">';
     if ($avatar_position == 'left' || $avatar_position == 'right') {
         echo '<div class="row g-0 '.$card_vertical_align.'">';
         echo '<div class="'.$avatar_width_cls.'">';
@@ -319,31 +290,24 @@ $document = Astroid\Framework::getDocument();
 
 $document->loadUIKit();
 if ($enable_slider) {
-    if($slider_type=='swiper') {
-        if ($slider_dotnav) {
-            echo '<div class="swiper-pagination"></div>';
+    if ($slider_dotnav) {
+        echo '<div class="swiper-pagination"></div>';
+    }
+    if ($slider_nav) {
+        if ($slider_nav_position) {
+            echo '<div class="swiper_nav uk-flex ' . $slider_nav_position . '"><div class="swiper-button-prev swiper-nav-button uk-position-relative"></div><div class="swiper-button-next swiper-nav-button uk-position-relative"></div></div> ';
+        } else {
+            echo '<div class="swiper_nav uk-flex ' . $slider_nav_position . '"><div class="swiper-button-prev swiper-nav-button"></div><div class="swiper-button-next swiper-nav-button"></div></div> ';
         }
-        if ($slider_nav) {
-            if ($slider_nav_position) {
-                echo '<div class="swiper_nav uk-flex ' . $slider_nav_position . '"><div class="swiper-button-prev swiper-nav-button uk-position-relative"></div><div class="swiper-button-next swiper-nav-button uk-position-relative"></div></div> ';
-            } else {
-                echo '<div class="swiper_nav uk-flex ' . $slider_nav_position . '"><div class="swiper-button-prev swiper-nav-button"></div><div class="swiper-button-next swiper-nav-button"></div></div> ';
-            }
 
-        }
-        if ($slider_scrollbar) {
-            echo '<div class="swiper-scrollbar"></div>';
-        }
+    }
+    if ($slider_scrollbar) {
+        echo '<div class="swiper-scrollbar"></div>';
     }
 
-    if($slider_type=='swiper'){
-        echo '</div>';
-        $document->loadSwiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
-    }else{
-        $wa->registerAndUseStyle('slick.css', 'astroid/slick.min.css');
-        $wa->registerAndUseScript('slick.js', 'astroid/slick.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-        echo '<script type="text/javascript">jQuery(document).ready(function(){jQuery(\'#'.$element->id.' .astroid-slick\').slick({'.implode(',', $slide_settings).'})});</script>';
-    }
+    echo '</div>';
+    $document->loadSwiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
+
 } elseif ($use_masonry) {
     $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
@@ -364,6 +328,13 @@ if ($params->get('card_style', '') == 'custom') {
     $element->style_dark->child('.card')->addCss('color', $text_color['dark']);
 
     $bg_color       =   Style::getColor($params->get('bg_color', ''));
+    if($bg_color['light']==''){
+        $bg_color['light'] = 'transparent';
+    }
+    if($bg_color['dark']==''){
+        $bg_color['dark'] = 'transparent';
+    }
+
     if ($avatar_position == 'left' || $avatar_position == 'right') {
         $element->style->child('.card-body')->addCss('background-color', $bg_color['light']);
         $element->style_dark->child('.card-body')->addCss('background-color', $bg_color['dark']);
@@ -455,6 +426,9 @@ $nav_border_hover    =   json_decode($params->get('slider_nav_border_hover', '')
 if (!empty($nav_border_hover)) {
     Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button:hover', $nav_border_hover, 'global', $element->isRoot);
 }
+$nav_icon_size        =   $params->get('nav_icon_size', '16');
+$element->style->child('.swiper-button-next:after, .swiper-button-prev:after')->addCss('font-size', $nav_icon_size.'px');
+
 $testimonial_icon_color     = Style::getColor($params->get('testimonial_icon_color', ''));
 $element->style->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['light']);
 $element->style_dark->child('.testimonial_icon')->addCss('color', $testimonial_icon_color['dark']);
