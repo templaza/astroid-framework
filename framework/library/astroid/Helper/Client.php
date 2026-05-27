@@ -195,7 +195,7 @@ class Client
             $loaded = true;
         }
 
-        if ($form->getName() == 'com_content.article' && $tabs_visibility && ((Framework::isSite() && $frontendVisibility) || Framework::isAdmin())) {
+        if ($form->getName() == 'com_content.article' && $tabs_visibility && !empty($article_tabs_visibility) && ((Framework::isSite() && $frontendVisibility) || Framework::isAdmin())) {
             if (Framework::isSite() && isset($data->attribs) && isset($data->params)) {
                 $data->attribs = $data->params;
             }
