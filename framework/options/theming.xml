@@ -5,10 +5,11 @@
          <field type="astroidgroup" name="buttons" title="ASTROID_BUTTONS" />
          <field type="astroidgroup" name="colors" title="ASTROID_OPTIONS_COLOURS" help="https://docs.astroidframe.work/styling/theming" />
          <field type="astroidgroup" name="sassoverrides" title="ASTROID_OPTIONS_OVERRIDES" preset="sass_overrides:astroidsassoverrides" help="https://docs.astroidframe.work/styling/theming#-custom-colors" />
-         <field astroidgroup="buttons" name="button_overrides" type="astroidsubform" as-index="style">
+         <field astroidgroup="buttons" name="button_overrides" type="astroidsubform">
             <form>
                <fields>
                   <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                     <field name="title" type="astroidtext" label="JGLOBAL_TITLE" />
                      <field name="style" type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" default="primary">
                         <option value="primary">ASTROID_PRIMARY</option>
                         <option value="secondary">ASTROID_SECONDARY</option>
@@ -21,6 +22,7 @@
                         <option value="link">ASTROID_LINK</option>
                         <option value="custom">ASTROID_WIDGET_CUSTOM</option>
                      </field>
+                     <field ngShow="[style]!='custom'" name="button_outline" type="astroidradio" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL" astroid-switch="true" />
                      <field ngShow="[style]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CLASS" name="class"/>
                      <field description="TPL_ASTROID_BODY_TYPOGRAPHY_OPTION_DESC" name="enable_typography" type="astroidradio" default="default" label="TPL_ASTROID_TYPOGRAPHY_OPTIONS_LABEL">
                         <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
