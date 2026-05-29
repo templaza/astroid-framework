@@ -37,7 +37,8 @@ foreach ($catids as $catid) {
 $document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
-$items = Article::getArticles($limit, $ordering, $categories);
+$offset             =   $params->get('offset', 0);
+$items = Article::getArticles($limit, $ordering, $categories,true,'',array(),$offset);
 
 $enable_slider      =   $params->get('enable_slider', 0);
 $use_masonry        =   $params->get('use_masonry', 0);
