@@ -132,7 +132,7 @@ try {
                 }
                 if (strtolower($_header[0]) == 'bcc' && isset($_header[1]))
                 {
-                    $mail->addCc(trim($_header[1]));
+                    $mail->addBcc(trim($_header[1]));
                 }
             }
         }
