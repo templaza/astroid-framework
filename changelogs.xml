@@ -26,13 +26,10 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.12</version>
+        <version>1.0.13</version>
         <addition>
-            <item><![CDATA[Add Transform feature]]></item>
+            <item><![CDATA[Add Filter Options to Transform Animation]]></item>
+            <item><![CDATA[4 New Widgets - Circle Text, Pricing Table, UK Gallery, UK Slider]]></item>
         </addition>
-        <change>
-            <item><![CDATA[Improve load Asset documents]]></item>
-            <item><![CDATA[Update the Field structure to conform to Joomla 6 standards.]]></item>
-        </change>
     </changelog>
 </changelogs>
