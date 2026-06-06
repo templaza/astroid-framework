@@ -1,7 +1,7 @@
 <updates>
     <update>
         <name>Astroid Pro</name>
-        <version>1.0.12</version>
+        <version>1.0.13</version>
         <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
         <element>astroidpro</element>
         <folder>astroid</folder>
@@ -15,7 +15,7 @@
         </tags>
         <maintainer>Astroid Framework</maintainer>
         <maintainerurl>https://astroidframe.work/</maintainerurl>
-        <targetplatform name="joomla" version="(4.)|(5.)"/>
-        <php_minimum>8.0.0</php_minimum>
+        <targetplatform name="joomla" version="(4.)|(5.)|(6.)"/>
+        <php_minimum>8.2.0</php_minimum>
     </update>
 </updates>
