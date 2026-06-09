@@ -19,6 +19,7 @@ use Astroid\Component\Includer;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Filter\OutputFilter;
 use Astroid\Component\Utility;
+use Joomla\Filesystem\Path;
 
 defined('_JEXEC') or die;
 
@@ -64,13 +65,17 @@ class Admin extends Helper\Client
             ];
             $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
 
-            if (!Helper::isJsonString($params['layout'])) {
-                $layout = Layout::getDataLayout($params['layout'], $template->template, 'main_layouts');
-                $params['layout'] = \json_encode($layout['data']);
-                $preset['preset'] = $params;
-            }
-
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/astroid/presets/" . $preset_name . '.json', \json_encode($preset));
+
+            // Save Main Layout Preset
+            Layout::saveLayoutPreset('main_layouts', $template->template);
+
+            // Save Sub-Layout Preset
+            Layout::saveLayoutPreset('layouts', $template->template);
+
+            // Save Article-Layout Preset
+            Layout::saveLayoutPreset('article_layouts', $template->template);
+
             $this->response($preset_name);
         } else {
             Helper::putContents(JPATH_SITE . "/media/templates/site/{$template->template}/params" . '/' . $template->id . '.json', $params);
@@ -530,7 +535,7 @@ class Admin extends Helper\Client
         $app->setBody($body);
     }
 
-    public function importpreset(): true
+    public function importpreset(): void
     {
         try {
             // Check for request forgeries.
@@ -538,7 +543,7 @@ class Admin extends Helper\Client
             $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid";
             $preset = [
                 'title' => $app->input->post->get('title', '', 'RAW'),
                 'desc' => $app->input->post->get('desc', '', 'RAW'),
@@ -573,35 +578,68 @@ class Admin extends Helper\Client
             $pathinfo = pathinfo($file['name']);
             $uploadedFileExtension = $pathinfo['extension'];
             $uploadedFileExtension = strtolower($uploadedFileExtension);
-            if ($uploadedFileExtension != 'json') {
+            if ($uploadedFileExtension != 'json' || $uploadedFileExtension != 'zip') {
                 throw new \Exception(Text::_('INVALID EXTENSION'));
             }
 
             $fileTemp = $file['tmp_name'];
-            $json           = file_get_contents($fileTemp);
-            $config         = json_decode($json, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                if (!isset($config['preset'])) {
-                    $preset['preset'] = $json;
-                } else {
-                    $preset['preset'] = $config['preset'];
+            if ($uploadedFileExtension == 'zip') {
+                $zip = new \Joomla\Archive\Zip();
+                $tmpPath = $app->get('tmp_path', JPATH_SITE . '/tmp');
+                $zipFolder = \uniqid('astroid-preset-');
+                $zipPath = $tmpPath . '/' . $zipFolder;
+                if ($zip->extract($fileTemp, $zipPath)) {
+                    $files = Folder::files($zipPath . '/presets', '\.json$');
+                    foreach ($files as $file) {
+                        File::move($zipPath . '/presets/' . $file, $presets_path . '/presets/' . $file);
+                    }
+
+                    // Move Main Layout Presets
+                    $files = Folder::files($zipPath . '/main_layouts', '\.json$');
+                    foreach ($files as $file) {
+                        File::move($zipPath . '/main_layouts/' . $file, $presets_path . '/main_layouts/' . $file);
+                    }
+
+                    // Move Sub Layout Presets
+                    $files = Folder::files($zipPath . '/layouts', '\.json$');
+                    foreach ($files as $file) {
+                        File::move($zipPath . '/layouts/' . $file, $presets_path . '/layouts/' . $file);
+                    }
+
+                    // Move Article Layout Presets
+                    $files = Folder::files($zipPath . '/article_layouts', '\.json$');
+                    foreach ($files as $file) {
+                        File::move($zipPath . '/article_layouts/' . $file, $presets_path . '/article_layouts/' . $file);
+                    }
+
+                    // Remove Zip Folder
+                    Folder::delete($zipPath);
                 }
             } else {
-                throw new \Exception(Text::_('INVALID FILETYPE'));
+                $dataFile = file_get_contents($fileTemp);
+                $config = \json_decode($dataFile, true);
+                if (\json_last_error() === JSON_ERROR_NONE) {
+                    if (!isset($config['preset'])) {
+                        $preset['preset'] = $dataFile;
+                    } else {
+                        $preset['preset'] = $config['preset'];
+                    }
+                } else {
+                    throw new \Exception(Text::_('INVALID FILETYPE'));
+                }
+
+                $uploadPath = $presets_path . '/presets/' . $preset_name . '.' .$uploadedFileExtension;
+                Helper::putContents($uploadPath, \json_encode($preset));
             }
 
-            $uploadPath = $presets_path . $preset_name . '.json';
-
-            Helper::putContents($uploadPath, \json_encode($preset));
-            unlink($fileTemp);
+            File::delete($fileTemp);
             $this->response($preset_name);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
-        return true;
     }
 
-    public function loadpreset(): true
+    public function loadpreset(): void
     {
         try {
             // Check for request forgeries.
@@ -623,10 +661,9 @@ class Admin extends Helper\Client
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
-        return true;
     }
 
-    public function removepreset(): true
+    public function removepreset(): void
     {
         try {
             // Check for request forgeries.
@@ -644,7 +681,66 @@ class Admin extends Helper\Client
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
-        return true;
+    }
+
+    public function exportpreset(): void
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $this->checkAdminAuth();
+            $app = Factory::getApplication();
+            $template_name  = $app->input->get('template', NULL, 'RAW');
+            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid";
+            $file           = $app->input->post->get('name', '', 'RAW');
+            $file_name      = $presets_path.'/presets/'.$file.'.json';
+            if (!File::exists($file_name)) {
+                throw new \Exception('Preset file not found');
+            }
+            $arrayFiles = array();
+            $arrayFiles[] = [
+                'name' => 'presets/'.$file.'.json',
+                'data' => file_get_contents($file_name)
+            ];
+
+            // Add Main Layout Preset
+            $mainLayoutPresets = Layout::getLayoutPresets('main_layouts', $template_name);
+            foreach ($mainLayoutPresets as $mainLayoutPreset) {
+                $arrayFiles[] = [
+                    'name' => 'main_layouts/' . $mainLayoutPreset,
+                    'data' => file_get_contents(Path::clean($presets_path.'/main_layouts/'.$mainLayoutPreset))
+                ];
+            }
+
+            // Add Sub Layout Preset
+            $layoutPresets = Layout::getLayoutPresets('layouts', $template_name);
+            foreach ($layoutPresets as $layoutPreset) {
+                $arrayFiles[] = [
+                    'name' => 'layouts/' . $layoutPreset,
+                    'data' => file_get_contents(Path::clean($presets_path.'/layouts/'.$layoutPreset))
+                ];
+            }
+
+            // Add Article Layout Preset
+            $articleLayoutPresets = Layout::getLayoutPresets('article_layouts', $template_name);
+            foreach ($articleLayoutPresets as $articleLayoutPreset) {
+                $arrayFiles[] = [
+                    'name' => 'article_layouts/' . $articleLayoutPreset,
+                    'data' => file_get_contents(Path::clean($presets_path.'/article_layouts/'.$articleLayoutPreset))
+                ];
+            }
+            $tmpPath = $app->get('tmp_path', JPATH_SITE . '/tmp');
+            $zipFile = $file . '-' . date('YmdHis') . '.zip';
+            $zipPath = $tmpPath . '/' . $zipFile;
+            $zip = new \Joomla\Archive\Zip();
+            $ok = $zip->create($zipPath, $arrayFiles);
+            if (!$ok || !File::exists($zipPath)) {
+                throw new \Exception('Unable to create zip file');
+            }
+            $this->response($zipFile);
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
     }
 
     public function getFreeTemplates(): true
