@@ -213,21 +213,26 @@ foreach ($grids->data as $key => $grid) {
     }
     $title = $grid->params->get('title', '');
     if (!empty($title)) {
-        $enable_animation = $grid->params->get('enable_animation', 0);
-        if (!empty($enable_animation)) {
+        $enable_animation = (int) $grid->params->get('enable_animation', 0);
+
+        if ($enable_animation && is_numeric($title)) {
             $document->loadAnimationCounter();
-            $animation_duration = $grid->params->get('animation_duration', 3);
-            $title = '<span data-as-animation-counter="'. $title .'" data-as-animation-duration="'.$animation_duration.'">0</span>';
+
+            $target = (int) $title;
+            $animation_duration = (float) $grid->params->get('animation_duration', 3);
+
+            $counterHtml = '<span data-as-animation-counter="' . $target . '" data-as-animation-duration="' . htmlspecialchars((string) $animation_duration, ENT_QUOTES, 'UTF-8') . '">0</span>';
+
             $prefix = $grid->params->get('prefix', '');
-            if (!empty($prefix)) {
+            if ($prefix !== '') {
+                $prefix = htmlspecialchars($prefix, ENT_QUOTES, 'UTF-8');
                 $prefix_position = $grid->params->get('prefix_position', 'after');
-                if ($prefix_position == 'before') {
-                    $title = $prefix . $title;
-                } else {
-                    $title = $title . $prefix;
-                }
+                $counterHtml = $prefix_position === 'before' ? ($prefix . $counterHtml) : ($counterHtml . $prefix);
             }
+
+            $title = $counterHtml;
         }
+
         echo '<'.$title_html_element.' class="astroid-heading">'. $title . '</'.$title_html_element.'>';
     }
     if (!empty($grid->params->get('meta', '')) && $meta_position == 'after') {
