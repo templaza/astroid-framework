@@ -550,7 +550,6 @@ class Admin extends Helper\Client
                 'thumbnail' => '', 'demo' => '',
                 'preset' => ''
             ];
-            $preset_name = uniqid(OutputFilter::stringURLSafe($preset['title']).'-');
 
             $file =   $app->input->files->get('file', NULL, 'raw');
 
@@ -578,8 +577,8 @@ class Admin extends Helper\Client
             $pathinfo = pathinfo($file['name']);
             $uploadedFileExtension = $pathinfo['extension'];
             $uploadedFileExtension = strtolower($uploadedFileExtension);
-            if ($uploadedFileExtension != 'json' || $uploadedFileExtension != 'zip') {
-                throw new \Exception(Text::_('INVALID EXTENSION'));
+            if ($uploadedFileExtension != 'json' && $uploadedFileExtension != 'zip') {
+                throw new \Exception(Text::_('INVALID EXTENSION').': '.$uploadedFileExtension);
             }
 
             $fileTemp = $file['tmp_name'];
@@ -590,26 +589,38 @@ class Admin extends Helper\Client
                 $zipPath = $tmpPath . '/' . $zipFolder;
                 if ($zip->extract($fileTemp, $zipPath)) {
                     $files = Folder::files($zipPath . '/presets', '\.json$');
+                    if (!empty($files) && !is_dir( $presets_path . '/presets' ) ) {
+                        Folder::create( $presets_path . '/presets' );
+                    }
                     foreach ($files as $file) {
-                        File::move($zipPath . '/presets/' . $file, $presets_path . '/presets/' . $file);
+                        File::copy($zipPath . '/presets/' . $file, $presets_path . '/presets/' . $file);
                     }
 
                     // Move Main Layout Presets
                     $files = Folder::files($zipPath . '/main_layouts', '\.json$');
+                    if (!empty($files) && !is_dir( $presets_path . '/main_layouts' ) ) {
+                        Folder::create( $presets_path . '/main_layouts' );
+                    }
                     foreach ($files as $file) {
-                        File::move($zipPath . '/main_layouts/' . $file, $presets_path . '/main_layouts/' . $file);
+                        File::copy($zipPath . '/main_layouts/' . $file, $presets_path . '/main_layouts/' . $file);
                     }
 
                     // Move Sub Layout Presets
                     $files = Folder::files($zipPath . '/layouts', '\.json$');
+                    if (!empty($files) && !is_dir( $presets_path . '/layouts' ) ) {
+                        Folder::create( $presets_path . '/layouts' );
+                    }
                     foreach ($files as $file) {
-                        File::move($zipPath . '/layouts/' . $file, $presets_path . '/layouts/' . $file);
+                        File::copy($zipPath . '/layouts/' . $file, $presets_path . '/layouts/' . $file);
                     }
 
                     // Move Article Layout Presets
                     $files = Folder::files($zipPath . '/article_layouts', '\.json$');
+                    if (!empty($files) && !is_dir( $presets_path . '/article_layouts' ) ) {
+                        Folder::create( $presets_path . '/article_layouts' );
+                    }
                     foreach ($files as $file) {
-                        File::move($zipPath . '/article_layouts/' . $file, $presets_path . '/article_layouts/' . $file);
+                        File::copy($zipPath . '/article_layouts/' . $file, $presets_path . '/article_layouts/' . $file);
                     }
 
                     // Remove Zip Folder
@@ -628,12 +639,12 @@ class Admin extends Helper\Client
                     throw new \Exception(Text::_('INVALID FILETYPE'));
                 }
 
-                $uploadPath = $presets_path . '/presets/' . $preset_name . '.' .$uploadedFileExtension;
+                $uploadPath = $presets_path . '/presets/' . $pathinfo['filename'] . '.' .$uploadedFileExtension;
                 Helper::putContents($uploadPath, \json_encode($preset));
             }
 
-            File::delete($fileTemp);
-            $this->response($preset_name);
+            unlink($fileTemp);
+            $this->response($pathinfo['filename']);
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
@@ -674,7 +685,7 @@ class Admin extends Helper\Client
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.$file.'.json';
-            if (File::exists($file_name)) {
+            if (file_exists($file_name)) {
                 File::delete($file_name);
             }
             $this->response('Preset Removed!');
@@ -694,7 +705,7 @@ class Admin extends Helper\Client
             $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid";
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.'/presets/'.$file.'.json';
-            if (!File::exists($file_name)) {
+            if (!file_exists($file_name)) {
                 throw new \Exception('Preset file not found');
             }
             $arrayFiles = array();
@@ -734,7 +745,7 @@ class Admin extends Helper\Client
             $zipPath = $tmpPath . '/' . $zipFile;
             $zip = new \Joomla\Archive\Zip();
             $ok = $zip->create($zipPath, $arrayFiles);
-            if (!$ok || !File::exists($zipPath)) {
+            if (!$ok || !file_exists($zipPath)) {
                 throw new \Exception('Unable to create zip file');
             }
             $this->response($zipFile);
