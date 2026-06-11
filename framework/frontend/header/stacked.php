@@ -124,7 +124,7 @@ if ($mode == 'divided-logo-left') {
              }
 
              if ($enable_offcanvas || $block_2_type == 'position' || $block_2_type == 'custom') {
-                 echo '<div class="w-100 d-flex justify-content-end align-items-center">';
+                 echo '<div class="w-100 d-flex justify-content-end align-items-center as-gutter-x-xl@lg">';
                  // header block 2 starts
                  if ($block_2_type == 'position') {
                      echo '<div class="header-block-item d-none d-'.$header_breakpoint.'-flex justify-content-end align-items-center">';
