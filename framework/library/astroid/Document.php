@@ -43,7 +43,7 @@ class Document
     private $_wa = null;
     protected static array $_layout_paths = [];
     protected $type = null;
-    protected $modules = null;
+    protected array $modules = ['position' => [], 'id' => []];
 
     private $canWriteFile = true;
     private $waLocked = true;
@@ -622,7 +622,13 @@ class Document
 
     private function _modulePosition($position): false|string
     {
-        $this->modules[$position] = '';
+        if (empty($position)) {
+            return '';
+        }
+        if (isset($this->modules['position'][$position])) {
+            return $this->modules['position'][$position];
+        }
+        $this->modules['position'][$position] = '';
         $renderer = $this->getDocument()->loadRenderer('module');
         $modules = ModuleHelper::getModules($position);
         ob_start();
@@ -631,14 +637,20 @@ class Document
             echo $renderer->render($module);
         }
 
-        $this->modules[$position] = ob_get_clean();
+        $this->modules['position'][$position] = ob_get_clean();
 
-        return $this->modules[$position];
+        return $this->modules['position'][$position];
     }
 
     private function _moduleId($id): false|string
     {
-        $this->modules[$id] = '';
+        if (empty($id)) {
+            return '';
+        }
+        if (isset($this->modules['id'][$id])) {
+            return $this->modules['id'][$id];
+        }
+        $this->modules['id'][$id] = '';
         $renderer = $this->getDocument()->loadRenderer('module');
         $modules = ModuleHelper::getModuleById($id);
         ob_start();
@@ -647,9 +659,9 @@ class Document
             echo $renderer->render($modules);
         }
 
-        $this->modules[$id] = ob_get_clean();
+        $this->modules['id'][$id] = ob_get_clean();
 
-        return $this->modules[$id];
+        return $this->modules['id'][$id];
     }
 
     private function _position($position, $style)
