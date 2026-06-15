@@ -1,7 +1,7 @@
 <updates>
     <update>
         <name>Astroid Pro</name>
-        <version>1.0.13</version>
+        <version>1.0.14</version>
         <infourl title="Astroid Framework">https://astroidframe.work/</infourl>
         <element>astroidpro</element>
         <folder>astroid</folder>

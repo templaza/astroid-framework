@@ -26,10 +26,9 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.13</version>
-        <addition>
-            <item><![CDATA[Add Filter Options to Transform Animation]]></item>
-            <item><![CDATA[4 New Widgets – Circle Text, Pricing Table, UK Gallery, UK Slider]]></item>
-        </addition>
+        <version>1.0.14</version>
+        <fix>
+            <item><![CDATA[Fix issue load Dynamic Content in Subform]]></item>
+        </fix>
     </changelog>
 </changelogs>
