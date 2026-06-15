@@ -91,7 +91,7 @@ foreach ($form_elements as $key => $form_element) :
 
     echo '<div class="'.implode(' ', $column).'">';
     if ($show_label && $form_builder_item['field_label']) {
-        echo '<label class="form-label uk-form-label" for="as-form-builder-'.$form_builder_item['field_name'].'">'.$form_builder_item['field_label'].($form_builder_item['field_required'] == 1 ? ' <span class="text-danger">*</span>' : '').'</label>';
+        echo '<label class="form-label" for="as-form-builder-'.$form_builder_item['field_name'].'">'.$form_builder_item['field_label'].($form_builder_item['field_required'] == 1 ? ' <span class="text-danger">*</span>' : '').'</label>';
     }
     $required   =   $form_builder_item['field_required'] == 1 ? ' required' : '';
     switch ($form_builder_item['type']) {
