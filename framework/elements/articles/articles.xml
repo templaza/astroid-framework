@@ -29,6 +29,7 @@
                     <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
                     <option value="ordering">ASTROID_WIDGET_ORDERING_ARTICLEORDER</option>
                 </field>
+                <field astroidgroup="general" name="show_custom_fields" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ARTICLE_CUSTOM_FIELDS"/>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>
@@ -345,6 +346,7 @@
                     <option value="classic">ASTROID_WIDGET_LAYOUT_CLASSIC_LABEL</option>
                     <option value="overlay">ASTROID_WIDGET_LAYOUT_IMG_OVERLAY_LABEL</option>
                 </field>
+                <field astroidgroup="image_options" name="thumbnail_hidden" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_IMAGE_HIDDEN"/>
                 <field astroidgroup="image_options" name="thumbnail_only" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_IMAGE_THUMBNAIL_ONLY"/>
                 <field astroidgroup="image_options" name="linked_image" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_LINKED_IMAGE"/>
                 <field astroidgroup="image_options" name="img_border_radius" type="astroidlist" label="ASTROID_WIDGET_BORDER_RADIUS_LABEL" default="">

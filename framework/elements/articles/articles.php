@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\CMS\Uri\Uri;
-
+use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 extract($displayData);
 $catids         = json_decode($params->get('catids', '[]'), true);
 
@@ -38,6 +38,7 @@ $document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
 $offset             =   $params->get('offset', 0);
+$show_custom_fields =   $params->get('show_custom_fields', 0);
 $items = Article::getArticles($limit, $ordering, $categories,true,'',array(),$offset);
 
 $enable_slider      =   $params->get('enable_slider', 0);
@@ -191,6 +192,7 @@ $media_width_cls    .=  $xs_column_media ? ' col-' . $xs_column_media : '';
 // Image Options
 $layout             =   $params->get('layout', 'classic');
 $thumbnail_only     =   $params->get('thumbnail_only', 0);
+$thumbnail_hidden     =   $params->get('thumbnail_hidden', 0);
 $linked_image       =   $params->get('linked_image', 0);
 $enable_image_cover =   $params->get('enable_image_cover', 0);
 $min_height         =   $params->get('min_height', 500);
@@ -287,85 +289,88 @@ foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $video_type     =   $item->params->get('astroid_article_video_type', '');
     $media          =   '';
-    if ($thumbnail_only && !empty($item->image_thumbnail)) {
-        $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+    if($thumbnail_hidden==0){
+        if ($thumbnail_only && !empty($item->image_thumbnail)) {
+            $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
             if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
-    } else {
-        switch ($item->post_format) {
-            case 'gallery':
-                $gallery    =   (array) $item->params->get('astroid_article_gallery_items', array());
-                if (count($gallery)) {
-                    $has_gallery    =   true;
-                    $media  =   '<div id="astroid-articles-'.$item->id.'" class="as-slideshow-media carousel slide carousel-fade overflow-hidden'.$img_border_radius.'" data-bs-ride="carousel">';
-                    $media  .=  '<div class="carousel-inner">';
-                    $active =   true;
-                    foreach ($gallery as $gallery_item) {
-                        $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'" data-bs-interval="3000">';
-                        $media  .=  '<a href="'.Route::_($link).'" title="'. $item->title . '">';
-                        if ($enable_image_cover) {
-                            $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
-                        }
-                        $media  .=  '<img src="'.$gallery_item->image.'" class="d-block w-100'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'" alt="'.$gallery_item->title.'">';
-                        if ($enable_image_cover) {
+        } else {
+            switch ($item->post_format) {
+                case 'gallery':
+                    $gallery    =   (array) $item->params->get('astroid_article_gallery_items', array());
+                    if (count($gallery)) {
+                        $has_gallery    =   true;
+                        $media  =   '<div id="astroid-articles-'.$item->id.'" class="as-slideshow-media carousel slide carousel-fade overflow-hidden'.$img_border_radius.'" data-bs-ride="carousel">';
+                        $media  .=  '<div class="carousel-inner">';
+                        $active =   true;
+                        foreach ($gallery as $gallery_item) {
+                            $media  .=  '<div class="carousel-item'.($active ? ' active' : '').'" data-bs-interval="3000">';
+                            $media  .=  '<a href="'.Route::_($link).'" title="'. $item->title . '">';
+                            if ($enable_image_cover) {
+                                $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
+                            }
+                            $media  .=  '<img src="'.$gallery_item->image.'" class="d-block w-100'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'" alt="'.$gallery_item->title.'">';
+                            if ($enable_image_cover) {
+                                $media  .=  '</div>';
+                            }
+                            $media  .=  '</a>';
                             $media  .=  '</div>';
+                            $active =   false;
                         }
-                        $media  .=  '</a>';
                         $media  .=  '</div>';
-                        $active =   false;
+                        $media  .=  '</div>';
                     }
-                    $media  .=  '</div>';
-                    $media  .=  '</div>';
-                }
-                break;
-            case 'video':
-                $video_url  =   $item->params->get('astroid_article_video_url', '');
-                $video_local_url  =   $item->params->get('astroid_article_video_local', '');
-                $video_src  =   Article::getVideoSrc($video_url);
-                if ($video_type !== 'local') {
-                    if ($video_src) {
-                        if ($video_type == 'vimeo') {
-                            $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+                    break;
+                case 'video':
+                    $video_url  =   $item->params->get('astroid_article_video_url', '');
+                    $video_local_url  =   $item->params->get('astroid_article_video_local', '');
+                    $video_src  =   Article::getVideoSrc($video_url);
+                    if ($video_type !== 'local') {
+                        if ($video_src) {
+                            if ($video_type == 'vimeo') {
+                                $video_src  .=  '?autoplay=1&loop=1&muted=1&autopause=0&title=0&byline=0&portrait=0&controls=0';
+                            }
+                            $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
+                            $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
+                            $media .=   '</div>';
+                            if ($video_type == 'youtube' && !empty($item->image_thumbnail)) {
+                                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                            }
                         }
-                        $media =    '<div class="entry-video ratio ratio-16x9 overflow-hidden'.$img_border_radius.'">';
-                        $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
-                        $media .=   '</div>';
-                        if ($video_type == 'youtube' && !empty($item->image_thumbnail)) {
-                            $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
-                        }
+                    } elseif (!empty($video_local_url)) {
+                        $document->loadVideoBG();
+                        $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover'.(!$enable_image_cover ? ' ratio ratio-16x9' : '').'" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
                     }
-                } elseif (!empty($video_local_url)) {
-                    $document->loadVideoBG();
-                    $media = '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-article-video-local as-image-cover astroid-image-overlay-cover'.(!$enable_image_cover ? ' ratio ratio-16x9' : '').'" data-as-video-bg="'.Uri::base('true').'/images/'.$video_local_url.'"'.(!empty($item->image_thumbnail) ? ' data-as-video-poster="'.$item->image_thumbnail.'"' : '').'></div></a>';
-                }
-                break;
-            case 'audio':
-                $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
-                $media      =   $renderer->render(['article' => $item]);
-                break;
-            default:
-                if (!empty($item->image_thumbnail)) {
-                    $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                    break;
+                case 'audio':
+                    $renderer   =   new FileLayout('blog.audio', JPATH_LIBRARIES . '/astroid/framework/frontend');
+                    $media      =   $renderer->render(['article' => $item]);
+                    break;
+                default:
+                    if (!empty($item->image_thumbnail)) {
+                        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
                         if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
-                }
-                break;
+                    }
+                    break;
+            }
+        }
+        $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
+        if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
+            $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
+        }
+        if ($enable_image_effect) {
+            $media  =   '<div class="as-image-effect">' . $media . '</div>';
         }
     }
-    $item_image_cover = !empty($item->image_thumbnail) && ($enable_image_cover || $layout == 'overlay');
-    if ($item_image_cover && ($item->post_format !== 'video' || $video_type !== 'local')) {
-        $media  =   '<a href="'.Route::_($link).'" title="'. $item->title . '"><div class="as-image-cover d-block overflow-hidden'.($layout == 'overlay' ? ' astroid-image-overlay-cover' : '').$img_border_radius.'"><img class="object-fit-cover w-100 h-100" src="'. $item->image_thumbnail .'" alt="'.$item->title.'"></div></a>';
-    }
-    if ($enable_image_effect) {
-        $media  =   '<div class="as-image-effect">' . $media . '</div>';
-    }
+
     echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
-    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic' && $thumbnail_hidden==0) {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
     }
     if ($media_position != 'inside') {
         echo $media;
     }
-    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic' && $thumbnail_hidden==0) {
         echo '</div>';
         echo '<div class="col order-1">';
     }
@@ -395,6 +400,28 @@ foreach ($items as $key => $item) {
         }
         echo '</dl>';
     }
+
+    if($show_custom_fields){
+        $fields = FieldsHelper::getFields('com_content.article', $item, true);
+            ?>
+            <div class="row row-cols-2 article-custom-fields">
+                <?php
+                foreach ($fields as $field) {
+                    if (!empty($field->value)) {
+                        echo '<div class="field-item">';
+                        echo '<span class="field-label d-block">' . $field->title . ':</span>';
+                        echo '<span class="field-value d-block">' . $field->value . '</span>';
+                        echo '';
+                        echo '</div>';
+                    }
+                }
+                ?>
+            </div>
+    <?php
+    }
+
+
+
     if (!empty($item->introtext) && $enable_intro_text) {
         echo '<div class="astroid-article-introtext">' . (!empty($intro_limit) ? mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') : $item->introtext) . '</div>';
     }
@@ -415,7 +442,7 @@ foreach ($items as $key => $item) {
 
     echo '</div>'; // End Card-Body
 
-    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic') {
+    if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic' && $thumbnail_hidden==0) {
         echo '</div>';
         echo '</div>';
     }
