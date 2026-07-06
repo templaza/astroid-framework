@@ -141,6 +141,7 @@ class AstroidlayoutdataField extends FormField {
                 $constant['editor'] = $editor;
                 $json = [
                     'article_id' => $id,
+                    'source' => $article_layout->layout,
                     'widgets' => $widgets,
                     'constant'   => $constant,
                     'language'  =>  $language,
