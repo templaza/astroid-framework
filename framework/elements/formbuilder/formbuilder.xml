@@ -38,6 +38,7 @@
                     <option value="link">Link</option>
                     <option value="text">Text</option>
                 </field>
+                <field astroidgroup="button_options" type="astroidtext" label="ASTROID_BANNER_CTA_BUTTON_TEXT_LABEL" name="btn_text" default=""/>
                 <field astroidgroup="button_options" type="astroidlist" label="ASTROID_POSITION" name="button_position" default="">
                     <option value="">TPL_ASTROID_DEFAULT</option>
                     <option value="inside">ASTROID_INSIDE</option>

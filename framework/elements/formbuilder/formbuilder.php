@@ -82,6 +82,7 @@ if ($params->get('enable_captcha', 0) == 1) {
 echo '<form id="'.$element->id.'_formbuilder" class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget"'.$captcha_attr.'>';
 echo '<div class="row'.$row_column_cls.'">';
 $button_style       =   $params->get('button_style', 'primary');
+$btn_text           =   $params->get('btn_text', '');
 $button_outline     =   $params->get('button_outline', 0);
 
 $button_size        =   $params->get('button_size', '');
@@ -93,7 +94,12 @@ $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 $button_margin_top  =   $params->get('button_margin_top', '4');
 $button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
 $button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-$btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
+if($btn_text){
+    $btn_title      =   $btn_text;
+}else{
+    $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
+}
+
 
 foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
