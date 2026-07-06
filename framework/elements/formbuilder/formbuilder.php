@@ -26,6 +26,7 @@ extract($displayData);
 $mainframe      =   Factory::getApplication();
 
 $form_elements  = $params->get('form_elements', '');
+$button_position  = $params->get('button_position', '');
 if (empty($form_elements)) {
     return false;
 }
@@ -80,6 +81,20 @@ if ($params->get('enable_captcha', 0) == 1) {
 
 echo '<form id="'.$element->id.'_formbuilder" class="as-form-builder mt-4" method="post" action="'.Uri::root().'index.php?option=com_ajax&astroid=ajax_widget"'.$captcha_attr.'>';
 echo '<div class="row'.$row_column_cls.'">';
+$button_style       =   $params->get('button_style', 'primary');
+$button_outline     =   $params->get('button_outline', 0);
+
+$button_size        =   $params->get('button_size', '');
+$button_size        =   $button_size ? ' '. $button_size : '';
+
+$button_radius      =   $params->get('btn_border_radius', '');
+$button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
+
+$button_margin_top  =   $params->get('button_margin_top', '4');
+$button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
+$button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
+$btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
+
 foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
     //Options
@@ -157,6 +172,29 @@ foreach ($form_elements as $key => $form_element) :
     }
     echo '</div>';
 endforeach;
+if($button_position=='inside'){
+    $column_btn     =   [];
+    $column_btn[]   =   (isset($params['btn_column_lg']) && $params['btn_column_lg']) ? 'col-lg-' . 12/$params['btn_column_lg'] : 'col-lg-6';
+    $column_btn[]   =   (isset($params['btn_column_md']) && $params['btn_column_md']) ? 'col-md-' . 12/$params['btn_column_md'] : 'col-md-6';
+    $column_btn[]   =   (isset($params['btn_column_sm']) && $params['btn_column_sm']) ? 'col-sm-' . 12/$params['btn_column_sm'] : 'col-sm-12';
+    $column_btn[]   =   (isset($params['btn_column']) && $params['btn_column']) ? 'col-' . 12/$params['btn_column'] : 'col-12';
+
+    echo '<div class="'.implode(' ', $column_btn).'">';
+        if ($params->get('enable_captcha', 0) == 1) {
+            $captcha_type = $pluginParams->get('captcha_type', 'default');
+            echo '<div class="mt-2">';
+            if ($captcha_type == 'recaptcha') {
+                echo '<div class="google-recaptcha"></div>';
+            } else if ($captcha_type == 'turnstile') {
+                echo '<div class="cloudflare-turnstile"></div>';
+            } else {
+                echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha-' . $source . '-' . $element->unqid);
+            }
+            echo '</div>';
+        }
+    echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
+    echo '</div>';
+}
 echo '</div>';
 
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
@@ -177,34 +215,22 @@ if (isset($options['layout_type']) && $options['layout_type']) {
     }
 }
 echo '<input type="hidden" class="token" name="'.Session::getFormToken().'" value="1">';
-
-$button_style       =   $params->get('button_style', 'primary');
-$button_outline     =   $params->get('button_outline', 0);
-
-$button_size        =   $params->get('button_size', '');
-$button_size        =   $button_size ? ' '. $button_size : '';
-
-$button_radius      =   $params->get('btn_border_radius', '');
-$button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
-
-$button_margin_top  =   $params->get('button_margin_top', '4');
-$button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
-$button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-$btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
-
-if ($params->get('enable_captcha', 0) == 1) {
-    $captcha_type = $pluginParams->get('captcha_type', 'default');
-    echo '<div class="mt-2">';
-    if ($captcha_type == 'recaptcha') {
-        echo '<div class="google-recaptcha"></div>';
-    } else if ($captcha_type == 'turnstile') {
-        echo '<div class="cloudflare-turnstile"></div>';
-    } else {
-        echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha-' . $source . '-' . $element->unqid);
+if($button_position!='inside'){
+    if ($params->get('enable_captcha', 0) == 1) {
+        $captcha_type = $pluginParams->get('captcha_type', 'default');
+        echo '<div class="mt-2">';
+        if ($captcha_type == 'recaptcha') {
+            echo '<div class="google-recaptcha"></div>';
+        } else if ($captcha_type == 'turnstile') {
+            echo '<div class="cloudflare-turnstile"></div>';
+        } else {
+            echo Helper\Captcha::loadCaptcha('as-formbuilder-captcha-' . $source . '-' . $element->unqid);
+        }
+        echo '</div>';
     }
-    echo '</div>';
+    echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
 }
-echo '<button type="button" class="as-form-builer-submit btn ' . $button_class . $button_margin . '">'.$btn_title.'</button>';
+
 echo '<div class="as-formbuilder-status mt-4"></div>';
 echo '</form>';
 
