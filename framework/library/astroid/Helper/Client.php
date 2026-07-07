@@ -321,7 +321,8 @@ class Client
         }
     }
 
-    public function saveArticleElement() {
+    public function saveArticleElement(): void
+    {
         try {
             // Check for request forgeries.
             $this->checkAuth();
@@ -330,6 +331,7 @@ class Client
             $data           = $app->input->post->get('data', '', 'RAW');
             $article_id     = $app->input->post->get('article_id', 0, 'RAW');
             $template_name  = $app->input->post->get('template', NULL, 'RAW');
+
             $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/article_widget_data/";
             if ($data && $article_id) {
                 $json_data      = json_decode($data, true);
@@ -345,6 +347,31 @@ class Client
         } catch (\Exception $e) {
             $this->errorResponse($e);
         }
-        return true;
+    }
+
+    public function removeArticleElementData(): void
+    {
+        try {
+            // Check for request forgeries.
+            $this->checkAuth();
+            $this->checkAdminAuth();
+            $app            = Factory::getApplication();
+            $element_id     = $app->input->post->get('element_id', 0, 'RAW');
+            $article_id     = $app->input->post->get('article_id', 0, 'RAW');
+            $template_name  = $app->input->post->get('template', NULL, 'RAW');
+            $source         = $app->input->post->get('source', NULL, 'RAW');
+            $layout_path    = JPATH_SITE . "/media/templates/site/$template_name/params/article_widget_data/". $article_id . '_' . $element_id . '.json';
+            $astroid_path    = JPATH_SITE . "/media/templates/site/$template_name/astroid/article_widget_data/". $article_id . '_' . $element_id . '.json';
+            if (file_exists($layout_path)) {
+                File::delete($layout_path);
+            }
+            if (file_exists($astroid_path)) {
+                File::delete($astroid_path);
+            }
+            $element = Helper::getElement($element_id, null, ['layout_type' => 'article_layouts', 'source' => $source, 'template' => $template_name]);
+            $this->response(\json_encode($element));
+        } catch (\Exception $e) {
+            $this->errorResponse($e);
+        }
     }
 }
