@@ -409,9 +409,8 @@ foreach ($items as $key => $item) {
                 foreach ($fields as $field) {
                     if (!empty($field->value)) {
                         echo '<div class="field-item">';
-                        echo '<span class="field-label d-block">' . $field->title . ':</span>';
-                        echo '<span class="field-value d-block">' . $field->value . '</span>';
-                        echo '';
+                        echo '<span class="field-label d-block">' . htmlspecialchars($field->title, ENT_QUOTES, 'UTF-8') . ':</span>';
+                        echo '<span class="field-value d-block">' . htmlspecialchars((string) $field->value, ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</div>';
                     }
                 }
