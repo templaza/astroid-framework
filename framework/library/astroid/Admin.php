@@ -639,7 +639,11 @@ class Admin extends Helper\Client
                     throw new \Exception(Text::_('INVALID FILETYPE'));
                 }
 
-                $uploadPath = $presets_path . '/presets/' . $pathinfo['filename'] . '.' .$uploadedFileExtension;
+                $presetDir = $presets_path . '/presets';
+                if (!is_dir($presetDir)) {
+                    Folder::create($presetDir);
+                }
+                $uploadPath = $presetDir . '/' . $pathinfo['filename'] . '.' . $uploadedFileExtension;
                 Helper::putContents($uploadPath, \json_encode($preset));
             }
 
