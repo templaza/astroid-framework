@@ -289,6 +289,7 @@ foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $video_type     =   $item->params->get('astroid_article_video_type', '');
     $media          =   '';
+    $item_image_cover = false;
     if($thumbnail_hidden==0){
         if ($thumbnail_only && !empty($item->image_thumbnail)) {
             $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
