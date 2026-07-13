@@ -94,8 +94,8 @@ $mask_repeat         = $params->get('mask_repeat', '');
 $mask_position         = $params->get('mask_position', '');
 if($shape=='style1'){
     $shape_style = ''. Uri::root() . 'media/astroid/assets/images/style1.svg';
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-image', 'url('.$shape_style.')');
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-repeat', $mask_repeat);
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-position', $mask_position);
-    $style->child('.as-image-wrapper img')->addCss('-webkit-mask-size', $mask_scale.'%');
+    $style->child('.uk-image-wrapper img')->addCss('-webkit-mask-image', 'url('.$shape_style.')');
+    $style->child('.uk-image-wrapper img')->addCss('-webkit-mask-repeat', $mask_repeat);
+    $style->child('.uk-image-wrapper img')->addCss('-webkit-mask-position', $mask_position);
+    $style->child('.uk-image-wrapper img')->addCss('-webkit-mask-size', $mask_scale.'%');
 }
