@@ -89,7 +89,7 @@ $clsItemBody .= $blog_layout == 'overlay' ? ' card-img-overlay as-light ' . $ove
 ?>
 <div class="item-content item-media-<?php echo $image_position; ?> post-<?php echo $astroid_article_type; ?> position-relative<?php echo (!empty($clsItemContainer) ? ' '.$clsItemContainer : '') . ($image_position == 'bottom' ? ' d-flex flex-column-reverse' : ''); ?>">
     <?php if ($isUnpublished) : ?>
-    <div class="system-unpublished">
+    <div class="system-unpublished<?php echo $image_position == 'bottom' ? ' d-flex flex-column-reverse' : ''; ?>">
         <?php endif; ?>
         <?php
         if ($astroid_article_type == 'video' && $astroid_article_video_type == 'local') {
