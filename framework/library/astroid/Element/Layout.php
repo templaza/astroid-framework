@@ -191,12 +191,14 @@ class Layout
         }
         $presets_path = JPATH_SITE . "/media/templates/site/{$template_name}/astroid/{$filearea}/";
         $params_path = JPATH_SITE . "/media/templates/site/{$template_name}/params/{$filearea}/";
+        if (!file_exists($params_path)) {
+            return false;
+        }
         if (!is_dir($presets_path)) {
             if (!Folder::create($presets_path)) {
                 return false;
             }
         }
-
         $files = Folder::files($params_path, '\.json$', false, false);
         foreach ($files as $file) {
             $file_url = Path::clean($presets_path . $file);
