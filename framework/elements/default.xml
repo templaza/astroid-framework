@@ -13,8 +13,8 @@
             <field type="astroidgroup" name="spacing_settings" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
             <field type="astroidgroup" name="colors_settings" title="ASTROID_OPTIONS_COLOURS"/>
             <field type="astroidgroup" name="alignment_settings" title="ASTROID_WIDGET_WIDTH_AND_ALIGNMENT_LABEL"/>
-            <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
             <field type="astroidgroup" name="device_settings" title="ASTROID_ELEMENT_HEAD_DEVICE_VISIBILITY_LABEL" />
+            <field type="astroidgroup" name="custom_settings" title="TPL_ASTROID_CUSTOM_CUSTOM_CSS_LABEL"/>
 
             <field astroidgroup="general" name="astroid_element_visibility" type="astroidlist" label="ASTROID_ELEMENT_VISIBILITY_LABEL" default="allPage">
                <option value="allPage">ASTROID_BANNER_VISIBILITY_OPTIONS_ALL</option>
