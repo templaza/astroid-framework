@@ -292,7 +292,7 @@ foreach ($items as $key => $item) {
     $item_image_cover = false;
     if($thumbnail_hidden==0){
         if ($thumbnail_only && !empty($item->image_thumbnail)) {
-            $media      =   $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+            $media      =   $media      =   '<img class="'.$img_border_radius.' '. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
             if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
         } else {
             switch ($item->post_format) {
@@ -309,7 +309,7 @@ foreach ($items as $key => $item) {
                             if ($enable_image_cover) {
                                 $media  .=  '<div class="position-absolute top-0 start-0 end-0 bottom-0 astroid-image-overlay-cover">';
                             }
-                            $media  .=  '<img src="'.$gallery_item->image.'" class="d-block w-100'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'" alt="'.$gallery_item->title.'">';
+                            $media  .=  '<img src="'.$gallery_item->image.'" class="'.$img_border_radius.' d-block w-100'.($enable_image_cover ? ' object-fit-cover w-100 h-100' : '').'" alt="'.$gallery_item->title.'">';
                             if ($enable_image_cover) {
                                 $media  .=  '</div>';
                             }
@@ -334,7 +334,7 @@ foreach ($items as $key => $item) {
                             $media .=   '<iframe src="' . $video_src . '" title="'.$item->title.'" allowfullscreen></iframe>';
                             $media .=   '</div>';
                             if ($video_type == 'youtube' && !empty($item->image_thumbnail)) {
-                                $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                                $media      =   '<img class=" '.$img_border_radius.' '. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
                             }
                         }
                     } elseif (!empty($video_local_url)) {
@@ -348,7 +348,7 @@ foreach ($items as $key => $item) {
                     break;
                 default:
                     if (!empty($item->image_thumbnail)) {
-                        $media      =   '<img class="'. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
+                        $media      =   '<img class="'.$img_border_radius.' '. ($media_position == 'bottom' ? 'order-2 ' : '') . ($media_position == 'left' || $media_position == 'right' ? 'object-fit-cover w-100 h-100 ' : '') . ($params->get('card_style', '') == 'none' || $border_radius !== '' ? '' : 'card-img-'. $media_position) .'" src="'. $item->image_thumbnail .'" alt="'.$item->title.'">';
                         if ($linked_image) { $media = '<a href="' . Route::_($link) . '">' . $media . '</a>'; }
                     }
                     break;
