@@ -368,6 +368,12 @@ if ($params->get('card_style', '') == 'custom') {
     $style->child('.as-grid > .card')->addCss('background-color', $bg_color['light']);
     $style_dark->child('.as-grid > .card')->addCss('background-color', $bg_color['dark']);
 
+    $bg_hover_color       =   Style::getColor($params->get('bg_hover_color', ''));
+
+    $style->child('.as-grid > .card:hover')->addCss('background-color', $bg_hover_color['light']);
+    $style_dark->child('.as-grid > .card:hover')->addCss('background-color', $bg_hover_color['dark']);
+
+
     $card_border    =   json_decode($params->get('card_border', ''), true);
     if (!empty($card_border)) {
         Style::addBorderStyle('#'. $element->id . ' .as-grid > .card', $card_border, 'global', $element->isRoot);

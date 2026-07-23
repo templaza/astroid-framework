@@ -273,6 +273,7 @@
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="text_color" type="astroidcolor" label="TPL_ASTROID_TEXT_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="bg_color" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL" />
                 <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="card_border" type="astroidborder" label="ASTROID_WIDGET_BORDER_LABEL" />
+                <field astroidgroup="card_options" ngShow="[card_style]=='custom'" name="bg_hover_color" type="astroidcolor" label="ASTROID_WIDGET_BACKGROUND_COLOR_HOVER" />
 
                 <field astroidgroup="card_options" type="astroidlist" name="card_size" label="ASTROID_WIDGET_CARD_SIZE_LABEL" default="">
                     <option value="none">ASTROID_NONE</option>
