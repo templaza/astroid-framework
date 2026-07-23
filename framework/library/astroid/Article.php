@@ -65,7 +65,7 @@ class Article
         }
     }
 
-    public function addMeta()
+    public function addMeta(): void
     {
         $app = Factory::getApplication();
         $itemid = $app->input->get('Itemid', '', 'INT');
@@ -74,11 +74,13 @@ class Article
 
         if (!empty($item)) {
             $params = $item->getParams();
-
             $enabled = $params->get('astroid_opengraph_menuitem', 0);
             $enabled = (int) $enabled;
             if (!empty($enabled)) {
-                return;
+                $astroid_og_visibility = $params->get('astroid_og_visibility', "currentPage");
+                if ($astroid_og_visibility !== "currentPage") {
+                    return;
+                }
             }
         }
 
