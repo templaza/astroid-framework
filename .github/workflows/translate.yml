@@ -16,9 +16,9 @@ on:
       locales:
         description: >
           Comma-separated list of target locales to sync.
-          Leave blank to sync all default locales (de-DE,fr-FR,es-ES,pt-BR,zh-CN).
+          Leave blank to sync all default locales (de-DE,fr-FR,es-ES,pt-BR,zh-CN,ru-RU,vi-VN).
         required: false
-        default: 'de-DE,fr-FR,es-ES,pt-BR,zh-CN'
+        default: 'de-DE,fr-FR,es-ES,pt-BR,zh-CN,ru-RU,vi-VN'
       force:
         description: >
           Force re-translation of ALL keys, including those already translated.

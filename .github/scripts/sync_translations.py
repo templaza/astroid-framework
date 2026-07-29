@@ -6,7 +6,7 @@ Usage:
     python .github/scripts/sync_translations.py [options]
 
 Options:
-    --locales DE-DE,fr-FR,...   Comma-separated target locales (default: all five)
+    --locales DE-DE,fr-FR,...   Comma-separated target locales (default: all seven)
     --source   PATH             Source INI file (default: language/en-GB/en-GB.astroid.ini)
     --force                     Re-translate already-translated keys
     --dry-run                   Parse and report without writing files or calling the API
@@ -174,6 +174,8 @@ DEEPL_LANG = {
     "es-ES": "ES",
     "pt-BR": "PT-BR",
     "zh-CN": "ZH",
+    "ru-RU": "RU",
+    "vi-VN": "VI",
 }
 
 
@@ -401,7 +403,7 @@ def update_astroid_xml(locales: List[str], xml_path: Path) -> bool:
 # CLI
 # ---------------------------------------------------------------------------
 
-_DEFAULT_LOCALES = ["de-DE", "fr-FR", "es-ES", "pt-BR", "zh-CN"]
+_DEFAULT_LOCALES = ["de-DE", "fr-FR", "es-ES", "pt-BR", "zh-CN", "ru-RU", "vi-VN"]
 _DEFAULT_SOURCE = Path("language/en-GB/en-GB.astroid.ini")
 _ASTROID_XML = Path("astroid.xml")
 
