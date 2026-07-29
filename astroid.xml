@@ -24,9 +24,11 @@
       <folder>js</folder>
       <filename>joomla.asset.json</filename>
    </media>
-   <languages folder="language/en-GB">
-      <language tag="en-GB">en-GB.astroid.ini</language>
-      <language tag="en-GB">en-GB.astroid.sys.ini</language>
+   <languages folder="language">
+      <language tag="en-GB">en-GB/en-GB.astroid.ini</language>
+      <language tag="en-GB">en-GB/en-GB.astroid.sys.ini</language>
+      <language tag="de-DE">de-DE/de-DE.astroid.ini</language>
+      <language tag="de-DE">de-DE/de-DE.astroid.sys.ini</language>
    </languages>
    <changelogurl>https://raw.githubusercontent.com/templaza/astroid-framework/refs/heads/updates/changelogs.xml</changelogurl>
    <updateservers>
