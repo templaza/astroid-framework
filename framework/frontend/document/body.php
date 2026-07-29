@@ -40,15 +40,15 @@ if ($header && !empty($header_mode) && $header_mode == 'sidebar') {
     $mode = $params->get('header_sidebar_menu_mode', 'left');
     if ($mode == 'topbar') {
         $sidebar_position = $params->get('sidebar_position', 'left');
-        if ($sidebar_position == 'right') {
-            $astroid_content_class[] = 'order-xl-1';
-        }
     } else {
         $sidebar_position = $mode;
     }
     $astroid_content_class[] = 'sidebar-dir-' . $sidebar_position;
     array_push($container_class, 'row', 'g-0');
     $astroid_content_class[] = 'col';
+    if ($sidebar_position == 'right') {
+        $astroid_content_class[] = 'order-xl-1';
+    }
 }
 
 // Astroid Layout Background
