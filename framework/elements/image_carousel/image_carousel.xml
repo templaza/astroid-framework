@@ -196,7 +196,7 @@
                 <field astroidgroup="slider_options" ngShow="[slider_nav]==1" name="nav_bg_color_hover" type="astroidcolor" label="ASTROID_WIDGET_BACKGROUND_COLOR_HOVER"/>
                 <field astroidgroup="slider_options" ngShow="[slider_nav]==1" name="slider_nav_border_hover" type="astroidborder" label="ASTROID_WIDGET_BORDER_HOVER"/>
                 <field astroidgroup="slider_options" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
-                <field astroidgroup="slider_options" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SROLLBAR"/>
+                <field astroidgroup="slider_options" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SCROLLBAR"/>
                 <field astroidgroup="slider_options" name="direction" type="astroidlist" label="ASTROID_WIDGET_SWIPER_DIRECTION" default="">
                     <option value="">JGLOBAL_INHERIT</option>
                     <option value="ltr">ASTROID_WIDGET_DIRECTION_LTR</option>
