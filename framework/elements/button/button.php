@@ -93,18 +93,23 @@ foreach ($buttons->data as $key => $button) {
         $name = trim((string) $attr->params->get('attribute', ''));
         $value = (string) $attr->params->get('value', '');
 
-        if ($name === '' || preg_match('/^on/i', $name)) {
+        if ($name === '') {
             continue;
         }
 
         // Keep only valid attribute name characters (incl. data-* / aria-*)
         $name = preg_replace('/[^a-zA-Z0-9_:\-\.]/', '', $name);
-        if ($name === '') {
+        $lower = strtolower($name);
+
+        if ($lower === '' || str_starts_with($lower, 'on') || in_array($lower, ['href', 'id', 'class', 'target', 'rel', 'style'], true)) {
+            continue;
+        }
+
+        if (!str_starts_with($lower, 'data-') && !str_starts_with($lower, 'aria-') && !in_array($lower, ['title', 'role', 'tabindex', 'download'], true)) {
             continue;
         }
 
         $btn_attrs .= ' ' . $name . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
-    }
     echo '<a id="btn-'.$button->id.'" href="' .$button->params->get('link', ''). '" class="' .$button_class . '"'.$link_target.$btn_attrs.'>'.$btn_title.'</a>';
     $btn_font_style =   $button->params->get('btn_font_style');
     if (!empty($btn_font_style)) {
