@@ -29,6 +29,19 @@
       <language tag="en-GB">en-GB/en-GB.astroid.sys.ini</language>
       <language tag="de-DE">de-DE/de-DE.astroid.ini</language>
       <language tag="de-DE">de-DE/de-DE.astroid.sys.ini</language>
+      <language tag="fr-FR">fr-FR/fr-FR.astroid.ini</language>
+      <language tag="fr-FR">fr-FR/fr-FR.astroid.sys.ini</language>
+      <language tag="es-ES">es-ES/es-ES.astroid.ini</language>
+      <language tag="es-ES">es-ES/es-ES.astroid.sys.ini</language>
+      <language tag="pt-BR">pt-BR/pt-BR.astroid.ini</language>
+      <language tag="pt-BR">pt-BR/pt-BR.astroid.sys.ini</language>
+      <language tag="zh-CN">zh-CN/zh-CN.astroid.ini</language>
+      <language tag="zh-CN">zh-CN/zh-CN.astroid.sys.ini</language>
+      <language tag="ru-RU">ru-RU/ru-RU.astroid.ini</language>
+      <language tag="ru-RU">ru-RU/ru-RU.astroid.sys.ini</language>
+      <language tag="vi-VN">vi-VN/vi-VN.astroid.ini</language>
+      <language tag="vi-VN">vi-VN/vi-VN.astroid.sys.ini</language>
+
    </languages>
    <changelogurl>https://raw.githubusercontent.com/templaza/astroid-framework/refs/heads/updates/changelogs.xml</changelogurl>
    <updateservers>
