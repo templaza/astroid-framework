@@ -205,7 +205,6 @@ def translate_deepl(
     for batch_start in range(0, len(texts), batch_size):
         batch = texts[batch_start : batch_start + batch_size]
         params: List[Tuple[str, str]] = [
-            ("auth_key", api_key),
             ("source_lang", source_lang),
             ("target_lang", target_lang),
         ]
@@ -217,7 +216,10 @@ def translate_deepl(
             endpoint,
             data=body,
             method="POST",
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": f"DeepL-Auth-Key {api_key}",
+            },
         )
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:
