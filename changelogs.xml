@@ -3,24 +3,21 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.4.2</version>
+        <version>3.4.3</version>
         <addition>
-            <item><![CDATA[Smooth Scroll (Legacy) Library Returns]]></item>
-            <item><![CDATA[New Astroid Scroll Effects Library]]></item>
-            <item><![CDATA[New Transform “Filter” Group]]></item>
-            <item><![CDATA[Add UK Image, UK Grid, UK Testimonials]]></item>
+            <item><![CDATA[New Sticky Header container option]]></item>
+            <item><![CDATA[Category view option to display the info block above the title]]></item>
+            <item><![CDATA[Grid animation counter and improved animation handling]]></item>
+            <item><![CDATA[Outline style and custom attributes for Button widgets]]></item>
+            <item><![CDATA[“vw” unit added to Typography fields]]></item>
+            <item><![CDATA[German (de-DE) language support in core package plus automated translation workflow]]></item>
         </addition>
         <fix>
-            <item><![CDATA[Fixed issue when $params is null in Mega Menu]]></item>
-            <item><![CDATA[Fixed conflict between Basic and Advanced animation]]></item>
-            <item><![CDATA[Fixed overflow hidden issue in Parallax container]]></item>
-            <item><![CDATA[Fixed issue where Menu Backdrop setting could cause FOUC (Flash of Unstyled Content)]]></item>
+            <item><![CDATA[Fixes for Open Graph, article tabs, image media, typography UI, sidebars, subform cache, and more]]></item>
         </fix>
         <change>
-            <item><![CDATA[Enable/Disable Astroid Tabs in Blog]]></item>
-            <item><![CDATA[Lenis JS Included in Astroid Package]]></item>
-            <item><![CDATA[Updated Accordion, Heading Element]]></item>
-            <item><![CDATA[Improved Media Manager Experience]]></item>
+            <item><![CDATA[Updated Google Font Library, Font Awesome 7.3.1, Bootstrap 5.3.8]]></item>
+            <item><![CDATA[Improvements to presets, article custom fields, layout builder UX, and module loading]]></item>
         </change>
     </changelog>
     <changelog>
