@@ -22,3 +22,14 @@
     }
   }
 }
+.slider_visible_all{
+  overflow: visible;
+}
+.slider_visible_right{
+  overflow: visible;
+  clip-path: inset(-100vw -100vw -100vw 0);
+}
+.slider_visible_left{
+  overflow: visible;
+  clip-path: inset(0 -100vw -100vw -100vw);
+}

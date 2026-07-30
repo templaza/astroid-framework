@@ -702,24 +702,26 @@ class Utility
                     }
                 }
                 $css_not_size .= Style::getSpacingStyle($button->params->get('border_radius', ''), 'radius');
-
+                $button_outline = $button->params->get('button_outline', 0);
+                $btn_class = $button_outline ? '.btn-outline' : '.btn';
+                $btn_class .= '-' . $style;
                 // Button override
                 if (!empty($css_light)) {
-                    $content .= '.btn-'. $style .' {';
+                    $content .= $btn_class .' {';
                     $content .= $css_light;
                     $content .= '}';
                 }
 
                 if (!empty($css_dark)) {
                     $content .= '@include color-mode(dark) {';
-                    $content .= '.btn-'. $style .' {';
+                    $content .= $btn_class .' {';
                     $content .= $css_dark;
                     $content .= '}';
                     $content .= '}';
                 }
 
                 if (!empty($css_not_size)) {
-                    $content .= '.btn-'. $style .':not(.btn-sm):not(.btn-lg) {';
+                    $content .= $btn_class .':not(.btn-sm):not(.btn-lg):not(.input-password-toggle) {';
                     $content .= $css_not_size;
                     $content .= '}';
                 }

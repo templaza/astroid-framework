@@ -161,7 +161,7 @@ class Article
         return ceil($this->article['rating_sum'] / $this->article['rating_count']);
     }
 
-    public static function getArticles( $count = 5, $ordering = 'latest', $catid = '', $include_subcategories = true, $post_format = '', $tagids = array() ) {
+    public static function getArticles( $count = 5, $ordering = 'latest', $catid = '', $include_subcategories = true, $post_format = '', $tagids = array(),$offset='' ) {
 
         $app = Factory::getApplication();
         $authorised = Access::getAuthorisedViewLevels($app->getIdentity()->id);
@@ -275,7 +275,7 @@ class Article
         // continue query
         $query->where($db->quoteName('a.access')." IN (" . implode( ',', $authorised ) . ")");
         $query->order($db->quoteName('a.created') . ' DESC')
-            ->setLimit($count);
+            ->setLimit($count,$offset);
         $db->setQuery($query);
         $items = $db->loadObjectList();
 

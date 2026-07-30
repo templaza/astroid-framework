@@ -119,6 +119,9 @@ class AstroidlayoutdataField extends FormField {
                                         $widget_data = json_decode($widget_data, true);
                                         $element['state'] = $widget_data['state'];
                                         $element['params'] = array_merge($element['params'], $widget_data['params']);
+                                        $element['source'] = 'article_data';
+                                    } else {
+                                        $element['source'] = 'template_data';
                                     }
                                     $section_widgets[]  =   $element;
                                 }
@@ -138,6 +141,7 @@ class AstroidlayoutdataField extends FormField {
                 $constant['editor'] = $editor;
                 $json = [
                     'article_id' => $id,
+                    'source' => $article_layout->layout,
                     'widgets' => $widgets,
                     'constant'   => $constant,
                     'language'  =>  $language,

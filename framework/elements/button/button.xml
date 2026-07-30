@@ -26,6 +26,16 @@
                                     <option value="first">ASTROID_WIDGET_ICON_POSITION_FIRST_LABEL</option>
                                     <option value="last">ASTROID_WIDGET_ICON_POSITION_LAST_LABEL</option>
                                 </field>
+                                <field name="button_attributes" type="astroidsubform" label="ASTROID_WIDGET_BUTTON_ATTRIBUTES" as-index="attribute">
+                                    <form>
+                                        <fields>
+                                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                                                <field type="astroidtext" label="ASTROID_WIDGET_ATTRIBUTE_LABEL" name="attribute" dynamic="true"/>
+                                                <field type="astroidtext" label="ASTROID_VALUE_LABEL" name="value" dynamic="true"/>
+                                            </fieldset>
+                                        </fields>
+                                    </form>
+                                </field>
                                 <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
                                     <option value="primary">Primary</option>
                                     <option value="secondary">Secondary</option>

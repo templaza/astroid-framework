@@ -18,6 +18,7 @@ $document = Astroid\Framework::getDocument();
 $params = $template->getParams();
 
 $header_menu = $params->get('header_menu', 'mainmenu');
+$header_sticky_container_type = $params->get('header_sticky_container_type', 'container');
 $header_menu_method = $params->get('header_menu_method', 'default');
 $mobile_menu_method = $params->get('mobile_menu_method', 'default');
 $header_menu_module_position = $params->get('header_menu_module_position', 'astroid-header-menu');
@@ -58,7 +59,7 @@ switch ($stickey_mode) {
 ?>
 <!-- header starts -->
 <header id="astroid-sticky-header" class="<?php echo implode(' ', $class); ?> d-none">
-    <div class="container">
+    <div class="<?php echo $header_sticky_container_type; ?>">
         <div class="astroid-header d-flex flex-row justify-content-between">
             <?php if (!empty($header_mobile_menu)) {
                 if ($mobile_menu_method == 'module_position') {

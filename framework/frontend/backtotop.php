@@ -13,6 +13,7 @@
 defined('_JEXEC') or die;
 extract($displayData);
 use Astroid\Helper\Style;
+use Joomla\CMS\Language\Text;
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
 $enable_backtotop = $params->get('backtotop', 1);
@@ -67,5 +68,5 @@ if (!$backtotop_on_mobile) {
    $class[] = 'hideonxs';
 }
 
-$html .= '<button type="button" title="Back to Top" id="astroid-backtotop" class="btn ' . implode(' ', $class) . '" ><i class="' . $backtotop_icon . '"></i></button>';
+$html .= '<button type="button" title="'.Text::_('TPL_ASTROID_BASIC_BACK_TO_TOP_LABEL').'" id="astroid-backtotop" class="btn ' . implode(' ', $class) . '" ><i class="' . $backtotop_icon . '"></i></button>';
 echo $html;

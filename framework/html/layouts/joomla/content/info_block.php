@@ -12,11 +12,12 @@ use Astroid\Article;
 use Joomla\CMS\Language\Text;
 
 $blockPosition = $displayData['params']->get('info_block_position', 0);
+$info_block_above_position = $displayData['params']->get('info_block_above_position', 'below_title');
 if (!isset($displayData['astroidArticle'])) {
    $displayData['astroidArticle'] = new Article($displayData['item']);
 }
 ?>
-<dl class="article-info muted <?php echo $displayData['position']; ?>">
+<dl class="article-info muted <?php echo $displayData['position'] . ($info_block_above_position == 'above_title' ? ' mb-1' : ''); ?>">
    <?php
    if (
        $displayData['position'] === 'above' && ($blockPosition == 0 || $blockPosition == 2)

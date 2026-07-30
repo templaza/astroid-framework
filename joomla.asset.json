@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "astroid",
-  "version": "3.4.1",
+  "version": "3.4.3",
   "description": "Astroid Framework Assets",
   "license": "GPL-3.0-or-later",
   "assets": [
@@ -164,6 +164,14 @@
         "astroid.gsap"
       ],
       "uri": "astroid/AstroidScrollEffects.min.js"
+    },
+    {
+      "name": "astroid.animation.counter",
+      "type": "script",
+      "dependencies": [
+        "astroid.gsap"
+      ],
+      "uri": "astroid/animate-counter.min.js"
     }
   ]
 }

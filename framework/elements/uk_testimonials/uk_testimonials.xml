@@ -36,11 +36,6 @@
                         </fields>
                     </form>
                 </field>
-                <field astroidgroup="general" name="overlay_text_color" type="astroidlist" label="ASTROID_WIDGET_OVERLAY_TEXT_COLOR" default="">
-                    <option value="">JGLOBAL_INHERIT</option>
-                    <option value="as-light">ASTROID_WIDGET_LIGHT_COLOR</option>
-                    <option value="as-dark">ASTROID_WIDGET_DARK_COLOR</option>
-                </field>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
                     <option value="xl">ASTROID_WIDGET_XL_ICON</option>
@@ -112,6 +107,7 @@
                     <option value="4">Large</option>
                     <option value="5">X-Large</option>
                 </field>
+
                 <field astroidgroup="grid_options" ngShow="[column_responsive]=='xl'" type="astroidlist" name="row_gutter_xl" label="ASTROID_WIDGET_ROW_GUTTER_XL_LABEL" default="">
                     <option value="">JGLOBAL_INHERIT</option>
                     <option value="0">Collapse</option>
@@ -382,19 +378,15 @@
                     <option value="align-items-end">ASTROID_BOTTOM</option>
                 </field>
 
-                <field astroidgroup="slider_options" name="enable_slider" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_ARTICLES_ENABLE_SLIDER"/>
-                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" type="astroidlist" name="slider_type" label="ASTROID_WIDGET_SLIDER_TYPE" default="">
-                    <option value="">Slick</option>
-                    <option value="swiper">Swiper</option>
-                </field>
+                <field astroidgroup="slider_options" name="enable_slider" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDER_ENABLE"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_autoplay" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_AUTOPLAY"/>
-                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="1" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_autoplay]==1" name="interval" type="astroidrange" min="0" max="10" step="1" default="3" label="ASTROID_WIDGET_INTERVAL" postfix="seconds" />
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="speed" type="astroidrange" min="0" max="10" step="0.5" default="1" label="ASTROID_WIDGET_SWIPER_SPEED" postfix="seconds" />
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="freemode" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SWIPER_FREEMODE"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="loop" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SWIPER_LOOP"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_nav" type="astroidradio" astroid-switch="true" default="1" label="ASTROID_WIDGET_NAVIGATION"/>
-                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" type="astroidlist" name="nav_position" label="ASTROID_WIDGET_NAV_POSITION" default="">
-                    <option value="">ASTROID_WIDGET_NAV_POSITION_INSIDE</option>
-                    <option value="nav-outside">ASTROID_WIDGET_NAV_POSITION_OUTSIDE</option>
-                </field>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="nav_icon_size" type="astroidrange" min="0" max="100" step="1" default="16" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" postfix="px" />
                 <field ngShow="[enable_slider]==1 AND [slider_nav]==1" astroidgroup="slider_options" type="astroidlist" name="slider_nav_position" label="ASTROID_POSITION" default="">
                     <option value="">Default</option>
                     <option value="uk-position-top-left">ASTROID_WIDGET_TOP_LEFT</option>
@@ -419,13 +411,92 @@
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="nav_bg_color_hover" type="astroidcolor" label="ASTROID_WIDGET_BACKGROUND_COLOR_HOVER"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_nav]==1" name="slider_nav_border_hover" type="astroidborder" label="ASTROID_WIDGET_BORDER_HOVER"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_dotnav" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_DOT_NAVIGATION"/>
-                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SCROLLBAR"/>
                 <field astroidgroup="slider_options" ngShow="[enable_slider]==1 AND [slider_dotnav]==1" type="astroidlist" name="dot_alignment" label="ASTROID_WIDGET_DOT_ALIGNMENT" default="">
                     <option value="">JGLOBAL_INHERIT</option>
                     <option value="left">JGLOBAL_LEFT</option>
                     <option value="center">JGLOBAL_CENTER</option>
                     <option value="right">JGLOBAL_RIGHT</option>
                 </field>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="slider_scrollbar" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_SLIDE_SROLLBAR"/>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="direction" type="astroidlist" label="ASTROID_WIDGET_SWIPER_DIRECTION" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="ltr">ASTROID_WIDGET_DIRECTION_LTR</option>
+                    <option value="rtl">ASTROID_WIDGET_DIRECTION_RTL</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[enable_slider]==1" name="column_responsive_sl" type="astroidradio" width="full" default="lg">
+                    <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
+                    <option value="xl">ASTROID_WIDGET_XL_ICON</option>
+                    <option value="lg">ASTROID_WIDGET_LG_ICON</option>
+                    <option value="md">ASTROID_WIDGET_MD_ICON</option>
+                    <option value="sm">ASTROID_WIDGET_SM_ICON</option>
+                    <option value="xs">ASTROID_WIDGET_XS_ICON</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xxl' AND [enable_slider]==1" type="astroidlist" name="xxl_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xl' AND [enable_slider]==1" type="astroidlist" name="xl_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='lg' AND [enable_slider]==1" type="astroidlist" name="lg_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="3">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='md' AND [enable_slider]==1" type="astroidlist" name="md_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="1">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='sm' AND [enable_slider]==1" type="astroidlist" name="sm_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="1">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xs' AND [enable_slider]==1" type="astroidlist" name="xs_slidesPerGroup" label="ASTROID_WIDGET_SLIDES_PER_GROUP" default="1">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="1">ASTROID_WIDGET_1_COLUMN</option>
+                    <option value="2">ASTROID_WIDGET_2_COLUMNS</option>
+                    <option value="3">ASTROID_WIDGET_3_COLUMNS</option>
+                    <option value="4">ASTROID_WIDGET_4_COLUMNS</option>
+                    <option value="5">ASTROID_WIDGET_5_COLUMNS</option>
+                    <option value="6">ASTROID_WIDGET_6_COLUMNS</option>
+                    <option value="auto">ASTROID_WIDGET_AUTO_COLUMNS</option>
+                </field>
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xxl' AND [enable_slider]==1" name="gutter_xxl" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_XXL_LABEL" postfix="px" />
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xl' AND [enable_slider]==1" name="gutter_xl" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_XL_LABEL" postfix="px" />
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='lg' AND [enable_slider]==1" name="gutter_lg" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_LG_LABEL" postfix="px" />
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='md' AND [enable_slider]==1" name="gutter_md" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_MD_LABEL" postfix="px" />
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='sm' AND [enable_slider]==1" name="gutter_sm" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_SM_LABEL" postfix="px" />
+                <field astroidgroup="slider_options" ngShow="[column_responsive_sl]=='xs' AND [enable_slider]==1" name="gutter_xs" type="astroidrange" min="0" max="100" step="1" default="10" label="ASTROID_ROW_GUTTER_XS_LABEL" postfix="px" />
 
                 <field astroidgroup="avatar_options" type="astroidlist" name="avatar_position" label="ASTROID_WIDGET_TESTIMONIALS_AVATAR_POSITION_LABEL" default="top">
                     <option value="top">ASTROID_TOP</option>

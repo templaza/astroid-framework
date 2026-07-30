@@ -3,7 +3,7 @@
 /**
  * @package   Astroid Framework
  * @author    Astroid Framework Team https://astroidframe.work
- * @copyright Copyright (C) 2023 AstroidFrame.work.
+ * @copyright Copyright (C) 2026 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -19,8 +19,8 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.4.2';
-    public static $fontawesome_version = '7.2.0';
+    public static $astroid_version = '3.4.3';
+    public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.1';
     public static $animatecss_version = '3.7.0';
     public static $forum_link = 'https://github.com/templaza/astroid-framework/issues';

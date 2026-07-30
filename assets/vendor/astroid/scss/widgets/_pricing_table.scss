@@ -1,0 +1,42 @@
+.pricing-value {
+  > * {
+    display: inline-block;
+    line-height: 1;
+  }
+}
+.pricing-table_featured {
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 0;
+  z-index: 9;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  width: 150px;
+  overflow: hidden;
+  height: 150px;
+}
+
+.pricing-table_featured-inner {
+  text-align: center;
+  text-transform: uppercase;
+  left: 0;
+  width: 200%;
+  -webkit-transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+  -ms-transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+  transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+  margin-top: 35px;
+  font-size: 12px;
+  line-height: 2;
+  color: #fff;
+}
+
+.pricing-table-symbol {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: top;
+}
+.pricing-amount {
+  margin-right: 5px;
+}

@@ -72,6 +72,9 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Accordion Widget
 * Raw HTML Widget
 * Image Carousel Widget
+* UK Grid Widget
+* UK Image Widget
+* UK Testimonials Widget
 * [View all Widgets](https://astroidframe.work/widgets)
 
 ## Article Widgets
@@ -102,6 +105,11 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Countdown Widget
 * Art Slider
 * Image Motion Cursor
+* Pricing Table Widget
+* Circle Text Widget
+* UK Gallery Widget
+* UK Pricing Table Widget
+* UK Slider Widget
 
 ## Requirements
 * Joomla: 4.x, 5.x, 6.x

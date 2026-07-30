@@ -14,6 +14,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Path;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Astroid\Helper;
 
 defined('_JEXEC') or die;
 
@@ -177,6 +179,49 @@ class Layout
         }, $layouts);
 
         return true;
+    }
+
+    public static function saveLayoutPreset($filearea, $template_name = ''): bool
+    {
+        if (empty($filearea)) {
+            return false;
+        }
+        if (empty($template_name)) {
+            $template_name = Framework::getTemplate()->template;
+        }
+        $presets_path = JPATH_SITE . "/media/templates/site/{$template_name}/astroid/{$filearea}/";
+        $params_path = JPATH_SITE . "/media/templates/site/{$template_name}/params/{$filearea}/";
+        if (!file_exists($params_path)) {
+            return false;
+        }
+        if (!is_dir($presets_path)) {
+            if (!Folder::create($presets_path)) {
+                return false;
+            }
+        }
+        $files = Folder::files($params_path, '\.json$', false, false);
+        foreach ($files as $file) {
+            $file_url = Path::clean($presets_path . $file);
+            $content = file_get_contents(Path::clean($params_path . $file));
+            Helper::putContents($file_url, $content);
+        }
+        return true;
+    }
+
+    public static function getLayoutPresets($filearea, $template_name = '', $full_path = false): array
+    {
+        if (empty($filearea)) {
+            return [];
+        }
+        if (empty($template_name)) {
+            $template_name = Framework::getTemplate()->template;
+        }
+        $presets_path = JPATH_SITE . "/media/templates/site/{$template_name}/astroid/{$filearea}/";
+        if (!is_dir($presets_path)) {
+            return [];
+        }
+
+        return Folder::files($presets_path, '\.json$', false, $full_path);
     }
 
     public static function loadModuleLayout($id)

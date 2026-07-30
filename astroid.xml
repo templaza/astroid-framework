@@ -3,8 +3,8 @@
    <name>Astroid Framework</name>
    <libraryname>astroid</libraryname>
    <author>Astroid Framework Team</author>
-   <creationDate>May 2026</creationDate>
-   <version>3.4.2</version>
+   <creationDate>July 2026</creationDate>
+   <version>3.4.3</version>
    <url>https://astroidframe.work/</url>
    <copyright>Copyright (C) 2026 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -24,9 +24,11 @@
       <folder>js</folder>
       <filename>joomla.asset.json</filename>
    </media>
-   <languages folder="language/en-GB">
-      <language tag="en-GB">en-GB.astroid.ini</language>
-      <language tag="en-GB">en-GB.astroid.sys.ini</language>
+   <languages folder="language">
+      <language tag="en-GB">en-GB/en-GB.astroid.ini</language>
+      <language tag="en-GB">en-GB/en-GB.astroid.sys.ini</language>
+      <language tag="de-DE">de-DE/de-DE.astroid.ini</language>
+      <language tag="de-DE">de-DE/de-DE.astroid.sys.ini</language>
    </languages>
    <changelogurl>https://raw.githubusercontent.com/templaza/astroid-framework/refs/heads/updates/changelogs.xml</changelogurl>
    <updateservers>

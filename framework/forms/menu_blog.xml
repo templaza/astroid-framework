@@ -20,6 +20,10 @@
             <option value="1">JYES</option>
             <option value="0">JNO</option>
          </field>
+         <field name="info_block_above_position" type="list" default="below_title" label="ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_ABOVE_POSITION">
+            <option value="above_title">ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_POSITION_ABOVE_TITLE</option>
+            <option value="below_title">ASTROID_ELEMENTS_ARTICLE_INFOBLOCK_POSITION_BELOW_TITLE</option>
+         </field>
          <field name="category_show_intro" type="radio" default="1" label="ASTROID_SHOW_INTRO_ON_CATEGORY_VIEW" class="btn-group btn-group-yesno">
             <option value="1">JYES</option>
             <option value="0">JNO</option>
@@ -29,7 +33,7 @@
             <option value="0">JNO</option>
          </field>
          <field type="spacer" name="image_lead_spacer" label="ASTROID_ARTICLE_IMAGE_LEAD_OPTIONS" />
-         <field name="image_lead_position" type="list" default="" label="Lead Item Image Position">
+         <field name="image_lead_position" type="list" default="" label="ASTROID_ARTICLE_IMAGE_LEAD_POSITION_LABEL">
             <option value="">Default</option>
             <option value="top">Top</option>
             <option value="left">Left</option>
@@ -99,7 +103,7 @@
             <option value="10">5/6</option>
          </field>
          <field type="spacer" name="image_intro_spacer" label="ASTROID_ARTICLE_IMAGE_INTRO_OPTIONS" />
-         <field name="image_intro_position" type="list" default="" label="Intro Item Image Position">
+         <field name="image_intro_position" type="list" default="" label="ASTROID_ARTICLE_IMAGE_INTRO_POSITION_LABEL">
             <option value="">Default</option>
             <option value="top">Top</option>
             <option value="left">Left</option>

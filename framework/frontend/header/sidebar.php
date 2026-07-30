@@ -58,7 +58,7 @@ $offcanvas_animation = $params->get('offcanvas_animation', 'st-effect-1');
 $offcanvas_togglevisibility = $params->get('offcanvas_togglevisibility', 'd-block');
 $class = ['astroid-header', 'astroid-sidebar-header', 'col-12', 'col-xl-auto', 'astroid-sidebar-' . $mode, 'sidebar-dir-' . $sidebar_position, 'has-sidebar'];
 if ($sidebar_position == 'right') {
-    $class[] = 'order-xl-1';
+    $class[] = 'order-xl-2';
 }
 $navClass = ['nav', 'astroid-nav', 'd-none', 'd-lg-flex'];
 $navWrapperClass = ['align-self-center', 'px-2', 'd-none', 'd-lg-block'];

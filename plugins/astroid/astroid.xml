@@ -2,8 +2,8 @@
 <extension type="plugin" method="upgrade" group="system">
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
-   <creationDate>March 2026</creationDate>
-   <version>3.4.2</version>
+   <creationDate>July 2026</creationDate>
+   <version>3.4.3</version>
    <url>https://www.astroidframe.work</url>
    <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
@@ -18,7 +18,7 @@
    <config>
       <fields name="params">
          <fieldset name="basic">
-            <field name="astroid_load_fontawesome" type="radio" default="cdn" label="ASTROID_LOAD_FONTAWESOME" description="ASTROID_LOAD_FONTAWESOME_DESC" class="btn-group btn-group-yesno">
+            <field name="astroid_load_fontawesome" type="radio" default="local" label="ASTROID_LOAD_FONTAWESOME" description="ASTROID_LOAD_FONTAWESOME_DESC" class="btn-group btn-group-yesno">
                <option value="0">OFF</option>
                <option value="cdn">CDN</option>
                <option value="local">Local</option>

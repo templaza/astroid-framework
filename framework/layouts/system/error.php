@@ -94,7 +94,7 @@ if ($background_setting_404 == 'video' && !empty($background_video_404)) {
                   ?>
                   <?php $this->setError($this->_error->getPrevious()); ?>
                   <?php while ($loop === true) : ?>
-                     <p><strong><?php echo JText::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
+                     <p><strong><?php echo \Joomla\CMS\Language\Text::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
                      <p>
                         <?php echo htmlspecialchars($this->_error->getMessage(), ENT_QUOTES, 'UTF-8'); ?>
                         <br /><?php echo htmlspecialchars($this->_error->getFile(), ENT_QUOTES, 'UTF-8'); ?>:<?php echo $this->_error->getLine(); ?>

@@ -105,8 +105,9 @@ $overlay_position   = $params->get('overlay_position', 'justify-content-center a
 
 $title_html_element =   $params->get('title_html_element', 'h3');
 $enable_title = $params->get('enable_title', 1);
+$slider_visible = $params->get('slider_visible', '');
 
-echo '<div class="swiper as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
+echo '<div class="swiper '.$slider_visible.' as-loading"'.(!empty($dir) ? ' dir="'.$dir.'"' : '').'>';
 echo '<div class="swiper-wrapper'.(!empty($column_alignment) ? ' ' . $column_alignment : '').'">';
 foreach ($images->getData() as $image) {
     if (!empty($image->params->get('image'))) {
@@ -131,7 +132,7 @@ if ($slider_dotnav) {
     echo '<div class="swiper-pagination"></div>';
 }
 if ($slider_nav) {
-    echo '<div class="swiper-button-prev"></div><div class="swiper-button-next"></div>';
+    echo '<div class="swiper-button-prev swiper-nav-button"></div><div class="swiper-button-next swiper-nav-button"></div>';
 }
 if ($slider_scrollbar) {
     echo '<div class="swiper-scrollbar"></div>';
@@ -175,4 +176,52 @@ if ($overlay_padding == 'custom') {
 $title_font_style   =   $params->get('title_font_style');
 if (!empty($title_font_style)) {
     Style::renderTypography('#'.$element->id.' .astroid-heading', $title_font_style, null, $element->isRoot);
+}
+$slider_nav_height      =   $params->get('slider_nav_height', '');
+$nav_height = json_decode($slider_nav_height, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($nav_height)) {
+    $element->style->child('.swiper-nav-button')->addResponsiveCSS('height', $nav_height, $nav_height['postfix']);
+}
+$slider_nav_width      =   $params->get('slider_nav_width', '');
+$nav_width = json_decode($slider_nav_width, true);
+if (json_last_error() === JSON_ERROR_NONE && is_array($nav_width)) {
+    $element->style->child('.swiper-nav-button')->addResponsiveCSS('width', $nav_width, $nav_width['postfix']);
+}
+$nav_border    =   json_decode($params->get('slider_nav_border', ''), true);
+if (!empty($nav_border)) {
+    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button', $nav_border, 'global', $element->isRoot);
+}
+$nav_radius  =   $params->get('slider_nav_radius', '');
+if (!empty($nav_radius)) {
+    Style::setSpacingStyle($element->style->child('.swiper-nav-button'), $nav_radius,'radius');
+}
+$nav_icon_size        =   $params->get('nav_icon_size', '44');
+$element->style->child('.swiper-button-next:after, .swiper-button-prev:after')->addCss('font-size', $nav_icon_size.'px');
+$nav_color     = Style::getColor($params->get('nav_color', ''));
+$element->style->child('.swiper-nav-button')->addCss('color', $nav_color['light']);
+$element->style_dark->child('.swiper-nav-button')->addCss('color', $nav_color['dark']);
+
+$nav_bg_color     = Style::getColor($params->get('nav_bg_color', ''));
+$element->style->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['light']);
+$element->style_dark->child('.swiper-nav-button')->addCss('background-color', $nav_bg_color['dark']);
+
+$nav_bg_color_hover     = Style::getColor($params->get('nav_bg_color_hover', ''));
+$element->style->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['light']);
+$element->style_dark->child('.swiper-nav-button:hover')->addCss('background-color', $nav_bg_color_hover['dark']);
+
+$nav_color_hover     = Style::getColor($params->get('nav_color_hover', ''));
+$element->style->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['light']);
+$element->style_dark->child('.swiper-nav-button:hover')->addCss('color', $nav_color_hover['dark']);
+
+$nav_border_hover    =   json_decode($params->get('slider_nav_border_hover', ''), true);
+if (!empty($nav_border_hover)) {
+    Style::addBorderStyle('#'. $element->id . ' .swiper-nav-button:hover', $nav_border_hover, 'global', $element->isRoot);
+}
+$next_margin   =   $params->get('next_margin', '');
+if (!empty($next_margin)) {
+    Style::setSpacingStyle($element->style->child('.swiper-button-next'), $next_margin, 'margin');
+}
+$preview_margin   =   $params->get('preview_margin', '');
+if (!empty($preview_margin)) {
+    Style::setSpacingStyle($element->style->child('.swiper-button-prev'), $preview_margin, 'margin');
 }
