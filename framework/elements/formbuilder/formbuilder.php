@@ -94,10 +94,11 @@ $button_bd_radius   =   $button_radius ? ' ' . $button_radius : '';
 $button_margin_top  =   $params->get('button_margin_top', '4');
 $button_margin      =   !empty($button_margin_top) ? ' mt-' . $button_margin_top : '';
 $button_class   =   $button_style !== 'text' ? 'btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
-if($btn_text){
-    $btn_title      =   $btn_text;
-}else{
-    $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
+if ($btn_text !== '') {
+    $safeText = htmlspecialchars($btn_text, ENT_QUOTES, 'UTF-8');
+    $btn_title = ($button_style === 'text') ? ('<small>' . $safeText . '</small>') : $safeText;
+} else {
+    $btn_title = $button_style === 'text' ? '<small>' . Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
 }
 
 
