@@ -38,6 +38,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -225,6 +226,23 @@ def translate_deepl(
             with urllib.request.urlopen(req, timeout=60) as resp:
                 data: dict = json.loads(resp.read().decode("utf-8"))
             results.extend(t["text"] for t in data["translations"])
+        except urllib.error.HTTPError as exc:
+            body = ""
+            try:
+                body = exc.read().decode("utf-8", errors="replace")
+            except Exception:  # noqa: BLE001
+                pass
+            msg = f"HTTP Error {exc.code}: {exc.reason}"
+            if body:
+                msg += f" – {body}"
+            if exc.code in (403, 456):
+                # 403 = invalid/wrong-endpoint key; 456 = quota exceeded.
+                # No point retrying further batches.
+                raise RuntimeError(
+                    f"DeepL auth/quota error (aborting remaining batches): {msg}"
+                ) from exc
+            print(f"    [ERROR] DeepL batch failed: {msg}", file=sys.stderr)
+            results.extend(batch)  # fall back to source text for non-fatal errors
         except Exception as exc:  # noqa: BLE001
             print(f"    [ERROR] DeepL batch failed: {exc}", file=sys.stderr)
             results.extend(batch)  # fall back to source text
@@ -296,7 +314,12 @@ def sync_locale(
     if dry_run or api_key is None:
         translated_texts = list(protected_texts)  # no-op
     else:
-        translated_texts = translate_deepl(protected_texts, deepl_lang, api_key)
+        try:
+            translated_texts = translate_deepl(protected_texts, deepl_lang, api_key)
+        except RuntimeError as exc:
+            print(f"  [{locale}] FATAL – {exc}", file=sys.stderr)
+            stats["error"] = str(exc)
+            return stats
 
     # Restore + validate
     new_translations: Dict[str, str] = {}
@@ -447,7 +470,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:  # noqa: C901
     args = build_parser().parse_args(argv)
 
-    api_key: Optional[str] = os.environ.get("DEEPL_API_KEY") or None
+    raw_key = os.environ.get("DEEPL_API_KEY") or ""
+    api_key: Optional[str] = raw_key.strip() or None
 
     if not api_key and not args.dry_run:
         print(
@@ -486,8 +510,11 @@ def main(argv: Optional[List[str]] = None) -> int:  # noqa: C901
         )
         all_stats[locale] = stats
 
-        # Ensure sys.ini file exists (even if empty)
-        if not args.dry_run and not target_sys.exists():
+        if stats.get("error"):
+            exit_code = 1
+
+        # Ensure sys.ini file exists (even if empty) – skip when translation failed
+        if not args.dry_run and not stats.get("error") and not target_sys.exists():
             target_sys.parent.mkdir(parents=True, exist_ok=True)
             target_sys.write_text("", encoding="utf-8")
             print(f"  [{locale}] Created {target_sys}")
@@ -511,6 +538,9 @@ def main(argv: Optional[List[str]] = None) -> int:  # noqa: C901
     for locale, stats in all_stats.items():
         if stats.get("skipped"):
             print(f"{locale:<10}  {'SKIPPED':>10}")
+            continue
+        if stats.get("error"):
+            print(f"{locale:<10}  {'ERROR':>10}  (translation aborted – see above)")
             continue
         total = stats["total_source"]
         existing = stats["pre_existing"]
