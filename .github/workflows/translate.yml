@@ -56,6 +56,14 @@ jobs:
         env:
           DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
         run: |
+          # Skip gracefully when the DeepL API key secret is not configured.
+          # This prevents spurious CI failures on forks or when the secret is absent.
+          if [ -z "$DEEPL_API_KEY" ]; then
+            echo "DEEPL_API_KEY secret is not configured – skipping translation."
+            echo "script_exit_code=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           EXTRA_ARGS=""
 
           # Honour --force input
