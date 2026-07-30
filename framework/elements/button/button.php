@@ -105,11 +105,8 @@ foreach ($buttons->data as $key => $button) {
             continue;
         }
 
-        if (!str_starts_with($lower, 'data-') && !str_starts_with($lower, 'aria-') && !in_array($lower, ['title', 'role', 'tabindex', 'download'], true)) {
-            continue;
-        }
-
         $btn_attrs .= ' ' . $name . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
+    }
     echo '<a id="btn-'.$button->id.'" href="' .$button->params->get('link', ''). '" class="' .$button_class . '"'.$link_target.$btn_attrs.'>'.$btn_title.'</a>';
     $btn_font_style =   $button->params->get('btn_font_style');
     if (!empty($btn_font_style)) {
