@@ -23,9 +23,14 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.0.14</version>
-        <fix>
-            <item><![CDATA[Fix issue load Dynamic Content in Subform]]></item>
-        </fix>
+        <version>1.1.0</version>
+        <addition>
+            <item><![CDATA[Add Pricing Table Widget]]></item>
+            <item><![CDATA[Add attributes to External JS and CSS in CodePen Widget]]></item>
+        </addition>
+        <change>
+            <item><![CDATA[Update UK Slider Widget]]></item>
+            <item><![CDATA[Update UK Pricing Table, UK Gallery]]></item>
+        </change>
     </changelog>
 </changelogs>
