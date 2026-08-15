@@ -1013,9 +1013,10 @@ class Helper
     public static function getCategoryParams($article)
     {
         $params = new Registry();
-        if (!empty($article->catid)) {
+        $article_cid = is_array($article) ? $article['catid'] : (is_object($article) ? $article->catid : null);
+        if (!empty($article_cid)) {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $catid = (int) $article->catid;
+            $catid = (int) $article_cid;
             $query = $db->getQuery(true)
                 ->select($db->quoteName('params'))
                 ->from($db->quoteName('#__categories'))
