@@ -169,6 +169,11 @@
         "astroid.gsap"
       ],
       "uri": "astroid/animate-counter.min.js"
+    },
+    {
+      "name": "astroid.countdown",
+      "type": "script",
+      "uri": "astroid/countdown.min.js"
     }
   ]
 }
