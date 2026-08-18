@@ -313,6 +313,16 @@ class Article
         return $items;
     }
 
+    public static function getArticle($id): object
+    {
+        if (empty($id)) {
+            throw new \InvalidArgumentException('Article ID cannot be empty');
+        }
+        $component      = Factory::getApplication()->bootComponent('com_content')->getMVCFactory();
+        $model          = $component->createModel('Article', 'Site');
+        return $model->getItem($id);
+    }
+
     public static function getVideoSrc($video_url = '') {
         $video_src = '';
         if(isset($video_url) && $video_url != NULL) {
