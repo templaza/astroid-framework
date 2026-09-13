@@ -15,6 +15,8 @@ defined('_JEXEC') or die;
 
 use Astroid\Helper\Style;
 use Astroid\Component\Article;
+use Joomla\CMS\Event\Content;
+use Joomla\CMS\Plugin\PluginHelper;
 use Astroid\Framework;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Layout\FileLayout;
@@ -257,31 +259,35 @@ $button_radius      =   $params->get('button_border_radius', '');
 $button_radius      =   $button_radius ? ' ' . $button_radius : '';
 
 // Button Custom Style
-
 if ($button_style === 'custom') {
-$color          = Style::getColor($params->get('btn_color', ''));
-$color_hover    = Style::getColor($params->get('btn_color_hover', ''));
-$color_active   = Style::getColor($params->get('btn_color_active', ''));
-$bgcolor        = Style::getColor($params->get('btn_bgcolor', ''));
-$bgcolor_hover  = Style::getColor($params->get('btn_bgcolor_hover', ''));
-$bgcolor_active = Style::getColor($params->get('btn_bgcolor_active', ''));
+    $color          = Style::getColor($params->get('btn_color', ''));
+    $color_hover    = Style::getColor($params->get('btn_color_hover', ''));
+    $color_active   = Style::getColor($params->get('btn_color_active', ''));
+    $bgcolor        = Style::getColor($params->get('btn_bgcolor', ''));
+    $bgcolor_hover  = Style::getColor($params->get('btn_bgcolor_hover', ''));
+    $bgcolor_active = Style::getColor($params->get('btn_bgcolor_active', ''));
 
-// Color style
-$element->style->child('.btn')->addCss('color', $color['light']);
-$element->style_dark->child('.btn')->addCss('color', $color['dark']);
-$element->style->child('.btn')->hover()->addCss('color', $color_hover['light']);
-$element->style_dark->child('.btn')->hover()->addCss('color', $color_hover['dark']);
-$element->style->child('.btn:not(.collapsed)')->addCss('color', $color_active['light']);
-$element->style_dark->child('.btn:not(.collapsed)')->addCss('color', $color_active['dark']);
+    // Color style
+    $element->style->child('.btn')->addCss('color', $color['light']);
+    $element->style_dark->child('.btn')->addCss('color', $color['dark']);
+    $element->style->child('.btn')->hover()->addCss('color', $color_hover['light']);
+    $element->style_dark->child('.btn')->hover()->addCss('color', $color_hover['dark']);
+    $element->style->child('.btn:not(.collapsed)')->addCss('color', $color_active['light']);
+    $element->style_dark->child('.btn:not(.collapsed)')->addCss('color', $color_active['dark']);
 
-// Background color style
-$element->style->child('.btn')->addCss('background-color', $bgcolor['light']);
-$element->style_dark->child('.btn')->addCss('background-color', $bgcolor['dark']);
-$element->style->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['light']);
-$element->style_dark->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['dark']);
-$element->style->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
-$element->style_dark->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
-    }
+    // Background color style
+    $element->style->child('.btn')->addCss('background-color', $bgcolor['light']);
+    $element->style_dark->child('.btn')->addCss('background-color', $bgcolor['dark']);
+    $element->style->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['light']);
+    $element->style_dark->child('.btn')->hover()->addCss('background-color', $bgcolor_hover['dark']);
+    $element->style->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['light']);
+    $element->style_dark->child('.btn:not(.collapsed)')->addCss('background-color', $bgcolor_active['dark']);
+}
+
+$dispatcher = Factory::getApplication()->getDispatcher();
+
+// Process the content plugins.
+PluginHelper::importPlugin('content', null, true, $dispatcher);
 
 $has_gallery        =   false;
 echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
@@ -420,7 +426,15 @@ foreach ($items as $key => $item) {
     <?php
     }
 
-
+    $article   = Article::getArticle($item->id);
+    $contentEventArguments = [
+            'context' => 'com_content.category',
+            'subject' => $article,
+            'params'  => $article->params,
+    ];
+    $contentEvents = new Content\BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments);
+    $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
+    echo $results ? trim(implode("\n", $results)) : '';
 
     if (!empty($item->introtext) && $enable_intro_text) {
         echo '<div class="astroid-article-introtext">' . (!empty($intro_limit) ? mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') : $item->introtext) . '</div>';
@@ -434,6 +448,11 @@ foreach ($items as $key => $item) {
         }
         echo '</dl>';
     }
+
+    $contentEvents = new Content\AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments);
+    $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
+    echo $results ? trim(implode("\n", $results)) : '';
+
     if ($readmore) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size . $button_radius : 'as-btn-text text-uppercase text-reset';
         $btn_title      =   $button_style == 'text' ? '<small>'. Text::_('JGLOBAL_READ_MORE') . '</small>' : Text::_('JGLOBAL_READ_MORE');

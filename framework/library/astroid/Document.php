@@ -1496,6 +1496,11 @@ class Document
         $this->getWA()->useScript('astroid.scroll.effects');
     }
 
+    public function loadCountDown(): void
+    {
+        $this->getWA()->useScript('astroid.countdown');
+    }
+
     public function loadAnimationCounter(): void
     {
         $this->loadGSAP('ScrollTrigger');
