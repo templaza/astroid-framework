@@ -584,43 +584,51 @@ class Admin extends Helper\Client
             $fileTemp = $file['tmp_name'];
             if ($uploadedFileExtension == 'zip') {
                 $zip = new \Joomla\Archive\Zip();
-                $tmpPath = $app->get('tmp_path', JPATH_SITE . '/tmp');
+                $tmpPath = JPATH_SITE . '/tmp';
                 $zipFolder = \uniqid('astroid-preset-');
-                $zipPath = $tmpPath . '/' . $zipFolder;
+                $zipPath = Path::clean($tmpPath . '/' . $zipFolder);
                 if ($zip->extract($fileTemp, $zipPath)) {
-                    $files = Folder::files($zipPath . '/presets', '\.json$');
-                    if (!empty($files) && !is_dir( $presets_path . '/presets' ) ) {
-                        Folder::create( $presets_path . '/presets' );
-                    }
-                    foreach ($files as $file) {
-                        File::copy($zipPath . '/presets/' . $file, $presets_path . '/presets/' . $file);
+                    if (is_dir($zipPath . '/presets')) {
+                        $files = Folder::files($zipPath . '/presets', '\.json$');
+                        if (!empty($files) && !is_dir( $presets_path . '/presets' ) ) {
+                            Folder::create( $presets_path . '/presets' );
+                        }
+                        foreach ($files as $file) {
+                            File::copy($zipPath . '/presets/' . $file, $presets_path . '/presets/' . $file);
+                        }
                     }
 
                     // Move Main Layout Presets
-                    $files = Folder::files($zipPath . '/main_layouts', '\.json$');
-                    if (!empty($files) && !is_dir( $presets_path . '/main_layouts' ) ) {
-                        Folder::create( $presets_path . '/main_layouts' );
-                    }
-                    foreach ($files as $file) {
-                        File::copy($zipPath . '/main_layouts/' . $file, $presets_path . '/main_layouts/' . $file);
+                    if (is_dir($zipPath . '/main_layouts')) {
+                        $files = Folder::files($zipPath . '/main_layouts', '\.json$');
+                        if (!empty($files) && !is_dir( $presets_path . '/main_layouts' ) ) {
+                            Folder::create( $presets_path . '/main_layouts' );
+                        }
+                        foreach ($files as $file) {
+                            File::copy($zipPath . '/main_layouts/' . $file, $presets_path . '/main_layouts/' . $file);
+                        }
                     }
 
                     // Move Sub Layout Presets
-                    $files = Folder::files($zipPath . '/layouts', '\.json$');
-                    if (!empty($files) && !is_dir( $presets_path . '/layouts' ) ) {
-                        Folder::create( $presets_path . '/layouts' );
-                    }
-                    foreach ($files as $file) {
-                        File::copy($zipPath . '/layouts/' . $file, $presets_path . '/layouts/' . $file);
+                    if (is_dir($zipPath . '/layouts')) {
+                        $files = Folder::files($zipPath . '/layouts', '\.json$');
+                        if (!empty($files) && !is_dir( $presets_path . '/layouts' ) ) {
+                            Folder::create( $presets_path . '/layouts' );
+                        }
+                        foreach ($files as $file) {
+                            File::copy($zipPath . '/layouts/' . $file, $presets_path . '/layouts/' . $file);
+                        }
                     }
 
                     // Move Article Layout Presets
-                    $files = Folder::files($zipPath . '/article_layouts', '\.json$');
-                    if (!empty($files) && !is_dir( $presets_path . '/article_layouts' ) ) {
-                        Folder::create( $presets_path . '/article_layouts' );
-                    }
-                    foreach ($files as $file) {
-                        File::copy($zipPath . '/article_layouts/' . $file, $presets_path . '/article_layouts/' . $file);
+                    if (is_dir($zipPath . '/article_layouts')) {
+                        $files = Folder::files($zipPath . '/article_layouts', '\.json$');
+                        if (!empty($files) && !is_dir( $presets_path . '/article_layouts' ) ) {
+                            Folder::create( $presets_path . '/article_layouts' );
+                        }
+                        foreach ($files as $file) {
+                            File::copy($zipPath . '/article_layouts/' . $file, $presets_path . '/article_layouts/' . $file);
+                        }
                     }
 
                     // Remove Zip Folder
@@ -662,7 +670,7 @@ class Admin extends Helper\Client
             $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
+            $presets_path   = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/");
             $file           = $app->input->post->get('name', '', 'RAW');
             $json           = file_get_contents($presets_path.$file.'.json');
             if (!$json) {
@@ -686,7 +694,7 @@ class Admin extends Helper\Client
             $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/";
+            $presets_path   = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid/presets/");
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.$file.'.json';
             if (file_exists($file_name)) {
@@ -706,7 +714,7 @@ class Admin extends Helper\Client
             $this->checkAdminAuth();
             $app = Factory::getApplication();
             $template_name  = $app->input->get('template', NULL, 'RAW');
-            $presets_path   = JPATH_SITE . "/media/templates/site/$template_name/astroid";
+            $presets_path   = Path::clean(JPATH_SITE . "/media/templates/site/$template_name/astroid");
             $file           = $app->input->post->get('name', '', 'RAW');
             $file_name      = $presets_path.'/presets/'.$file.'.json';
             if (!file_exists($file_name)) {
@@ -744,11 +752,15 @@ class Admin extends Helper\Client
                     'data' => file_get_contents(Path::clean($presets_path.'/article_layouts/'.$articleLayoutPreset))
                 ];
             }
-            $tmpPath = $app->get('tmp_path', JPATH_SITE . '/tmp');
+
+            $tmpPath = JPATH_SITE . '/tmp';
             $zipFile = $file . '-' . date('YmdHis') . '.zip';
             $zipPath = $tmpPath . '/' . $zipFile;
+
             $zip = new \Joomla\Archive\Zip();
+
             $ok = $zip->create($zipPath, $arrayFiles);
+
             if (!$ok || !file_exists($zipPath)) {
                 throw new \Exception('Unable to create zip file');
             }
@@ -763,7 +775,7 @@ class Admin extends Helper\Client
         try {
             $this->checkAdminAuth();
             // Check for request forgeries.
-            $json_file   = JPATH_SITE . "/media/astroid/assets/json/templates.json";
+            $json_file   = Path::clean(JPATH_SITE . "/media/astroid/assets/json/templates.json");
             if (file_exists($json_file)) {
                 $json = file_get_contents($json_file);
                 $this->response(\json_decode($json, true));

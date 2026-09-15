@@ -50,7 +50,7 @@ if (isset($item->id)) {
         $style      .=  '--as-nav-item-badge-color: '.$options->badge_color.';';
         $style      .=  'background-color: var(--as-nav-item-badge-background);';
         $style      .=  'color: var(--as-nav-item-badge-color);';
-        $document->addStyledeclaration('.nav-link-item-id-'.$item->id.' > .nav-title .menu-item-badge{'.$style.'}');
+        $document->addStyledeclaration('.nav-link-item-id-'.$item->id.' .nav-title .menu-item-badge{'.$style.'}');
     }
 }
 
@@ -93,9 +93,7 @@ $attr = [];
 foreach ($attributes as $key => $attribute) {
    $attr[] = $key . '="' . $attribute . '"';
 }
-?>
-<!--menu link starts-->
-<?php
+
 // One Page Coding Starts
 // Valid conditions
 // Must start with #
@@ -109,50 +107,47 @@ if ($item->type == 'url') {
       $item->link = Uri::getInstance() . $item->link;
    }
 }
-?>
-<a href="<?php echo $item->flink; ?>" <?php echo implode(' ', $attr); ?>>
-   <span class="nav-title">
-      <?php if (!empty($options->icon)) { ?>
-         <i class="<?php echo $options->icon; ?>"></i>
-      <?php } ?>
-      <?php if (!$options->icononly) { ?>
-         <?php if (!empty($item->menu_image)) { ?>
-            <img src="<?php echo Uri::root() . $item->menu_image; ?>" alt="<?php echo $item->title; ?>" <?php echo !empty($item->menu_image_css) ? "class='$item->menu_image_css'" : "";?> />
-         <?php } ?>
-         <?php if (!empty($item->menu_image) && $item->getParams()->get('menu_text', 1)) { ?>
-            <?php echo '<span class="nav-title-text">'.$item->title.'</span>'; ?>
-         <?php } else if (!empty($item->menu_image) && !$item->getParams()->get('menu_text', 1)) { ?>
+$has_media = (!empty($options->icon) || !empty($item->menu_image)) ? true : false;
+echo '<!--menu link starts-->';
+echo '<a href="' . $item->flink . '" ' . implode(' ', $attr) . '>';
+echo $has_media ? '<div class="as-gutter-x-md d-flex">' : '';
 
-         <?php } else { ?>
-            <?php echo '<span class="nav-title-text">'.$item->title.'</span>'; ?>
-         <?php } ?>
-      <?php } ?>
-      <?php if ($options->badge && ($header != 'sticky' || $enable_sticky_badge)) { ?>
-         <?php if ($item->level == 1) { ?>
-            <sup>
-               <span class="menu-item-badge">
-                  <?php echo $options->badge_text; ?>
-               </span>
-            </sup>
-         <?php } else { ?>
-            <span class="menu-item-badge">
-               <?php echo $options->badge_text; ?>
-            </span>
-         <?php } ?>
-      <?php } ?>
-      <?php if ((!$is_mobile_menu && $item->level == 1 && (($item->parent && $item->deeper == 1) || $options->megamenu)) && ($item->level != $header_endLevel) && !$slidemenu) { ?>
-         <?php if ($params->get('dropdown_arrow', 0)) {  ?>
-            <i class="fas fa-chevron-down nav-item-caret"></i>
-         <?php } ?>
-      <?php } elseif ((!$is_mobile_menu && $item->parent) && $item->level != $header_endLevel && !$slidemenu) { ?>
-         <i class="fas fa-chevron-right nav-item-caret"></i>
-      <?php } ?>
-   </span>
-   <?php if (!$is_mobile_menu && !empty($options->subtitle)) { ?>
-      <small class="nav-subtitle"><?php echo $options->subtitle ?></small>
-   <?php } ?>
-</a>
-<?php if ($slidemenu && ($item->parent && $item->deeper == 1)) { ?>
-    <i class="fas fa-plus nav-item-caret<?php echo $active ? ' open' : ''; ?>"></i>
-<?php } ?>
-<!--menu link ends-->
+if (!empty($options->icon)) {
+   echo '<div class="nav-icon"><i class="' . $options->icon . '"></i></div>';
+}
+
+if (!empty($item->menu_image)) {
+    echo '<div class="nav-image"><img src="' . Uri::root() . $item->menu_image . '" alt="' . $item->title . '" ' . (!empty($item->menu_image_css) ? "class='" . $item->menu_image_css . "'" : "") . ' /></div>';
+}
+
+echo $has_media ? '<div class="w-100 d-flex flex-wrap flex-column justify-content-center">' : '';
+echo '<div class="nav-title">';
+if (!$options->icononly && $item->getParams()->get('menu_text', 1)) {
+    echo '<span class="nav-title-text">' . $item->title . '</span>';
+}
+
+if ($options->badge && ($header != 'sticky' || $enable_sticky_badge)) {
+   if ($item->level == 1) {
+      echo '<sup><span class="menu-item-badge">' . $options->badge_text . '</span></sup>';
+   } else {
+      echo '<span class="menu-item-badge">' . $options->badge_text . '</span>';
+   }
+}
+if ((!$is_mobile_menu && $item->level == 1 && (($item->parent && $item->deeper == 1) || $options->megamenu)) && ($item->level != $header_endLevel) && !$slidemenu) {
+   if ($params->get('dropdown_arrow', 0)) {
+      echo '<i class="fas fa-chevron-down nav-item-caret"></i>';
+   }
+} elseif ((!$is_mobile_menu && $item->parent) && $item->level != $header_endLevel && !$slidemenu) {
+   echo '<i class="fas fa-chevron-right nav-item-caret"></i>';
+}
+echo '</div>';
+if (!$is_mobile_menu && !empty($options->subtitle)) {
+   echo '<small class="nav-subtitle">' . $options->subtitle . '</small>';
+}
+echo $has_media ? '</div>' : '';
+echo $has_media ? '</div>' : '';
+echo '</a>';
+if ($slidemenu && ($item->parent && $item->deeper == 1)) {
+   echo '<i class="fas fa-plus nav-item-caret' . ($active ? ' open' : '') . '"></i>';
+}
+echo '<!--menu link ends-->';

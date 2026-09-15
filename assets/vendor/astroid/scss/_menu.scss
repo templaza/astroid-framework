@@ -167,23 +167,9 @@
 
 	.nav-item-parent {
 		.nav-title {
-			padding-right: 25px;
-
-			>.nav-item-caret {
-				right: 0;
-				position: absolute;
-				top: 50%;
+			> .nav-item-caret {
 				font-size: 75%;
-				width: 20px;
-				height: 20px;
-				line-height: 20px;
-				text-align: center;
-				margin-top: -10px;
 			}
-		}
-
-		&.no-dropdown-icon .nav-title {
-			padding-right: 0;
 		}
 	}
 
@@ -205,7 +191,10 @@
 		}
 
 		.nav-title {
-			padding-right: 0;
+			> .nav-item-caret {
+				position: absolute;
+				right: 0;
+			}
 		}
 
 		>li {
