@@ -328,7 +328,6 @@ class AstroidMegaMenuPro {
                 sub.addEventListener('mouseleave', () => this.closeSub(sub));
             }
 
-
             link.addEventListener('keydown', e => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -354,7 +353,9 @@ class AstroidMegaMenuPro {
 
         const proceed = () => {
             if (submenu._tl) submenu._tl.kill();
-            this.closeSiblingsSub(sub);
+            if (this.settings.trigger === 'click' || !this.canHover) {
+                this.closeSiblingsSub(sub);
+            }
             sub.classList.add('open');
             submenu.style.display = 'block';
             submenu.style.pointerEvents = 'auto';
@@ -430,7 +431,7 @@ class AstroidMegaMenuPro {
     }
 
     closeSiblingsSub(current) {
-        const siblings = current.closest('.nav-submenu').querySelectorAll(':scope > .nav-item-submenu');
+        const siblings = current.closest('ul').querySelectorAll(':scope > .nav-item-submenu');
         siblings.forEach(sub => {
             if (sub !== current) {
                 this.closeSub(sub);
