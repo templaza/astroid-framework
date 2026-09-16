@@ -32,6 +32,7 @@ class Document
     protected array $_scripts = ['head' => [], 'body' => []];
     protected array $_styles = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
     protected array $_customtags = ['head' => [], 'body' => []];
+    protected array $_custom_classes = ['global' => [], 'larger_desktop' => [], 'large_desktop' => [], 'desktop' => [], 'tablet' => [], 'landscape_mobile' => [], 'mobile' => []];
     protected array $_is_loaded = [];
     protected array $_gsap_plugins = [];
     protected $_dev = null;
@@ -975,6 +976,13 @@ class Document
         }
     }
 
+    public function addCustomClass($object, $style, $device = 'global'): void
+    {
+        if (empty($this->_custom_classes[$device][$object])) {
+            $this->_custom_classes[$device][$object] = $style;
+        }
+    }
+
     public function moveFile(&$array, $a, $b): void
     {
         $out = array_splice($array, $a, 1);
@@ -1362,6 +1370,15 @@ class Document
         // css on page
         if (Framework::isSite()) {
             $template = Framework::getTemplate();
+
+            // Add custom classes to the style declaration
+            foreach ($this->_custom_classes as $device => $custom_css) {
+                foreach ($custom_css as $object => $style) {
+                    $this->addStyleDeclaration($object . '{' . $style . '}', $device);
+                }
+            }
+
+            // Get the compiled CSS from the style declarations
             $css = $this->renderCss();
             // page css();
             $pageCSSHash = md5($css);
