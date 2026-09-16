@@ -39,9 +39,14 @@ foreach ($catids as $catid) {
 $document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
+$tags               =   json_decode($params->get('tags', '[]'), true);
+$tagids             =   [];
+foreach ($tags as $tag) {
+    $tagids[]    =   $tag['value'];
+}
 $offset             =   $params->get('offset', 0);
 $show_custom_fields =   $params->get('show_custom_fields', 0);
-$items = Article::getArticles($limit, $ordering, $categories,true,'',array(),$offset);
+$items = Article::getArticles($limit, $ordering, $categories,true,'',$tagids,$offset);
 
 $enable_slider      =   $params->get('enable_slider', 0);
 $use_masonry        =   $params->get('use_masonry', 0);
