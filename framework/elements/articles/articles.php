@@ -26,27 +26,24 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+use Astroid\Component\Utility;
+
 extract($displayData);
 $catids         = json_decode($params->get('catids', '[]'), true);
 
 if (!count($catids)) {
     return false;
 }
-$categories = [];
-foreach ($catids as $catid) {
-    $categories[]   =   $catid['value'];
-}
+$categories         =   Utility::getMultipleValues($catids);
 $document           =   Framework::getDocument();
 $limit              =   $params->get('limit', 3);
 $ordering           =   $params->get('ordering', 'latest');
 $tags               =   json_decode($params->get('tags', '[]'), true);
-$tagids             =   [];
-foreach ($tags as $tag) {
-    $tagids[]    =   $tag['value'];
-}
+$tagids             =   Utility::getMultipleValues($tags);
+$article_type       =   $params->get('article_type', '');
 $offset             =   $params->get('offset', 0);
 $show_custom_fields =   $params->get('show_custom_fields', 0);
-$items = Article::getArticles($limit, $ordering, $categories,true,'',$tagids,$offset);
+$items = Article::getArticles($limit, $ordering, $categories,true,$article_type,$tagids,$offset);
 
 $enable_slider      =   $params->get('enable_slider', 0);
 $use_masonry        =   $params->get('use_masonry', 0);
