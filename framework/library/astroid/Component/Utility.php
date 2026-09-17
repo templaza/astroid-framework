@@ -347,6 +347,15 @@ class Utility
         return null;
     }
 
+    public static function getMultipleValues(array $values): ?array
+    {
+        $return            =   [];
+        foreach ($values as $value) {
+            $return[]    =   $value['value'];
+        }
+        return $return;
+    }
+
     public static function colors(): void
     {
         $params = Framework::getTemplate()->getParams();
