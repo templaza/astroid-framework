@@ -107,7 +107,7 @@ if ($item->type == 'url') {
       $item->link = Uri::getInstance() . $item->link;
    }
 }
-$has_media = (!empty($options->icon) || !empty($item->menu_image)) ? true : false;
+$has_media = !empty($options->icon);
 echo '<!--menu link starts-->';
 echo '<a href="' . $item->flink . '" ' . implode(' ', $attr) . '>';
 echo $has_media ? '<div class="as-gutter-x-md d-flex">' : '';
@@ -116,14 +116,15 @@ if (!empty($options->icon)) {
    echo '<div class="nav-icon"><i class="' . $options->icon . '"></i></div>';
 }
 
-if (!empty($item->menu_image)) {
-    echo '<div class="nav-image"><img src="' . Uri::root() . $item->menu_image . '" alt="' . $item->title . '" ' . (!empty($item->menu_image_css) ? "class='" . $item->menu_image_css . "'" : "") . ' /></div>';
-}
-
 echo $has_media ? '<div class="w-100 d-flex flex-wrap flex-column justify-content-center">' : '';
 echo '<div class="nav-title">';
-if (!$options->icononly && $item->getParams()->get('menu_text', 1)) {
-    echo '<span class="nav-title-text">' . $item->title . '</span>';
+if (!$options->icononly) {
+    if (!empty($item->menu_image)) {
+        echo '<img src="' . Uri::root() . $item->menu_image . '" alt="' . $item->title . '" ' . (!empty($item->menu_image_css) ? "class='" . $item->menu_image_css . "'" : "") . '>';
+    }
+    if ($item->getParams()->get('menu_text', 1)) {
+        echo '<span class="nav-title-text">' . $item->title . '</span>';
+    }
 }
 
 if ($options->badge && ($header != 'sticky' || $enable_sticky_badge)) {
