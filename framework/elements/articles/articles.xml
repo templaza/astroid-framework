@@ -17,6 +17,16 @@
                 <field type="astroidgroup" name="slider_options" title="ASTROID_WIDGET_SLIDER_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
                 <field astroidgroup="general" type="astroidcategories" name="catids" label="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES" description="ASTROID_WIDGET_ARTICLES_SELECT_CATEGORIES_DESC" default="[]"/>
+                <field astroidgroup="general" type="astroidtag" name="tags" label="ASTROID_ELEMENTS_ARTICLE_TAGS" description="ASTROID_ELEMENTS_ARTICLE_TAGS_DESC" default="[]"/>
+                <field astroidgroup="general" type="astroidlist" name="article_type" label="ASTROID_ARTICLE_FILTER_TYPE" description="ASTROID_ARTICLE_FILTER_TYPE_DESC" default="">
+                    <option value="">ASTROID_WIDGET_ALL_TYPES</option>
+                    <option value="regular">ASTROID_ARTICLE_WIDGET_REGULAR</option>
+                    <option value="video">ASTROID_ARTICLE_WIDGET_VIDEO</option>
+                    <option value="gallery">ASTROID_ARTICLE_WIDGET_GALLERY</option>
+                    <option value="audio">ASTROID_ARTICLE_WIDGET_AUDIO</option>
+                    <option value="review">ASTROID_ARTICLE_WIDGET_REVIEW</option>
+                    <option value="quote">ASTROID_ARTICLE_WIDGET_QUOTE</option>
+                </field>
                 <field astroidgroup="general" type="astroidrange" name="offset"  min="0" max="1000" step="1" default="0" label="ASTROID_SELECT_ARTICLE_OFFSET" postfix="" />
                 <field astroidgroup="general" type="astroidtext" label="ASTROID_WIDGET_LIMIT_LABEL" description="ASTROID_WIDGET_ARTICLES_LIMIT_DESC" name="limit" default="3"/>
                 <field astroidgroup="general" type="astroidlist" name="ordering" label="JFIELD_ORDERING_LABEL" description="ASTROID_WIDGET_ARTICLES_ORDERING_DESC" default="latest">

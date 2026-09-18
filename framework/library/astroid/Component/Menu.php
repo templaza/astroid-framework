@@ -88,8 +88,6 @@ class Menu
         }
 
         $logo_position_count = 0;
-        $astroid_menu_options = new \stdClass();
-        $li_content = [];
 
         foreach ($list as $i => &$item) {
             if (in_array($item->id, self::$parentlist)) {
@@ -128,7 +126,8 @@ class Menu
                 }
                 // The next item is deeper.
                 if ($item->deeper) {
-                    echo '<ul class="nav-submenu" style="width:' . $options->width . '">';
+                    echo '<ul class="nav-submenu astroid-width-' . $options->width . '">';
+                    $document->addCustomClass('.astroid-width-' . $options->width, 'width:' . $options->width . ' !important;');
                 }
                 // The next item is shallower.
                 elseif ($item->shallower) {
@@ -161,6 +160,8 @@ class Menu
 
         echo '</ul>'
             . '</nav>';
+
+        return '';
     }
 
     // Joomla Functions
@@ -169,7 +170,8 @@ class Menu
     {
         $document = Framework::getDocument();
         if (!empty($options->rows)) {
-            echo '<div style="width:' . $options->width . '" class="megamenu-container">';
+            echo '<div class="megamenu-container astroid-width-' . $options->width . '">';
+            $document->addCustomClass('.astroid-width-' . $options->width, 'width:' . $options->width);
             foreach ($options->rows as $row) {
                 echo '<div class="row">';
                 foreach ($row['cols'] as $col) {

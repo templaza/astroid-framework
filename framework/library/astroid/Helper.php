@@ -358,7 +358,7 @@ class Helper
     public static function getAstroidFieldsets($form)
     {
         $astroidfieldsets = $form->getFieldsets();
-        usort($astroidfieldsets, "self::fieldsetOrding");
+        usort($astroidfieldsets, [self::class, 'fieldsetOrding']);
 
         $fieldsets = [];
 
@@ -385,7 +385,11 @@ class Helper
     public static function getModules()
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = "SELECT #__modules.*, #__usergroups.title as access_title FROM #__modules JOIN #__usergroups ON #__usergroups.id=#__modules.access WHERE #__modules.client_id=0";
+        $query = $db->getQuery(true)
+            ->select([$db->quoteName('m') . '.*', $db->quoteName('ug.title', 'access_title')])
+            ->from($db->quoteName('#__modules', 'm'))
+            ->join('INNER', $db->quoteName('#__usergroups', 'ug') . ' ON ' . $db->quoteName('ug.id') . ' = ' . $db->quoteName('m.access'))
+            ->where($db->quoteName('m.client_id') . ' = 0');
 
         $db->setQuery($query);
         $results = $db->loadObjectList();
@@ -913,18 +917,18 @@ class Helper
             $response = $http->get($url);
 
             if ($response->code !== 200) {
-                throw new Exception('Failed to fetch data. HTTP Code: ' . $response->code);
+                throw new \Exception('Failed to fetch data. HTTP Code: ' . $response->code);
             }
             $xml = simplexml_load_string($response->body, 'SimpleXMLElement', LIBXML_NOCDATA);
             if ($xml === false) {
-                throw new Exception('Failed to parse XML data.');
+                throw new \Exception('Failed to parse XML data.');
             }
             // Convert XML to Array
             $data = json_decode(json_encode($xml), true);
 
             $json = json_encode(['time' => $today, 'data' => $data]);
             if ($json === false) {
-                throw new Exception('Failed to convert XML to JSON.');
+                throw new \Exception('Failed to convert XML to JSON.');
             }
 
             // Save the latest promotion data
@@ -942,7 +946,7 @@ class Helper
             $db->execute();
 
             return $data;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Factory::getApplication()->enqueueMessage('Error: ' . $e->getMessage(), 'error');
             return null;
         }
@@ -1004,5 +1008,25 @@ class Helper
         }
 
         return $strings;
+    }
+
+    public static function getCategoryParams($article)
+    {
+        $params = new Registry();
+        $article_cid = is_array($article) ? $article['catid'] : (is_object($article) ? $article->catid : null);
+        if (!empty($article_cid)) {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $catid = (int) $article_cid;
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('params'))
+                ->from($db->quoteName('#__categories'))
+                ->where($db->quoteName('id') . ' = ' . $catid);
+            $db->setQuery($query);
+            $result = $db->loadObject();
+            if (!empty($result) && !empty($result->params)) {
+                $params->loadString($result->params, 'JSON');
+            }
+        }
+        return $params;
     }
 }

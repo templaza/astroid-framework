@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.4.3';
+    public static $astroid_version = '3.5.0-rc3';
     public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.1';
     public static $animatecss_version = '3.7.0';
@@ -55,7 +55,7 @@ class Constants
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
-            'astroid_version'       => self::$astroid_version,
+            'version'               => self::$astroid_version,
             'astroid_link'          => self::$astroid_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
