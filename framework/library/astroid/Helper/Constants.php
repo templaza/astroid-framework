@@ -55,7 +55,7 @@ class Constants
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
-            'astroid_version'       => self::$astroid_version,
+            'version'               => self::$astroid_version,
             'astroid_link'          => self::$astroid_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
