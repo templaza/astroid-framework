@@ -980,6 +980,9 @@ class Document
     {
         if (empty($this->_custom_classes[$device][$object])) {
             $this->_custom_classes[$device][$object] = $style;
+            if (!$this->canWriteFile() && $this->canUseWA()) {
+                $this->getWA()->addInlineStyle(Style::getCss($object . '{' . $style . '}', $device));
+            }
         }
     }
 
