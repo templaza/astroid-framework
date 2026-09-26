@@ -2,10 +2,10 @@
 <extension type="plugin" method="upgrade" group="system">
    <name>System - Astroid Plugin</name>
    <author>Astroid Framework Team</author>
-   <creationDate>July 2026</creationDate>
-   <version>3.4.3</version>
+   <creationDate>September 2026</creationDate>
+   <version>3.5.0</version>
    <url>https://www.astroidframe.work</url>
-   <copyright>Copyright (C) 2025 TemPlaza, Inc. All rights reserved.</copyright>
+   <copyright>Copyright (C) 2026 TemPlaza, Inc. All rights reserved.</copyright>
    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
    <authorEmail>info@templaza.com</authorEmail>
    <authorUrl>https://www.templaza.com</authorUrl>
@@ -36,6 +36,10 @@
                <option value="0">JNO</option>
             </field>
             <field name="astroid_legacy" type="radio" default="0" label="ASTROID_SAFEMODE" description="ASTROID_SAFE_MODE_DESC" class="btn-group btn-group-yesno">
+               <option value="1">JYES</option>
+               <option value="0">JNO</option>
+            </field>
+            <field name="hide_preview_font" type="radio" default="0" label="TPL_ASTROID_HIDE_FONT_PREVIEW" class="btn-group btn-group-yesno">
                <option value="1">JYES</option>
                <option value="0">JNO</option>
             </field>

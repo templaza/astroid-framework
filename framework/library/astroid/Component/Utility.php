@@ -261,7 +261,8 @@ class Utility
         {
             foreach ($categories as $category)
             {
-                $article_cats[] = ['value' => $category->id, 'label' => str_repeat('- ', ($category->level - 1)) . $category->title];
+                $indent = max(0, (int) $category->level - 1);
+                $article_cats[] = ['value' => $category->id, 'label' => str_repeat('- ', $indent) . $category->title];
             }
         }
         return $article_cats;
@@ -344,6 +345,15 @@ class Utility
 
         // Return null if the string is not in the correct format
         return null;
+    }
+
+    public static function getMultipleValues(array $values): ?array
+    {
+        $return            =   [];
+        foreach ($values as $value) {
+            $return[]    =   $value['value'];
+        }
+        return $return;
     }
 
     public static function colors(): void

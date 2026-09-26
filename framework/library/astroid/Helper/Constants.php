@@ -14,12 +14,13 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Astroid\Framework;
 use Astroid\Helper;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.4.3';
+    public static $astroid_version = '3.5.0-rc4';
     public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.1';
     public static $animatecss_version = '3.7.0';
@@ -45,6 +46,7 @@ class Constants
         $pluginParams   =   Helper::getPluginParams();
         $enable_widget  =   $pluginParams->get('astroid_enable_widgets', 1);
         $tinyMceLicense =   $pluginParams->get('tinymce_license', '');
+        $hide_preview_font =   $pluginParams->get('hide_preview_font', 0);
         return [
             'site_url'              =>  Uri::root(true). '/',
             'base_url'              =>  Uri::base(true),
@@ -55,7 +57,7 @@ class Constants
             'tpl_template_name'     => $template->template,
             'template_title'        => $template->title,
             'enable_widget'         => $enable_widget,
-            'astroid_version'       => self::$astroid_version,
+            'version'               => self::$astroid_version,
             'astroid_link'          => self::$astroid_link,
             'document_link'         => self::$documentation_link,
             'video_tutorial'        => self::$video_tutorial_link,
@@ -65,6 +67,8 @@ class Constants
             'jtemplate_link'        => Helper::getJoomlaUrl(),
             'astroid_admin_token'   => Session::getFormToken(),
             'astroid_action'        => Helper::getAstroidUrl('save', ['template' => $template->template . '-' . $template->id]),
+            'typography'            => Font::getAllFonts(),
+            'hide_preview_font'     => $hide_preview_font,
             'form_template'         => Helper::getFormTemplate($mode),
             'tiny_mce_license'      => empty($tinyMceLicense) ? 'gpl' : $tinyMceLicense,
             'is_pro'                => Helper::isPro(),
@@ -72,7 +76,14 @@ class Constants
             'dynamic_source_fields' => self::DynamicSourceFields(),
             'dynamic_source_options'=> self::getDynamicOptions(),
             'astroid_legacy'        => Helper::isLegacy(),
-            'cms_name'              => 'joomla'
+            'cms_name'              => 'joomla',
+            'monaco_editor_path'    => ASTROID_MEDIA_URL . '/vendor/monaco_editor/vs',
+            'tiny_mce_path'         => ASTROID_MEDIA_URL . '/vendor/tinymce/tinymce.min.js',
+            'donate'                => [
+                'link' => self::$donate_link,
+                'text' => Text::_('ASTROID_BUY_ME_A_COFFEE'),
+                'image'=> ASTROID_MEDIA_URL . '/images/cup-border.webp',
+            ]
         ];
     }
 
