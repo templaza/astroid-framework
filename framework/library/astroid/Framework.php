@@ -50,7 +50,7 @@ abstract class Framework
     public static function constants()
     {
         define('ASTROID_MEDIA', JPATH_SITE . '/media/astroid/assets');
-        define('ASTROID_MEDIA_URL', Uri::root() . 'media/astroid/assets/');
+        define('ASTROID_MEDIA_URL', Uri::root(true) . '/media/astroid/assets');
         define('ASTROID_LAYOUTS', JPATH_LIBRARIES . '/astroid/framework/layouts');
         define('ASTROID_ELEMENTS', JPATH_LIBRARIES . '/astroid/framework/elements');
         define('ASTROID_CACHE', JPATH_SITE . '/cache/astroid');

@@ -300,7 +300,7 @@ class Admin extends Helper\Client
     {
         $this->checkAdminAuth();
         $this->format = 'html'; // Response Format
-        $this->response(Helper\Font::getAllFonts());
+        $this->response(\json_encode(Helper\Font::getAllFonts()));
     }
 
     protected function icons() : void
@@ -354,7 +354,6 @@ class Admin extends Helper\Client
         $document->addScript('media/system/js/core.min.js');
         $document->addScript('media/system/js/keepalive.min.js');
         $document->addScript('vendor/bootstrap/js/bootstrap.bundle.min.js', 'body');
-        $document->addScript('vendor/tinymce/tinymce.min.js');
         $document->addScript('vendor/manager/dist/index.js', 'body', [], [], 'module');
 
         $config = Helper\Constants::manager_configs();

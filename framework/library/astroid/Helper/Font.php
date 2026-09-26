@@ -127,7 +127,7 @@ class Font
                 ];
             }
         }
-        return \json_encode($rt_fonts);
+        return $rt_fonts;
     }
 
     /**
