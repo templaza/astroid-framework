@@ -757,7 +757,6 @@ class Admin extends Helper\Client
             $tmpPath = JPATH_SITE . '/tmp';
             $zipFile = $file . '-' . date('YmdHis') . '.zip';
             $zipPath = $tmpPath . '/' . $zipFile;
-
             $zip = new \Joomla\Archive\Zip();
 
             $ok = $zip->create($zipPath, $arrayFiles);
