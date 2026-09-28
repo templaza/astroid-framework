@@ -50,28 +50,28 @@ if (Helper::isPro()) {
                 $row_gutter         =   $this->params->get($type . '_row_gutter_' . $key, '');
                 $column_gutter      =   $this->params->get($type . '_column_gutter_' . $key, '');
 
-                if (!empty($row_gutter)) {
+                if ($row_gutter !== '') {
                     ${$type . '_row_cls'}[]     =  'gy-' . $key . '-' . $row_gutter;
                 }
-                if (!empty($column_gutter)) {
+                if ($column_gutter !== '') {
                     ${$type . '_row_cls'}[]     =  'gx-' . $key . '-' . $column_gutter;
                 }
                 $param_column       =   $this->params->get($type . '_' . $key . '_column', ($key == 'lg' && $type == 'intro' ? $num_columns : ''));
-                if (!empty($param_column)) {
+                if ($param_column !== '') {
                     ${$type . '_row_cls'}[]      =  'row-cols-' . $key . '-' . $param_column;
                 }
 
             } else {
                 $row_gutter         =   $this->params->get($type . '_row_gutter', 5);
                 $column_gutter      =   $this->params->get($type . '_column_gutter', 3);
-                if (!empty($row_gutter)) {
+                if ($row_gutter !== '') {
                     ${$type . '_row_cls'}[]    =  'gy-' . $row_gutter;
                 }
-                if (!empty($column_gutter)) {
+                if ($column_gutter !== '') {
                     ${$type . '_row_cls'}[]    =  'gx-' . $column_gutter;
                 }
                 $param_column               =   $this->params->get($type . '_column', 1);
-                if (!empty($param_column)) {
+                if ($param_column !== '') {
                     ${$type . '_row_cls'}[]     =   'row-cols-' . $param_column;
                 }
             }

@@ -127,7 +127,7 @@ class Font
                 ];
             }
         }
-        return \json_encode($rt_fonts);
+        return $rt_fonts;
     }
 
     /**
@@ -189,7 +189,7 @@ class Font
 
     public static function getLocalFonts($template_fonts_path) {
         $fonts = [];
-        $font_extensions = ['otf', 'ttf', 'woff'];
+        $font_extensions = ['otf', 'ttf', 'woff', 'eot'];
         foreach (scandir($template_fonts_path) as $font_path) {
             if (is_file($template_fonts_path . '/' . $font_path)) {
                 $pathinfo = pathinfo($template_fonts_path . '/' . $font_path);

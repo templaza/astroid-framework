@@ -23,9 +23,9 @@ $color_mode_theme  =   $app->input->cookie->get('astroid_colormode', 'light');
     <meta charset="utf-8" />
     <meta name="generator" content="Astroid Framework | Template Manager" />
     <title><?php echo $template->title; ?></title>
-    <link href="<?php echo ASTROID_MEDIA_URL . 'images/favicon.png'; ?>" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href="<?php echo ASTROID_MEDIA_URL . '/images/favicon.png'; ?>" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type="application/json" id="astroid-script-options"><?php echo json_encode($document->getScriptOptions(),JSON_PRETTY_PRINT); ?></script>
+    <script type="application/json" id="astroid-script-options"><?php echo json_encode($document->getScriptOptions(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?></script>
     <?php echo $document->getStylesheets(); ?>
     <?php echo $document->getScripts('head'); ?>
 </head>

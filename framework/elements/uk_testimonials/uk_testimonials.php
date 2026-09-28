@@ -238,7 +238,15 @@ foreach ($testimonials->getData() as $key => $testimonial) {
         }
     }
     if ($avatar_position == 'top') {
-        echo $media;
+
+        if($testimonial_icon){
+            echo '<div class="uk-flex uk-flex-between">';
+            echo $media;
+            echo '<div class="testimonial_icon"><i class="'.$testimonial_icon.'"></i></div>';
+            echo '</div>';
+        }else{
+            echo $media;
+        }
     }
     if (!empty($testimonial->params->get('message', ''))) {
         echo '<div class="as-author-message">' . $testimonial->params->get('message', '') . '</div>';

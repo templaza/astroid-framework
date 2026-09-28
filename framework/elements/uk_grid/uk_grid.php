@@ -107,6 +107,7 @@ $enable_image_cover =   $params->get('enable_image_cover', 0);
 $image_fullwidth    =   $enable_image_cover ? 1 : $params->get('image_fullwidth', 1);
 $min_height         =   $params->get('min_height', 0);
 $overlay_type       =   $params->get('overlay_type', '');
+$overlay_type_hover       =   $params->get('overlay_type_hover', '');
 $enable_grid_match  =   $params->get('enable_grid_match', 0);
 $vertical_middle    =   $params->get('vertical_middle', 0);
 
@@ -389,6 +390,19 @@ switch ($overlay_type) {
         $overlay_gradient   =   $params->get('overlay_gradient', '');
         if (!empty($overlay_gradient)) {
             $style->child('.astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_gradient));
+        }
+        break;
+}
+switch ($overlay_type_hover) {
+    case 'color':
+        $overlay_hover_color      =   Style::getColor($params->get('overlay_hover_color', ''));
+        $style->child('.as-image-cover:hover .astroid-image-overlay-cover:after')->addCss('background-color', $overlay_hover_color['light']);
+        $style_dark->child('.as-image-cover:hover .astroid-image-overlay-cover:after')->addCss('background-color', $overlay_hover_color['dark']);
+        break;
+    case 'background-color':
+        $overlay_hover_gradient   =   $params->get('overlay_hover_gradient', '');
+        if (!empty($overlay_hover_gradient)) {
+            $style->child('.as-image-cover:hover .astroid-image-overlay-cover:after')->addCss('background-image', Style::getGradientValue($overlay_hover_gradient));
         }
         break;
 }

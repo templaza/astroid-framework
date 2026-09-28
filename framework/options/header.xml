@@ -2,7 +2,6 @@
 <form>
    <fields name="params">
       <fieldset icon="as-icon as-icon-menu3" label="ASTROID_OPTIONS_HEADER" name="astroid_header" addfieldprefix="Astroid\Field" order="2">
-
          <field type="astroidgroup" name="header_element" title="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_LABEL" description="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_DESC" help="https://docs.astroidframe.work/header/header-modes"/>
          <field type="astroidgroup" name="header_logo_options_element" title="TPL_ASTROID_HEADER_LOGO_OPTION" description="TPL_ASTROID_HEADER_LOGO_OPTION_DESC" help="https://docs.astroidframe.work/header/logo-options"/>
          <field type="astroidgroup" name="header_sticky_options_element" title="TPL_ASTROID_HEADER_STICKY_HEADER_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_DESC" help="https://docs.astroidframe.work/header/sticky-header"/>
@@ -224,7 +223,7 @@
 
          <!-- Sticky Options-->
          <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_sticky_options_element" class="sticky-header-switch" name="enable_sticky_menu" type="astroidradio" astroid-switch="true" default="0" label="TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_ENABLE_DESC"/>
-         <field astroidgroup="header_sticky_options_element" name="header_sticky_container_type" type="astroidlist" label="TPL_ASTROID_CONTAINER_TYPE" description="TPL_ASTROID_CONTAINER_TYPE_DESC" default="">
+         <field ngShow="[header]==true AND [enable_sticky_menu]==true AND [header_mode]!='sidebar'" astroidgroup="header_sticky_options_element" name="header_sticky_container_type" type="astroidlist" label="TPL_ASTROID_CONTAINER_TYPE" description="TPL_ASTROID_CONTAINER_TYPE_DESC" default="">
             <option value="">JDEFAULT</option>
             <option value="container">ASTROID_CONTAINER</option>
             <option value="container-fluid">ASTROID_CONTAINER_FLUID</option>

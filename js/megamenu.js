@@ -4,8 +4,8 @@
  * @copyright Copyright (C) 2026 AstroidFrame.work.
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
  */
-class AstroidMegaMenuPro {
 
+class AstroidMegaMenuPro {
     constructor(navbar, options = {}) {
 
         this.navbar = navbar;
@@ -143,7 +143,6 @@ class AstroidMegaMenuPro {
             : this.open(item);
     }
     open(item) {
-
         this.closeSiblings(item);
 
         const content = this.getContent(item);
@@ -329,7 +328,6 @@ class AstroidMegaMenuPro {
                 sub.addEventListener('mouseleave', () => this.closeSub(sub));
             }
 
-
             link.addEventListener('keydown', e => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -347,7 +345,6 @@ class AstroidMegaMenuPro {
     }
 
     openSub(sub, parentContent) {
-
         const submenu = sub.querySelector(':scope > '+this.settings.submenuSelector);
         if (!submenu) return;
 
@@ -356,6 +353,9 @@ class AstroidMegaMenuPro {
 
         const proceed = () => {
             if (submenu._tl) submenu._tl.kill();
+            if (this.settings.trigger === 'click' || !this.canHover) {
+                this.closeSiblingsSub(sub);
+            }
             sub.classList.add('open');
             submenu.style.display = 'block';
             submenu.style.pointerEvents = 'auto';
@@ -412,7 +412,6 @@ class AstroidMegaMenuPro {
     }
 
     closeSub(sub) {
-
         const submenu = sub.querySelector(this.settings.submenuSelector);
         if (!submenu) return;
 
@@ -431,12 +430,20 @@ class AstroidMegaMenuPro {
         });
     }
 
+    closeSiblingsSub(current) {
+        const siblings = current.closest('ul').querySelectorAll(':scope > .nav-item-submenu');
+        siblings.forEach(sub => {
+            if (sub !== current) {
+                this.closeSub(sub);
+            }
+        });
+    }
+
     /* =============================
        SMART POSITIONING
     ============================= */
 
     positionContent(item, content) {
-
         const positionType = item.dataset.position;
 
         // Reset first
@@ -510,7 +517,6 @@ class AstroidMegaMenuPro {
     ============================= */
 
     staggerItems(container, parentItem) {
-
         const el = container instanceof Element ? container : null;
         if (!el) return;
 
@@ -601,7 +607,6 @@ class AstroidMegaMenuPro {
     }
 
     keyboardSupport(trigger, item) {
-
         trigger.addEventListener('keydown', e => {
 
             if (e.key === 'Enter') {
@@ -622,7 +627,6 @@ class AstroidMegaMenuPro {
     ============================= */
 
     observeMutations() {
-
         const observer = new MutationObserver(() => {
             this.items = this.navbar.querySelectorAll(
                 `${this.settings.megamenuSelector}`
