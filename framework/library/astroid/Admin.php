@@ -585,10 +585,7 @@ class Admin extends Helper\Client
             $fileTemp = $file['tmp_name'];
             if ($uploadedFileExtension == 'zip') {
                 $zip = new \Joomla\Archive\Zip();
-                $tmpPath = $app->get('tmp_path', '');
-                if (empty($tmpPath) || !is_dir($tmpPath)) {
-                    $tmpPath = JPATH_SITE . '/tmp';
-                }
+                $tmpPath = JPATH_SITE . '/tmp';
                 $zipFolder = \uniqid('astroid-preset-');
                 $zipPath = Path::clean($tmpPath . '/' . $zipFolder);
                 if ($zip->extract($fileTemp, $zipPath)) {
@@ -757,13 +754,9 @@ class Admin extends Helper\Client
                 ];
             }
 
-            $tmpPath = $app->get('tmp_path', '');
-            if (empty($tmpPath) || !is_dir($tmpPath)) {
-                $tmpPath = JPATH_SITE . '/tmp';
-            }
+            $tmpPath = JPATH_SITE . '/tmp';
             $zipFile = $file . '-' . date('YmdHis') . '.zip';
             $zipPath = $tmpPath . '/' . $zipFile;
-
             $zip = new \Joomla\Archive\Zip();
 
             $ok = $zip->create($zipPath, $arrayFiles);
