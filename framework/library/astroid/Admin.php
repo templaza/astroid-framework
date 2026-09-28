@@ -444,7 +444,9 @@ class Admin extends Helper\Client
         // styles
         $stylesheets = ['vendor/manager/dist/index.css', 'media/astroid/assets/vendor/fontawesome/css/all.min.css', 'media/astroid/assets/vendor/linearicons/font.min.css'];
         $document->addStyleSheet($stylesheets, ['rel' => 'stylesheet', 'type' => 'text/css'], 0);
-        $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
+        if (!$config['hide_preview_font']) {
+            $document->addStyleSheet('https://fonts.gstatic.com', ['rel' => 'preconnect']);
+        }
 
         Helper::triggerEvent('onBeforeAstroidAdminRender', [&$template]);
 
