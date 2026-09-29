@@ -19,19 +19,8 @@
       "uri": "astroid/megamenu.min.js"
     },
     {
-      "name": "astroid.offcanvas",
-      "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
-      "uri": "astroid/offcanvas.min.js"
-    },
-    {
       "name": "astroid.mobilemenu",
       "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
       "uri": "astroid/mobilemenu.min.js"
     },
     {

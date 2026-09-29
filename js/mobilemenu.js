@@ -1,56 +1,103 @@
-(function ($) {
-   $.fn.astroidMobileMenu = function () {
-      this.each(function () {
-         var _this = $(this);
-         _this.find('li').addClass('menu-item');
-         _this.find('li').each(function () {
-            $(this).children('ul').addClass('dropdown-menus');
-            $(this).children('ul').find('li').addClass('dropdown-menus-item');
+(function () {
+   'use strict';
+
+   function toElementArray(target) {
+      if (!target) return [];
+      if (typeof target === 'string') return Array.from(document.querySelectorAll(target));
+      if (target instanceof Element) return [target];
+      if (target instanceof NodeList || Array.isArray(target)) {
+         return Array.from(target).filter(function (item) {
+            return item instanceof Element;
          });
-         _this.wrap('<div class="astroid-mobilemenu-container" />').wrap('<div class="astroid-mobilemenu-inner"></div>');
+      }
+      return [];
+   }
 
-         // Add Class For Sub Menu
-         _this.find('li:has(> ul)').addClass('subMenu-wrapper');
+   function wrapMenu(menu) {
+      var isAlreadyWrapped = menu.parentElement &&
+         menu.parentElement.classList.contains('astroid-mobilemenu-inner') &&
+         menu.parentElement.parentElement &&
+         menu.parentElement.parentElement.classList.contains('astroid-mobilemenu-container');
 
-         _this.find('li').each(function () {
-            // Get Text For Sub Menu Back Button
-			if ($(this).children('a').length) {
-				var sub_menu_lable = $(this).children('a').html();
-			}else{
-				var sub_menu_lable = $(this).children('span').html();
-			}
-            if ($(this).hasClass('subMenu-wrapper')) {
-               var _indicator = $('<span class="menu-indicator"><i class="fas fa-angle-right"></i></span>');
-               var _indicatorBackItem = $('<li class="menu-item menu-go-back"></li>');
-               var _indicatorBack = $('<span class="menu-indicator-back"><i class="fas fa-angle-left"></i></span>');
-               _indicatorBack.append(sub_menu_lable);
-               _indicatorBackItem.append(_indicatorBack);
+      if (isAlreadyWrapped) return;
 
-               // Add Button For Toggle Sub Menu
-               if ($(this).children('a').length) {
-                  $(this).children('a').after(_indicator);
-                  if ($(this).children('a').hasClass('item-link-heading')) {
-                     $(this).children('a').bind('click', function (event) {
-                        event.preventDefault();
-                        _indicator.next('.dropdown-menus').toggleClass('menu_open');
-                     });
-                  }
-               }else{
-                  $(this).children('span').after(_indicator);
-               }
-               // For Sub menu Open
-               _indicator.bind('click', function () {
-                  $(this).next('.dropdown-menus').toggleClass('menu_open');
-               });
-               // Add Button In Sub Menu For Main Menu
-               $(this).children('ul').prepend(_indicatorBackItem);
-               // For sub Menu Close
-               _indicatorBack.bind('click', function () {
-                  $(this).parent().parent('.dropdown-menus').removeClass('menu_open');
-               });
-            }
+      var container = document.createElement('div');
+      container.className = 'astroid-mobilemenu-container offcanvas-body p-0';
+      var inner = document.createElement('div');
+      inner.className = 'astroid-mobilemenu-inner';
+
+      menu.parentNode.insertBefore(container, menu);
+      container.appendChild(inner);
+      inner.appendChild(menu);
+   }
+
+   function initMenu(menu) {
+      menu.querySelectorAll('li').forEach(function (li) {
+         li.classList.add('menu-item');
+
+         li.querySelectorAll(':scope > ul').forEach(function (submenu) {
+            submenu.classList.add('dropdown-menus');
+            submenu.querySelectorAll('li').forEach(function (submenuItem) {
+               submenuItem.classList.add('dropdown-menus-item');
+            });
          });
       });
-      return this;
-   };
-}(jQuery));
+
+      wrapMenu(menu);
+
+      menu.querySelectorAll('li').forEach(function (li) {
+         if (li.querySelector(':scope > ul')) {
+            li.classList.add('subMenu-wrapper');
+         }
+      });
+
+      menu.querySelectorAll('li.subMenu-wrapper').forEach(function (li) {
+         if (li.querySelector(':scope > .menu-indicator')) return;
+
+         var labelElement = li.querySelector(':scope > a, :scope > span');
+         var submenu = li.querySelector(':scope > ul.dropdown-menus, :scope > ul');
+         if (!labelElement || !submenu) return;
+
+         var submenuLabel = labelElement.innerHTML;
+
+         var indicator = document.createElement('span');
+         indicator.className = 'menu-indicator';
+         indicator.innerHTML = '<i class="fas fa-angle-right"></i>';
+
+         var indicatorBackItem = document.createElement('li');
+         indicatorBackItem.className = 'menu-item menu-go-back';
+
+         var indicatorBack = document.createElement('span');
+         indicatorBack.className = 'menu-indicator-back d-flex align-items-center flex-wrap';
+         indicatorBack.innerHTML = '<i class="fas fa-angle-left"></i>' + submenuLabel;
+         indicatorBackItem.appendChild(indicatorBack);
+
+         labelElement.insertAdjacentElement('afterend', indicator);
+
+         if (labelElement.tagName === 'A' && labelElement.classList.contains('item-link-heading')) {
+            labelElement.addEventListener('click', function (event) {
+               event.preventDefault();
+               submenu.classList.toggle('menu_open');
+            });
+         }
+
+         indicator.addEventListener('click', function () {
+            submenu.classList.toggle('menu_open');
+         });
+
+         if (!submenu.querySelector(':scope > .menu-go-back')) {
+            submenu.insertAdjacentElement('afterbegin', indicatorBackItem);
+         }
+
+         indicatorBack.addEventListener('click', function () {
+            submenu.classList.remove('menu_open');
+         });
+      });
+   }
+
+   function astroidMobileMenu(target) {
+      toElementArray(target).forEach(initMenu);
+   }
+
+   window.astroidMobileMenu = astroidMobileMenu;
+})();

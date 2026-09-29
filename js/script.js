@@ -59,9 +59,8 @@
    let initMobileMenu = function () {
       const mobileMenus = document.querySelectorAll('.astroid-mobile-menu');
       if (!mobileMenus.length) return;
-      // astroidMobileMenu is an external jQuery plugin
-      if (typeof jQuery !== 'undefined') {
-         jQuery('.astroid-mobile-menu').astroidMobileMenu();
+      if (typeof window.astroidMobileMenu === 'function') {
+         window.astroidMobileMenu(mobileMenus);
       }
       mobileMenus.forEach(function (el) {
          el.classList.remove('d-none');
@@ -71,8 +70,9 @@
    let initOffcanvasMenu = function () {
       const offcanvas = document.querySelector('#astroid-offcanvas');
       if (!offcanvas) return;
-      if (offcanvas.querySelectorAll('ul.menu').length && typeof jQuery !== 'undefined') {
-         jQuery('#astroid-offcanvas').find('ul.menu').astroidMobileMenu();
+      if (!offcanvas.querySelectorAll('ul.menu').length) return;
+      if (typeof window.astroidMobileMenu === 'function') {
+         window.astroidMobileMenu(offcanvas.querySelectorAll('ul.menu'));
       }
    };
 

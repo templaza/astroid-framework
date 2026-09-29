@@ -9,17 +9,17 @@
  *  You can easily override all files under /frontend/ folder.
  *	Just copy the file to ROOT/templates/YOURTEMPLATE/html/frontend/ folder to create and override
  */
-use Joomla\CMS\Factory;
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
 
 $params = Astroid\Framework::getTemplate()->getParams();
 $document = Astroid\Framework::getDocument();
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 
 $header = $params->get('header', TRUE);
 $header_mobile_menu = $params->get('header_mobile_menu', '');
+$mobile_menu_heading_text = $params->get('mobile_menu_heading_text', '');
+
 echo '<div id="astroid-mobilemenu-wrap">';
 if ($header && !empty($header_mobile_menu)) :
     $dir = 'left';
@@ -33,18 +33,23 @@ if ($header && !empty($header_mobile_menu)) :
             $dir = $mode;
         }
     }
-
-    $wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
+    $offcanvas_direction = match($dir) {
+        'left' => 'offcanvas-start',
+        'right' => 'offcanvas-end',
+        default => 'offcanvas-start',
+    };
+    $document->getWA()->useScript('bootstrap.offcanvas');
+    $document->getWA()->useScript('astroid.mobilemenu');
 ?>
-<div class="astroid-mobilemenu d-none d-init dir-<?php echo $dir; ?>" data-class-prefix="astroid-mobilemenu" id="astroid-mobilemenu">
-   <div class="burger-menu-button active">
-      <button aria-label="Mobile Menu Toggle" type="button" class="button close-offcanvas offcanvas-close-btn">
-         <span class="box">
-            <span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span>
-         </span>
-      </button>
-   </div>
+<div class="astroid-mobilemenu offcanvas <?php echo $offcanvas_direction; ?>" tabindex="-1" aria-labelledby="astroid-mobilemenu-label" id="astroid-mobilemenu">
+    <div class="offcanvas-header burger-menu-button">
+        <h5 class="offcanvas-title" id="astroid-mobilemenu-label"><?php echo $mobile_menu_heading_text; ?></h5>
+        <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="button close-offcanvas offcanvas-close-btn">
+             <span class="box">
+                <span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span>
+             </span>
+        </button>
+    </div>
    <?php Astroid\Component\Menu::getMobileMenu($header_mobile_menu); 
    ?>
 </div>
