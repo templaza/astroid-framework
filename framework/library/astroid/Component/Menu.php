@@ -577,7 +577,7 @@ class Menu
         return $class;
     }
 
-    public static function getMobileMenu($menutype = '', $nav_class = [])
+    public static function getMobileMenu($menutype = '', $nav_class = []): string
     {
         if (empty($menutype)) {
             return '';
@@ -624,6 +624,7 @@ class Menu
             }
         }
         echo '</ul>';
+        return '';
     }
 
     public static function getSidebarMenu($menutype = '')

@@ -40,20 +40,21 @@ if ($header && !empty($header_mobile_menu)) :
     };
     $document->getWA()->useScript('bootstrap.offcanvas');
     $document->getWA()->useScript('astroid.mobilemenu');
-?>
-<div class="astroid-mobilemenu offcanvas <?php echo $offcanvas_direction; ?>" tabindex="-1" aria-labelledby="astroid-mobilemenu-label" id="astroid-mobilemenu">
-    <div class="offcanvas-header burger-menu-button">
-        <h5 class="offcanvas-title" id="astroid-mobilemenu-label"><?php echo $mobile_menu_heading_text; ?></h5>
-        <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="button close-offcanvas offcanvas-close-btn">
-             <span class="box">
-                <span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span>
-             </span>
-        </button>
-    </div>
-   <?php Astroid\Component\Menu::getMobileMenu($header_mobile_menu); 
-   ?>
-</div>
-<?php
+
+    echo '<div class="astroid-mobilemenu offcanvas ' . $offcanvas_direction . '" tabindex="-1" aria-labelledby="astroid-mobilemenu-label" id="astroid-mobilemenu">';
+    echo '<div class="offcanvas-header burger-menu-button">';
+    echo '<h5 class="offcanvas-title" id="astroid-mobilemenu-label">' . $mobile_menu_heading_text . '</h5>';
+    echo '<button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="button close-offcanvas offcanvas-close-btn">';
+    echo '<span class="box">';
+    echo '<span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span>';
+    echo '</span>';
+    echo '</button>';
+    echo '</div>';
+
+    echo Astroid\Component\Menu::getMobileMenu($header_mobile_menu);
+
+    echo '</div>';
+
     $style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
     $document->addStyledeclaration($style);
 endif;
