@@ -175,6 +175,11 @@ $mobilemenu-width: 249px !default;
          z-index: 1;
       }
    }
+
+   .nav-title > * {
+      display: inline-block;
+      vertical-align: middle;
+   }
 }
 
 .burger-menu-button {
