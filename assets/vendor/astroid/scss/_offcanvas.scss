@@ -59,7 +59,7 @@ $offcanvas-btn: 50px !default;
 		text-transform: none;
 		background-color: transparent;
 		border: 0;
-		margin: 0;
+		margin: 0 0 0 auto;
 		overflow: visible;
 		&:hover {
 			opacity: .7;
@@ -237,44 +237,8 @@ $offcanvas-btn: 50px !default;
 }
 
 .astroid-offcanvas {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: $zindex-popover;
-	visibility: hidden;
-	height: 100vh;
-	overflow-x: hidden;
-	overflow-y: auto;
-	-webkit-overflow-scrolling: touch;
-	color: var(--as-mobile-menu-text-color);
-	background-color: var(--as-mobile-backgroundcolor);
-	-webkit-transition: all .5s;
-	transition: all .5s;
-	max-width: 100vw !important;
-	.burger-menu-button{
-		padding: 10px;
-		position: sticky;
-		top: 0;
-		left: 0;
-		width: 100%;
-		z-index: 9;
-	}
-	.astroid-offcanvas-inner {
-		position: relative;
-		display: block;
-		padding: 0 30px;
-		height: calc(100% - #{$offcanvas-btn});
-	}
 	li.menu-item.menu-go-back{
 		margin-top: $offcanvas-btn;
-	}
-	.close-offcanvas,
-	.close-offcanvas:hover {
-		display: inline-block;
-		margin-top: 0;
-		position: relative;
-		right: 0;
-		z-index: 999999;
 	}
 	.burger-menu-button .inner,
 	.burger-menu-button .inner::before,

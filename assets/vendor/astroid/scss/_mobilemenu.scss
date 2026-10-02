@@ -1,33 +1,19 @@
 $burger-layer-width: 30px !default;
 $close-btn-height: 50px !default;
 $menu-indicator-width: 60px !default;
+$mobilemenu-width: 249px !default;
 
 .astroid-mobilemenu {
-   position: fixed;
-   top: 0;
-   left: 0;
    background-color: var(--as-mobilemenu-backgroundcolor);
    color: var(--as-mobilemenu-menu-text-color);
-   z-index: $zindex-popover;
-   visibility: hidden;
-   height: 100%;
-   width: 250px;
-   overflow: auto;
-   -webkit-overflow-scrolling: touch;
-   -webkit-transition: all .5s;
-   transition: all .5s;
-   max-width: 100vw !important;
-
-   &.dir-right {
-      right: 0;
-      left: auto;
-   }
+   --bs-offcanvas-width: 250px;
 
    a small {
       display: block !important;
    }
 
    .burger-menu-button {
+      background-color: var(--as-mobilemenu-backgroundcolor);
       padding: 10px;
       position: sticky;
       top: 0;
@@ -163,7 +149,7 @@ $menu-indicator-width: 60px !default;
       left: -150%;
       top: 0;
       height: 100vh;
-      width: 100% !important;
+      width: $mobilemenu-width !important;
       transition: all .5s;
       background-color: $white;
 
@@ -176,7 +162,7 @@ $menu-indicator-width: 60px !default;
          box-sizing: border-box;
       }
 
-      .menu-indicator-back i {
+      .menu-indicator-back > i {
          margin-right: 10px;
       }
 
@@ -188,6 +174,11 @@ $menu-indicator-width: 60px !default;
          left: 0;
          z-index: 1;
       }
+   }
+
+   .nav-title > * {
+      display: inline-block;
+      vertical-align: middle;
    }
 }
 

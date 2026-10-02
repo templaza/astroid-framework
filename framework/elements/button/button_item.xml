@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields>
+        <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+            <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+            <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_BUTTON_LINK_DESC" name="link" hint="https://astroidframe.work/" dynamic="true"/>
+            <field ngShow="[link]!=''" type="astroidlist" name="link_target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
+                <option value="">Default</option>
+                <option value="_blank">New Window</option>
+                <option value="_parent">Parent Frame</option>
+                <option value="_top">Full body of the window</option>
+            </field>
+            <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon" dynamic="true"/>
+            <field ngShow="[icon]!=''" type="astroidlist" label="ASTROID_WIDGET_ICON_POSITION_LABEL" name="icon_position" default="first">
+                <option value="first">ASTROID_WIDGET_ICON_POSITION_FIRST_LABEL</option>
+                <option value="last">ASTROID_WIDGET_ICON_POSITION_LAST_LABEL</option>
+            </field>
+            <field name="button_attributes" type="astroidsubform" label="ASTROID_WIDGET_BUTTON_ATTRIBUTES" as-index="attribute">
+                <form>
+                    <fields>
+                        <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+                            <field type="astroidtext" label="ASTROID_WIDGET_ATTRIBUTE_LABEL" name="attribute" dynamic="true"/>
+                            <field type="astroidtext" label="ASTROID_VALUE_LABEL" name="value" dynamic="true"/>
+                        </fieldset>
+                    </fields>
+                </form>
+            </field>
+            <field type="astroidlist" label="ASTROID_WIDGET_GLOBAL_STYLES_LABEL" name="button_style" default="primary">
+                <option value="primary">Primary</option>
+                <option value="secondary">Secondary</option>
+                <option value="success">Success</option>
+                <option value="danger">Danger</option>
+                <option value="warning">Warning</option>
+                <option value="info">Info</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="link">Link</option>
+                <option value="text">Text</option>
+                <option value="custom">Custom</option>
+            </field>
+            <field ngShow="[button_style]=='custom'" name="color_settings" type="astroidradio" width="full" default="color">
+                <option value="color">TPL_ASTROID_COLOR</option>
+                <option value="hover">TPL_ASTROID_COLOR_HOVER</option>
+            </field>
+            <field ngShow="[button_style]=='custom' AND [color_settings]=='color'" name="color" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+            <field ngShow="[button_style]=='custom' AND [color_settings]=='hover'" name="color_hover" type="astroidcolor" label="ASTROID_WIDGET_COLOR_LABEL"/>
+            <field ngShow="[button_style]=='custom' AND [color_settings]=='color'" name="bgcolor" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+            <field ngShow="[button_style]=='custom' AND [color_settings]=='hover'" name="bgcolor_hover" type="astroidcolor" label="TPL_ASTROID_BACKGROUND_COLOR_LABEL"/>
+            <field name="button_outline" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_OUTLINE_LABEL"/>
+            <field type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
+                <option value="">Default</option>
+                <option value="btn-lg">Large</option>
+                <option value="btn-sm">Small</option>
+                <option value="custom">Custom</option>
+            </field>
+            <field ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+            <field name="btn_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+        </fieldset>
+        <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
+            <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+            <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
+        </fieldset>
+    </fields>
+</form>

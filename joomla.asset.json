@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "astroid",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "Astroid Framework Assets",
   "license": "GPL-3.0-or-later",
   "assets": [
@@ -19,19 +19,8 @@
       "uri": "astroid/megamenu.min.js"
     },
     {
-      "name": "astroid.offcanvas",
-      "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
-      "uri": "astroid/offcanvas.min.js"
-    },
-    {
       "name": "astroid.mobilemenu",
       "type": "script",
-      "dependencies": [
-        "jquery"
-      ],
       "uri": "astroid/mobilemenu.min.js"
     },
     {

@@ -12,5 +12,5 @@
 // No direct access.
 defined('_JEXEC') or die;
 extract($displayData);
-echo '<div class="'.$containerClass.'"><div class="header-mobilemenu-trigger burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu" data-effect="mobilemenu-slide"><button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button></div></div>';
+echo '<div class="'.$containerClass.'"><div class="header-mobilemenu-trigger burger-menu-button align-self-center"><button data-bs-toggle="offcanvas" data-bs-target="#astroid-mobilemenu" aria-controls="astroid-mobilemenu" type="button" class="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button></div></div>';
 ?>
