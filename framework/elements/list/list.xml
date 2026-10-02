@@ -12,26 +12,8 @@
                 <field type="astroidgroup" name="title_options" title="ASTROID_WIDGET_TITLE_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
                 <field type="astroidgroup" name="spacing_options" title="ASTROID_ELEMENT_HEAD_SPACING_LABEL"/>
-                <field astroidgroup="general" name="list_items" type="astroidsubform" label="ASTROID_WIDGET_LIST_ITEMS_LABEL">
-                    <form>
-                        <fields>
-                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
-                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
-                                <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description" dynamic="true"/>
-                                <field type="astroidlist" label="ASTROID_WIDGET_ICON_TYPE" name="icon_type" default="fontawesome">
-                                    <option value="fontawesome">TPL_ASTROID_FONTAWESOME</option>
-                                    <option value="custom">ASTROID_WIDGET_CUSTOM</option>
-                                </field>
-                                <field ngShow="[icon_type]=='fontawesome'" type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="fa_icon"/>
-                                <field ngShow="[icon_type]=='custom'" type="astroidtext" label="ASTROID_WIDGET_CUSTOM_ICON_CLASS" name="custom_icon" dynamic="true"/>
-                            </fieldset>
-                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
-                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
-                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
-                            </fieldset>
-                        </fields>
-                    </form>
-                </field>
+                <field astroidgroup="general" name="list_items" type="astroidsubform" label="ASTROID_WIDGET_LIST_ITEMS_LABEL"
+                       formsource="libraries/astroid/framework/elements/list/list_item.xml"/>
                 <field astroidgroup="misc_options" type="astroidlist" name="list_style" label="ASTROID_WIDGET_NAV_LIST_STYLE" default="ul">
                     <option value="ul">Unordered List</option>
                     <option value="ol">Ordered List</option>
