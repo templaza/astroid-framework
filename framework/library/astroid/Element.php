@@ -176,7 +176,11 @@ class Element
                 $this->form->load($defaultXml, false);
             } else {
                 $defaultXml = simplexml_load_file($this->subform['formsource']);
-                $this->form->load($defaultXml->form, false);
+                if (isset($defaultXml->form)) {
+                    $this->form->load($defaultXml->form, false);
+                } elseif (isset($defaultXml->fields)) {
+                    $this->form->load($defaultXml, false);
+                }
             }
         }
 
