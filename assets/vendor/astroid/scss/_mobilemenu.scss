@@ -49,6 +49,15 @@ $mobilemenu-width: 249px !default;
          }
       }
    }
+
+   &.show {
+      .burger-menu-button .inner,
+      .burger-menu-button .inner::before,
+      .burger-menu-button .inner::after {
+         background-color: var(--as-mobilemenu-menu-active-icon-color);
+         opacity: 1;
+      }
+   }
 }
 
 .offcanvas-right {
@@ -186,51 +195,6 @@ $mobilemenu-width: 249px !default;
    text-align: right;
    line-height: 0;
    margin: 0;
-}
-
-.astroid-mobilemenu-open {
-   .close-offcanvas,
-   .close-offcanvas:hover {
-      color: $black;
-      display: inline-block;
-      margin: 0;
-      position: relative;
-      right: 5px;
-      box-sizing: content-box;
-      z-index: 999999;
-   }
-
-   .burger-menu-button .inner,
-   .burger-menu-button .inner::before,
-   .burger-menu-button .inner::after {
-      background-color: var(--as-mobilemenu-menu-active-icon-color);
-      opacity: 1;
-   }
-}
-
-body.astroid-mobile-menu-opened {
-   max-height: 100vh;
-   overflow: hidden;
-
-   .astroid-mobilemenu-open {
-      overflow-x: hidden;
-   }
-
-   .astroid-content:after {
-      width: 100%;
-      height: 100%;
-      opacity: 1;
-      -webkit-transition: opacity .5s;
-      transition: opacity .5s;
-   }
-
-   .astroid-mobilemenu:after {
-      width: 0;
-      height: 0;
-      opacity: 0;
-      -webkit-transition: opacity .5s, width .1s .5s, height .1s .5s;
-      transition: opacity .5s, width .1s .5s, height .1s .5s;
-   }
 }
 
 .rtl {
