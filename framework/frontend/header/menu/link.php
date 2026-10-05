@@ -117,7 +117,7 @@ if (!empty($options->icon)) {
 }
 
 echo $has_media ? '<div class="w-100 d-flex flex-wrap flex-column justify-content-center">' : '';
-echo '<div class="nav-title">';
+echo '<div class="nav-title as-gutter-x-md">';
 if (!$options->icononly) {
     if (!empty($item->menu_image)) {
         echo '<img src="' . Uri::root() . $item->menu_image . '" alt="' . $item->title . '" ' . (!empty($item->menu_image_css) ? "class='" . $item->menu_image_css . "'" : "") . '>';

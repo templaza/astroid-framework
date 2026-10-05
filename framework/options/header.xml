@@ -5,6 +5,7 @@
          <field type="astroidgroup" name="header_element" title="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_LABEL" description="TPL_ASTROID_HEADER_ELEMENT_MAIN_TITLE_DESC" help="https://docs.astroidframe.work/header/header-modes"/>
          <field type="astroidgroup" name="header_logo_options_element" title="TPL_ASTROID_HEADER_LOGO_OPTION" description="TPL_ASTROID_HEADER_LOGO_OPTION_DESC" help="https://docs.astroidframe.work/header/logo-options"/>
          <field type="astroidgroup" name="header_sticky_options_element" title="TPL_ASTROID_HEADER_STICKY_HEADER_LABEL" description="TPL_ASTROID_HEADER_STICKY_HEADER_DESC" help="https://docs.astroidframe.work/header/sticky-header"/>
+         <field type="astroidgroup" name="header_mobilemenu_options_element" title="TPL_ASTROID_HEADER_MOBILE_MENU_LABEL" description="TPL_ASTROID_HEADER_MOBILE_MENU_DESC" help="https://docs.astroidframe.work/header/mobile-menu"/>
          <field type="astroidgroup" name="header_offcanvas_options_element" title="TPL_ASTROID_HEADER_OFF_CANVAS_MENU" description="TPL_ASTROID_HEADER_OFF_CANVAS_MENU_DESC" help="https://docs.astroidframe.work/header/off-canvas-menu"/>
          <field type="astroidgroup" name="header_animation_options_element" title="TPL_ASTROID_HEADER_MENU_ANIMATION" description="TPL_ASTROID_HEADER_MENU_ANIMATION_DESC"/>
 
@@ -114,43 +115,6 @@
          </field>
 
          <field astroidgroup="header_element" name="header_menu_module_position" type="astroidmodulesposition" default="astroid-header-menu" label="TPL_ASTROID_SITE_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" ngShow="[header]==true AND [header_menu_method]=='module_position'"/>
-
-         <field ngShow="[header]==true" astroidgroup="header_element" name="mobile_menu_method" type="astroidlist" default="default" label="TPL_ASTROID_MOBILE_MENU_METHOD_LABEL" description="TPL_ASTROID_HEADER_MENU_METHOD_DESC">
-            <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
-            <option value="module_position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
-         </field>
-         <field ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_element" name="header_mobile_menu" type="astroidsql" query="SELECT * FROM #__menu_types" default="" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MOBILE_MENU_LABEL">
-            <option value="">ASTROID_NONE</option>
-         </field>
-
-         <field name="header_mobile_startLevel" type="astroidlist" label="TPL_ASTROID_HEADER_MENU_STARTLEVEL_LABEL" description="TPL_ASTROID_HEADER_MENU_STARTLEVEL_DESC" default="1" filter="integer" ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_element">
-            <option value="1">J1</option>
-            <option value="2">J2</option>
-            <option value="3">J3</option>
-            <option value="4">J4</option>
-            <option value="5">J5</option>
-            <option value="6">J6</option>
-            <option value="7">J7</option>
-            <option value="8">J8</option>
-            <option value="9">J9</option>
-            <option value="10">J10</option>
-         </field>
-
-         <field name="header_mobile_endLevel" type="astroidlist" label="TPL_ASTROID_HEADER_MENU_ENDLEVEL_LABEL" description="TPL_ASTROID_HEADER_MENU_ENDLEVEL_DESC" default="0" filter="integer" ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_element">
-            <option value="0">JALL</option>
-            <option value="1">J1</option>
-            <option value="2">J2</option>
-            <option value="3">J3</option>
-            <option value="4">J4</option>
-            <option value="5">J5</option>
-            <option value="6">J6</option>
-            <option value="7">J7</option>
-            <option value="8">J8</option>
-            <option value="9">J9</option>
-            <option value="10">J10</option>
-         </field>
-
-         <field astroidgroup="header_element" name="mobile_menu_module_position" type="astroidmodulesposition" default="astroid-header-mobilemenu" label="TPL_ASTROID_MOBILE_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" ngShow="[header]==true AND [mobile_menu_method]=='module_position'"/>
 
          <field name="header_breakpoint" type="astroidlist" label="TPL_ASTROID_HEADER_BREAKPOINT_LABEL" description="TPL_ASTROID_HEADER_BREAKPOINT_DESC" default="lg" ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_element">
             <option value="sm">ASTROID_SMALL</option>
@@ -290,11 +254,7 @@
          <field ngShow="[header]==true AND [enable_offcanvas]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" name="offcanvas_panelwidth" class="form-control" type="astroidtext" label="TPL_ASTROID_PANEL_WIDTH_LABEL" hint="320px" default="320px" description="TPL_ASTROID_PANEL_WIDTH_DESC">
          </field>
 
-         <field ngShow="[header]==true AND [enable_offcanvas]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" description="TPL_ASTROID_OFF_CANVAS_ANIMATION_DESC" name="offcanvas_animation" type="astroidlist" class="form-select" default="st-effect-1" label="TPL_ASTROID_OFF_CANVAS_ANIMATION_LABEL">
-            <option value="st-effect-1">TPL_ASTROID_OFF_CANVAS_ANIMATION_OPTIONS_SILDE_IN_ON_TOP</option>
-            <option value="st-effect-2">TPL_ASTROID_OFF_CANVAS_ANIMATION_OPTIONS_REVEAL</option>
-            <option value="st-effect-3">TPL_ASTROID_OFF_CANVAS_ANIMATION_OPTIONS_PUSH</option>
-         </field>
+         <field ngShow="[header]==true AND [enable_offcanvas]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" name="offcanvas_heading_text" type="astroidtext" label="ASTROID_OFFCANVAS_HEADING_TEXT_LABEL" description="ASTROID_OFFCANVAS_HEADING_TEXT_DESC" />
 
          <field ngShow="[header]==true AND [enable_offcanvas]==true AND [header_mode]!='sidebar'" astroidgroup="header_offcanvas_options_element" description="TPL_ASTROID_OFF_CANVAS_DIRECTION_DESC" name="offcanvas_direction" type="astroidradio" class="form-control" default="offcanvasDirLeft" label="TPL_ASTROID_OFF_CANVAS_DIRECTION_LABEL">
             <option value="offcanvasDirLeft">JGLOBAL_LEFT</option>
@@ -305,6 +265,46 @@
             <option value="offcanvasLeft">JGLOBAL_LEFT</option>
             <option value="offcanvasRight">JGLOBAL_RIGHT</option>
          </field>
+
+         <!--Mobile Menu Options-->
+         <field ngShow="[header]==true" astroidgroup="header_mobilemenu_options_element" name="mobile_menu_heading_text" type="astroidtext" label="ASTROID_MOBILEMENU_HEADING_TEXT_LABEL" description="ASTROID_MOBILEMENU_HEADING_TEXT_DESC" />
+
+         <field ngShow="[header]==true" astroidgroup="header_mobilemenu_options_element" name="mobile_menu_method" type="astroidlist" default="default" label="TPL_ASTROID_MOBILE_MENU_METHOD_LABEL" description="TPL_ASTROID_HEADER_MENU_METHOD_DESC">
+            <option value="default">TPL_ASTROID_OPTIONS_DEFAULT</option>
+            <option value="module_position">TPL_ASTROID_MODULE_POSITION_LABEL</option>
+         </field>
+         <field ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_mobilemenu_options_element" name="header_mobile_menu" type="astroidsql" query="SELECT * FROM #__menu_types" default="" class="form-control astroid-select-ui" key_field="menutype" value_field="title" label="TPL_ASTROID_HEADER_MOBILE_MENU_LABEL">
+            <option value="">ASTROID_NONE</option>
+         </field>
+
+         <field name="header_mobile_startLevel" type="astroidlist" label="TPL_ASTROID_HEADER_MENU_STARTLEVEL_LABEL" description="TPL_ASTROID_HEADER_MENU_STARTLEVEL_DESC" default="1" filter="integer" ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_mobilemenu_options_element">
+            <option value="1">J1</option>
+            <option value="2">J2</option>
+            <option value="3">J3</option>
+            <option value="4">J4</option>
+            <option value="5">J5</option>
+            <option value="6">J6</option>
+            <option value="7">J7</option>
+            <option value="8">J8</option>
+            <option value="9">J9</option>
+            <option value="10">J10</option>
+         </field>
+
+         <field name="header_mobile_endLevel" type="astroidlist" label="TPL_ASTROID_HEADER_MENU_ENDLEVEL_LABEL" description="TPL_ASTROID_HEADER_MENU_ENDLEVEL_DESC" default="0" filter="integer" ngShow="[header]==true AND [mobile_menu_method]=='default'" astroidgroup="header_mobilemenu_options_element">
+            <option value="0">JALL</option>
+            <option value="1">J1</option>
+            <option value="2">J2</option>
+            <option value="3">J3</option>
+            <option value="4">J4</option>
+            <option value="5">J5</option>
+            <option value="6">J6</option>
+            <option value="7">J7</option>
+            <option value="8">J8</option>
+            <option value="9">J9</option>
+            <option value="10">J10</option>
+         </field>
+
+         <field astroidgroup="header_mobilemenu_options_element" name="mobile_menu_module_position" type="astroidmodulesposition" default="astroid-header-mobilemenu" label="TPL_ASTROID_MOBILE_MODULE_POSITION_LABEL" description="TPL_ASTROID_MODULE_POSITION_DESC" ngShow="[header]==true AND [mobile_menu_method]=='module_position'"/>
 
          <!--Animation Options-->
          <field ngShow="[header]==true AND [header_mode]!='sidebar'" astroidgroup="header_animation_options_element" name="dropdown_animation_type" type="astroidlist" default="slide-scale" label="TPL_ASTROID_HEADER_MENU_ANIMATION">

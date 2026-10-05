@@ -204,7 +204,6 @@
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" type="astroidgetpro" name="animation_stagger" label="ASTROID_ANIMATION_STAGGER_TIME" description="ASTROID_ANIMATION_STAGGER_TIME_DESC" />
             <field astroidgroup="animation_settings" ngShow="[animation]!=''" name="animation_element" type="astroidgetpro" label="ASTROID_ANIMATION_ELEMENT" description="ASTROID_ANIMATION_ELEMENT_DESC"/>
 
-            <field astroidgroup="transform_settings" name="transform_scenes" type="astroidgetpro" label="ASTROID_WIDGET_TRANSFORM_SCENES_LABEL" description="ASTROID_WIDGET_TRANSFORM_SCENES_DESC"/>
             <field astroidgroup="transform_settings" name="transform_scenes" type="astroidsubform" label="ASTROID_WIDGET_TRANSFORM_SCENES_LABEL" description="ASTROID_WIDGET_TRANSFORM_SCENES_DESC" count-label="ASTROID_ELEMENT_TRANSFORM_SCENE_LABEL">
                <form>
                   <fields>

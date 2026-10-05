@@ -9,27 +9,8 @@
         <fields>
             <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
                 <field type="astroidgroup" name="misc_options" title="ASTROID_WIDGET_MISC_OPTIONS_LABEL"/>
-                <field astroidgroup="general" name="icons" type="astroidsubform" label="ASTROID_WIDGET_ICONS_LABEL">
-                    <form>
-                        <fields>
-                            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
-                                <field type="astroidtext" class="form-control" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
-                                <field type="astroidicons" label="ASTROID_WIDGET_ICON_LABEL" name="icon" dynamic="true"/>
-                                <field type="astroidtext" label="ASTROID_WIDGET_LINK_LABEL" description="ASTROID_WIDGET_ICON_LINK_DESC" name="link" hint="https://astroidframe.work/" dynamic="true"/>
-                                <field type="astroidlist" name="target" label="ASTROID_WIDGET_LINK_TARGET_LABEL" default="">
-                                    <option value="">Default</option>
-                                    <option value="_blank">New Window</option>
-                                    <option value="_parent">Parent Frame</option>
-                                    <option value="_top">Full body of the window</option>
-                                </field>
-                            </fieldset>
-                            <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
-                                <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
-                                <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
-                            </fieldset>
-                        </fields>
-                    </form>
-                </field>
+                <field astroidgroup="general" name="icons" type="astroidsubform" label="ASTROID_WIDGET_ICONS_LABEL"
+                       formsource="libraries/astroid/framework/elements/icons/icon_item.xml" />
                 <field astroidgroup="misc_options" name="icon_size" type="astroidrange" min="1" max="300" step="1" postfix="px" default="18" label="TPL_ASTROID_BASIC_ICON_SIZE_LABEL" description="TPL_ASTROID_BASIC_ICON_SIZE_DESC" />
                 <field astroidgroup="misc_options" type="astroidlist" name="icon_gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="2">
                     <option value="0">Collapse</option>

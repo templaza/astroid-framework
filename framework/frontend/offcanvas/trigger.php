@@ -23,7 +23,7 @@ $triggerClasses[] = $visibility;
 // `active` class will be added when offcanvas menu opened
 ?>
 <div class="<?php echo implode(' ', $triggerClasses); ?>" data-offcanvas="<?php echo $offcanvas; ?>" data-effect="<?php echo $effect; ?>" data-direction="<?php echo $direction; ?>">
-    <button type="button" aria-label="Off-Canvas Toggle" class="button">
+    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#astroid-offcanvas" aria-controls="astroid-offcanvas" class="button">
         <span class="box">
             <span class="inner"><span class="visually-hidden">Off-Canvas Toggle</span></span>
         </span>

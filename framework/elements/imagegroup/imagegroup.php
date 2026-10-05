@@ -54,7 +54,7 @@ if ($text_alignment) {
 if ($use_masonry && !$enable_slider) {
     $row_column_cls .=  ' as-masonry as-loading';
 }
-
+$wrapper_cls        =   '';
 $xxl_column         =   $params->get('xxl_column', '');
 if ($xxl_column) {
     $slide_settings[]=  'slidesToShow: ' . $xxl_column;
@@ -138,12 +138,14 @@ foreach ($responsive_key as $key) {
         }
         if ($column_gutter) {
             $gutter_cls     .=  ' gx-' . $key . '-' . $column_gutter;
+            $wrapper_cls    .=  ' px-' . $key . '-' . $column_gutter;
         }
     } else {
         $row_gutter         =   $params->get('row_gutter', 3);
         $column_gutter      =   $params->get('column_gutter', 3);
         $gutter_cls         .=  ' gy-' . $row_gutter;
         $gutter_cls         .=  ' gx-' . $column_gutter;
+        $wrapper_cls        .=  ' px-' . $column_gutter;
     }
 }
 
@@ -172,6 +174,7 @@ if (!empty($display_title) && !empty($title_font_style)) {
 }
 
 $overlay_type       =   $params->get('overlay_type', '');
+echo '<div class="image-group-wrapper'.$wrapper_cls.'">';
 echo '<div class="'.($enable_slider ? 'astroid-slick overflow-hidden opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
 foreach ($images->getData() as $image) {
     if (!empty($image->params->get('image'))) {
@@ -191,6 +194,7 @@ foreach ($images->getData() as $image) {
         echo '</div>';
     }
 }
+echo '</div>';
 echo '</div>';
 $document = Framework::getDocument();
 

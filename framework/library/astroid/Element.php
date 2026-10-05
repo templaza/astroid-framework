@@ -165,24 +165,28 @@ class Element
         $this->form = new Form($this->type);
         if ($this->type !== 'subform') {
             $defaultXml = simplexml_load_file($this->default_xml_file);
-            $this->form->load($defaultXml->form, false);
+            $this->form->load($defaultXml->form);
             if ($this->mode !== 'article_data' && Helper::isPro()) {
                 $defaultXml = simplexml_load_file(ASTROID_PRO_PATH . DIRECTORY_SEPARATOR . 'elements' . DIRECTORY_SEPARATOR . 'default.xml');
-                $this->form->load($defaultXml->form, false);
+                $this->form->load($defaultXml->form);
             }
         } else {
             if ($this->subform['formtype'] == 'string') {
                 $defaultXml = simplexml_load_string($this->subform['formsource']);
-                $this->form->load($defaultXml, false);
+                $this->form->load($defaultXml);
             } else {
                 $defaultXml = simplexml_load_file($this->subform['formsource']);
-                $this->form->load($defaultXml->form, false);
+                if (isset($defaultXml->form)) {
+                    $this->form->load($defaultXml->form);
+                } elseif (isset($defaultXml->fields)) {
+                    $this->form->load($defaultXml);
+                }
             }
         }
 
         if (!empty($this->xml_file)) {
             $xml = $this->xml->form;
-            $this->form->load($xml, false);
+            $this->form->load($xml);
         }
 
         $formData = [];
