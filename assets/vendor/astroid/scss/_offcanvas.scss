@@ -237,6 +237,8 @@ $offcanvas-btn: 50px !default;
 }
 
 .astroid-offcanvas {
+	color: var(--as-mobile-menu-text-color);
+	background-color: var(--as-mobile-backgroundcolor);
 	li.menu-item.menu-go-back{
 		margin-top: $offcanvas-btn;
 	}
