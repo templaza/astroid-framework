@@ -107,6 +107,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Image Motion Cursor
 * Pricing Table Widget
 * Circle Text Widget
+* Flex Gallery Widget
 * UK Gallery Widget
 * UK Pricing Table Widget
 * UK Slider Widget
