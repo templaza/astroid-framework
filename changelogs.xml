@@ -3,46 +3,29 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.5.0</version>
-        <addition>
-            <item><![CDATA[Add astroid-embed-responsive style]]></item>
-            <item><![CDATA[Add Countdown js]]></item>
-            <item><![CDATA[Add filter by tags to Articles Widget]]></item>
-            <item><![CDATA[Add triggers onBeforeDisplayContent and onAfterDisplayContent to Articles Widget]]></item>
-            <item><![CDATA[Add filter by Article Type option to Article Widget]]></item>
-            <item><![CDATA[Add a feature to disable Google Font Preview to address privacy concerns in compliance with UK and EU data protection regulations.]]></item>
-        </addition>
+        <version>3.5.1</version>
         <fix>
-            <item><![CDATA[Fix issue HTML injection in form builder]]></item>
-            <item><![CDATA[Fix issue overriding security-sensitive attributes]]></item>
-            <item><![CDATA[Fix the issue when $article is not an object]]></item>
-            <item><![CDATA[Fix issue str_repeat(): Argument #2 ($times) must be greater than or equal to 0]]></item>
-            <item><![CDATA[Fix issue can not import/export Preset]]></item>
-            <item><![CDATA[Fix The menu with the click option overlaps the sub-sub-menu windows. #1576]]></item>
-            <item><![CDATA[Fix issue "Local" font tab disappears when using only .woff2 files #1577]]></item>
-            <item><![CDATA[Fix issue related Link Image of menu item]]></item>
+            <item><![CDATA[Fix a horizontal bar issue in the Image Group Widget]]></item>
+            <item><![CDATA[Fix the media upload location]]></item>
+            <item><![CDATA[Fix subforms failing to load a field named title]]></item>
+            <item><![CDATA[Fix plugin options that could not be overridden]]></item>
         </fix>
         <change>
-            <item><![CDATA[GSAP from 3.14 to 3.15]]></item>
-            <item><![CDATA[Save all 3rd party packages to Astroid core]]></item>
-            <item><![CDATA[Update menu link structure]]></item>
-            <item><![CDATA[Improve UX of Megamenu on Click mode]]></item>
-            <item><![CDATA[Update composer library]]></item>
-            <item><![CDATA[Avoid inline styles in menu output to improve CSP compatibility #1568]]></item>
-            <item><![CDATA[Remove jQuery in script.js]]></item>
+            <item><![CDATA[Remove jQuery from the mobile script]]></item>
+            <item><![CDATA[Refactor the offcanvas script and integrate it with Bootstrap Offcanvas]]></item>
+            <item><![CDATA[Improve the UI of the Mobile Menu link]]></item>
+            <item><![CDATA[Improve the UI of Header Options in Template Options]]></item>
         </change>
     </changelog>
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <addition>
-            <item><![CDATA[Add Pricing Table Widget]]></item>
-            <item><![CDATA[Add attributes to External JS and CSS in CodePen Widget]]></item>
+            <item><![CDATA[Add Flex Gallery Widget]]></item>
         </addition>
-        <change>
-            <item><![CDATA[Update UK Slider Widget]]></item>
-            <item><![CDATA[Update UK Pricing Table, UK Gallery]]></item>
-        </change>
+        <fix>
+            <item><![CDATA[Fix subforms failing to load a field named title]]></item>
+        </fix>
     </changelog>
 </changelogs>
