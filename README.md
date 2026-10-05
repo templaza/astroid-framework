@@ -96,6 +96,8 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Title
 * Toc
 * Article Type Icon
+* Course
+* Event
 
 ## Pro Widgets
 * Hover Motion Widget
