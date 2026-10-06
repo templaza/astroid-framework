@@ -186,9 +186,15 @@ $mobilemenu-width: 249px !default;
       }
    }
 
-   .nav-title > * {
-      display: inline-block;
-      vertical-align: middle;
+   .nav-title { 
+      > * {
+         display: inline-block;
+         vertical-align: middle;
+      }
+      > img {
+         padding-left: 0.5rem;
+         margin-left: 0;
+      }
    }
 }
 
