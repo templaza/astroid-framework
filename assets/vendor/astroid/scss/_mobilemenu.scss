@@ -60,7 +60,7 @@ $mobilemenu-width: 249px !default;
    }
 }
 
-.offcanvas-right {
+.offcanvas-end {
    .astroid-mobilemenu-container .astroid-mobilemenu-inner .dropdown-menus {
       left: auto;
       right: -100%;
@@ -158,7 +158,7 @@ $mobilemenu-width: 249px !default;
       left: -150%;
       top: 0;
       height: 100vh;
-      width: $mobilemenu-width !important;
+      width: $mobilemenu-width;
       transition: all .5s;
       background-color: $white;
 
