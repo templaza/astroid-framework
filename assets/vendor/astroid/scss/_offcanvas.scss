@@ -252,6 +252,9 @@ $offcanvas-btn: 50px !default;
 		color: var(--as-mobile-menu-link-color);
 	}
 	.astroid-mobilemenu-container .astroid-mobilemenu-inner {
+		.dropdown-menus {
+			background-color: var(--as-mobile-backgroundcolor);
+		}
 		.menu-item {
 			a {
 				color: var(--as-mobile-menu-link-color);
