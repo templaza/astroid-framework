@@ -199,7 +199,7 @@ class astroidScript {
       const _winScroll = window.scrollY;
       const _breakpoint = this.deviceBreakpoint(true);
 
-      if (_breakpoint === 'xl' || _breakpoint === 'lg') {
+      if (_breakpoint === 'xl' || _breakpoint === 'xxl' || _breakpoint === 'lg') {
          if (stickyHeader.classList.contains('header-sticky-desktop') && (_winScroll > _headerBottom)) {
             toggleStickyHeader(stickyHeader, true);
          } else if (stickyHeader.classList.contains('header-stickyonscroll-desktop') && (_winScroll > _headerBottom) && !this.isScrollDown()) {
@@ -279,11 +279,12 @@ class astroidScript {
              '<div class="d-none d-sm-block d-md-none device-sm"></div>' +
              '<div class="d-none d-md-block d-lg-none device-md"></div>' +
              '<div class="d-none d-lg-block d-xl-none device-lg"></div>' +
-             '<div class="d-none d-xl-block device-xl"></div>';
+             '<div class="d-none d-xl-block d-xxl-none device-xl"></div>' +
+             '<div class="d-none d-xxl-block device-xxl"></div>';
          document.body.appendChild(wrapper);
       }
 
-      const _sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+      const _sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
       let _device = 'undefined';
       _sizes.forEach(function (_size) {
          const el = document.querySelector('.astroid-breakpoints .device-' + _size);
