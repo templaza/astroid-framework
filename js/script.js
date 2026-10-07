@@ -97,8 +97,8 @@ class astroidScript {
                            c.classList.remove('open');
                         });
                      }
-                  }.bind(this));
-               });
+                  });
+               }.bind(this));
             }
 
             // Toggle open class on clicked caret
