@@ -421,7 +421,7 @@ class astroidScript {
       this.deviceBreakpoint(false);
    }
 }
-const astroid = new astroidScript();
+window.astroid = new astroidScript();
 document.addEventListener('DOMContentLoaded', astroid.docReady.bind(astroid));
 window.addEventListener('load', astroid.winLoad.bind(astroid));
 window.addEventListener('resize', astroid.winResize.bind(astroid));
