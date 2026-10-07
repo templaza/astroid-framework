@@ -1,3 +1,10 @@
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2026 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
+
 "use strict";
 class astroidScript {
    lastScrollTop = 0;
@@ -97,7 +104,7 @@ class astroidScript {
                            c.classList.remove('open');
                         });
                      }
-                  });
+                  }.bind(this));
                }.bind(this));
             }
 
