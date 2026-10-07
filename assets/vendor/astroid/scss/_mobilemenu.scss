@@ -155,13 +155,14 @@ $mobilemenu-width: 249px !default;
 
    .dropdown-menus {
       position: fixed;
+      inset: 0;
       left: -150%;
       top: 0;
       height: 100vh;
       width: $mobilemenu-width;
       transition: all .5s;
       background-color: $white;
-      padding-bottom: 60px;
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
 
       .menu-indicator-back {
          text-align: left;
