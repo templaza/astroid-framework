@@ -58,7 +58,7 @@ elseif ($menu_mode == 'mobile') :
             <button data-bs-toggle="offcanvas" data-bs-target="#astroid-mobilemenu-<?php echo $module->id; ?>" aria-controls="astroid-mobilemenu" type="button" class="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
         </div>
     </div>
-<script type="text/html" id="astroid-mobilemenu-template-<?php echo $module->id; ?>">
+
     <div class="astroid-mobilemenu offcanvas <?php echo $offcanvas_direction; ?>" tabindex="-1" aria-labelledby="astroid-mobilemenu-label-<?php echo $module->id; ?>" id="astroid-mobilemenu-<?php echo $module->id; ?>">
         <div class="offcanvas-header burger-menu-button">
             <h5 class="offcanvas-title" id="astroid-mobilemenu-label-<?php echo $module->id; ?>"></h5>
@@ -66,11 +66,4 @@ elseif ($menu_mode == 'mobile') :
         </div>
         <?php Astroid\Component\Menu::getMobileMenu($menu); ?>
     </div>
-</script>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var template = document.getElementById('astroid-mobilemenu-template-<?php echo $module->id; ?>').innerHTML;
-        document.getElementById('astroid-mobilemenu-wrap').insertAdjacentHTML('beforeend', template);
-    });
-</script>
 <?php endif; ?>
