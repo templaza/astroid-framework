@@ -66,4 +66,10 @@ elseif ($menu_mode == 'mobile') :
         </div>
         <?php Astroid\Component\Menu::getMobileMenu($menu); ?>
     </div>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.getElementById('astroid-mobilemenu-<?php echo $module->id; ?>');
+            document.getElementById('astroid-mobilemenu-wrap').appendChild(mobileMenu);
+        });
+    </script>
 <?php endif; ?>
