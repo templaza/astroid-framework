@@ -69,9 +69,6 @@ if ($header && !empty($header_mobile_menu)) :
     echo Astroid\Component\Menu::getMobileMenu($header_mobile_menu);
 
     echo '</div>';
-
-    $style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
-    $document->addStyledeclaration($style);
 endif;
 echo '</div>';
 ?>
