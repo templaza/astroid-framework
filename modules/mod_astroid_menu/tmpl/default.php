@@ -61,7 +61,7 @@ elseif ($menu_mode == 'mobile') :
 
     <div class="astroid-mobilemenu offcanvas <?php echo $offcanvas_direction; ?>" tabindex="-1" aria-labelledby="astroid-mobilemenu-label-<?php echo $module->id; ?>" id="astroid-mobilemenu-<?php echo $module->id; ?>" data-lenis-prevent>
         <div class="offcanvas-header burger-menu-button">
-            <h5 class="offcanvas-title" id="astroid-mobilemenu-label-<?php echo $module->id; ?>"><?php echo $module->title; ?></h5>
+            <h5 class="offcanvas-title" id="astroid-mobilemenu-label-<?php echo $module->id; ?>"><?php echo $module->showtitle ? $module->title : ''; ?></h5>
             <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="button close-offcanvas offcanvas-close-btn"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
         </div>
         <?php Astroid\Component\Menu::getMobileMenu($menu); ?>
