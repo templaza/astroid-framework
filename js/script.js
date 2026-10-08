@@ -7,8 +7,10 @@
 
 "use strict";
 class astroidScript {
-   lastScrollTop = 0;
-   windowloaded = false;
+   constructor() {
+      this.lastScrollTop = 0;
+      this.windowloaded = false;
+   }
 
    initLastScrollTop() {
       this.lastScrollTop = window.scrollY;
