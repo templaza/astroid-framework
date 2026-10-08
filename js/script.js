@@ -14,7 +14,7 @@ class astroidScript {
 
    initLastScrollTop() {
       this.lastScrollTop = window.scrollY;
-   };
+   }
 
    isScrollDown() {
       return window.scrollY > this.lastScrollTop;
@@ -63,7 +63,19 @@ class astroidScript {
       } else {
          this.slideUp(el, duration);
       }
-   };
+   }
+
+   getDocumentDevice(breakpoint) {
+      const map = {
+         'xs': 'mobile',
+         'sm': 'landscape_mobile',
+         'md': 'tablet',
+         'lg': 'desktop',
+         'xl': 'large_desktop',
+         'xxl': 'larger_desktop'
+      }
+      return map[breakpoint] || 'global';
+   }
 
    // --- Init functions ---
 
