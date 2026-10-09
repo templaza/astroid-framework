@@ -14,16 +14,16 @@
    }
 
    function wrapMenu(menu) {
-      var isAlreadyWrapped = menu.parentElement &&
+      const isAlreadyWrapped = menu.parentElement &&
          menu.parentElement.classList.contains('astroid-mobilemenu-inner') &&
          menu.parentElement.parentElement &&
          menu.parentElement.parentElement.classList.contains('astroid-mobilemenu-container');
 
       if (isAlreadyWrapped) return;
 
-      var container = document.createElement('div');
+      const container = document.createElement('div');
       container.className = 'astroid-mobilemenu-container offcanvas-body p-0';
-      var inner = document.createElement('div');
+      const inner = document.createElement('div');
       inner.className = 'astroid-mobilemenu-inner';
 
       menu.parentNode.insertBefore(container, menu);
@@ -54,20 +54,20 @@
       menu.querySelectorAll('li.subMenu-wrapper').forEach(function (li) {
          if (li.querySelector(':scope > .menu-indicator')) return;
 
-         var labelElement = li.querySelector(':scope > a, :scope > span');
-         var submenu = li.querySelector(':scope > ul.dropdown-menus, :scope > ul');
+         const labelElement = li.querySelector(':scope > a, :scope > span');
+         const submenu = li.querySelector(':scope > ul.dropdown-menus, :scope > ul');
          if (!labelElement || !submenu) return;
 
-         var submenuLabel = labelElement.innerHTML;
+         const submenuLabel = labelElement.innerHTML;
 
-         var indicator = document.createElement('span');
+         const indicator = document.createElement('span');
          indicator.className = 'menu-indicator';
          indicator.innerHTML = '<i class="fas fa-angle-right"></i>';
 
-         var indicatorBackItem = document.createElement('li');
+         const indicatorBackItem = document.createElement('li');
          indicatorBackItem.className = 'menu-item menu-go-back';
 
-         var indicatorBack = document.createElement('span');
+         const indicatorBack = document.createElement('span');
          indicatorBack.className = 'menu-indicator-back d-flex align-items-center flex-wrap';
          indicatorBack.innerHTML = '<i class="fas fa-angle-left"></i>' + submenuLabel;
          indicatorBackItem.appendChild(indicatorBack);

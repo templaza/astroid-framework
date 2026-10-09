@@ -38,43 +38,38 @@ if ($tagId = $params->get('tag_id', '')) {
 elseif ($menu_mode == 'sidebar') :
     Astroid\Component\Menu::getSidebarMenu($menu);
 elseif ($menu_mode == 'mobile') :
-    $dir    =   'left';
     $mobilemenu_visibility = $params->get('mobilemenu_visibility', 'lg');
     $document = Astroid\Framework::getDocument();
-    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-    $wa->registerAndUseScript('astroid.offcanvas', 'astroid/offcanvas.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    $wa->registerAndUseScript('astroid.mobilemenu', 'astroid/mobilemenu.min.js', ['relative' => true, 'version' => 'auto'], [], ['jquery']);
-    $style = new \Astroid\Helper\Style('.astroid-mobilemenu#astroid-mobilemenu-'. $module->id);
-    $style->addCss('visibility', 'visible');
-    $style->addCss('-webkit-transform', 'translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0)');
-    $style->addCss('transform', 'translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0)');
-    $style->render();
-    $style = new \Astroid\Helper\Style('.mobilemenu-slide.astroid-mobilemenu-' . $module->id . '-open .astroid-mobilemenu#astroid-mobilemenu-'. $module->id);
-    $style->addCss('visibility', 'visible');
-    $style->addCss('-webkit-transform', 'translate3d(0, 0, 0)');
-    $style->addCss('transform', 'translate3d(0, 0, 0)');
-    $style->render();
-    $style = new \Astroid\Helper\Style('.astroid-mobilemenu#astroid-mobilemenu-' . $module->id . '::after');
-    $style->addCss('display', 'none');
-    $style->render();
+    $document->getWA()->useScript('bootstrap.offcanvas');
+    $document->getWA()->useScript('astroid.mobilemenu');
+    
+    // Map document text direction to a physical side for offcanvas defaults.
+    $direction = strtolower((string) $document->getDocument()->getDirection());
+    $dir = $direction === 'rtl' ? 'right' : 'left';
+
+    $offcanvas_direction = match($dir) {
+        'left' => 'offcanvas-start',
+        'right' => 'offcanvas-end',
+        default => 'offcanvas-start',
+    };
     ?>
     <div class="d-flex d-<?php echo $mobilemenu_visibility; ?>-none justify-content-start">
-        <div class="header-mobilemenu-trigger d-<?php echo $mobilemenu_visibility; ?>-none burger-menu-button align-self-center" data-offcanvas="#astroid-mobilemenu-<?php echo $module->id; ?>" data-effect="mobilemenu-slide">
-            <button aria-label="Mobile Menu Toggle" class="button" type="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
+        <div class="header-mobilemenu-trigger d-<?php echo $mobilemenu_visibility; ?>-none burger-menu-button align-self-center">
+            <button data-bs-toggle="offcanvas" data-bs-target="#astroid-mobilemenu-<?php echo $module->id; ?>" aria-controls="astroid-mobilemenu" type="button" class="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
         </div>
     </div>
-<script type="text/html" id="astroid-mobilemenu-template-<?php echo $module->id; ?>">
-    <div class="astroid-mobilemenu d-none d-init dir-<?php echo $dir; ?>" data-class-prefix="astroid-mobilemenu-<?php echo $module->id; ?>" id="astroid-mobilemenu-<?php echo $module->id; ?>">
-        <div class="burger-menu-button active">
-            <button aria-label="Mobile Menu Toggle" type="button" class="button close-offcanvas offcanvas-close-btn"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
+
+    <div class="astroid-mobilemenu offcanvas <?php echo $offcanvas_direction; ?>" tabindex="-1" aria-labelledby="astroid-mobilemenu-label-<?php echo $module->id; ?>" id="astroid-mobilemenu-<?php echo $module->id; ?>" data-lenis-prevent>
+        <div class="offcanvas-header burger-menu-button">
+            <h5 class="offcanvas-title" id="astroid-mobilemenu-label-<?php echo $module->id; ?>"><?php echo $module->showtitle ? $module->title : ''; ?></h5>
+            <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" class="button close-offcanvas offcanvas-close-btn"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
         </div>
         <?php Astroid\Component\Menu::getMobileMenu($menu); ?>
     </div>
-</script>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var template = document.getElementById('astroid-mobilemenu-template-<?php echo $module->id; ?>').innerHTML;
-        document.getElementById('astroid-mobilemenu-wrap').insertAdjacentHTML('beforeend', template);
-    });
-</script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.getElementById('astroid-mobilemenu-<?php echo $module->id; ?>');
+            document.getElementById('astroid-mobilemenu-wrap').appendChild(mobileMenu);
+        });
+    </script>
 <?php endif; ?>

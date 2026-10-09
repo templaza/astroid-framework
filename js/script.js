@@ -1,21 +1,32 @@
-(function () {
-   // Functions
-   let lastScrollTop = 0;
-   let windowloaded = false;
+/**
+ * @package   Astroid Framework
+ * @author    Astroid Framework Team https://astroidframe.work
+ * @copyright Copyright (C) 2026 AstroidFrame.work.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3 or Later
+ */
 
-   let initLastScrollTop = function () {
-      lastScrollTop = window.scrollY;
-   };
+"use strict";
+class astroidScript {
+   constructor() {
+      this.lastScrollTop = 0;
+      this.windowloaded = false;
+   }
 
-   let isScrollDown = () => window.scrollY > lastScrollTop;
+   initLastScrollTop() {
+      this.lastScrollTop = window.scrollY;
+   }
+
+   isScrollDown() {
+      return window.scrollY > this.lastScrollTop;
+   }
 
    // --- Helpers ---
 
-   let getOffsetTop = function (el) {
+   getOffsetTop(el) {
       return el.getBoundingClientRect().top + window.scrollY;
-   };
+   }
 
-   let slideUp = function (el, duration) {
+   slideUp(el, duration) {
       duration = duration || 300;
       if (getComputedStyle(el).display === 'none') return;
       el.style.height = el.scrollHeight + 'px';
@@ -30,9 +41,9 @@
          el.style.overflow = '';
          el.style.transition = '';
       }, duration);
-   };
+   }
 
-   let slideToggle = function (el, duration) {
+   slideToggle(el, duration) {
       duration = duration || 300;
       const isHidden = getComputedStyle(el).display === 'none';
       if (isHidden) {
@@ -50,13 +61,25 @@
             el.style.transition = '';
          }, duration);
       } else {
-         slideUp(el, duration);
+         this.slideUp(el, duration);
       }
-   };
+   }
+
+   getDocumentDevice(breakpoint) {
+      const map = {
+         'xs': 'mobile',
+         'sm': 'landscape_mobile',
+         'md': 'tablet',
+         'lg': 'desktop',
+         'xl': 'large_desktop',
+         'xxl': 'larger_desktop'
+      }
+      return map[breakpoint] || 'global';
+   }
 
    // --- Init functions ---
 
-   let initMobileMenu = function () {
+   initMobileMenu() {
       const mobileMenus = document.querySelectorAll('.astroid-mobile-menu');
       if (!mobileMenus.length) return;
       if (typeof window.astroidMobileMenu === 'function') {
@@ -65,18 +88,18 @@
       mobileMenus.forEach(function (el) {
          el.classList.remove('d-none');
       });
-   };
+   }
 
-   let initOffcanvasMenu = function () {
+   initOffcanvasMenu() {
       const offcanvas = document.querySelector('#astroid-offcanvas');
       if (!offcanvas) return;
       if (!offcanvas.querySelectorAll('ul.menu').length) return;
       if (typeof window.astroidMobileMenu === 'function') {
          window.astroidMobileMenu(offcanvas.querySelectorAll('ul.menu'));
       }
-   };
+   }
 
-   let initSidebarMenu = function () {
+   initSidebarMenu() {
       if (!document.querySelector('.astroid-sidebar-menu')) return;
 
       document.querySelectorAll('.astroid-sidebar-menu .nav-item-caret').forEach(function (caret) {
@@ -89,29 +112,29 @@
                Array.from(parentLi.parentElement.children).forEach(function (sibling) {
                   if (sibling === parentLi || sibling.tagName !== 'LI') return;
                   Array.from(sibling.children).forEach(function (child) {
-                     if (child.tagName === 'UL') slideUp(child);
+                     if (child.tagName === 'UL') this.slideUp(child);
                      if (child.tagName === 'DIV') {
                         child.querySelectorAll('.nav-item-caret').forEach(function (c) {
                            c.classList.remove('open');
                         });
                      }
-                  });
-               });
+                  }.bind(this));
+               }.bind(this));
             }
 
             // Toggle open class on clicked caret
             caret.classList.toggle('open');
 
             // Toggle the sibling <ul> of the caret's parent div
-            if (parentDiv) {
+            if (parentDiv && parentDiv.parentElement) {
                Array.from(parentDiv.parentElement.children).forEach(function (child) {
                   if (child !== parentDiv && child.tagName === 'UL') {
-                     slideToggle(child);
+                     this.slideToggle(child);
                   }
-               });
+               }.bind(this));
             }
-         });
-      });
+         }.bind(this));
+      }.bind(this));
 
       document.querySelectorAll('.astroid-sidebar-collapsable').forEach(function (el) {
          el.addEventListener('click', function () {
@@ -119,17 +142,17 @@
             if (header) header.classList.toggle('expanded');
          });
       });
-   };
+   }
 
-   let initDisplay = function () {
+   initDisplay() {
       setTimeout(function () {
          document.querySelectorAll('.d-init').forEach(function (el) {
             el.classList.remove('d-none');
          });
       }, 100);
-   };
+   }
 
-   let initBackToTop = function () {
+   initBackToTop() {
       const btn = document.querySelector('#astroid-backtotop');
 
       window.addEventListener('scroll', function () {
@@ -153,13 +176,13 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
          });
       }
-   };
+   }
 
-   let initHeader = function () {
+   initHeader() {
       if (document.querySelector('.astroid-sidebar-header-topbar')) {
          const sidebarTopbar = document.querySelector('.astroid-sidebar-topbar');
          if (sidebarTopbar) {
-            const _sidebarTop = getOffsetTop(sidebarTopbar);
+            const _sidebarTop = this.getOffsetTop(sidebarTopbar);
             const content = sidebarTopbar.querySelector(':scope > .astroid-sidebar-content');
             if (content) {
                content.style.top = _sidebarTop + 'px';
@@ -172,7 +195,7 @@
       const _header = document.querySelector('header');
       if (!_header) return false;
 
-      const _headerTop = getOffsetTop(_header);
+      const _headerTop = this.getOffsetTop(_header);
       const _headerHeight = _header.offsetHeight;
       const _headerBottom = _headerTop + _headerHeight + 30;
 
@@ -188,12 +211,12 @@
       };
 
       const _winScroll = window.scrollY;
-      const _breakpoint = deviceBreakpoint(true);
+      const _breakpoint = this.deviceBreakpoint(true);
 
-      if (_breakpoint === 'xl' || _breakpoint === 'lg') {
+      if (_breakpoint === 'xl' || _breakpoint === 'xxl' || _breakpoint === 'lg') {
          if (stickyHeader.classList.contains('header-sticky-desktop') && (_winScroll > _headerBottom)) {
             toggleStickyHeader(stickyHeader, true);
-         } else if (stickyHeader.classList.contains('header-stickyonscroll-desktop') && (_winScroll > _headerBottom) && !isScrollDown()) {
+         } else if (stickyHeader.classList.contains('header-stickyonscroll-desktop') && (_winScroll > _headerBottom) && !this.isScrollDown()) {
             toggleStickyHeader(stickyHeader, true);
          } else {
             toggleStickyHeader(stickyHeader, false);
@@ -207,7 +230,7 @@
          }
          if (stickyHeader.classList.contains('header-sticky-tablet') && (_winScroll > _headerBottom)) {
             toggleStickyHeader(stickyHeader, true);
-         } else if (stickyHeader.classList.contains('header-stickyonscroll-tablet') && (_winScroll > _headerBottom) && !isScrollDown()) {
+         } else if (stickyHeader.classList.contains('header-stickyonscroll-tablet') && (_winScroll > _headerBottom) && !this.isScrollDown()) {
             toggleStickyHeader(stickyHeader, true);
          } else {
             toggleStickyHeader(stickyHeader, false);
@@ -221,15 +244,15 @@
          }
          if (stickyHeader.classList.contains('header-sticky-mobile') && (_winScroll > _headerBottom)) {
             toggleStickyHeader(stickyHeader, true);
-         } else if (stickyHeader.classList.contains('header-stickyonscroll-mobile') && (_winScroll > _headerBottom) && !isScrollDown()) {
+         } else if (stickyHeader.classList.contains('header-stickyonscroll-mobile') && (_winScroll > _headerBottom) && !this.isScrollDown()) {
             toggleStickyHeader(stickyHeader, true);
          } else {
             toggleStickyHeader(stickyHeader, false);
          }
       }
-   };
+   }
 
-   let initEmptyHeaderContent = function () {
+   initEmptyHeaderContent() {
       ['.header-left-section', '.header-center-section', '.header-right-section'].forEach(function (selector) {
          document.querySelectorAll(selector).forEach(function (el) {
             if (!el.innerHTML.trim()) {
@@ -237,44 +260,45 @@
             }
          });
       });
-   };
+   }
 
-   let initTooltip = function () {
+   initTooltip() {
       const tooltipTriggerList = Array.from(document.querySelectorAll('[data-toggle="tooltip"]'));
       if (tooltipTriggerList.length) {
          tooltipTriggerList.forEach(function (el) {
             new bootstrap.Tooltip(el);
          });
       }
-   };
+   }
 
-   let initProgressBar = function () {
+   initProgressBar() {
       document.querySelectorAll('.progress-bar-viewport-animation').forEach(function (el) {
-         if (!el.classList.contains('viewport-animation-done') && elementInViewport(el)) {
+         if (!el.classList.contains('viewport-animation-done') && this.elementInViewport(el)) {
             const _width = parseInt(el.dataset.value, 10);
             el.style.width = _width + '%';
          }
-      });
-   };
+      }.bind(this));
+   }
 
-   let elementInViewport = function (element) {
-      const _this_top = getOffsetTop(element);
+   elementInViewport(element) {
+      const _this_top = this.getOffsetTop(element);
       return (_this_top <= window.scrollY + window.innerHeight) && (_this_top >= window.scrollY);
-   };
+   }
 
-   let deviceBreakpoint = function (_return) {
+   deviceBreakpoint(_return) {
       if (!document.querySelector('.astroid-breakpoints')) {
          const wrapper = document.createElement('div');
          wrapper.className = 'astroid-breakpoints d-none';
          wrapper.innerHTML = '<div class="d-block d-sm-none device-xs"></div>' +
-            '<div class="d-none d-sm-block d-md-none device-sm"></div>' +
-            '<div class="d-none d-md-block d-lg-none device-md"></div>' +
-            '<div class="d-none d-lg-block d-xl-none device-lg"></div>' +
-            '<div class="d-none d-xl-block device-xl"></div>';
+             '<div class="d-none d-sm-block d-md-none device-sm"></div>' +
+             '<div class="d-none d-md-block d-lg-none device-md"></div>' +
+             '<div class="d-none d-lg-block d-xl-none device-lg"></div>' +
+             '<div class="d-none d-xl-block d-xxl-none device-xl"></div>' +
+             '<div class="d-none d-xxl-block device-xxl"></div>';
          document.body.appendChild(wrapper);
       }
 
-      const _sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+      const _sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
       let _device = 'undefined';
       _sizes.forEach(function (_size) {
          const el = document.querySelector('.astroid-breakpoints .device-' + _size);
@@ -291,9 +315,9 @@
          });
          document.body.classList.add('astroid-device-' + _device);
       }
-   };
+   }
 
-   let initPreloader = function () {
+   initPreloader() {
       const preloader = document.getElementById('astroid-preloader');
       if (!preloader) return;
       // ensure visible and reset any previous inline styles
@@ -323,9 +347,9 @@
             onEnd();
          }
       }, 700);
-   };
+   }
 
-   let setCookie = function (name, value, days) {
+   setCookie(name, value, days) {
       let expires = '';
       if (days) {
          const date = new Date();
@@ -333,12 +357,13 @@
          expires = '; expires=' + date.toGMTString();
       }
       document.cookie = name + '=' + value + expires + '; path=/';
-   };
+   }
 
-   let initColorMode = function () {
+   initColorMode() {
       if (!document.querySelector('.astroid-color-mode')) return;
 
       const switchers = document.querySelectorAll('.astroid-color-mode .switcher');
+      const script = this;
       let color_mode = 'light';
       const cmCookieName = 'astroid-color-mode-' + TEMPLATE_HASH;
       const acm = ('; ' + document.cookie).split('; ' + cmCookieName + '=').pop().split(';')[0];
@@ -370,57 +395,58 @@
             if (this.checked) {
                switchers.forEach(function (s) { if (!s.checked) s.checked = true; });
                document.documentElement.setAttribute('data-bs-theme', 'dark');
-               setCookie('astroid-color-mode-' + TEMPLATE_HASH, 'dark', 3);
+               script.setCookie('astroid-color-mode-' + TEMPLATE_HASH, 'dark', 3);
             } else {
                switchers.forEach(function (s) { if (s.checked) s.checked = false; });
                document.documentElement.setAttribute('data-bs-theme', 'light');
-               setCookie('astroid-color-mode-' + TEMPLATE_HASH, 'light', 3);
+               script.setCookie('astroid-color-mode-' + TEMPLATE_HASH, 'light', 3);
             }
          });
       });
-   };
+   }
 
    // Events
-   let docReady = function () {
-      initDisplay();
-      initMobileMenu();
-      initOffcanvasMenu();
-      initSidebarMenu();
-      //initMegamenu();
-      //initSubmenu();
-      initColorMode();
-      initBackToTop();
-      initHeader();
-      initEmptyHeaderContent();
-      initTooltip();
-      deviceBreakpoint(false);
-   };
+   docReady() {
+      this.initDisplay();
+      this.initMobileMenu();
+      this.initOffcanvasMenu();
+      this.initSidebarMenu();
+      //this.initMegamenu();
+      //this.initSubmenu();
+      this.initColorMode();
+      this.initBackToTop();
+      this.initHeader();
+      this.initEmptyHeaderContent();
+      this.initTooltip();
+      this.deviceBreakpoint(false);
+      this.initLastScrollTop();
+   }
 
-   let winLoad = function () {
-      deviceBreakpoint(false);
-      initPreloader();
-      initProgressBar();
-      windowloaded = true;
-   };
+   winLoad() {
+      this.deviceBreakpoint(false);
+      this.initPreloader();
+      this.initProgressBar();
+      this.windowloaded = true;
+   }
 
-   let winResize = function () {
-      deviceBreakpoint(false);
-      initHeader();
-   };
+   winResize() {
+      this.deviceBreakpoint(false);
+      this.initHeader();
+   }
 
-   let winScroll = function () {
-      initHeader();
-      initLastScrollTop();
-      if (windowloaded) {
-         initProgressBar();
+   winScroll() {
+      this.initHeader();
+      this.initLastScrollTop();
+      if (this.windowloaded) {
+         this.initProgressBar();
       }
-      deviceBreakpoint(false);
-   };
-
-   document.addEventListener('DOMContentLoaded', docReady);
-   window.addEventListener('load', winLoad);
-   window.addEventListener('resize', winResize);
-   window.addEventListener('scroll', winScroll);
-   window.addEventListener('orientationchange', winResize);
-})();
+      this.deviceBreakpoint(false);
+   }
+}
+window.astroid = new astroidScript();
+document.addEventListener('DOMContentLoaded', astroid.docReady.bind(astroid));
+window.addEventListener('load', astroid.winLoad.bind(astroid));
+window.addEventListener('resize', astroid.winResize.bind(astroid));
+window.addEventListener('scroll', astroid.winScroll.bind(astroid));
+window.addEventListener('orientationchange', astroid.winResize.bind(astroid));
 

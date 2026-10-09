@@ -22,17 +22,32 @@ $mobile_menu_heading_text = $params->get('mobile_menu_heading_text', '');
 
 echo '<div id="astroid-mobilemenu-wrap">';
 if ($header && !empty($header_mobile_menu)) :
-    $dir = 'left';
+    // Map document text direction to a physical side for offcanvas defaults.
+    $direction = strtolower((string) $document->getDocument()->getDirection());
+    $fallback_dir = $direction === 'rtl' ? 'right' : 'left';
+    $dir = $fallback_dir;
+
     $header = $params->get('header', TRUE);
     $header_mode = $params->get('header_mode', 'horizontal');
-    $mode = $params->get('header_sidebar_menu_mode', 'left');
+    $mode = $params->get('header_sidebar_menu_mode', $fallback_dir);
     if ($header_mode == 'sidebar') {
         if ($mode == 'topbar') {
-            $dir = $params->get('sidebar_position', 'left');
+            $dir = $params->get('sidebar_position', $fallback_dir);
         } else {
             $dir = $mode;
         }
     }
+
+    // Accept logical directions too, then normalize to left/right.
+    $dir = strtolower((string) $dir);
+    if ($dir === 'ltr') {
+        $dir = 'left';
+    } elseif ($dir === 'rtl') {
+        $dir = 'right';
+    } elseif (!in_array($dir, ['left', 'right'], true)) {
+        $dir = $fallback_dir;
+    }
+
     $offcanvas_direction = match($dir) {
         'left' => 'offcanvas-start',
         'right' => 'offcanvas-end',
@@ -54,9 +69,6 @@ if ($header && !empty($header_mobile_menu)) :
     echo Astroid\Component\Menu::getMobileMenu($header_mobile_menu);
 
     echo '</div>';
-
-    $style = '.mobilemenu-slide.astroid-mobilemenu{visibility:visible;-webkit-transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);transform:translate3d(' . ($dir == 'left' ? '-' : '') . '100%, 0, 0);}.mobilemenu-slide.astroid-mobilemenu-open .mobilemenu-slide.astroid-mobilemenu {visibility:visible;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}.mobilemenu-slide.astroid-mobilemenu::after{display:none;}';
-    $document->addStyledeclaration($style);
 endif;
 echo '</div>';
 ?>
