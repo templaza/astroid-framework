@@ -71,4 +71,3 @@ if ($header && !empty($header_mobile_menu)) :
     echo '</div>';
 endif;
 echo '</div>';
-?>

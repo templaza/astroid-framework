@@ -9,6 +9,7 @@
 
 namespace Astroid\Helper;
 use Astroid\Helper;
+use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Factory;
 
@@ -87,7 +88,10 @@ class Overrides
                 $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
             }
             if (empty($relativePath)) {
-                return self::generateExtensionPath(\substr($callPath, stripos($callPath, DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR) + 5));
+                $extensionPath = self::generateExtensionPath(\substr($callPath, stripos($callPath, DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR) + 5));
+                if (\file_exists($extensionPath)) {
+                    return $extensionPath;
+                }
             }
         }
 
@@ -96,7 +100,12 @@ class Overrides
             return $astroidOverridePath;
         }
 
-        return self::generateExtensionPath($relativePath);
+        $extensionPath = self::generateExtensionPath($relativePath);
+        if (!\file_exists($extensionPath)) {
+            Factory::getApplication()->enqueueMessage(Text::_('COM_ASTROID_FILE_NOT_FOUND'), 'error');
+            return '';
+        }
+        return $extensionPath;
     }
 
     public static function getHTMLSystem($filename = ''): string

@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 
 class Constants 
 {
-    public static $astroid_version = '3.5.2-rc3';
+    public static $astroid_version = '3.5.2';
     public static $fontawesome_version = '7.3.1';
     public static $fancybox_version = '6.1';
     public static $animatecss_version = '3.7.0';
@@ -77,6 +77,7 @@ class Constants
             'dynamic_source_options'=> self::getDynamicOptions(),
             'astroid_legacy'        => Helper::isLegacy(),
             'cms_name'              => 'joomla',
+            'go_pro_link'           => self::$go_pro,
             'monaco_editor_path'    => ASTROID_MEDIA_URL . '/vendor/monaco_editor/vs',
             'tiny_mce_path'         => ASTROID_MEDIA_URL . '/vendor/tinymce/tinymce.min.js',
             'donate'                => [
