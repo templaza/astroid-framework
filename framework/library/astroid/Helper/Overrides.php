@@ -74,6 +74,7 @@ class Overrides
 
         $htmlAstroidPath = JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'astroid' . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'html';
 
+        $relativePath = '';
         if (\strpos($callPath, $htmlTemplatePath) === 0) {
             $relativePath = \substr($callPath, \strlen($htmlTemplatePath));
         }
