@@ -21,12 +21,9 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.1.1</version>
-        <addition>
-            <item><![CDATA[Add Flex Gallery Widget]]></item>
-        </addition>
-        <fix>
-            <item><![CDATA[Fix subforms failing to load a field named title]]></item>
-        </fix>
+        <version>1.1.2</version>
+        <change>
+            <item><![CDATA[Improved style of Flex Gallery Widget]]></item>
+        </change>
     </changelog>
 </changelogs>
