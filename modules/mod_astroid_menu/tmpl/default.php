@@ -55,7 +55,7 @@ elseif ($menu_mode == 'mobile') :
     ?>
     <div class="d-flex d-<?php echo $mobilemenu_visibility; ?>-none justify-content-start">
         <div class="header-mobilemenu-trigger d-<?php echo $mobilemenu_visibility; ?>-none burger-menu-button align-self-center">
-            <button data-bs-toggle="offcanvas" data-bs-target="#astroid-mobilemenu-<?php echo $module->id; ?>" aria-controls="astroid-mobilemenu" type="button" class="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
+            <button data-bs-toggle="offcanvas" data-bs-target="#astroid-mobilemenu-<?php echo $module->id; ?>" aria-controls="astroid-mobilemenu-<?php echo $module->id; ?>" type="button" class="button"><span class="box"><span class="inner"><span class="visually-hidden">Mobile Menu Toggle</span></span></span></button>
         </div>
     </div>
 
