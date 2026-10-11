@@ -3,18 +3,19 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.5.1</version>
+        <version>3.5.2</version>
         <fix>
-            <item><![CDATA[Fix a horizontal bar issue in the Image Group Widget]]></item>
-            <item><![CDATA[Fix the media upload location]]></item>
-            <item><![CDATA[Fix subforms failing to load a field named title]]></item>
-            <item><![CDATA[Fix plugin options that could not be overridden]]></item>
+            <item><![CDATA[Fixed the off-canvas background color]]></item>
+            <item><![CDATA[Fixed an issue with the right-side off-canvas menu]]></item>
+            <item><![CDATA[Fixed dropdown menu background colors in the off-canvas block.]]></item>
+            <item><![CDATA[Fixed the mobile menu not working in the Astroid Menu Module.]]></item>
+            <item><![CDATA[Fixed an incompatibility between Astroid Editor and JCE Editor]]></item>
         </fix>
         <change>
-            <item><![CDATA[Remove jQuery from the mobile script]]></item>
-            <item><![CDATA[Refactor the offcanvas script and integrate it with Bootstrap Offcanvas]]></item>
-            <item><![CDATA[Improve the UI of the Mobile Menu link]]></item>
-            <item><![CDATA[Improve the UI of Header Options in Template Options]]></item>
+            <item><![CDATA[Refactored navigation title styles for a clearer structure.]]></item>
+            <item><![CDATA[Added safe-area support and extra padding at the end of the mobile menu.]]></item>
+            <item><![CDATA[Updated mobile menu direction to follow the language direction.]]></item>
+            <item><![CDATA[Made the Astroid script global.]]></item>
         </change>
     </changelog>
     <changelog>
