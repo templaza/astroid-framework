@@ -193,52 +193,13 @@ $offcanvas-btn: 50px !default;
 	}
 }
 
-.off-page-content {
-	position: fixed;
-	top: 0;
-	height: 100%;
-	z-index: 10001;
-	.off-page-inner {
-		position: relative;
-		z-index: 2;
-		background-color: $white;
-		height: 100%;
-		overflow-y: auto;
-	}
-	.off-page-close {
-		width: 40px;
-		height: 40px;
-		position: absolute;
-		top: 0;
-		right: 0;
-		z-index: 3;
-		text-align: center;
-		line-height: 40px;
-		background-color: $white;
-		color: $black;
-		font-size: 16px;
-		cursor: pointer;
-		border-bottom: 1px solid #eee;
-		border-left: 1px solid #eee;
-		&:after {
-			content: "\2715";
-		}
-	}
-	.off-page-overlay {
-		position: fixed;
-		display: none;
-		z-index: 1;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-		background-color: rgba(0, 0, 0, .6);
-	}
-}
-
 .astroid-offcanvas {
 	color: var(--as-mobile-menu-text-color);
 	background-color: var(--as-mobile-backgroundcolor);
+	.offcanvas-header {
+		background-color: var(--as-mobile-backgroundcolor);
+		z-index: 3;
+	}
 	li.menu-item.menu-go-back{
 		margin-top: $offcanvas-btn;
 	}
@@ -252,6 +213,9 @@ $offcanvas-btn: 50px !default;
 		color: var(--as-mobile-menu-link-color);
 	}
 	.astroid-mobilemenu-container .astroid-mobilemenu-inner {
+		.dropdown-menus {
+			background-color: var(--as-mobile-backgroundcolor);
+		}
 		.menu-item {
 			a {
 				color: var(--as-mobile-menu-link-color);

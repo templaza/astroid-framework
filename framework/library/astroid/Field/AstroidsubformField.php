@@ -69,7 +69,6 @@ class AstroidsubformField extends FormField
                 if (strrpos($this->formsource, '.xml') === \strlen($this->formsource) - 4) {
                     $this->formsource = Path::clean(JPATH_ROOT . '/' . $this->formsource);
                 }
-
                 break;
 
             default:

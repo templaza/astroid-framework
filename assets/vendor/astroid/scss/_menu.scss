@@ -137,9 +137,9 @@
 		align-items: center;
 		flex-wrap: wrap;
 		position: relative;
-		margin-left: -5px;
-		> * {
-			margin-left: 5px;
+		> img {
+			padding-left: 0.5rem;
+			margin-left: 0;
 		}
 		> sup {
 			position: absolute;

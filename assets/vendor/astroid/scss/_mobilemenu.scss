@@ -60,7 +60,7 @@ $mobilemenu-width: 249px !default;
    }
 }
 
-.offcanvas-right {
+.offcanvas-end {
    .astroid-mobilemenu-container .astroid-mobilemenu-inner .dropdown-menus {
       left: auto;
       right: -100%;
@@ -155,12 +155,14 @@ $mobilemenu-width: 249px !default;
 
    .dropdown-menus {
       position: fixed;
+      inset: 0;
       left: -150%;
       top: 0;
       height: 100vh;
-      width: $mobilemenu-width !important;
+      width: $mobilemenu-width;
       transition: all .5s;
       background-color: $white;
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
 
       .menu-indicator-back {
          text-align: left;
@@ -185,9 +187,15 @@ $mobilemenu-width: 249px !default;
       }
    }
 
-   .nav-title > * {
-      display: inline-block;
-      vertical-align: middle;
+   .nav-title { 
+      > * {
+         display: inline-block;
+         vertical-align: middle;
+      }
+      > img {
+         padding-left: 0.5rem;
+         margin-left: 0;
+      }
    }
 }
 
