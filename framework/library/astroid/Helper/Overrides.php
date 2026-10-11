@@ -103,7 +103,7 @@ class Overrides
 
         $extensionPath = self::generateExtensionPath($relativePath);
         if (!\file_exists($extensionPath)) {
-            Factory::getApplication()->enqueueMessage(Text::_('COM_ASTROID_FILE_NOT_FOUND'), 'error');
+            Factory::getApplication()->enqueueMessage(Text::_('ASTROID_FILE_NOT_FOUND'), 'error');
             return '';
         }
         return $extensionPath;
