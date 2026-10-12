@@ -244,7 +244,7 @@ foreach ($grids->data as $key => $grid) {
     if (!empty($grid->params->get('link', '')) && !empty($grid->params->get('link_title', ''))) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size. $button_bd_radius : 'as-btn-text text-uppercase text-reset';
         $btn_title      =   $button_style == 'text' ? '<small>'. $grid->params->get('link_title', '') . '</small>' : $grid->params->get('link_title', '');
-        echo '<a class="d-block '. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
+        echo '<a class="d-inline-block '. $button_class . (!empty($button_margin_top) ? ' mt-' . $button_margin_top : '') .'" href="'.$grid->params->get('link', '').'" role="button"'.$link_target.'>' . $btn_title . '</a>';
     }
 
     echo '</div>'; // End Card-Body
