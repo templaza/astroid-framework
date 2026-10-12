@@ -39,6 +39,8 @@
                     <option value="random">ASTROID_WIDGET_ORDERING_RANDOM</option>
                     <option value="ordering">ASTROID_WIDGET_ORDERING_ARTICLEORDER</option>
                 </field>
+                <field astroidgroup="general" name="show_content_before_display" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ARTICLE_SHOW_CONTENT_BEFORE_DISPLAY"/>
+                <field astroidgroup="general" name="show_content_after_display" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ARTICLE_SHOW_CONTENT_AFTER_DISPLAY"/>
                 <field astroidgroup="general" name="show_custom_fields" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ARTICLE_CUSTOM_FIELDS"/>
                 <field astroidgroup="grid_options" name="column_responsive" type="astroidradio" width="full" default="lg">
                     <option value="xxl">ASTROID_WIDGET_XXL_ICON</option>
