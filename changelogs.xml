@@ -18,9 +18,12 @@
     <changelog>
         <element>astroidpro</element>
         <type>plugin</type>
-        <version>1.1.2</version>
-        <change>
-            <item><![CDATA[Improved style of Flex Gallery Widget]]></item>
-        </change>
+        <version>1.2.0</version>
+        <addition>
+            <item><![CDATA[New Timeline Widget: Add timeline functionality to your site with the new Timeline Widget.]]></item>
+        </addition>
+        <fix>
+            <item><![CDATA[Fix issue CodePen element passes null attributes to Joomla WebAssetManager]]></item>
+        </fix>
     </changelog>
 </changelogs>
