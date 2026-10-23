@@ -72,6 +72,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Accordion Widget
 * Raw HTML Widget
 * Image Carousel Widget
+* Toast Widget
 * UK Grid Widget
 * UK Image Widget
 * UK Testimonials Widget
@@ -110,6 +111,7 @@ Powerful framework for designers and developers to create responsive, fast & rob
 * Pricing Table Widget
 * Circle Text Widget
 * Flex Gallery Widget
+* Timeline Widget
 * UK Gallery Widget
 * UK Pricing Table Widget
 * UK Slider Widget
