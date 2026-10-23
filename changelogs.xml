@@ -3,19 +3,16 @@
     <changelog>
         <element>astroid</element>
         <type>library</type>
-        <version>3.5.2</version>
+        <version>3.5.3</version>
+        <addition>
+            <item><![CDATA[New Toast Widget: Add toast notifications to your site with the new Toast Widget.]]></item>
+        </addition>
         <fix>
-            <item><![CDATA[Fixed the off-canvas background color]]></item>
-            <item><![CDATA[Fixed an issue with the right-side off-canvas menu]]></item>
-            <item><![CDATA[Fixed dropdown menu background colors in the off-canvas block.]]></item>
-            <item><![CDATA[Fixed the mobile menu not working in the Astroid Menu Module.]]></item>
-            <item><![CDATA[Fixed an incompatibility between Astroid Editor and JCE Editor]]></item>
+            <item><![CDATA[Responsive selector fix: Fixed an issue that caused responsive selectors to revert to Global.]]></item>
+            <item><![CDATA[Grid Widget Read More styling: Fixed the top margin style for the Read More link.]]></item>
         </fix>
         <change>
-            <item><![CDATA[Refactored navigation title styles for a clearer structure.]]></item>
-            <item><![CDATA[Added safe-area support and extra padding at the end of the mobile menu.]]></item>
-            <item><![CDATA[Updated mobile menu direction to follow the language direction.]]></item>
-            <item><![CDATA[Made the Astroid script global.]]></item>
+            <item><![CDATA[Article Widget event controls: Choose whether to enable or disable Joomla trigger events in the Article Widget.]]></item>
         </change>
     </changelog>
     <changelog>
