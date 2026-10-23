@@ -43,6 +43,8 @@ $tagids             =   Utility::getMultipleValues($tags);
 $article_type       =   $params->get('article_type', '');
 $offset             =   $params->get('offset', 0);
 $show_custom_fields =   $params->get('show_custom_fields', 0);
+$show_content_before_display    =   $params->get('show_content_before_display', 0);
+$show_content_after_display     =   $params->get('show_content_after_display', 0);
 $items = Article::getArticles($limit, $ordering, $categories,true,$article_type,$tagids,$offset);
 
 $enable_slider      =   $params->get('enable_slider', 0);
@@ -434,9 +436,11 @@ foreach ($items as $key => $item) {
             'subject' => $article,
             'params'  => $article->params,
     ];
-    $contentEvents = new Content\BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments);
-    $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
-    echo $results ? trim(implode("\n", $results)) : '';
+    if ($show_content_before_display) {
+        $contentEvents = new Content\BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments);
+        $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
+        echo $results ? trim(implode("\n", $results)) : '';
+    }
 
     if (!empty($item->introtext) && $enable_intro_text) {
         echo '<div class="astroid-article-introtext">' . (!empty($intro_limit) ? mb_substr(strip_tags($item->introtext), 0, $intro_limit, 'UTF-8') : $item->introtext) . '</div>';
@@ -451,9 +455,11 @@ foreach ($items as $key => $item) {
         echo '</dl>';
     }
 
-    $contentEvents = new Content\AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments);
-    $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
-    echo $results ? trim(implode("\n", $results)) : '';
+    if ($show_content_after_display) {
+        $contentEvents = new Content\AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments);
+        $results = $dispatcher->dispatch($contentEvents->getName(), $contentEvents)->getArgument('result', []);
+        echo $results ? trim(implode("\n", $results)) : '';
+    }
 
     if ($readmore) {
         $button_class   =   $button_style !== 'text' ? 'btn btn-' . (intval($button_outline) ? 'outline-' : '') . $button_style . $button_size . $button_radius : 'as-btn-text text-uppercase text-reset';

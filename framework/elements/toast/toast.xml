@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_TOAST_LABEL</title>
+    <description>ASTROID_WIDGET_TOAST_DESC</description>
+    <icon>as-icon as-icon-license2</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_UTILITY</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
+                <field type="astroidgroup" name="heading_options" title="ASTROID_WIDGET_HEADING_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="meta_options" title="ASTROID_WIDGET_META_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="content_options" title="ASTROID_WIDGET_CONTENT_OPTIONS_LABEL"/>
+                <field type="astroidgroup" name="readmore_options" title="ASTROID_WIDGET_READMORE_OPTIONS_LABEL"/>
+                <field astroidgroup="general" name="toast_position" type="astroidlist" label="ASTROID_POSITION" description="ASTROID_WIDGET_TOAST_POSITION_DESCRIPTION" default="">
+                    <option value="">ASTROID_WIDGET_STATIC_TOAST_LABEL</option>
+                    <option value="top-0 start-0">ASTROID_WIDGET_TOP_LEFT</option>
+                    <option value="top-0 start-50 translate-middle-x">ASTROID_WIDGET_TOP_CENTER</option>
+                    <option value="top-0 end-0">ASTROID_WIDGET_TOP_RIGHT</option>
+                    <option value="top-50 start-0 translate-middle-y">ASTROID_WIDGET_CENTER_LEFT</option>
+                    <option value="top-50 start-50 translate-middle">ASTROID_WIDGET_CENTER_CENTER</option>
+                    <option value="top-50 end-0 translate-middle-y">ASTROID_WIDGET_CENTER_RIGHT</option>
+                    <option value="bottom-0 start-0">ASTROID_WIDGET_BOTTOM_LEFT</option>
+                    <option value="bottom-0 start-50 translate-middle-x">ASTROID_WIDGET_BOTTOM_CENTER</option>
+                    <option value="bottom-0 end-0">ASTROID_WIDGET_BOTTOM_RIGHT</option>
+                </field>
+                <field astroidgroup="general" name="toast_maxwidth" type="astroidrange" min="300" max="1500" step="1" default="500" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" postfix="px" />
+                <field astroidgroup="general" name="toast_padding" type="astroidrange" min="10" max="80" step="1" default="30" label="ASTROID_WIDGET_PADDING_LABEL" description="ASTROID_WIDGET_TOAST_PADDING_DESCRIPTION" postfix="px" responsive="true" />
+                <field astroidgroup="general" name="always_display" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ALWAYS_DISPLAY"/>
+                <field astroidgroup="heading_options" type="astroidtext" label="ASTROID_WIDGET_HEADING_LABEL" description="ASTROID_WIDGET_HEADING_CONTENT_DESC" name="heading" dynamic="true"/>
+                <field astroidgroup="heading_options" ngShow="[heading]!==''" name="html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="h5">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                    <option value="h4">h4</option>
+                    <option value="h5">h5</option>
+                    <option value="h6">h6</option>
+                    <option value="div">div</option>
+                </field>
+                <field astroidgroup="heading_options" ngShow="[heading]!==''" name="heading_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+
+                <field astroidgroup="meta_options" type="astroidtext" label="ASTROID_WIDGET_META" name="meta" dynamic="true"/>
+                <field astroidgroup="meta_options" ngShow="[meta]!==''" name="meta_html_element" type="astroidlist" label="ASTROID_WIDGET_HTML_ELEMENT_LABEL" default="div">
+                    <option value="div">div</option>
+                    <option value="small">small</option>
+                    <option value="del">del</option>
+                    <option value="ins">ins</option>
+                    <option value="strong">strong</option>
+                    <option value="em">em</option>
+                </field>
+                <field astroidgroup="meta_options" ngShow="[meta]!==''" name="meta_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+
+                <field astroidgroup="content_options" name="content" type="astroideditor" label="ASTROID_WIDGET_CONTENT_LABEL" dynamic="true"/>
+                <field astroidgroup="content_options" type="astroiddivider" name="content_divider" />
+                <field astroidgroup="content_options" ngShow="[content]!==''" name="content_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
+
+                <field astroidgroup="readmore_options" name="buttons" type="astroidsubform" label="ASTROID_WIDGET_BUTTONS_LABEL" formsource="libraries/astroid/framework/elements/button/button_item.xml"/>
+                <field astroidgroup="readmore_options" name="button_group" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_WIDGET_BUTTON_GROUP_LABEL"/>
+                <field astroidgroup="readmore_options" type="astroidlist" name="button_size" label="ASTROID_WIDGET_BUTTON_SIZE_LABEL" default="">
+                    <option value="">Default</option>
+                    <option value="btn-lg">Large</option>
+                    <option value="btn-sm">Small</option>
+                    <option value="custom">Custom</option>
+                </field>
+                <field astroidgroup="readmore_options" ngShow="[button_size]=='custom'" name="button_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" color-picker="false" preview="false"/>
+
+                <field astroidgroup="readmore_options" ngShow="[button_size]=='custom'" name="btn_padding" type="astroidspacing" label="ASTROID_WIDGET_PADDING_LABEL" />
+                <field astroidgroup="readmore_options" type="astroidlist" name="btn_border_radius" label="ASTROID_WIDGET_GLOBAL_BORDER_RADIUS_LABEL" default="">
+                    <option value="">Rounded</option>
+                    <option value="rounded-0">Square</option>
+                    <option value="rounded-pill">Circle</option>
+                </field>
+                <field ngShow="[button_group]==0" astroidgroup="readmore_options" type="astroidlist" name="gutter" label="ASTROID_WIDGET_GUTTER_LABEL" default="lg">
+                    <option value="sm">ASTROID_SM</option>
+                    <option value="md">ASTROID_MD</option>
+                    <option value="lg">ASTROID_LG</option>
+                    <option value="xl">ASTROID_XL</option>
+                    <option value="xxl">ASTROID_XXL</option>
+                </field>
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
