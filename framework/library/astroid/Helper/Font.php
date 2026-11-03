@@ -203,7 +203,7 @@ class Font
             $extension = strtolower($pathinfo['extension'] ?? '');
 
             if ($extension === $woff2_extension) {
-                $fontname = self::getFontNameFromWoff2($full_path);
+                $fontname = self::getFontFamilyName($full_path);
             } elseif (in_array($extension, $lib_extensions, true)) {
                 $font     = \FontLib\Font::load($full_path);
                 $font->parse();
@@ -231,17 +231,27 @@ class Font
     }
 
     // php-font-lib does not support woff2 — derive name from filename.
+    // A {basename}.json sidecar with {"family":"Roboto Slab"} overrides the derived name,
+    // keeping typography selections stable when the font file is replaced.
     // RobotoSlab-Regular.woff2 → Roboto Slab Regular
-    private static function getFontNameFromWoff2(string $filepath): string
+    private static function getFontFamilyName(string $filepath): string
     {
         if (!is_readable($filepath)) {
             return '';
         }
 
-        $basename = pathinfo($filepath, PATHINFO_FILENAME);
-        $name     = str_replace(['-', '_'], ' ', $basename);
-        $name     = preg_replace('/([a-z])([A-Z])/', '$1 $2', $name);
-        $name     = trim(preg_replace('/\s+/', ' ', $name));
+        $basename    = pathinfo($filepath, PATHINFO_FILENAME);
+        $sidecar     = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $basename . '.json';
+        if (is_readable($sidecar)) {
+            $meta = json_decode(file_get_contents($sidecar), true);
+            if (!empty($meta['family']) && is_string($meta['family'])) {
+                return trim($meta['family']);
+            }
+        }
+
+        $name = str_replace(['-', '_'], ' ', $basename);
+        $name = preg_replace('/([a-z])([A-Z])/', '$1 $2', $name);
+        $name = trim(preg_replace('/\s+/', ' ', $name));
 
         return $name !== '' ? $name : $basename;
     }
