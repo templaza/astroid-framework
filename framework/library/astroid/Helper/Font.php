@@ -224,7 +224,16 @@ class Font
                     'files' => [],
                 ];
             }
-            $descriptors = self::getFontDescriptors($full_path);
+            $basename     = pathinfo($full_path, PATHINFO_FILENAME);
+            $sidecar_file = pathinfo($full_path, PATHINFO_DIRNAME) . '/' . $basename . '.json';
+            $sidecar      = [];
+            if (is_readable($sidecar_file)) {
+                $meta = json_decode(@file_get_contents($sidecar_file), true);
+                if (is_array($meta)) {
+                    $sidecar = $meta;
+                }
+            }
+            $descriptors = self::getFontDescriptors($font_path, $sidecar);
             $fonts[$fontid]['files'][] = [
                 'file'   => $font_path,
                 'weight' => $descriptors['weight'],
@@ -264,56 +273,49 @@ class Font
         return $name !== '' ? $name : $basename;
     }
 
-    private static function getFontDescriptors(string $filepath): array
+    private static function getFontDescriptors(string $filename, array $sidecar = []): array
     {
-        $result   = ['weight' => 400, 'style' => 'normal'];
-        $basename = pathinfo($filepath, PATHINFO_FILENAME);
+        // Order matters: longest/most-specific tokens first to avoid partial matches.
+        $weight_map = [
+            'Thin'       => '100',
+            'ExtraLight' => '200',
+            'UltraLight' => '200',
+            'Light'      => '300',
+            'Medium'     => '500',
+            'SemiBold'   => '600',
+            'DemiBold'   => '600',
+            'ExtraBold'  => '800',
+            'UltraBold'  => '800',
+            'Black'      => '900',
+            'Heavy'      => '900',
+            'Bold'       => '700',
+        ];
 
-        // Sidecar overrides filename detection.
-        $sidecar = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $basename . '.json';
-        if (is_readable($sidecar)) {
-            $meta = json_decode(@file_get_contents($sidecar), true);
-            if (is_array($meta)) {
-                if (isset($meta['weight']) && is_numeric($meta['weight'])) {
-                    $result['weight'] = (int) $meta['weight'];
-                }
-                if (isset($meta['style']) && in_array($meta['style'], ['normal', 'italic', 'oblique'], true)) {
-                    $result['style'] = $meta['style'];
-                }
-                if ($result['weight'] !== 400 || $result['style'] !== 'normal') {
-                    return $result;
-                }
+        // Infer from filename first.
+        $weight = '400';
+        foreach ($weight_map as $token => $value) {
+            if (stripos($filename, $token) !== false) {
+                $weight = $value;
+                break;
             }
         }
 
-        if (preg_match('/BoldItalic|Bold[-_\s]Italic/i', $basename)) {
-            return ['weight' => 700, 'style' => 'italic'];
-        }
-        if (preg_match('/Oblique/i', $basename)) {
-            $result['style'] = 'oblique';
-        } elseif (preg_match('/Italic/i', $basename)) {
-            $result['style'] = 'italic';
+        $style = 'normal';
+        if (stripos($filename, 'Italic') !== false) {
+            $style = 'italic';
+        } elseif (stripos($filename, 'Oblique') !== false) {
+            $style = 'oblique';
         }
 
-        if (preg_match('/Thin/i', $basename)) {
-            $result['weight'] = 100;
-        } elseif (preg_match('/ExtraLight|UltraLight/i', $basename)) {
-            $result['weight'] = 200;
-        } elseif (preg_match('/Light/i', $basename)) {
-            $result['weight'] = 300;
-        } elseif (preg_match('/Medium/i', $basename)) {
-            $result['weight'] = 500;
-        } elseif (preg_match('/SemiBold|DemiBold/i', $basename)) {
-            $result['weight'] = 600;
-        } elseif (preg_match('/ExtraBold|UltraBold/i', $basename)) {
-            $result['weight'] = 800;
-        } elseif (preg_match('/Black|Heavy/i', $basename)) {
-            $result['weight'] = 900;
-        } elseif (preg_match('/Bold/i', $basename)) {
-            $result['weight'] = 700;
+        // Overlay sidecar fields individually — explicit sidecar values win, unspecified fields keep filename inference.
+        if (!empty($sidecar['weight'])) {
+            $weight = (string) $sidecar['weight'];
+        }
+        if (!empty($sidecar['style'])) {
+            $style = $sidecar['style'];
         }
 
-        return $result;
+        return ['weight' => $weight, 'style' => $style];
     }
 
     public static function fontAstroidIcons() {
