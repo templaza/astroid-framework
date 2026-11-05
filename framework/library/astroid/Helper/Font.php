@@ -111,10 +111,10 @@ class Font
 
             // Method is only used in admin, so we use the un-cached function 'getUploadedFonts'
             // above, and check here if we need to update the fontcache.
-            $cachedFonts = self::getCachedLocalFonts($template);
-            $font_ids = array_keys($uploadedFonts);
-            $cached_font_ids = $cachedFonts == null ? [] : array_keys($cachedFonts);
-            if ($cached_font_ids != $font_ids) {
+            $cachedFonts  = self::getCachedLocalFonts($template);
+            $current_hash = md5(json_encode($uploadedFonts));
+            $cached_hash  = md5(json_encode($cachedFonts));
+            if ($current_hash !== $cached_hash) {
                 self::updateCachedLocalFonts($template, $uploadedFonts);
             }
         }
@@ -224,7 +224,12 @@ class Font
                     'files' => [],
                 ];
             }
-            $fonts[$fontid]['files'][] = $font_path;
+            $descriptors = self::getFontDescriptors($full_path);
+            $fonts[$fontid]['files'][] = [
+                'file'   => $font_path,
+                'weight' => $descriptors['weight'],
+                'style'  => $descriptors['style'],
+            ];
         }
 
         return $fonts;
@@ -243,9 +248,12 @@ class Font
         $basename    = pathinfo($filepath, PATHINFO_FILENAME);
         $sidecar     = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $basename . '.json';
         if (is_readable($sidecar)) {
-            $meta = json_decode(file_get_contents($sidecar), true);
+            $meta = json_decode(@file_get_contents($sidecar), true);
             if (!empty($meta['family']) && is_string($meta['family'])) {
-                return trim($meta['family']);
+                $family = htmlspecialchars(strip_tags(trim($meta['family'])), ENT_QUOTES, 'UTF-8');
+                if (strlen($family) <= 100 && preg_match('/^[\p{L}\p{N} \-]+$/u', $family)) {
+                    return $family;
+                }
             }
         }
 
@@ -254,6 +262,58 @@ class Font
         $name = trim(preg_replace('/\s+/', ' ', $name));
 
         return $name !== '' ? $name : $basename;
+    }
+
+    private static function getFontDescriptors(string $filepath): array
+    {
+        $result   = ['weight' => 400, 'style' => 'normal'];
+        $basename = pathinfo($filepath, PATHINFO_FILENAME);
+
+        // Sidecar overrides filename detection.
+        $sidecar = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $basename . '.json';
+        if (is_readable($sidecar)) {
+            $meta = json_decode(@file_get_contents($sidecar), true);
+            if (is_array($meta)) {
+                if (isset($meta['weight']) && is_numeric($meta['weight'])) {
+                    $result['weight'] = (int) $meta['weight'];
+                }
+                if (isset($meta['style']) && in_array($meta['style'], ['normal', 'italic', 'oblique'], true)) {
+                    $result['style'] = $meta['style'];
+                }
+                if ($result['weight'] !== 400 || $result['style'] !== 'normal') {
+                    return $result;
+                }
+            }
+        }
+
+        if (preg_match('/BoldItalic|Bold[-_\s]Italic/i', $basename)) {
+            return ['weight' => 700, 'style' => 'italic'];
+        }
+        if (preg_match('/Oblique/i', $basename)) {
+            $result['style'] = 'oblique';
+        } elseif (preg_match('/Italic/i', $basename)) {
+            $result['style'] = 'italic';
+        }
+
+        if (preg_match('/Thin/i', $basename)) {
+            $result['weight'] = 100;
+        } elseif (preg_match('/ExtraLight|UltraLight/i', $basename)) {
+            $result['weight'] = 200;
+        } elseif (preg_match('/Light/i', $basename)) {
+            $result['weight'] = 300;
+        } elseif (preg_match('/Medium/i', $basename)) {
+            $result['weight'] = 500;
+        } elseif (preg_match('/SemiBold|DemiBold/i', $basename)) {
+            $result['weight'] = 600;
+        } elseif (preg_match('/ExtraBold|UltraBold/i', $basename)) {
+            $result['weight'] = 800;
+        } elseif (preg_match('/Black|Heavy/i', $basename)) {
+            $result['weight'] = 900;
+        } elseif (preg_match('/Bold/i', $basename)) {
+            $result['weight'] = 700;
+        }
+
+        return $result;
     }
 
     public static function fontAstroidIcons() {
@@ -402,11 +462,18 @@ class Font
             $files = $uploaded_fonts[$value]['files'];
             $value = $uploaded_fonts[$value]['name'];
             foreach ($files as $file) {
-                if (file_exists($template_custom_fonts_path . '/' . $file)) {
-                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_custom_path . $file . '");}');
+                $filename = is_array($file) ? $file['file']   : $file;
+                $weight   = is_array($file) ? (int) $file['weight'] : 400;
+                $style    = is_array($file) ? $file['style']  : 'normal';
+                if (file_exists($template_custom_fonts_path . '/' . $filename)) {
+                    $src = $font_custom_path . $filename;
                 } else {
-                    $wa->addInlineStyle('@font-face { font-family: "' . $value . '"; src: url("' . $font_path . $file . '");}');
+                    $src = $font_path . $filename;
                 }
+                $wa->addInlineStyle(
+                    '@font-face { font-family: "' . $value . '"; src: url("' . $src . '");' .
+                    ' font-weight: ' . $weight . '; font-style: ' . $style . '; }'
+                );
             }
         }
         return $value;
