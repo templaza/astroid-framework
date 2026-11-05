@@ -308,10 +308,13 @@ class Font
         }
 
         // Overlay sidecar fields individually — explicit sidecar values win, unspecified fields keep filename inference.
-        if (!empty($sidecar['weight'])) {
-            $weight = (string) $sidecar['weight'];
+        if (isset($sidecar['weight']) && is_numeric($sidecar['weight'])) {
+            $w = (int) $sidecar['weight'];
+            if ($w >= 1 && $w <= 1000) {
+                $weight = (string) $w;
+            }
         }
-        if (!empty($sidecar['style'])) {
+        if (isset($sidecar['style']) && is_string($sidecar['style']) && in_array($sidecar['style'], ['normal', 'italic', 'oblique'], true)) {
             $style = $sidecar['style'];
         }
 
