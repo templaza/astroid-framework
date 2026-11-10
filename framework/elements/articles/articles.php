@@ -72,7 +72,7 @@ $responsive_key     =   [
         'xl'    => '1200',
         'xxl'   => '1400',
 ];
-$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3, 'xl' => 3, 'xxl' => 3];
+$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3, 'xl' => '', 'xxl' => ''];
 foreach ($responsive_key as $key => $min_width) {
     $column         =   $params->get($key . '_column', $column_defaults[$key] ?? '');
     $row_column_cls .=  $key !== 'xs' ? ' row-cols-' . $key . '-' . $column : ' row-cols-' . $column;
