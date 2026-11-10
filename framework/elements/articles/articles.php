@@ -72,12 +72,23 @@ $responsive_key     =   [
         'xl'    => '1200',
         'xxl'   => '1400',
 ];
-$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3, 'xl' => '', 'xxl' => ''];
+$gutter_map = [
+        '0' => '0',
+        '1' => '8',
+        '2' => '16',
+        '3' => '32',
+        '4' => '48',
+        '5' => '96',
+];
+$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3, 'xl' => 3, 'xxl' => 3];
+$latest_gutter = 3;
 foreach ($responsive_key as $key => $min_width) {
     $column         =   $params->get($key . '_column', $column_defaults[$key] ?? '');
     $row_column_cls .=  $key !== 'xs' ? ' row-cols-' . $key . '-' . $column : ' row-cols-' . $column;
+    $column_gutter  =   $params->get('column_gutter_'. $key, $latest_gutter);
+    $latest_gutter  =   $column_gutter;
     $slidesPerGroup =   1;
-    $gutter         =   30;
+    $gutter         =   $gutter_map[$column_gutter];
     if (!empty($column)) {
         if (!count($slide_settings)) {
             $slide_settings[]       =   'slidesPerView: ' . $column;
