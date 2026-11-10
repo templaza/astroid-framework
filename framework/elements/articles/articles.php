@@ -485,6 +485,9 @@ if ($enable_slider) {
         $style_dark->child('.swiper-button-prev')->addCss('color', $nav_color['dark']);
         $style_dark->child('.swiper-button-next')->addCss('color', $nav_color['dark']);
     }
+    if ($enable_grid_match) {
+        $style->child('.swiper-slide')->addCss('height', 'auto');
+    }
 } elseif ($use_masonry) {
     $document->loadMasonry('#'. $element->id .' .as-masonry');
 }
