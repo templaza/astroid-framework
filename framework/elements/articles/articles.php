@@ -72,8 +72,9 @@ $responsive_key     =   [
         'xl'    => '1200',
         'xxl'   => '1400',
 ];
+$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3];
 foreach ($responsive_key as $key => $min_width) {
-    $column         =   $params->get($key . '_column', '');
+    $column         =   $params->get($key . '_column', $column_defaults[$key] ?? '');
     $row_column_cls .=  !empty($key) ? ' row-cols-' . $key . '-' . $column : ' row-cols-' . $column;
     $slidesPerGroup =   1;
     $gutter         =   30;
