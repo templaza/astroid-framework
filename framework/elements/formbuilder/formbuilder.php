@@ -54,27 +54,29 @@ foreach ($responsive_key as $key) {
     }
 }
 
-function normalizeFloat(string $value): ?float
-{
-    $value = trim($value);
+if (!function_exists('normalizeFloat')) {
+    function normalizeFloat(string $value): ?float
+    {
+        $value = trim($value);
 
-    if (str_contains($value, '/')) {
-        $parts = explode('/', $value, 2);
+        if (str_contains($value, '/')) {
+            $parts = explode('/', $value, 2);
 
-        if (!is_numeric(trim($parts[0])) || !is_numeric(trim($parts[1]))) {
-            return null;
+            if (!is_numeric(trim($parts[0])) || !is_numeric(trim($parts[1]))) {
+                return null;
+            }
+
+            $denominator = (float) trim($parts[1]);
+
+            if ($denominator == 0.0) {
+                return null;
+            }
+
+            return (float) trim($parts[0]) / $denominator;
         }
 
-        $denominator = (float) trim($parts[1]);
-
-        if ($denominator == 0.0) {
-            return null;
-        }
-
-        return (float) trim($parts[0]) / $denominator;
+        return is_numeric($value) ? (float) $value : null;
     }
-
-    return is_numeric($value) ? (float) $value : null;
 }
 
 $document = Framework::getDocument();
