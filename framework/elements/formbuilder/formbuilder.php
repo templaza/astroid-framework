@@ -106,10 +106,10 @@ foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
     //Options
     $column     =   [];
-    $column[]   =   (isset($form_builder_item['column_lg']) && $form_builder_item['column_lg']) ? 'col-lg-' . 12/$form_builder_item['column_lg'] : 'col-lg-6';
-    $column[]   =   (isset($form_builder_item['column_md']) && $form_builder_item['column_md']) ? 'col-md-' . 12/$form_builder_item['column_md'] : 'col-md-6';
-    $column[]   =   (isset($form_builder_item['column_sm']) && $form_builder_item['column_sm']) ? 'col-sm-' . 12/$form_builder_item['column_sm'] : 'col-sm-12';
-    $column[]   =   (isset($form_builder_item['column']) && $form_builder_item['column']) ? 'col-' . 12/$form_builder_item['column'] : 'col-12';
+    $column[]   =   (isset($form_builder_item['column_lg']) && $form_builder_item['column_lg']) ? 'col-lg-' . $form_builder_item['column_lg'] : 'col-lg-6';
+    $column[]   =   (isset($form_builder_item['column_md']) && $form_builder_item['column_md']) ? 'col-md-' . $form_builder_item['column_md'] : 'col-md-6';
+    $column[]   =   (isset($form_builder_item['column_sm']) && $form_builder_item['column_sm']) ? 'col-sm-' . $form_builder_item['column_sm'] : 'col-sm-12';
+    $column[]   =   (isset($form_builder_item['column']) && $form_builder_item['column']) ? 'col-' . $form_builder_item['column'] : 'col-12';
 
     echo '<div class="'.implode(' ', $column).'">';
     if ($show_label && $form_builder_item['field_label']) {
@@ -181,10 +181,10 @@ foreach ($form_elements as $key => $form_element) :
 endforeach;
 if($button_position=='inside'){
     $column_btn     =   [];
-    $column_btn[]   =   (isset($params['btn_column_lg']) && $params['btn_column_lg']) ? 'col-lg-' . 12/$params['btn_column_lg'] : 'col-lg-6';
-    $column_btn[]   =   (isset($params['btn_column_md']) && $params['btn_column_md']) ? 'col-md-' . 12/$params['btn_column_md'] : 'col-md-6';
-    $column_btn[]   =   (isset($params['btn_column_sm']) && $params['btn_column_sm']) ? 'col-sm-' . 12/$params['btn_column_sm'] : 'col-sm-12';
-    $column_btn[]   =   (isset($params['btn_column']) && $params['btn_column']) ? 'col-' . 12/$params['btn_column'] : 'col-12';
+    $column_btn[]   =   (isset($params['btn_column_lg']) && $params['btn_column_lg']) ? 'col-lg-' . $params['btn_column_lg'] : 'col-lg-6';
+    $column_btn[]   =   (isset($params['btn_column_md']) && $params['btn_column_md']) ? 'col-md-' . $params['btn_column_md'] : 'col-md-6';
+    $column_btn[]   =   (isset($params['btn_column_sm']) && $params['btn_column_sm']) ? 'col-sm-' . $params['btn_column_sm'] : 'col-sm-12';
+    $column_btn[]   =   (isset($params['btn_column']) && $params['btn_column']) ? 'col-' . $params['btn_column'] : 'col-12';
 
     echo '<div class="'.implode(' ', $column_btn).'">';
         if ($params->get('enable_captcha', 0) == 1) {
