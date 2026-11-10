@@ -54,6 +54,29 @@ foreach ($responsive_key as $key) {
     }
 }
 
+function normalizeFloat(string $value): ?float
+{
+    $value = trim($value);
+
+    if (str_contains($value, '/')) {
+        $parts = explode('/', $value, 2);
+
+        if (!is_numeric(trim($parts[0])) || !is_numeric(trim($parts[1]))) {
+            return null;
+        }
+
+        $denominator = (float) trim($parts[1]);
+
+        if ($denominator == 0.0) {
+            return null;
+        }
+
+        return (float) trim($parts[0]) / $denominator;
+    }
+
+    return is_numeric($value) ? (float) $value : null;
+}
+
 $document = Framework::getDocument();
 $show_label     =   $params->get('show_label', 1);
 $pluginParams   =   Helper::getPluginParams('captcha', 'astroidcaptcha');
@@ -101,15 +124,14 @@ if ($btn_text !== '') {
     $btn_title = $button_style === 'text' ? '<small>' . Text::_('JSUBMIT') . '</small>' : Text::_('JSUBMIT');
 }
 
-
 foreach ($form_elements as $key => $form_element) :
     $form_builder_item    =   Style::getSubFormParams($form_element->params);
     //Options
     $column     =   [];
-    $column[]   =   (isset($form_builder_item['column_lg']) && $form_builder_item['column_lg']) ? 'col-lg-' . $form_builder_item['column_lg'] : 'col-lg-6';
-    $column[]   =   (isset($form_builder_item['column_md']) && $form_builder_item['column_md']) ? 'col-md-' . $form_builder_item['column_md'] : 'col-md-6';
-    $column[]   =   (isset($form_builder_item['column_sm']) && $form_builder_item['column_sm']) ? 'col-sm-' . $form_builder_item['column_sm'] : 'col-sm-12';
-    $column[]   =   (isset($form_builder_item['column']) && $form_builder_item['column']) ? 'col-' . $form_builder_item['column'] : 'col-12';
+    $column[]   =   (isset($form_builder_item['column_lg']) && $form_builder_item['column_lg']) ? 'col-lg-' . 12/normalizeFloat($form_builder_item['column_lg']) : 'col-lg-6';
+    $column[]   =   (isset($form_builder_item['column_md']) && $form_builder_item['column_md']) ? 'col-md-' . 12/normalizeFloat($form_builder_item['column_md']) : 'col-md-6';
+    $column[]   =   (isset($form_builder_item['column_sm']) && $form_builder_item['column_sm']) ? 'col-sm-' . 12/normalizeFloat($form_builder_item['column_sm']) : 'col-sm-12';
+    $column[]   =   (isset($form_builder_item['column']) && $form_builder_item['column']) ? 'col-' . 12/normalizeFloat($form_builder_item['column']) : 'col-12';
 
     echo '<div class="'.implode(' ', $column).'">';
     if ($show_label && $form_builder_item['field_label']) {
@@ -181,10 +203,10 @@ foreach ($form_elements as $key => $form_element) :
 endforeach;
 if($button_position=='inside'){
     $column_btn     =   [];
-    $column_btn[]   =   (isset($params['btn_column_lg']) && $params['btn_column_lg']) ? 'col-lg-' . $params['btn_column_lg'] : 'col-lg-6';
-    $column_btn[]   =   (isset($params['btn_column_md']) && $params['btn_column_md']) ? 'col-md-' . $params['btn_column_md'] : 'col-md-6';
-    $column_btn[]   =   (isset($params['btn_column_sm']) && $params['btn_column_sm']) ? 'col-sm-' . $params['btn_column_sm'] : 'col-sm-12';
-    $column_btn[]   =   (isset($params['btn_column']) && $params['btn_column']) ? 'col-' . $params['btn_column'] : 'col-12';
+    $column_btn[]   =   (isset($params['btn_column_lg']) && $params['btn_column_lg']) ? 'col-lg-' . 12/normalizeFloat($params['btn_column_lg']) : 'col-lg-6';
+    $column_btn[]   =   (isset($params['btn_column_md']) && $params['btn_column_md']) ? 'col-md-' . 12/normalizeFloat($params['btn_column_md']) : 'col-md-6';
+    $column_btn[]   =   (isset($params['btn_column_sm']) && $params['btn_column_sm']) ? 'col-sm-' . 12/normalizeFloat($params['btn_column_sm']) : 'col-sm-12';
+    $column_btn[]   =   (isset($params['btn_column']) && $params['btn_column']) ? 'col-' . 12/normalizeFloat($params['btn_column']) : 'col-12';
 
     echo '<div class="'.implode(' ', $column_btn).'">';
         if ($params->get('enable_captcha', 0) == 1) {
