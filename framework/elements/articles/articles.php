@@ -89,16 +89,12 @@ foreach ($responsive_key as $key => $min_width) {
     $latest_gutter  =   $column_gutter;
     $slidesPerGroup =   1;
     $gutter         =   $gutter_map[$column_gutter];
-    if (!empty($column)) {
-        if (!count($slide_settings)) {
-            $slide_settings[]       =   'slidesPerView: ' . $column;
-            if ($slidesPerGroup == '') {
-                $slide_settings[]       =   'slidesPerGroup: ' . $slidesPerGroup;
-            }
-            $slide_settings[]       =   'spaceBetween: ' . $gutter;
-        } elseif (!empty($min_width)) {
-            $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$column.($slidesPerGroup ? ',slidesPerGroup: '.$slidesPerGroup : '').',spaceBetween: '.$gutter.'}';
-        }
+    $effective_column = !empty($column) ? $column : ($key === 'xs' ? 1 : $effective_column);
+    if (!count($slide_settings)) {
+        $slide_settings[]       =   'slidesPerView: ' . $effective_column;
+        $slide_settings[]       =   'spaceBetween: ' . $gutter;
+    } elseif (!empty($min_width)) {
+        $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$effective_column.',slidesPerGroup: '.$slidesPerGroup.',spaceBetween: '.$gutter.'}';
     }
 }
 
