@@ -11,6 +11,16 @@
   .card-img-overlay {
     top: auto;
   }
+  > .swiper {
+    padding-bottom: 3rem;
+  }
+  .swiper-pagination-bullet {
+    transition: all 0.3s ease;
+  }
+  .swiper-pagination-bullet-active {
+    width: 20px;
+    border-radius: 10px;
+  }
 }
 .astroid-article-heading {
   > a {

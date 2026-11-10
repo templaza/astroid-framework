@@ -64,77 +64,66 @@ if ($use_masonry && !$enable_slider) {
     $row_column_cls .=  ' as-masonry as-loading';
 }
 
-$xxl_column         =   $params->get('xxl_column', '');
-if ($xxl_column) {
-    $slide_settings[]=  'slidesToShow: ' . $xxl_column;
-    $row_column_cls .=  ' row-cols-xxl-' . $xxl_column;
-}
-
-$xl_column          =   $params->get('xl_column', '');
-if ($xl_column) {
-    $row_column_cls .=  ' row-cols-xl-' . $xl_column;
+$responsive_key     =   [
+        'xs'    => '',
+        'sm'    => '576',
+        'md'    => '768',
+        'lg'    => '992',
+        'xl'    => '1200',
+        'xxl'   => '1400',
+];
+$gutter_map = [
+        '0' => '0',
+        '1' => '8',
+        '2' => '16',
+        '3' => '32',
+        '4' => '48',
+        '5' => '96',
+];
+$column_defaults = ['xs' => 1, 'sm' => 1, 'md' => 1, 'lg' => 3, 'xl' => 3, 'xxl' => 3];
+$latest_gutter = 3;
+foreach ($responsive_key as $key => $min_width) {
+    $column         =   $params->get($key . '_column', $column_defaults[$key] ?? '');
+    $row_column_cls .=  $key !== 'xs' ? ' row-cols-' . $key . '-' . $column : ' row-cols-' . $column;
+    $column_gutter  =   $params->get($key === 'xs' ? 'column_gutter' : 'column_gutter_' . $key, $latest_gutter);
+    $latest_gutter  =   $column_gutter;
+    $slidesPerGroup =   1;
+    $gutter         =   $gutter_map[$column_gutter];
+    $effective_column = !empty($column) ? $column : ($key === 'xs' ? 1 : $effective_column);
     if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $xl_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 1400,settings: {slidesToShow: ' . $xl_column.'}}';
-    }
-}
-
-$lg_column          =   $params->get('lg_column', 3);
-if ($lg_column) {
-    $row_column_cls .=  ' row-cols-lg-' . $lg_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $lg_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 1200,settings: {slidesToShow: ' . $lg_column.'}}';
-    }
-}
-
-$md_column          =   $params->get('md_column', 1);
-if ($md_column) {
-    $row_column_cls .=  ' row-cols-md-' . $md_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $md_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 992,settings: {slidesToShow: ' . $md_column.'}}';
-    }
-}
-
-$sm_column          =   $params->get('sm_column', 1);
-if ($sm_column) {
-    $row_column_cls .=  ' row-cols-sm-' . $sm_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $sm_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 768,settings: {slidesToShow: ' . $sm_column.'}}';
-    }
-}
-
-$xs_column          =   $params->get('xs_column', 1);
-if ($xs_column) {
-    $row_column_cls .=  ' row-cols-' . $xs_column;
-    if (!count($slide_settings)) {
-        $slide_settings[]       =  'slidesToShow: ' . $xs_column;
-    } else {
-        $slide_responsive[]     =   '{breakpoint: 576,settings: {slidesToShow: ' . $xs_column.'}}';
+        $slide_settings[]       =   'slidesPerView: ' . $effective_column;
+        $slide_settings[]       =   'spaceBetween: ' . $gutter;
+    } elseif (!empty($min_width)) {
+        $slide_responsive[]     =   $min_width . ': {slidesPerView: '.$effective_column.',slidesPerGroup: '.$slidesPerGroup.',spaceBetween: '.$gutter.'}';
     }
 }
 
 if ($slider_autoplay) {
-    $slide_settings[]       =   'autoplay: true';
-    $slide_settings[]       =   'autoplaySpeed: '. ($interval * 1000);
+    $slide_settings[]       =   'autoplay: {delay: '.($interval * 1000).'}';
 }
 
 if ($slider_dotnav) {
-    $slide_settings[]       =   'dots: true';
+    $slide_settings[]       =   'pagination: {el: ".swiper-pagination",clickable: true,}';
 }
 
-if (!$slider_nav) {
-    $slide_settings[]       =   'arrows: false';
+if ($slider_nav) {
+    $slide_settings[]       =   'navigation: {nextEl: ".swiper-button-next",prevEl: ".swiper-button-prev",}';
+}
+$speed              =   $params->get('speed', 0.5);
+if (!empty($speed)) {
+    $slide_settings[]   =   'speed:' . ($speed * 1000);
+}
+$loop               =   $params->get('loop', 1);
+if (!empty($loop)) {
+    $slide_settings[]   =   'loop:true';
+}
+$freemode           =   $params->get('freemode', 0);
+if (!empty($freemode)) {
+    $slide_settings[]   =   'freeMode: true';
 }
 
 if (count($slide_responsive)) {
-    $slide_settings[]       =  'responsive: ['.implode(',', $slide_responsive).']';
+    $slide_settings[]       =   'breakpoints: {'.implode(',', $slide_responsive).'}';
 }
 
 $gutter_cls         =   '';
@@ -294,7 +283,10 @@ $dispatcher = Factory::getApplication()->getDispatcher();
 PluginHelper::importPlugin('content', null, true, $dispatcher);
 
 $has_gallery        =   false;
-echo '<div class="'.($enable_slider ? 'astroid-slick opacity-0' : $row_column_cls).$gutter_cls.$text_color_mode.'">';
+echo '<div class="'.($enable_slider ? 'swiper' : $row_column_cls.$gutter_cls).$text_color_mode.'">';
+if ($enable_slider) {
+    echo '<div class="swiper-wrapper">';
+}
 foreach ($items as $key => $item) {
     $link           =   RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language);
     $video_type     =   $item->params->get('astroid_article_video_type', '');
@@ -373,7 +365,7 @@ foreach ($items as $key => $item) {
         }
     }
 
-    echo '<div class="astroid-article-item astroid-grid '.$item->post_format.'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
+    echo '<div class="astroid-article-item astroid-grid '.$item->post_format . ($enable_slider? ' swiper-slide' : '').'"><div class="card overflow-hidden' . $card_style . $box_shadow . $bd_radius . ($enable_grid_match ? ' h-100' : '') . '">';
     if (($media_position == 'left' || $media_position == 'right') && !$item_image_cover && $layout == 'classic' && $thumbnail_hidden==0) {
         echo '<div class="row g-0">';
         echo '<div class="'.$media_width_cls.'">';
@@ -476,6 +468,15 @@ foreach ($items as $key => $item) {
 
     echo '</div></div>';
 }
+if ($enable_slider) {
+    echo '</div>';
+    if ($slider_dotnav) {
+        echo '<div class="swiper-pagination"></div>';
+    }
+    if ($slider_nav) {
+        echo '<div class="swiper-button-prev swiper-nav-button"></div><div class="swiper-button-next swiper-nav-button"></div>';
+    }
+}
 echo '</div>';
 $mainframe = Factory::getApplication();
 $wa = $mainframe->getDocument()->getWebAssetManager();
@@ -484,15 +485,17 @@ if ($has_gallery) {
 }
 
 if ($enable_slider) {
-    $document->loadSlick('#'.$element->id.' .astroid-slick', implode(',', $slide_settings));
+    $document->loadSwiper('#'.$element->id.' .swiper', implode(',', $slide_settings));
     if ($slider_nav) {
         $nav_color  =   Style::getColor($params->get('nav_color', ''));
-        $style->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['light']);
-        $style->child('.astroid-slick .slick-next')->addCss('color', $nav_color['light']);
-        $style_dark->child('.astroid-slick .slick-prev')->addCss('color', $nav_color['dark']);
-        $style_dark->child('.astroid-slick .slick-next')->addCss('color', $nav_color['dark']);
+        $style->child('.swiper-button-prev')->addCss('color', $nav_color['light']);
+        $style->child('.swiper-button-next')->addCss('color', $nav_color['light']);
+        $style_dark->child('.swiper-button-prev')->addCss('color', $nav_color['dark']);
+        $style_dark->child('.swiper-button-next')->addCss('color', $nav_color['dark']);
     }
-
+    if ($enable_grid_match) {
+        $style->child('.swiper-slide')->addCss('height', 'auto');
+    }
 } elseif ($use_masonry) {
     $document->loadMasonry('#'. $element->id .' .as-masonry');
 }

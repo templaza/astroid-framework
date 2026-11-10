@@ -1445,7 +1445,7 @@ class Document
         $this->getWA()->useScript('astroid.swiper.js');
         if (!empty($obj) && !empty($config)) {
             $this->loadImagesLoaded();
-            $this->getWA()->addInlineScript('window.addEventListener("load", function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); document.querySelectorAll(\''.$obj.'\').forEach(function(element){element.classList.remove("as-loading");});});');
+            $this->getWA()->addInlineScript('document.addEventListener(\'DOMContentLoaded\', function(){const swiper = new Swiper(\''.$obj.'\', {'.$config.'}); document.querySelectorAll(\''.$obj.'\').forEach(function(element){element.classList.remove("as-loading");});});');
         }
     }
 
