@@ -281,6 +281,7 @@ class Font
             'ExtraLight' => '200',
             'UltraLight' => '200',
             'Light'      => '300',
+            'Regular'    => '400',
             'Medium'     => '500',
             'SemiBold'   => '600',
             'DemiBold'   => '600',
