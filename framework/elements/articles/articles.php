@@ -85,7 +85,7 @@ $latest_gutter = 3;
 foreach ($responsive_key as $key => $min_width) {
     $column         =   $params->get($key . '_column', $column_defaults[$key] ?? '');
     $row_column_cls .=  $key !== 'xs' ? ' row-cols-' . $key . '-' . $column : ' row-cols-' . $column;
-    $column_gutter  =   $params->get('column_gutter_'. $key, $latest_gutter);
+    $column_gutter  =   $params->get($key === 'xs' ? 'column_gutter' : 'column_gutter_' . $key, $latest_gutter);
     $latest_gutter  =   $column_gutter;
     $slidesPerGroup =   1;
     $gutter         =   $gutter_map[$column_gutter];
