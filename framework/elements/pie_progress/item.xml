@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields>
+        <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL">
+            <field name="percent" type="astroidrange" min="0" max="100" step="1" default="75" label="ASTROID_WIDGET_PERCENT_LABEL" description="ASTROID_WIDGET_PIE_PROGRESS_PERCENT_DESC" postfix="%" />
+            <field name="duration" type="astroidrange" min="200" max="5000" step="1" default="1200" label="ASTROID_WIDGET_DURATION_LABEL" description="ASTROID_WIDGET_PIE_PROGRESS_DURATION_DESC" postfix="ms" />
+            <field type="astroidtext" label="JGLOBAL_TITLE" name="title" dynamic="true"/>
+            <field type="astroideditor" label="ASTROID_SHORTCUT_DESCRIPTION_LABEL" name="description" dynamic="true"/>
+        </fieldset>
+        <fieldset name="advanced-settings" label="ASTROID_ELEMENT_HEAD_ADVANCED_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
+            <field type="astroidgroup" name="dynamic_group_settings" title="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP" description="ASTROID_DYNAMIC_CONTENT_HEADING_GROUP_DESC"/>
+            <field astroidgroup="dynamic_group_settings" name="dynamic_content_settings" type="astroiddynamiccontent" label="ASTROID_DYNAMIC_CONTENT_SOURCE_LABEL"/>
+        </fieldset>
+    </fields>
+</form>

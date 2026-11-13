@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "astroid",
-  "version": "3.5.2",
+  "version": "3.6.0",
   "description": "Astroid Framework Assets",
   "license": "GPL-3.0-or-later",
   "assets": [
@@ -163,6 +163,15 @@
       "name": "astroid.countdown",
       "type": "script",
       "uri": "astroid/countdown.min.js"
+    },
+    {
+      "name": "astroid.pie_progress",
+      "type": "script",
+      "dependencies": [
+        "astroid.gsap",
+        "astroid.gsap.ScrollTrigger"
+      ],
+      "uri": "astroid/pie_progress.min.js"
     }
   ]
 }

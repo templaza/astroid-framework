@@ -42,10 +42,10 @@ foreach ($responsive_key as $key) {
         $row_column_cls     .=  $column ? ' row-cols-'. $key .'-' . $column : '';
         $row_gutter         =   $params->get('row_gutter_'.$key, '');
         $column_gutter      =   $params->get('column_gutter_'. $key, '');
-        if ($row_gutter) {
+        if ($row_gutter !== '' && $row_gutter !== null) {
             $row_column_cls .=  ' gy-' . $key . '-' . $row_gutter;
         }
-        if ($column_gutter) {
+        if ($column_gutter !== '' && $column_gutter !== null) {
             $row_column_cls .=  ' gx-' . $key . '-' . $column_gutter;
         }
     } else {
