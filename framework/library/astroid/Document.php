@@ -1527,6 +1527,12 @@ class Document
         $this->getWA()->useScript('astroid.animation.counter');
     }
 
+    public function loadPieProgress(): void
+    {
+        $this->loadGSAP('ScrollTrigger');
+        $this->getWA()->useScript('astroid.pie_progress');
+    }
+
     public function loadGoogleReCaptcha($onload = [], $render = ''): void
     {
         $query = array();

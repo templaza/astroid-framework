@@ -1,0 +1,74 @@
+/* Astroid Framework: Pie Progress widget */
+
+.astroid-pie-progress {
+    --apb-size: 160px;               /* chart size */
+    --apb-color: #2F4BFF;            /* color of the completed portion */
+    --apb-track: #D5DBE8;            /* chart background color */
+    --apb-done: #12A06B;             /* color when reaching 100% */
+    --apb-label-bg: #14213D;         /* percentage label background */
+    --apb-label-text: #FFFFFF;       /* percentage label text color */
+    --apb-label-size: calc(var(--apb-size) * .7);
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    max-width: 100%;
+    &__chart {
+        position: relative;
+        width: var(--apb-size);
+        height: var(--apb-size);
+        max-width: 100%;
+    }
+
+    &__svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg); /* start at the 12 o'clock position */
+    }
+
+    &__track {
+        fill: var(--apb-track);
+    }
+
+    /* With r = 25 and stroke-width = 50, the stroke fills the circle as a pie chart */
+    &__arc {
+        fill: none;
+        stroke: var(--apb-color);
+        stroke-width: 50;
+        stroke-dasharray: 157.08; /* circumference = 2 * PI * 25 */
+        stroke-dashoffset: 157.08;
+    }
+
+    &.is-complete &__arc {
+        stroke: var(--apb-done);
+    }
+
+    &__value {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--apb-label-size);
+        height: var(--apb-label-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 12px;
+        border-radius: 999px;
+        background: var(--apb-label-bg);
+        color: var(--apb-label-text);
+        font-size: calc(var(--apb-size) * 0.14);
+        font-weight: 700;
+        line-height: 1.4;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    &__title {
+        margin: 0;
+        font-weight: 600;
+    }
+}
