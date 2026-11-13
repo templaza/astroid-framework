@@ -30,7 +30,7 @@
   // Animate from the current value to the target. Render immediately if GSAP is unavailable or reduced motion is enabled.
   function tweenTo(root, target, duration, extra) {
     const state = root.__apb;
-    if (!hasGsap || prefersReducedMotion() || duration <= 0) {
+    if (!hasGsap || duration <= 0) {
       state.v = target;
       render(root, target);
       return;

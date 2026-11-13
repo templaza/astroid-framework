@@ -167,6 +167,9 @@
     {
       "name": "astroid.pie_progress",
       "type": "script",
+      "dependencies": [
+        "astroid.gsap"
+      ],
       "uri": "astroid/pie_progress.min.js"
     }
   ]
