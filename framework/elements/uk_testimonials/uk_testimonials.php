@@ -238,7 +238,7 @@ foreach ($gutter_breakpoints as $device => $key) {
 }
 $row_gaps['global'] = $row_gaps['larger_desktop'] ?? 16;
 $column_gaps['global'] = $column_gaps['larger_desktop'] ?? 16;
-$negative_column_gaps = array_map(static fn ($gap) => (string) (0 - (float) $gap), $column_gaps);
+$negative_column_gaps = array_map(static fn ($gap) => (float) $gap === 0.0 ? '0.0' : (string) (0 - (float) $gap), $column_gaps);
 $element->style->child('.uk-testimonial-grid')->addResponsiveCSS('margin-left', $negative_column_gaps, 'px');
 $element->style->child('.uk-testimonial-grid')->child('> *')->addResponsiveCSS('padding-left', $column_gaps, 'px');
 $element->style->child('.uk-testimonial-grid')->child('> .uk-grid-margin')->addResponsiveCSS('margin-top', $row_gaps, 'px');
