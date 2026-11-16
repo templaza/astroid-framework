@@ -462,7 +462,7 @@ if (!empty($enable_rating)) {
     $element->style->child('.as-star-half')->addCss('background', 'linear-gradient(90deg, var(--rating-color) 50%, transparent 50%)');
     $element->style->child('.as-star-half')->addCss('-webkit-background-clip', 'text');
     $element->style->child('.as-star-half')->addCss('background-clip', 'text');
-    $element->style->child('.as-star-half')->addCss('color', 'transparent');
+    $element->style->child('.as-star-half')->addCss('color', 'inherit');
     $element->style->child('.as-star-half')->addCss('-webkit-text-fill-color', 'transparent');
 }
 
