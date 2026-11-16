@@ -163,11 +163,9 @@ $slider_nav_position    =   $params->get('slider_nav_position','');
 $testimonial_icon    =   $params->get('fa_icon','');
 
 if ($text_alignment) {
-    $alignment              =   ' uk-flex-' . match ($text_alignment) {
-        'start', 'left' => 'left',
-        'end', 'right' => 'right',
-        default => 'center',
-    };
+    $text_alignment_breakpoint = $params->get('text_alignment_breakpoint', '');
+    $text_alignment_fallback = $params->get('text_alignment_fallback', '');
+    $alignment = ' justify-content' . ($text_alignment_breakpoint ? '-' . $text_alignment_breakpoint : '') . '-' . $text_alignment . ($text_alignment_fallback ? ' justify-content-' . $text_alignment_fallback : '');
 } else {
     $alignment              =   '';
 }
