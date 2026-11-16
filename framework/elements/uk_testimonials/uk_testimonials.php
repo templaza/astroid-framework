@@ -72,6 +72,7 @@ $card_size          =   match ($card_size) {
     'small' => ' uk-card-small',
     'large' => ' uk-card-large',
     'custom' => ' uk-card-body-custom',
+    'none' => ' uk-padding-remove',
     default => '',
 };
 
