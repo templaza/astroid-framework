@@ -81,6 +81,41 @@
             });
          }
 
+         // Handle anchor links with hashes to scroll to the target element after closing the offcanvas menu
+         if (labelElement.tagName === 'A') {
+            const url = new URL(labelElement.href, window.location.href);
+
+            if (
+                url.origin === window.location.origin &&
+                url.pathname === window.location.pathname &&
+                url.search === window.location.search &&
+                url.hash
+            ) {
+               const id = decodeURIComponent(url.hash.substring(1));
+               const target = document.getElementById(id);
+               const container = labelElement.closest('.offcanvas');
+
+               if (target && container && window.bootstrap?.Offcanvas) {
+                  labelElement.addEventListener('click', function (event) {
+                     event.preventDefault();
+                     const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(container);
+
+                     container.addEventListener('hidden.bs.offcanvas', function () {
+
+                        history.pushState(null, '', url.hash);
+
+                        target.scrollIntoView({
+                           behavior: 'auto',
+                           block: 'start'
+                        });
+
+                     }, { once: true });
+                     offcanvas.hide();
+                  });
+               }
+            }
+         }
+
          indicator.addEventListener('click', function () {
             submenu.classList.toggle('menu_open');
          });
