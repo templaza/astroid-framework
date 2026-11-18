@@ -229,7 +229,7 @@ if($button_position=='inside'){
 echo '</div>';
 
 echo '<input type="hidden" name="form_id" value="'.$element->unqid.'">';
-echo '<input type="hidden" name="template" value="'.Framework::getTemplate()->id.'">';
+$mainframe->setUserState('astroid.formbuilder.template.' . $element->unqid, Framework::getTemplate()->id);
 echo '<input type="hidden" name="widget" value="formbuilder">';
 $source = 'template';
 if (isset($options['source']) && $options['source']) {

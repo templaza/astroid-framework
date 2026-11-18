@@ -23,7 +23,7 @@ $mainframe      =   Factory::getApplication();
 $asformbuilder  =   $mainframe->input->post->get('as-form-builder-', array(), 'RAW');
 $unqid          =   $mainframe->input->post->get('form_id', '', 'string');
 $source         =   $mainframe->input->post->get('source', '', 'string');
-$template_id    =   $mainframe->input->post->get('template', '', 'ALNUM');
+$template_id    =   $mainframe->getUserState('astroid.formbuilder.template.' . $unqid, '');
 $template       =   Framework::getTemplate(intval($template_id));
 $layout_type    =   $mainframe->input->post->get('layout_type', 'template', 'string');
 $article_id     =   0;
@@ -59,7 +59,8 @@ try {
             $value = implode(', ', $value);
         }
         $message        =   str_replace('{{'.$field.'}}', $value, $message);
-        $email_headers  =   str_replace('{{'.$field.'}}', $value, $email_headers);
+        $header_value   =   preg_replace('/[\r\n]+/', '', (string) $value);
+        $email_headers  =   str_replace('{{'.$field.'}}', $header_value, $email_headers);
     }
     $replyToMail = $replyToName = '';
     if (intval($params->get('enable_captcha', 0))) {
@@ -128,15 +129,30 @@ try {
                 }
                 if (strtolower($_header[0]) == 'cc' && isset($_header[1]))
                 {
-                    $mail->addCc(trim($_header[1]));
+                    $cc = trim($_header[1]);
+                    if ($cc !== '' && !filter_var($cc, FILTER_VALIDATE_EMAIL)) {
+                        throw new \InvalidArgumentException('Invalid email address in form headers.');
+                    }
+                    if ($cc !== '') {
+                        $mail->addCc($cc);
+                    }
                 }
                 if (strtolower($_header[0]) == 'bcc' && isset($_header[1]))
                 {
-                    $mail->addBcc(trim($_header[1]));
+                    $bcc = trim($_header[1]);
+                    if ($bcc !== '' && !filter_var($bcc, FILTER_VALIDATE_EMAIL)) {
+                        throw new \InvalidArgumentException('Invalid email address in form headers.');
+                    }
+                    if ($bcc !== '') {
+                        $mail->addBcc($bcc);
+                    }
                 }
             }
         }
         if (!empty($replyToMail)) {
+            if (!filter_var($replyToMail, FILTER_VALIDATE_EMAIL)) {
+                throw new \InvalidArgumentException('Invalid reply-to email address in form headers.');
+            }
             if (!empty($replyToName)) {
                 $mail->addReplyTo($replyToMail, $replyToName);
             } else {
