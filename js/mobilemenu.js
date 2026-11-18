@@ -91,7 +91,12 @@
                 url.search === window.location.search &&
                 url.hash
             ) {
-               const id = decodeURIComponent(url.hash.substring(1));
+               let id = url.hash.substring(1);
+               try {
+                  id = decodeURIComponent(id);
+               } catch (error) {
+                  // Keep the raw fragment when it is not valid URI encoding.
+               }
                const target = document.getElementById(id);
                const container = labelElement.closest('.offcanvas');
 
