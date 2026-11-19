@@ -61,7 +61,7 @@
                const target = document.getElementById(id);
                const container = link.closest('.offcanvas');
 
-               if (target && container && window.bootstrap?.Offcanvas) {
+               if (target && container && window.bootstrap && window.bootstrap.Offcanvas) {
                   link.addEventListener('click', function (event) {
                      event.preventDefault();
                      const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(container);
