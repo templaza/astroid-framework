@@ -1,11 +1,12 @@
 <promotions>
     <promotion>
-        <title>Trick or treat? Your Astroid treat is inside</title>
-        <description>Spooky season savings 🎃 Get 30% off every Astroid Framework membership with code HALLOWEEN2026, Oct 15–31.</description>
+        <title>Black Friday 2026: Get 50% Off Every Astroid Plan</title>
+        <description>Today is the day to upgrade your Astroid Pro. Every Astroid plan is half price, and that includes licenses for your whole team. With code BLACKFRIDAY, Ends December 2.</description>
         <link>https://astroidframe.work/pricing</link>
-        <link_title>Don't get ghosted by this deal!</link_title>
+        <link_title>Claim your 50% discount</link_title>
+        <discount>50%</discount>
         <image>#</image>
-        <validity>2026-10-15</validity>
-        <expiration>2026-11-1</expiration>
+        <validity>2026-11-19</validity>
+        <expiration>2026-12-2</expiration>
     </promotion>
 </promotions>
