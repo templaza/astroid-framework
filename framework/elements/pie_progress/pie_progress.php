@@ -74,12 +74,6 @@ if (json_last_error() === JSON_ERROR_NONE && is_array($chart_size_data)) {
     $element->style->child('.astroid-pie-progress')->addResponsiveCSS('--apb-size', $chart_size_data, $chart_size_data['postfix']);
 }
 
-$chart_size = $params->get('chart_size', '{"xxl":"150","xl":"150","lg":"150","md":"150","sm":"150","xs":"150","postfix":"px"}');
-$chart_size_data = \json_decode($chart_size, true);
-if (json_last_error() === JSON_ERROR_NONE && is_array($chart_size_data)) {
-    $element->style->child('.astroid-pie-progress')->addResponsiveCSS('--apb-size', $chart_size_data, $chart_size_data['postfix']);
-}
-
 $chart_label_size = $params->get('chart_label_size', '{"xxl":"100","xl":"100","lg":"100","md":"100","sm":"100","xs":"100","postfix":"px"}');
 $chart_label_size_data = \json_decode($chart_label_size, true);
 if (json_last_error() === JSON_ERROR_NONE && is_array($chart_label_size_data)) {

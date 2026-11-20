@@ -28,6 +28,7 @@ $document->getWA()->useScript('bootstrap.toast');
 $toast_position = $params->get('toast_position', '');
 $toast_maxwidth = $params->get('toast_maxwidth', '500');
 $toast_padding  = $params->get('toast_padding', '');
+$toast_background = $params->get('toast_background', '');
 
 $title          = $params->get('heading', '');
 $html_element   = $params->get('html_element', 'h5');
@@ -47,7 +48,7 @@ if (!empty($toast_position)) {
     $position = ' position-fixed ' . $toast_position;
 }
 echo !empty($toast_position) ? '<div class="toast-container' . $position . ' p-lg-5 p-md-3">' : '';
-echo '<div id="astroid-toast-' . $element->id . '" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">';
+echo '<div id="astroid-toast-' . $element->id . '" class="toast fade show' . ($toast_background ? ' ' . $toast_background : '') . '" role="alert" aria-live="assertive" aria-atomic="true">';
 if (!empty($title)) {
     echo '<div class="toast-header">';
     echo '<'.$html_element.' class="astroid-content-heading me-auto my-2">'. $title . '</'.$html_element.'>';
