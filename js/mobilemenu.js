@@ -34,13 +34,53 @@
    function initMenu(menu) {
       menu.querySelectorAll('li').forEach(function (li) {
          li.classList.add('menu-item');
-
          li.querySelectorAll(':scope > ul').forEach(function (submenu) {
             submenu.classList.add('dropdown-menus');
             submenu.querySelectorAll('li').forEach(function (submenuItem) {
                submenuItem.classList.add('dropdown-menus-item');
             });
          });
+
+         const link = li.querySelector(':scope > a');
+         // Handle anchor links with hashes to scroll to the target element after closing the offcanvas menu
+         if (link && link.tagName === 'A') {
+            const url = new URL(link.href, window.location.href);
+
+            if (
+                url.origin === window.location.origin &&
+                url.pathname === window.location.pathname &&
+                url.search === window.location.search &&
+                url.hash
+            ) {
+               let id = url.hash.substring(1);
+               try {
+                  id = decodeURIComponent(id);
+               } catch (error) {
+                  // Keep the raw fragment when it is not valid URI encoding.
+               }
+               const target = document.getElementById(id);
+               const container = link.closest('.offcanvas');
+
+               if (target && container && window.bootstrap && window.bootstrap.Offcanvas) {
+                  link.addEventListener('click', function (event) {
+                     event.preventDefault();
+                     const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(container);
+
+                     container.addEventListener('hidden.bs.offcanvas', function () {
+
+                        history.pushState(null, '', url.hash);
+
+                        target.scrollIntoView({
+                           behavior: 'auto',
+                           block: 'start'
+                        });
+
+                     }, { once: true });
+                     offcanvas.hide();
+                  });
+               }
+            }
+         }
       });
 
       wrapMenu(menu);

@@ -24,6 +24,17 @@
                     <option value="bottom-0 start-50 translate-middle-x">ASTROID_WIDGET_BOTTOM_CENTER</option>
                     <option value="bottom-0 end-0">ASTROID_WIDGET_BOTTOM_RIGHT</option>
                 </field>
+                <field astroidgroup="general" name="toast_background" type="astroidlist" label="ASTROID_BACKGROUND_AND_COLOR_LABEL" default="">
+                    <option value="">JGLOBAL_INHERIT</option>
+                    <option value="text-bg-primary">ASTROID_PRIMARY</option>
+                    <option value="text-bg-secondary">ASTROID_SECONDARY</option>
+                    <option value="text-bg-success">ASTROID_SUCCESS</option>
+                    <option value="text-bg-danger">ASTROID_DANGER</option>
+                    <option value="text-bg-warning">ASTROID_WARNING</option>
+                    <option value="text-bg-info">ASTROID_INFO</option>
+                    <option value="text-bg-light">ASTROID_LIGHT</option>
+                    <option value="text-bg-dark">ASTROID_DARK</option>
+                </field>
                 <field astroidgroup="general" name="toast_maxwidth" type="astroidrange" min="300" max="1500" step="1" default="500" label="ASTROID_WIDGET_MAX_WIDTH_LABEL" description="ASTROID_WIDGET_MAX_WIDTH_DESC" postfix="px" />
                 <field astroidgroup="general" name="toast_padding" type="astroidrange" min="10" max="80" step="1" default="30" label="ASTROID_WIDGET_PADDING_LABEL" description="ASTROID_WIDGET_TOAST_PADDING_DESCRIPTION" postfix="px" responsive="true" />
                 <field astroidgroup="general" name="always_display" type="astroidradio" astroid-switch="true" default="0" label="ASTROID_ALWAYS_DISPLAY"/>

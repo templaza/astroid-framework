@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element>
+    <title>ASTROID_WIDGET_SVG_LABEL</title>
+    <description>ASTROID_WIDGET_SVG_DESC</description>
+    <icon>as-icon as-icon-vector</icon>
+    <category>ASTROID_ELEMENT_CATEGORY_MEDIA</category>
+    <element_type>widget</element_type>
+    <form>
+        <fields>
+            <fieldset name="general-settings" label="TPL_ASTROID_GENERAL_SETTINGS_LABEL" addfieldprefix="Astroid\Field">
+                <field astroidgroup="general" name="svg" type="astroidmedia" label="ASTROID_WIDGET_SELECT_SVG_LABEL" description="ASTROID_WIDGET_SELECT_SVG_DESC"/>
+                <field astroidgroup="general" name="svg_width" type="astroidrange" min="10" max="1000" step="1" default="160" label="ASTROID_WIDGET_SVG_WIDTH_LABEL" description="ASTROID_WIDGET_SVG_WIDTH_DESC" postfix="px" responsive="true" />
+                <field astroidgroup="general" name="svg_height" type="astroidrange" min="10" max="1000" step="1" default="160" label="ASTROID_WIDGET_SVG_HEIGHT_LABEL" description="ASTROID_WIDGET_SVG_HEIGHT_DESC" postfix="px" responsive="true" />
+                <field astroidgroup="general" name="svg_color" type="astroidcolor" label="ASTROID_WIDGET_SVG_COLOR_LABEL" description="ASTROID_WIDGET_SVG_COLOR_DESC" />
+            </fieldset>
+            <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
+                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
+                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
+                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
+                </field>
+                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+            </fieldset>
+        </fields>
+    </form>
+</element>
