@@ -75,7 +75,7 @@ class BaseElement
         $assignment =   $this->params->get('assignment', "");
         if (($assignment_type == 2 || $assignment_type == 3) && $assignment) {
             $assignment =   \json_decode($assignment, true);
-            if (($assignment_type == 2 && (isset($assignment[$menuId]) && !$assignment[$menuId])) || ($assignment_type == 3 && (!isset($assignment[$menuId]) || $assignment[$menuId]))) {
+            if (($assignment_type == 2 && (!isset($assignment[$menuId]) || !$assignment[$menuId])) || ($assignment_type == 3 && isset($assignment[$menuId]) && $assignment[$menuId])) {
                 return '';
             }
         }
