@@ -115,6 +115,18 @@ class AstroidlistField extends FormField {
          return $options;
       }
 
+       if (!empty($this->element['assignment-types'])) {
+           $options = array();
+           $variables = \Astroid\Helper\Constants::$assignment_types;
+           foreach ($variables as $value => $label) {
+               $object = new \stdClass();
+               $object->value = $value;
+               $object->text = Text::_($label);
+               $options[] = $object;
+           }
+           return $options;
+       }
+
       $fieldname = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname);
       $options = array();
 
