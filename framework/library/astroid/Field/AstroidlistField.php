@@ -17,6 +17,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Component\ComponentHelper;
+use Astroid\Helper\Constants;
 /**
  * Form Field class for the Joomla Platform.
  * Supports a generic list of options.
@@ -102,29 +103,19 @@ class AstroidlistField extends FormField {
     * @since   3.7.0
     */
    protected function getOptions() {
-
-      if (!empty($this->element['bootstrap-color'])) {
-         $options = array();
-         $variables = \Astroid\Helper\Constants::$bootstrap_colors;
-         foreach ($variables as $value => $label) {
-            $object = new \stdClass();
-            $object->value = $value;
-            $object->text = Text::_($label);
-            $options[] = $object;
-         }
-         return $options;
-      }
-
-       if (!empty($this->element['assignment-types'])) {
-           $options = array();
-           $variables = \Astroid\Helper\Constants::$assignment_types;
-           foreach ($variables as $value => $label) {
-               $object = new \stdClass();
-               $object->value = $value;
-               $object->text = Text::_($label);
-               $options[] = $object;
+       if (!empty($this->element['list-type'])) {
+           $list_type = (string) $this->element['list-type'];
+           if (isset(Constants::${$list_type})) {
+               $options = array();
+               $variables = Constants::${$list_type};
+               foreach ($variables as $value => $label) {
+                   $object = new \stdClass();
+                   $object->value = $value;
+                   $object->text = Text::_($label);
+                   $options[] = $object;
+               }
+               return $options;
            }
-           return $options;
        }
 
       $fieldname = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname);
