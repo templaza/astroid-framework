@@ -73,9 +73,9 @@ class BaseElement
         $menuId = $jinput->get('Itemid', 0, 'INT');
 
         $assignment =   $this->params->get('assignment', "");
-        if ($assignment_type == 2 && $assignment) {
+        if (($assignment_type == 2 || $assignment_type == 3) && $assignment) {
             $assignment =   \json_decode($assignment, true);
-            if ((isset($assignment[$menuId]) && !$assignment[$menuId]) || !isset($assignment[$menuId])) {
+            if (($assignment_type == 2 && (!isset($assignment[$menuId]) || !$assignment[$menuId])) || ($assignment_type == 3 && isset($assignment[$menuId]) && $assignment[$menuId])) {
                 return '';
             }
         }
@@ -131,9 +131,9 @@ class BaseElement
         $menuId = $jinput->get('Itemid', 0, 'INT');
 
         $assignment =   $this->params->get('assignment', "");
-        if ($assignment_type == 2 && $assignment) {
+        if (($assignment_type == 2 || $assignment_type == 3) && $assignment) {
             $assignment =   \json_decode($assignment, true);
-            if ((isset($assignment[$menuId]) && !$assignment[$menuId]) || !isset($assignment[$menuId])) {
+            if (($assignment_type == 2 && (!isset($assignment[$menuId]) || !$assignment[$menuId])) || ($assignment_type == 3 && isset($assignment[$menuId]) && $assignment[$menuId])) {
                 return false;
             }
         }

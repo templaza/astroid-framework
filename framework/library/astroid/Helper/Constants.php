@@ -107,6 +107,13 @@ class Constants
         'custom' => 'TPL_COLOR_CUSTOM'
     ];
 
+    public static $assignment_types = [
+        0 => 'ASTROID_WIDGET_NO_PAGES',
+        1 => 'ASTROID_WIDGET_ON_ALL_PAGES',
+        2 => 'ASTROID_WIDGET_SELECTED_PAGES',
+        3 => 'ASTROID_WIDGET_EXCLUDED_PAGES'
+    ];
+
     public static $animations = [
         '' => ['' => 'None'],
         'Attention Seekers' => [

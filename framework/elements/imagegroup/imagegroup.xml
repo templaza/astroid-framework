@@ -288,12 +288,8 @@
                 <field astroidgroup="title_options" ngShow="[display_title]==1" name="title_font_style" label="ASTROID_WIDGET_FONT_STYLES_LABEL" type="astroidtypography" columns="1" preview="false"/>
             </fieldset>
             <fieldset name="assignment-settings" label="TPL_ASTROID_ASSIGNMENT_SETTINGS_LABEL" addfieldprefix="Astroid\Field" articleData="false">
-                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" default="1">
-                    <option value="1">ASTROID_WIDGET_ON_ALL_PAGES</option>
-                    <option value="0">ASTROID_WIDGET_NO_PAGES</option>
-                    <option value="2">ASTROID_WIDGET_SELECTED_PAGES</option>
-                </field>
-                <field ngShow="[assignment_type]==2" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
+                <field type="astroidlist" name="assignment_type" label="ASTROID_WIDGET_ASSIGN" list-type="assignment_types" default="1"/>
+                <field ngShow="[assignment_type]==2 || [assignment_type]==3" type="astroidassignment" label="ASTROID_ASSIGN_TO_MENU_ITEM" name="assignment"/>
             </fieldset>
         </fields>
     </form>
