@@ -524,7 +524,7 @@ class Style
         }
     }
 
-    public static function getFontFamilyValue($value, $alt_font = '')
+    public static function getFontFamilyValue($value, $alt_font = ''): string
     {
         $value = ($value == '__default' ? '' : $value);
         if (empty($value) && empty($alt_font)) {
@@ -543,17 +543,38 @@ class Style
         return implode(', ', $return);
     }
 
-    public static function getColor($color)
+    public static function getColor($color, $rgb = false): array
     {
         $result = json_decode($color);
         if (json_last_error() === JSON_ERROR_NONE) {
+            if ($rgb) {
+                $result->light = self::convertRgbaToCode($result->light);
+                $result->dark = self::convertRgbaToCode($result->dark);
+            }
             return ['light'=>$result->light, 'dark'=>$result->dark];
         } else {
+            if ($rgb) {
+                $color = self::convertRgbaToCode($color);
+            }
             return ['light'=>$color, 'dark'=>$color];
         }
     }
 
-    public static function getGradientValue($value)
+    private static function convertRgbaToCode($color) : string
+    {
+        if (!is_string($color) || !preg_match('/^rgba\(\s*(.*?)\s*\)$/i', trim($color), $matches)) {
+            return $color;
+        }
+
+        $channels = array_map('trim', explode(',', $matches[1]));
+        if (count($channels) !== 4) {
+            return $color;
+        }
+
+        return implode(', ', array_slice($channels, 0, 3)) . ',' . $channels[3];
+    }
+
+    public static function getGradientValue($value): string
     {
         if (empty($value)) {
             return '';
